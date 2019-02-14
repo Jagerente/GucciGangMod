@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/JustlPain/GucciGangProject"><img src="https://i.imgur.com/72NvqqP.png" alt="GucciGangProject"></a>
+  <a><img src="https://i.imgur.com/72NvqqP.png" alt="by Bishop"></a>
   <br>
   GucciGangProject
   <br>
@@ -23,8 +23,20 @@
 * [Latest version](#download)
 * [DEN's source](#download)
 
-# Special thanks to:
+# Special thanks
+### For helping with code:
 * BaBaIKa
 * Order
+* SAviTO
 * tap1k
 * VENICE
+* Wineglass
+### For the beautiful art:
+* [Bishop](https://vk.com/bishoptyan)
+### For the GUI elements:
+* Lineyka
+### For testing:
+* Dio
+* Lisiko
+* Shissui
+* zender
