@@ -23,8 +23,20 @@
 * [Latest version](#download)
 * [DEN's source](#download)
 
-# Special thanks to:
+# Special thanks
+### For helping with code:
 * BaBaIKa
 * Order
+* SAviTO
 * tap1k
 * VENICE
+* Wineglass
+### For the beautiful art:
+* [Bishop](https://vk.com/bishoptyan)
+### For the GUI elements:
+* Lineyka
+### For testing:
+* Dio
+* Lisiko
+* Shissui
+* zender
