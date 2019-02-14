@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/JustlPain/GucciGangProject"><img src="https://i.imgur.com/72NvqqP.png" alt="by Bishop"></a>
+  <a><img src="https://i.imgur.com/72NvqqP.png" alt="by Bishop"></a>
   <br>
   GucciGangProject
   <br>
