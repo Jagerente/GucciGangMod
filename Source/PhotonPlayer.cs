@@ -209,6 +209,21 @@ public class PhotonPlayer
         }
     }
 
+    protected internal string Name
+    {
+        get
+        {
+            var a = customProperties["name"];
+            var b = a as string;
+            return b ?? string.Empty;
+        }
+        set
+        {
+            var propertiesToSet = new Hashtable { { "name", value } };
+            SetCustomProperties(propertiesToSet);
+        }
+    }
+
     public string name
     {
         get
