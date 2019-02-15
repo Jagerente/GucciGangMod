@@ -25,7 +25,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Aottg\aottg_Data\Managed\</OutputPath>
+    <OutputPath>..\..\GGP_DATA\Managed\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -532,5 +532,8 @@
     <Reference Include="UnityScript.Lang">
       <HintPath>..\Aottg\aottg_Data\Managed\UnityScript.Lang.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GGP\" />
   </ItemGroup>
 </Project>
