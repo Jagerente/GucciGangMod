@@ -56,6 +56,12 @@
     </Reference>
     <Reference Include="System" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="GGP\GUIHelpers.cs" />
+    <Compile Include="GGP\BetterGUI.cs" />
+    <Compile Include="GGP\Pages.cs" />
+    <Compile Include="GGP\Settings.cs" />
+    <Compile Include="GGP\SpectatorMode.cs" />
+    <Compile Include="GGP\Style.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="AHSSShotGunCollider.cs" />
     <Compile Include="GAMETYPE.cs" />
@@ -533,7 +539,5 @@
       <HintPath>..\Aottg\aottg_Data\Managed\UnityScript.Lang.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GGP\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
