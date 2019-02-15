@@ -171,8 +171,8 @@ namespace GGP
         }
         void LateUpdate()
         {
-            if (Input.GetKeyDown(buttonEnable) && Settings.specmode) { onEnable = !onEnable; Activate(onEnable); }
-            if (Input.GetKeyDown(buttonShowGUI) && Settings.specmode) { showGui = !showGui; }
+            if (Input.GetKeyDown(buttonEnable) && Settings.SpecMode) { onEnable = !onEnable; Activate(onEnable); }
+            if (Input.GetKeyDown(buttonShowGUI) && Settings.SpecMode) { showGui = !showGui; }
         }
         void OnGUI()
         {
