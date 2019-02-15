@@ -30,9 +30,21 @@ public class PanelMain : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        label_single.GetComponent<UILabel>().enabled = false;
+        label_multi.GetComponent<UILabel>().enabled = false;
+        label_option.GetComponent<UILabel>().enabled = false;
+        label_credits.GetComponent<UILabel>().enabled = false;
+        foreach (UIButton button in base.gameObject.GetComponentsInChildren<UIButton>())
+        {
+            button.transform.position = new Vector3(0, 9999, 0);
+        }
+    }
+
     private void Update()
     {
-        this.showTxt();
+        //this.showTxt();
     }
 }
 
