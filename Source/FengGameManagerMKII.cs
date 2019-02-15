@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
 using GGP;
 
 public class FengGameManagerMKII : Photon.MonoBehaviour
@@ -2689,6 +2690,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     public void EnterSpecMode(bool enter)
     {
+        Settings.SpecMode = enter;
         if (enter)
         {
             this.spectateSprites = new List<GameObject>();
@@ -11244,12 +11246,43 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         }
     }
 
-    public void setBackground()
+    public GameObject cameraObject;
+    public GameObject canvasObject;
+    public System.Collections.IEnumerator LoadBackground()
     {
-        if (isAssetLoaded)
+        using (WWW www = new WWW("file:///" + Application.dataPath + "/GUI/GGP.png"))
         {
-            UnityEngine.Object.Instantiate(RCassets.Load("backgroundCamera"));
+            yield return www;
+            if (www.texture != null)
+            {
+                this.cameraObject = new GameObject();
+                Camera camera = this.cameraObject.AddComponent<Camera>();
+                camera.clearFlags = CameraClearFlags.Color;
+                camera.depth = -1f;
+                this.cameraObject.AddComponent<GUILayer>();
+                this.canvasObject = new GameObject();
+                Canvas canvas = this.canvasObject.AddComponent<Canvas>();
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                canvas.worldCamera = camera;
+                canvas.pixelPerfect = true;
+                canvas.sortingOrder = -1;
+                CanvasScaler canvasScaler = this.canvasObject.AddComponent<CanvasScaler>();
+                this.canvasObject.GetComponent<RectTransform>();
+                this.canvasObject.AddComponent<CanvasRenderer>();
+                this.canvasObject.AddComponent<GraphicRaycaster>();
+                canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                canvasScaler.referenceResolution = new Vector2(Screen.width, Screen.height);
+                canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                canvasScaler.matchWidthOrHeight = -1f;
+                canvasScaler.referencePixelsPerUnit = 100f;
+                Image image = this.canvasObject.AddComponent<Image>();
+                image.sprite = UnityEngine.Sprite.Create(www.texture, new Rect(0f, 0f, (float)www.texture.width, (float)www.texture.height), new Vector2(0.5f, 0.5f));
+                image.color = new Color(255f, 255f, 255f, 255f);
+                //image.type = Image.Type.Simple;
+                image.preserveAspect = false;
+            }
         }
+        yield break;
     }
 
     private void setGameSettings(ExitGames.Client.Photon.Hashtable hash)
@@ -12947,8 +12980,23 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 }
             }
         }
-        this.setBackground();
         ChangeQuality.setCurrentQuality();
+
+        base.StartCoroutine(this.LoadBackground());
+        //base.gameObject.AddComponent<FPSCounter>();
+        //base.gameObject.AddComponent<HotKeys>();
+        //base.gameObject.AddComponent<Checker>();
+        Settings.LoadConfig();
+        Settings.LoadHumanSkins();
+        Settings.LoadForestSkins();
+        Settings.LoadCitySkins();
+        if (SpectatorMode.instance == null)
+        {
+            GameObject gm = new GameObject("SpectatorMode");
+            gm.AddComponent<SpectatorMode>();
+            DontDestroyOnLoad(gm);
+        }
+
     }
 
     [RPC]
