@@ -2,7 +2,7 @@
   <br>
   <a><img src="https://i.imgur.com/72NvqqP.png" alt="by Bishop"></a>
   <br>
-  GucciGangProject
+  GucciGangMod
   <br>
 </h1>
 
@@ -16,7 +16,7 @@
 
 
 # Overview
-**GucciGangProject** is an **AoTTG** modification based on **RCFinal** source by **[DEN](#download)**.
+**GucciGangMod** is an **AoTTG** modification based on **RCFinal** source by **[DEN](#download)**.
 # Feautures
 
 # Download
