@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using GGP;
 
 public class FengGameManagerMKII : Photon.MonoBehaviour
 {
@@ -4820,7 +4821,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         }
     }
 
-    private IEnumerator loginFeng()
+    public IEnumerator loginFeng()
     {
         WWW iteratorVariable1;
         WWWForm form = new WWWForm();
@@ -5285,6 +5286,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                     }
                     else if (((GameObject.Find("ButtonCREDITS") != null) && (GameObject.Find("ButtonCREDITS").transform.parent.gameObject != null)) && NGUITools.GetActive(GameObject.Find("ButtonCREDITS").transform.parent.gameObject))
                     {
+
                         num7 = (((float) Screen.width) / 2f) - 85f;
                         num8 = ((float) Screen.height) / 2f;
                         GUI.backgroundColor = new Color(0.08f, 0.3f, 0.4f, 1f);
@@ -8910,8 +8912,13 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        Settings.Forest = LevelInfo.getInfo(FengGameManagerMKII.level).mapName.Contains("Forest");
+        Settings.City = LevelInfo.getInfo(FengGameManagerMKII.level).mapName.Contains("City");
+
         if ((level != 0) && ((Application.loadedLevelName != "characterCreation") && (Application.loadedLevelName != "SnapShot")))
         {
+            Settings.InitSettings();
+            Settings.InitLocationSkins();
             ChangeQuality.setCurrentQuality();
             foreach (GameObject obj2 in GameObject.FindGameObjectsWithTag("titan"))
             {
@@ -11641,7 +11648,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         }
     }
 
-    private IEnumerator setGuildFeng()
+    public IEnumerator setGuildFeng()
     {
         WWW iteratorVariable1;
         WWWForm form = new WWWForm();
