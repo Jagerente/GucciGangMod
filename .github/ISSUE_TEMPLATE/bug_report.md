@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help me improve
+about: Create a report to help me fix the problem
 title: "Bug Title"
 labels: bug
 assignees: JustlPain
