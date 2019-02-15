@@ -18,7 +18,7 @@ public class InRoomChat : Photon.MonoBehaviour
     public static Rect GuiRect = new Rect(0f, 100f, 300f, 470f);
     public static Rect GuiRect2 = new Rect(30f, 575f, 300f, 25f);
     private string inputLine = string.Empty;
-    public bool IsVisible = true;
+    public static bool IsVisible = true;
     public static List<string> messages = new List<string>();
     private Vector2 scrollPos = Vector2.zero;
 
@@ -27,12 +27,12 @@ public class InRoomChat : Photon.MonoBehaviour
         messages.Add(newLine);
     }
 
-    ///<summary>
+    ///<param name="type">
     ///0 - MC
     ///1 - Exist
     ///2 - Myself
     ///3 - GGP User
-    ///</summary>
+    /// </param>
     public static string Error(int type, string text = "")
     {
         switch (type)
@@ -50,9 +50,9 @@ public class InRoomChat : Photon.MonoBehaviour
         }
     }
 
-    public static string RCLine(string line)
+    public static string RCLine(string text)
     {
-        return "<color=#FFC000>" + line + "</color>";
+        return "<color=#FFC000>" + text + "</color>";
     }
 
     private static string ChatFormatting(string text, string color, int bold, int italic, string size = null)
@@ -776,10 +776,10 @@ public class InRoomChat : Photon.MonoBehaviour
                 goto Label_219C;
             }
         }
-        else if ((Event.current.type == EventType.KeyUp) && (((Event.current.keyCode != KeyCode.None) && (Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat])) && (GUI.GetNameOfFocusedControl() != "ChatInput")))
+        else if ((Event.current.type == EventType.KeyUp) && (((Event.current.keyCode != KeyCode.None) && (Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat])) && (UnityEngine.GUI.GetNameOfFocusedControl() != "ChatInput")))
         {
             this.inputLine = string.Empty;
-            GUI.FocusControl("ChatInput");
+            UnityEngine.GUI.FocusControl("ChatInput");
             goto Label_219C;
         }
         if ((Event.current.type == EventType.KeyDown) && ((Event.current.keyCode == KeyCode.KeypadEnter) || (Event.current.keyCode == KeyCode.Return)))
@@ -790,7 +790,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 if (this.inputLine == "\t")
                 {
                     this.inputLine = string.Empty;
-                    GUI.FocusControl(string.Empty);
+                    UnityEngine.GUI.FocusControl(string.Empty);
                     return;
                 }
                 if (FengGameManagerMKII.RCEvents.ContainsKey("OnChatInput"))
@@ -832,14 +832,14 @@ public class InRoomChat : Photon.MonoBehaviour
                     commandSwitch(this.inputLine.Remove(0, 1).Split(' '));
                 }
                 this.inputLine = string.Empty;
-                GUI.FocusControl(string.Empty);
+                UnityEngine.GUI.FocusControl(string.Empty);
                 return;
             }
             this.inputLine = "\t";
-            GUI.FocusControl("ChatInput");
+            UnityEngine.GUI.FocusControl("ChatInput");
         }
     Label_219C:
-        GUI.SetNextControlName(string.Empty);
+        UnityEngine.GUI.SetNextControlName(string.Empty);
         GUILayout.BeginArea(GuiRect);
         GUILayout.FlexibleSpace();
         string text = string.Empty;
@@ -861,7 +861,7 @@ public class InRoomChat : Photon.MonoBehaviour
         GUILayout.EndArea();
         GUILayout.BeginArea(GuiRect2);
         GUILayout.BeginHorizontal();
-        GUI.SetNextControlName("ChatInput");
+        UnityEngine.GUI.SetNextControlName("ChatInput");
         this.inputLine = GUILayout.TextField(this.inputLine);
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
