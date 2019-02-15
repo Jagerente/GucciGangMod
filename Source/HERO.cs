@@ -78,7 +78,7 @@ public class HERO : Photon.MonoBehaviour
     private float flareTotalCD = 30f;
     private Transform forearmL;
     private Transform forearmR;
-    private float gravity = 20f;
+    public float gravity = 20f;
     private bool grounded;
     private GameObject gunDummy;
     private Vector3 gunTarget;
