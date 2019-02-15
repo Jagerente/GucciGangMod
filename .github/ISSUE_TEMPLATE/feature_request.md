@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "[FEAUTURE REQUEST]"
+title: "Feauture Title"
 labels: enhancement
 assignees: JustlPain
 
