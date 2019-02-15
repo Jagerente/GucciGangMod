@@ -140,6 +140,11 @@ public class InRoomChat : Photon.MonoBehaviour
     {
         switch (command[0])
         {
+            case "reconnect":
+                {
+                    PhotonNetwork.networkingPeer.OnStatusChanged(StatusCode.DisconnectByServerLogic);
+                    break;
+                }
             case "tp":
                 {
                     var player = PhotonPlayer.Find(Convert.ToInt32(command[1]));

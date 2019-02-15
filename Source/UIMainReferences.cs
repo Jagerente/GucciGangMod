@@ -66,6 +66,10 @@ public class UIMainReferences : MonoBehaviour
             StartCoroutine(request());
             FengGameManagerMKII.loginstate = 0;
         }
+        if (FengGameManagerMKII.shallRejoin[0] is bool && (bool)FengGameManagerMKII.shallRejoin[0])
+        {
+            PhotonNetwork.ConnectToMaster((string)FengGameManagerMKII.shallRejoin[1], 0x13bf, FengGameManagerMKII.applicationId, UIMainReferences.version);
+        }
     }
 
 }

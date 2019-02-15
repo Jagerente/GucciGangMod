@@ -92,6 +92,17 @@ public class PanelMultiJoin : MonoBehaviour
 
     private void showlist()
     {
+        if (FengGameManagerMKII.shallRejoin[0] is bool && (bool)FengGameManagerMKII.shallRejoin[0])
+        {
+            if ((((RoomInfo)FengGameManagerMKII.shallRejoin[2]).maxPlayers == 0 || ((RoomInfo)FengGameManagerMKII.shallRejoin[2]).maxPlayers > ((RoomInfo)FengGameManagerMKII.shallRejoin[2]).playerCount) && ((RoomInfo)FengGameManagerMKII.shallRejoin[2]).open)
+            {
+                PhotonNetwork.JoinRoom(((RoomInfo)FengGameManagerMKII.shallRejoin[2]).name);
+            }
+            else
+            {
+                FengGameManagerMKII.shallRejoin[0] = false;
+            }
+        }
         if (this.filter == string.Empty)
         {
             if (PhotonNetwork.GetRoomList().Length > 0)

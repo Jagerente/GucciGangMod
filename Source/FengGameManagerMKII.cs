@@ -5075,8 +5075,12 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         UnityEngine.MonoBehaviour.print("OnConnectedToPhoton");
     }
 
+    public static object[] shallRejoin = new object[3];
+
     public void OnConnectionFail(DisconnectCause cause)
     {
+        if (cause == DisconnectCause.DisconnectByServerLogic) shallRejoin[0] = true;
+
         UnityEngine.MonoBehaviour.print("OnConnectionFail : " + cause.ToString());
         Screen.lockCursor = false;
         Screen.showCursor = true;
@@ -8663,6 +8667,8 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     public void OnJoinedLobby()
     {
+        shallRejoin[1] = PhotonNetwork.networkingPeer.MasterServerAddress.Split(':')[0];
+
         NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, false);
         NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
         NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiJoinPrivate, false);
@@ -8670,6 +8676,12 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     public void OnJoinedRoom()
     {
+        shallRejoin[2] = PhotonNetwork.networkingPeer.mRoomToGetInto;
+        if (shallRejoin[0] is bool && (bool)shallRejoin[0])
+        {
+            shallRejoin[0] = false;
+        }
+
         this.maxPlayers = PhotonNetwork.room.maxPlayers;
         this.playerList = string.Empty;
         char[] separator = new char[] { "`"[0] };
