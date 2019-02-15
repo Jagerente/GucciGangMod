@@ -142,7 +142,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     public Texture2D textureBackgroundBlue;
     public int time = 600;
     private float timeElapse;
-    private float timeTotalServer;
+    public float timeTotalServer;
     private ArrayList titans;
     private int titanScore;
     public List<TitanSpawner> titanSpawners;
