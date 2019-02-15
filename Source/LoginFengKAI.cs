@@ -143,7 +143,7 @@ public class LoginFengKAI : MonoBehaviour
         }
         else
         {
-            this.output.GetComponent<UILabel>().text = "Welcome," + player.name;
+            //this.output.GetComponent<UILabel>().text = "Welcome," + player.name;
         }
     }
 

@@ -8741,10 +8741,10 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         if (loginstate != 3)
         {
             this.name = nameField;
-            if ((!this.name.StartsWith("[") || (this.name.Length < 8)) || (this.name.Substring(7, 1) != "]"))
-            {
-                this.name = "[9999FF]" + this.name;
-            }
+            //if ((!this.name.StartsWith("[") || (this.name.Length < 8)) || (this.name.Substring(7, 1) != "]"))
+            //{
+            //    this.name = "[9999FF]" + this.name;
+            //}
             this.name = this.name.Replace("[-]", "");
             LoginFengKAI.player.name = this.name;
         }
@@ -12932,11 +12932,12 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     {
         if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && (GameObject.Find("LabelNetworkStatus") != null))
         {
-            GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = PhotonNetwork.connectionStateDetailed.ToString();
+            //GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = PhotonNetwork.connectionStateDetailed.ToString();
             if (PhotonNetwork.connected)
             {
-                UILabel component = GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>();
-                component.text = component.text + " ping:" + PhotonNetwork.GetPing();
+                //UILabel component = GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>();
+                //component.text = component.text + " ping:" + PhotonNetwork.GetPing();
+                GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"Ping:{PhotonNetwork.GetPing()}";
             }
         }
         if (this.gameStart)

@@ -533,9 +533,6 @@ namespace GGP
         public static void LoadConfig()
         {
             UI = PlayerPrefs.GetInt("UI", 1);
-            //Login
-            FengGameManagerMKII.nameField = PlayerPrefs.GetString("name", string.Empty);
-            LoginFengKAI.player.guildname = PlayerPrefs.GetString("guildname", string.Empty);
             //Game Settings
             InvertMouse = PlayerPrefs.GetInt("InvertMouse", 0);
             MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 0.5f);
