@@ -5300,7 +5300,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 GUI.Box(new Rect(0, 0, Screen.width, Screen.height), string.Empty);
                 GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), this.textureBackgroundBlack);
                 GUI.DrawTexture(GUIHelpers.AlignRect(192, 192, GUIHelpers.Alignment.CENTER), Style.Logo);
-                GUI.Label(GUIHelpers.AlignRect(600, 150, GUIHelpers.Alignment.BOTTOMCENTER), "<size=64>GucciGangProject</size>\n" + "<size=32>Loading</size>", BetterGUI.text_labelmiddlecenter);
+                GUI.Label(GUIHelpers.AlignRect(600, 150, GUIHelpers.Alignment.BOTTOMCENTER), "<size=64>GucciGangMod</size>\n" + "<size=32>Loading</size>", BetterGUI.text_labelmiddlecenter);
             }
         }
         else if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.STOP)
