@@ -85,6 +85,9 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     private float xSpeed = -3f;
     private float ySpeed = -0.8f;
 
+    public static bool FOV;
+    public static float FOVvalue;
+
     private void Awake()
     {
         isTyping = false;
@@ -418,6 +421,15 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             base.gameObject.GetComponent<Camera>().aspect = Screen.width / Screen.height;
         }
         this.createSnapShotRT2();
+    }
+
+    public void setFOV(float value)
+    {
+        if (!FOV)
+        {
+            FOV = true;
+        }
+        FOVvalue = value;
     }
 
     public GameObject setMainObject(GameObject obj, bool resetRotation = true, bool lockAngle = false)

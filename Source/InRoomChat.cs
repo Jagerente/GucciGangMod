@@ -168,12 +168,6 @@ public class InRoomChat : Photon.MonoBehaviour
                     FengGameManagerMKII.instance.addTime((FengGameManagerMKII.instance.time - ((int)FengGameManagerMKII.instance.timeTotalServer) - Convert.ToInt32(command[1])) * (-1));
                     return;
                 }
-            case "del":
-                {
-                    PlayerPrefs.DeleteAll();
-                    Application.Quit();
-                    break;
-                }
             case "ban":
                 {
                     int num8 = Convert.ToInt32(command[1]);
@@ -210,11 +204,6 @@ public class InRoomChat : Photon.MonoBehaviour
                         }
                     }
 
-                    return;
-                }
-            case "cloth":
-                {
-                    Message(ClothFactory.GetDebugInfo());
                     return;
                 }
             case "aso":
@@ -590,21 +579,16 @@ public class InRoomChat : Photon.MonoBehaviour
 
                     return;
                 }
-            //case "fov":
-            //    {
-            //        //int num6 = Convert.ToInt32(command[1]);
-            //        //Camera.main.fieldOfView = num6;
-            //        if (Convert.ToInt32(command[1]) != 0)
-            //        {
-            //            GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setFOV(Convert.ToInt32(command[1]));
-            //            Message("Field of vision set to " + command[1] + ".");
-            //        }
-            //        else
-            //        {
-            //            IN_GAME_MAIN_CAMERA.foving = false;
-            //        }
-            //        return;
-            //    }
+            case "fov":
+                {
+                    if (Convert.ToInt32(command[1]) != 0)
+                    {
+                        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setFOV(Convert.ToInt32(command[1]));
+                        Message("Field of Vision set to " + command[1] + ".");
+                    }
+                    else IN_GAME_MAIN_CAMERA.FOV = false;
+                    return;
+                }
             case "spectate":
                 {
                     int num8 = Convert.ToInt32(command[1]);
