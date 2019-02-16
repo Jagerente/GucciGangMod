@@ -60,8 +60,11 @@
     <Reference Include="System" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="GGP\CachingGM.cs" />
+    <Compile Include="GGP\FPSCounter.cs" />
     <Compile Include="GGP\GUIHelpers.cs" />
     <Compile Include="GGP\BetterGUI.cs" />
+    <Compile Include="GGP\HotKeys.cs" />
+    <Compile Include="GGP\Layer.cs" />
     <Compile Include="GGP\Pages.cs" />
     <Compile Include="GGP\RichPresence.cs" />
     <Compile Include="GGP\Settings.cs" />
