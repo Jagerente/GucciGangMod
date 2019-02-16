@@ -8,6 +8,7 @@ namespace GGP
 {
     class Style : MonoBehaviour
     {
+        static string path = "Gucci/";
         static bool styleinited = false;
         static Texture2D Box;
         static Texture2D Window;
@@ -40,169 +41,169 @@ namespace GGP
 
         void Start()
         {
-            WWW LOGO = new WWW("file:///" + Application.dataPath + "/GUI/GGP_Logo.png");
+            WWW LOGO = new WWW("file:///" + Application.dataPath + $"/Styles/{path}GGP_Logo.png");
             if (Logo == null)
             {
                 Logo = LOGO.texture;
                 Logo.Apply();
             }
-            WWW BOX = new WWW("file:///" + Application.dataPath + "/GUI/Box.png");
+            WWW BOX = new WWW("file:///" + Application.dataPath + $"/Styles/{path}Box.png");
             if (Box == null)
             {
                 Box = BOX.texture;
                 Box.Apply();
             }
-            WWW WINDOW = new WWW("file:///" + Application.dataPath + "/GUI/Window.png");
+            WWW WINDOW = new WWW("file:///" + Application.dataPath + $"/Styles/{path}Window.png");
             if (Window == null)
             {
                 Window = WINDOW.texture;
                 Window.Apply();
             }
-            WWW BUTTONN = new WWW("file:///" + Application.dataPath + "/GUI/ButtonN.png");
+            WWW BUTTONN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonN.png");
             if (ButtonN == null)
             {
                 ButtonN = BUTTONN.texture;
                 ButtonN.Apply();
             }
-            WWW BUTTONA = new WWW("file:///" + Application.dataPath + "/GUI/ButtonA.png");
+            WWW BUTTONA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonA.png");
             if (ButtonA == null)
             {
                 ButtonA = BUTTONA.texture;
                 ButtonA.Apply();
             }
-            WWW BUTTONH = new WWW("file:///" + Application.dataPath + "/GUI/ButtonH.png");
+            WWW BUTTONH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonH.png");
             if (ButtonH == null)
             {
                 ButtonH = BUTTONH.texture;
                 ButtonH.Apply();
             }
-            WWW BUTTONON = new WWW("file:///" + Application.dataPath + "/GUI/ButtonON.png");
+            WWW BUTTONON = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonON.png");
             if (ButtonON == null)
             {
                 ButtonON = BUTTONON.texture;
                 ButtonON.Apply();
             }
-            WWW BUTTONOH = new WWW("file:///" + Application.dataPath + "/GUI/ButtonOH.png");
+            WWW BUTTONOH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonOH.png");
             if (ButtonOH == null)
             {
                 ButtonOH = BUTTONOH.texture;
                 ButtonOH.Apply();
             }
-            WWW BUTTONOA = new WWW("file:///" + Application.dataPath + "/GUI/ButtonOA.png");
+            WWW BUTTONOA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonOA.png");
             if (ButtonOA == null)
             {
                 ButtonOA = BUTTONOA.texture;
                 ButtonOA.Apply();
             }
-            WWW TEXTN = new WWW("file:///" + Application.dataPath + "/GUI/TextN.png");
+            WWW TEXTN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}TextN.png");
             if (TextN == null)
             {
                 TextN = TEXTN.texture;
                 TextN.Apply();
             }
-            WWW TEXTH = new WWW("file:///" + Application.dataPath + "/GUI/TextH.png");
+            WWW TEXTH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}TextH.png");
             if (TextH == null)
             {
                 TextH = TEXTH.texture;
                 TextH.Apply();
             }
-            WWW TEXTF = new WWW("file:///" + Application.dataPath + "/GUI/TextF.png");
+            WWW TEXTF = new WWW("file:///" + Application.dataPath + $"/Styles/{path}TextF.png");
             if (TextF == null)
             {
                 TextF = TEXTF.texture;
                 TextF.Apply();
             }
-            WWW TEXTON = new WWW("file:///" + Application.dataPath + "/GUI/TextON.png");
+            WWW TEXTON = new WWW("file:///" + Application.dataPath + $"/Styles/{path}TextON.png");
             if (TextON == null)
             {
                 TextON = TEXTON.texture;
                 TextON.Apply();
             }
-            WWW THUMBN = new WWW("file:///" + Application.dataPath + "/GUI/ThumbN.png");
+            WWW THUMBN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ThumbN.png");
             if (ThumbN == null)
             {
                 ThumbN = THUMBN.texture;
                 ThumbN.Apply();
             }
-            WWW THUMBA = new WWW("file:///" + Application.dataPath + "/GUI/ThumbA.png");
+            WWW THUMBA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ThumbA.png");
             if (ThumbA == null)
             {
                 ThumbA = THUMBA.texture;
                 ThumbA.Apply();
             }
-            WWW THUMBH = new WWW("file:///" + Application.dataPath + "/GUI/ThumbH.png");
+            WWW THUMBH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ThumbH.png");
             if (ThumbH == null)
             {
                 ThumbH = THUMBH.texture;
                 ThumbH.Apply();
             }
-            WWW TOGGLEN = new WWW("file:///" + Application.dataPath + "/GUI/ToggleN.png");
+            WWW TOGGLEN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleN.png");
             if (ToggleN == null)
             {
                 ToggleN = TOGGLEN.texture;
                 ToggleN.Apply();
             }
-            WWW TOGGLEA = new WWW("file:///" + Application.dataPath + "/GUI/ToggleA.png");
+            WWW TOGGLEA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleA.png");
             if (ToggleA == null)
             {
                 ToggleA = TOGGLEA.texture;
                 ToggleA.Apply();
             }
-            WWW TOGGLEH = new WWW("file:///" + Application.dataPath + "/GUI/ToggleH.png");
+            WWW TOGGLEH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleH.png");
             if (ToggleH == null)
             {
                 ToggleH = TOGGLEH.texture;
                 ToggleH.Apply();
             }
-            WWW TOGGLEON = new WWW("file:///" + Application.dataPath + "/GUI/ToggleON.png");
+            WWW TOGGLEON = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleON.png");
             if (ToggleON == null)
             {
                 ToggleON = TOGGLEON.texture;
                 ToggleON.Apply();
             }
-            WWW TOGGLEOA = new WWW("file:///" + Application.dataPath + "/GUI/ToggleOA.png");
+            WWW TOGGLEOA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleOA.png");
             if (ToggleOA == null)
             {
                 ToggleOA = TOGGLEOA.texture;
                 ToggleOA.Apply();
             }
-            WWW TOGGLEOH = new WWW("file:///" + Application.dataPath + "/GUI/ToggleOH.png");
+            WWW TOGGLEOH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleOH.png");
             if (ToggleOH == null)
             {
                 ToggleOH = TOGGLEOH.texture;
                 ToggleOH.Apply();
             }
-            WWW VERTICALSCROLLBAR = new WWW("file:///" + Application.dataPath + "/GUI/ScrollBarH.png");
+            WWW VERTICALSCROLLBAR = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarH.png");
             if (VerticalScrollBar == null)
             {
                 VerticalScrollBar = VERTICALSCROLLBAR.texture;
                 VerticalScrollBar.Apply();
             }
-            WWW HORIZONTALSCROLLBAR = new WWW("file:///" + Application.dataPath + "/GUI/ScrollBarV.png");
+            WWW HORIZONTALSCROLLBAR = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarV.png");
             if (HorizontalScrollBar == null)
             {
                 HorizontalScrollBar = HORIZONTALSCROLLBAR.texture;
                 HorizontalScrollBar.Apply();
             }
-            WWW SBTN = new WWW("file:///" + Application.dataPath + "/GUI/ScrollBarThumbN.png");
+            WWW SBTN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarThumbN.png");
             if (ScrollBarThumbN == null)
             {
                 ScrollBarThumbN = SBTN.texture;
                 ScrollBarThumbN.Apply();
             }
-            WWW SBTA = new WWW("file:///" + Application.dataPath + "/GUI/ScrollBarThumbA.png");
+            WWW SBTA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarThumbA.png");
             if (ScrollBarThumbA == null)
             {
                 ScrollBarThumbA = SBTA.texture;
                 ScrollBarThumbA.Apply();
             }
-            WWW SBTH = new WWW("file:///" + Application.dataPath + "/GUI/ScrollBarThumbH.png");
+            WWW SBTH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarThumbH.png");
             if (ScrollBarThumbH == null)
             {
                 ScrollBarThumbH = SBTH.texture;
                 ScrollBarThumbH.Apply();
             }
-            WWW SLIDER = new WWW("file:///" + Application.dataPath + "/GUI/Slider.png");
+            WWW SLIDER = new WWW("file:///" + Application.dataPath + $"/Styles/{path}Slider.png");
             if (Slider == null)
             {
                 Slider = SLIDER.texture;
