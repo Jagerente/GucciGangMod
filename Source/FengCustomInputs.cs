@@ -3,6 +3,7 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
+using GGP;
 using System;
 using UnityEngine;
 
@@ -556,12 +557,9 @@ public class FengCustomInputs : MonoBehaviour
     {
         this.reset2defaults();
         this.loadConfig();
+        Settings.LoadConfig();
         this.saveInputs();
-        PlayerPrefs.SetFloat("MouseSensitivity", 0.5f);
         PlayerPrefs.SetString("version", UIMainReferences.version);
-        PlayerPrefs.SetInt("invertMouseY", 1);
-        PlayerPrefs.SetInt("cameraTilt", 1);
-        PlayerPrefs.SetFloat("GameQuality", 0.9f);
     }
 
     public void showKeyMap()
@@ -575,19 +573,19 @@ public class FengCustomInputs : MonoBehaviour
         }
         if (GameObject.Find("ChangeQuality") != null)
         {
-            GameObject.Find("ChangeQuality").GetComponent<UISlider>().sliderValue = PlayerPrefs.GetFloat("GameQuality");
+            GameObject.Find("ChangeQuality").GetComponent<UISlider>().sliderValue = Settings.OverallQuality;
         }
         if (GameObject.Find("MouseSensitivity") != null)
         {
-            GameObject.Find("MouseSensitivity").GetComponent<UISlider>().sliderValue = PlayerPrefs.GetFloat("MouseSensitivity");
+            GameObject.Find("MouseSensitivity").GetComponent<UISlider>().sliderValue = Settings.MouseSensitivity;
         }
         if (GameObject.Find("CheckboxSettings") != null)
         {
-            GameObject.Find("CheckboxSettings").GetComponent<UICheckbox>().isChecked = PlayerPrefs.GetInt("invertMouseY") != 1;
+            GameObject.Find("CheckboxSettings").GetComponent<UICheckbox>().isChecked = Settings.InvertMouse != 1;
         }
         if (GameObject.Find("CheckboxCameraTilt") != null)
         {
-            GameObject.Find("CheckboxCameraTilt").GetComponent<UICheckbox>().isChecked = PlayerPrefs.GetInt("cameraTilt") == 1;
+            GameObject.Find("CheckboxCameraTilt").GetComponent<UICheckbox>().isChecked = Settings.CameraTilt == 1;
         }
     }
 

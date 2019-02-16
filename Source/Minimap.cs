@@ -3,6 +3,7 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
+using GGP;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -142,7 +143,7 @@ public class Minimap : MonoBehaviour
 
     private void CheckUserInput()
     {
-        if ((((int) FengGameManagerMKII.settings[0xe7]) == 1) && (RCSettings.globalDisableMinimap == 0))
+        if (Settings.Minimap == 1 && RCSettings.globalDisableMinimap == 0)
         {
             if (this.minimapIsCreated)
             {

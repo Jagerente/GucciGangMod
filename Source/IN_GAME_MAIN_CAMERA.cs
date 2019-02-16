@@ -3,6 +3,7 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
+using GGP;
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -93,21 +94,6 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         isTyping = false;
         isPausing = false;
         base.name = "MainCamera";
-        if (PlayerPrefs.HasKey("GameQuality"))
-        {
-            if (PlayerPrefs.GetFloat("GameQuality") >= 0.9f)
-            {
-                base.GetComponent<TiltShift>().enabled = true;
-            }
-            else
-            {
-                base.GetComponent<TiltShift>().enabled = false;
-            }
-        }
-        else
-        {
-            base.GetComponent<TiltShift>().enabled = true;
-        }
         this.CreateMinimap();
     }
 
@@ -211,7 +197,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 Minimap.instance.myCam.enabled = false;
             }
             minimap.CreateMinimap(Minimap.instance.myCam, 0x200, 0.3f, info.minimapPreset);
-            if ((((int) FengGameManagerMKII.settings[0xe7]) == 0) || (RCSettings.globalDisableMinimap == 1))
+            if ((Settings.Minimap == 0) || (RCSettings.globalDisableMinimap == 1))
             {
                 minimap.SetEnabled(false);
             }
@@ -592,14 +578,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localScale = new Vector3(Screen.width * 0.4f, Screen.height * 0.4f, 1f);
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localPosition = new Vector3(-Screen.width * 0.225f, Screen.height * 0.225f, 0f);
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.rotation = Quaternion.Euler(0f, 0f, 10f);
-            if (PlayerPrefs.HasKey("showSSInGame") && (PlayerPrefs.GetInt("showSSInGame") == 1))
-            {
-                GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = true;
-            }
-            else
-            {
-                GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = false;
-            }
+            GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = Settings.SnapshotsInGame == 1 ? true : false;
         }
     }
 
@@ -648,23 +627,9 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     {
         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addCamera(this);
         isPausing = false;
-        sensitivityMulti = PlayerPrefs.GetFloat("MouseSensitivity");
-        invertY = PlayerPrefs.GetInt("invertMouseY");
         this.inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
         this.setDayLight(dayLight);
         this.locker = GameObject.Find("locker");
-        if (PlayerPrefs.HasKey("cameraTilt"))
-        {
-            cameraTilt = PlayerPrefs.GetInt("cameraTilt");
-        }
-        else
-        {
-            cameraTilt = 1;
-        }
-        if (PlayerPrefs.HasKey("cameraDistance"))
-        {
-            cameraDistance = PlayerPrefs.GetFloat("cameraDistance") + 0.3f;
-        }
         this.createSnapShotRT2();
     }
 
@@ -692,7 +657,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public void startSnapShot2(Vector3 p, int dmg, GameObject target, float startTime)
     {
         int num;
-        if (int.TryParse((string) FengGameManagerMKII.settings[0x5f], out num))
+        if (int.TryParse(Settings.SnapshotsMinDamage, out num))
         {
             if (dmg >= num)
             {

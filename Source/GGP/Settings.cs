@@ -10,6 +10,12 @@ namespace GGP
 
         public static bool Forest = false;
         public static bool City = false;
+        public static bool Tutorial = false;
+        public static bool Outside = false;
+        public static bool CaveFight = false;
+        public static bool HouseFight = false;
+        public static bool Akina = false;
+        public static bool Colossal = false;
 
         public static float MouseSensitivity;
         public static float CameraDistance;
@@ -133,6 +139,8 @@ namespace GGP
         public static int BladeTrailsQuality;
         public static string BladeTrailsFadeTime;
         public static float BladeTrailsFrameRate;
+        //Titan Skins
+        public static int TitanSkins;
         //Location Skins
         public static int Particles;
         public static float ParticlesCount;
@@ -499,6 +507,8 @@ namespace GGP
             PlayerPrefs.SetFloat("HeadPunchVolume", HeadPunchVolume);
             PlayerPrefs.SetFloat("BoomVolume", BoomVolume);
             PlayerPrefs.SetFloat("StepVolume", StepVolume);
+            //Titan Skins
+            PlayerPrefs.SetInt("TitanSkins", TitanSkins);
             //Human Skins
             PlayerPrefs.SetInt("HumanSkins", HumanSkins);
             PlayerPrefs.SetInt("CustomGas", CustomGas);
@@ -606,7 +616,9 @@ namespace GGP
             HeadPunchVolume = PlayerPrefs.GetFloat("HeadPunchVolume", 1f);
             BoomVolume = PlayerPrefs.GetFloat("BoomVolume", 1f);
             StepVolume = PlayerPrefs.GetFloat("StepVolume", 1f);
-            //HumanSkins
+            //Titan Skins
+            TitanSkins = PlayerPrefs.GetInt("TitanSkins", 0);
+            //Human Skins
             HumanSkins = PlayerPrefs.GetInt("HumanSkins", 0);
             CustomGas = PlayerPrefs.GetInt("CustomGas", 0);
             BladeTrails = PlayerPrefs.GetInt("BladeTrails", 1);
@@ -691,6 +703,7 @@ namespace GGP
             {
                 Application.targetFrameRate = 50;
             }
+            QualitySettings.vSyncCount = VSync;
             QualitySettings.anisotropicFiltering = AnisotropicFiltreing == 0 ? AnisotropicFiltering.Disable : AnisotropicFiltreing == 1 ? AnisotropicFiltering.Enable : AnisotropicFiltering.ForceEnable;
             QualitySettings.antiAliasing = AntiAliasing == 0 ? 0 : AntiAliasing == 1 ? 2 : AntiAliasing == 2 ? 4 : 8;
             QualitySettings.blendWeights = BlendWeights == 0 ? UnityEngine.BlendWeights.OneBone : BlendWeights == 1 ? UnityEngine.BlendWeights.TwoBones : UnityEngine.BlendWeights.FourBones;
@@ -833,6 +846,14 @@ namespace GGP
             {
                 GameObject.Find(str).SetActive(false);
             }
+        }
+
+        public static bool OnMap()
+        {
+            if (Forest || City || CaveFight || HouseFight || Colossal || Akina || Tutorial || Outside)
+                return true;
+            else
+                return false;
         }
     }
 }

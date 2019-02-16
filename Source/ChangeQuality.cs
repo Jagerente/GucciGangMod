@@ -66,14 +66,6 @@ public class ChangeQuality : MonoBehaviour
         {
             QualitySettings.SetQualityLevel(5, true);
         }
-        if (val < 0.9f)
-        {
-            turnOffTiltShift();
-        }
-        else
-        {
-            turnOnTiltShift();
-        }
     }
 
     public static void turnOffTiltShift()

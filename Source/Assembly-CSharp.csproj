@@ -45,6 +45,9 @@
     <Reference Include="Boo.Lang">
       <HintPath>..\Aottg\aottg_Data\Managed\Boo.Lang.dll</HintPath>
     </Reference>
+    <Reference Include="DiscordRPC">
+      <HintPath>..\..\DiscordRPC.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\Aottg\aottg_Data\Managed\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -56,9 +59,11 @@
     </Reference>
     <Reference Include="System" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="GGP\CachingGM.cs" />
     <Compile Include="GGP\GUIHelpers.cs" />
     <Compile Include="GGP\BetterGUI.cs" />
     <Compile Include="GGP\Pages.cs" />
+    <Compile Include="GGP\RichPresence.cs" />
     <Compile Include="GGP\Settings.cs" />
     <Compile Include="GGP\SpectatorMode.cs" />
     <Compile Include="GGP\Style.cs" />

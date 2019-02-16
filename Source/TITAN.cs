@@ -4,6 +4,7 @@
 //Farewell Cowboy
 
 using ExitGames.Client.Photon;
+using GGP;
 using Photon;
 using System;
 using System.Collections;
@@ -2575,7 +2576,7 @@ public class TITAN : Photon.MonoBehaviour
     {
         this.skin = 0x56;
         this.eye = false;
-        if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine) && (((int) FengGameManagerMKII.settings[1]) == 1))
+        if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine) && (Settings.TitanSkins == 1))
         {
             int index = (int) UnityEngine.Random.Range((float) 86f, (float) 90f);
             int num2 = index - 60;
@@ -2610,7 +2611,7 @@ public class TITAN : Photon.MonoBehaviour
         }
         bool mipmap = true;
         bool iteratorVariable1 = false;
-        if (((int) FengGameManagerMKII.settings[0x3f]) == 1)
+        if (Settings.MipMapping == 1)
         {
             mipmap = false;
         }
@@ -2686,7 +2687,7 @@ public class TITAN : Photon.MonoBehaviour
     [RPC]
     public void loadskinRPC(string body, string eye)
     {
-        if (((int) FengGameManagerMKII.settings[1]) == 1)
+        if (Settings.TitanSkins == 1)
         {
             base.StartCoroutine(this.loadskinE(body, eye));
         }

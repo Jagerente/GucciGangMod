@@ -3,6 +3,7 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
+using GGP;
 using Photon;
 using System;
 using System.Collections;
@@ -51,7 +52,7 @@ public class TITAN_SETUP : Photon.MonoBehaviour
             iteratorVariable1.transform.localScale = this.hair_go_ref.transform.localScale;
             iteratorVariable1.renderer.material = CharacterMaterials.materials[this.hair.texture];
             bool mipmap = true;
-            if (((int) FengGameManagerMKII.settings[0x3f]) == 1)
+            if (Settings.MipMapping == 1)
             {
                 mipmap = false;
             }
@@ -143,7 +144,7 @@ public class TITAN_SETUP : Photon.MonoBehaviour
     {
         int num;
         object[] objArray2;
-        if ((((int) FengGameManagerMKII.settings[1]) == 1) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
+        if ((Settings.TitanSkins == 1) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
         {
             Color color;
             num = UnityEngine.Random.Range(0, 9);
@@ -253,7 +254,7 @@ public class TITAN_SETUP : Photon.MonoBehaviour
     [RPC]
     public void setHairRPC2(int hair, int eye, string hairlink)
     {
-        if (((int) FengGameManagerMKII.settings[1]) == 1)
+        if (Settings.TitanSkins == 1)
         {
             base.StartCoroutine(this.loadskinE(hair, eye, hairlink));
         }

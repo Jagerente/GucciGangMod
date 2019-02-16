@@ -4,6 +4,7 @@
 //Farewell Cowboy
 
 using ExitGames.Client.Photon;
+using GGP;
 using Photon;
 using System;
 using System.Collections;
@@ -989,7 +990,7 @@ public class HERO : Photon.MonoBehaviour
             Transform transform = base.transform.Find("audio_die");
             transform.parent = null;
             transform.GetComponent<AudioSource>().Play();
-            if (PlayerPrefs.HasKey("EnableSS") && (PlayerPrefs.GetInt("EnableSS") == 1))
+            if (Settings.Snapshots == 1)
             {
                 GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(base.transform.position, 0, null, 0.02f);
             }
@@ -2617,7 +2618,7 @@ public class HERO : Photon.MonoBehaviour
     {
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
         {
-            if (((int) FengGameManagerMKII.settings[0x5d]) == 1)
+            if (Settings.Wind == 0)
             {
                 foreach (Renderer renderer in base.GetComponentsInChildren<Renderer>())
                 {
@@ -2627,67 +2628,15 @@ public class HERO : Photon.MonoBehaviour
                     }
                 }
             }
-            if (((int) FengGameManagerMKII.settings[0]) == 1)
+            if (Settings.HumanSkins == 1)
             {
-                int index = 14;
-                int num3 = 4;
-                int num4 = 5;
-                int num5 = 6;
-                int num6 = 7;
-                int num7 = 8;
-                int num8 = 9;
-                int num9 = 10;
-                int num10 = 11;
-                int num11 = 12;
-                int num12 = 13;
-                int num13 = 3;
-                int num14 = 0x5e;
-                if (((int) FengGameManagerMKII.settings[0x85]) == 1)
+                if (Settings.HumanSkinCount <= 0) return;
+                string url = "";
+                for (int i = 0; i < 13; i++)
                 {
-                    num13 = 0x86;
-                    num3 = 0x87;
-                    num4 = 0x88;
-                    num5 = 0x89;
-                    num6 = 0x8a;
-                    num7 = 0x8b;
-                    num8 = 140;
-                    num9 = 0x8d;
-                    num10 = 0x8e;
-                    num11 = 0x8f;
-                    num12 = 0x90;
-                    index = 0x91;
-                    num14 = 0x92;
+                    url += Settings.HumanSkinFields[Settings.HumanCurrentSkin][i] + (i != 12 ? "," : "");
                 }
-                else if (((int) FengGameManagerMKII.settings[0x85]) == 2)
-                {
-                    num13 = 0x93;
-                    num3 = 0x94;
-                    num4 = 0x95;
-                    num5 = 150;
-                    num6 = 0x97;
-                    num7 = 0x98;
-                    num8 = 0x99;
-                    num9 = 0x9a;
-                    num10 = 0x9b;
-                    num11 = 0x9c;
-                    num12 = 0x9d;
-                    index = 0x9e;
-                    num14 = 0x9f;
-                }
-                string str = (string) FengGameManagerMKII.settings[index];
-                string str2 = (string) FengGameManagerMKII.settings[num3];
-                string str3 = (string) FengGameManagerMKII.settings[num4];
-                string str4 = (string) FengGameManagerMKII.settings[num5];
-                string str5 = (string) FengGameManagerMKII.settings[num6];
-                string str6 = (string) FengGameManagerMKII.settings[num7];
-                string str7 = (string) FengGameManagerMKII.settings[num8];
-                string str8 = (string) FengGameManagerMKII.settings[num9];
-                string str9 = (string) FengGameManagerMKII.settings[num10];
-                string str10 = (string) FengGameManagerMKII.settings[num11];
-                string str11 = (string) FengGameManagerMKII.settings[num12];
-                string str12 = (string) FengGameManagerMKII.settings[num13];
-                string str13 = (string) FengGameManagerMKII.settings[num14];
-                string url = str12 + "," + str2 + "," + str3 + "," + str4 + "," + str5 + "," + str6 + "," + str7 + "," + str8 + "," + str9 + "," + str10 + "," + str11 + "," + str + "," + str13;
+
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                 {
                     base.StartCoroutine(this.loadskinE(-1, url));
@@ -2713,13 +2662,13 @@ public class HERO : Photon.MonoBehaviour
         }
         bool mipmap = true;
         bool iteratorVariable1 = false;
-        if (((int) FengGameManagerMKII.settings[0x3f]) == 1)
+        if (Settings.MipMapping == 1)
         {
             mipmap = false;
         }
         string[] iteratorVariable2 = url.Split(new char[] { ',' });
         bool iteratorVariable3 = false;
-        if (((int) FengGameManagerMKII.settings[15]) == 0)
+        if (Settings.CustomGas == 0)
         {
             iteratorVariable3 = true;
         }
@@ -3287,7 +3236,7 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     public void loadskinRPC(int horse, string url)
     {
-        if (((int) FengGameManagerMKII.settings[0]) == 1)
+        if (Settings.HumanSkins == 1)
         {
             base.StartCoroutine(this.loadskinE(horse, url));
         }
@@ -4724,11 +4673,11 @@ public class HERO : Photon.MonoBehaviour
                 float magnitude = vector.magnitude;
                 GameObject obj11 = this.LabelDistance;
                 string str = (magnitude <= 1000f) ? ((int) magnitude).ToString() : "???";
-                if (((int) FengGameManagerMKII.settings[0xbd]) == 1)
+                if (Settings.Speedometer == 1)
                 {
                     str = str + "\n" + this.currentSpeed.ToString("F1") + " u/s";
                 }
-                else if (((int) FengGameManagerMKII.settings[0xbd]) == 2)
+                else if (Settings.Speedometer == 2)
                 {
                     str = str + "\n" + ((this.currentSpeed / 100f)).ToString("F1") + "K";
                 }
@@ -7034,7 +6983,7 @@ public class HERO : Photon.MonoBehaviour
                                         if (!this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
                                         {
                                             this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
-                                            if (((int) FengGameManagerMKII.settings[0x5c]) == 0)
+                                            if (Settings.BladeTrails == 1)
                                             {
                                                 this.leftbladetrail2.Activate();
                                                 this.rightbladetrail2.Activate();
@@ -7104,7 +7053,7 @@ public class HERO : Photon.MonoBehaviour
                                         {
                                             this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
                                             this.slash.Play();
-                                            if (((int) FengGameManagerMKII.settings[0x5c]) == 0)
+                                            if (Settings.BladeTrails == 1)
                                             {
                                                 this.leftbladetrail2.Activate();
                                                 this.rightbladetrail2.Activate();

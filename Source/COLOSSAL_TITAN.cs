@@ -3,6 +3,7 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
+using GGP;
 using Photon;
 using System;
 using System.Collections;
@@ -386,7 +387,7 @@ public class COLOSSAL_TITAN : Photon.MonoBehaviour
 
     public void loadskin()
     {
-        if (PhotonNetwork.isMasterClient && (((int) FengGameManagerMKII.settings[1]) == 1))
+        if (PhotonNetwork.isMasterClient && (GGP.Settings.TitanSkins == 1))
         {
             base.photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, new object[] { (string) FengGameManagerMKII.settings[0x43] });
         }
@@ -400,7 +401,7 @@ public class COLOSSAL_TITAN : Photon.MonoBehaviour
         }
         bool mipmap = true;
         bool iteratorVariable1 = false;
-        if (((int) FengGameManagerMKII.settings[0x3f]) == 1)
+        if (Settings.MipMapping == 1)
         {
             mipmap = false;
         }
@@ -441,7 +442,7 @@ public class COLOSSAL_TITAN : Photon.MonoBehaviour
     [RPC]
     public void loadskinRPC(string url)
     {
-        if ((((int) FengGameManagerMKII.settings[1]) == 1) && ((url.EndsWith(".jpg") || url.EndsWith(".png")) || url.EndsWith(".jpeg")))
+        if ((GGP.Settings.TitanSkins == 1) && ((url.EndsWith(".jpg") || url.EndsWith(".png")) || url.EndsWith(".jpeg")))
         {
             base.StartCoroutine(this.loadskinE(url));
         }

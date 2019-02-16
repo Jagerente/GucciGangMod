@@ -3,6 +3,7 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
+using GGP;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -101,7 +102,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                             if (num2 > (item.transform.root.GetComponent<TITAN>().myLevel * 100f))
                             {
                                 item.transform.root.GetComponent<TITAN>().die();
-                                if (PlayerPrefs.HasKey("EnableSS") && (PlayerPrefs.GetInt("EnableSS") == 1))
+                                if (Settings.Snapshots == 1)
                                 {
                                     GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num2, item.transform.root.gameObject, 0.02f);
                                 }
@@ -120,7 +121,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                                 num3 = Mathf.Max(10, num3);
                                 if (num3 > (item.transform.root.GetComponent<TITAN>().myLevel * 100f))
                                 {
-                                    if (PlayerPrefs.HasKey("EnableSS") && (PlayerPrefs.GetInt("EnableSS") == 1))
+                                    if (Settings.Snapshots == 1)
                                     {
                                         GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num3, item.transform.root.gameObject, 0.02f);
                                         item.transform.root.GetComponent<TITAN>().asClientLookTarget = false;
@@ -159,7 +160,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                             num6 = Mathf.Max(10, num6);
                             if (num6 > (item.transform.root.GetComponent<TITAN>().myLevel * 100f))
                             {
-                                if (PlayerPrefs.HasKey("EnableSS") && (PlayerPrefs.GetInt("EnableSS") == 1))
+                                if (Settings.Snapshots == 1)
                                 {
                                     GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num6, item.transform.root.gameObject, 0.02f);
                                 }
@@ -174,7 +175,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                             Vector3 vector8 = this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity - item.transform.root.rigidbody.velocity;
                             int num7 = (int) ((vector8.magnitude * 10f) * this.scoreMulti);
                             num7 = Mathf.Max(10, num7);
-                            if (PlayerPrefs.HasKey("EnableSS") && (PlayerPrefs.GetInt("EnableSS") == 1))
+                            if (Settings.Snapshots == 1)
                             {
                                 GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num7, null, 0.02f);
                             }
@@ -186,7 +187,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                         Vector3 vector9 = this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity - item.transform.root.rigidbody.velocity;
                         int num8 = (int) ((vector9.magnitude * 10f) * this.scoreMulti);
                         num8 = Mathf.Max(10, num8);
-                        if (PlayerPrefs.HasKey("EnableSS") && (PlayerPrefs.GetInt("EnableSS") == 1))
+                        if (Settings.Snapshots == 1)
                         {
                             GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num8, null, 0.02f);
                         }
