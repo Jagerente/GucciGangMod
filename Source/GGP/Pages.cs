@@ -9,7 +9,7 @@ namespace GGP
 {
     class Pages : MonoBehaviour
     {
-        #region Rects
+        #region Variables
         static readonly float leftpos = ((Screen.width) / 2f) - 350f;
         static readonly float toppos = ((Screen.height) / 2f) - 250f;
         static readonly float w = 730f;
@@ -20,6 +20,16 @@ namespace GGP
         static readonly Rect right_top = new Rect(leftpos + 380f, toppos + 75f, 355f, 500 - 95f);
         static readonly Rect left = new Rect(leftpos + 20f, toppos + 35f, 355f, 500f - 55f);
         static readonly Rect right = new Rect(leftpos + 380f, toppos + 35f, 355f, 500f - 55f);
+
+        static string size = "72";
+        static string color1 = "D6B1DE";
+        static string color2 = "FFFFFF";
+        static string SingleButton = "";
+        static Rect Single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
+        static string MultiplayerButton = "";
+        static Rect Multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
+        static string QuitButton = "";
+        static Rect Quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
         #endregion
 
         #region Scrolls
@@ -67,18 +77,6 @@ namespace GGP
         #region Pages
         public void Main_Menu()
         {
-            #region Variables
-            string SingleButton = "";
-            Rect Single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
-            string MultiplayerButton = "";
-            Rect Multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
-            string QuitButton = "";
-            Rect Quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
-            string size = "72";
-            string color1 = "D6B1DE";
-            string color2 = "FFFFFF";
-            #endregion
-
             #region Single
             if (GUI.Button(Single, SingleButton, "label"))
             {
@@ -349,7 +347,7 @@ namespace GGP
             BetterGUI.SubHeader("Gas Burst");
             BetterGUI.Grid("Rebind + Double Tap", ref Settings.DoubleBurstRebind, SwitcherStr);
             BetterGUI.TextField("Force", ref Settings.DashForce);
-            BetterGUI.TextField("Animation Delay", ref Settings.DashForce);
+            BetterGUI.TextField("Animation Delay", ref Settings.DashDelay);
             BetterGUI.SubHeader("Resources");
             BetterGUI.Grid("Infinite Blades", ref Settings.InfiniteBlades, SwitcherStr);
             BetterGUI.Grid("Infinite Bullets", ref Settings.InfiniteBullets, SwitcherStr);
