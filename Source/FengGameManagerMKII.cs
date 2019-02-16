@@ -6573,8 +6573,8 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                     Rect full = new Rect(num7, num8 - 25f, h, w);
                     GUI.Box(new Rect(num7, num8 - 25f, 730f, 550f), string.Empty);
                     Pages.TopNavigationPanelInt = GUI.SelectionGrid(new Rect(num7 + 5f, num8 - 20f, 720f, 50f), Pages.TopNavigationPanelInt, Pages.TopNavigationPanelStr, 5);
-                    Pages.page = Pages.TopNavigationPanelInt;
-                    switch (Pages.page)
+                    var page = Pages.TopNavigationPanelInt;
+                    switch (page)
                     {
                         case 0:
                             Pages.Game_Settings();
@@ -11012,7 +11012,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         this.name = string.Empty;
         if (nameField == null)
         {
-            nameField = "GUEST" + UnityEngine.Random.Range(0, 0x186a0);
+            nameField = string.Empty;
         }
         if (privateServerField == null)
         {

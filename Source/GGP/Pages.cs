@@ -9,12 +9,7 @@ namespace GGP
 {
     class Pages : MonoBehaviour
     {
-        static int levelskinpage = 0;
-
-        private static bool remember = false;
-        private static int rememberint;
-        private static bool firstlaunch = true;
-
+        #region Rects
         static readonly float leftpos = ((Screen.width) / 2f) - 350f;
         static readonly float toppos = ((Screen.height) / 2f) - 250f;
         static readonly float w = 730f;
@@ -25,9 +20,23 @@ namespace GGP
         static readonly Rect right_top = new Rect(leftpos + 380f, toppos + 75f, 355f, 500 - 95f);
         static readonly Rect left = new Rect(leftpos + 20f, toppos + 35f, 355f, 500f - 55f);
         static readonly Rect right = new Rect(leftpos + 380f, toppos + 35f, 355f, 500f - 55f);
+        #endregion
+
+        #region Scrolls
+        public static Vector2 VideoScroll = Vector2.zero;
+        public static Vector2 AudioScroll = Vector2.zero;
+        public static Vector2 LevelSkinForestScrollLeft = Vector2.zero;
+        public static Vector2 LevelSkinForestScrollRight = Vector2.zero;
+        public static Vector2 LevelSkinCityScrollLeft = Vector2.zero;
+        public static Vector2 LevelSkinCityScrollRight = Vector2.zero;
+        public static Vector2 GameSettingsScrollLeft = Vector2.zero;
+        public static Vector2 GameSettingsScrollRight = Vector2.zero;
+        #endregion
+
+        #region Grids
         public static int TopNavigationPanelInt = 0;
         public static string[] TopNavigationPanelStr = new[]
-        {
+{
         BetterGUI.ButtonStyle("Game Settings"),//0
         BetterGUI.ButtonStyle("Server Settings"),//1
         BetterGUI.ButtonStyle("Video & Audio"),//2
@@ -39,17 +48,6 @@ namespace GGP
         BetterGUI.ButtonStyle("Custom Map"),//8
         BetterGUI.ButtonStyle("Custom Logic")//9
         };
-        public static int page = 0;
-
-        public static Vector2 VideoScroll = Vector2.zero;
-        public static Vector2 AudioScroll = Vector2.zero;
-        public static Vector2 LevelSkinForestScrollLeft = Vector2.zero;
-        public static Vector2 LevelSkinForestScrollRight = Vector2.zero;
-        public static Vector2 LevelSkinCityScrollLeft = Vector2.zero;
-        public static Vector2 LevelSkinCityScrollRight = Vector2.zero;
-        public static Vector2 GameSettingsScrollLeft = Vector2.zero;
-        public static Vector2 GameSettingsScrollRight = Vector2.zero;
-
         private static int TopLeftNavigationInt = 1;
         private static string[] TopLeftNavigationStr = new string[] { BetterGUI.ButtonStyle("Account"), BetterGUI.ButtonStyle("Name"), BetterGUI.ButtonStyle("Servers") };
         static readonly string[] SwitcherStr = { BetterGUI.ButtonStyle("Off"), BetterGUI.ButtonStyle("On") };
@@ -64,19 +62,24 @@ namespace GGP
         static readonly string[] CannonCooldownStr = new[] { BetterGUI.ButtonStyle("3.5"), BetterGUI.ButtonStyle("1"), BetterGUI.ButtonStyle("0.1") };
         static readonly string[] CannonRotateStr = new[] { BetterGUI.ButtonStyle("25"), BetterGUI.ButtonStyle("50"), BetterGUI.ButtonStyle("75"), BetterGUI.ButtonStyle("100") };
         static readonly string[] CannonSpeedStr = new[] { BetterGUI.ButtonStyle("50"), BetterGUI.ButtonStyle("75"), BetterGUI.ButtonStyle("100"), BetterGUI.ButtonStyle("200"), BetterGUI.ButtonStyle("500") };
+        #endregion
 
-        static string SingleButton = "";
-        static Rect Single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
-        static string MultiplayerButton = "";
-        static Rect Multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
-        static string QuitButton = "";
-        static Rect Quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
-        static string size = "72";
-        static string color1 = "D6B1DE";
-        static string color2 = "FFFFFF";
-
+        #region Pages
         public void Main_Menu()
         {
+            #region Variables
+            string SingleButton = "";
+            Rect Single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
+            string MultiplayerButton = "";
+            Rect Multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
+            string QuitButton = "";
+            Rect Quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
+            string size = "72";
+            string color1 = "D6B1DE";
+            string color2 = "FFFFFF";
+            #endregion
+
+            #region Single
             if (GUI.Button(Single, SingleButton, "label"))
             {
                 NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelSingleSet, true);
@@ -90,7 +93,9 @@ namespace GGP
             {
                 SingleButton = "<color=#" + color2 + "><size=" + size + "><b><i>S I N G L E</i></b></size></color>";
             }
+            #endregion
 
+            #region Multiplayer
             if (GUI.Button(Multiplayer, MultiplayerButton, "label"))
             {
                 NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, true);
@@ -104,6 +109,9 @@ namespace GGP
             {
                 MultiplayerButton = "<color=#" + color2 + "><size=" + size + "><b><i>M U L T I P L A Y E R</i></b></size></color>";
             }
+            #endregion
+
+            #region Quit
             if (GUI.Button(Quit, QuitButton, "label"))
             {
                 Application.Quit();
@@ -116,40 +124,21 @@ namespace GGP
             {
                 QuitButton = "<color=#" + color2 + "><size=" + size + "><b><i>Q U I T</i></b></size></color>";
             }
+            #endregion
 
-            //Top Left Navigation Panel
+            #region Top Left Navigation Panel
             GUILayout.BeginArea(GUIHelpers.AlignRect(460f, 400f, GUIHelpers.Alignment.TOPLEFT, 10, 10));
             GUILayout.BeginHorizontal();
 
-            TopLeftNavigationInt = GUILayout.SelectionGrid(TopLeftNavigationInt, TopLeftNavigationStr, 3, GUILayout.Width(460), GUILayout.Height(50));
-            FengGameManagerMKII.settings[187] = TopLeftNavigationInt == 0 ? 0 : ((TopLeftNavigationInt == 1) ? 1 : 2);
+            TopLeftNavigationInt = GUILayout.SelectionGrid(TopLeftNavigationInt, TopLeftNavigationStr, 3, GUILayout.Width(460), GUILayout.Height(50));;
             GUILayout.EndHorizontal();
 
-            switch (FengGameManagerMKII.settings[187])
+            switch (TopLeftNavigationInt)
             {
                 case 0:
-                    {
-                        //In Account
-                        if (FengGameManagerMKII.loginstate == 3)
-                        {
-                            GUILayout.Label("<size=16>Name: " + LoginFengKAI.player.name + "</size>", GUILayout.Width(300));
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("<size=16>Guild:</size>", GUILayout.Width(45));
-                            LoginFengKAI.player.guildname = GUILayout.TextField(LoginFengKAI.player.guildname, GUILayout.Width(175));
-                            GUILayout.EndHorizontal();
-                            GUILayout.BeginHorizontal();
-                            if (GUILayout.Button("<b><size=18>Set Guild</size></b>", GUILayout.Width(125)))
-                            {
-                                base.StartCoroutine(FengGameManagerMKII.instance.setGuildFeng());
-                            }
-                            if (GUILayout.Button("<b><size=18>Logout</size></b>", GUILayout.Width(125)))
-                            {
-                                FengGameManagerMKII.loginstate = 0;
-                            }
-                            GUILayout.EndHorizontal();
-                        }
-                        //Account
-                        else
+                    #region Account
+                    //Loggining
+                    if (FengGameManagerMKII.loginstate != 3)
                         {
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("<size=16>Username:</size>", GUILayout.Width(115));
@@ -161,20 +150,12 @@ namespace GGP
                             GUILayout.EndHorizontal();
                             GUILayout.BeginHorizontal();
                             GUILayout.Label("", GUILayout.Width(115));
-                            remember = GUILayout.Toggle(remember, "<size=16> Remember</size>");
-                            if (remember)
-                            {
-                                rememberint = 1;
-                            }
-                            else
-                            {
-                                rememberint = 0;
-                            }
-                            PlayerPrefs.SetInt("autologin", rememberint);
+                            Settings.Remember = GUILayout.Toggle(Settings.Remember, "<size=16> Remember</size>");
                             GUILayout.EndHorizontal();
                             if (GUILayout.Button("<size=18><b>Login</b></size>", GUILayout.Width(225)) && (FengGameManagerMKII.loginstate != 1))
                             {
-                                if (!remember)
+                                PlayerPrefs.SetInt("Remember", Settings.Remember ? 1 : 0);
+                                if (!Settings.Remember)
                                 {
                                     base.StartCoroutine(FengGameManagerMKII.instance.loginFeng());
                                     FengGameManagerMKII.loginstate = 1;
@@ -196,11 +177,30 @@ namespace GGP
                                 GUILayout.Label("<size=18><i>Login failed.</i></size>", GUILayout.Width(115));
                             }
                         }
+                        //In Account
+                        else
+                        {
+                            GUILayout.Label("<size=16>Name: " + LoginFengKAI.player.name + "</size>", GUILayout.Width(300));
+                            GUILayout.BeginHorizontal();
+                            GUILayout.Label("<size=16>Guild:</size>", GUILayout.Width(45));
+                            LoginFengKAI.player.guildname = GUILayout.TextField(LoginFengKAI.player.guildname, GUILayout.Width(175));
+                            GUILayout.EndHorizontal();
+                            GUILayout.BeginHorizontal();
+                            if (GUILayout.Button("<b><size=18>Set Guild</size></b>", GUILayout.Width(125)))
+                            {
+                                base.StartCoroutine(FengGameManagerMKII.instance.setGuildFeng());
+                            }
+                            if (GUILayout.Button("<b><size=18>Logout</size></b>", GUILayout.Width(125)))
+                            {
+                                FengGameManagerMKII.loginstate = 0;
+                            }
+                            GUILayout.EndHorizontal();
+                        }
                         break;
-                    }
+                #endregion
                 case 1:
-                    {
-                        if (FengGameManagerMKII.loginstate == 3)
+                    #region Custom Name
+                    if (FengGameManagerMKII.loginstate == 3)
                         {
                             GUILayout.Label("<size=30><b><i>You are already logged in!</i></b></size>", GUILayout.Width(400));
                         }
@@ -229,10 +229,10 @@ namespace GGP
                             GUILayout.EndHorizontal();
                         }
                         break;
-                    }
+                #endregion
                 case 2:
-                    {
-                        if (UIMainReferences.version == UIMainReferences.fengVersion)
+                    #region Server Type
+                    if (UIMainReferences.version == UIMainReferences.fengVersion)
                         {
                             GUILayout.Label("<size=24><b><i>Connected to Public server.</i></b></size>", GUILayout.Width(400));
                         }
@@ -277,11 +277,13 @@ namespace GGP
                         }
                         GUILayout.EndHorizontal();
                         break;
-                    }
+                    #endregion
             }
             GUILayout.EndArea();
+            #endregion
 
-            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 15f), "Level Editor"))//15,128,25
+            #region Top Right Navigation Panel
+            if (GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 15f), "Level Editor"))//15,128,25
             {
                 FengGameManagerMKII.settings[0x40] = 0x65;
                 Application.LoadLevel(2);
@@ -294,10 +296,11 @@ namespace GGP
             {
                 Application.LoadLevel("SnapShot");
             }
+            #endregion
         }
-
         public static void Game_Settings()
         {
+            #region Left
             GUILayout.BeginArea(left);
             GUILayout.BeginVertical();
             BetterGUI.Header("General");
@@ -332,7 +335,9 @@ namespace GGP
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
             GUILayout.EndArea();
+            #endregion
 
+            #region Right
             GUILayout.BeginArea(right);
             GUILayout.BeginVertical();
             BetterGUI.Header("Character");
@@ -356,6 +361,7 @@ namespace GGP
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
             GUILayout.EndArea();
+            #endregion
         }
         public static void Server_Settings()
         {
@@ -816,6 +822,7 @@ namespace GGP
         }
         public static void Video_and_Audio()
         {
+            #region Left
             GUILayout.BeginArea(left);
             GUILayout.BeginVertical();
 
@@ -880,7 +887,9 @@ namespace GGP
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
             GUILayout.EndArea();
+            #endregion
 
+            #region Right
             GUILayout.BeginArea(right);
             GUILayout.BeginVertical();
             BetterGUI.Header("Audio");
@@ -907,6 +916,7 @@ namespace GGP
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
             GUILayout.EndArea();
+            #endregion
         }
         public static void Rebinds()
         {
@@ -1785,6 +1795,7 @@ namespace GGP
         }
         public static void Level_Skins()
         {
+            var levelskinpage = 0;
             if (levelskinpage == 0)
             {
                 GUILayout.BeginArea(left);
@@ -2073,5 +2084,6 @@ namespace GGP
             }
 
         }
+        #endregion
     }
 }

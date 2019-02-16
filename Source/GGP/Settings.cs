@@ -6,8 +6,10 @@ namespace GGP
 {
     class Settings
     {
+        public static bool Remember = false;
         public static bool SpecMode = false;
 
+        #region Location Names
         public static bool Forest = false;
         public static bool City = false;
         public static bool Tutorial = false;
@@ -16,7 +18,8 @@ namespace GGP
         public static bool HouseFight = false;
         public static bool Akina = false;
         public static bool Colossal = false;
-
+        #endregion
+        #region Game Settings
         public static float MouseSensitivity;
         public static float CameraDistance;
         public static int CameraTilt;
@@ -53,7 +56,8 @@ namespace GGP
         public static string CannonSpeed;
         public static string CannonRotate;
         public static string CannonCooldown;
-        //Video
+        #endregion
+        #region Video Settings
         public static float OverallQuality;
         public static int TextureQuality;
         public static int VSync;
@@ -86,7 +90,8 @@ namespace GGP
         public static float FogColorG;
         public static float FogColorB;
         public static int Wind;
-        //Audio
+        #endregion
+        #region Audio Settings
         public static float GlobalVolume;
         public static float AHSSVolume;
         public static float AirSlashVolume;
@@ -100,7 +105,8 @@ namespace GGP
         public static float HeadPunchVolume;
         public static float BoomVolume;
         public static float StepVolume;
-        //Bombs
+        #endregion
+        #region Bombs
         public static float Bomb_ColorR;
         public static float Bomb_ColorG;
         public static float Bomb_ColorB;
@@ -111,7 +117,8 @@ namespace GGP
         public static float Bomb_Speed;
         public static float Bomb_Cooldown;
         public static float Bomb_Points;
-        //Human Skins
+        #endregion
+        #region Human Skins
         public static int HumanSkins;
         public static readonly string[] HumanSkinLabels = new[]
         {
@@ -139,9 +146,11 @@ namespace GGP
         public static int BladeTrailsQuality;
         public static string BladeTrailsFadeTime;
         public static float BladeTrailsFrameRate;
-        //Titan Skins
+        #endregion
+        #region Titan Skins
         public static int TitanSkins;
-        //Location Skins
+        #endregion
+        #region Location Skins
         public static int Particles;
         public static float ParticlesCount;
         public static float ParticlesHeight;
@@ -228,8 +237,8 @@ namespace GGP
         public static List<float[]> CityFogColor;
         public static List<float> CityFogStartDistance;
         public static List<float> CityFogEndDistance;
+        #endregion
 
-        //HUMANSKINS
         public static void LoadHumanSkins()
         {
             HumanSkinFields = new List<string[]>();
@@ -265,7 +274,7 @@ namespace GGP
             }
             PlayerPrefs.SetString("SkinSlotsNames", str2);
         }
-        //Forest
+
         public static void LoadForestSkins()
         {
             ForestSkinCount = PlayerPrefs.GetInt("ForestSkinCount", 3);
@@ -359,7 +368,7 @@ namespace GGP
             }
             PlayerPrefs.SetString("ForestSetTitles", title);
         }
-        //City
+
         public static void LoadCitySkins()
         {
             CitySkinCount = PlayerPrefs.GetInt("CitySkinCount", 3);
@@ -430,9 +439,10 @@ namespace GGP
             }
             PlayerPrefs.SetString("CitySetTitles", title);
         }
+
         public static void Save()
         {
-            //Game Settings
+            #region Game Settings
             PlayerPrefs.SetInt("InvertMouse", InvertMouse);
             PlayerPrefs.SetFloat("MouseSensitivity", MouseSensitivity);
             PlayerPrefs.SetFloat("CameraDistance", CameraDistance);
@@ -460,7 +470,8 @@ namespace GGP
             PlayerPrefs.SetString("CannonSpeed", CannonSpeed);
             PlayerPrefs.SetString("CannonRotate", CannonRotate);
             PlayerPrefs.SetString("CannonCooldown", CannonCooldown);
-            //Video
+            #endregion
+            #region Video Settings
             PlayerPrefs.SetFloat("OverallQuality", OverallQuality);
             PlayerPrefs.SetInt("TextureQuality", TextureQuality);
             PlayerPrefs.SetInt("VSync", VSync);
@@ -493,7 +504,8 @@ namespace GGP
             PlayerPrefs.SetFloat("FogColorR", FogColorR);
             PlayerPrefs.SetFloat("FogColorG", FogColorG);
             PlayerPrefs.SetFloat("FogColorB", FogColorB);
-            //Audio
+            #endregion
+            #region Audio Settings
             PlayerPrefs.SetFloat("GlobalVolume", GlobalVolume);
             PlayerPrefs.SetFloat("AHSSVolume", AHSSVolume);
             PlayerPrefs.SetFloat("AirSlashVolume", AirSlashVolume);
@@ -507,16 +519,19 @@ namespace GGP
             PlayerPrefs.SetFloat("HeadPunchVolume", HeadPunchVolume);
             PlayerPrefs.SetFloat("BoomVolume", BoomVolume);
             PlayerPrefs.SetFloat("StepVolume", StepVolume);
-            //Titan Skins
+            #endregion
+            #region Titan Skins
             PlayerPrefs.SetInt("TitanSkins", TitanSkins);
-            //Human Skins
+            #endregion
+            #region Human Skins
             PlayerPrefs.SetInt("HumanSkins", HumanSkins);
             PlayerPrefs.SetInt("CustomGas", CustomGas);
             PlayerPrefs.SetInt("BladeTrails", BladeTrails);
             PlayerPrefs.SetInt("BladeTrailsQuality", BladeTrailsQuality);
             PlayerPrefs.SetString("BladeTrailsFadeTime", BladeTrailsFadeTime);
             PlayerPrefs.SetFloat("BladeTrailsFrameRate", BladeTrailsFrameRate);
-            //Level Skins
+            #endregion
+            #region Location Skins
             PlayerPrefs.SetInt("Particles", Particles);
             PlayerPrefs.SetFloat("ParticlesCount", ParticlesCount);
             PlayerPrefs.SetFloat("ParticlesHeight", ParticlesHeight);
@@ -529,7 +544,8 @@ namespace GGP
             PlayerPrefs.SetFloat("ParticlesGravity", ParticlesGravity);
             PlayerPrefs.SetInt("LevelSkins", LocationSkins);
             PlayerPrefs.SetInt("ForestRandomizedPairs", ForestRandomizedPairs);
-            //Bombs
+            #endregion
+            #region Bombs
             PlayerPrefs.SetFloat("Bomb_ColorR", Bomb_ColorR);
             PlayerPrefs.SetFloat("Bomb_ColorG", Bomb_ColorG);
             PlayerPrefs.SetFloat("Bomb_ColorB", Bomb_ColorB);
@@ -539,11 +555,12 @@ namespace GGP
             PlayerPrefs.SetFloat("Bomb_Range", Bomb_Range);
             PlayerPrefs.SetFloat("Bomb_Speed", Bomb_Speed);
             PlayerPrefs.SetFloat("Bomb_Cooldown", Bomb_Cooldown);
+            #endregion
         }
         public static void LoadConfig()
         {
-            UI = PlayerPrefs.GetInt("UI", 1);
-            //Game Settings
+            Remember = Convert.ToBoolean(PlayerPrefs.GetInt("Remember", 0));
+            #region Game Settings
             InvertMouse = PlayerPrefs.GetInt("InvertMouse", 0);
             MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 0.5f);
             CameraDistance = PlayerPrefs.GetFloat("CameraDistance", 1f);
@@ -569,7 +586,9 @@ namespace GGP
             CannonSpeed = PlayerPrefs.GetString("CannonSpeed", "50");
             CannonRotate = PlayerPrefs.GetString("CannonRotate", "25");
             CannonCooldown = PlayerPrefs.GetString("CannonCooldown", "3.5");
-            //Video
+            UI = PlayerPrefs.GetInt("UI", 1);
+            #endregion
+            #region Video Settings
             OverallQuality = PlayerPrefs.GetFloat("OverallQuality", 0f);
             TextureQuality = PlayerPrefs.GetInt("TextureQuality", 0);
             VSync = PlayerPrefs.GetInt("VSync", 0);
@@ -602,7 +621,8 @@ namespace GGP
             FogColorR = PlayerPrefs.GetFloat("FogColorR", 0.066f);
             FogColorG = PlayerPrefs.GetFloat("FogColorG", 0.066f);
             FogColorB = PlayerPrefs.GetFloat("FogColorB", 0.066f);
-            //Audio
+            #endregion
+            #region Audio Settings
             GlobalVolume = PlayerPrefs.GetFloat("GlobalVolume", 1f);
             AHSSVolume = PlayerPrefs.GetFloat("AHSSVolume", 1f);
             AirSlashVolume = PlayerPrefs.GetFloat("AirSlashVolume", 1f);
@@ -616,16 +636,19 @@ namespace GGP
             HeadPunchVolume = PlayerPrefs.GetFloat("HeadPunchVolume", 1f);
             BoomVolume = PlayerPrefs.GetFloat("BoomVolume", 1f);
             StepVolume = PlayerPrefs.GetFloat("StepVolume", 1f);
-            //Titan Skins
+            #endregion
+            #region Titan Skins
             TitanSkins = PlayerPrefs.GetInt("TitanSkins", 0);
-            //Human Skins
+            #endregion
+            #region Human Skins
             HumanSkins = PlayerPrefs.GetInt("HumanSkins", 0);
             CustomGas = PlayerPrefs.GetInt("CustomGas", 0);
             BladeTrails = PlayerPrefs.GetInt("BladeTrails", 1);
             BladeTrailsQuality = PlayerPrefs.GetInt("BladeTrailsQuality", 0);
             BladeTrailsFadeTime = PlayerPrefs.GetString("BladeTrailsFadeTime", "0.2");
             BladeTrailsFrameRate = PlayerPrefs.GetFloat("BladeTrailsFrameRate", 60f);
-            //Level Skins
+            #endregion
+            #region Location Skins
             Particles = PlayerPrefs.GetInt("Particles", 0);
             ParticlesCount = PlayerPrefs.GetFloat("ParticlesCount", 3000);
             ParticlesHeight = PlayerPrefs.GetFloat("ParticlesHeight", 100);
@@ -638,7 +661,8 @@ namespace GGP
             ParticlesGravity = PlayerPrefs.GetFloat("ParticlesGravity", 0.001f);
             LocationSkins = PlayerPrefs.GetInt("LevelSkins", 0);
             ForestRandomizedPairs = PlayerPrefs.GetInt("ForestRandomizedPairs", 0);
-            //Bombs
+            #endregion
+            #region Bombs
             Bomb_ColorR = PlayerPrefs.GetFloat("Bomb_ColorR", 1f);
             Bomb_ColorG = PlayerPrefs.GetFloat("Bomb_ColorG", 1f);
             Bomb_ColorB = PlayerPrefs.GetFloat("Bomb_ColorB", 1f);
@@ -648,7 +672,9 @@ namespace GGP
             Bomb_Range = PlayerPrefs.GetFloat("Bomb_Range", 5f);
             Bomb_Speed = PlayerPrefs.GetFloat("Bomb_Speed", 5f);
             Bomb_Cooldown = PlayerPrefs.GetFloat("Bomb_Cooldown", 5f);
+            #endregion
         }
+
         public static void InitSettings()
         {
             if (UI == 0)
@@ -716,7 +742,6 @@ namespace GGP
             Camera.main.GetComponent<TiltShift>().enabled = Blur != 0;
             InRoomChat.IsVisible = Chat == 1 ? true : false;
         }
-
         public static void InitLocationSkins()
         {
             if (LocationSkins == 0)
