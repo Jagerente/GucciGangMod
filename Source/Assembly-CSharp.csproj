@@ -45,8 +45,9 @@
     <Reference Include="Boo.Lang">
       <HintPath>..\Aottg\aottg_Data\Managed\Boo.Lang.dll</HintPath>
     </Reference>
-    <Reference Include="DiscordRPC">
-      <HintPath>..\..\DiscordRPC.dll</HintPath>
+    <Reference Include="DiscordRPC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\DiscordRPC.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\Aottg\aottg_Data\Managed\ICSharpCode.SharpZipLib.dll</HintPath>
