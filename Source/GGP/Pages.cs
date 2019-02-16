@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -2071,18 +2072,6 @@ namespace GGP
                 FengGameManagerMKII.currentScriptLogic = string.Empty;
             }
 
-        }
-        public static void Save()
-        {
-            GUILayout.BeginArea(full);
-            GUILayout.Label("Settings saved to playerprefs!");
-            GUILayout.EndArea();
-        }
-        public static void Load()
-        {
-            GUILayout.BeginArea(full);
-            GUILayout.Label("Settings reloaded from playerprefs!");
-            GUILayout.EndArea();
         }
     }
 }
