@@ -22,11 +22,6 @@ public class InRoomChat : Photon.MonoBehaviour
     public static List<string> messages = new List<string>();
     private Vector2 scrollPos = Vector2.zero;
 
-    public void addLINE(string newLine)
-    {
-        messages.Add(newLine);
-    }
-
     ///<param name="type">
     ///0 - MC
     ///1 - Exist
@@ -58,6 +53,12 @@ public class InRoomChat : Photon.MonoBehaviour
     private static string ChatFormatting(string text, string color, int bold, int italic, string size = null)
     {
         return "<color=#" + color + ">" + (size != "" ? "<size=" + size + ">" : "") + (bold == 1 ? "<b>" : "") + (italic == 1 ? "<i>" : "") + text + (italic == 1 ? "</i>" : "") + (bold == 1 ? "</b>" : "") + (size != "" ? "</size>" : "") + "</color>";
+    }
+
+    #region Messages
+    public void addLINE(string newLine)
+    {
+        messages.Add(newLine);
     }
 
     public static void Message(string str)
@@ -134,7 +135,7 @@ public class InRoomChat : Photon.MonoBehaviour
     {
         FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.Others, RCLine(str + " [" + player.ID + "]" + player.Name.hexColor() + str2), string.Empty);
     }
-
+    #endregion
 
     private void commandSwitch(string[] command)
     {
