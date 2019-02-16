@@ -6996,14 +6996,14 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        Settings.Forest = Application.loadedLevelName.Contains("Forest");
-        Settings.City = Application.loadedLevelName.Contains("City");
-        Settings.Akina = Application.loadedLevelName.Contains("Akina");
-        Settings.HouseFight = Application.loadedLevelName.Contains("House");
-        Settings.CaveFight = Application.loadedLevelName.Contains("Cave");
-        Settings.Outside = Application.loadedLevelName.Contains("OutSide");
-        Settings.Colossal = Application.loadedLevelName.Contains("Colossal");
-        Settings.Tutorial = Application.loadedLevelName.Contains("Tutorial");
+        Settings.Forest = Application.loadedLevelName.ToLower().Contains("forest");
+        Settings.City = Application.loadedLevelName.ToLower().Contains("city");
+        Settings.Akina = Application.loadedLevelName.ToLower().Contains("akina");
+        Settings.HouseFight = Application.loadedLevelName.ToLower().Contains("house");
+        Settings.CaveFight = Application.loadedLevelName.ToLower().Contains("cave");
+        Settings.Outside = Application.loadedLevelName.ToLower().Contains("outside");
+        Settings.Colossal = Application.loadedLevelName.ToLower().Contains("colossal");
+        Settings.Tutorial = Application.loadedLevelName.ToLower().Contains("tutorial");
 
 
         if ((level != 0) && ((Application.loadedLevelName != "characterCreation") && (Application.loadedLevelName != "SnapShot")))
