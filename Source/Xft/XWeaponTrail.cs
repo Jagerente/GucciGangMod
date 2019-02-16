@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
     using UnityEngine;
+    using GGP;
 
     public class XWeaponTrail : MonoBehaviour
     {
-        public float Fps = 60f;
+        public static float fps;
+        float deltaTime;
         public int Granularity = 60;
-        public int MaxFrame = 14;
+        public int MaxFrame = 60;
         protected float mElapsedTime;
         protected float mFadeElapsedime;
         protected float mFadeT = 1f;
@@ -30,7 +32,7 @@
 
         public void Activate()
         {
-            this.MaxFrame = 14;
+            this.MaxFrame = Convert.ToInt32(Settings.BladeTrailsFrameRate);
             this.Init();
             if (this.mMeshObj == null)
             {
@@ -196,6 +198,8 @@
                     }
                 }
             }
+            deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+            fps = 1.0f / deltaTime;
         }
 
         private void UpdateFade()
@@ -296,7 +300,7 @@
         {
             get
             {
-                return (1f / this.Fps);
+                return (1f / fps);
             }
         }
 
@@ -325,4 +329,3 @@
         }
     }
 }
-
