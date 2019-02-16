@@ -11,7 +11,7 @@ namespace GGP
         public static bool isPause = false;
         private void Update()
         {
-            //Time Stop
+            #region Stop Time
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 if (Time.timeScale == 1E-06f)
@@ -20,7 +20,8 @@ namespace GGP
                     Time.timeScale = 1E-06f;
 
             }
-            //Infinites
+            #endregion
+            #region Infinites
             if (Input.GetKeyDown(KeyCode.B))
             {
                 if (Settings.InfiniteBlades == 0 || Settings.InfiniteBullets == 0 || Settings.InfiniteGas == 0)
@@ -36,17 +37,20 @@ namespace GGP
                     Settings.InfiniteGas = 0;
                 }
             }
-            //No Clip
+            #endregion
+            #region No Clip
             if (Input.GetKeyDown(Profile ? KeyCode.N : KeyCode.V))
             {
                 Settings.NoClip = Settings.NoClip == 0 ? 1 : 0;
             }
-            //No Gravity
+            #endregion
+            #region No Gravity
             if (Input.GetKeyDown(KeyCode.F4))
             {
                 Settings.NoGravity = Settings.NoGravity == 0 ? 1 : 0;
             }
-            //Restart + Resetkd
+            #endregion
+            #region Restart
             if (Input.GetKeyDown(Profile ? KeyCode.Z : KeyCode.G))
             {
                 if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
@@ -77,7 +81,8 @@ namespace GGP
                     FengGameManagerMKII.instance.restartGameSingle();
                 }
             }
-            //Pause
+            #endregion
+            #region Pause
             if (Input.GetKeyDown(Profile ? KeyCode.F3 : KeyCode.P))
             {
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
@@ -119,12 +124,14 @@ namespace GGP
                     }
                 }
             }
-            //Screenshoot
+            #endregion
+            #region Screenshot
             if (Input.GetKeyDown(KeyCode.F5))
             {
                 Application.CaptureScreenshot(Application.dataPath + "/Screenshoots/Screenshot_" + DateTime.Now.ToString("yyyy:mm:dd:hh:mm:ss").Replace(":", "-") + ".png");
             }
-            //TP
+            #endregion
+            #region Teleport
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
                 RaycastHit findpoint;
@@ -134,7 +141,6 @@ namespace GGP
                     GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position = new Vector3(point.x, point.y, point.z);
                 }
             }
-            //TP
             if (Input.GetKey(KeyCode.Alpha4))
             {
                 GameObject obj = new GameObject();
@@ -156,7 +162,8 @@ namespace GGP
                 obj2.transform.position = obj.transform.position;
                 //FengGameManagerMKII.instance.StartCoroutine(FengGameManagerMKII.instance.LoadSound(FengGameManagerMKII.SoundType.Teleport));
             }
-            //Object spawn
+            #endregion
+            #region Object Spawn
             //if (Input.GetKeyDown(KeyCode.J))
             //{
             //    if (Settings.ObjectSpawn != null && PhotonNetwork.isMasterClient)
@@ -226,21 +233,8 @@ namespace GGP
             //        }
             //    }
             //}
-            ////Hide UI
-            //if (Input.GetKeyDown(KeyCode.H))
-            //{
-            //    AbuseMenu.HideUI = !AbuseMenu.HideUI;
-            //}
-            ////Hide Crosshair HK
-            //if (Input.GetKeyDown(KeyCode.Z))
-            //{
-            //    AbuseMenu.HideCrosshair = !AbuseMenu.HideCrosshair;
-            //}
-            //if (Input.GetKeyDown(KeyCode.K))
-            //{
-            //    Settings.BodyLean = Settings.BodyLean == 0 ? 1 : 0;
-            //}
-            //Laugh
+            #endregion
+            #region Titan Laugh
             //if (Input.GetKeyDown(KeyCode.Z))
             //{
             //    int titan_count = 0;
@@ -255,7 +249,7 @@ namespace GGP
             //    InRoomChat.Message(titan_count + " Titans was laughed.");
             //    //FengGameManagerMKII.instance.StartCoroutine(FengGameManagerMKII.instance.LoadSound(FengGameManagerMKII.SoundType.Joke));
             //}
-
+            #endregion
         }
     }
 }
