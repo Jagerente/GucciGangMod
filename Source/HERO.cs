@@ -1912,13 +1912,20 @@ public class HERO : Photon.MonoBehaviour
                     {
                         this.baseRigidBody.AddForce(new Vector3(0f, -this.gravity * this.baseRigidBody.mass, 0f));
                     }
-                    if (this.currentSpeed > 10f)
+                    if (Settings.FOV == 0)
                     {
-                        this.currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(this.currentCamera.GetComponent<Camera>().fieldOfView, Mathf.Min((float) 100f, (float) (this.currentSpeed + 40f)), 0.1f);
+                        if (this.currentSpeed > 10f)
+                        {
+                            this.currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(this.currentCamera.GetComponent<Camera>().fieldOfView, Mathf.Min((float)100f, (float)(this.currentSpeed + 40f)), 0.1f);
+                        }
+                        else
+                        {
+                            this.currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(this.currentCamera.GetComponent<Camera>().fieldOfView, 50f, 0.1f);
+                        }
                     }
                     else
                     {
-                        this.currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(this.currentCamera.GetComponent<Camera>().fieldOfView, 50f, 0.1f);
+                        this.currentCamera.GetComponent<Camera>().fieldOfView = Settings.FOVvalue;
                     }
                     if (flag2)
                     {

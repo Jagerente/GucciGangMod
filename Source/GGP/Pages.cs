@@ -309,6 +309,11 @@ namespace GGP
             BetterGUI.SubHeader("Camera");
             BetterGUI.Slider("Camera Distance", true, 100, ref Settings.CameraDistance, 0f, 1f);
             BetterGUI.Grid("Camera Tilt", ref Settings.CameraTilt, SwitcherStr);
+            BetterGUI.Grid("Static FOV", ref Settings.FOV, SwitcherStr);
+            if (Settings.FOV == 1)
+            {
+                BetterGUI.Slider("FOV value", true, 0, ref Settings.FOVvalue, 60f, 120f);
+            }
             BetterGUI.SubHeader("Snapshots");
             BetterGUI.Grid("Snapshots", ref Settings.Snapshots, SwitcherStr);
             BetterGUI.Grid("Show In Game", ref Settings.SnapshotsInGame, SwitcherStr);

@@ -53,6 +53,8 @@ namespace GGP
         public static int InfiniteBlades = 0;
         public static int InfiniteBullets = 0;
         public static int InfiniteGas = 0;
+        public static int FOV;
+        public static float FOVvalue;
         public static string CannonSpeed;
         public static string CannonRotate;
         public static string CannonCooldown;
@@ -467,6 +469,8 @@ namespace GGP
             PlayerPrefs.SetInt("Minimap", Minimap);
             PlayerPrefs.SetInt("BodyLean", BodyLean);
             PlayerPrefs.SetInt("DoubleBurst", DoubleBurstRebind);
+            PlayerPrefs.SetInt("FOV", FOV);
+            PlayerPrefs.SetFloat("FOVvalue", FOVvalue);
             PlayerPrefs.SetString("CannonSpeed", CannonSpeed);
             PlayerPrefs.SetString("CannonRotate", CannonRotate);
             PlayerPrefs.SetString("CannonCooldown", CannonCooldown);
@@ -583,6 +587,8 @@ namespace GGP
             Speedometer = PlayerPrefs.GetInt("Speedometer", 0);
             BodyLean = PlayerPrefs.GetInt("BodyLean", 1);
             DoubleBurstRebind = PlayerPrefs.GetInt("DoubleBurst", 0);
+            FOV = PlayerPrefs.GetInt("FOV", 0);
+            FOVvalue = PlayerPrefs.GetFloat("FOVvalue", 100);
             CannonSpeed = PlayerPrefs.GetString("CannonSpeed", "50");
             CannonRotate = PlayerPrefs.GetString("CannonRotate", "25");
             CannonCooldown = PlayerPrefs.GetString("CannonCooldown", "3.5");

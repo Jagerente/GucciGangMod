@@ -603,10 +603,10 @@ public class InRoomChat : Photon.MonoBehaviour
                 {
                     if (Convert.ToInt32(command[1]) != 0)
                     {
-                        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setFOV(Convert.ToInt32(command[1]));
-                        Message("Field of Vision set to " + command[1] + ".");
+                        Settings.FOVvalue = Convert.ToSingle(command[1]);
+                        Message($"Field of Vision set to  {command[1]}.");
                     }
-                    else IN_GAME_MAIN_CAMERA.FOV = false;
+                    else Settings.FOV = 0;
                     return;
                 }
             case "spectate":
