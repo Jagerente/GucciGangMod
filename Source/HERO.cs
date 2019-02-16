@@ -4699,7 +4699,13 @@ public class HERO : Photon.MonoBehaviour
                 }
                 else if (Settings.Speedometer == 2)
                 {
-                    str = str + "\n" + ((this.currentSpeed / 100f)).ToString("F1") + "K";
+                    var bdmg = this.currentSpeed * 10f;
+                    var admg = this.currentSpeed * 4f;
+                    var admg2 = this.currentSpeed * 6f;
+                    if (!useGun)
+                        str += $"\n{(bdmg/1000).ToString("F1")}K";
+                    else
+                        str += $"\n{(admg/1000).ToString("F1")}K\n{(admg2/1000).ToString("F1")}K";
                 }
                 obj11.GetComponent<UILabel>().text = str;
                 if (magnitude > 120f)
@@ -7263,14 +7269,14 @@ public class HERO : Photon.MonoBehaviour
                                         if (Settings.InfiniteBullets == 0)
                                             this.leftBulletLeft--;
                                         this.setup.part_blade_l.SetActive(true);
-                                        this.leftGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                                        this.leftGunHasBullet = true;
                                     }
                                     if (!((this.rightBulletLeft <= 0) || this.rightGunHasBullet))
                                     {
                                         if (Settings.InfiniteBullets == 0)
                                             this.rightBulletLeft--;
                                         this.setup.part_blade_r.SetActive(true);
-                                        this.rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                                        this.rightGunHasBullet = true;
                                     }
                                     this.updateRightMagUI();
                                     this.updateLeftMagUI();
