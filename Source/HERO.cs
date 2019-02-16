@@ -949,12 +949,12 @@ public class HERO : Photon.MonoBehaviour
             {
                 PhotonNetwork.Instantiate("FX/boost_smoke", base.transform.position, base.transform.rotation, 0);
             }
-            this.dashTime = 0.5f;
+            this.dashTime = Convert.ToSingle(Settings.DashDelay);
             this.crossFade("dash", 0.1f);
             base.animation["dash"].time = 0.1f;
             this.state = HERO_STATE.AirDodge;
             this.falseAttack();
-            base.rigidbody.AddForce((Vector3) (this.dashV * 40f), ForceMode.VelocityChange);
+            base.rigidbody.AddForce((Vector3) (this.dashV * Convert.ToSingle(Settings.DashForce)), ForceMode.VelocityChange);
         }
     }
 
@@ -7603,10 +7603,10 @@ public class HERO : Photon.MonoBehaviour
             amount = 1;
         }
         amount *= 2;
-        if (this.currentBladeSta > 0f)
+        if (this.currentBladeSta > 0f && Settings.InfiniteBlades == 0)
         {
             this.currentBladeSta -= amount;
-            if (this.currentBladeSta <= 0f || Settings.InfiniteBlades == 0)
+            if (this.currentBladeSta <= 0f)
             {
                 if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
                 {
