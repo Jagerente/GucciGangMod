@@ -66,11 +66,13 @@
     <Compile Include="GGP\BetterGUI.cs" />
     <Compile Include="GGP\HotKeys.cs" />
     <Compile Include="GGP\Layer.cs" />
+    <Compile Include="GGP\Logger.cs" />
     <Compile Include="GGP\Pages.cs" />
     <Compile Include="GGP\RichPresence.cs" />
     <Compile Include="GGP\Settings.cs" />
     <Compile Include="GGP\SpectatorMode.cs" />
     <Compile Include="GGP\Style.cs" />
+    <Compile Include="GGP\Utilities.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="AHSSShotGunCollider.cs" />
     <Compile Include="GAMETYPE.cs" />

@@ -247,6 +247,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     [RPC]
     private void Chat(string content, string sender, PhotonMessageInfo info)
     {
+        Logger.LogChat(Settings.ChatPath, content, info);
         if (sender != string.Empty)
         {
             content = sender + ": " + content;
@@ -258,6 +259,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     [RPC]
     private void ChatPM(string sender, string content, PhotonMessageInfo info)
     {
+        Logger.LogChat(Settings.ChatPath, content, info);
         content = sender + ": " + content;
         content = "<color=#FFC000>FROM [" + Convert.ToString(info.sender.ID) + "]</color> " + content;
         this.chatRoom.addLINE(content);
@@ -6874,6 +6876,11 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     public void OnJoinedRoom()
     {
+        var section = "--------------------------------------------------------------------------------------------------------------------------------------------------------";
+        var info = string.Empty;
+        for (int i = 0; i < 4; i++)
+            info += PhotonNetwork.room.name.Split('`')[i].ToUpper() + (i < 3 ? "/" : string.Empty);
+        Logger.Log(Settings.ChatPath, section + Environment.NewLine + DateTime.Now.ToLongDateString() + Environment.NewLine + info + Environment.NewLine + section + Environment.NewLine);
         shallRejoin[2] = PhotonNetwork.networkingPeer.mRoomToGetInto;
         if (shallRejoin[0] is bool && (bool)shallRejoin[0])
         {
