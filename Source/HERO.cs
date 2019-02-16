@@ -666,7 +666,7 @@ public class HERO : Photon.MonoBehaviour
                     {
                         this.reloadAnimation = "AHSS_gun_reload_both_air";
                     }
-                    this.leftGunHasBullet = this.rightGunHasBullet = false;
+                    this.leftGunHasBullet = this.rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
                 }
                 this.crossFade(this.reloadAnimation, 0.05f);
             }
@@ -1196,10 +1196,10 @@ public class HERO : Photon.MonoBehaviour
                 this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                 this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                 this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                this.leftbladetrail.StopSmoothly(0.2f);
-                this.rightbladetrail.StopSmoothly(0.2f);
-                this.leftbladetrail2.StopSmoothly(0.2f);
-                this.rightbladetrail2.StopSmoothly(0.2f);
+                this.leftbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                this.rightbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
             }
             this.attackLoop = 0;
             if (!this.attackReleased)
@@ -1354,6 +1354,13 @@ public class HERO : Photon.MonoBehaviour
                                     this.baseRigidBody.AddForce((Vector3) (-this.baseRigidBody.velocity * 2f), ForceMode.Acceleration);
                                 }
                             }
+                            if (Settings.BodyLean == 0 && !this.useGun)
+                            {
+                                this.facingDirection = Mathf.Atan2(to.x, to.z) * 57.29578f;
+                                Quaternion rotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+                                this.baseTransform.rotation = rotation;
+                                this.baseTransform.rotation = rotation;
+                            }
                         }
                         this.launchElapsedTimeL += Time.deltaTime;
                         if (this.QHold && (this.currentGas > 0f))
@@ -1396,6 +1403,13 @@ public class HERO : Photon.MonoBehaviour
                                 {
                                     this.baseRigidBody.AddForce((Vector3) (-this.baseRigidBody.velocity * 2f), ForceMode.Acceleration);
                                 }
+                            }
+                            if (Settings.BodyLean == 0 && !this.useGun)
+                            {
+                                this.facingDirection = Mathf.Atan2(vector5.x, vector5.z) * 57.29578f;
+                                Quaternion rotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+                                this.baseTransform.rotation = rotation;
+                                this.baseTransform.rotation = rotation;
                             }
                         }
                         this.launchElapsedTimeR += Time.deltaTime;
@@ -2424,7 +2438,10 @@ public class HERO : Photon.MonoBehaviour
                 }
             }
             this.setHookedPplDirection();
-            this.bodyLean();
+            if (Settings.BodyLean == 1 || this.useGun)
+            {
+                bodyLean();
+            }
         }
     }
 
@@ -2469,18 +2486,21 @@ public class HERO : Photon.MonoBehaviour
             {
                 this.crossFade("AHSS_hook_forward_both", 0.1f);
             }
-            else if (left && !this.isRightHandHooked)
+            else if (Settings.BodyLean == 1)
             {
-                this.crossFade("air_hook_l_just", 0.1f);
-            }
-            else if (!left && !this.isLeftHandHooked)
-            {
-                this.crossFade("air_hook_r_just", 0.1f);
-            }
-            else
-            {
-                this.crossFade("dash", 0.1f);
-                base.animation["dash"].time = 0f;
+                if (left && !this.isRightHandHooked)
+                {
+                    this.crossFade("air_hook_l_just", 0.1f);
+                }
+                else if (!left && !this.isLeftHandHooked)
+                {
+                    this.crossFade("air_hook_r_just", 0.1f);
+                }
+                else
+                {
+                    this.crossFade("dash", 0.1f);
+                    base.animation["dash"].time = 0f;
+                }
             }
         }
         if (left)
@@ -5574,7 +5594,7 @@ public class HERO : Photon.MonoBehaviour
                                         }
                                         else
                                         {
-                                            if (this.needLean)
+                                            if ((Settings.BodyLean == 1 || useGun) && this.needLean)
                                             {
                                                 if (this.leanLeft)
                                                 {
@@ -5595,7 +5615,7 @@ public class HERO : Photon.MonoBehaviour
                                 }
                                 else if (this.inputManager.isInputDown[InputCode.attack0])
                                 {
-                                    if (this.needLean)
+                                    if ((Settings.BodyLean == 1 || useGun) && this.needLean)
                                     {
                                         if (this.inputManager.isInput[InputCode.left])
                                         {
@@ -5889,10 +5909,10 @@ public class HERO : Photon.MonoBehaviour
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                                         this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail.StopSmoothly(0.1f);
-                                        this.rightbladetrail.StopSmoothly(0.1f);
-                                        this.leftbladetrail2.StopSmoothly(0.1f);
-                                        this.rightbladetrail2.StopSmoothly(0.1f);
+                                        this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
+                                        this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
+                                        this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
+                                        this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
                                     }
                                 }
                                 else
@@ -5957,12 +5977,12 @@ public class HERO : Photon.MonoBehaviour
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                                         this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail2.StopSmoothly(0.1f);
-                                        this.rightbladetrail2.StopSmoothly(0.1f);
-                                        if (QualitySettings.GetQualityLevel() >= 2)
+                                        this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
+                                        this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
+                                        if (Settings.BladeTrailsQuality == 1)
                                         {
-                                            this.leftbladetrail.StopSmoothly(0.1f);
-                                            this.rightbladetrail.StopSmoothly(0.1f);
+                                            this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
+                                            this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
                                         }
                                     }
                                     if ((this.attackLoop > 0) && (base.animation[this.attackAnimation].normalizedTime > num))
@@ -7159,19 +7179,19 @@ public class HERO : Photon.MonoBehaviour
                                     if ((this.attackAnimation == "AHSS_shoot_both") || (this.attackAnimation == "AHSS_shoot_both_air"))
                                     {
                                         flag7 = true;
-                                        this.leftGunHasBullet = false;
-                                        this.rightGunHasBullet = false;
-                                        this.baseRigidBody.AddForce((Vector3) (-this.baseTransform.forward * 1000f), ForceMode.Acceleration);
+                                        this.leftGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                                        this.rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                                        this.baseRigidBody.AddForce((Vector3)(-this.baseTransform.forward * 1000f), ForceMode.Acceleration);
                                     }
                                     else
                                     {
                                         if ((this.attackAnimation == "AHSS_shoot_l") || (this.attackAnimation == "AHSS_shoot_l_air"))
                                         {
-                                            this.leftGunHasBullet = false;
+                                            this.leftGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
                                         }
                                         else
                                         {
-                                            this.rightGunHasBullet = false;
+                                            this.rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
                                         }
                                         this.baseRigidBody.AddForce((Vector3) (-this.baseTransform.forward * 600f), ForceMode.Acceleration);
                                     }
@@ -7240,15 +7260,17 @@ public class HERO : Photon.MonoBehaviour
                                     this.throwedBlades = true;
                                     if (!((this.leftBulletLeft <= 0) || this.leftGunHasBullet))
                                     {
-                                        this.leftBulletLeft--;
+                                        if (Settings.InfiniteBullets == 0)
+                                            this.leftBulletLeft--;
                                         this.setup.part_blade_l.SetActive(true);
-                                        this.leftGunHasBullet = true;
+                                        this.leftGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
                                     }
                                     if (!((this.rightBulletLeft <= 0) || this.rightGunHasBullet))
                                     {
+                                        if (Settings.InfiniteBullets == 0)
+                                            this.rightBulletLeft--;
                                         this.setup.part_blade_r.SetActive(true);
-                                        this.rightBulletLeft--;
-                                        this.rightGunHasBullet = true;
+                                        this.rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
                                     }
                                     this.updateRightMagUI();
                                     this.updateLeftMagUI();
@@ -7584,7 +7606,7 @@ public class HERO : Photon.MonoBehaviour
         if (this.currentBladeSta > 0f)
         {
             this.currentBladeSta -= amount;
-            if (this.currentBladeSta <= 0f)
+            if (this.currentBladeSta <= 0f && Settings.InfiniteBlades == 0)
             {
                 if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
                 {
@@ -7607,7 +7629,7 @@ public class HERO : Photon.MonoBehaviour
         {
             amount = this.useGasSpeed;
         }
-        if (this.currentGas > 0f)
+        if (this.currentGas > 0f && Settings.InfiniteGas == 0)
         {
             this.currentGas -= amount;
             if (this.currentGas < 0f)
