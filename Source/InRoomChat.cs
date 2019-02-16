@@ -148,7 +148,7 @@ public class InRoomChat : Photon.MonoBehaviour
             case "tp":
                 {
                     var player = PhotonPlayer.Find(Convert.ToInt32(command[1]));
-                    //HotKeys.TPRemember = player;
+                    HotKeys.TPRemember = player;
                     GameObject obj = new GameObject();
                     GameObject obj2 = new GameObject();
                     GameObject[] tpplayers = GameObject.FindGameObjectsWithTag("Player");
