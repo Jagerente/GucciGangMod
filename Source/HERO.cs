@@ -7606,7 +7606,7 @@ public class HERO : Photon.MonoBehaviour
         if (this.currentBladeSta > 0f)
         {
             this.currentBladeSta -= amount;
-            if (this.currentBladeSta <= 0f && Settings.InfiniteBlades == 0)
+            if (this.currentBladeSta <= 0f || Settings.InfiniteBlades == 0)
             {
                 if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
                 {
