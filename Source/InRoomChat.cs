@@ -61,7 +61,7 @@ public class InRoomChat : Photon.MonoBehaviour
         messages.Add(newLine);
     }
 
-    public static void Message(string str)
+    public static void Message(string str = "")
     {
         messages.Add(Settings.RCFormatting == 1 ? RCLine(str) :
             ChatFormatting(str, Settings.ChatMajorColor, Settings.ChatMajorBold, Settings.ChatMajorItalic, Settings.ChatSize));
@@ -93,7 +93,7 @@ public class InRoomChat : Photon.MonoBehaviour
             ChatFormatting(" " + str2, Settings.ChatMajorColor, Settings.ChatMajorBold, Settings.ChatMajorItalic, Settings.ChatSize));
     }
 
-    public static void Message_2(string str)
+    public static void Message_2(string str = "")
     {
         FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, Settings.RCFormatting == 1 ? RCLine(str) :
                 ChatFormatting(str, Settings.ChatMajorColor, Settings.ChatMajorBold, Settings.ChatMajorItalic, ""), string.Empty);
@@ -119,7 +119,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 ChatFormatting(" " + str2, Settings.ChatMajorColor, Settings.ChatMajorBold, Settings.ChatMajorItalic, ""), string.Empty);
     }
 
-    public static void Message_3(string str)
+    public static void Message_3(string str = "")
     {
         FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.Others, RCLine(str), string.Empty);
     }
@@ -141,6 +141,20 @@ public class InRoomChat : Photon.MonoBehaviour
     {
         switch (command[0])
         {
+            case "/clear":
+            case "/clean":
+                {
+                    for (int i = 0; i < 15; i++)
+                        Message_2();
+                    break;
+                }
+            case "clear":
+            case "clean":
+                {
+                    for (int i = 0; i < 15; i++)
+                        Message();
+                    break;
+                }
             case "reconnect":
                 {
                     PhotonNetwork.networkingPeer.OnStatusChanged(StatusCode.DisconnectByServerLogic);
