@@ -3,14 +3,9 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using ExitGames.Client.Photon;
-using Photon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6611,12 +6606,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                         case 9:
                             Pages.Custom_Logic();
                             break;
-                        case 10:
-                            Pages.Save();
-                            break;
-                        case 11:
-                            Pages.Load();
-                            break;
                     }
                     if (GUI.Button(new Rect(num7 + 408f, num8 + 465f + i, 42f, 25f), "Save"))
                     {
@@ -6762,7 +6751,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                     }
                     else if (GUI.Button(new Rect(num7 + 455f, num8 + 465f + i, 40f, 25f), "Load"))
                     {
-                        Pages.page = 11;
                         this.loadconfig();
                         Settings.LoadConfig();
                         Settings.LoadHumanSkins();
@@ -11105,8 +11093,8 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         ChangeQuality.setCurrentQuality();
 
         base.StartCoroutine(this.LoadBackground());
-        //base.gameObject.AddComponent<FPSCounter>();
-        //base.gameObject.AddComponent<HotKeys>();
+        base.gameObject.AddComponent<FPSCounter>();
+        base.gameObject.AddComponent<HotKeys>();
         //base.gameObject.AddComponent<Checker>();
         Settings.LoadConfig();
         Settings.LoadHumanSkins();
@@ -11182,8 +11170,12 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         {
             if (PhotonNetwork.connected)
             {
-                GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"Ping:{PhotonNetwork.GetPing()}";
+                GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"Ping:{PhotonNetwork.GetPing()} " + (Settings.FPS == 1 ? $"FPS:{FPSCounter.FPS}" : string.Empty);
             }
+        }
+        else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE && Settings.FPS == 1 && Settings.UI != 0 && Settings.OnMap())
+        {
+            GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"FPS:{FPSCounter.FPS}";
         }
 
         if (this.gameStart)
