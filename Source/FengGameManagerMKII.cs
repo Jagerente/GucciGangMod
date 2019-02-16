@@ -249,7 +249,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     {
         if (sender != string.Empty)
         {
-            content = sender + ":" + content;
+            content = sender + ": " + content;
         }
         content = "<color=#FFC000>[" + Convert.ToString(info.sender.ID) + "]</color> " + content;
         this.chatRoom.addLINE(content);
@@ -258,7 +258,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     [RPC]
     private void ChatPM(string sender, string content, PhotonMessageInfo info)
     {
-        content = sender + ":" + content;
+        content = sender + ": " + content;
         content = "<color=#FFC000>FROM [" + Convert.ToString(info.sender.ID) + "]</color> " + content;
         this.chatRoom.addLINE(content);
     }
