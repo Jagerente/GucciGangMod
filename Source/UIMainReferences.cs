@@ -62,7 +62,35 @@ public class UIMainReferences : MonoBehaviour
             GameObject target = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("InputManagerController"));
             target.name = "InputManagerController";
             UnityEngine.Object.DontDestroyOnLoad(target);
-            FengGameManagerMKII.s = "verified343,hair,character_eye,glass,character_face,character_head,character_hand,character_body,character_arm,character_leg,character_chest,character_cape,character_brand,character_3dmg,r,character_blade_l,character_3dmg_gas_r,character_blade_r,3dmg_smoke,HORSE,hair,body_001,Cube,Plane_031,mikasa_asset,character_cap_,character_gun".Split(new char[] { ',' });
+            FengGameManagerMKII.s = (
+                "verified343," +//0
+                "hair," +//1
+                "character_eye," +//2
+                "glass," +//3
+                "character_face," +//4
+                "character_head," +//5
+                "character_hand," +//6
+                "character_body," +//7
+                "character_arm," +//8
+                "character_leg," +//9
+                "character_chest," +//10
+                "character_cape," +//11
+                "character_brand," +//12
+                "character_3dmg," +//13
+                "r," +//14
+                "character_blade_l," +//15
+                "character_3dmg_gas_r," +//16
+                "character_blade_r," +//17
+                "3dmg_smoke," +//18
+                "HORSE," +//19
+                "hair," +//20
+                "body_001," +//21
+                "Cube," +//22
+                "Plane_031," +//23
+                "mikasa_asset," +//24
+                "character_cap_," +//25
+                "character_gun"//26
+                ).Split(new char[] { ',' });
             StartCoroutine(request());
             FengGameManagerMKII.loginstate = 0;
         }
