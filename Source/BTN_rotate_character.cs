@@ -34,10 +34,10 @@ public class BTN_rotate_character : MonoBehaviour
         transform.position += (Vector3) (Vector3.up * 1.1f);
         if (this.isRotate)
         {
-            float angle = Input.GetAxis("Mouse X") * 2.5f;
-            float num2 = -Input.GetAxis("Mouse Y") * 2.5f;
-            this.camera.transform.RotateAround(this.camera.transform.position, Vector3.up, angle);
-            this.camera.transform.RotateAround(this.camera.transform.position, this.camera.transform.right, num2);
+            float x = Input.GetAxis("Mouse X") * 2.5f;
+            float y = -Input.GetAxis("Mouse Y") * 2.5f;
+            this.camera.transform.RotateAround(this.camera.transform.position, Vector3.up, x);
+            this.camera.transform.RotateAround(this.camera.transform.position, this.camera.transform.right, y);
         }
         Transform transform2 = this.camera.transform;
         transform2.position -= (Vector3) (this.camera.transform.forward * this.distance);
