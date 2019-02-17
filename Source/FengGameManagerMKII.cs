@@ -6876,11 +6876,13 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     public void OnJoinedRoom()
     {
+        #region Chat Logger
         var section = "--------------------------------------------------------------------------------------------------------------------------------------------------------";
         var info = string.Empty;
         for (int i = 0; i < 4; i++)
             info += PhotonNetwork.room.name.Split('`')[i].ToUpper() + (i < 3 ? "/" : string.Empty);
         Logger.Log(Settings.ChatPath, section + Environment.NewLine + DateTime.Now.ToLongDateString() + Environment.NewLine + info + Environment.NewLine + section + Environment.NewLine);
+        #endregion
         shallRejoin[2] = PhotonNetwork.networkingPeer.mRoomToGetInto;
         if (shallRejoin[0] is bool && (bool)shallRejoin[0])
         {
