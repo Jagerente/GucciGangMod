@@ -20,6 +20,9 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
+**Output Log**
+Attach Error lines from the outpur_log.txt file in */DATA* directory.
+
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
