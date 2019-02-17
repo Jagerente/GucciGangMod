@@ -1189,33 +1189,6 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     transform2.GetComponent<AudioSource>().Play();
                 }
             }
-            if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !base.photonView.isMine)
-            {
-            }
-        }
-    }
-
-    public void lateUpdate2()
-    {
-        if (!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE))
-        {
-            if (base.animation.IsPlaying("run"))
-            {
-                if ((((base.animation["run"].normalizedTime % 1f) > 0.1f) && ((base.animation["run"].normalizedTime % 1f) < 0.6f)) && (this.stepSoundPhase == 2))
-                {
-                    this.stepSoundPhase = 1;
-                    Transform transform = base.transform.Find("snd_titan_foot");
-                    transform.GetComponent<AudioSource>().Stop();
-                    transform.GetComponent<AudioSource>().Play();
-                }
-                if (((base.animation["run"].normalizedTime % 1f) > 0.6f) && (this.stepSoundPhase == 1))
-                {
-                    this.stepSoundPhase = 2;
-                    Transform transform2 = base.transform.Find("snd_titan_foot");
-                    transform2.GetComponent<AudioSource>().Stop();
-                    transform2.GetComponent<AudioSource>().Play();
-                }
-            }
             this.updateLabel();
             this.healthTime -= Time.deltaTime;
         }
