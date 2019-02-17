@@ -20,7 +20,7 @@
 # Feautures
 All of the feautures you can find at [WIKI](https://github.com/JustlPain/GucciGangMod/wiki) page.
 # Download
-* [Latest version](#download)
+* [Latest version](https://github.com/JustlPain/GucciGangMod/releases)
 * [DEN's source](https://mega.nz/#!R5oxzQAA!xl2WvFQZJPAHs8rkYJMBmE74V_FNf1SiYN91KXQDq3M)
 
 # Special thanks
