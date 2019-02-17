@@ -913,11 +913,8 @@ public class HERO : Photon.MonoBehaviour
             this.meatDie.Play();
             if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine) && !this.useGun)
             {
-                if (Settings.BladeTrailsQuality == 0)
-                {
-                    leftbladetrail.Deactivate();
-                    rightbladetrail.Deactivate();
-                }
+                leftbladetrail.Deactivate();
+                rightbladetrail.Deactivate();
                 leftbladetrail2.Deactivate();
                 rightbladetrail2.Deactivate();
             }
@@ -1081,11 +1078,8 @@ public class HERO : Photon.MonoBehaviour
                 this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                 this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                 this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                if (Settings.BladeTrailsQuality == 0)
-                {
-                    this.leftbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
-                    this.rightbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
-                }
+                this.leftbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                this.rightbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
                 this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
                 this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
             }
@@ -1989,11 +1983,8 @@ public class HERO : Photon.MonoBehaviour
         }
         if (!this.useGun && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
         {
-            if (Settings.BladeTrailsQuality == 0)
-            {
-                this.leftbladetrail.Deactivate();
-                this.rightbladetrail.Deactivate();
-            }
+            this.leftbladetrail.Deactivate();
+            this.rightbladetrail.Deactivate();
             this.leftbladetrail2.Deactivate();
             this.rightbladetrail2.Deactivate();
         }
@@ -3035,34 +3026,34 @@ public class HERO : Photon.MonoBehaviour
                     this.leftbladetrail.MyMaterial.mainTexture = trailsSkin;
                     this.rightbladetrail.MyMaterial.mainTexture = trailsSkin;
                     FengGameManagerMKII.linkHash[0].Add(skins[12], this.leftbladetrail.MyMaterial);
+                    this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     if (Settings.BladeTrailsQuality == 0)
                     {
-                        this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                        this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                        this.leftbladetrail2.MyMaterial = this.leftbladetrail.MyMaterial;
+                        this.rightbladetrail2.MyMaterial = this.leftbladetrail.MyMaterial;
                     }
-                    this.leftbladetrail2.MyMaterial = this.leftbladetrail.MyMaterial;
-                    this.rightbladetrail2.MyMaterial = this.leftbladetrail.MyMaterial;
                 }
                 else
                 {
-                    this.leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    this.rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     if (Settings.BladeTrailsQuality == 0)
                     {
-                        this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                        this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                        this.leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                        this.rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     }
+                    this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 }
             }
             else
             {
-                this.leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                this.rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 if (Settings.BladeTrailsQuality == 0)
                 {
-                    this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    this.leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    this.rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 }
+                this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
             }
         }
         #endregion
@@ -3436,11 +3427,8 @@ public class HERO : Photon.MonoBehaviour
         this.meatDie.Play();
         if (!(this.useGun || ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !base.photonView.isMine)))
         {
-            if (Settings.BladeTrailsQuality == 0)
-            {
-                this.leftbladetrail.Deactivate();
-                this.rightbladetrail.Deactivate();
-            }
+            this.leftbladetrail.Deactivate();
+            this.rightbladetrail.Deactivate();
             this.leftbladetrail2.Deactivate();
             this.rightbladetrail2.Deactivate();
         }
@@ -4655,7 +4643,7 @@ public class HERO : Photon.MonoBehaviour
             base.gameObject.layer = LayerMask.NameToLayer("NetworkObject");
             if (IN_GAME_MAIN_CAMERA.dayLight == DayLight.Night)
             {
-                GameObject obj3 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("flashlight"));
+                GameObject obj3 = (GameObject)UnityEngine.Object.Instantiate(Resources.Load("flashlight"));
                 obj3.transform.parent = this.baseTransform;
                 obj3.transform.position = this.baseTransform.position + Vector3.up;
                 obj3.transform.rotation = Quaternion.Euler(353f, 0f, 0f);
@@ -4666,11 +4654,8 @@ public class HERO : Photon.MonoBehaviour
             this.setup.setCharacterComponent();
             UnityEngine.Object.Destroy(this.checkBoxLeft);
             UnityEngine.Object.Destroy(this.checkBoxRight);
-            if (Settings.BladeTrailsQuality == 0)
-            {
-                UnityEngine.Object.Destroy(this.leftbladetrail);
-                UnityEngine.Object.Destroy(this.rightbladetrail);
-            }
+            UnityEngine.Object.Destroy(this.leftbladetrail);
+            UnityEngine.Object.Destroy(this.rightbladetrail);
             UnityEngine.Object.Destroy(this.leftbladetrail2);
             UnityEngine.Object.Destroy(this.rightbladetrail2);
             this.hasspawn = true;
@@ -5367,13 +5352,13 @@ public class HERO : Photon.MonoBehaviour
                                             {
                                                 this.leftbladetrail2.Activate();
                                                 this.rightbladetrail2.Activate();
-                                                if (Settings.BladeTrailsQuality == 0)
+                                                if (Settings.BladeTrailsQuality == 1)
                                                 {
                                                     this.leftbladetrail.Activate();
                                                     this.rightbladetrail.Activate();
                                                 }
                                             }
-                                            this.baseRigidBody.velocity = (Vector3) (-Vector3.up * 30f);
+                                            this.baseRigidBody.velocity = (Vector3)(-Vector3.up * 30f);
                                         }
                                         if (!this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me)
                                         {
@@ -5387,11 +5372,8 @@ public class HERO : Photon.MonoBehaviour
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                                         this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        if (Settings.BladeTrailsQuality == 0)
-                                        {
-                                            this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                            this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                        }
+                                        this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                         this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                         this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                     }
@@ -5443,7 +5425,7 @@ public class HERO : Photon.MonoBehaviour
                                             {
                                                 this.leftbladetrail2.Activate();
                                                 this.rightbladetrail2.Activate();
-                                                if (Settings.BladeTrailsQuality == 0)
+                                                if (Settings.BladeTrailsQuality == 1)
                                                 {
                                                     this.leftbladetrail.Activate();
                                                     this.rightbladetrail.Activate();
@@ -5463,7 +5445,7 @@ public class HERO : Photon.MonoBehaviour
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
                                         this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                         this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                        if (Settings.BladeTrailsQuality == 0)
+                                        if (Settings.BladeTrailsQuality == 1)
                                         {
                                             this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                             this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
@@ -5989,12 +5971,8 @@ public class HERO : Photon.MonoBehaviour
             {
                 if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
                 {
-                    if (Settings.BladeTrailsQuality == 0)
-                    {
-
-                        this.leftbladetrail.Deactivate();
-                        this.rightbladetrail.Deactivate();
-                    }
+                    this.leftbladetrail.Deactivate();
+                    this.rightbladetrail.Deactivate();
                     this.leftbladetrail2.Deactivate();
                     this.rightbladetrail2.Deactivate();
                     this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
