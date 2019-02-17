@@ -25,11 +25,14 @@ namespace GGP
         public static float CameraDistance;
         public static int CameraTilt;
         public static int InvertMouse;
+        public static int FOV;
+        public static float FOVvalue;
+
         public static int Snapshots;
         public static int SnapshotsInGame;
         public static string SnapshotsMinDamage;
-        public static int UI;
 
+        public static int UI;
         public static int Chat;
         public static int RCFormatting;
         public static string ChatMajorColor;
@@ -45,17 +48,18 @@ namespace GGP
         public static int DamageFeed;
         public static int Speedometer;
         public static int Minimap;
+
         public static int BodyLean;
         public static int NoGravity = 0;
         public static int NoClip = 0;
         public static int DoubleBurstRebind;
         public static string DashForce = "40";
         public static string DashDelay = "0.5";
+        public static int Bouncy;
         public static int InfiniteBlades = 0;
         public static int InfiniteBullets = 0;
         public static int InfiniteGas = 0;
-        public static int FOV;
-        public static float FOVvalue;
+        
         public static string CannonSpeed;
         public static string CannonRotate;
         public static string CannonCooldown;
@@ -144,6 +148,7 @@ namespace GGP
         public static List<string[]> HumanSkinFields;
         public static List<string> HumanSetTitles;
         public static string[] HumanSkinSetTitles;
+
         public static int CustomGas;
         public static int BladeTrails;
         public static int BladeTrailsQuality;
@@ -164,13 +169,16 @@ namespace GGP
         public static float ParticlesColorB;
         public static float ParticlesColorA;
         public static float ParticlesGravity;
+
         public static bool fog;
         public static bool ambient;
         public static float fog_start;
         public static float fog_end;
         public static Color fog_color;
         public static Color ambient_color;
+
         public static int LocationSkins;
+
         public static readonly string[] ForestSkinLabels = new[]
         {
             "Ground:",
@@ -203,12 +211,14 @@ namespace GGP
         public static List<string> ForestSetTitles;
         public static string[] ForestSkinSetTitles;
         public static int ForestRandomizedPairs;
+
         public static List<int> ForestAmbient;
         public static List<float[]> ForestAmbientColor;
         public static List<int> ForestFog;
         public static List<float[]> ForestFogColor;
         public static List<float> ForestFogStartDistance;
         public static List<float> ForestFogEndDistance;
+
         public static readonly string[] CitySkinLabels = new[]
         {
             "Ground:",//0
@@ -236,6 +246,7 @@ namespace GGP
         public static string[] CitySkinSetTitles;
         public static List<int> CityAmbient;
         public static List<float[]> CityAmbientColor;
+
         public static List<int> CityFog;
         public static List<float[]> CityFogColor;
         public static List<float> CityFogStartDistance;
@@ -450,9 +461,13 @@ namespace GGP
             PlayerPrefs.SetFloat("MouseSensitivity", MouseSensitivity);
             PlayerPrefs.SetFloat("CameraDistance", CameraDistance);
             PlayerPrefs.SetInt("CameraTilt", CameraTilt);
+            PlayerPrefs.SetInt("FOV", FOV);
+            PlayerPrefs.SetFloat("FOVvalue", FOVvalue);
+
             PlayerPrefs.SetInt("Snapshots", Snapshots);
             PlayerPrefs.SetInt("SnapshotsInGame", SnapshotsInGame);
             PlayerPrefs.SetString("SnapshotsMinDamage", SnapshotsMinDamage);
+
             PlayerPrefs.SetInt("UI", UI);
             PlayerPrefs.SetInt("Chat", Chat);
             PlayerPrefs.SetInt("RCFormatting", RCFormatting);
@@ -463,15 +478,16 @@ namespace GGP
             PlayerPrefs.SetInt("ChatMajorItalic", ChatMajorItalic);
             PlayerPrefs.SetInt("ChatMinorItalic", ChatMinorItalic); ;
             PlayerPrefs.SetString("ChatSize", ChatSize);
-            PlayerPrefs.SetInt("FPS", FPS);
+
             PlayerPrefs.SetInt("GameFeed", GameFeed);
             PlayerPrefs.SetInt("DamageFeed", DamageFeed);
             PlayerPrefs.SetInt("Speedometer", Speedometer);
             PlayerPrefs.SetInt("Minimap", Minimap);
+
             PlayerPrefs.SetInt("BodyLean", BodyLean);
             PlayerPrefs.SetInt("DoubleBurst", DoubleBurstRebind);
-            PlayerPrefs.SetInt("FOV", FOV);
-            PlayerPrefs.SetFloat("FOVvalue", FOVvalue);
+            PlayerPrefs.SetInt("Bouncy", Bouncy);
+
             PlayerPrefs.SetString("CannonSpeed", CannonSpeed);
             PlayerPrefs.SetString("CannonRotate", CannonRotate);
             PlayerPrefs.SetString("CannonCooldown", CannonCooldown);
@@ -479,6 +495,7 @@ namespace GGP
             #region Video Settings
             PlayerPrefs.SetFloat("OverallQuality", OverallQuality);
             PlayerPrefs.SetInt("TextureQuality", TextureQuality);
+            PlayerPrefs.SetInt("FPS", FPS);
             PlayerPrefs.SetInt("VSync", VSync);
             PlayerPrefs.SetString("FPSLock", FPSLock);
             PlayerPrefs.SetInt("MipMapping", MipMapping);
@@ -547,6 +564,7 @@ namespace GGP
             PlayerPrefs.SetFloat("ParticlesColorB", ParticlesColorB);
             PlayerPrefs.SetFloat("ParticlesColorA", ParticlesColorA);
             PlayerPrefs.SetFloat("ParticlesGravity", ParticlesGravity);
+
             PlayerPrefs.SetInt("LevelSkins", LocationSkins);
             PlayerPrefs.SetInt("ForestRandomizedPairs", ForestRandomizedPairs);
             #endregion
@@ -570,9 +588,14 @@ namespace GGP
             MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 0.5f);
             CameraDistance = PlayerPrefs.GetFloat("CameraDistance", 1f);
             CameraTilt = PlayerPrefs.GetInt("CameraTilt", 0);
+            FOV = PlayerPrefs.GetInt("FOV", 0);
+            FOVvalue = PlayerPrefs.GetFloat("FOVvalue", 100);
+
             Snapshots = PlayerPrefs.GetInt("Snapshots", 0);
             SnapshotsInGame = PlayerPrefs.GetInt("SnapshotsInGame", 0);
             SnapshotsMinDamage = PlayerPrefs.GetString("SnapshotsMinDamage", "0");
+
+            UI = PlayerPrefs.GetInt("UI", 1);
             Chat = PlayerPrefs.GetInt("Chat", 1);
             RCFormatting = PlayerPrefs.GetInt("RCFormatting", 1);
             ChatMajorColor = PlayerPrefs.GetString("ChatMajorColor", "FDBCB4");
@@ -582,22 +605,24 @@ namespace GGP
             ChatMajorItalic = PlayerPrefs.GetInt("ChatMajorItalic", 0);
             ChatMinorItalic = PlayerPrefs.GetInt("ChatMinorItalic", 0); ;
             ChatSize = PlayerPrefs.GetString("ChatSize", "");
-            FPS = PlayerPrefs.GetInt("FPS", 1);
+
             GameFeed = PlayerPrefs.GetInt("GameFeed", 0);
             DamageFeed = PlayerPrefs.GetInt("DamageFeed", 0);
             Speedometer = PlayerPrefs.GetInt("Speedometer", 0);
+            Minimap = PlayerPrefs.GetInt("Minimap", 0);
+
             BodyLean = PlayerPrefs.GetInt("BodyLean", 1);
             DoubleBurstRebind = PlayerPrefs.GetInt("DoubleBurst", 0);
-            FOV = PlayerPrefs.GetInt("FOV", 0);
-            FOVvalue = PlayerPrefs.GetFloat("FOVvalue", 100);
+            Bouncy = PlayerPrefs.GetInt("Bouncy", 0);
+
             CannonSpeed = PlayerPrefs.GetString("CannonSpeed", "50");
             CannonRotate = PlayerPrefs.GetString("CannonRotate", "25");
             CannonCooldown = PlayerPrefs.GetString("CannonCooldown", "3.5");
-            UI = PlayerPrefs.GetInt("UI", 1);
             #endregion
             #region Video Settings
             OverallQuality = PlayerPrefs.GetFloat("OverallQuality", 0f);
             TextureQuality = PlayerPrefs.GetInt("TextureQuality", 0);
+            FPS = PlayerPrefs.GetInt("FPS", 1);
             VSync = PlayerPrefs.GetInt("VSync", 0);
             FPSLock = PlayerPrefs.GetString("FPSLock", "0");
             MipMapping = PlayerPrefs.GetInt("MipMapping", 0);
@@ -684,6 +709,8 @@ namespace GGP
 
         public static void InitSettings()
         {
+            var player = Utilities.Player();
+            
             if (UI == 0)
             {
                 Disable("UIflare1");
@@ -710,15 +737,18 @@ namespace GGP
                 Disable("GasUI");
             }
 
-            foreach (GameObject gameObject2 in GameObject.FindGameObjectsWithTag("Player"))
+            if (player != null && player.GetComponent<HERO>() != null)
             {
-                if (gameObject2 != null && gameObject2.GetComponent<HERO>() != null)
+                player.GetComponent<HERO>().gravity = NoGravity == 1 ? 0f : 20f;
+                player.GetComponent<CapsuleCollider>().isTrigger = NoClip == 1 ? true : false;
+                if (Bouncy == 1)
                 {
-                    gameObject2.GetComponent<HERO>().gravity = NoGravity == 1 ? 0f : 20f;
-                    gameObject2.GetComponent<CapsuleCollider>().isTrigger = NoClip == 1 ? true : false;
+                    player.collider.material.bounciness = 1;
+                    player.collider.material.bounceCombine = PhysicMaterialCombine.Maximum;
                 }
+                else
+                    player.collider.material.bounciness = 0;
             }
-
             AudioListener.volume = GlobalVolume;
             IN_GAME_MAIN_CAMERA.invertY = InvertMouse == 0 ? 1 : -1;
             IN_GAME_MAIN_CAMERA.sensitivityMulti = MouseSensitivity;
@@ -726,16 +756,13 @@ namespace GGP
             IN_GAME_MAIN_CAMERA.cameraDistance = CameraDistance + 0.3f;
             PlayerPrefs.SetInt("Snapshots", Snapshots);
             PlayerPrefs.SetInt("SnapshotsInGame", SnapshotsInGame);
+            InRoomChat.IsVisible = Chat == 1 ? true : false;
+            #region Quality 
             QualitySettings.SetQualityLevel(Convert.ToInt32(Mathf.Round(OverallQuality)), true);
             QualitySettings.masterTextureLimit = TextureQuality == 0 ? 2 : TextureQuality == 1 ? 1 : 0;
-            if (Convert.ToInt32(FPSLock) > 50 || Convert.ToInt32(FPSLock) == 0)
-            {
-                Application.targetFrameRate = Convert.ToInt32(FPSLock);
-            }
-            else if (Convert.ToInt32(FPSLock) < 50 && Convert.ToInt32(FPSLock) > 0)
-            {
-                Application.targetFrameRate = 50;
-            }
+            if (Convert.ToInt32(FPSLock) > 50) Application.targetFrameRate = Convert.ToInt32(FPSLock);
+            else if (Convert.ToInt32(FPSLock) == 0) Application.targetFrameRate = -1;
+            else Application.targetFrameRate = 50;
             QualitySettings.vSyncCount = VSync;
             QualitySettings.anisotropicFiltering = AnisotropicFiltreing == 0 ? AnisotropicFiltering.Disable : AnisotropicFiltreing == 1 ? AnisotropicFiltering.Enable : AnisotropicFiltering.ForceEnable;
             QualitySettings.antiAliasing = AntiAliasing == 0 ? 0 : AntiAliasing == 1 ? 2 : AntiAliasing == 2 ? 4 : 8;
@@ -747,7 +774,8 @@ namespace GGP
             QualitySettings.shadowProjection = ShadowProjection == 0 ? UnityEngine.ShadowProjection.CloseFit : UnityEngine.ShadowProjection.StableFit;
             QualitySettings.shadowCascades = ShadowCascades == 0 ? 0 : ((ShadowCascades == 1) ? 2 : 4);
             Camera.main.GetComponent<TiltShift>().enabled = Blur != 0;
-            InRoomChat.IsVisible = Chat == 1 ? true : false;
+            #endregion
+
         }
         public static void InitLocationSkins()
         {
