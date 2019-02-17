@@ -10,26 +10,26 @@ namespace GGP
     class Pages : MonoBehaviour
     {
         #region Variables
-        static readonly float leftpos = ((Screen.width) / 2f) - 350f;
-        static readonly float toppos = ((Screen.height) / 2f) - 250f;
-        static readonly float w = 730f;
-        static readonly float h = 550f;
-        static readonly Rect full = new Rect(leftpos, toppos - 25f, h, w);
-        static readonly Rect topcenter = new Rect(leftpos, toppos + 35f, 730f, 35f);
-        static readonly Rect left_top = new Rect(leftpos + 20f, toppos + 75f, 355f, 500 - 95f);
-        static readonly Rect right_top = new Rect(leftpos + 380f, toppos + 75f, 355f, 500 - 95f);
-        static readonly Rect left = new Rect(leftpos + 20f, toppos + 35f, 355f, 500f - 55f);
-        static readonly Rect right = new Rect(leftpos + 380f, toppos + 35f, 355f, 500f - 55f);
+        static readonly float _leftPos = ((Screen.width) / 2f) - 350f;
+        static readonly float _topPos = ((Screen.height) / 2f) - 250f;
+        static readonly float _width = 730f;
+        static readonly float _height = 550f;
+        static readonly Rect _full = new Rect(_leftPos, _topPos - 25f, _height, _width);
+        static readonly Rect _topCenter = new Rect(_leftPos, _topPos + 35f, 730f, 35f);
+        static readonly Rect _topLeft = new Rect(_leftPos + 20f, _topPos + 75f, 355f, 500 - 95f);
+        static readonly Rect _topRight = new Rect(_leftPos + 380f, _topPos + 75f, 355f, 500 - 95f);
+        static readonly Rect _left = new Rect(_leftPos + 20f, _topPos + 35f, 355f, 500f - 55f);
+        static readonly Rect _right = new Rect(_leftPos + 380f, _topPos + 35f, 355f, 500f - 55f);
 
-        static string size = "72";
-        static string color1 = "D6B1DE";
-        static string color2 = "FFFFFF";
-        static string SingleButton = "";
-        static Rect Single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
-        static string MultiplayerButton = "";
-        static Rect Multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
-        static string QuitButton = "";
-        static Rect Quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
+        static string _size = "72";
+        static string _color1 = "D6B1DE";
+        static string _color2 = "FFFFFF";
+        static string _singleButton = "";
+        static Rect _single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
+        static string _multiplayerButton = "";
+        static Rect _multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
+        static string _quitButton = "";
+        static Rect _quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
         #endregion
 
         #region Scrolls
@@ -78,49 +78,49 @@ namespace GGP
         public void Main_Menu()
         {
             #region Single
-            if (GUI.Button(Single, SingleButton, "label"))
+            if (GUI.Button(_single, _singleButton, "label"))
             {
                 NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelSingleSet, true);
                 NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelMain, false);
             }
-            if (Single.Contains(GUIHelpers.mousePos))
+            if (_single.Contains(GUIHelpers.mousePos))
             {
-                SingleButton = "<color=#" + color1 + "><size=" + size + "><b><i>S I N G L E</i></b></size></color>";
+                _singleButton = "<color=#" + _color1 + "><size=" + _size + "><b><i>S I N G L E</i></b></size></color>";
             }
             else
             {
-                SingleButton = "<color=#" + color2 + "><size=" + size + "><b><i>S I N G L E</i></b></size></color>";
+                _singleButton = "<color=#" + _color2 + "><size=" + _size + "><b><i>S I N G L E</i></b></size></color>";
             }
             #endregion
 
             #region Multiplayer
-            if (GUI.Button(Multiplayer, MultiplayerButton, "label"))
+            if (GUI.Button(_multiplayer, _multiplayerButton, "label"))
             {
                 NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, true);
                 NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelMain, false);
             }
-            if (Multiplayer.Contains(GUIHelpers.mousePos))
+            if (_multiplayer.Contains(GUIHelpers.mousePos))
             {
-                MultiplayerButton = "<color=#" + color1 + "><size=" + size + "><b><i>M U L T I P L A Y E R</i></b></size></color>";
+                _multiplayerButton = "<color=#" + _color1 + "><size=" + _size + "><b><i>M U L T I P L A Y E R</i></b></size></color>";
             }
             else
             {
-                MultiplayerButton = "<color=#" + color2 + "><size=" + size + "><b><i>M U L T I P L A Y E R</i></b></size></color>";
+                _multiplayerButton = "<color=#" + _color2 + "><size=" + _size + "><b><i>M U L T I P L A Y E R</i></b></size></color>";
             }
             #endregion
 
             #region Quit
-            if (GUI.Button(Quit, QuitButton, "label"))
+            if (GUI.Button(_quit, _quitButton, "label"))
             {
                 Application.Quit();
             }
-            if (Quit.Contains(GUIHelpers.mousePos))
+            if (_quit.Contains(GUIHelpers.mousePos))
             {
-                QuitButton = "<color=#" + color1 + "><size=" + size + "><b><i>Q U I T</i></b></size></color>";
+                _quitButton = "<color=#" + _color1 + "><size=" + _size + "><b><i>Q U I T</i></b></size></color>";
             }
             else
             {
-                QuitButton = "<color=#" + color2 + "><size=" + size + "><b><i>Q U I T</i></b></size></color>";
+                _quitButton = "<color=#" + _color2 + "><size=" + _size + "><b><i>Q U I T</i></b></size></color>";
             }
             #endregion
 
@@ -299,7 +299,7 @@ namespace GGP
         public static void Game_Settings()
         {
             #region Left
-            GUILayout.BeginArea(left);
+            GUILayout.BeginArea(_left);
             GUILayout.BeginVertical();
             BetterGUI.Header("General");
             GameSettingsScrollLeft = GUILayout.BeginScrollView(GameSettingsScrollLeft, false, false);
@@ -340,7 +340,7 @@ namespace GGP
             #endregion
 
             #region Right
-            GUILayout.BeginArea(right);
+            GUILayout.BeginArea(_right);
             GUILayout.BeginVertical();
             BetterGUI.Header("Character");
             GameSettingsScrollRight = GUILayout.BeginScrollView(GameSettingsScrollRight, false, false);
@@ -371,20 +371,20 @@ namespace GGP
             string[] strArray16;
             bool flag35;
             bool flag36;
-            GUI.Label(new Rect(leftpos + 200f, toppos + 382f, 400f, 22f), "Master Client only. Changes will take effect upon restart.");
-            if (GUI.Button(new Rect(leftpos + 267.5f, toppos + 50f, 60f, 25f), "Titans"))
+            GUI.Label(new Rect(_leftPos + 200f, _topPos + 382f, 400f, 22f), "Master Client only. Changes will take effect upon restart.");
+            if (GUI.Button(new Rect(_leftPos + 267.5f, _topPos + 50f, 60f, 25f), "Titans"))
             {
                 FengGameManagerMKII.settings[230] = 0;
             }
-            else if (GUI.Button(new Rect(leftpos + 332.5f, toppos + 50f, 40f, 25f), "PVP"))
+            else if (GUI.Button(new Rect(_leftPos + 332.5f, _topPos + 50f, 40f, 25f), "PVP"))
             {
                 FengGameManagerMKII.settings[230] = 1;
             }
-            else if (GUI.Button(new Rect(leftpos + 377.5f, toppos + 50f, 50f, 25f), "Misc"))
+            else if (GUI.Button(new Rect(_leftPos + 377.5f, _topPos + 50f, 50f, 25f), "Misc"))
             {
                 FengGameManagerMKII.settings[230] = 2;
             }
-            else if (GUI.Button(new Rect(leftpos + 320f, toppos + 415f, 60f, 30f), "Reset"))
+            else if (GUI.Button(new Rect(_leftPos + 320f, _topPos + 415f, 60f, 30f), "Reset"))
             {
                 FengGameManagerMKII.settings[192] = 0;
                 FengGameManagerMKII.settings[193] = 0;
@@ -428,15 +428,15 @@ namespace GGP
             }
             if (((int)FengGameManagerMKII.settings[230]) == 0)
             {
-                GUI.Label(new Rect(leftpos + 100f, toppos + 90f, 160f, 22f), "Custom Titan Number:", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 112f, 200f, 22f), "Amount (Integer):", "Label");
-                FengGameManagerMKII.settings[204] = GUI.TextField(new Rect(leftpos + 250f, toppos + 112f, 50f, 22f), (string)FengGameManagerMKII.settings[204]);
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 90f, 160f, 22f), "Custom Titan Number:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 112f, 200f, 22f), "Amount (Integer):", "Label");
+                FengGameManagerMKII.settings[204] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 112f, 50f, 22f), (string)FengGameManagerMKII.settings[204]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[203]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 90f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 90f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -448,13 +448,13 @@ namespace GGP
                         FengGameManagerMKII.settings[203] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 100f, toppos + 152f, 160f, 22f), "Custom Titan Spawns:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 152f, 160f, 22f), "Custom Titan Spawns:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[210]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 152f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 152f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -466,27 +466,27 @@ namespace GGP
                         FengGameManagerMKII.settings[210] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 100f, toppos + 174f, 150f, 22f), "Normal (Decimal):", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 196f, 150f, 22f), "Aberrant (Decimal):", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 218f, 150f, 22f), "Jumper (Decimal):", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 240f, 150f, 22f), "Crawler (Decimal):", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 262f, 150f, 22f), "Punk (Decimal):", "Label");
-                FengGameManagerMKII.settings[211] = GUI.TextField(new Rect(leftpos + 250f, toppos + 174f, 50f, 22f), (string)FengGameManagerMKII.settings[211]);
-                FengGameManagerMKII.settings[212] = GUI.TextField(new Rect(leftpos + 250f, toppos + 196f, 50f, 22f), (string)FengGameManagerMKII.settings[212]);
-                FengGameManagerMKII.settings[213] = GUI.TextField(new Rect(leftpos + 250f, toppos + 218f, 50f, 22f), (string)FengGameManagerMKII.settings[213]);
-                FengGameManagerMKII.settings[214] = GUI.TextField(new Rect(leftpos + 250f, toppos + 240f, 50f, 22f), (string)FengGameManagerMKII.settings[214]);
-                FengGameManagerMKII.settings[215] = GUI.TextField(new Rect(leftpos + 250f, toppos + 262f, 50f, 22f), (string)FengGameManagerMKII.settings[215]);
-                GUI.Label(new Rect(leftpos + 100f, toppos + 302f, 160f, 22f), "Titan Size Mode:", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 324f, 150f, 22f), "Minimum (Decimal):", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 346f, 150f, 22f), "Maximum (Decimal):", "Label");
-                FengGameManagerMKII.settings[208] = GUI.TextField(new Rect(leftpos + 250f, toppos + 324f, 50f, 22f), (string)FengGameManagerMKII.settings[208]);
-                FengGameManagerMKII.settings[209] = GUI.TextField(new Rect(leftpos + 250f, toppos + 346f, 50f, 22f), (string)FengGameManagerMKII.settings[209]);
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 174f, 150f, 22f), "Normal (Decimal):", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 196f, 150f, 22f), "Aberrant (Decimal):", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 218f, 150f, 22f), "Jumper (Decimal):", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 240f, 150f, 22f), "Crawler (Decimal):", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 262f, 150f, 22f), "Punk (Decimal):", "Label");
+                FengGameManagerMKII.settings[211] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 174f, 50f, 22f), (string)FengGameManagerMKII.settings[211]);
+                FengGameManagerMKII.settings[212] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 196f, 50f, 22f), (string)FengGameManagerMKII.settings[212]);
+                FengGameManagerMKII.settings[213] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 218f, 50f, 22f), (string)FengGameManagerMKII.settings[213]);
+                FengGameManagerMKII.settings[214] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 240f, 50f, 22f), (string)FengGameManagerMKII.settings[214]);
+                FengGameManagerMKII.settings[215] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 262f, 50f, 22f), (string)FengGameManagerMKII.settings[215]);
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 302f, 160f, 22f), "Titan Size Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 324f, 150f, 22f), "Minimum (Decimal):", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 346f, 150f, 22f), "Maximum (Decimal):", "Label");
+                FengGameManagerMKII.settings[208] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 324f, 50f, 22f), (string)FengGameManagerMKII.settings[208]);
+                FengGameManagerMKII.settings[209] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 346f, 50f, 22f), (string)FengGameManagerMKII.settings[209]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[207]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 302f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 302f, 40f, 20f), flag35, "On");
                 if (flag36 != flag35)
                 {
                     if (flag36)
@@ -498,22 +498,22 @@ namespace GGP
                         FengGameManagerMKII.settings[207] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 90f, 160f, 22f), "Titan Health Mode:", "Label");
-                GUI.Label(new Rect(leftpos + 400f, toppos + 161f, 150f, 22f), "Minimum (Integer):", "Label");
-                GUI.Label(new Rect(leftpos + 400f, toppos + 183f, 150f, 22f), "Maximum (Integer):", "Label");
-                FengGameManagerMKII.settings[198] = GUI.TextField(new Rect(leftpos + 550f, toppos + 161f, 50f, 22f), (string)FengGameManagerMKII.settings[198]);
-                FengGameManagerMKII.settings[199] = GUI.TextField(new Rect(leftpos + 550f, toppos + 183f, 50f, 22f), (string)FengGameManagerMKII.settings[199]);
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 90f, 160f, 22f), "Titan Health Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 161f, 150f, 22f), "Minimum (Integer):", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 183f, 150f, 22f), "Maximum (Integer):", "Label");
+                FengGameManagerMKII.settings[198] = GUI.TextField(new Rect(_leftPos + 550f, _topPos + 161f, 50f, 22f), (string)FengGameManagerMKII.settings[198]);
+                FengGameManagerMKII.settings[199] = GUI.TextField(new Rect(_leftPos + 550f, _topPos + 183f, 50f, 22f), (string)FengGameManagerMKII.settings[199]);
                 strArray16 = new[] { "Off", "Fixed", "Scaled" };
-                FengGameManagerMKII.settings[197] = GUI.SelectionGrid(new Rect(leftpos + 550f, toppos + 90f, 100f, 66f), (int)FengGameManagerMKII.settings[197], strArray16, 1, GUI.skin.toggle);
-                GUI.Label(new Rect(leftpos + 400f, toppos + 223f, 160f, 22f), "Titan Damage Mode:", "Label");
-                GUI.Label(new Rect(leftpos + 400f, toppos + 245f, 150f, 22f), "Damage (Integer):", "Label");
-                FengGameManagerMKII.settings[206] = GUI.TextField(new Rect(leftpos + 550f, toppos + 245f, 50f, 22f), (string)FengGameManagerMKII.settings[206]);
+                FengGameManagerMKII.settings[197] = GUI.SelectionGrid(new Rect(_leftPos + 550f, _topPos + 90f, 100f, 66f), (int)FengGameManagerMKII.settings[197], strArray16, 1, GUI.skin.toggle);
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 223f, 160f, 22f), "Titan Damage Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 245f, 150f, 22f), "Damage (Integer):", "Label");
+                FengGameManagerMKII.settings[206] = GUI.TextField(new Rect(_leftPos + 550f, _topPos + 245f, 50f, 22f), (string)FengGameManagerMKII.settings[206]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[205]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 550f, toppos + 223f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 550f, _topPos + 223f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -525,15 +525,15 @@ namespace GGP
                         FengGameManagerMKII.settings[205] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 285f, 160f, 22f), "Titan Explode Mode:", "Label");
-                GUI.Label(new Rect(leftpos + 400f, toppos + 307f, 160f, 22f), "Radius (Integer):", "Label");
-                FengGameManagerMKII.settings[196] = GUI.TextField(new Rect(leftpos + 550f, toppos + 307f, 50f, 22f), (string)FengGameManagerMKII.settings[196]);
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 285f, 160f, 22f), "Titan Explode Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 307f, 160f, 22f), "Radius (Integer):", "Label");
+                FengGameManagerMKII.settings[196] = GUI.TextField(new Rect(_leftPos + 550f, _topPos + 307f, 50f, 22f), (string)FengGameManagerMKII.settings[196]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[195]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 550f, toppos + 285f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 550f, _topPos + 285f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -545,13 +545,13 @@ namespace GGP
                         FengGameManagerMKII.settings[195] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 347f, 160f, 22f), "Disable Rock Throwing:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 347f, 160f, 22f), "Disable Rock Throwing:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[194]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 550f, toppos + 347f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 550f, _topPos + 347f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -566,15 +566,15 @@ namespace GGP
             }
             else if (((int)FengGameManagerMKII.settings[230]) == 1)
             {
-                GUI.Label(new Rect(leftpos + 100f, toppos + 90f, 160f, 22f), "Point Mode:", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 112f, 160f, 22f), "Max Points (Integer):", "Label");
-                FengGameManagerMKII.settings[227] = GUI.TextField(new Rect(leftpos + 250f, toppos + 112f, 50f, 22f), (string)FengGameManagerMKII.settings[227]);
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 90f, 160f, 22f), "Point Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 112f, 160f, 22f), "Max Points (Integer):", "Label");
+                FengGameManagerMKII.settings[227] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 112f, 50f, 22f), (string)FengGameManagerMKII.settings[227]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[226]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 90f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 90f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -586,13 +586,13 @@ namespace GGP
                         FengGameManagerMKII.settings[226] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 100f, toppos + 152f, 160f, 22f), "PVP Bomb Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 152f, 160f, 22f), "PVP Bomb Mode:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[192]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 152f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 152f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -604,18 +604,18 @@ namespace GGP
                         FengGameManagerMKII.settings[192] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 100f, toppos + 182f, 100f, 66f), "Team Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 182f, 100f, 66f), "Team Mode:", "Label");
                 strArray16 = new[] { "Off", "No Sort", "Size-Lock", "Skill-Lock" };
-                FengGameManagerMKII.settings[193] = GUI.SelectionGrid(new Rect(leftpos + 250f, toppos + 182f, 120f, 88f), (int)FengGameManagerMKII.settings[193], strArray16, 1, GUI.skin.toggle);
-                GUI.Label(new Rect(leftpos + 100f, toppos + 278f, 160f, 22f), "Infection Mode:", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 300f, 160f, 22f), "Starting Titans (Integer):", "Label");
-                FengGameManagerMKII.settings[201] = GUI.TextField(new Rect(leftpos + 250f, toppos + 300f, 50f, 22f), (string)FengGameManagerMKII.settings[201]);
+                FengGameManagerMKII.settings[193] = GUI.SelectionGrid(new Rect(_leftPos + 250f, _topPos + 182f, 120f, 88f), (int)FengGameManagerMKII.settings[193], strArray16, 1, GUI.skin.toggle);
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 278f, 160f, 22f), "Infection Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 300f, 160f, 22f), "Starting Titans (Integer):", "Label");
+                FengGameManagerMKII.settings[201] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 300f, 50f, 22f), (string)FengGameManagerMKII.settings[201]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[200]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 278f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 278f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -627,13 +627,13 @@ namespace GGP
                         FengGameManagerMKII.settings[200] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 100f, toppos + 330f, 160f, 22f), "Friendly Mode:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 330f, 160f, 22f), "Friendly Mode:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[219]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 330f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 330f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -645,16 +645,16 @@ namespace GGP
                         FengGameManagerMKII.settings[219] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 90f, 160f, 22f), "Sword/AHSS PVP:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 90f, 160f, 22f), "Sword/AHSS PVP:", "Label");
                 strArray16 = new[] { "Off", "Teams", "FFA" };
-                FengGameManagerMKII.settings[220] = GUI.SelectionGrid(new Rect(leftpos + 550f, toppos + 90f, 100f, 66f), (int)FengGameManagerMKII.settings[220], strArray16, 1, GUI.skin.toggle);
-                GUI.Label(new Rect(leftpos + 400f, toppos + 164f, 160f, 22f), "No AHSS Air-Reloading:", "Label");
+                FengGameManagerMKII.settings[220] = GUI.SelectionGrid(new Rect(_leftPos + 550f, _topPos + 90f, 100f, 66f), (int)FengGameManagerMKII.settings[220], strArray16, 1, GUI.skin.toggle);
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 164f, 160f, 22f), "No AHSS Air-Reloading:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[228]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 550f, toppos + 164f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 550f, _topPos + 164f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -666,13 +666,13 @@ namespace GGP
                         FengGameManagerMKII.settings[228] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 194f, 160f, 22f), "Cannons kill humans:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 194f, 160f, 22f), "Cannons kill humans:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[261]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 550f, toppos + 194f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 550f, _topPos + 194f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -687,15 +687,15 @@ namespace GGP
             }
             else if (((int)FengGameManagerMKII.settings[230]) == 2)
             {
-                GUI.Label(new Rect(leftpos + 100f, toppos + 90f, 160f, 22f), "Custom Titans/Wave:", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 112f, 160f, 22f), "Amount (Integer):", "Label");
-                FengGameManagerMKII.settings[218] = GUI.TextField(new Rect(leftpos + 250f, toppos + 112f, 50f, 22f), (string)FengGameManagerMKII.settings[218]);
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 90f, 160f, 22f), "Custom Titans/Wave:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 112f, 160f, 22f), "Amount (Integer):", "Label");
+                FengGameManagerMKII.settings[218] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 112f, 50f, 22f), (string)FengGameManagerMKII.settings[218]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[217]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 90f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 90f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -707,15 +707,15 @@ namespace GGP
                         FengGameManagerMKII.settings[217] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 100f, toppos + 152f, 160f, 22f), "Maximum Waves:", "Label");
-                GUI.Label(new Rect(leftpos + 100f, toppos + 174f, 160f, 22f), "Amount (Integer):", "Label");
-                FengGameManagerMKII.settings[222] = GUI.TextField(new Rect(leftpos + 250f, toppos + 174f, 50f, 22f), (string)FengGameManagerMKII.settings[222]);
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 152f, 160f, 22f), "Maximum Waves:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 174f, 160f, 22f), "Amount (Integer):", "Label");
+                FengGameManagerMKII.settings[222] = GUI.TextField(new Rect(_leftPos + 250f, _topPos + 174f, 50f, 22f), (string)FengGameManagerMKII.settings[222]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[221]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 152f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 152f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -727,13 +727,13 @@ namespace GGP
                         FengGameManagerMKII.settings[221] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 100f, toppos + 214f, 160f, 22f), "Punks every 5 waves:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 214f, 160f, 22f), "Punks every 5 waves:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[229]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 214f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 214f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -745,13 +745,13 @@ namespace GGP
                         FengGameManagerMKII.settings[229] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 100f, toppos + 244f, 160f, 22f), "Global Minimap Disable:", "Label");
+                GUI.Label(new Rect(_leftPos + 100f, _topPos + 244f, 160f, 22f), "Global Minimap Disable:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[235]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 250f, toppos + 274f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 250f, _topPos + 274f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -763,15 +763,15 @@ namespace GGP
                         FengGameManagerMKII.settings[235] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 90f, 160f, 22f), "Endless Respawn:", "Label");
-                GUI.Label(new Rect(leftpos + 400f, toppos + 112f, 160f, 22f), "Respawn Time (Integer):", "Label");
-                FengGameManagerMKII.settings[224] = GUI.TextField(new Rect(leftpos + 550f, toppos + 112f, 50f, 22f), (string)FengGameManagerMKII.settings[224]);
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 90f, 160f, 22f), "Endless Respawn:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 112f, 160f, 22f), "Respawn Time (Integer):", "Label");
+                FengGameManagerMKII.settings[224] = GUI.TextField(new Rect(_leftPos + 550f, _topPos + 112f, 50f, 22f), (string)FengGameManagerMKII.settings[224]);
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[223]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 550f, toppos + 90f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 550f, _topPos + 90f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -783,13 +783,13 @@ namespace GGP
                         FengGameManagerMKII.settings[223] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 152f, 160f, 22f), "Kick Eren Titan:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 152f, 160f, 22f), "Kick Eren Titan:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[202]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 550f, toppos + 152f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 550f, _topPos + 152f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -801,13 +801,13 @@ namespace GGP
                         FengGameManagerMKII.settings[202] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 182f, 160f, 22f), "Allow Horses:", "Label");
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 182f, 160f, 22f), "Allow Horses:", "Label");
                 flag35 = false;
                 if (((int)FengGameManagerMKII.settings[216]) == 1)
                 {
                     flag35 = true;
                 }
-                flag36 = GUI.Toggle(new Rect(leftpos + 550f, toppos + 182f, 40f, 20f), flag35, "On");
+                flag36 = GUI.Toggle(new Rect(_leftPos + 550f, _topPos + 182f, 40f, 20f), flag35, "On");
                 if (flag35 != flag36)
                 {
                     if (flag36)
@@ -819,14 +819,14 @@ namespace GGP
                         FengGameManagerMKII.settings[216] = 0;
                     }
                 }
-                GUI.Label(new Rect(leftpos + 400f, toppos + 212f, 180f, 22f), "Message of the day:", "Label");
-                FengGameManagerMKII.settings[225] = GUI.TextField(new Rect(leftpos + 400f, toppos + 234f, 200f, 22f), (string)FengGameManagerMKII.settings[225]);
+                GUI.Label(new Rect(_leftPos + 400f, _topPos + 212f, 180f, 22f), "Message of the day:", "Label");
+                FengGameManagerMKII.settings[225] = GUI.TextField(new Rect(_leftPos + 400f, _topPos + 234f, 200f, 22f), (string)FengGameManagerMKII.settings[225]);
             }
         }
         public static void Video_and_Audio()
         {
             #region Left
-            GUILayout.BeginArea(left);
+            GUILayout.BeginArea(_left);
             GUILayout.BeginVertical();
 
             BetterGUI.Header("Video");
@@ -894,7 +894,7 @@ namespace GGP
             #endregion
 
             #region Right
-            GUILayout.BeginArea(right);
+            GUILayout.BeginArea(_right);
             GUILayout.BeginVertical();
             BetterGUI.Header("Audio");
             AudioScroll = GUILayout.BeginScrollView(AudioScroll, false, false);
@@ -933,19 +933,19 @@ namespace GGP
             string str4;
             bool flag4;
 
-            if (GUI.Button(new Rect(leftpos + 233f, toppos + 51f, 55f, 25f), "Human"))
+            if (GUI.Button(new Rect(_leftPos + 233f, _topPos + 51f, 55f, 25f), "Human"))
             {
                 FengGameManagerMKII.settings[190] = 0;
             }
-            else if (GUI.Button(new Rect(leftpos + 293f, toppos + 51f, 52f, 25f), "Titan"))
+            else if (GUI.Button(new Rect(_leftPos + 293f, _topPos + 51f, 52f, 25f), "Titan"))
             {
                 FengGameManagerMKII.settings[190] = 1;
             }
-            else if (GUI.Button(new Rect(leftpos + 350f, toppos + 51f, 53f, 25f), "Horse"))
+            else if (GUI.Button(new Rect(_leftPos + 350f, _topPos + 51f, 53f, 25f), "Horse"))
             {
                 FengGameManagerMKII.settings[190] = 2;
             }
-            else if (GUI.Button(new Rect(leftpos + 408f, toppos + 51f, 59f, 25f), "Cannon"))
+            else if (GUI.Button(new Rect(_leftPos + 408f, _topPos + 51f, 59f, 25f), "Cannon"))
             {
                 FengGameManagerMKII.settings[190] = 3;
             }
@@ -964,7 +964,7 @@ namespace GGP
                         k = 390f;
                         j -= 15;
                     }
-                    GUI.Label(new Rect(leftpos + k, (toppos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
+                    GUI.Label(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
                 }
                 bool flag37 = false;
                 if (((int)FengGameManagerMKII.settings[97]) == 1)
@@ -981,7 +981,7 @@ namespace GGP
                 {
                     flag39 = true;
                 }
-                bool flag40 = GUI.Toggle(new Rect(leftpos + 457f, toppos + 261f, 40f, 20f), flag37, "On");
+                bool flag40 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 261f, 40f, 20f), flag37, "On");
                 if (flag37 != flag40)
                 {
                     if (flag40)
@@ -993,7 +993,7 @@ namespace GGP
                         FengGameManagerMKII.settings[97] = 0;
                     }
                 }
-                bool flag41 = GUI.Toggle(new Rect(leftpos + 457f, toppos + 286f, 40f, 20f), flag38, "On");
+                bool flag41 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 286f, 40f, 20f), flag38, "On");
                 if (flag38 != flag41)
                 {
                     if (flag41)
@@ -1005,7 +1005,7 @@ namespace GGP
                         FengGameManagerMKII.settings[116] = 0;
                     }
                 }
-                bool flag42 = GUI.Toggle(new Rect(leftpos + 457f, toppos + 311f, 40f, 20f), flag39, "On");
+                bool flag42 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 311f, 40f, 20f), flag39, "On");
                 if (flag39 != flag42)
                 {
                     if (flag42)
@@ -1026,48 +1026,48 @@ namespace GGP
                         k = 500f;
                         j -= 15;
                     }
-                    if (GUI.Button(new Rect(leftpos + k, (toppos + 86f) + (j * 25f), 120f, 20f), FengGameManagerMKII.inputManager.getKeyRC(i), "box"))
+                    if (GUI.Button(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 120f, 20f), FengGameManagerMKII.inputManager.getKeyRC(i), "box"))
                     {
                         FengGameManagerMKII.settings[100] = i + 1;
                         FengGameManagerMKII.inputManager.setNameRC(i, "waiting...");
                     }
                 }
-                if (GUI.Button(new Rect(leftpos + 500f, toppos + 261f, 120f, 20f), (string)FengGameManagerMKII.settings[98], "box"))
+                if (GUI.Button(new Rect(_leftPos + 500f, _topPos + 261f, 120f, 20f), (string)FengGameManagerMKII.settings[98], "box"))
                 {
                     FengGameManagerMKII.settings[98] = "waiting...";
                     FengGameManagerMKII.settings[100] = 98;
                 }
-                else if (GUI.Button(new Rect(leftpos + 500f, toppos + 286f, 120f, 20f), (string)FengGameManagerMKII.settings[99], "box"))
+                else if (GUI.Button(new Rect(_leftPos + 500f, _topPos + 286f, 120f, 20f), (string)FengGameManagerMKII.settings[99], "box"))
                 {
                     FengGameManagerMKII.settings[99] = "waiting...";
                     FengGameManagerMKII.settings[100] = 99;
                 }
-                else if (GUI.Button(new Rect(leftpos + 500f, toppos + 311f, 120f, 20f), (string)FengGameManagerMKII.settings[182], "box"))
+                else if (GUI.Button(new Rect(_leftPos + 500f, _topPos + 311f, 120f, 20f), (string)FengGameManagerMKII.settings[182], "box"))
                 {
                     FengGameManagerMKII.settings[182] = "waiting...";
                     FengGameManagerMKII.settings[100] = 182;
                 }
-                else if (GUI.Button(new Rect(leftpos + 500f, toppos + 336f, 120f, 20f), (string)FengGameManagerMKII.settings[232], "box"))
+                else if (GUI.Button(new Rect(_leftPos + 500f, _topPos + 336f, 120f, 20f), (string)FengGameManagerMKII.settings[232], "box"))
                 {
                     FengGameManagerMKII.settings[232] = "waiting...";
                     FengGameManagerMKII.settings[100] = 232;
                 }
-                else if (GUI.Button(new Rect(leftpos + 500f, toppos + 361f, 120f, 20f), (string)FengGameManagerMKII.settings[233], "box"))
+                else if (GUI.Button(new Rect(_leftPos + 500f, _topPos + 361f, 120f, 20f), (string)FengGameManagerMKII.settings[233], "box"))
                 {
                     FengGameManagerMKII.settings[233] = "waiting...";
                     FengGameManagerMKII.settings[100] = 233;
                 }
-                else if (GUI.Button(new Rect(leftpos + 500f, toppos + 386f, 120f, 20f), (string)FengGameManagerMKII.settings[234], "box"))
+                else if (GUI.Button(new Rect(_leftPos + 500f, _topPos + 386f, 120f, 20f), (string)FengGameManagerMKII.settings[234], "box"))
                 {
                     FengGameManagerMKII.settings[234] = "waiting...";
                     FengGameManagerMKII.settings[100] = 234;
                 }
-                else if (GUI.Button(new Rect(leftpos + 500f, toppos + 411f, 120f, 20f), (string)FengGameManagerMKII.settings[236], "box"))
+                else if (GUI.Button(new Rect(_leftPos + 500f, _topPos + 411f, 120f, 20f), (string)FengGameManagerMKII.settings[236], "box"))
                 {
                     FengGameManagerMKII.settings[236] = "waiting...";
                     FengGameManagerMKII.settings[100] = 236;
                 }
-                else if (GUI.Button(new Rect(leftpos + 500f, toppos + 436f, 120f, 20f), (string)FengGameManagerMKII.settings[262], "box"))
+                else if (GUI.Button(new Rect(_leftPos + 500f, _topPos + 436f, 120f, 20f), (string)FengGameManagerMKII.settings[262], "box"))
                 {
                     FengGameManagerMKII.settings[262] = "waiting...";
                     FengGameManagerMKII.settings[100] = 262;
@@ -1195,7 +1195,7 @@ namespace GGP
                         k = 390f;
                         j -= 7;
                     }
-                    GUI.Label(new Rect(leftpos + k, (toppos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
+                    GUI.Label(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
                 }
                 for (i = 0; i < 14; i++)
                 {
@@ -1207,7 +1207,7 @@ namespace GGP
                         k = 500f;
                         j -= 7;
                     }
-                    if (GUI.Button(new Rect(leftpos + k, (toppos + 86f) + (j * 25f), 120f, 20f), (string)FengGameManagerMKII.settings[num23], "box"))
+                    if (GUI.Button(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 120f, 20f), (string)FengGameManagerMKII.settings[num23], "box"))
                     {
                         FengGameManagerMKII.settings[num23] = "waiting...";
                         FengGameManagerMKII.settings[100] = num23;
@@ -1286,7 +1286,7 @@ namespace GGP
                         k = 390f;
                         j -= 4;
                     }
-                    GUI.Label(new Rect(leftpos + k, (toppos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
+                    GUI.Label(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
                 }
                 for (i = 0; i < 7; i++)
                 {
@@ -1298,7 +1298,7 @@ namespace GGP
                         k = 500f;
                         j -= 4;
                     }
-                    if (GUI.Button(new Rect(leftpos + k, (toppos + 86f) + (j * 25f), 120f, 20f), (string)FengGameManagerMKII.settings[num23], "box"))
+                    if (GUI.Button(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 120f, 20f), (string)FengGameManagerMKII.settings[num23], "box"))
                     {
                         FengGameManagerMKII.settings[num23] = "waiting...";
                         FengGameManagerMKII.settings[100] = num23;
@@ -1377,7 +1377,7 @@ namespace GGP
                         k = 390f;
                         j -= 4;
                     }
-                    GUI.Label(new Rect(leftpos + k, (toppos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
+                    GUI.Label(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
                 }
                 for (i = 0; i < 7; i++)
                 {
@@ -1389,7 +1389,7 @@ namespace GGP
                         k = 500f;
                         j -= 4;
                     }
-                    if (GUI.Button(new Rect(leftpos + k, (toppos + 86f) + (j * 25f), 120f, 20f), (string)FengGameManagerMKII.settings[num23], "box"))
+                    if (GUI.Button(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 120f, 20f), (string)FengGameManagerMKII.settings[num23], "box"))
                     {
                         FengGameManagerMKII.settings[num23] = "waiting...";
                         FengGameManagerMKII.settings[100] = num23;
@@ -1459,83 +1459,83 @@ namespace GGP
         }
         public static void Bombs()
         {
-            GUI.Label(new Rect(leftpos + 150f, toppos + 80f, 185f, 22f), "Bomb Mode", "Label");
-            GUI.Label(new Rect(leftpos + 80f, toppos + 110f, 80f, 22f), "Color:", "Label");
+            GUI.Label(new Rect(_leftPos + 150f, _topPos + 80f, 185f, 22f), "Bomb Mode", "Label");
+            GUI.Label(new Rect(_leftPos + 80f, _topPos + 110f, 80f, 22f), "Color:", "Label");
             var textured = new Texture2D(1, 1, TextureFormat.ARGB32, false);
             textured.SetPixel(0, 0, new Color((float)FengGameManagerMKII.settings[246], (float)FengGameManagerMKII.settings[247], (float)FengGameManagerMKII.settings[248], (float)FengGameManagerMKII.settings[249]));
             textured.Apply();
-            GUI.DrawTexture(new Rect(leftpos + 120f, toppos + 113f, 40f, 15f), textured, ScaleMode.StretchToFill);
+            GUI.DrawTexture(new Rect(_leftPos + 120f, _topPos + 113f, 40f, 15f), textured, ScaleMode.StretchToFill);
             UnityEngine.Object.Destroy(textured);
-            GUI.Label(new Rect(leftpos + 72f, toppos + 135f, 20f, 22f), "R:", "Label");
-            GUI.Label(new Rect(leftpos + 72f, toppos + 160f, 20f, 22f), "G:", "Label");
-            GUI.Label(new Rect(leftpos + 72f, toppos + 185f, 20f, 22f), "B:", "Label");
-            GUI.Label(new Rect(leftpos + 72f, toppos + 210f, 20f, 22f), "A:", "Label");
-            FengGameManagerMKII.settings[246] = GUI.HorizontalSlider(new Rect(leftpos + 92f, toppos + 138f, 100f, 20f), (float)FengGameManagerMKII.settings[246], 0f, 1f);
-            FengGameManagerMKII.settings[247] = GUI.HorizontalSlider(new Rect(leftpos + 92f, toppos + 163f, 100f, 20f), (float)FengGameManagerMKII.settings[247], 0f, 1f);
-            FengGameManagerMKII.settings[248] = GUI.HorizontalSlider(new Rect(leftpos + 92f, toppos + 188f, 100f, 20f), (float)FengGameManagerMKII.settings[248], 0f, 1f);
-            FengGameManagerMKII.settings[249] = GUI.HorizontalSlider(new Rect(leftpos + 92f, toppos + 213f, 100f, 20f), (float)FengGameManagerMKII.settings[249], 0.5f, 1f);
-            GUI.Label(new Rect(leftpos + 72f, toppos + 235f, 95f, 22f), "Bomb Radius:", "Label");
-            GUI.Label(new Rect(leftpos + 72f, toppos + 260f, 95f, 22f), "Bomb Range:", "Label");
-            GUI.Label(new Rect(leftpos + 72f, toppos + 285f, 95f, 22f), "Bomb Speed:", "Label");
-            GUI.Label(new Rect(leftpos + 72f, toppos + 310f, 95f, 22f), "Bomb CD:", "Label");
-            GUI.Label(new Rect(leftpos + 72f, toppos + 335f, 95f, 22f), "Unused Points:", "Label");
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 135f, 20f, 22f), "R:", "Label");
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 160f, 20f, 22f), "G:", "Label");
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 185f, 20f, 22f), "B:", "Label");
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 210f, 20f, 22f), "A:", "Label");
+            FengGameManagerMKII.settings[246] = GUI.HorizontalSlider(new Rect(_leftPos + 92f, _topPos + 138f, 100f, 20f), (float)FengGameManagerMKII.settings[246], 0f, 1f);
+            FengGameManagerMKII.settings[247] = GUI.HorizontalSlider(new Rect(_leftPos + 92f, _topPos + 163f, 100f, 20f), (float)FengGameManagerMKII.settings[247], 0f, 1f);
+            FengGameManagerMKII.settings[248] = GUI.HorizontalSlider(new Rect(_leftPos + 92f, _topPos + 188f, 100f, 20f), (float)FengGameManagerMKII.settings[248], 0f, 1f);
+            FengGameManagerMKII.settings[249] = GUI.HorizontalSlider(new Rect(_leftPos + 92f, _topPos + 213f, 100f, 20f), (float)FengGameManagerMKII.settings[249], 0.5f, 1f);
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 235f, 95f, 22f), "Bomb Radius:", "Label");
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 260f, 95f, 22f), "Bomb Range:", "Label");
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 285f, 95f, 22f), "Bomb Speed:", "Label");
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 310f, 95f, 22f), "Bomb CD:", "Label");
+            GUI.Label(new Rect(_leftPos + 72f, _topPos + 335f, 95f, 22f), "Unused Points:", "Label");
             var num30 = (int)FengGameManagerMKII.settings[250];
-            GUI.Label(new Rect(leftpos + 168f, toppos + 235f, 20f, 22f), num30.ToString(), "Label");
+            GUI.Label(new Rect(_leftPos + 168f, _topPos + 235f, 20f, 22f), num30.ToString(), "Label");
             num30 = (int)FengGameManagerMKII.settings[251];
-            GUI.Label(new Rect(leftpos + 168f, toppos + 260f, 20f, 22f), num30.ToString(), "Label");
+            GUI.Label(new Rect(_leftPos + 168f, _topPos + 260f, 20f, 22f), num30.ToString(), "Label");
             num30 = (int)FengGameManagerMKII.settings[252];
-            GUI.Label(new Rect(leftpos + 168f, toppos + 285f, 20f, 22f), num30.ToString(), "Label");
-            GUI.Label(new Rect(leftpos + 168f, toppos + 310f, 20f, 22f), ((int)FengGameManagerMKII.settings[253]).ToString(), "Label");
+            GUI.Label(new Rect(_leftPos + 168f, _topPos + 285f, 20f, 22f), num30.ToString(), "Label");
+            GUI.Label(new Rect(_leftPos + 168f, _topPos + 310f, 20f, 22f), ((int)FengGameManagerMKII.settings[253]).ToString(), "Label");
             int num43 = (((20 - ((int)FengGameManagerMKII.settings[250])) - ((int)FengGameManagerMKII.settings[251])) - ((int)FengGameManagerMKII.settings[252])) - ((int)FengGameManagerMKII.settings[253]);
-            GUI.Label(new Rect(leftpos + 168f, toppos + 335f, 20f, 22f), num43.ToString(), "Label");
-            if (GUI.Button(new Rect(leftpos + 190f, toppos + 235f, 20f, 20f), "-"))
+            GUI.Label(new Rect(_leftPos + 168f, _topPos + 335f, 20f, 22f), num43.ToString(), "Label");
+            if (GUI.Button(new Rect(_leftPos + 190f, _topPos + 235f, 20f, 20f), "-"))
             {
                 if (((int)FengGameManagerMKII.settings[250]) > 0)
                 {
                     FengGameManagerMKII.settings[250] = ((int)FengGameManagerMKII.settings[250]) - 1;
                 }
             }
-            else if (GUI.Button(new Rect(leftpos + 215f, toppos + 235f, 20f, 20f), "+") && ((((int)FengGameManagerMKII.settings[250]) < 10) && (num43 > 0)))
+            else if (GUI.Button(new Rect(_leftPos + 215f, _topPos + 235f, 20f, 20f), "+") && ((((int)FengGameManagerMKII.settings[250]) < 10) && (num43 > 0)))
             {
                 FengGameManagerMKII.settings[250] = ((int)FengGameManagerMKII.settings[250]) + 1;
             }
-            if (GUI.Button(new Rect(leftpos + 190f, toppos + 260f, 20f, 20f), "-"))
+            if (GUI.Button(new Rect(_leftPos + 190f, _topPos + 260f, 20f, 20f), "-"))
             {
                 if (((int)FengGameManagerMKII.settings[251]) > 0)
                 {
                     FengGameManagerMKII.settings[251] = ((int)FengGameManagerMKII.settings[251]) - 1;
                 }
             }
-            else if (GUI.Button(new Rect(leftpos + 215f, toppos + 260f, 20f, 20f), "+") && ((((int)FengGameManagerMKII.settings[251]) < 10) && (num43 > 0)))
+            else if (GUI.Button(new Rect(_leftPos + 215f, _topPos + 260f, 20f, 20f), "+") && ((((int)FengGameManagerMKII.settings[251]) < 10) && (num43 > 0)))
             {
                 FengGameManagerMKII.settings[251] = ((int)FengGameManagerMKII.settings[251]) + 1;
             }
-            if (GUI.Button(new Rect(leftpos + 190f, toppos + 285f, 20f, 20f), "-"))
+            if (GUI.Button(new Rect(_leftPos + 190f, _topPos + 285f, 20f, 20f), "-"))
             {
                 if (((int)FengGameManagerMKII.settings[252]) > 0)
                 {
                     FengGameManagerMKII.settings[252] = ((int)FengGameManagerMKII.settings[252]) - 1;
                 }
             }
-            else if (GUI.Button(new Rect(leftpos + 215f, toppos + 285f, 20f, 20f), "+") && ((((int)FengGameManagerMKII.settings[252]) < 10) && (num43 > 0)))
+            else if (GUI.Button(new Rect(_leftPos + 215f, _topPos + 285f, 20f, 20f), "+") && ((((int)FengGameManagerMKII.settings[252]) < 10) && (num43 > 0)))
             {
                 FengGameManagerMKII.settings[252] = ((int)FengGameManagerMKII.settings[252]) + 1;
             }
-            if (GUI.Button(new Rect(leftpos + 190f, toppos + 310f, 20f, 20f), "-"))
+            if (GUI.Button(new Rect(_leftPos + 190f, _topPos + 310f, 20f, 20f), "-"))
             {
                 if (((int)FengGameManagerMKII.settings[253]) > 0)
                 {
                     FengGameManagerMKII.settings[253] = ((int)FengGameManagerMKII.settings[253]) - 1;
                 }
             }
-            else if (GUI.Button(new Rect(leftpos + 215f, toppos + 310f, 20f, 20f), "+") && ((((int)FengGameManagerMKII.settings[253]) < 10) && (num43 > 0)))
+            else if (GUI.Button(new Rect(_leftPos + 215f, _topPos + 310f, 20f, 20f), "+") && ((((int)FengGameManagerMKII.settings[253]) < 10) && (num43 > 0)))
             {
                 FengGameManagerMKII.settings[253] = ((int)FengGameManagerMKII.settings[253]) + 1;
             }
         }
         public static void Human_Skins()
         {
-            GUILayout.BeginArea(left);
+            GUILayout.BeginArea(_left);
             GUILayout.BeginVertical();
             BetterGUI.Header("Settings");
             BetterGUI.SubHeader("General");
@@ -1549,7 +1549,7 @@ namespace GGP
             GUILayout.EndVertical();
             GUILayout.EndArea();
 
-            GUILayout.BeginArea(right);
+            GUILayout.BeginArea(_right);
             GUILayout.BeginVertical();
             BetterGUI.Header("Skins");
             GUILayout.BeginHorizontal();
@@ -1568,13 +1568,13 @@ namespace GGP
 
             //OLD
             {
-                //GUI.Label(new Rect(leftpos + 205f, toppos + 52f, 120f, 30f), "Human Skin Mode:", "Label");
+                //GUI.Label(new Rect(_leftPos + 205f, _topPos + 52f, 120f, 30f), "Human Skin Mode:", "Label");
                 //var flag2 = false;
                 //if (((int)FengGameManagerMKII.settings[0]) == 1)
                 //{
                 //    flag2 = true;
                 //}
-                //var flag5 = GUI.Toggle(new Rect(leftpos + 325f, toppos + 52f, 40f, 20f), flag2, "On");
+                //var flag5 = GUI.Toggle(new Rect(_leftPos + 325f, _topPos + 52f, 40f, 20f), flag2, "On");
                 //if (flag2 != flag5)
                 //{
                 //    if (flag5)
@@ -1589,90 +1589,90 @@ namespace GGP
                 //float num44 = 44f;
                 //if (((int)FengGameManagerMKII.settings[0x85]) == 0)
                 //{
-                //    if (GUI.Button(new Rect(leftpos + 375f, toppos + 51f, 120f, 22f), "Human Set 1"))
+                //    if (GUI.Button(new Rect(_leftPos + 375f, _topPos + 51f, 120f, 22f), "Human Set 1"))
                 //    {
                 //        FengGameManagerMKII.settings[0x85] = 1;
                 //    }
-                //    FengGameManagerMKII.settings[3] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[3]);
-                //    FengGameManagerMKII.settings[4] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[4]);
-                //    FengGameManagerMKII.settings[5] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[5]);
-                //    FengGameManagerMKII.settings[6] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[6]);
-                //    FengGameManagerMKII.settings[7] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[7]);
-                //    FengGameManagerMKII.settings[8] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[8]);
-                //    FengGameManagerMKII.settings[14] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[14]);
-                //    FengGameManagerMKII.settings[9] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[9]);
-                //    FengGameManagerMKII.settings[10] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[10]);
-                //    FengGameManagerMKII.settings[11] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[11]);
-                //    FengGameManagerMKII.settings[12] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[12]);
-                //    FengGameManagerMKII.settings[13] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[13]);
-                //    FengGameManagerMKII.settings[0x5e] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x5e]);
+                //    FengGameManagerMKII.settings[3] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[3]);
+                //    FengGameManagerMKII.settings[4] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[4]);
+                //    FengGameManagerMKII.settings[5] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[5]);
+                //    FengGameManagerMKII.settings[6] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[6]);
+                //    FengGameManagerMKII.settings[7] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[7]);
+                //    FengGameManagerMKII.settings[8] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[8]);
+                //    FengGameManagerMKII.settings[14] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[14]);
+                //    FengGameManagerMKII.settings[9] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[9]);
+                //    FengGameManagerMKII.settings[10] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[10]);
+                //    FengGameManagerMKII.settings[11] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[11]);
+                //    FengGameManagerMKII.settings[12] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[12]);
+                //    FengGameManagerMKII.settings[13] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[13]);
+                //    FengGameManagerMKII.settings[0x5e] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x5e]);
                 //}
                 //else if (((int)FengGameManagerMKII.settings[0x85]) == 1)
                 //{
-                //    if (GUI.Button(new Rect(leftpos + 375f, toppos + 51f, 120f, 22f), "Human Set 2"))
+                //    if (GUI.Button(new Rect(_leftPos + 375f, _topPos + 51f, 120f, 22f), "Human Set 2"))
                 //    {
                 //        FengGameManagerMKII.settings[0x85] = 2;
                 //    }
-                //    FengGameManagerMKII.settings[0x86] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x86]);
-                //    FengGameManagerMKII.settings[0x87] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x87]);
-                //    FengGameManagerMKII.settings[0x88] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x88]);
-                //    FengGameManagerMKII.settings[0x89] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x89]);
-                //    FengGameManagerMKII.settings[0x8a] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8a]);
-                //    FengGameManagerMKII.settings[0x8b] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8b]);
-                //    FengGameManagerMKII.settings[0x91] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[0x91]);
-                //    FengGameManagerMKII.settings[140] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[140]);
-                //    FengGameManagerMKII.settings[0x8d] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8d]);
-                //    FengGameManagerMKII.settings[0x8e] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8e]);
-                //    FengGameManagerMKII.settings[0x8f] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8f]);
-                //    FengGameManagerMKII.settings[0x90] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x90]);
-                //    FengGameManagerMKII.settings[0x92] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x92]);
+                //    FengGameManagerMKII.settings[0x86] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x86]);
+                //    FengGameManagerMKII.settings[0x87] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x87]);
+                //    FengGameManagerMKII.settings[0x88] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x88]);
+                //    FengGameManagerMKII.settings[0x89] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x89]);
+                //    FengGameManagerMKII.settings[0x8a] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8a]);
+                //    FengGameManagerMKII.settings[0x8b] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8b]);
+                //    FengGameManagerMKII.settings[0x91] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[0x91]);
+                //    FengGameManagerMKII.settings[140] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[140]);
+                //    FengGameManagerMKII.settings[0x8d] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8d]);
+                //    FengGameManagerMKII.settings[0x8e] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8e]);
+                //    FengGameManagerMKII.settings[0x8f] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8f]);
+                //    FengGameManagerMKII.settings[0x90] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x90]);
+                //    FengGameManagerMKII.settings[0x92] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x92]);
                 //}
                 //else if (((int)FengGameManagerMKII.settings[0x85]) == 2)
                 //{
-                //    if (GUI.Button(new Rect(leftpos + 375f, toppos + 51f, 120f, 22f), "Human Set 3"))
+                //    if (GUI.Button(new Rect(_leftPos + 375f, _topPos + 51f, 120f, 22f), "Human Set 3"))
                 //    {
                 //        FengGameManagerMKII.settings[0x85] = 0;
                 //    }
-                //    FengGameManagerMKII.settings[0x93] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x93]);
-                //    FengGameManagerMKII.settings[0x94] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x94]);
-                //    FengGameManagerMKII.settings[0x95] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x95]);
-                //    FengGameManagerMKII.settings[150] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[150]);
-                //    FengGameManagerMKII.settings[0x97] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x97]);
-                //    FengGameManagerMKII.settings[0x98] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x98]);
-                //    FengGameManagerMKII.settings[0x9e] = GUI.TextField(new Rect(leftpos + 80f, (toppos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9e]);
-                //    FengGameManagerMKII.settings[0x99] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x99]);
-                //    FengGameManagerMKII.settings[0x9a] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9a]);
-                //    FengGameManagerMKII.settings[0x9b] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9b]);
-                //    FengGameManagerMKII.settings[0x9c] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9c]);
-                //    FengGameManagerMKII.settings[0x9d] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9d]);
-                //    FengGameManagerMKII.settings[0x9f] = GUI.TextField(new Rect(leftpos + 390f, (toppos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9f]);
+                //    FengGameManagerMKII.settings[0x93] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x93]);
+                //    FengGameManagerMKII.settings[0x94] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x94]);
+                //    FengGameManagerMKII.settings[0x95] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x95]);
+                //    FengGameManagerMKII.settings[150] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[150]);
+                //    FengGameManagerMKII.settings[0x97] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x97]);
+                //    FengGameManagerMKII.settings[0x98] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x98]);
+                //    FengGameManagerMKII.settings[0x9e] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9e]);
+                //    FengGameManagerMKII.settings[0x99] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x99]);
+                //    FengGameManagerMKII.settings[0x9a] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9a]);
+                //    FengGameManagerMKII.settings[0x9b] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9b]);
+                //    FengGameManagerMKII.settings[0x9c] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9c]);
+                //    FengGameManagerMKII.settings[0x9d] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9d]);
+                //    FengGameManagerMKII.settings[0x9f] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9f]);
                 //}
-                //GUI.Label(new Rect(leftpos + 80f, (toppos + 92f) + (num44 * 0f), 150f, 20f), "Horse:", "Label");
-                //GUI.Label(new Rect(leftpos + 80f, (toppos + 92f) + (num44 * 1f), 227f, 20f), "Hair (model dependent):", "Label");
-                //GUI.Label(new Rect(leftpos + 80f, (toppos + 92f) + (num44 * 2f), 150f, 20f), "Eyes:", "Label");
-                //GUI.Label(new Rect(leftpos + 80f, (toppos + 92f) + (num44 * 3f), 240f, 20f), "Glass (must have a glass enabled):", "Label");
-                //GUI.Label(new Rect(leftpos + 80f, (toppos + 92f) + (num44 * 4f), 150f, 20f), "Face:", "Label");
-                //GUI.Label(new Rect(leftpos + 80f, (toppos + 92f) + (num44 * 5f), 150f, 20f), "Skin:", "Label");
-                //GUI.Label(new Rect(leftpos + 80f, (toppos + 92f) + (num44 * 6f), 240f, 20f), "Hoodie (costume dependent):", "Label");
-                //GUI.Label(new Rect(leftpos + 390f, (toppos + 92f) + (num44 * 0f), 240f, 20f), "Costume (model dependent):", "Label");
-                //GUI.Label(new Rect(leftpos + 390f, (toppos + 92f) + (num44 * 1f), 150f, 20f), "Logo & Cape:", "Label");
-                //GUI.Label(new Rect(leftpos + 390f, (toppos + 92f) + (num44 * 2f), 240f, 20f), "3DMG Center & 3DMG/Blade/Gun(left):", "Label");
-                //GUI.Label(new Rect(leftpos + 390f, (toppos + 92f) + (num44 * 3f), 227f, 20f), "3DMG/Blade/Gun(right):", "Label");
-                //GUI.Label(new Rect(leftpos + 390f, (toppos + 92f) + (num44 * 4f), 150f, 20f), "Gas:", "Label");
-                //GUI.Label(new Rect(leftpos + 390f, (toppos + 92f) + (num44 * 5f), 150f, 20f), "Weapon Trail:", "Label");
+                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 0f), 150f, 20f), "Horse:", "Label");
+                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 1f), 227f, 20f), "Hair (model dependent):", "Label");
+                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 2f), 150f, 20f), "Eyes:", "Label");
+                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 3f), 240f, 20f), "Glass (must have a glass enabled):", "Label");
+                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 4f), 150f, 20f), "Face:", "Label");
+                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 5f), 150f, 20f), "Skin:", "Label");
+                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 6f), 240f, 20f), "Hoodie (costume dependent):", "Label");
+                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 0f), 240f, 20f), "Costume (model dependent):", "Label");
+                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 1f), 150f, 20f), "Logo & Cape:", "Label");
+                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 2f), 240f, 20f), "3DMG Center & 3DMG/Blade/Gun(_left):", "Label");
+                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 3f), 227f, 20f), "3DMG/Blade/Gun(_right):", "Label");
+                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 4f), 150f, 20f), "Gas:", "Label");
+                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 5f), 150f, 20f), "Weapon Trail:", "Label");
             }
         }
         public static void Titan_Skins()
         {
             int num45;
             int num46;
-            GUI.Label(new Rect(leftpos + 270f, toppos + 52f, 120f, 30f), "Titan Skin Mode:", "Label");
+            GUI.Label(new Rect(_leftPos + 270f, _topPos + 52f, 120f, 30f), "Titan Skin Mode:", "Label");
             var flag6 = false;
             if (Settings.TitanSkins == 1)
             {
                 flag6 = true;
             }
-            bool flag11 = GUI.Toggle(new Rect(leftpos + 390f, toppos + 52f, 40f, 20f), flag6, "On");
+            bool flag11 = GUI.Toggle(new Rect(_leftPos + 390f, _topPos + 52f, 40f, 20f), flag6, "On");
             if (flag6 != flag11)
             {
                 if (flag11)
@@ -1684,13 +1684,13 @@ namespace GGP
                     Settings.TitanSkins = 0;
                 }
             }
-            GUI.Label(new Rect(leftpos + 270f, toppos + 77f, 120f, 30f), "Randomized Pairs:", "Label");
+            GUI.Label(new Rect(_leftPos + 270f, _topPos + 77f, 120f, 30f), "Randomized Pairs:", "Label");
             flag6 = false;
             if (((int)FengGameManagerMKII.settings[32]) == 1)
             {
                 flag6 = true;
             }
-            flag11 = GUI.Toggle(new Rect(leftpos + 390f, toppos + 77f, 40f, 20f), flag6, "On");
+            flag11 = GUI.Toggle(new Rect(_leftPos + 390f, _topPos + 77f, 40f, 20f), flag6, "On");
             if (flag6 != flag11)
             {
                 if (flag11)
@@ -1702,13 +1702,13 @@ namespace GGP
                     FengGameManagerMKII.settings[32] = 0;
                 }
             }
-            GUI.Label(new Rect(leftpos + 158f, toppos + 112f, 150f, 20f), "Titan Hair:", "Label");
-            FengGameManagerMKII.settings[21] = GUI.TextField(new Rect(leftpos + 80f, toppos + 134f, 165f, 20f), (string)FengGameManagerMKII.settings[21]);
-            FengGameManagerMKII.settings[22] = GUI.TextField(new Rect(leftpos + 80f, toppos + 156f, 165f, 20f), (string)FengGameManagerMKII.settings[22]);
-            FengGameManagerMKII.settings[23] = GUI.TextField(new Rect(leftpos + 80f, toppos + 178f, 165f, 20f), (string)FengGameManagerMKII.settings[23]);
-            FengGameManagerMKII.settings[24] = GUI.TextField(new Rect(leftpos + 80f, toppos + 200f, 165f, 20f), (string)FengGameManagerMKII.settings[24]);
-            FengGameManagerMKII.settings[25] = GUI.TextField(new Rect(leftpos + 80f, toppos + 222f, 165f, 20f), (string)FengGameManagerMKII.settings[25]);
-            if (GUI.Button(new Rect(leftpos + 250f, toppos + 134f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[16])))
+            GUI.Label(new Rect(_leftPos + 158f, _topPos + 112f, 150f, 20f), "Titan Hair:", "Label");
+            FengGameManagerMKII.settings[21] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 134f, 165f, 20f), (string)FengGameManagerMKII.settings[21]);
+            FengGameManagerMKII.settings[22] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 156f, 165f, 20f), (string)FengGameManagerMKII.settings[22]);
+            FengGameManagerMKII.settings[23] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 178f, 165f, 20f), (string)FengGameManagerMKII.settings[23]);
+            FengGameManagerMKII.settings[24] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 200f, 165f, 20f), (string)FengGameManagerMKII.settings[24]);
+            FengGameManagerMKII.settings[25] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 222f, 165f, 20f), (string)FengGameManagerMKII.settings[25]);
+            if (GUI.Button(new Rect(_leftPos + 250f, _topPos + 134f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[16])))
             {
                 num45 = 16;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1722,7 +1722,7 @@ namespace GGP
                 }
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            else if (GUI.Button(new Rect(leftpos + 250f, toppos + 156f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[17])))
+            else if (GUI.Button(new Rect(_leftPos + 250f, _topPos + 156f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[17])))
             {
                 num45 = 17;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1736,7 +1736,7 @@ namespace GGP
                 }
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            else if (GUI.Button(new Rect(leftpos + 250f, toppos + 178f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[18])))
+            else if (GUI.Button(new Rect(_leftPos + 250f, _topPos + 178f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[18])))
             {
                 num45 = 18;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1750,7 +1750,7 @@ namespace GGP
                 }
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            else if (GUI.Button(new Rect(leftpos + 250f, toppos + 200f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[19])))
+            else if (GUI.Button(new Rect(_leftPos + 250f, _topPos + 200f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[19])))
             {
                 num45 = 19;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1764,7 +1764,7 @@ namespace GGP
                 }
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            else if (GUI.Button(new Rect(leftpos + 250f, toppos + 222f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[20])))
+            else if (GUI.Button(new Rect(_leftPos + 250f, _topPos + 222f, 60f, 20f), FengGameManagerMKII.hairtype((int)FengGameManagerMKII.settings[20])))
             {
                 num45 = 20;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1778,31 +1778,31 @@ namespace GGP
                 }
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            GUI.Label(new Rect(leftpos + 158f, toppos + 252f, 150f, 20f), "Titan Eye:", "Label");
-            FengGameManagerMKII.settings[26] = GUI.TextField(new Rect(leftpos + 80f, toppos + 274f, 230f, 20f), (string)FengGameManagerMKII.settings[26]);
-            FengGameManagerMKII.settings[27] = GUI.TextField(new Rect(leftpos + 80f, toppos + 296f, 230f, 20f), (string)FengGameManagerMKII.settings[27]);
-            FengGameManagerMKII.settings[28] = GUI.TextField(new Rect(leftpos + 80f, toppos + 318f, 230f, 20f), (string)FengGameManagerMKII.settings[28]);
-            FengGameManagerMKII.settings[29] = GUI.TextField(new Rect(leftpos + 80f, toppos + 340f, 230f, 20f), (string)FengGameManagerMKII.settings[29]);
-            FengGameManagerMKII.settings[30] = GUI.TextField(new Rect(leftpos + 80f, toppos + 362f, 230f, 20f), (string)FengGameManagerMKII.settings[30]);
-            GUI.Label(new Rect(leftpos + 455f, toppos + 112f, 150f, 20f), "Titan Body:", "Label");
-            FengGameManagerMKII.settings[86] = GUI.TextField(new Rect(leftpos + 390f, toppos + 134f, 230f, 20f), (string)FengGameManagerMKII.settings[86]);
-            FengGameManagerMKII.settings[87] = GUI.TextField(new Rect(leftpos + 390f, toppos + 156f, 230f, 20f), (string)FengGameManagerMKII.settings[87]);
-            FengGameManagerMKII.settings[88] = GUI.TextField(new Rect(leftpos + 390f, toppos + 178f, 230f, 20f), (string)FengGameManagerMKII.settings[88]);
-            FengGameManagerMKII.settings[89] = GUI.TextField(new Rect(leftpos + 390f, toppos + 200f, 230f, 20f), (string)FengGameManagerMKII.settings[89]);
-            FengGameManagerMKII.settings[90] = GUI.TextField(new Rect(leftpos + 390f, toppos + 222f, 230f, 20f), (string)FengGameManagerMKII.settings[90]);
-            GUI.Label(new Rect(leftpos + 472f, toppos + 252f, 150f, 20f), "Eren:", "Label");
-            FengGameManagerMKII.settings[65] = GUI.TextField(new Rect(leftpos + 390f, toppos + 274f, 230f, 20f), (string)FengGameManagerMKII.settings[65]);
-            GUI.Label(new Rect(leftpos + 470f, toppos + 296f, 150f, 20f), "Annie:", "Label");
-            FengGameManagerMKII.settings[66] = GUI.TextField(new Rect(leftpos + 390f, toppos + 318f, 230f, 20f), (string)FengGameManagerMKII.settings[66]);
-            GUI.Label(new Rect(leftpos + 465f, toppos + 340f, 150f, 20f), "Colossal:", "Label");
-            FengGameManagerMKII.settings[67] = GUI.TextField(new Rect(leftpos + 390f, toppos + 362f, 230f, 20f), (string)FengGameManagerMKII.settings[67]);
+            GUI.Label(new Rect(_leftPos + 158f, _topPos + 252f, 150f, 20f), "Titan Eye:", "Label");
+            FengGameManagerMKII.settings[26] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 274f, 230f, 20f), (string)FengGameManagerMKII.settings[26]);
+            FengGameManagerMKII.settings[27] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 296f, 230f, 20f), (string)FengGameManagerMKII.settings[27]);
+            FengGameManagerMKII.settings[28] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 318f, 230f, 20f), (string)FengGameManagerMKII.settings[28]);
+            FengGameManagerMKII.settings[29] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 340f, 230f, 20f), (string)FengGameManagerMKII.settings[29]);
+            FengGameManagerMKII.settings[30] = GUI.TextField(new Rect(_leftPos + 80f, _topPos + 362f, 230f, 20f), (string)FengGameManagerMKII.settings[30]);
+            GUI.Label(new Rect(_leftPos + 455f, _topPos + 112f, 150f, 20f), "Titan Body:", "Label");
+            FengGameManagerMKII.settings[86] = GUI.TextField(new Rect(_leftPos + 390f, _topPos + 134f, 230f, 20f), (string)FengGameManagerMKII.settings[86]);
+            FengGameManagerMKII.settings[87] = GUI.TextField(new Rect(_leftPos + 390f, _topPos + 156f, 230f, 20f), (string)FengGameManagerMKII.settings[87]);
+            FengGameManagerMKII.settings[88] = GUI.TextField(new Rect(_leftPos + 390f, _topPos + 178f, 230f, 20f), (string)FengGameManagerMKII.settings[88]);
+            FengGameManagerMKII.settings[89] = GUI.TextField(new Rect(_leftPos + 390f, _topPos + 200f, 230f, 20f), (string)FengGameManagerMKII.settings[89]);
+            FengGameManagerMKII.settings[90] = GUI.TextField(new Rect(_leftPos + 390f, _topPos + 222f, 230f, 20f), (string)FengGameManagerMKII.settings[90]);
+            GUI.Label(new Rect(_leftPos + 472f, _topPos + 252f, 150f, 20f), "Eren:", "Label");
+            FengGameManagerMKII.settings[65] = GUI.TextField(new Rect(_leftPos + 390f, _topPos + 274f, 230f, 20f), (string)FengGameManagerMKII.settings[65]);
+            GUI.Label(new Rect(_leftPos + 470f, _topPos + 296f, 150f, 20f), "Annie:", "Label");
+            FengGameManagerMKII.settings[66] = GUI.TextField(new Rect(_leftPos + 390f, _topPos + 318f, 230f, 20f), (string)FengGameManagerMKII.settings[66]);
+            GUI.Label(new Rect(_leftPos + 465f, _topPos + 340f, 150f, 20f), "Colossal:", "Label");
+            FengGameManagerMKII.settings[67] = GUI.TextField(new Rect(_leftPos + 390f, _topPos + 362f, 230f, 20f), (string)FengGameManagerMKII.settings[67]);
         }
         public static void Level_Skins()
         {
             var levelskinpage = 0;
             if (levelskinpage == 0)
             {
-                GUILayout.BeginArea(left);
+                GUILayout.BeginArea(_left);
                 GUILayout.BeginVertical();
                 LevelSkinForestScrollLeft = GUILayout.BeginScrollView(LevelSkinForestScrollLeft, false, false);
 
@@ -1859,7 +1859,7 @@ namespace GGP
                 GUILayout.EndVertical();
                 GUILayout.EndArea();
 
-                GUILayout.BeginArea(right);
+                GUILayout.BeginArea(_right);
                 GUILayout.BeginVertical();
 
                 BetterGUI.Header(Settings.ForestSetTitles[Settings.ForestCurrentSkin]);
@@ -1929,7 +1929,7 @@ namespace GGP
             }
             else
             {
-                GUILayout.BeginArea(left);
+                GUILayout.BeginArea(_left);
                 GUILayout.BeginVertical();
                 LevelSkinCityScrollLeft = GUILayout.BeginScrollView(LevelSkinCityScrollLeft, false, false);
 
@@ -1967,7 +1967,7 @@ namespace GGP
                 GUILayout.EndVertical();
                 GUILayout.EndArea();
 
-                GUILayout.BeginArea(right);
+                GUILayout.BeginArea(_right);
                 GUILayout.BeginVertical();
 
                 BetterGUI.Header(Settings.CitySetTitles[Settings.CityCurrentSkin]);
@@ -2034,14 +2034,14 @@ namespace GGP
         }
         public static void Custom_Map()
         {
-            GUI.Label(new Rect(leftpos + 150f, toppos + 51f, 120f, 22f), "Map Settings", "Label");
-            GUI.Label(new Rect(leftpos + 50f, toppos + 81f, 140f, 20f), "Titan Spawn Cap:", "Label");
-            FengGameManagerMKII.settings[85] = GUI.TextField(new Rect(leftpos + 155f, toppos + 81f, 30f, 20f), (string)FengGameManagerMKII.settings[85]);
+            GUI.Label(new Rect(_leftPos + 150f, _topPos + 51f, 120f, 22f), "Map Settings", "Label");
+            GUI.Label(new Rect(_leftPos + 50f, _topPos + 81f, 140f, 20f), "Titan Spawn Cap:", "Label");
+            FengGameManagerMKII.settings[85] = GUI.TextField(new Rect(_leftPos + 155f, _topPos + 81f, 30f, 20f), (string)FengGameManagerMKII.settings[85]);
             var strArray16 = new[] { "1 Round", "Waves", "PVP", "Racing", "Custom" };
-            RCSettings.gameType = GUI.SelectionGrid(new Rect(leftpos + 190f, toppos + 80f, 140f, 60f), RCSettings.gameType, strArray16, 2, GUI.skin.toggle);
-            GUI.Label(new Rect(leftpos + 150f, toppos + 155f, 150f, 20f), "Level Script:", "Label");
-            FengGameManagerMKII.currentScript = GUI.TextField(new Rect(leftpos + 50f, toppos + 180f, 275f, 220f), FengGameManagerMKII.currentScript);
-            if (GUI.Button(new Rect(leftpos + 100f, toppos + 410f, 50f, 25f), "Copy"))
+            RCSettings.gameType = GUI.SelectionGrid(new Rect(_leftPos + 190f, _topPos + 80f, 140f, 60f), RCSettings.gameType, strArray16, 2, GUI.skin.toggle);
+            GUI.Label(new Rect(_leftPos + 150f, _topPos + 155f, 150f, 20f), "Level Script:", "Label");
+            FengGameManagerMKII.currentScript = GUI.TextField(new Rect(_leftPos + 50f, _topPos + 180f, 275f, 220f), FengGameManagerMKII.currentScript);
+            if (GUI.Button(new Rect(_leftPos + 100f, _topPos + 410f, 50f, 25f), "Copy"))
             {
                 var editor = new TextEditor
                 {
@@ -2050,30 +2050,30 @@ namespace GGP
                 editor.SelectAll();
                 editor.Copy();
             }
-            else if (GUI.Button(new Rect(leftpos + 225f, toppos + 410f, 50f, 25f), "Clear"))
+            else if (GUI.Button(new Rect(_leftPos + 225f, _topPos + 410f, 50f, 25f), "Clear"))
             {
                 FengGameManagerMKII.currentScript = string.Empty;
             }
-            GUI.Label(new Rect(leftpos + 455f, toppos + 51f, 180f, 20f), "Custom Textures", "Label");
-            GUI.Label(new Rect(leftpos + 375f, toppos + 81f, 180f, 20f), "Ground Skin:", "Label");
-            FengGameManagerMKII.settings[162] = GUI.TextField(new Rect(leftpos + 375f, toppos + 103f, 275f, 20f), (string)FengGameManagerMKII.settings[162]);
-            GUI.Label(new Rect(leftpos + 375f, toppos + 125f, 150f, 20f), "Skybox Front:", "Label");
-            FengGameManagerMKII.settings[175] = GUI.TextField(new Rect(leftpos + 375f, toppos + 147f, 275f, 20f), (string)FengGameManagerMKII.settings[175]);
-            GUI.Label(new Rect(leftpos + 375f, toppos + 169f, 150f, 20f), "Skybox Back:", "Label");
-            FengGameManagerMKII.settings[176] = GUI.TextField(new Rect(leftpos + 375f, toppos + 191f, 275f, 20f), (string)FengGameManagerMKII.settings[176]);
-            GUI.Label(new Rect(leftpos + 375f, toppos + 213f, 150f, 20f), "Skybox Left:", "Label");
-            FengGameManagerMKII.settings[177] = GUI.TextField(new Rect(leftpos + 375f, toppos + 235f, 275f, 20f), (string)FengGameManagerMKII.settings[177]);
-            GUI.Label(new Rect(leftpos + 375f, toppos + 257f, 150f, 20f), "Skybox Right:", "Label");
-            FengGameManagerMKII.settings[178] = GUI.TextField(new Rect(leftpos + 375f, toppos + 279f, 275f, 20f), (string)FengGameManagerMKII.settings[178]);
-            GUI.Label(new Rect(leftpos + 375f, toppos + 301f, 150f, 20f), "Skybox Up:", "Label");
-            FengGameManagerMKII.settings[179] = GUI.TextField(new Rect(leftpos + 375f, toppos + 323f, 275f, 20f), (string)FengGameManagerMKII.settings[179]);
-            GUI.Label(new Rect(leftpos + 375f, toppos + 345f, 150f, 20f), "Skybox Down:", "Label");
-            FengGameManagerMKII.settings[180] = GUI.TextField(new Rect(leftpos + 375f, toppos + 367f, 275f, 20f), (string)FengGameManagerMKII.settings[180]);
+            GUI.Label(new Rect(_leftPos + 455f, _topPos + 51f, 180f, 20f), "Custom Textures", "Label");
+            GUI.Label(new Rect(_leftPos + 375f, _topPos + 81f, 180f, 20f), "Ground Skin:", "Label");
+            FengGameManagerMKII.settings[162] = GUI.TextField(new Rect(_leftPos + 375f, _topPos + 103f, 275f, 20f), (string)FengGameManagerMKII.settings[162]);
+            GUI.Label(new Rect(_leftPos + 375f, _topPos + 125f, 150f, 20f), "Skybox Front:", "Label");
+            FengGameManagerMKII.settings[175] = GUI.TextField(new Rect(_leftPos + 375f, _topPos + 147f, 275f, 20f), (string)FengGameManagerMKII.settings[175]);
+            GUI.Label(new Rect(_leftPos + 375f, _topPos + 169f, 150f, 20f), "Skybox Back:", "Label");
+            FengGameManagerMKII.settings[176] = GUI.TextField(new Rect(_leftPos + 375f, _topPos + 191f, 275f, 20f), (string)FengGameManagerMKII.settings[176]);
+            GUI.Label(new Rect(_leftPos + 375f, _topPos + 213f, 150f, 20f), "Skybox Left:", "Label");
+            FengGameManagerMKII.settings[177] = GUI.TextField(new Rect(_leftPos + 375f, _topPos + 235f, 275f, 20f), (string)FengGameManagerMKII.settings[177]);
+            GUI.Label(new Rect(_leftPos + 375f, _topPos + 257f, 150f, 20f), "Skybox Right:", "Label");
+            FengGameManagerMKII.settings[178] = GUI.TextField(new Rect(_leftPos + 375f, _topPos + 279f, 275f, 20f), (string)FengGameManagerMKII.settings[178]);
+            GUI.Label(new Rect(_leftPos + 375f, _topPos + 301f, 150f, 20f), "Skybox Up:", "Label");
+            FengGameManagerMKII.settings[179] = GUI.TextField(new Rect(_leftPos + 375f, _topPos + 323f, 275f, 20f), (string)FengGameManagerMKII.settings[179]);
+            GUI.Label(new Rect(_leftPos + 375f, _topPos + 345f, 150f, 20f), "Skybox Down:", "Label");
+            FengGameManagerMKII.settings[180] = GUI.TextField(new Rect(_leftPos + 375f, _topPos + 367f, 275f, 20f), (string)FengGameManagerMKII.settings[180]);
         }
         public static void Custom_Logic()
         {
-            FengGameManagerMKII.currentScriptLogic = GUI.TextField(new Rect(leftpos + 50f, toppos + 82f, 600f, 270f), FengGameManagerMKII.currentScriptLogic);
-            if (GUI.Button(new Rect(leftpos + 250f, toppos + 365f, 50f, 20f), "Copy"))
+            FengGameManagerMKII.currentScriptLogic = GUI.TextField(new Rect(_leftPos + 50f, _topPos + 82f, 600f, 270f), FengGameManagerMKII.currentScriptLogic);
+            if (GUI.Button(new Rect(_leftPos + 250f, _topPos + 365f, 50f, 20f), "Copy"))
             {
                 var editor = new TextEditor
                 {
@@ -2082,12 +2082,17 @@ namespace GGP
                 editor.SelectAll();
                 editor.Copy();
             }
-            else if (GUI.Button(new Rect(leftpos + 400f, toppos + 365f, 50f, 20f), "Clear"))
+            else if (GUI.Button(new Rect(_leftPos + 400f, _topPos + 365f, 50f, 20f), "Clear"))
             {
                 FengGameManagerMKII.currentScriptLogic = string.Empty;
             }
 
         }
         #endregion
+
+        public static void Singleplayer()
+        {
+            //GUI.Window(83, new Rect());
+        }
     }
 }

@@ -6563,18 +6563,18 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 Screen.lockCursor = false;
                 if (((int)settings[0x40]) != 6)
                 {
-                    float i = 25f;
-                    num7 = (((float)Screen.width) / 2f) - 350f;
-                    num8 = (((float)Screen.height) / 2f) - 250f;
-                    //GUI.backgroundColor = new Color(0.08f, 0.3f, 0.4f, 1f);
-                    //GUI.DrawTexture(new Rect(num7 + 2f, num8 + 2f, 696f, 496f), this.textureBackgroundBlue);
-                    Rect left = new Rect(num7 + 20f, num8 + 35f, 355f, 500f - 55f);
-                    Rect right = new Rect(num7 + 380f, num8 + 35f, 355f, 500f - 55f);
+                    var i = 25f;
+                    var posLeft = (((float)Screen.width) / 2f) - 350f;
+                    var posRight = (((float)Screen.height) / 2f) - 250f;
+                    var left = new Rect(posLeft + 20f, posRight + 35f, 355f, 500f - 55f);
+                    var right = new Rect(posLeft + 380f, posRight + 35f, 355f, 500f - 55f);
                     var w = 730f;
                     var h = 550f;
-                    Rect full = new Rect(num7, num8 - 25f, h, w);
-                    GUI.Box(new Rect(num7, num8 - 25f, 730f, 550f), string.Empty);
-                    Pages.TopNavigationPanelInt = GUI.SelectionGrid(new Rect(num7 + 5f, num8 - 20f, 720f, 50f), Pages.TopNavigationPanelInt, Pages.TopNavigationPanelStr, 5);
+                    var full = new Rect(posLeft, posRight - 25f, h, w);
+
+                    GUI.Box(new Rect(posLeft, posRight - 25f, 730f, 550f), string.Empty);
+
+                    Pages.TopNavigationPanelInt = GUI.SelectionGrid(new Rect(posLeft + 5f, posRight - 20f, 720f, 50f), Pages.TopNavigationPanelInt, Pages.TopNavigationPanelStr, 5);
                     var page = Pages.TopNavigationPanelInt;
                     switch (page)
                     {
@@ -6609,7 +6609,8 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                             Pages.Custom_Logic();
                             break;
                     }
-                    if (GUI.Button(new Rect(num7 + 408f, num8 + 465f + i, 42f, 25f), "Save"))
+                    #region Bottom Buttons
+                    if (GUI.Button(new Rect(posLeft + 408f, posRight + 465f + i, 42f, 25f), "Save"))
                     {
                         PlayerPrefs.SetInt("titantype1", (int)settings[0x10]);
                         PlayerPrefs.SetInt("titantype2", (int)settings[0x11]);
@@ -6751,7 +6752,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                         Settings.SaveForestSkins();
                         Settings.SaveCitySkins();
                     }
-                    else if (GUI.Button(new Rect(num7 + 455f, num8 + 465f + i, 40f, 25f), "Load"))
+                    else if (GUI.Button(new Rect(posLeft + 455f, posRight + 465f + i, 40f, 25f), "Load"))
                     {
                         this.loadconfig();
                         Settings.LoadConfig();
@@ -6759,11 +6760,11 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                         Settings.LoadForestSkins();
                         Settings.LoadCitySkins();
                     }
-                    else if (GUI.Button(new Rect(num7 + 500f, num8 + 465f + i, 60f, 25f), "Default"))
+                    else if (GUI.Button(new Rect(posLeft + 500f, posRight + 465f + i, 60f, 25f), "Default"))
                     {
                         GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
                     }
-                    else if (GUI.Button(new Rect(num7 + 565f, num8 + 465f + i, 75f, 25f), "Continue"))
+                    else if (GUI.Button(new Rect(posLeft + 565f, posRight + 465f + i, 75f, 25f), "Continue"))
                     {
                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                         {
@@ -6794,7 +6795,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                             GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
                         }
                     }
-                    else if (GUI.Button(new Rect(num7 + 645f, num8 + 465f + i, 40f, 25f), "Quit"))
+                    else if (GUI.Button(new Rect(posLeft + 645f, posRight + 465f + i, 40f, 25f), "Quit"))
                     {
                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                         {
@@ -6813,6 +6814,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                         UnityEngine.Object.Destroy(GameObject.Find("MultiplayerManager"));
                         Application.LoadLevel("menu");
                     }
+                    #endregion
                 }
             }
             else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
