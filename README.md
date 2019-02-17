@@ -34,7 +34,7 @@ All of the feautures you can find at [WIKI](https://github.com/JustlPain/GucciGa
 ### For the beautiful art:
 * [Bishop](https://vk.com/bishoptyan)
 ### For the GUI elements:
-* Lineyka
+* Shy aka Lineyka
 ### For testing:
 * Dio
 * Lisiko
