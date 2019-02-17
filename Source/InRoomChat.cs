@@ -50,7 +50,7 @@ public class InRoomChat : Photon.MonoBehaviour
         return "<color=#FFC000>" + text + "</color>";
     }
 
-    private static string ChatFormatting(string text, string color, int bold, int italic, string size = null)
+    private static string ChatFormatting(string text, string color, int bold, int italic, string size = "")
     {
         return "<color=#" + color + ">" + (size != "" ? "<size=" + size + ">" : "") + (bold == 1 ? "<b>" : "") + (italic == 1 ? "<i>" : "") + text + (italic == 1 ? "</i>" : "") + (bold == 1 ? "</b>" : "") + (size != "" ? "</size>" : "") + "</color>";
     }
@@ -141,6 +141,21 @@ public class InRoomChat : Photon.MonoBehaviour
     {
         switch (command[0])
         {
+            case "pos":
+                {
+                    var player = Utilities.Player();
+                    var x = player.transform.position.x;
+                    var y = player.transform.position.y;
+                    var z = player.transform.position.z;
+                    Message($"Your position is [{x};{y};{z}].");
+                    break;
+                }
+            case "info":
+                {
+                    var player = Utilities.Player();
+                    Message(player.collider.material.bounciness.ToString());
+                    break;
+                }
             case "/clear":
             case "/clean":
                 {
