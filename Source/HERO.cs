@@ -1489,12 +1489,15 @@ public class HERO : Photon.MonoBehaviour
                         }
                         if (((this.state == HERO_STATE.Attack) && (this.attackAnimation == "attack3_1")) && (this.baseAnimation[this.attackAnimation].normalizedTime >= 1f))
                         {
-                            this.playAnimation("attack3_2");
-                            this.resetAnimationSpeed();
-                            vector7 = Vector3.zero;
-                            this.baseRigidBody.velocity = vector7;
-                            zero = vector7;
-                            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(0.2f, 0.3f, 0.95f);
+                            if (Settings.Bouncy == 0)
+                            {
+                                this.playAnimation("attack3_2");
+                                this.resetAnimationSpeed();
+                                vector7 = Vector3.zero;
+                                this.baseRigidBody.velocity = vector7;
+                                zero = vector7;
+                                this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(0.2f, 0.3f, 0.95f);
+                            }
                         }
                         if (this.state == HERO_STATE.GroundDodge)
                         {
@@ -7037,10 +7040,10 @@ public class HERO : Photon.MonoBehaviour
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                                         this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail.StopSmoothly(0.1f);
-                                        this.rightbladetrail.StopSmoothly(0.1f);
-                                        this.leftbladetrail2.StopSmoothly(0.1f);
-                                        this.rightbladetrail2.StopSmoothly(0.1f);
+                                        this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                     }
                                 }
                                 else
@@ -7167,7 +7170,14 @@ public class HERO : Photon.MonoBehaviour
                                     }
                                     else if (this.attackAnimation == "attack3_1")
                                     {
-                                        this.baseRigidBody.velocity -= (Vector3) ((Vector3.up * Time.deltaTime) * 30f);
+                                        #region Plane
+                                        if (Input.GetKey(KeyCode.Q))
+                                            this.baseRigidBody.velocity += (Vector3)(Vector3.up * Time.deltaTime * 30f);
+                                        else if (Input.GetKey(KeyCode.E))
+                                            this.baseRigidBody.velocity = this.baseRigidBody.velocity;
+                                        #endregion
+                                        else
+                                            this.baseRigidBody.velocity -= (Vector3)((Vector3.up * Time.deltaTime) * 30f);
                                     }
                                     else
                                     {
