@@ -400,70 +400,6 @@ public class HERO : Photon.MonoBehaviour
         GameObject obj10;
         GameObject obj2 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
         obj2.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
-        obj2.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.ARM_R);
-        if (!isBite)
-        {
-            GameObject gO = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
-            GameObject obj4 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
-            GameObject obj5 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
-            gO.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
-            obj4.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
-            obj5.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
-            gO.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.UPPER);
-            obj4.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.LOWER);
-            obj5.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.ARM_L);
-            this.applyForceToBody(gO, v);
-            this.applyForceToBody(obj4, v);
-            this.applyForceToBody(obj5, v);
-            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
-            {
-                this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(gO, false, false);
-            }
-        }
-        else if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
-        {
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(obj2, false, false);
-        }
-        this.applyForceToBody(obj2, v);
-        Transform transform = base.transform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L").transform;
-        Transform transform2 = base.transform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R").transform;
-        if (this.useGun)
-        {
-            obj6 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
-            obj7 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_r"), transform2.position, transform2.rotation);
-            obj8 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_3dmg_2"), base.transform.position, base.transform.rotation);
-            obj9 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_mag_l"), base.transform.position, base.transform.rotation);
-            obj10 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_mag_r"), base.transform.position, base.transform.rotation);
-        }
-        else
-        {
-            obj6 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position, transform.rotation);
-            obj7 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position, transform2.rotation);
-            obj8 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_3dmg"), base.transform.position, base.transform.rotation);
-            obj9 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_3dmg_gas_l"), base.transform.position, base.transform.rotation);
-            obj10 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_3dmg_gas_r"), base.transform.position, base.transform.rotation);
-        }
-        obj6.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj7.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj8.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj9.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj10.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        this.applyForceToBody(obj6, v);
-        this.applyForceToBody(obj7, v);
-        this.applyForceToBody(obj8, v);
-        this.applyForceToBody(obj9, v);
-        this.applyForceToBody(obj10, v);
-    }
-
-    private void breakApart2(Vector3 v, bool isBite)
-    {
-        GameObject obj6;
-        GameObject obj7;
-        GameObject obj8;
-        GameObject obj9;
-        GameObject obj10;
-        GameObject obj2 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
-        obj2.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
         obj2.GetComponent<HERO_SETUP>().isDeadBody = true;
         obj2.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.ARM_R);
         if (!isBite)
@@ -977,12 +913,15 @@ public class HERO : Photon.MonoBehaviour
             this.meatDie.Play();
             if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine) && !this.useGun)
             {
-                this.leftbladetrail.Deactivate();
-                this.rightbladetrail.Deactivate();
-                this.leftbladetrail2.Deactivate();
-                this.rightbladetrail2.Deactivate();
+                if (Settings.BladeTrailsQuality == 0)
+                {
+                    leftbladetrail.Deactivate();
+                    rightbladetrail.Deactivate();
+                }
+                leftbladetrail2.Deactivate();
+                rightbladetrail2.Deactivate();
             }
-            this.breakApart2(v, isBite);
+            this.breakApart(v, isBite);
             this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
             GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose2();
             this.falseAttack();
@@ -1030,60 +969,6 @@ public class HERO : Photon.MonoBehaviour
     }
 
     private void dodge(bool offTheWall = false)
-    {
-        if (((this.myHorse != null) && !this.isMounted) && (Vector3.Distance(this.myHorse.transform.position, base.transform.position) < 15f))
-        {
-            this.getOnHorse();
-        }
-        else
-        {
-            this.state = HERO_STATE.GroundDodge;
-            if (!offTheWall)
-            {
-                float num;
-                float num2;
-                if (this.inputManager.isInput[InputCode.up])
-                {
-                    num = 1f;
-                }
-                else if (this.inputManager.isInput[InputCode.down])
-                {
-                    num = -1f;
-                }
-                else
-                {
-                    num = 0f;
-                }
-                if (this.inputManager.isInput[InputCode.left])
-                {
-                    num2 = -1f;
-                }
-                else if (this.inputManager.isInput[InputCode.right])
-                {
-                    num2 = 1f;
-                }
-                else
-                {
-                    num2 = 0f;
-                }
-                float num3 = this.getGlobalFacingDirection(num2, num);
-                if ((num2 != 0f) || (num != 0f))
-                {
-                    this.facingDirection = num3 + 180f;
-                    this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                }
-                this.crossFade("dodge", 0.1f);
-            }
-            else
-            {
-                this.playAnimation("dodge");
-                this.playAnimationAt("dodge", 0.2f);
-            }
-            this.sparks.enableEmission = false;
-        }
-    }
-
-    private void dodge2(bool offTheWall = false)
     {
         if (((!FengGameManagerMKII.inputRC.isInputHorse(InputCodeRC.horseMount) || (this.myHorse == null)) || this.isMounted) || (Vector3.Distance(this.myHorse.transform.position, base.transform.position) >= 15f))
         {
@@ -1196,8 +1081,11 @@ public class HERO : Photon.MonoBehaviour
                 this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                 this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                 this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                this.leftbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
-                this.rightbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                if (Settings.BladeTrailsQuality == 0)
+                {
+                    this.leftbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                    this.rightbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                }
                 this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
                 this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
             }
@@ -1739,7 +1627,7 @@ public class HERO : Photon.MonoBehaviour
                             if ((this.wallRunTime > 1f) || ((z == 0f) && (x == 0f)))
                             {
                                 this.baseRigidBody.AddForce((Vector3) ((-this.baseTransform.forward * this.speed) * 0.75f), ForceMode.Impulse);
-                                this.dodge2(true);
+                                this.dodge(true);
                             }
                             else if (!this.IsUpFrontGrounded())
                             {
@@ -2101,8 +1989,11 @@ public class HERO : Photon.MonoBehaviour
         }
         if (!this.useGun && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
         {
-            this.leftbladetrail.Deactivate();
-            this.rightbladetrail.Deactivate();
+            if (Settings.BladeTrailsQuality == 0)
+            {
+                this.leftbladetrail.Deactivate();
+                this.rightbladetrail.Deactivate();
+            }
             this.leftbladetrail2.Deactivate();
             this.rightbladetrail2.Deactivate();
         }
@@ -2219,125 +2110,6 @@ public class HERO : Photon.MonoBehaviour
     }
 
     public void lateUpdate()
-    {
-        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && (this.myNetWorkName != null))
-        {
-            if (this.titanForm && (this.eren_titan != null))
-            {
-                this.myNetWorkName.transform.localPosition = (Vector3) ((Vector3.up * Screen.height) * 2f);
-            }
-            Vector3 start = new Vector3(base.transform.position.x, base.transform.position.y + 2f, base.transform.position.z);
-            GameObject obj2 = GameObject.Find("MainCamera");
-            LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-            LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
-            LayerMask mask3 = mask2 | mask;
-            if ((Vector3.Angle(obj2.transform.forward, start - obj2.transform.position) > 90f) || Physics.Linecast(start, obj2.transform.position, (int) mask3))
-            {
-                this.myNetWorkName.transform.localPosition = (Vector3) ((Vector3.up * Screen.height) * 2f);
-            }
-            else
-            {
-                Vector2 vector5 = GameObject.Find("MainCamera").GetComponent<Camera>().WorldToScreenPoint(start);
-                this.myNetWorkName.transform.localPosition = new Vector3((float) ((int) (vector5.x - (Screen.width * 0.5f))), (float) ((int) (vector5.y - (Screen.height * 0.5f))), 0f);
-            }
-        }
-        if (!this.titanForm)
-        {
-            if ((IN_GAME_MAIN_CAMERA.cameraTilt == 1) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
-            {
-                Quaternion quaternion3;
-                Vector3 zero = Vector3.zero;
-                Vector3 position = Vector3.zero;
-                if ((this.isLaunchLeft && (this.bulletLeft != null)) && this.bulletLeft.GetComponent<Bullet>().isHooked())
-                {
-                    zero = this.bulletLeft.transform.position;
-                }
-                if ((this.isLaunchRight && (this.bulletRight != null)) && this.bulletRight.GetComponent<Bullet>().isHooked())
-                {
-                    position = this.bulletRight.transform.position;
-                }
-                Vector3 vector8 = Vector3.zero;
-                if ((zero.magnitude != 0f) && (position.magnitude == 0f))
-                {
-                    vector8 = zero;
-                }
-                else if ((zero.magnitude == 0f) && (position.magnitude != 0f))
-                {
-                    vector8 = position;
-                }
-                else if ((zero.magnitude != 0f) && (position.magnitude != 0f))
-                {
-                    vector8 = (Vector3) ((zero + position) * 0.5f);
-                }
-                Vector3 from = Vector3.Project(vector8 - base.transform.position, GameObject.Find("MainCamera").transform.up);
-                Vector3 vector10 = Vector3.Project(vector8 - base.transform.position, GameObject.Find("MainCamera").transform.right);
-                if (vector8.magnitude > 0f)
-                {
-                    Vector3 to = from + vector10;
-                    float num = Vector3.Angle(vector8 - base.transform.position, base.rigidbody.velocity) * 0.005f;
-                    Vector3 vector14 = GameObject.Find("MainCamera").transform.right + vector10.normalized;
-                    quaternion3 = Quaternion.Euler(GameObject.Find("MainCamera").transform.rotation.eulerAngles.x, GameObject.Find("MainCamera").transform.rotation.eulerAngles.y, (vector14.magnitude >= 1f) ? (-Vector3.Angle(from, to) * num) : (Vector3.Angle(from, to) * num));
-                }
-                else
-                {
-                    quaternion3 = Quaternion.Euler(GameObject.Find("MainCamera").transform.rotation.eulerAngles.x, GameObject.Find("MainCamera").transform.rotation.eulerAngles.y, 0f);
-                }
-                GameObject.Find("MainCamera").transform.rotation = Quaternion.Lerp(GameObject.Find("MainCamera").transform.rotation, quaternion3, Time.deltaTime * 2f);
-            }
-            if ((this.state == HERO_STATE.Grab) && (this.titanWhoGrabMe != null))
-            {
-                if (this.titanWhoGrabMe.GetComponent<TITAN>() != null)
-                {
-                    base.transform.position = this.titanWhoGrabMe.GetComponent<TITAN>().grabTF.transform.position;
-                    base.transform.rotation = this.titanWhoGrabMe.GetComponent<TITAN>().grabTF.transform.rotation;
-                }
-                else if (this.titanWhoGrabMe.GetComponent<FEMALE_TITAN>() != null)
-                {
-                    base.transform.position = this.titanWhoGrabMe.GetComponent<FEMALE_TITAN>().grabTF.transform.position;
-                    base.transform.rotation = this.titanWhoGrabMe.GetComponent<FEMALE_TITAN>().grabTF.transform.rotation;
-                }
-            }
-            if (this.useGun)
-            {
-                if (this.leftArmAim || this.rightArmAim)
-                {
-                    Vector3 vector17 = this.gunTarget - base.transform.position;
-                    float current = -Mathf.Atan2(vector17.z, vector17.x) * 57.29578f;
-                    float num3 = -Mathf.DeltaAngle(current, base.transform.rotation.eulerAngles.y - 90f);
-                    this.headMovement();
-                    if ((!this.isLeftHandHooked && this.leftArmAim) && ((num3 < 40f) && (num3 > -90f)))
-                    {
-                        this.leftArmAimTo(this.gunTarget);
-                    }
-                    if ((!this.isRightHandHooked && this.rightArmAim) && ((num3 > -40f) && (num3 < 90f)))
-                    {
-                        this.rightArmAimTo(this.gunTarget);
-                    }
-                }
-                else if (!this.grounded)
-                {
-                    this.handL.localRotation = Quaternion.Euler(90f, 0f, 0f);
-                    this.handR.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-                }
-                if (this.isLeftHandHooked && (this.bulletLeft != null))
-                {
-                    this.leftArmAimTo(this.bulletLeft.transform.position);
-                }
-                if (this.isRightHandHooked && (this.bulletRight != null))
-                {
-                    this.rightArmAimTo(this.bulletRight.transform.position);
-                }
-            }
-            this.setHookedPplDirection();
-            this.bodyLean();
-            if ((!base.animation.IsPlaying("attack3_2") && !base.animation.IsPlaying("attack5")) && !base.animation.IsPlaying("special_petra"))
-            {
-                base.rigidbody.rotation = Quaternion.Lerp(base.gameObject.transform.rotation, this.targetRotation, Time.deltaTime * 6f);
-            }
-        }
-    }
-
-    public void lateUpdate2()
     {
         if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && (this.myNetWorkName != null))
         {
@@ -3263,8 +3035,11 @@ public class HERO : Photon.MonoBehaviour
                     this.leftbladetrail.MyMaterial.mainTexture = trailsSkin;
                     this.rightbladetrail.MyMaterial.mainTexture = trailsSkin;
                     FengGameManagerMKII.linkHash[0].Add(skins[12], this.leftbladetrail.MyMaterial);
-                    this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    if (Settings.BladeTrailsQuality == 0)
+                    {
+                        this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                        this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    }
                     this.leftbladetrail2.MyMaterial = this.leftbladetrail.MyMaterial;
                     this.rightbladetrail2.MyMaterial = this.leftbladetrail.MyMaterial;
                 }
@@ -3272,16 +3047,22 @@ public class HERO : Photon.MonoBehaviour
                 {
                     this.leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     this.rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    if (Settings.BladeTrailsQuality == 0)
+                    {
+                        this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                        this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    }
                 }
             }
             else
             {
                 this.leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 this.rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                if (Settings.BladeTrailsQuality == 0)
+                {
+                    this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                }
             }
         }
         #endregion
@@ -3442,7 +3223,7 @@ public class HERO : Photon.MonoBehaviour
             this.rightbladetrail2.Deactivate();
         }
         this.falseAttack();
-        this.breakApart2(v, isBite);
+        this.breakApart(v, isBite);
         if (base.photonView.isMine)
         {
             this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
@@ -3655,13 +3436,16 @@ public class HERO : Photon.MonoBehaviour
         this.meatDie.Play();
         if (!(this.useGun || ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !base.photonView.isMine)))
         {
-            this.leftbladetrail.Deactivate();
-            this.rightbladetrail.Deactivate();
+            if (Settings.BladeTrailsQuality == 0)
+            {
+                this.leftbladetrail.Deactivate();
+                this.rightbladetrail.Deactivate();
+            }
             this.leftbladetrail2.Deactivate();
             this.rightbladetrail2.Deactivate();
         }
         this.falseAttack();
-        this.breakApart2(v, isBite);
+        this.breakApart(v, isBite);
         if (base.photonView.isMine)
         {
             this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
@@ -4267,146 +4051,6 @@ public class HERO : Photon.MonoBehaviour
                     int num = 0;
                     foreach (PhotonPlayer player in PhotonNetwork.playerList)
                     {
-                        if ((((int) player.customProperties[PhotonPlayerProperty.isTitan]) == 1) && (((string) player.customProperties[PhotonPlayerProperty.character]).ToUpper() == "EREN"))
-                        {
-                            num++;
-                        }
-                    }
-                    if (num > 1)
-                    {
-                        this.skillId = "petra";
-                        this.skillCDLast = 1f;
-                    }
-                }
-            }
-        }
-        if (this.skillId == "sasha")
-        {
-            this.skillCDLast = 20f;
-        }
-        if (this.skillId == "petra")
-        {
-            this.skillCDLast = 3.5f;
-        }
-        this.skillCDDuration = this.skillCDLast;
-        this.speed = ((float) this.setup.myCostume.stat.SPD) / 10f;
-        this.totalGas = this.currentGas = this.setup.myCostume.stat.GAS;
-        this.totalBladeSta = this.currentBladeSta = this.setup.myCostume.stat.BLA;
-        base.rigidbody.mass = 0.5f - ((this.setup.myCostume.stat.ACL - 100) * 0.001f);
-        GameObject.Find("skill_cd_bottom").transform.localPosition = new Vector3(0f, (-Screen.height * 0.5f) + 5f, 0f);
-        this.skillCD = GameObject.Find("skill_cd_" + this.skillId);
-        this.skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
-        GameObject.Find("GasUI").transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
-        {
-            GameObject.Find("bulletL").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL1").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR1").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL2").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR2").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL3").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR3").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL4").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR4").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL5").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR5").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL6").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR6").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL7").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR7").GetComponent<UISprite>().enabled = false;
-        }
-        if (this.setup.myCostume.uniform_type == UNIFORM_TYPE.CasualAHSS)
-        {
-            this.standAnimation = "AHSS_stand_gun";
-            this.useGun = true;
-            this.gunDummy = new GameObject();
-            this.gunDummy.name = "gunDummy";
-            this.gunDummy.transform.position = base.transform.position;
-            this.gunDummy.transform.rotation = base.transform.rotation;
-            this.myGroup = GROUP.A;
-            this.setTeam(2);
-            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
-            {
-                GameObject.Find("bladeCL").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladeCR").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel1").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader1").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel2").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader2").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel3").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader3").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel4").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader4").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel5").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader5").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bulletL").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL1").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR1").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL2").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR2").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL3").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR3").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL4").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR4").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL5").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR5").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL6").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR6").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL7").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR7").GetComponent<UISprite>().enabled = true;
-                this.skillCD.transform.localPosition = (Vector3) (Vector3.up * 5000f);
-            }
-        }
-        else if (this.setup.myCostume.sex == SEX.FEMALE)
-        {
-            this.standAnimation = "stand";
-            this.setTeam(1);
-        }
-        else
-        {
-            this.standAnimation = "stand_levi";
-            this.setTeam(1);
-        }
-    }
-
-    public void setStat2()
-    {
-        this.skillCDLast = 1.5f;
-        this.skillId = this.setup.myCostume.stat.skillId;
-        if (this.skillId == "levi")
-        {
-            this.skillCDLast = 3.5f;
-        }
-        this.customAnimationSpeed();
-        if (this.skillId == "armin")
-        {
-            this.skillCDLast = 5f;
-        }
-        if (this.skillId == "marco")
-        {
-            this.skillCDLast = 10f;
-        }
-        if (this.skillId == "jean")
-        {
-            this.skillCDLast = 0.001f;
-        }
-        if (this.skillId == "eren")
-        {
-            this.skillCDLast = 120f;
-            if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
-            {
-                if ((LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || (LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.RACING)) || ((LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.PVP_CAPTURE) || (LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.TROST)))
-                {
-                    this.skillId = "petra";
-                    this.skillCDLast = 1f;
-                }
-                else
-                {
-                    int num = 0;
-                    foreach (PhotonPlayer player in PhotonNetwork.playerList)
-                    {
                         if ((RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.isTitan]) == 1) && (RCextensions.returnStringFromObject(player.customProperties[PhotonPlayerProperty.character]).ToUpper() == "EREN"))
                         {
                             num++;
@@ -4581,119 +4225,6 @@ public class HERO : Photon.MonoBehaviour
         Vector3 vector;
         if (Screen.showCursor)
         {
-            GameObject obj2 = GameObject.Find("cross1");
-            GameObject obj3 = GameObject.Find("cross2");
-            GameObject obj4 = GameObject.Find("crossL1");
-            GameObject obj5 = GameObject.Find("crossL2");
-            GameObject obj6 = GameObject.Find("crossR1");
-            GameObject obj7 = GameObject.Find("crossR2");
-            GameObject obj8 = GameObject.Find("LabelDistance");
-            vector = (Vector3) (Vector3.up * 10000f);
-            obj7.transform.localPosition = vector;
-            obj6.transform.localPosition = vector;
-            obj5.transform.localPosition = vector;
-            obj4.transform.localPosition = vector;
-            obj8.transform.localPosition = vector;
-            obj3.transform.localPosition = vector;
-            obj2.transform.localPosition = vector;
-        }
-        else
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-            LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
-            LayerMask mask3 = mask2 | mask;
-            if (Physics.Raycast(ray, out hit, 1E+07f, mask3.value))
-            {
-                RaycastHit hit2;
-                GameObject obj9 = GameObject.Find("cross1");
-                GameObject obj10 = GameObject.Find("cross2");
-                obj9.transform.localPosition = Input.mousePosition;
-                Transform transform = obj9.transform;
-                transform.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
-                obj10.transform.localPosition = obj9.transform.localPosition;
-                vector = hit.point - base.transform.position;
-                float magnitude = vector.magnitude;
-                GameObject obj11 = GameObject.Find("LabelDistance");
-                string str = (magnitude <= 1000f) ? ((int) magnitude).ToString() : "???";
-                obj11.GetComponent<UILabel>().text = str;
-                if (magnitude > 120f)
-                {
-                    Transform transform2 = obj9.transform;
-                    transform2.localPosition += (Vector3) (Vector3.up * 10000f);
-                    obj11.transform.localPosition = obj10.transform.localPosition;
-                }
-                else
-                {
-                    Transform transform3 = obj10.transform;
-                    transform3.localPosition += (Vector3) (Vector3.up * 10000f);
-                    obj11.transform.localPosition = obj9.transform.localPosition;
-                }
-                Transform transform4 = obj11.transform;
-                transform4.localPosition -= new Vector3(0f, 15f, 0f);
-                Vector3 vector2 = new Vector3(0f, 0.4f, 0f);
-                vector2 -= (Vector3) (base.transform.right * 0.3f);
-                Vector3 vector3 = new Vector3(0f, 0.4f, 0f);
-                vector3 += (Vector3) (base.transform.right * 0.3f);
-                float num3 = (hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f);
-                Vector3 vector4 = (hit.point - ((Vector3) (base.transform.right * num3))) - (base.transform.position + vector2);
-                Vector3 vector5 = (hit.point + ((Vector3) (base.transform.right * num3))) - (base.transform.position + vector3);
-                vector4.Normalize();
-                vector5.Normalize();
-                vector4 = (Vector3) (vector4 * 1000000f);
-                vector5 = (Vector3) (vector5 * 1000000f);
-                if (Physics.Linecast(base.transform.position + vector2, (base.transform.position + vector2) + vector4, out hit2, mask3.value))
-                {
-                    GameObject obj12 = GameObject.Find("crossL1");
-                    obj12.transform.localPosition = this.currentCamera.WorldToScreenPoint(hit2.point);
-                    Transform transform5 = obj12.transform;
-                    transform5.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
-                    obj12.transform.localRotation = Quaternion.Euler(0f, 0f, (Mathf.Atan2(obj12.transform.localPosition.y - (Input.mousePosition.y - (Screen.height * 0.5f)), obj12.transform.localPosition.x - (Input.mousePosition.x - (Screen.width * 0.5f))) * 57.29578f) + 180f);
-                    GameObject obj13 = GameObject.Find("crossL2");
-                    obj13.transform.localPosition = obj12.transform.localPosition;
-                    obj13.transform.localRotation = obj12.transform.localRotation;
-                    if (hit2.distance > 120f)
-                    {
-                        Transform transform6 = obj12.transform;
-                        transform6.localPosition += (Vector3) (Vector3.up * 10000f);
-                    }
-                    else
-                    {
-                        Transform transform7 = obj13.transform;
-                        transform7.localPosition += (Vector3) (Vector3.up * 10000f);
-                    }
-                }
-                if (Physics.Linecast(base.transform.position + vector3, (base.transform.position + vector3) + vector5, out hit2, mask3.value))
-                {
-                    GameObject obj14 = GameObject.Find("crossR1");
-                    obj14.transform.localPosition = this.currentCamera.WorldToScreenPoint(hit2.point);
-                    Transform transform8 = obj14.transform;
-                    transform8.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
-                    obj14.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(obj14.transform.localPosition.y - (Input.mousePosition.y - (Screen.height * 0.5f)), obj14.transform.localPosition.x - (Input.mousePosition.x - (Screen.width * 0.5f))) * 57.29578f);
-                    GameObject obj15 = GameObject.Find("crossR2");
-                    obj15.transform.localPosition = obj14.transform.localPosition;
-                    obj15.transform.localRotation = obj14.transform.localRotation;
-                    if (hit2.distance > 120f)
-                    {
-                        Transform transform9 = obj14.transform;
-                        transform9.localPosition += (Vector3) (Vector3.up * 10000f);
-                    }
-                    else
-                    {
-                        Transform transform10 = obj15.transform;
-                        transform10.localPosition += (Vector3) (Vector3.up * 10000f);
-                    }
-                }
-            }
-        }
-    }
-
-    private void showAimUI2()
-    {
-        Vector3 vector;
-        if (Screen.showCursor)
-        {
             GameObject obj2 = this.cross1;
             GameObject obj3 = this.cross2;
             GameObject obj4 = this.crossL1;
@@ -4819,16 +4350,6 @@ public class HERO : Photon.MonoBehaviour
 
     private void showFlareCD()
     {
-        if (GameObject.Find("UIflare1") != null)
-        {
-            GameObject.Find("UIflare1").GetComponent<UISprite>().fillAmount = (this.flareTotalCD - this.flare1CD) / this.flareTotalCD;
-            GameObject.Find("UIflare2").GetComponent<UISprite>().fillAmount = (this.flareTotalCD - this.flare2CD) / this.flareTotalCD;
-            GameObject.Find("UIflare3").GetComponent<UISprite>().fillAmount = (this.flareTotalCD - this.flare3CD) / this.flareTotalCD;
-        }
-    }
-
-    private void showFlareCD2()
-    {
         if (this.cachedSprites["UIflare1"] != null)
         {
             this.cachedSprites["UIflare1"].fillAmount = (this.flareTotalCD - this.flare1CD) / this.flareTotalCD;
@@ -4838,118 +4359,6 @@ public class HERO : Photon.MonoBehaviour
     }
 
     private void showGas()
-    {
-        float num = this.currentGas / this.totalGas;
-        float num2 = this.currentBladeSta / this.totalBladeSta;
-        GameObject.Find("gasL1").GetComponent<UISprite>().fillAmount = this.currentGas / this.totalGas;
-        GameObject.Find("gasR1").GetComponent<UISprite>().fillAmount = this.currentGas / this.totalGas;
-        if (!this.useGun)
-        {
-            GameObject.Find("bladeCL").GetComponent<UISprite>().fillAmount = this.currentBladeSta / this.totalBladeSta;
-            GameObject.Find("bladeCR").GetComponent<UISprite>().fillAmount = this.currentBladeSta / this.totalBladeSta;
-            if (num <= 0f)
-            {
-                GameObject.Find("gasL").GetComponent<UISprite>().color = Color.red;
-                GameObject.Find("gasR").GetComponent<UISprite>().color = Color.red;
-            }
-            else if (num < 0.3f)
-            {
-                GameObject.Find("gasL").GetComponent<UISprite>().color = Color.yellow;
-                GameObject.Find("gasR").GetComponent<UISprite>().color = Color.yellow;
-            }
-            else
-            {
-                GameObject.Find("gasL").GetComponent<UISprite>().color = Color.white;
-                GameObject.Find("gasR").GetComponent<UISprite>().color = Color.white;
-            }
-            if (num2 <= 0f)
-            {
-                GameObject.Find("bladel1").GetComponent<UISprite>().color = Color.red;
-                GameObject.Find("blader1").GetComponent<UISprite>().color = Color.red;
-            }
-            else if (num2 < 0.3f)
-            {
-                GameObject.Find("bladel1").GetComponent<UISprite>().color = Color.yellow;
-                GameObject.Find("blader1").GetComponent<UISprite>().color = Color.yellow;
-            }
-            else
-            {
-                GameObject.Find("bladel1").GetComponent<UISprite>().color = Color.white;
-                GameObject.Find("blader1").GetComponent<UISprite>().color = Color.white;
-            }
-            if (this.currentBladeNum <= 4)
-            {
-                GameObject.Find("bladel5").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader5").GetComponent<UISprite>().enabled = false;
-            }
-            else
-            {
-                GameObject.Find("bladel5").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("blader5").GetComponent<UISprite>().enabled = true;
-            }
-            if (this.currentBladeNum <= 3)
-            {
-                GameObject.Find("bladel4").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader4").GetComponent<UISprite>().enabled = false;
-            }
-            else
-            {
-                GameObject.Find("bladel4").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("blader4").GetComponent<UISprite>().enabled = true;
-            }
-            if (this.currentBladeNum <= 2)
-            {
-                GameObject.Find("bladel3").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader3").GetComponent<UISprite>().enabled = false;
-            }
-            else
-            {
-                GameObject.Find("bladel3").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("blader3").GetComponent<UISprite>().enabled = true;
-            }
-            if (this.currentBladeNum <= 1)
-            {
-                GameObject.Find("bladel2").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader2").GetComponent<UISprite>().enabled = false;
-            }
-            else
-            {
-                GameObject.Find("bladel2").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("blader2").GetComponent<UISprite>().enabled = true;
-            }
-            if (this.currentBladeNum <= 0)
-            {
-                GameObject.Find("bladel1").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader1").GetComponent<UISprite>().enabled = false;
-            }
-            else
-            {
-                GameObject.Find("bladel1").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("blader1").GetComponent<UISprite>().enabled = true;
-            }
-        }
-        else
-        {
-            if (this.leftGunHasBullet)
-            {
-                GameObject.Find("bulletL").GetComponent<UISprite>().enabled = true;
-            }
-            else
-            {
-                GameObject.Find("bulletL").GetComponent<UISprite>().enabled = false;
-            }
-            if (this.rightGunHasBullet)
-            {
-                GameObject.Find("bulletR").GetComponent<UISprite>().enabled = true;
-            }
-            else
-            {
-                GameObject.Find("bulletR").GetComponent<UISprite>().enabled = false;
-            }
-        }
-    }
-
-    private void showGas2()
     {
         float num = this.currentGas / this.totalGas;
         float num2 = this.currentBladeSta / this.totalBladeSta;
@@ -5257,8 +4666,11 @@ public class HERO : Photon.MonoBehaviour
             this.setup.setCharacterComponent();
             UnityEngine.Object.Destroy(this.checkBoxLeft);
             UnityEngine.Object.Destroy(this.checkBoxRight);
-            UnityEngine.Object.Destroy(this.leftbladetrail);
-            UnityEngine.Object.Destroy(this.rightbladetrail);
+            if (Settings.BladeTrailsQuality == 0)
+            {
+                UnityEngine.Object.Destroy(this.leftbladetrail);
+                UnityEngine.Object.Destroy(this.rightbladetrail);
+            }
             UnityEngine.Object.Destroy(this.leftbladetrail2);
             UnityEngine.Object.Destroy(this.rightbladetrail2);
             this.hasspawn = true;
@@ -5286,10 +4698,6 @@ public class HERO : Photon.MonoBehaviour
     }
 
     private void suicide()
-    {
-    }
-
-    private void suicide2()
     {
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
@@ -5346,1098 +4754,6 @@ public class HERO : Photon.MonoBehaviour
     }
 
     public void update()
-    {
-        if (!IN_GAME_MAIN_CAMERA.isPausing)
-        {
-            if (this.invincible > 0f)
-            {
-                this.invincible -= Time.deltaTime;
-            }
-            if (!this.hasDied)
-            {
-                if (this.titanForm && (this.eren_titan != null))
-                {
-                    base.transform.position = this.eren_titan.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position;
-                    base.gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
-                }
-                if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
-                {
-                    if ((this.state == HERO_STATE.Grab) && !this.useGun)
-                    {
-                        if (this.skillId == "jean")
-                        {
-                            if (((this.state != HERO_STATE.Attack) && (this.inputManager.isInputDown[InputCode.attack0] || this.inputManager.isInputDown[InputCode.attack1])) && ((this.escapeTimes > 0) && !base.animation.IsPlaying("grabbed_jean")))
-                            {
-                                this.playAnimation("grabbed_jean");
-                                base.animation["grabbed_jean"].time = 0f;
-                                this.escapeTimes--;
-                            }
-                            if ((base.animation.IsPlaying("grabbed_jean") && (base.animation["grabbed_jean"].normalizedTime > 0.64f)) && (this.titanWhoGrabMe.GetComponent<TITAN>() != null))
-                            {
-                                this.ungrabbed();
-                                base.rigidbody.velocity = (Vector3) (Vector3.up * 30f);
-                                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
-                                {
-                                    this.titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
-                                }
-                                else
-                                {
-                                    base.photonView.RPC("netSetIsGrabbedFalse", PhotonTargets.All, new object[0]);
-                                    if (PhotonNetwork.isMasterClient)
-                                    {
-                                        this.titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
-                                    }
-                                    else
-                                    {
-                                        PhotonView.Find(this.titanWhoGrabMeID).RPC("grabbedTargetEscape", PhotonTargets.MasterClient, new object[0]);
-                                    }
-                                }
-                            }
-                        }
-                        else if (this.skillId == "eren")
-                        {
-                            this.showSkillCD();
-                            if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) || ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) && !IN_GAME_MAIN_CAMERA.isPausing))
-                            {
-                                this.calcSkillCD();
-                                this.calcFlareCD();
-                            }
-                            if (this.inputManager.isInputDown[InputCode.attack1])
-                            {
-                                bool flag = false;
-                                if ((this.skillCDDuration > 0f) || flag)
-                                {
-                                    flag = true;
-                                }
-                                else
-                                {
-                                    this.skillCDDuration = this.skillCDLast;
-                                    if ((this.skillId == "eren") && (this.titanWhoGrabMe.GetComponent<TITAN>() != null))
-                                    {
-                                        this.ungrabbed();
-                                        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
-                                        {
-                                            this.titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
-                                        }
-                                        else
-                                        {
-                                            base.photonView.RPC("netSetIsGrabbedFalse", PhotonTargets.All, new object[0]);
-                                            if (PhotonNetwork.isMasterClient)
-                                            {
-                                                this.titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
-                                            }
-                                            else
-                                            {
-                                                PhotonView.Find(this.titanWhoGrabMeID).photonView.RPC("grabbedTargetEscape", PhotonTargets.MasterClient, new object[0]);
-                                            }
-                                        }
-                                        this.erenTransform();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else if (!this.titanForm)
-                    {
-                        this.bufferUpdate();
-                        if (!this.grounded && (this.state != HERO_STATE.AirDodge))
-                        {
-                            this.checkDashDoubleTap();
-                            if (this.dashD)
-                            {
-                                this.dashD = false;
-                                this.dash(0f, -1f);
-                                return;
-                            }
-                            if (this.dashU)
-                            {
-                                this.dashU = false;
-                                this.dash(0f, 1f);
-                                return;
-                            }
-                            if (this.dashL)
-                            {
-                                this.dashL = false;
-                                this.dash(-1f, 0f);
-                                return;
-                            }
-                            if (this.dashR)
-                            {
-                                this.dashR = false;
-                                this.dash(1f, 0f);
-                                return;
-                            }
-                        }
-                        if (this.grounded && ((this.state == HERO_STATE.Idle) || (this.state == HERO_STATE.Slide)))
-                        {
-                            if ((this.inputManager.isInputDown[InputCode.jump] && !base.animation.IsPlaying("jump")) && !base.animation.IsPlaying("horse_geton"))
-                            {
-                                this.idle();
-                                this.crossFade("jump", 0.1f);
-                                this.sparks.enableEmission = false;
-                            }
-                            if ((this.inputManager.isInputDown[InputCode.dodge] && !base.animation.IsPlaying("jump")) && !base.animation.IsPlaying("horse_geton"))
-                            {
-                                this.dodge2(false);
-                                return;
-                            }
-                        }
-                        if (this.state == HERO_STATE.Idle)
-                        {
-                            if (this.inputManager.isInputDown[InputCode.flare1])
-                            {
-                                this.shootFlare(1);
-                            }
-                            if (this.inputManager.isInputDown[InputCode.flare2])
-                            {
-                                this.shootFlare(2);
-                            }
-                            if (this.inputManager.isInputDown[InputCode.flare3])
-                            {
-                                this.shootFlare(3);
-                            }
-                            if (this.inputManager.isInputDown[InputCode.restart])
-                            {
-                                this.suicide();
-                            }
-                            if (((this.myHorse != null) && this.isMounted) && this.inputManager.isInputDown[InputCode.dodge])
-                            {
-                                this.getOffHorse();
-                            }
-                            if ((base.animation.IsPlaying(this.standAnimation) || !this.grounded) && this.inputManager.isInputDown[InputCode.reload])
-                            {
-                                this.changeBlade();
-                                return;
-                            }
-                            if (base.animation.IsPlaying(this.standAnimation) && this.inputManager.isInputDown[InputCode.salute])
-                            {
-                                this.salute();
-                                return;
-                            }
-                            if ((!this.isMounted && (this.inputManager.isInputDown[InputCode.attack0] || this.inputManager.isInputDown[InputCode.attack1])) && !this.useGun)
-                            {
-                                bool flag2 = false;
-                                if (this.inputManager.isInputDown[InputCode.attack1])
-                                {
-                                    if ((this.skillCDDuration > 0f) || flag2)
-                                    {
-                                        flag2 = true;
-                                    }
-                                    else
-                                    {
-                                        this.skillCDDuration = this.skillCDLast;
-                                        if (this.skillId == "eren")
-                                        {
-                                            this.erenTransform();
-                                            return;
-                                        }
-                                        if (this.skillId == "marco")
-                                        {
-                                            if (this.IsGrounded())
-                                            {
-                                                this.attackAnimation = (UnityEngine.Random.Range(0, 2) != 0) ? "special_marco_1" : "special_marco_0";
-                                                this.playAnimation(this.attackAnimation);
-                                            }
-                                            else
-                                            {
-                                                flag2 = true;
-                                                this.skillCDDuration = 0f;
-                                            }
-                                        }
-                                        else if (this.skillId == "armin")
-                                        {
-                                            if (this.IsGrounded())
-                                            {
-                                                this.attackAnimation = "special_armin";
-                                                this.playAnimation("special_armin");
-                                            }
-                                            else
-                                            {
-                                                flag2 = true;
-                                                this.skillCDDuration = 0f;
-                                            }
-                                        }
-                                        else if (this.skillId == "sasha")
-                                        {
-                                            if (this.IsGrounded())
-                                            {
-                                                this.attackAnimation = "special_sasha";
-                                                this.playAnimation("special_sasha");
-                                                this.currentBuff = BUFF.SpeedUp;
-                                                this.buffTime = 10f;
-                                            }
-                                            else
-                                            {
-                                                flag2 = true;
-                                                this.skillCDDuration = 0f;
-                                            }
-                                        }
-                                        else if (this.skillId == "mikasa")
-                                        {
-                                            this.attackAnimation = "attack3_1";
-                                            this.playAnimation("attack3_1");
-                                            base.rigidbody.velocity = (Vector3) (Vector3.up * 10f);
-                                        }
-                                        else if (this.skillId == "levi")
-                                        {
-                                            RaycastHit hit;
-                                            this.attackAnimation = "attack5";
-                                            this.playAnimation("attack5");
-                                            Rigidbody rigidbody1 = base.rigidbody;
-                                            rigidbody1.velocity += (Vector3) (Vector3.up * 5f);
-                                            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                            LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                            LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
-                                            LayerMask mask3 = mask2 | mask;
-                                            if (Physics.Raycast(ray, out hit, 1E+07f, mask3.value))
-                                            {
-                                                if (this.bulletRight != null)
-                                                {
-                                                    this.bulletRight.GetComponent<Bullet>().disable();
-                                                    this.releaseIfIHookSb();
-                                                }
-                                                this.dashDirection = hit.point - base.transform.position;
-                                                this.launchRightRope(hit, true, 1);
-                                                this.rope.Play();
-                                            }
-                                            this.facingDirection = Mathf.Atan2(this.dashDirection.x, this.dashDirection.z) * 57.29578f;
-                                            this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                                            this.attackLoop = 3;
-                                        }
-                                        else if (this.skillId == "petra")
-                                        {
-                                            RaycastHit hit2;
-                                            this.attackAnimation = "special_petra";
-                                            this.playAnimation("special_petra");
-                                            Rigidbody rigidbody2 = base.rigidbody;
-                                            rigidbody2.velocity += (Vector3) (Vector3.up * 5f);
-                                            Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                            LayerMask mask4 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                            LayerMask mask5 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
-                                            LayerMask mask6 = mask5 | mask4;
-                                            if (Physics.Raycast(ray2, out hit2, 1E+07f, mask6.value))
-                                            {
-                                                if (this.bulletRight != null)
-                                                {
-                                                    this.bulletRight.GetComponent<Bullet>().disable();
-                                                    this.releaseIfIHookSb();
-                                                }
-                                                if (this.bulletLeft != null)
-                                                {
-                                                    this.bulletLeft.GetComponent<Bullet>().disable();
-                                                    this.releaseIfIHookSb();
-                                                }
-                                                this.dashDirection = hit2.point - base.transform.position;
-                                                this.launchLeftRope(hit2, true, 0);
-                                                this.launchRightRope(hit2, true, 0);
-                                                this.rope.Play();
-                                            }
-                                            this.facingDirection = Mathf.Atan2(this.dashDirection.x, this.dashDirection.z) * 57.29578f;
-                                            this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                                            this.attackLoop = 3;
-                                        }
-                                        else
-                                        {
-                                            if ((Settings.BodyLean == 1 || useGun) && this.needLean)
-                                            {
-                                                if (this.leanLeft)
-                                                {
-                                                    this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
-                                                }
-                                                else
-                                                {
-                                                    this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                this.attackAnimation = "attack1";
-                                            }
-                                            this.playAnimation(this.attackAnimation);
-                                        }
-                                    }
-                                }
-                                else if (this.inputManager.isInputDown[InputCode.attack0])
-                                {
-                                    if ((Settings.BodyLean == 1 || useGun) && this.needLean)
-                                    {
-                                        if (this.inputManager.isInput[InputCode.left])
-                                        {
-                                            this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
-                                        }
-                                        else if (this.inputManager.isInput[InputCode.right])
-                                        {
-                                            this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
-                                        }
-                                        else if (this.leanLeft)
-                                        {
-                                            this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
-                                        }
-                                        else
-                                        {
-                                            this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
-                                        }
-                                    }
-                                    else if (this.inputManager.isInput[InputCode.left])
-                                    {
-                                        this.attackAnimation = "attack2";
-                                    }
-                                    else if (this.inputManager.isInput[InputCode.right])
-                                    {
-                                        this.attackAnimation = "attack1";
-                                    }
-                                    else if (this.lastHook != null)
-                                    {
-                                        if (this.lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck") != null)
-                                        {
-                                            this.attackAccordingToTarget(this.lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck"));
-                                        }
-                                        else
-                                        {
-                                            flag2 = true;
-                                        }
-                                    }
-                                    else if ((this.bulletLeft != null) && (this.bulletLeft.transform.parent != null))
-                                    {
-                                        Transform a = this.bulletLeft.transform.parent.transform.root.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
-                                        if (a != null)
-                                        {
-                                            this.attackAccordingToTarget(a);
-                                        }
-                                        else
-                                        {
-                                            this.attackAccordingToMouse();
-                                        }
-                                    }
-                                    else if ((this.bulletRight != null) && (this.bulletRight.transform.parent != null))
-                                    {
-                                        Transform transform2 = this.bulletRight.transform.parent.transform.root.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
-                                        if (transform2 != null)
-                                        {
-                                            this.attackAccordingToTarget(transform2);
-                                        }
-                                        else
-                                        {
-                                            this.attackAccordingToMouse();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        GameObject obj2 = this.findNearestTitan();
-                                        if (obj2 != null)
-                                        {
-                                            Transform transform3 = obj2.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
-                                            if (transform3 != null)
-                                            {
-                                                this.attackAccordingToTarget(transform3);
-                                            }
-                                            else
-                                            {
-                                                this.attackAccordingToMouse();
-                                            }
-                                        }
-                                        else
-                                        {
-                                            this.attackAccordingToMouse();
-                                        }
-                                    }
-                                }
-                                if (!flag2)
-                                {
-                                    this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
-                                    this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                    if (this.grounded)
-                                    {
-                                        base.rigidbody.AddForce((Vector3) (base.gameObject.transform.forward * 200f));
-                                    }
-                                    this.playAnimation(this.attackAnimation);
-                                    base.animation[this.attackAnimation].time = 0f;
-                                    this.buttonAttackRelease = false;
-                                    this.state = HERO_STATE.Attack;
-                                    if ((this.grounded || (this.attackAnimation == "attack3_1")) || ((this.attackAnimation == "attack5") || (this.attackAnimation == "special_petra")))
-                                    {
-                                        this.attackReleased = true;
-                                        this.buttonAttackRelease = true;
-                                    }
-                                    else
-                                    {
-                                        this.attackReleased = false;
-                                    }
-                                    this.sparks.enableEmission = false;
-                                }
-                            }
-                            if (this.useGun)
-                            {
-                                if (this.inputManager.isInput[InputCode.attack1])
-                                {
-                                    this.leftArmAim = true;
-                                    this.rightArmAim = true;
-                                }
-                                else if (this.inputManager.isInput[InputCode.attack0])
-                                {
-                                    if (this.leftGunHasBullet)
-                                    {
-                                        this.leftArmAim = true;
-                                        this.rightArmAim = false;
-                                    }
-                                    else
-                                    {
-                                        this.leftArmAim = false;
-                                        if (this.rightGunHasBullet)
-                                        {
-                                            this.rightArmAim = true;
-                                        }
-                                        else
-                                        {
-                                            this.rightArmAim = false;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    this.leftArmAim = false;
-                                    this.rightArmAim = false;
-                                }
-                                if (this.leftArmAim || this.rightArmAim)
-                                {
-                                    RaycastHit hit3;
-                                    Ray ray3 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                    LayerMask mask7 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                    LayerMask mask8 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
-                                    LayerMask mask9 = mask8 | mask7;
-                                    if (Physics.Raycast(ray3, out hit3, 1E+07f, mask9.value))
-                                    {
-                                        this.gunTarget = hit3.point;
-                                    }
-                                }
-                                bool flag3 = false;
-                                bool flag4 = false;
-                                bool flag5 = false;
-                                if (this.inputManager.isInputUp[InputCode.attack1])
-                                {
-                                    if (this.leftGunHasBullet && this.rightGunHasBullet)
-                                    {
-                                        if (this.grounded)
-                                        {
-                                            this.attackAnimation = "AHSS_shoot_both";
-                                        }
-                                        else
-                                        {
-                                            this.attackAnimation = "AHSS_shoot_both_air";
-                                        }
-                                        flag3 = true;
-                                    }
-                                    else if (!this.leftGunHasBullet && !this.rightGunHasBullet)
-                                    {
-                                        flag4 = true;
-                                    }
-                                    else
-                                    {
-                                        flag5 = true;
-                                    }
-                                }
-                                if (flag5 || this.inputManager.isInputUp[InputCode.attack0])
-                                {
-                                    if (this.grounded)
-                                    {
-                                        if (this.leftGunHasBullet && this.rightGunHasBullet)
-                                        {
-                                            if (this.isLeftHandHooked)
-                                            {
-                                                this.attackAnimation = "AHSS_shoot_r";
-                                            }
-                                            else
-                                            {
-                                                this.attackAnimation = "AHSS_shoot_l";
-                                            }
-                                        }
-                                        else if (this.leftGunHasBullet)
-                                        {
-                                            this.attackAnimation = "AHSS_shoot_l";
-                                        }
-                                        else if (this.rightGunHasBullet)
-                                        {
-                                            this.attackAnimation = "AHSS_shoot_r";
-                                        }
-                                    }
-                                    else if (this.leftGunHasBullet && this.rightGunHasBullet)
-                                    {
-                                        if (this.isLeftHandHooked)
-                                        {
-                                            this.attackAnimation = "AHSS_shoot_r_air";
-                                        }
-                                        else
-                                        {
-                                            this.attackAnimation = "AHSS_shoot_l_air";
-                                        }
-                                    }
-                                    else if (this.leftGunHasBullet)
-                                    {
-                                        this.attackAnimation = "AHSS_shoot_l_air";
-                                    }
-                                    else if (this.rightGunHasBullet)
-                                    {
-                                        this.attackAnimation = "AHSS_shoot_r_air";
-                                    }
-                                    if (this.leftGunHasBullet || this.rightGunHasBullet)
-                                    {
-                                        flag3 = true;
-                                    }
-                                    else
-                                    {
-                                        flag4 = true;
-                                    }
-                                }
-                                if (flag3)
-                                {
-                                    this.state = HERO_STATE.Attack;
-                                    this.crossFade(this.attackAnimation, 0.05f);
-                                    this.gunDummy.transform.position = base.transform.position;
-                                    this.gunDummy.transform.rotation = base.transform.rotation;
-                                    this.gunDummy.transform.LookAt(this.gunTarget);
-                                    this.attackReleased = false;
-                                    this.facingDirection = this.gunDummy.transform.rotation.eulerAngles.y;
-                                    this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                                }
-                                else if (flag4 && (this.grounded || (LevelInfo.getInfo(FengGameManagerMKII.level).type != GAMEMODE.PVP_AHSS)))
-                                {
-                                    this.changeBlade();
-                                }
-                            }
-                        }
-                        else if (this.state == HERO_STATE.Attack)
-                        {
-                            if (!this.useGun)
-                            {
-                                if (!this.inputManager.isInput[InputCode.attack0])
-                                {
-                                    this.buttonAttackRelease = true;
-                                }
-                                if (!this.attackReleased)
-                                {
-                                    if (this.buttonAttackRelease)
-                                    {
-                                        this.continueAnimation();
-                                        this.attackReleased = true;
-                                    }
-                                    else if (base.animation[this.attackAnimation].normalizedTime >= 0.32f)
-                                    {
-                                        this.pauseAnimation();
-                                    }
-                                }
-                                if ((this.attackAnimation == "attack3_1") && (this.currentBladeSta > 0f))
-                                {
-                                    if (base.animation[this.attackAnimation].normalizedTime >= 0.8f)
-                                    {
-                                        if (!this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
-                                        {
-                                            this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
-                                            this.leftbladetrail2.Activate();
-                                            this.rightbladetrail2.Activate();
-                                            if (QualitySettings.GetQualityLevel() >= 2)
-                                            {
-                                                this.leftbladetrail.Activate();
-                                                this.rightbladetrail.Activate();
-                                            }
-                                            base.rigidbody.velocity = (Vector3) (-Vector3.up * 30f);
-                                        }
-                                        if (!this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me)
-                                        {
-                                            this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = true;
-                                            this.slash.Play();
-                                        }
-                                    }
-                                    else if (this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
-                                    {
-                                        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
-                                        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
-                                        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
-                                        this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
-                                        this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
-                                        this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
-                                    }
-                                }
-                                else
-                                {
-                                    float num;
-                                    float num2;
-                                    if (this.currentBladeSta == 0f)
-                                    {
-                                        num2 = num = -1f;
-                                    }
-                                    else if (this.attackAnimation == "attack5")
-                                    {
-                                        num2 = 0.35f;
-                                        num = 0.5f;
-                                    }
-                                    else if (this.attackAnimation == "special_petra")
-                                    {
-                                        num2 = 0.35f;
-                                        num = 0.48f;
-                                    }
-                                    else if (this.attackAnimation == "special_armin")
-                                    {
-                                        num2 = 0.25f;
-                                        num = 0.35f;
-                                    }
-                                    else if (this.attackAnimation == "attack4")
-                                    {
-                                        num2 = 0.6f;
-                                        num = 0.9f;
-                                    }
-                                    else if (this.attackAnimation == "special_sasha")
-                                    {
-                                        num2 = num = -1f;
-                                    }
-                                    else
-                                    {
-                                        num2 = 0.5f;
-                                        num = 0.85f;
-                                    }
-                                    if ((base.animation[this.attackAnimation].normalizedTime > num2) && (base.animation[this.attackAnimation].normalizedTime < num))
-                                    {
-                                        if (!this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
-                                        {
-                                            this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
-                                            this.slash.Play();
-                                            this.leftbladetrail2.Activate();
-                                            this.rightbladetrail2.Activate();
-                                            if (QualitySettings.GetQualityLevel() >= 2)
-                                            {
-                                                this.leftbladetrail.Activate();
-                                                this.rightbladetrail.Activate();
-                                            }
-                                        }
-                                        if (!this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me)
-                                        {
-                                            this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = true;
-                                        }
-                                    }
-                                    else if (this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
-                                    {
-                                        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
-                                        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
-                                        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
-                                        this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
-                                        if (Settings.BladeTrailsQuality == 1)
-                                        {
-                                            this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
-                                            this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime) - 0.1f);
-                                        }
-                                    }
-                                    if ((this.attackLoop > 0) && (base.animation[this.attackAnimation].normalizedTime > num))
-                                    {
-                                        this.attackLoop--;
-                                        this.playAnimationAt(this.attackAnimation, num2);
-                                    }
-                                }
-                                if (base.animation[this.attackAnimation].normalizedTime >= 1f)
-                                {
-                                    if ((this.attackAnimation == "special_marco_0") || (this.attackAnimation == "special_marco_1"))
-                                    {
-                                        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
-                                        {
-                                            if (!PhotonNetwork.isMasterClient)
-                                            {
-                                                object[] parameters = new object[] { 5f, 100f };
-                                                base.photonView.RPC("netTauntAttack", PhotonTargets.MasterClient, parameters);
-                                            }
-                                            else
-                                            {
-                                                this.netTauntAttack(5f, 100f);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            this.netTauntAttack(5f, 100f);
-                                        }
-                                        this.falseAttack();
-                                        this.idle();
-                                    }
-                                    else if (this.attackAnimation == "special_armin")
-                                    {
-                                        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
-                                        {
-                                            if (!PhotonNetwork.isMasterClient)
-                                            {
-                                                base.photonView.RPC("netlaughAttack", PhotonTargets.MasterClient, new object[0]);
-                                            }
-                                            else
-                                            {
-                                                this.netlaughAttack();
-                                            }
-                                        }
-                                        else
-                                        {
-                                            foreach (GameObject obj3 in GameObject.FindGameObjectsWithTag("titan"))
-                                            {
-                                                if (((Vector3.Distance(obj3.transform.position, base.transform.position) < 50f) && (Vector3.Angle(obj3.transform.forward, base.transform.position - obj3.transform.position) < 90f)) && (obj3.GetComponent<TITAN>() != null))
-                                                {
-                                                    obj3.GetComponent<TITAN>().beLaughAttacked();
-                                                }
-                                            }
-                                        }
-                                        this.falseAttack();
-                                        this.idle();
-                                    }
-                                    else if (this.attackAnimation == "attack3_1")
-                                    {
-                                        Rigidbody rigidbody3 = base.rigidbody;
-                                        rigidbody3.velocity -= (Vector3) ((Vector3.up * Time.deltaTime) * 30f);
-                                    }
-                                    else
-                                    {
-                                        this.falseAttack();
-                                        this.idle();
-                                    }
-                                }
-                                if (base.animation.IsPlaying("attack3_2") && (base.animation["attack3_2"].normalizedTime >= 1f))
-                                {
-                                    this.falseAttack();
-                                    this.idle();
-                                }
-                            }
-                            else
-                            {
-                                base.transform.rotation = Quaternion.Lerp(base.transform.rotation, this.gunDummy.transform.rotation, Time.deltaTime * 30f);
-                                UnityEngine.MonoBehaviour.print(this.attackAnimation);
-                                if (!this.attackReleased && (base.animation[this.attackAnimation].normalizedTime > 0.167f))
-                                {
-                                    GameObject obj4;
-                                    this.attackReleased = true;
-                                    bool flag6 = false;
-                                    if ((this.attackAnimation == "AHSS_shoot_both") || (this.attackAnimation == "AHSS_shoot_both_air"))
-                                    {
-                                        flag6 = true;
-                                        this.leftGunHasBullet = false;
-                                        this.rightGunHasBullet = false;
-                                        base.rigidbody.AddForce((Vector3) (-base.transform.forward * 1000f), ForceMode.Acceleration);
-                                    }
-                                    else
-                                    {
-                                        if ((this.attackAnimation == "AHSS_shoot_l") || (this.attackAnimation == "AHSS_shoot_l_air"))
-                                        {
-                                            this.leftGunHasBullet = false;
-                                        }
-                                        else
-                                        {
-                                            this.rightGunHasBullet = false;
-                                        }
-                                        base.rigidbody.AddForce((Vector3) (-base.transform.forward * 600f), ForceMode.Acceleration);
-                                    }
-                                    base.rigidbody.AddForce((Vector3) (Vector3.up * 200f), ForceMode.Acceleration);
-                                    string prefabName = "FX/shotGun";
-                                    if (flag6)
-                                    {
-                                        prefabName = "FX/shotGun 1";
-                                    }
-                                    if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && base.photonView.isMine)
-                                    {
-                                        obj4 = PhotonNetwork.Instantiate(prefabName, (Vector3) ((base.transform.position + (base.transform.up * 0.8f)) - (base.transform.right * 0.1f)), base.transform.rotation, 0);
-                                        if (obj4.GetComponent<EnemyfxIDcontainer>() != null)
-                                        {
-                                            obj4.GetComponent<EnemyfxIDcontainer>().myOwnerViewID = base.photonView.viewID;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        obj4 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load(prefabName), (Vector3) ((base.transform.position + (base.transform.up * 0.8f)) - (base.transform.right * 0.1f)), base.transform.rotation);
-                                    }
-                                }
-                                if (base.animation[this.attackAnimation].normalizedTime >= 1f)
-                                {
-                                    this.falseAttack();
-                                    this.idle();
-                                }
-                                if (!base.animation.IsPlaying(this.attackAnimation))
-                                {
-                                    this.falseAttack();
-                                    this.idle();
-                                }
-                            }
-                        }
-                        else if (this.state == HERO_STATE.ChangeBlade)
-                        {
-                            if (this.useGun)
-                            {
-                                if (base.animation[this.reloadAnimation].normalizedTime > 0.22f)
-                                {
-                                    if (!this.leftGunHasBullet && this.setup.part_blade_l.activeSelf)
-                                    {
-                                        this.setup.part_blade_l.SetActive(false);
-                                        Transform transform = this.setup.part_blade_l.transform;
-                                        GameObject obj5 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
-                                        obj5.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-                                        Vector3 force = ((Vector3) ((-base.transform.forward * 10f) + (base.transform.up * 5f))) - base.transform.right;
-                                        obj5.rigidbody.AddForce(force, ForceMode.Impulse);
-                                        Vector3 torque = new Vector3((float) UnityEngine.Random.Range(-100, 100), (float) UnityEngine.Random.Range(-100, 100), (float) UnityEngine.Random.Range(-100, 100));
-                                        obj5.rigidbody.AddTorque(torque, ForceMode.Acceleration);
-                                    }
-                                    if (!this.rightGunHasBullet && this.setup.part_blade_r.activeSelf)
-                                    {
-                                        this.setup.part_blade_r.SetActive(false);
-                                        Transform transform5 = this.setup.part_blade_r.transform;
-                                        GameObject obj6 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_r"), transform5.position, transform5.rotation);
-                                        obj6.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-                                        Vector3 vector4 = ((Vector3) ((-base.transform.forward * 10f) + (base.transform.up * 5f))) + base.transform.right;
-                                        obj6.rigidbody.AddForce(vector4, ForceMode.Impulse);
-                                        Vector3 vector5 = new Vector3((float) UnityEngine.Random.Range(-300, 300), (float) UnityEngine.Random.Range(-300, 300), (float) UnityEngine.Random.Range(-300, 300));
-                                        obj6.rigidbody.AddTorque(vector5, ForceMode.Acceleration);
-                                    }
-                                }
-                                if ((base.animation[this.reloadAnimation].normalizedTime > 0.62f) && !this.throwedBlades)
-                                {
-                                    this.throwedBlades = true;
-                                    if ((this.leftBulletLeft > 0) && !this.leftGunHasBullet)
-                                    {
-                                        this.leftBulletLeft--;
-                                        this.setup.part_blade_l.SetActive(true);
-                                        this.leftGunHasBullet = true;
-                                    }
-                                    if ((this.rightBulletLeft > 0) && !this.rightGunHasBullet)
-                                    {
-                                        this.setup.part_blade_r.SetActive(true);
-                                        this.rightBulletLeft--;
-                                        this.rightGunHasBullet = true;
-                                    }
-                                    this.updateRightMagUI();
-                                    this.updateLeftMagUI();
-                                }
-                                if (base.animation[this.reloadAnimation].normalizedTime > 1f)
-                                {
-                                    this.idle();
-                                }
-                            }
-                            else
-                            {
-                                if (!this.grounded)
-                                {
-                                    if ((base.animation[this.reloadAnimation].normalizedTime >= 0.2f) && !this.throwedBlades)
-                                    {
-                                        this.throwedBlades = true;
-                                        if (this.setup.part_blade_l.activeSelf)
-                                        {
-                                            this.throwBlades();
-                                        }
-                                    }
-                                    if ((base.animation[this.reloadAnimation].normalizedTime >= 0.56f) && (this.currentBladeNum > 0))
-                                    {
-                                        this.setup.part_blade_l.SetActive(true);
-                                        this.setup.part_blade_r.SetActive(true);
-                                        this.currentBladeSta = this.totalBladeSta;
-                                    }
-                                }
-                                else
-                                {
-                                    if ((base.animation[this.reloadAnimation].normalizedTime >= 0.13f) && !this.throwedBlades)
-                                    {
-                                        this.throwedBlades = true;
-                                        if (this.setup.part_blade_l.activeSelf)
-                                        {
-                                            this.throwBlades();
-                                        }
-                                    }
-                                    if ((base.animation[this.reloadAnimation].normalizedTime >= 0.37f) && (this.currentBladeNum > 0))
-                                    {
-                                        this.setup.part_blade_l.SetActive(true);
-                                        this.setup.part_blade_r.SetActive(true);
-                                        this.currentBladeSta = this.totalBladeSta;
-                                    }
-                                }
-                                if (base.animation[this.reloadAnimation].normalizedTime >= 1f)
-                                {
-                                    this.idle();
-                                }
-                            }
-                        }
-                        else if (this.state == HERO_STATE.Salute)
-                        {
-                            if (base.animation["salute"].normalizedTime >= 1f)
-                            {
-                                this.idle();
-                            }
-                        }
-                        else if (this.state == HERO_STATE.GroundDodge)
-                        {
-                            if (base.animation.IsPlaying("dodge"))
-                            {
-                                if (!this.grounded && (base.animation["dodge"].normalizedTime > 0.6f))
-                                {
-                                    this.idle();
-                                }
-                                if (base.animation["dodge"].normalizedTime >= 1f)
-                                {
-                                    this.idle();
-                                }
-                            }
-                        }
-                        else if (this.state == HERO_STATE.Land)
-                        {
-                            if (base.animation.IsPlaying("dash_land") && (base.animation["dash_land"].normalizedTime >= 1f))
-                            {
-                                this.idle();
-                            }
-                        }
-                        else if (this.state == HERO_STATE.FillGas)
-                        {
-                            if (base.animation.IsPlaying("supply") && (base.animation["supply"].normalizedTime >= 1f))
-                            {
-                                this.currentBladeSta = this.totalBladeSta;
-                                this.currentBladeNum = this.totalBladeNum;
-                                this.currentGas = this.totalGas;
-                                if (!this.useGun)
-                                {
-                                    this.setup.part_blade_l.SetActive(true);
-                                    this.setup.part_blade_r.SetActive(true);
-                                }
-                                else
-                                {
-                                    this.leftBulletLeft = this.rightBulletLeft = this.bulletMAX;
-                                    this.leftGunHasBullet = this.rightGunHasBullet = true;
-                                    this.setup.part_blade_l.SetActive(true);
-                                    this.setup.part_blade_r.SetActive(true);
-                                    this.updateRightMagUI();
-                                    this.updateLeftMagUI();
-                                }
-                                this.idle();
-                            }
-                        }
-                        else if (this.state == HERO_STATE.Slide)
-                        {
-                            if (!this.grounded)
-                            {
-                                this.idle();
-                            }
-                        }
-                        else if (this.state == HERO_STATE.AirDodge)
-                        {
-                            if (this.dashTime > 0f)
-                            {
-                                this.dashTime -= Time.deltaTime;
-                                if (this.currentSpeed > this.originVM)
-                                {
-                                    base.rigidbody.AddForce((Vector3) ((-base.rigidbody.velocity * Time.deltaTime) * 1.7f), ForceMode.VelocityChange);
-                                }
-                            }
-                            else
-                            {
-                                this.dashTime = 0f;
-                                this.idle();
-                            }
-                        }
-                        if (((this.inputManager.isInput[InputCode.leftRope] && !base.animation.IsPlaying("attack3_1")) && (!base.animation.IsPlaying("attack5") && !base.animation.IsPlaying("special_petra"))) && ((this.state != HERO_STATE.ChangeBlade) && (this.state != HERO_STATE.Grab)))
-                        {
-                            if (this.bulletLeft != null)
-                            {
-                                this.QHold = true;
-                            }
-                            else
-                            {
-                                RaycastHit hit4;
-                                Ray ray4 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                LayerMask mask10 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                LayerMask mask11 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
-                                LayerMask mask12 = mask11 | mask10;
-                                if (Physics.Raycast(ray4, out hit4, 10000f, mask12.value))
-                                {
-                                    this.launchLeftRope(hit4, true, 0);
-                                    this.rope.Play();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            this.QHold = false;
-                        }
-                        if (this.inputManager.isInput[InputCode.rightRope] && (((!base.animation.IsPlaying("attack3_1") && !base.animation.IsPlaying("attack5")) && !base.animation.IsPlaying("special_petra")) || (this.state == HERO_STATE.Idle)))
-                        {
-                            if (this.bulletRight != null)
-                            {
-                                this.EHold = true;
-                            }
-                            else
-                            {
-                                RaycastHit hit5;
-                                Ray ray5 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                LayerMask mask13 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                LayerMask mask14 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
-                                LayerMask mask15 = mask14 | mask13;
-                                if (Physics.Raycast(ray5, out hit5, 10000f, mask15.value))
-                                {
-                                    this.launchRightRope(hit5, true, 0);
-                                    this.rope.Play();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            this.EHold = false;
-                        }
-                        if (this.inputManager.isInput[InputCode.bothRope] && (((!base.animation.IsPlaying("attack3_1") && !base.animation.IsPlaying("attack5")) && !base.animation.IsPlaying("special_petra")) || (this.state == HERO_STATE.Idle)))
-                        {
-                            this.QHold = true;
-                            this.EHold = true;
-                            if ((this.bulletLeft == null) && (this.bulletRight == null))
-                            {
-                                RaycastHit hit6;
-                                Ray ray6 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                LayerMask mask16 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                LayerMask mask17 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
-                                LayerMask mask18 = mask17 | mask16;
-                                if (Physics.Raycast(ray6, out hit6, 1000000f, mask18.value))
-                                {
-                                    this.launchLeftRope(hit6, false, 0);
-                                    this.launchRightRope(hit6, false, 0);
-                                    this.rope.Play();
-                                }
-                            }
-                        }
-                        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) || ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) && !IN_GAME_MAIN_CAMERA.isPausing))
-                        {
-                            this.calcSkillCD();
-                            this.calcFlareCD();
-                        }
-                        if (!this.useGun)
-                        {
-                            if (this.leftbladetrail.gameObject.GetActive())
-                            {
-                                this.leftbladetrail.update();
-                                this.rightbladetrail.update();
-                            }
-                            if (this.leftbladetrail2.gameObject.GetActive())
-                            {
-                                this.leftbladetrail2.update();
-                                this.rightbladetrail2.update();
-                            }
-                            if (this.leftbladetrail.gameObject.GetActive())
-                            {
-                                this.leftbladetrail.lateUpdate();
-                                this.rightbladetrail.lateUpdate();
-                            }
-                            if (this.leftbladetrail2.gameObject.GetActive())
-                            {
-                                this.leftbladetrail2.lateUpdate();
-                                this.rightbladetrail2.lateUpdate();
-                            }
-                        }
-                        if (!IN_GAME_MAIN_CAMERA.isPausing)
-                        {
-                            this.showSkillCD();
-                            this.showFlareCD();
-                            this.showGas();
-                            this.showAimUI();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void update2()
     {
         if (!IN_GAME_MAIN_CAMERA.isPausing)
         {
@@ -6595,7 +4911,7 @@ public class HERO : Photon.MonoBehaviour
                             }
                             if (!((!this.inputManager.isInputDown[InputCode.dodge] || this.baseAnimation.IsPlaying("jump")) || this.baseAnimation.IsPlaying("horse_geton")))
                             {
-                                this.dodge2(false);
+                                this.dodge(false);
                                 return;
                             }
                         }
@@ -6615,7 +4931,7 @@ public class HERO : Photon.MonoBehaviour
                             }
                             if (this.inputManager.isInputDown[InputCode.restart])
                             {
-                                this.suicide2();
+                                this.suicide();
                             }
                             if (((this.myHorse != null) && this.isMounted) && FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount))
                             {
@@ -7051,8 +5367,11 @@ public class HERO : Photon.MonoBehaviour
                                             {
                                                 this.leftbladetrail2.Activate();
                                                 this.rightbladetrail2.Activate();
-                                                this.leftbladetrail.Activate();
-                                                this.rightbladetrail.Activate();
+                                                if (Settings.BladeTrailsQuality == 0)
+                                                {
+                                                    this.leftbladetrail.Activate();
+                                                    this.rightbladetrail.Activate();
+                                                }
                                             }
                                             this.baseRigidBody.velocity = (Vector3) (-Vector3.up * 30f);
                                         }
@@ -7068,8 +5387,11 @@ public class HERO : Photon.MonoBehaviour
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                                         this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                        this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        if (Settings.BladeTrailsQuality == 0)
+                                        {
+                                            this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                            this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        }
                                         this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                         this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                     }
@@ -7121,8 +5443,11 @@ public class HERO : Photon.MonoBehaviour
                                             {
                                                 this.leftbladetrail2.Activate();
                                                 this.rightbladetrail2.Activate();
-                                                this.leftbladetrail.Activate();
-                                                this.rightbladetrail.Activate();
+                                                if (Settings.BladeTrailsQuality == 0)
+                                                {
+                                                    this.leftbladetrail.Activate();
+                                                    this.rightbladetrail.Activate();
+                                                }
                                             }
                                         }
                                         if (!this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me)
@@ -7136,10 +5461,13 @@ public class HERO : Photon.MonoBehaviour
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                                         this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
                                         this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail2.StopSmoothly(0.1f);
-                                        this.rightbladetrail2.StopSmoothly(0.1f);
-                                        this.leftbladetrail.StopSmoothly(0.1f);
-                                        this.rightbladetrail.StopSmoothly(0.1f);
+                                        this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        if (Settings.BladeTrailsQuality == 0)
+                                        {
+                                            this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                            this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        }
                                     }
                                     if ((this.attackLoop > 0) && (this.baseAnimation[this.attackAnimation].normalizedTime > num))
                                     {
@@ -7546,14 +5874,14 @@ public class HERO : Photon.MonoBehaviour
                         if (!IN_GAME_MAIN_CAMERA.isPausing)
                         {
                             this.showSkillCD();
-                            this.showFlareCD2();
-                            this.showGas2();
-                            this.showAimUI2();
+                            this.showFlareCD();
+                            this.showGas();
+                            this.showAimUI();
                         }
                     }
                     else if (this.isCannon && !IN_GAME_MAIN_CAMERA.isPausing)
                     {
-                        this.showAimUI2();
+                        this.showAimUI();
                         this.calcSkillCD();
                         this.showSkillCD();
                     }
@@ -7661,8 +5989,12 @@ public class HERO : Photon.MonoBehaviour
             {
                 if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
                 {
-                    this.leftbladetrail.Deactivate();
-                    this.rightbladetrail.Deactivate();
+                    if (Settings.BladeTrailsQuality == 0)
+                    {
+
+                        this.leftbladetrail.Deactivate();
+                        this.rightbladetrail.Deactivate();
+                    }
                     this.leftbladetrail2.Deactivate();
                     this.rightbladetrail2.Deactivate();
                     this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
