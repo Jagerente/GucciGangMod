@@ -313,7 +313,7 @@ public class Language
                             break;
 
                         case "btn_QUICK_MATCH":
-                            btn_QUICK_MATCH[index] = str4;
+                            btn_QUICK_MATCH[index] = "OFFLINE";
                             break;
 
                         case "btn_default":

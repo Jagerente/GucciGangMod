@@ -11175,14 +11175,14 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     private void Update()
     {
-        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && (GameObject.Find("LabelNetworkStatus") != null) && Settings.OnMap())
+        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && !PhotonNetwork.offlineMode) && (GameObject.Find("LabelNetworkStatus") != null) && Settings.OnMap())
         {
             if (PhotonNetwork.connected)
             {
                 GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"Ping:{PhotonNetwork.GetPing()} " + (Settings.FPS == 1 ? $"FPS:{FPSCounter.FPS}" : string.Empty);
             }
         }
-        else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE && Settings.FPS == 1 && Settings.UI != 0 && Settings.OnMap())
+        else if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || PhotonNetwork.offlineMode) && Settings.FPS == 1 && Settings.UI != 0 && Settings.OnMap())
         {
             GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"FPS:{FPSCounter.FPS}";
         }
