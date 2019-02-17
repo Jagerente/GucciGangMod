@@ -13,7 +13,7 @@
   •
   <a href="#download">Download</a>
   •
-  <a href="#feautures">Feautures</a>
+  <a href="https://github.com/JustlPain/GucciGangMod/wiki/Information">Feautures</a>
 </p>
 
 
