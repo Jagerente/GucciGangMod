@@ -329,7 +329,6 @@ namespace GGP
             BetterGUI.Grid("Minor Bold", ref Settings.ChatMinorBold, SwitcherStr);
             BetterGUI.Grid("Major Italic", ref Settings.ChatMajorItalic, SwitcherStr);
             BetterGUI.Grid("Minor Italic", ref Settings.ChatMinorItalic, SwitcherStr);
-            BetterGUI.Grid("FPS", ref Settings.FPS, SwitcherStr);
             BetterGUI.Grid("Game Feed", ref Settings.GameFeed, SwitcherStr);
             BetterGUI.Grid("Damage Feed", ref Settings.DamageFeed, SwitcherStr);
             BetterGUI.SubHeader("Other");
@@ -349,6 +348,7 @@ namespace GGP
             BetterGUI.Grid("Body Lean", ref Settings.BodyLean, SwitcherStr);
             BetterGUI.Grid("No Gravity [F4]", ref Settings.NoGravity, SwitcherStr);
             BetterGUI.Grid("No Clip [V]", ref Settings.NoClip, SwitcherStr);
+            BetterGUI.Grid("Bouncy", ref Settings.Bouncy, SwitcherStr);
             BetterGUI.SubHeader("Gas Burst");
             BetterGUI.Grid("Rebind + Double Tap", ref Settings.DoubleBurstRebind, SwitcherStr);
             BetterGUI.TextField("Force", ref Settings.DashForce);
@@ -838,6 +838,7 @@ namespace GGP
             BetterGUI.Label(QualitySettings.names[QualitySettings.GetQualityLevel()], 1, 60f);
             GUILayout.EndHorizontal();
             BetterGUI.Grid("Textures", ref Settings.TextureQuality, TextureQualityStr);
+            BetterGUI.Grid("FPS", ref Settings.FPS, SwitcherStr);
             BetterGUI.TextField("FPS Lock", ref Settings.FPSLock);
             BetterGUI.SubHeader("Advanced");
             var mipmap = 0;
