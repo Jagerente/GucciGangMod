@@ -13,7 +13,7 @@ public class PhotonStatsGui : MonoBehaviour
     public bool healthStatsVisible;
     public bool statsOn = true;
     public Rect statsRect = new Rect(0f, 100f, 200f, 50f);
-    public bool statsWindowOn = true;
+    public bool statsWindowOn = false;
     public bool trafficStatsOn;
     public int WindowId = 100;
 
