@@ -7,7 +7,6 @@ namespace GGP
     class Settings
     {
         public static string ChatPath = $"{Application.dataPath}/chat.txt";
-        public static bool Remember = false;
         public static bool SpecMode = false;
 
         #region Location Names
@@ -582,7 +581,6 @@ namespace GGP
         }
         public static void LoadConfig()
         {
-            Remember = Convert.ToBoolean(PlayerPrefs.GetInt("Remember", 0));
             #region Game Settings
             InvertMouse = PlayerPrefs.GetInt("InvertMouse", 0);
             MouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 0.5f);
