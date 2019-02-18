@@ -11029,8 +11029,8 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         {
             privateServerField = string.Empty;
         }
-        usernameField = PlayerPrefs.GetString("Login", string.Empty);
-        passwordField = PlayerPrefs.GetString("Password", string.Empty);
+        usernameField = string.Empty;
+        passwordField = string.Empty;
         FengGameManagerMKII.nameField = PlayerPrefs.GetString("Name", string.Empty);
         LoginFengKAI.player.guildname = PlayerPrefs.GetString("Guild", string.Empty);
         this.resetGameSettings();
@@ -11106,6 +11106,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         base.StartCoroutine(this.LoadBackground());
         base.gameObject.AddComponent<FPSCounter>();
         base.gameObject.AddComponent<HotKeys>();
+        base.gameObject.AddComponent<PhotonStatsGui>();
         //base.gameObject.AddComponent<Checker>();
         Settings.LoadConfig();
         Settings.LoadHumanSkins();

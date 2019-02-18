@@ -58,8 +58,8 @@ namespace GGP
         BetterGUI.ButtonStyle("Custom Map"),//8
         BetterGUI.ButtonStyle("Custom Logic")//9
         };
-        private static int TopLeftNavigationInt = 1;
-        private static string[] TopLeftNavigationStr = new string[] { BetterGUI.ButtonStyle("Account"), BetterGUI.ButtonStyle("Name"), BetterGUI.ButtonStyle("Servers") };
+        private static int TopLeftNavigationInt = 0;
+        private static string[] TopLeftNavigationStr = new string[] { BetterGUI.ButtonStyle("<size=18>User</size>"), BetterGUI.ButtonStyle("<size=18>Servers</size>") };
         static readonly string[] SwitcherStr = { BetterGUI.ButtonStyle("Off"), BetterGUI.ButtonStyle("On") };
         static readonly string[] Speedometer = new[] { BetterGUI.ButtonStyle("Off"), BetterGUI.ButtonStyle("Speed"), BetterGUI.ButtonStyle("Damage") };
         static readonly string[] AnisotropicFilteringStr = new[] { BetterGUI.ButtonStyle("Off"), BetterGUI.ButtonStyle("On"), BetterGUI.ButtonStyle("Forced") };
@@ -125,156 +125,85 @@ namespace GGP
             #endregion
 
             #region Top Left Navigation Panel
-            GUILayout.BeginArea(GUIHelpers.AlignRect(460f, 400f, GUIHelpers.Alignment.TOPLEFT, 10, 10));
+            GUILayout.BeginArea(GUIHelpers.AlignRect(400, 400, GUIHelpers.Alignment.TOPLEFT, 10, 10));
             GUILayout.BeginHorizontal();
 
-            TopLeftNavigationInt = GUILayout.SelectionGrid(TopLeftNavigationInt, TopLeftNavigationStr, 3, GUILayout.Width(460), GUILayout.Height(50));;
+            TopLeftNavigationInt = GUILayout.SelectionGrid(TopLeftNavigationInt, TopLeftNavigationStr, 2, GUILayout.Width(400), GUILayout.Height(50));;
             GUILayout.EndHorizontal();
 
             switch (TopLeftNavigationInt)
             {
                 case 0:
-                    #region Account
-                    //Loggining
-                    if (FengGameManagerMKII.loginstate != 3)
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("<size=16>Username:</size>", GUILayout.Width(115));
-                            FengGameManagerMKII.usernameField = GUILayout.TextField(FengGameManagerMKII.usernameField, GUILayout.Width(105));
-                            GUILayout.EndHorizontal();
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("<size=16>Password:</size>", GUILayout.Width(115));
-                            FengGameManagerMKII.passwordField = GUILayout.PasswordField(FengGameManagerMKII.passwordField, "*"[0], GUILayout.Width(105));
-                            GUILayout.EndHorizontal();
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("", GUILayout.Width(115));
-                            Settings.Remember = GUILayout.Toggle(Settings.Remember, "<size=16> Remember</size>");
-                            GUILayout.EndHorizontal();
-                            if (GUILayout.Button("<size=18><b>Login</b></size>", GUILayout.Width(225)) && (FengGameManagerMKII.loginstate != 1))
-                            {
-                                PlayerPrefs.SetInt("Remember", Settings.Remember ? 1 : 0);
-                                if (!Settings.Remember)
-                                {
-                                    base.StartCoroutine(FengGameManagerMKII.instance.loginFeng());
-                                    FengGameManagerMKII.loginstate = 1;
-                                }
-                                else
-                                {
-                                    PlayerPrefs.SetString("Login", FengGameManagerMKII.usernameField);
-                                    PlayerPrefs.SetString("Password", FengGameManagerMKII.passwordField);
-                                    base.StartCoroutine(FengGameManagerMKII.instance.loginFeng());
-                                    FengGameManagerMKII.loginstate = 1;
-                                }
-                            }
-                            if (FengGameManagerMKII.loginstate == 1)
-                            {
-                                GUILayout.Label("<size=18><i>Loging in...</i></size>", GUILayout.Width(115));
-                            }
-                            else if (FengGameManagerMKII.loginstate == 2)
-                            {
-                                GUILayout.Label("<size=18><i>Login failed.</i></size>", GUILayout.Width(115));
-                            }
-                        }
-                        //In Account
-                        else
-                        {
-                            GUILayout.Label("<size=16>Name: " + LoginFengKAI.player.name + "</size>", GUILayout.Width(300));
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("<size=16>Guild:</size>", GUILayout.Width(45));
-                            LoginFengKAI.player.guildname = GUILayout.TextField(LoginFengKAI.player.guildname, GUILayout.Width(175));
-                            GUILayout.EndHorizontal();
-                            GUILayout.BeginHorizontal();
-                            if (GUILayout.Button("<b><size=18>Set Guild</size></b>", GUILayout.Width(125)))
-                            {
-                                base.StartCoroutine(FengGameManagerMKII.instance.setGuildFeng());
-                            }
-                            if (GUILayout.Button("<b><size=18>Logout</size></b>", GUILayout.Width(125)))
-                            {
-                                FengGameManagerMKII.loginstate = 0;
-                            }
-                            GUILayout.EndHorizontal();
-                        }
-                        break;
+                    #region Custom Name
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("<size=16>Name:</size>", GUILayout.Width(115));
+                    FengGameManagerMKII.nameField = GUILayout.TextField(FengGameManagerMKII.nameField, GUILayout.Width(180));
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("<size=16>Guild:</size>", GUILayout.Width(115));
+                    LoginFengKAI.player.guildname = GUILayout.TextArea(LoginFengKAI.player.guildname, GUILayout.Width(180));
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button(BetterGUI.Bold("<size=16>Save</size>"), GUILayout.Width(147)))
+                    {
+                        PlayerPrefs.SetString("Name", FengGameManagerMKII.nameField);
+                        PlayerPrefs.SetString("Guild", LoginFengKAI.player.guildname);
+                    }
+                    if (GUILayout.Button(BetterGUI.Bold("<size=16>Load</size>"), GUILayout.Width(147)))
+                    {
+                        FengGameManagerMKII.nameField = PlayerPrefs.GetString("Name", string.Empty);
+                        LoginFengKAI.player.guildname = PlayerPrefs.GetString("Guild", string.Empty);
+                    }
+                    GUILayout.EndHorizontal();
+                    break;
                 #endregion
                 case 1:
-                    #region Custom Name
-                    if (FengGameManagerMKII.loginstate == 3)
-                        {
-                            GUILayout.Label("<size=30><b><i>You are already logged in!</i></b></size>", GUILayout.Width(400));
-                        }
-                        //Custom Name
-                        else
-                        {
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("<size=16>Name:</size>", GUILayout.Width(115));
-                            FengGameManagerMKII.nameField = GUILayout.TextField(FengGameManagerMKII.nameField, GUILayout.Width(180));
-                            GUILayout.EndHorizontal();
-                            GUILayout.BeginHorizontal();
-                            GUILayout.Label("<size=16>Guild:</size>", GUILayout.Width(115));
-                            LoginFengKAI.player.guildname = GUILayout.TextArea(LoginFengKAI.player.guildname, GUILayout.Width(180));
-                            GUILayout.EndHorizontal();
-                            GUILayout.BeginHorizontal();
-                            if (GUILayout.Button(BetterGUI.Bold("Save"), GUILayout.Width(125)))
-                            {
-                                PlayerPrefs.SetString("Name", FengGameManagerMKII.nameField);
-                                PlayerPrefs.SetString("Guild", LoginFengKAI.player.guildname);
-                            }
-                            if (GUILayout.Button(BetterGUI.Bold("Load"), GUILayout.Width(125)))
-                            {
-                                FengGameManagerMKII.nameField = PlayerPrefs.GetString("Name", string.Empty);
-                                LoginFengKAI.player.guildname = PlayerPrefs.GetString("Guild", string.Empty);
-                            }
-                            GUILayout.EndHorizontal();
-                        }
-                        break;
-                #endregion
-                case 2:
                     #region Server Type
                     if (UIMainReferences.version == UIMainReferences.fengVersion)
+                    {
+                        GUILayout.Label("<size=24><b><i>Connected to Public server.</i></b></size>", GUILayout.Width(400));
+                    }
+                    else if (UIMainReferences.version == FengGameManagerMKII.s[0])
+                    {
+                        GUILayout.Label("<size=24><b><i>Connected to RC Private server.</i></b></size>", GUILayout.Width(400));
+                    }
+                    else if (UIMainReferences.version == "DontUseThisVersionPlease173")
+                    {
+                        GUILayout.Label("<size=24><b><i>Connecting to Crypto server...</i></b></size>", GUILayout.Width(400));
+                    }
+                    else
+                    {
+                        if (FengGameManagerMKII.privateServerField != "")
                         {
-                            GUILayout.Label("<size=24><b><i>Connected to Public server.</i></b></size>", GUILayout.Width(400));
-                        }
-                        else if (UIMainReferences.version == FengGameManagerMKII.s[0])
-                        {
-                            GUILayout.Label("<size=24><b><i>Connected to RC Private server.</i></b></size>", GUILayout.Width(400));
-                        }
-                        else if (UIMainReferences.version == "DontUseThisVersionPlease173")
-                        {
-                            GUILayout.Label("<size=24><b><i>Connecting to Crypto server...</i></b></size>", GUILayout.Width(400));
+                            GUILayout.Label("<size=24><b><i>Connected to " + FengGameManagerMKII.privateServerField + " server.</i></b></size>", GUILayout.Width(400));
                         }
                         else
                         {
-                            if (FengGameManagerMKII.privateServerField != "")
-                            {
-                                GUILayout.Label("<size=24><b><i>Connected to " + FengGameManagerMKII.privateServerField + " server.</i></b></size>", GUILayout.Width(400));
-                            }
-                            else
-                            {
-                                GUILayout.Label("<size=24><b><i>Connected to Custom server.</i></b></size>", GUILayout.Width(400));
-                            }
+                            GUILayout.Label("<size=24><b><i>Connected to Custom server.</i></b></size>", GUILayout.Width(400));
                         }
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("<size=16>Public Server</size>", GUILayout.Width(115));
-                        if (GUILayout.Button("<size=18><b>Connect</b></size>", GUILayout.Width(280)))
-                        {
-                            UIMainReferences.version = UIMainReferences.fengVersion;
-                        }
-                        GUILayout.EndHorizontal();
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("<size=16>RC Private</size>", GUILayout.Width(115));
-                        if (GUILayout.Button("<size=18><b>Connect</b></size>", GUILayout.Width(280)))
-                        {
-                            UIMainReferences.version = FengGameManagerMKII.s[0];
-                        }
-                        GUILayout.EndHorizontal();
-                        GUILayout.BeginHorizontal();
-                        FengGameManagerMKII.privateServerField = GUILayout.TextField(FengGameManagerMKII.privateServerField, 50, GUILayout.Width(115));
-                        if (GUILayout.Button("<size=18><b>Connect</b></size>", GUILayout.Width(280)))
-                        {
-                            UIMainReferences.version = FengGameManagerMKII.privateServerField;
-                        }
-                        GUILayout.EndHorizontal();
-                        break;
+                    }
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("<size=16>Public Server</size>", GUILayout.Width(115));
+                    if (GUILayout.Button("<size=18><b>Connect</b></size>", GUILayout.Width(280)))
+                    {
+                        UIMainReferences.version = UIMainReferences.fengVersion;
+                    }
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("<size=16>RC Private</size>", GUILayout.Width(115));
+                    if (GUILayout.Button("<size=18><b>Connect</b></size>", GUILayout.Width(280)))
+                    {
+                        UIMainReferences.version = FengGameManagerMKII.s[0];
+                    }
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    FengGameManagerMKII.privateServerField = GUILayout.TextField(FengGameManagerMKII.privateServerField, 50, GUILayout.Width(115));
+                    if (GUILayout.Button("<size=18><b>Connect</b></size>", GUILayout.Width(280)))
+                    {
+                        UIMainReferences.version = FengGameManagerMKII.privateServerField;
+                    }
+                    GUILayout.EndHorizontal();
+                    break;
                     #endregion
             }
             GUILayout.EndArea();
