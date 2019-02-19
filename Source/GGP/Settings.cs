@@ -8,6 +8,7 @@ namespace GGP
     {
         public static string ChatPath = $"{Application.dataPath}/chat.txt";
         public static bool SpecMode = false;
+        public static bool Suicide = false;
 
         #region Location Names
         public static bool Forest = false;
@@ -707,7 +708,7 @@ namespace GGP
 
         public static void InitSettings()
         {
-            var player = Utilities.Player();
+            var player = Extensions.Player();
             
             if (UI == 0)
             {

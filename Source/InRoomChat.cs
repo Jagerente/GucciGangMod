@@ -143,7 +143,7 @@ public class InRoomChat : Photon.MonoBehaviour
         {
             case "pos":
                 {
-                    var player = Utilities.Player();
+                    var player = GGP.Extensions.Player();
                     var x = player.transform.position.x;
                     var y = player.transform.position.y;
                     var z = player.transform.position.z;
@@ -152,7 +152,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 }
             case "info":
                 {
-                    var player = Utilities.Player();
+                    var player = GGP.Extensions.Player();
                     Message(player.collider.material.bounciness.ToString());
                     break;
                 }
