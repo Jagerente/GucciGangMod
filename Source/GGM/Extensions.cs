@@ -5,15 +5,10 @@ namespace GGM
 {
     public static class Extensions
     {
-        #region Location Names
+        #region Variables
+        private static string[] _locations = { "akina", "cave", "city", "colossal", "forest", "house", "outside", "tutorial"};
         public static bool Forest = false;
         public static bool City = false;
-        public static bool Tutorial = false;
-        public static bool Outside = false;
-        public static bool CaveFight = false;
-        public static bool HouseFight = false;
-        public static bool Akina = false;
-        public static bool Colossal = false;
         #endregion
 
         public static string StripHTML(string input)
@@ -55,10 +50,11 @@ namespace GGM
 
         public static bool OnMap()
         {
-            if (Forest || City || CaveFight || HouseFight || Colossal || Akina || Tutorial || Outside)
-                return true;
-            else
-                return false;
+            var boolean = false;
+            foreach (string location in _locations)
+                if (Application.loadedLevelName.ToLower().Contains(location))
+                    boolean = true;
+            return boolean;
         }
 
         public static bool ASODamage()

@@ -7009,13 +7009,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     {
         GGM.Extensions.Forest = Application.loadedLevelName.ToLower().Contains("forest");
         GGM.Extensions.City = Application.loadedLevelName.ToLower().Contains("city");
-        GGM.Extensions.Akina = Application.loadedLevelName.ToLower().Contains("akina");
-        GGM.Extensions.HouseFight = Application.loadedLevelName.ToLower().Contains("house");
-        GGM.Extensions.CaveFight = Application.loadedLevelName.ToLower().Contains("cave");
-        GGM.Extensions.Outside = Application.loadedLevelName.ToLower().Contains("outside");
-        GGM.Extensions.Colossal = Application.loadedLevelName.ToLower().Contains("colossal");
-        GGM.Extensions.Tutorial = Application.loadedLevelName.ToLower().Contains("tutorial");
-
 
         if ((level != 0) && ((Application.loadedLevelName != "characterCreation") && (Application.loadedLevelName != "SnapShot")))
         {
@@ -9367,7 +9360,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     public GameObject canvasObject;
     public System.Collections.IEnumerator LoadBackground()
     {
-        using (WWW www = new WWW("file:///" + Application.dataPath + "/GUI/GGM.png"))
+        using (WWW www = new WWW("file:///" + Application.dataPath + "/Background.png"))
         {
             yield return www;
             if (www.texture != null)
