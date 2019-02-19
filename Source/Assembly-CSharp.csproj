@@ -72,7 +72,7 @@
     <Compile Include="GGP\Settings.cs" />
     <Compile Include="GGP\SpectatorMode.cs" />
     <Compile Include="GGP\Style.cs" />
-    <Compile Include="GGP\Utilities.cs" />
+    <Compile Include="GGP\Extensions.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="AHSSShotGunCollider.cs" />
     <Compile Include="GAMETYPE.cs" />
