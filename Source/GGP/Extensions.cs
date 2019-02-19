@@ -22,5 +22,16 @@ namespace GGP
             }
             return player;
         }
+
+        public static bool Protection(PhotonMessageInfo info, string reason)
+        {
+            if (!info.sender.isMasterClient)
+            {
+                if (PhotonNetwork.player.isMasterClient)
+                    FengGameManagerMKII.instance.kickPlayerRC(info.sender, true, reason);
+                return true;
+            }
+            else return false;
+        }
     }
 }
