@@ -8,7 +8,7 @@ using Photon;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using GGP;
+using GGM;
 
 public class InRoomChat : Photon.MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class InRoomChat : Photon.MonoBehaviour
     ///0 - MC
     ///1 - Exist
     ///2 - Myself
-    ///3 - GGP User
+    ///3 - GGM User
     /// </param>
     public static string Error(int type, string text = "")
     {
@@ -143,7 +143,7 @@ public class InRoomChat : Photon.MonoBehaviour
         {
             case "pos":
                 {
-                    var player = GGP.Extensions.Player();
+                    var player = GGM.Extensions.Player();
                     var x = player.transform.position.x;
                     var y = player.transform.position.y;
                     var z = player.transform.position.z;
@@ -152,7 +152,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 }
             case "info":
                 {
-                    var player = GGP.Extensions.Player();
+                    var player = GGM.Extensions.Player();
                     Message(player.collider.material.bounciness.ToString());
                     break;
                 }
@@ -256,6 +256,35 @@ public class InRoomChat : Photon.MonoBehaviour
                             RCSettings.racingStatic = RCSettings.racingStatic == 0 ? 1 : 0;
                             Message("Racing will " + (RCSettings.asoPreservekdr == 1 ? " " : "not ") + "end on finish.");
                             break;
+                        case "damage":
+                            if (PhotonNetwork.isMasterClient)
+                            {
+                                if (!GGM.Extensions.ASODamage())
+                                {
+                                    FengGameManagerMKII.settings[210] = 1;
+                                    FengGameManagerMKII.settings[211] = "100";
+                                    FengGameManagerMKII.settings[212] = "0";
+                                    FengGameManagerMKII.settings[213] = "0";
+                                    FengGameManagerMKII.settings[214] = "0";
+                                    FengGameManagerMKII.settings[215] = "0";
+                                    FengGameManagerMKII.settings[207] = 1;
+                                    FengGameManagerMKII.settings[208] = "2.5";
+                                    FengGameManagerMKII.settings[209] = "3";
+                                    FengGameManagerMKII.settings[205] = 1;
+                                    FengGameManagerMKII.settings[206] = "1000";
+                                    FengGameManagerMKII.instance.restartRC();
+                                    Message_2("ASO Damage rules enabled.");
+                                }
+                                else
+                                {
+                                    FengGameManagerMKII.settings[210] = 0;
+                                    FengGameManagerMKII.settings[207] = 0;
+                                    FengGameManagerMKII.settings[205] = 0;
+                                    FengGameManagerMKII.instance.restartRC();
+                                    Message_2("ASO Damage rules disabled.");
+                                }
+                            }
+                            break;
                     }
 
                     return;
@@ -332,9 +361,15 @@ public class InRoomChat : Photon.MonoBehaviour
                     return;
                 }
             case "resetkd":
+            case "rkd":
                 {
                     PhotonNetwork.player.SetCustomProperties(new Hashtable()
-                    {{"kills", 0}, {"deaths", 0}, {"max_dmg", 0}, {"total_dmg", 0}});
+                    {
+                        { "kills", 0},
+                        { "deaths", 0},
+                        { "max_dmg", 0},
+                        { "total_dmg", 0}
+                    });
                     Message("Your stats have been reset.");
                     return;
                 }
