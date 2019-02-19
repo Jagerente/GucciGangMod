@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GGP
+namespace GGM
 {
     public static class Layer
     {

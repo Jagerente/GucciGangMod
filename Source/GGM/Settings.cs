@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GGP
+namespace GGM
 {
     class Settings
     {
@@ -10,16 +10,6 @@ namespace GGP
         public static bool SpecMode = false;
         public static bool Suicide = false;
 
-        #region Location Names
-        public static bool Forest = false;
-        public static bool City = false;
-        public static bool Tutorial = false;
-        public static bool Outside = false;
-        public static bool CaveFight = false;
-        public static bool HouseFight = false;
-        public static bool Akina = false;
-        public static bool Colossal = false;
-        #endregion
         #region Game Settings
         public static float MouseSensitivity;
         public static float CameraDistance;
@@ -897,22 +887,6 @@ namespace GGP
                     }
                 }
             }
-        }
-
-        static void Disable(string str)
-        {
-            if (GameObject.Find(str))
-            {
-                GameObject.Find(str).SetActive(false);
-            }
-        }
-
-        public static bool OnMap()
-        {
-            if (Forest || City || CaveFight || HouseFight || Colossal || Akina || Tutorial || Outside)
-                return true;
-            else
-                return false;
         }
     }
 }

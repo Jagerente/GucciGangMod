@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 
 
-namespace GGP
+namespace GGM
 {
     public class SpectatorMode : UnityEngine.MonoBehaviour
     {

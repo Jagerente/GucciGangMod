@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace GGP
+namespace GGM
 {
     class BetterGUI
     {

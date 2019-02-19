@@ -2,7 +2,7 @@
 using UnityEngine;
 using ExitGames.Client.Photon;
 
-namespace GGP
+namespace GGM
 {
     class HotKeys : MonoBehaviour
     {

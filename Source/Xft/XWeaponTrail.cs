@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using UnityEngine;
-    using GGP;
+    using GGM;
 
     public class XWeaponTrail : MonoBehaviour
     {

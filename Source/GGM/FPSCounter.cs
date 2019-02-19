@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GGP
+namespace GGM
 {
     class FPSCounter : MonoBehaviour
     {
