@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GGM
 {
-    class Extensions
+    public static class Extensions
     {
         #region Location Names
         public static bool Forest = false;
@@ -45,7 +45,7 @@ namespace GGM
             else return false;
         }
 
-        static void DisableObject(string str)
+        public static void DisableObject(string str)
         {
             if (GameObject.Find(str))
             {

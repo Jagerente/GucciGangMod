@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-using GGP;
+using GGM;
 
 public class FengGameManagerMKII : Photon.MonoBehaviour
 {
@@ -7007,14 +7007,14 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        Settings.Forest = Application.loadedLevelName.ToLower().Contains("forest");
-        Settings.City = Application.loadedLevelName.ToLower().Contains("city");
-        Settings.Akina = Application.loadedLevelName.ToLower().Contains("akina");
-        Settings.HouseFight = Application.loadedLevelName.ToLower().Contains("house");
-        Settings.CaveFight = Application.loadedLevelName.ToLower().Contains("cave");
-        Settings.Outside = Application.loadedLevelName.ToLower().Contains("outside");
-        Settings.Colossal = Application.loadedLevelName.ToLower().Contains("colossal");
-        Settings.Tutorial = Application.loadedLevelName.ToLower().Contains("tutorial");
+        GGM.Extensions.Forest = Application.loadedLevelName.ToLower().Contains("forest");
+        GGM.Extensions.City = Application.loadedLevelName.ToLower().Contains("city");
+        GGM.Extensions.Akina = Application.loadedLevelName.ToLower().Contains("akina");
+        GGM.Extensions.HouseFight = Application.loadedLevelName.ToLower().Contains("house");
+        GGM.Extensions.CaveFight = Application.loadedLevelName.ToLower().Contains("cave");
+        GGM.Extensions.Outside = Application.loadedLevelName.ToLower().Contains("outside");
+        GGM.Extensions.Colossal = Application.loadedLevelName.ToLower().Contains("colossal");
+        GGM.Extensions.Tutorial = Application.loadedLevelName.ToLower().Contains("tutorial");
 
 
         if ((level != 0) && ((Application.loadedLevelName != "characterCreation") && (Application.loadedLevelName != "SnapShot")))
@@ -7213,7 +7213,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 }
             }
         }
-        if (((Settings.Forest && PhotonNetwork.isMasterClient) || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) && Settings.Particles == 1)
+        if (((GGM.Extensions.Forest && PhotonNetwork.isMasterClient) || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) && Settings.Particles == 1)
         {
             GameObject gg = CachingsGM.Find("aot_supply");
             Material material = gg.GetComponentInChildren<ParticleSystem>().renderer.material;
@@ -8562,7 +8562,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     [RPC]
     private void refreshStatus(int score1, int score2, int wav, int highestWav, float time1, float time2, bool startRacin, bool endRacin, PhotonMessageInfo info)
     {
-        if (GGP.Extensions.Protection(info, "refreshStatus sent.")) return;
+        if (GGM.Extensions.Protection(info, "refreshStatus sent.")) return;
         this.humanScore = score1;
         this.titanScore = score2;
         this.wave = wav;
@@ -9367,7 +9367,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     public GameObject canvasObject;
     public System.Collections.IEnumerator LoadBackground()
     {
-        using (WWW www = new WWW("file:///" + Application.dataPath + "/GUI/GGP.png"))
+        using (WWW www = new WWW("file:///" + Application.dataPath + "/GUI/GGM.png"))
         {
             yield return www;
             if (www.texture != null)
@@ -10011,7 +10011,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     [RPC]
     private void showResult(string text0, string text1, string text2, string text3, string text4, string text6, PhotonMessageInfo info)
     {
-        if (GGP.Extensions.Protection(info, "showResult sent.")) return;
+        if (GGM.Extensions.Protection(info, "showResult sent.")) return;
         if (this.gameTimesUp || info.sender.isMasterClient)
         {
             if (!gameTimesUp)
@@ -11174,14 +11174,14 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     private void Update()
     {
-        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && !PhotonNetwork.offlineMode) && (GameObject.Find("LabelNetworkStatus") != null) && Settings.OnMap())
+        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && !PhotonNetwork.offlineMode) && (GameObject.Find("LabelNetworkStatus") != null) && GGM.Extensions.OnMap())
         {
             if (PhotonNetwork.connected)
             {
                 GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"Ping:{PhotonNetwork.GetPing()} " + (Settings.FPS == 1 ? $"FPS:{FPSCounter.FPS}" : string.Empty);
             }
         }
-        else if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || PhotonNetwork.offlineMode) && Settings.FPS == 1 && Settings.UI != 0 && Settings.OnMap())
+        else if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || PhotonNetwork.offlineMode) && Settings.FPS == 1 && Settings.UI != 0 && GGM.Extensions.OnMap())
         {
             GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"FPS:{FPSCounter.FPS}";
         }
@@ -11281,7 +11281,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 this.mainCamera.update();
             }
         }
-        if (Settings.OnMap())
+        if (GGM.Extensions.OnMap())
         {
             Settings.InitSettings();
             Settings.InitLocationSkins();

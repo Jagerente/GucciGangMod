@@ -702,28 +702,28 @@ namespace GGM
             
             if (UI == 0)
             {
-                Disable("UIflare1");
-                Disable("UIflare2");
-                Disable("UIflare3");
-                Disable("flareg1");
-                Disable("UIflare1");
-                Disable("flareg2");
-                Disable("flareg3");
-                Disable("bar");
-                Disable("locker");
-                Disable("stamina_titan");
-                Disable("stamina_titan_bottom");
-                Disable("flash");
-                Disable("skill_cd_bottom");
-                Disable("skill_cd_armin");
-                Disable("skill_cd_mikasa");
-                Disable("skill_cd_sasha");
-                Disable("skill_cd_petra");
-                Disable("skill_cd_levi");
-                Disable("skill_cd_jean");
-                Disable("skill_cd_marco");
-                Disable("skill_cd_eren");
-                Disable("GasUI");
+                GGM.Extensions.DisableObject("UIflare1");
+                GGM.Extensions.DisableObject("UIflare2");
+                GGM.Extensions.DisableObject("UIflare3");
+                GGM.Extensions.DisableObject("flareg1");
+                GGM.Extensions.DisableObject("UIflare1");
+                GGM.Extensions.DisableObject("flareg2");
+                GGM.Extensions.DisableObject("flareg3");
+                GGM.Extensions.DisableObject("bar");
+                GGM.Extensions.DisableObject("locker");
+                GGM.Extensions.DisableObject("stamina_titan");
+                GGM.Extensions.DisableObject("stamina_titan_bottom");
+                GGM.Extensions.DisableObject("flash");
+                GGM.Extensions.DisableObject("skill_cd_bottom");
+                GGM.Extensions.DisableObject("skill_cd_armin");
+                GGM.Extensions.DisableObject("skill_cd_mikasa");
+                GGM.Extensions.DisableObject("skill_cd_sasha");
+                GGM.Extensions.DisableObject("skill_cd_petra");
+                GGM.Extensions.DisableObject("skill_cd_levi");
+                GGM.Extensions.DisableObject("skill_cd_jean");
+                GGM.Extensions.DisableObject("skill_cd_marco");
+                GGM.Extensions.DisableObject("skill_cd_eren");
+                GGM.Extensions.DisableObject("GasUI");
             }
 
             if (player != null && player.GetComponent<HERO>() != null)
@@ -770,7 +770,7 @@ namespace GGM
         {
             if (LocationSkins == 0)
             {
-                if (Forest)
+                if (GGM.Extensions.Forest)
                 {
                     RenderSettings.fog = Fog == 1 ? true : false;
                     RenderSettings.fogStartDistance = FogStartDistance;
@@ -801,7 +801,7 @@ namespace GGM
             }
             else
             {
-                if (Forest && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
+                if (GGM.Extensions.Forest && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
                 {
 
                     RenderSettings.fog = ForestFog[ForestCurrentSkin] == 1 ? true : false;
@@ -827,7 +827,7 @@ namespace GGM
                     }
 
                 }
-                else if (City && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
+                else if (GGM.Extensions.City && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
                 {
                     RenderSettings.fog = CityFog[CityCurrentSkin] == 1 ? true : false;
                     RenderSettings.fogStartDistance = CityFogStartDistance[CityCurrentSkin];
@@ -851,7 +851,7 @@ namespace GGM
                             new Color(0.05f, 0.05f, 0.05f);
                     }
                 }
-                else if (!City && !Forest)
+                else if (!GGM.Extensions.City && !GGM.Extensions.Forest)
                 {
                     RenderSettings.fog = false;
                     RenderSettings.ambientLight =
@@ -859,7 +859,7 @@ namespace GGM
                             IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? new Color(0.729f, 0.643f, 0.458f) :
                             new Color(0.05f, 0.05f, 0.05f);
                 }
-                else if (!PhotonNetwork.isMasterClient && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && (Forest || City))
+                else if (!PhotonNetwork.isMasterClient && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && (GGM.Extensions.Forest || GGM.Extensions.City))
                 {
                     if (ambient)
                     {
@@ -881,7 +881,7 @@ namespace GGM
                     }
                     else
                     {
-                        RenderSettings.fog = Forest ? true : false;
+                        RenderSettings.fog = GGM.Extensions.Forest ? true : false;
                         RenderSettings.fogStartDistance = (Camera.main.farClipPlane / 7) - Camera.main.farClipPlane;
                         RenderSettings.fogEndDistance = Camera.main.farClipPlane;
                     }
