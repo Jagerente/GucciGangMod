@@ -200,25 +200,22 @@ public class InRoomChat : Photon.MonoBehaviour
                 }
             case "time":
                 {
-                    FengGameManagerMKII.instance.addTime((FengGameManagerMKII.instance.time - ((int)FengGameManagerMKII.instance.timeTotalServer) - Convert.ToInt32(command[1])) * (-1));
+                    var time = (FengGameManagerMKII.instance.time - ((int)FengGameManagerMKII.instance.timeTotalServer) - Convert.ToInt32(command[1])) * (-1);
+                    FengGameManagerMKII.instance.addTime(time);
                     return;
                 }
             case "ban":
                 {
-                    int num8 = Convert.ToInt32(command[1]);
-                    if (num8 == PhotonNetwork.player.ID)
+                    int player = Convert.ToInt32(command[1]);
+                    if (player == PhotonNetwork.player.ID)
                     {
                         Message(Error(3, "yourself."));
-                    }
-                    else if (!(FengGameManagerMKII.OnPrivateServer || PhotonNetwork.isMasterClient))
-                    {
-                        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, "/kick #" + Convert.ToString(num8), LoginFengKAI.player.name);
                     }
                     else
                     {
                         foreach (PhotonPlayer player3 in PhotonNetwork.playerList)
                         {
-                            if (num8 == player3.ID)
+                            if (player == player3.ID)
                             {
                                 if (FengGameManagerMKII.OnPrivateServer)
                                 {
@@ -232,8 +229,7 @@ public class InRoomChat : Photon.MonoBehaviour
                                 }
                             }
                         }
-
-                        if (PhotonPlayer.Find(num8) == null)
+                        if (PhotonPlayer.Find(player) == null)
                         {
                             Message(Error(1));
                         }
@@ -547,40 +543,39 @@ public class InRoomChat : Photon.MonoBehaviour
                 }
             case "kick":
                 {
-                    int num8 = Convert.ToInt32(command[1]);
-                    if (num8 == PhotonNetwork.player.ID)
+                    int player = Convert.ToInt32(command[1]);
+                    if (player == PhotonNetwork.player.ID)
                     {
                         Message(Error(2, "kick"));
                     }
                     else if (!(FengGameManagerMKII.OnPrivateServer || PhotonNetwork.isMasterClient))
                     {
-                        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, "/kick #" + Convert.ToString(num8), LoginFengKAI.player.name);
+                        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, "/kick #" + Convert.ToString(player), LoginFengKAI.player.name);
                     }
                     else
                     {
                         foreach (PhotonPlayer player3 in PhotonNetwork.playerList)
                         {
-                            if (num8 == player3.ID)
+                            if (player == player3.ID)
                             {
                                 if (FengGameManagerMKII.OnPrivateServer)
                                 {
-                                    FengGameManagerMKII.instance.kickPlayerRC(player3, false, "");
+                                    FengGameManagerMKII.instance.kickPlayerRC(player3, false, string.Empty);
                                 }
                                 else if (PhotonNetwork.isMasterClient)
                                 {
-                                    FengGameManagerMKII.instance.kickPlayerRC(player3, false, "");
+                                    FengGameManagerMKII.instance.kickPlayerRC(player3, false, string.Empty);
                                     Message_3(player3, "has been kicked from the server.");
                                     Message(player3, "has been kicked from the server.");
                                 }
                             }
                         }
 
-                        if (PhotonPlayer.Find(num8) == null)
+                        if (PhotonPlayer.Find(player) == null)
                         {
                             Message(Error(1));
                         }
                     }
-
                     return;
                 }
             case "restart":
