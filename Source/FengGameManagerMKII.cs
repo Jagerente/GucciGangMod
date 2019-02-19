@@ -8562,20 +8562,18 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     [RPC]
     private void refreshStatus(int score1, int score2, int wav, int highestWav, float time1, float time2, bool startRacin, bool endRacin, PhotonMessageInfo info)
     {
-        if (info.sender == PhotonNetwork.masterClient && !PhotonNetwork.isMasterClient)
+        if (GGP.Extensions.Protection(info, "refreshStatus sent.")) return;
+        this.humanScore = score1;
+        this.titanScore = score2;
+        this.wave = wav;
+        this.highestwave = highestWav;
+        this.roundTime = time1;
+        this.timeTotalServer = time2;
+        this.startRacing = startRacin;
+        this.endRacing = endRacin;
+        if (this.startRacing && (GameObject.Find("door") != null))
         {
-            this.humanScore = score1;
-            this.titanScore = score2;
-            this.wave = wav;
-            this.highestwave = highestWav;
-            this.roundTime = time1;
-            this.timeTotalServer = time2;
-            this.startRacing = startRacin;
-            this.endRacing = endRacin;
-            if (this.startRacing && (GameObject.Find("door") != null))
-            {
-                GameObject.Find("door").SetActive(false);
-            }
+            GameObject.Find("door").SetActive(false);
         }
     }
 
@@ -10011,10 +10009,12 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     }
 
     [RPC]
-    private void showResult(string text0, string text1, string text2, string text3, string text4, string text6, PhotonMessageInfo t)
+    private void showResult(string text0, string text1, string text2, string text3, string text4, string text6, PhotonMessageInfo info)
     {
-        if (!(this.gameTimesUp || !t.sender.isMasterClient))
+        if (GGP.Extensions.Protection(info, "showResult sent.")) return;
+        if (this.gameTimesUp || info.sender.isMasterClient)
         {
+            if (!gameTimesUp)
             this.gameTimesUp = true;
             GameObject obj2 = GameObject.Find("UI_IN_GAME");
             NGUITools.SetActive(obj2.GetComponent<UIReferArray>().panels[0], false);
@@ -10031,10 +10031,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             Screen.showCursor = true;
             IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
             this.gameStart = false;
-        }
-        else if (!(t.sender.isMasterClient || !PhotonNetwork.player.isMasterClient))
-        {
-            this.kickPlayerRC(t.sender, true, "false game end.");
         }
     }
 
