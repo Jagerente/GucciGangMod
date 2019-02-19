@@ -202,6 +202,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 {
                     var time = (FengGameManagerMKII.instance.time - ((int)FengGameManagerMKII.instance.timeTotalServer) - Convert.ToInt32(command[1])) * (-1);
                     FengGameManagerMKII.instance.addTime(time);
+                    Message("Time set to ", command[1].ToString());
                     return;
                 }
             case "ban":
@@ -249,7 +250,7 @@ public class InRoomChat : Photon.MonoBehaviour
                     {
                         case "kdr":
                             RCSettings.asoPreservekdr = RCSettings.asoPreservekdr == 0 ? 1 : 0;
-                            Message("KDRs will " + (RCSettings.asoPreservekdr == 1 ? " " : "not ") +
+                            Message("Players stats will " + (RCSettings.asoPreservekdr == 1 ? " " : "not ") +
                                       "be preserved from disconnects.");
                             break;
                         case "racing":
@@ -285,8 +286,13 @@ public class InRoomChat : Photon.MonoBehaviour
                                 }
                             }
                             break;
+                        default:
+                            Message("Possible:\n" +
+                                "/aso damage - Enable/Disable ASO settings." +
+                                "/aso kdr - Enable/Disable stats preserve.\n" +
+                                "/aso racing - Enable/Disable endless finish time.\n");
+                            break;
                     }
-
                     return;
                 }
             case "pause":
