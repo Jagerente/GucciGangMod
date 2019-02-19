@@ -3145,26 +3145,31 @@ public class HERO : Photon.MonoBehaviour
             {
                 if ((info.sender.customProperties[PhotonPlayerProperty.name] == null) || (info.sender.customProperties[PhotonPlayerProperty.isTitan] == null))
                 {
-                    FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + "</color>");
+                    InRoomChat.Message("Unusual Kill from ", info.sender);
+                    return;
                 }
                 else if (viewID < 0)
                 {
                     if (titanName == "")
                     {
-                        FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + " (possibly valid).</color>");
+                        InRoomChat.Message("Unusual Kill from ", info.sender);
+                        return;
                     }
                     else
                     {
-                        FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + "</color>");
+                        InRoomChat.Message("Unusual Kill from ", info.sender);
+                        return;
                     }
                 }
                 else if (PhotonView.Find(viewID) == null)
                 {
-                    FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + "</color>");
+                    InRoomChat.Message("Unusual Kill from ", info.sender);
+                    return;
                 }
                 else if (PhotonView.Find(viewID).owner.ID != info.sender.ID)
                 {
-                    FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + "</color>");
+                    InRoomChat.Message("Unusual Kill from ", info.sender);
+                    return;
                 }
             }
         }
@@ -3179,7 +3184,7 @@ public class HERO : Photon.MonoBehaviour
         }
         if (base.photonView.isMine)
         {
-            Vector3 vector = (Vector3) (Vector3.up * 5000f);
+            Vector3 vector = (Vector3)(Vector3.up * 5000f);
             if (this.myBomb != null)
             {
                 this.myBomb.destroyMe();
@@ -3277,26 +3282,31 @@ public class HERO : Photon.MonoBehaviour
             {
                 if ((info.sender.customProperties[PhotonPlayerProperty.name] == null) || (info.sender.customProperties[PhotonPlayerProperty.isTitan] == null))
                 {
-                    FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + "</color>");
+                    InRoomChat.Message("Unusual Kill from ", info.sender);
+                    return;
                 }
                 else if (viewID < 0)
                 {
                     if (titanName == "")
                     {
-                        FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + " (possibly valid).</color>");
+                        InRoomChat.Message("Unusual Kill from ", info.sender);
+                        return;
                     }
                     else if ((RCSettings.bombMode == 0) && (RCSettings.deadlyCannons == 0))
                     {
-                        FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + "</color>");
+                        InRoomChat.Message("Unusual Kill from ", info.sender);
+                        return;
                     }
                 }
                 else if (PhotonView.Find(viewID) == null)
                 {
-                    FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + "</color>");
+                    InRoomChat.Message("Unusual Kill from ", info.sender);
+                    return;
                 }
                 else if (PhotonView.Find(viewID).owner.ID != info.sender.ID)
                 {
-                    FengGameManagerMKII.instance.chatRoom.addLINE("<color=#FFCC00>Unusual Kill from ID " + info.sender.ID.ToString() + "</color>");
+                    InRoomChat.Message("Unusual Kill from ", info.sender);
+                    return;
                 }
             }
         }
@@ -3451,9 +3461,12 @@ public class HERO : Photon.MonoBehaviour
             ExitGames.Client.Photon.Hashtable propertiesToSet = new ExitGames.Client.Photon.Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
-            propertiesToSet = new ExitGames.Client.Photon.Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
-            PhotonNetwork.player.SetCustomProperties(propertiesToSet);
+            if (!Settings.Suicide)
+            {
+                propertiesToSet = new ExitGames.Client.Photon.Hashtable();
+                propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
+                PhotonNetwork.player.SetCustomProperties(propertiesToSet);
+            }
             object[] parameters = new object[] { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
@@ -4686,7 +4699,9 @@ public class HERO : Photon.MonoBehaviour
     {
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
+            Settings.Suicide = true;
             this.netDieLocal((Vector3) (base.rigidbody.velocity * 50f), false, -1, string.Empty, true);
+            Settings.Suicide = false;
             FengGameManagerMKII.instance.needChooseSide = true;
             FengGameManagerMKII.instance.justSuicide = true;
         }
