@@ -3,8 +3,11 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using GGM;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 {
@@ -153,6 +156,8 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 transform5.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
                 break;
             }
+            default:
+                throw new ArgumentOutOfRangeException();
         }
         if (cameraDistance < 0.65f)
         {
@@ -547,7 +552,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localScale = new Vector3(Screen.width * 0.4f, Screen.height * 0.4f, 1f);
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localPosition = new Vector3(-Screen.width * 0.225f, Screen.height * 0.225f, 0f);
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.rotation = Quaternion.Euler(0f, 0f, 10f);
-            GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = Settings.SnapshotsInGame == 1 ? true : false;
+            GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = Settings.SnapshotsInGame == 1;
         }
     }
 
@@ -681,7 +686,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     }
                     if (length > 0)
                     {
-                        setMainObject(GameObject.FindGameObjectsWithTag("Player")[currentPeekPlayerIndex], true, false);
+                        setMainObject(GameObject.FindGameObjectsWithTag("Player")[currentPeekPlayerIndex]);
                         setSpectorMode(false);
                         lockAngle = false;
                     }
@@ -700,7 +705,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     }
                     if (num2 > 0)
                     {
-                        setMainObject(GameObject.FindGameObjectsWithTag("Player")[currentPeekPlayerIndex], true, false);
+                        setMainObject(GameObject.FindGameObjectsWithTag("Player")[currentPeekPlayerIndex]);
                         setSpectorMode(false);
                         lockAngle = false;
                     }
@@ -716,8 +721,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 {
                     if (main_object != null)
                     {
-                        var position = transform.position;
-                        position = (head == null) ? main_object.transform.position : head.transform.position;
+                        var position = (head == null) ? main_object.transform.position : head.transform.position;
                         position += Vector3.up * heightMulti;
                         transform.position = Vector3.Lerp(transform.position, position - transform.forward * 5f, 0.2f);
                     }
