@@ -16,17 +16,17 @@ public class Emitter
 
     public Emitter(EffectLayer owner)
     {
-        this.Layer = owner;
-        this.EmitLoop = this.Layer.EmitLoop;
-        this.LastClientPos = this.Layer.ClientTransform.position;
+        Layer = owner;
+        EmitLoop = Layer.EmitLoop;
+        LastClientPos = Layer.ClientTransform.position;
     }
 
     protected int EmitByDistance()
     {
-        Vector3 vector = this.Layer.ClientTransform.position - this.LastClientPos;
-        if (vector.magnitude >= this.Layer.DiffDistance)
+        var vector = Layer.ClientTransform.position - LastClientPos;
+        if (vector.magnitude >= Layer.DiffDistance)
         {
-            this.LastClientPos = this.Layer.ClientTransform.position;
+            LastClientPos = Layer.ClientTransform.position;
             return 1;
         }
         return 0;
@@ -34,40 +34,40 @@ public class Emitter
 
     protected int EmitByRate()
     {
-        int num = UnityEngine.Random.Range(0, 100);
-        if ((num >= 0) && (num > this.Layer.ChanceToEmit))
+        var num = Random.Range(0, 100);
+        if ((num >= 0) && (num > Layer.ChanceToEmit))
         {
             return 0;
         }
-        this.EmitDelayTime += Time.deltaTime;
-        if ((this.EmitDelayTime < this.Layer.EmitDelay) && !this.IsFirstEmit)
+        EmitDelayTime += Time.deltaTime;
+        if ((EmitDelayTime < Layer.EmitDelay) && !IsFirstEmit)
         {
             return 0;
         }
-        this.EmitterElapsedTime += Time.deltaTime;
-        if (this.EmitterElapsedTime >= this.Layer.EmitDuration)
+        EmitterElapsedTime += Time.deltaTime;
+        if (EmitterElapsedTime >= Layer.EmitDuration)
         {
-            if (this.EmitLoop > 0f)
+            if (EmitLoop > 0f)
             {
-                this.EmitLoop--;
+                EmitLoop--;
             }
-            this.EmitterElapsedTime = 0f;
-            this.EmitDelayTime = 0f;
-            this.IsFirstEmit = false;
+            EmitterElapsedTime = 0f;
+            EmitDelayTime = 0f;
+            IsFirstEmit = false;
         }
-        if (this.EmitLoop == 0f)
+        if (EmitLoop == 0f)
         {
             return 0;
         }
-        if (this.Layer.AvailableNodeCount == 0)
+        if (Layer.AvailableNodeCount == 0)
         {
             return 0;
         }
-        int num2 = ((int) (this.EmitterElapsedTime * this.Layer.EmitRate)) - (this.Layer.ActiveENodes.Length - this.Layer.AvailableNodeCount);
-        int availableNodeCount = 0;
-        if (num2 > this.Layer.AvailableNodeCount)
+        var num2 = ((int) (EmitterElapsedTime * Layer.EmitRate)) - (Layer.ActiveENodes.Length - Layer.AvailableNodeCount);
+        var availableNodeCount = 0;
+        if (num2 > Layer.AvailableNodeCount)
         {
-            availableNodeCount = this.Layer.AvailableNodeCount;
+            availableNodeCount = Layer.AvailableNodeCount;
         }
         else
         {
@@ -82,116 +82,116 @@ public class Emitter
 
     public Vector3 GetEmitRotation(EffectNode node)
     {
-        Vector3 zero = Vector3.zero;
-        if (this.Layer.EmitType == 2)
+        var zero = Vector3.zero;
+        if (Layer.EmitType == 2)
         {
-            if (!this.Layer.SyncClient)
+            if (!Layer.SyncClient)
             {
-                return (node.Position - (this.Layer.ClientTransform.position + this.Layer.EmitPoint));
+                return (node.Position - (Layer.ClientTransform.position + Layer.EmitPoint));
             }
-            return (node.Position - this.Layer.EmitPoint);
+            return (node.Position - Layer.EmitPoint);
         }
-        if (this.Layer.EmitType == 3)
+        if (Layer.EmitType == 3)
         {
             Vector3 vector2;
-            if (!this.Layer.SyncClient)
+            if (!Layer.SyncClient)
             {
-                vector2 = node.Position - (this.Layer.ClientTransform.position + this.Layer.EmitPoint);
+                vector2 = node.Position - (Layer.ClientTransform.position + Layer.EmitPoint);
             }
             else
             {
-                vector2 = node.Position - this.Layer.EmitPoint;
+                vector2 = node.Position - Layer.EmitPoint;
             }
-            Vector3 toDirection = Vector3.RotateTowards(vector2, this.Layer.CircleDir, (90 - this.Layer.AngleAroundAxis) * 0.01745329f, 1f);
-            return (Vector3) (Quaternion.FromToRotation(vector2, toDirection) * vector2);
+            var toDirection = Vector3.RotateTowards(vector2, Layer.CircleDir, (90 - Layer.AngleAroundAxis) * 0.01745329f, 1f);
+            return Quaternion.FromToRotation(vector2, toDirection) * vector2;
         }
-        if (this.Layer.IsRandomDir)
+        if (Layer.IsRandomDir)
         {
-            Quaternion quaternion2 = Quaternion.Euler(0f, 0f, (float) this.Layer.AngleAroundAxis);
-            Quaternion quaternion3 = Quaternion.Euler(0f, (float) UnityEngine.Random.Range(0, 360), 0f);
-            return (Vector3) (((Quaternion.FromToRotation(Vector3.up, this.Layer.OriVelocityAxis) * quaternion3) * quaternion2) * Vector3.up);
+            var quaternion2 = Quaternion.Euler(0f, 0f, Layer.AngleAroundAxis);
+            var quaternion3 = Quaternion.Euler(0f, Random.Range(0, 360), 0f);
+            return ((Quaternion.FromToRotation(Vector3.up, Layer.OriVelocityAxis) * quaternion3) * quaternion2) * Vector3.up;
         }
-        return this.Layer.OriVelocityAxis;
+        return Layer.OriVelocityAxis;
     }
 
     public int GetNodes()
     {
-        if (this.Layer.IsEmitByDistance)
+        if (Layer.IsEmitByDistance)
         {
-            return this.EmitByDistance();
+            return EmitByDistance();
         }
-        return this.EmitByRate();
+        return EmitByRate();
     }
 
     public void Reset()
     {
-        this.EmitterElapsedTime = 0f;
-        this.EmitDelayTime = 0f;
-        this.IsFirstEmit = true;
-        this.EmitLoop = this.Layer.EmitLoop;
+        EmitterElapsedTime = 0f;
+        EmitDelayTime = 0f;
+        IsFirstEmit = true;
+        EmitLoop = Layer.EmitLoop;
     }
 
     public void SetEmitPosition(EffectNode node)
     {
-        Vector3 zero = Vector3.zero;
-        if (this.Layer.EmitType == 1)
+        var zero = Vector3.zero;
+        if (Layer.EmitType == 1)
         {
-            Vector3 emitPoint = this.Layer.EmitPoint;
-            float num = UnityEngine.Random.Range((float) (emitPoint.x - (this.Layer.BoxSize.x / 2f)), (float) (emitPoint.x + (this.Layer.BoxSize.x / 2f)));
-            float num2 = UnityEngine.Random.Range((float) (emitPoint.y - (this.Layer.BoxSize.y / 2f)), (float) (emitPoint.y + (this.Layer.BoxSize.y / 2f)));
-            float num3 = UnityEngine.Random.Range((float) (emitPoint.z - (this.Layer.BoxSize.z / 2f)), (float) (emitPoint.z + (this.Layer.BoxSize.z / 2f)));
+            var emitPoint = Layer.EmitPoint;
+            var num = Random.Range(emitPoint.x - (Layer.BoxSize.x / 2f), emitPoint.x + (Layer.BoxSize.x / 2f));
+            var num2 = Random.Range(emitPoint.y - (Layer.BoxSize.y / 2f), emitPoint.y + (Layer.BoxSize.y / 2f));
+            var num3 = Random.Range(emitPoint.z - (Layer.BoxSize.z / 2f), emitPoint.z + (Layer.BoxSize.z / 2f));
             zero.x = num;
             zero.y = num2;
             zero.z = num3;
-            if (!this.Layer.SyncClient)
+            if (!Layer.SyncClient)
             {
-                zero = this.Layer.ClientTransform.position + zero;
+                zero = Layer.ClientTransform.position + zero;
             }
         }
-        else if (this.Layer.EmitType == 0)
+        else if (Layer.EmitType == 0)
         {
-            zero = this.Layer.EmitPoint;
-            if (!this.Layer.SyncClient)
+            zero = Layer.EmitPoint;
+            if (!Layer.SyncClient)
             {
-                zero = this.Layer.ClientTransform.position + this.Layer.EmitPoint;
+                zero = Layer.ClientTransform.position + Layer.EmitPoint;
             }
         }
-        else if (this.Layer.EmitType == 2)
+        else if (Layer.EmitType == 2)
         {
-            zero = this.Layer.EmitPoint;
-            if (!this.Layer.SyncClient)
+            zero = Layer.EmitPoint;
+            if (!Layer.SyncClient)
             {
-                zero = this.Layer.ClientTransform.position + this.Layer.EmitPoint;
+                zero = Layer.ClientTransform.position + Layer.EmitPoint;
             }
-            Vector3 vector3 = (Vector3) (Vector3.up * this.Layer.Radius);
-            zero = ((Vector3) (Quaternion.Euler((float) UnityEngine.Random.Range(0, 360), (float) UnityEngine.Random.Range(0, 360), (float) UnityEngine.Random.Range(0, 360)) * vector3)) + zero;
+            var vector3 = Vector3.up * Layer.Radius;
+            zero = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)) * vector3 + zero;
         }
-        else if (this.Layer.EmitType == 4)
+        else if (Layer.EmitType == 4)
         {
-            Vector3 vector4 = this.Layer.EmitPoint + ((Vector3) ((this.Layer.ClientTransform.localRotation * Vector3.forward) * this.Layer.LineLengthLeft));
-            Vector3 vector5 = this.Layer.EmitPoint + ((Vector3) ((this.Layer.ClientTransform.localRotation * Vector3.forward) * this.Layer.LineLengthRight));
-            Vector3 vector6 = vector5 - vector4;
-            float num4 = ((float) (node.Index + 1)) / ((float) this.Layer.MaxENodes);
-            float num5 = vector6.magnitude * num4;
-            zero = vector4 + ((Vector3) (vector6.normalized * num5));
-            if (!this.Layer.SyncClient)
+            var vector4 = Layer.EmitPoint + (Layer.ClientTransform.localRotation * Vector3.forward) * Layer.LineLengthLeft;
+            var vector5 = Layer.EmitPoint + (Layer.ClientTransform.localRotation * Vector3.forward) * Layer.LineLengthRight;
+            var vector6 = vector5 - vector4;
+            var num4 = (node.Index + 1) / ((float) Layer.MaxENodes);
+            var num5 = vector6.magnitude * num4;
+            zero = vector4 + vector6.normalized * num5;
+            if (!Layer.SyncClient)
             {
-                zero = this.Layer.ClientTransform.TransformPoint(zero);
+                zero = Layer.ClientTransform.TransformPoint(zero);
             }
         }
-        else if (this.Layer.EmitType == 3)
+        else if (Layer.EmitType == 3)
         {
-            float num6 = ((float) (node.Index + 1)) / ((float) this.Layer.MaxENodes);
-            float y = 360f * num6;
-            Vector3 vector7 = (Vector3) (Quaternion.Euler(0f, y, 0f) * (Vector3.right * this.Layer.Radius));
-            zero = (Vector3) (Quaternion.FromToRotation(Vector3.up, this.Layer.CircleDir) * vector7);
-            if (!this.Layer.SyncClient)
+            var num6 = (node.Index + 1) / ((float) Layer.MaxENodes);
+            var y = 360f * num6;
+            var vector7 = Quaternion.Euler(0f, y, 0f) * (Vector3.right * Layer.Radius);
+            zero = Quaternion.FromToRotation(Vector3.up, Layer.CircleDir) * vector7;
+            if (!Layer.SyncClient)
             {
-                zero = (this.Layer.ClientTransform.position + zero) + this.Layer.EmitPoint;
+                zero = (Layer.ClientTransform.position + zero) + Layer.EmitPoint;
             }
             else
             {
-                zero += this.Layer.EmitPoint;
+                zero += Layer.EmitPoint;
             }
         }
         node.SetLocalPosition(zero);

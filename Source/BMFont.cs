@@ -26,49 +26,49 @@ public class BMFont
 
     public void Clear()
     {
-        this.mDict.Clear();
-        this.mSaved.Clear();
+        mDict.Clear();
+        mSaved.Clear();
     }
 
     public BMGlyph GetGlyph(int index)
     {
-        return this.GetGlyph(index, false);
+        return GetGlyph(index, false);
     }
 
     public BMGlyph GetGlyph(int index, bool createIfMissing)
     {
         BMGlyph glyph = null;
-        if (this.mDict.Count == 0)
+        if (mDict.Count == 0)
         {
-            int num = 0;
-            int count = this.mSaved.Count;
+            var num = 0;
+            var count = mSaved.Count;
             while (num < count)
             {
-                BMGlyph glyph2 = this.mSaved[num];
-                this.mDict.Add(glyph2.index, glyph2);
+                var glyph2 = mSaved[num];
+                mDict.Add(glyph2.index, glyph2);
                 num++;
             }
         }
-        if (!this.mDict.TryGetValue(index, out glyph) && createIfMissing)
+        if (!mDict.TryGetValue(index, out glyph) && createIfMissing)
         {
             glyph = new BMGlyph {
                 index = index
             };
-            this.mSaved.Add(glyph);
-            this.mDict.Add(index, glyph);
+            mSaved.Add(glyph);
+            mDict.Add(index, glyph);
         }
         return glyph;
     }
 
     public void Trim(int xMin, int yMin, int xMax, int yMax)
     {
-        if (this.isValid)
+        if (isValid)
         {
-            int num = 0;
-            int count = this.mSaved.Count;
+            var num = 0;
+            var count = mSaved.Count;
             while (num < count)
             {
-                BMGlyph glyph = this.mSaved[num];
+                var glyph = mSaved[num];
                 if (glyph != null)
                 {
                     glyph.Trim(xMin, yMin, xMax, yMax);
@@ -82,11 +82,11 @@ public class BMFont
     {
         get
         {
-            return this.mBase;
+            return mBase;
         }
         set
         {
-            this.mBase = value;
+            mBase = value;
         }
     }
 
@@ -94,11 +94,11 @@ public class BMFont
     {
         get
         {
-            return this.mSize;
+            return mSize;
         }
         set
         {
-            this.mSize = value;
+            mSize = value;
         }
     }
 
@@ -106,7 +106,7 @@ public class BMFont
     {
         get
         {
-            return (!this.isValid ? 0 : this.mSaved.Count);
+            return (!isValid ? 0 : mSaved.Count);
         }
     }
 
@@ -114,7 +114,7 @@ public class BMFont
     {
         get
         {
-            return (this.mSaved.Count > 0);
+            return (mSaved.Count > 0);
         }
     }
 
@@ -122,11 +122,11 @@ public class BMFont
     {
         get
         {
-            return this.mSpriteName;
+            return mSpriteName;
         }
         set
         {
-            this.mSpriteName = value;
+            mSpriteName = value;
         }
     }
 
@@ -134,11 +134,11 @@ public class BMFont
     {
         get
         {
-            return this.mHeight;
+            return mHeight;
         }
         set
         {
-            this.mHeight = value;
+            mHeight = value;
         }
     }
 
@@ -146,11 +146,11 @@ public class BMFont
     {
         get
         {
-            return this.mWidth;
+            return mWidth;
         }
         set
         {
-            this.mWidth = value;
+            mWidth = value;
         }
     }
 }

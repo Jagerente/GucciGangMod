@@ -12,18 +12,18 @@ public class WebRpcResponse
     {
         object obj2;
         response.Parameters.TryGetValue(0xd1, out obj2);
-        this.Name = obj2 as string;
+        Name = obj2 as string;
         response.Parameters.TryGetValue(0xcf, out obj2);
-        this.ReturnCode = (obj2 == null) ? -1 : ((byte) obj2);
+        ReturnCode = (obj2 == null) ? -1 : ((byte) obj2);
         response.Parameters.TryGetValue(0xd0, out obj2);
-        this.Parameters = obj2 as Dictionary<string, object>;
+        Parameters = obj2 as Dictionary<string, object>;
         response.Parameters.TryGetValue(0xce, out obj2);
-        this.DebugMessage = obj2 as string;
+        DebugMessage = obj2 as string;
     }
 
     public string ToStringFull()
     {
-        object[] args = new object[] { this.Name, SupportClass.DictionaryToString(this.Parameters), this.ReturnCode, this.DebugMessage };
+        var args = new object[] { Name, SupportClass.DictionaryToString(Parameters), ReturnCode, DebugMessage };
         return string.Format("{0}={2}: {1} \"{3}\"", args);
     }
 

@@ -18,111 +18,111 @@ public class UIButtonTween : MonoBehaviour
     private bool mStarted;
     private UITweener[] mTweens;
     public UITweener.OnFinished onFinished;
-    public AnimationOrTween.Direction playDirection = AnimationOrTween.Direction.Forward;
+    public Direction playDirection = Direction.Forward;
     public bool resetOnPlay;
-    public AnimationOrTween.Trigger trigger;
+    public Trigger trigger;
     public int tweenGroup;
     public GameObject tweenTarget;
 
     private void OnActivate(bool isActive)
     {
-        if (base.enabled && (((this.trigger == AnimationOrTween.Trigger.OnActivate) || ((this.trigger == AnimationOrTween.Trigger.OnActivateTrue) && isActive)) || ((this.trigger == AnimationOrTween.Trigger.OnActivateFalse) && !isActive)))
+        if (enabled && (((trigger == Trigger.OnActivate) || ((trigger == Trigger.OnActivateTrue) && isActive)) || ((trigger == Trigger.OnActivateFalse) && !isActive)))
         {
-            this.Play(isActive);
+            Play(isActive);
         }
     }
 
     private void OnClick()
     {
-        if (base.enabled && (this.trigger == AnimationOrTween.Trigger.OnClick))
+        if (enabled && (trigger == Trigger.OnClick))
         {
-            this.Play(true);
+            Play(true);
         }
     }
 
     private void OnDoubleClick()
     {
-        if (base.enabled && (this.trigger == AnimationOrTween.Trigger.OnDoubleClick))
+        if (enabled && (trigger == Trigger.OnDoubleClick))
         {
-            this.Play(true);
+            Play(true);
         }
     }
 
     private void OnEnable()
     {
-        if (this.mStarted && this.mHighlighted)
+        if (mStarted && mHighlighted)
         {
-            this.OnHover(UICamera.IsHighlighted(base.gameObject));
+            OnHover(UICamera.IsHighlighted(gameObject));
         }
     }
 
     private void OnHover(bool isOver)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (((this.trigger == AnimationOrTween.Trigger.OnHover) || ((this.trigger == AnimationOrTween.Trigger.OnHoverTrue) && isOver)) || ((this.trigger == AnimationOrTween.Trigger.OnHoverFalse) && !isOver))
+            if (((trigger == Trigger.OnHover) || ((trigger == Trigger.OnHoverTrue) && isOver)) || ((trigger == Trigger.OnHoverFalse) && !isOver))
             {
-                this.Play(isOver);
+                Play(isOver);
             }
-            this.mHighlighted = isOver;
+            mHighlighted = isOver;
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if (base.enabled && (((this.trigger == AnimationOrTween.Trigger.OnPress) || ((this.trigger == AnimationOrTween.Trigger.OnPressTrue) && isPressed)) || ((this.trigger == AnimationOrTween.Trigger.OnPressFalse) && !isPressed)))
+        if (enabled && (((trigger == Trigger.OnPress) || ((trigger == Trigger.OnPressTrue) && isPressed)) || ((trigger == Trigger.OnPressFalse) && !isPressed)))
         {
-            this.Play(isPressed);
+            Play(isPressed);
         }
     }
 
     private void OnSelect(bool isSelected)
     {
-        if (base.enabled && (((this.trigger == AnimationOrTween.Trigger.OnSelect) || ((this.trigger == AnimationOrTween.Trigger.OnSelectTrue) && isSelected)) || ((this.trigger == AnimationOrTween.Trigger.OnSelectFalse) && !isSelected)))
+        if (enabled && (((trigger == Trigger.OnSelect) || ((trigger == Trigger.OnSelectTrue) && isSelected)) || ((trigger == Trigger.OnSelectFalse) && !isSelected)))
         {
-            this.Play(true);
+            Play(true);
         }
     }
 
     public void Play(bool forward)
     {
-        GameObject go = (this.tweenTarget != null) ? this.tweenTarget : base.gameObject;
+        var go = (tweenTarget != null) ? tweenTarget : gameObject;
         if (!NGUITools.GetActive(go))
         {
-            if (this.ifDisabledOnPlay != EnableCondition.EnableThenPlay)
+            if (ifDisabledOnPlay != EnableCondition.EnableThenPlay)
             {
                 return;
             }
             NGUITools.SetActive(go, true);
         }
-        this.mTweens = !this.includeChildren ? go.GetComponents<UITweener>() : go.GetComponentsInChildren<UITweener>();
-        if (this.mTweens.Length == 0)
+        mTweens = !includeChildren ? go.GetComponents<UITweener>() : go.GetComponentsInChildren<UITweener>();
+        if (mTweens.Length == 0)
         {
-            if (this.disableWhenFinished != DisableCondition.DoNotDisable)
+            if (disableWhenFinished != DisableCondition.DoNotDisable)
             {
-                NGUITools.SetActive(this.tweenTarget, false);
+                NGUITools.SetActive(tweenTarget, false);
             }
         }
         else
         {
-            bool flag = false;
-            if (this.playDirection == AnimationOrTween.Direction.Reverse)
+            var flag = false;
+            if (playDirection == Direction.Reverse)
             {
                 forward = !forward;
             }
-            int index = 0;
-            int length = this.mTweens.Length;
+            var index = 0;
+            var length = mTweens.Length;
             while (index < length)
             {
-                UITweener tweener = this.mTweens[index];
-                if (tweener.tweenGroup == this.tweenGroup)
+                var tweener = mTweens[index];
+                if (tweener.tweenGroup == tweenGroup)
                 {
                     if (!flag && !NGUITools.GetActive(go))
                     {
                         flag = true;
                         NGUITools.SetActive(go, true);
                     }
-                    if (this.playDirection == AnimationOrTween.Direction.Toggle)
+                    if (playDirection == Direction.Toggle)
                     {
                         tweener.Toggle();
                     }
@@ -130,15 +130,15 @@ public class UIButtonTween : MonoBehaviour
                     {
                         tweener.Play(forward);
                     }
-                    if (this.resetOnPlay)
+                    if (resetOnPlay)
                     {
                         tweener.Reset();
                     }
-                    tweener.onFinished = this.onFinished;
-                    if ((this.eventReceiver != null) && !string.IsNullOrEmpty(this.callWhenFinished))
+                    tweener.onFinished = onFinished;
+                    if ((eventReceiver != null) && !string.IsNullOrEmpty(callWhenFinished))
                     {
-                        tweener.eventReceiver = this.eventReceiver;
-                        tweener.callWhenFinished = this.callWhenFinished;
+                        tweener.eventReceiver = eventReceiver;
+                        tweener.callWhenFinished = callWhenFinished;
                     }
                 }
                 index++;
@@ -148,32 +148,32 @@ public class UIButtonTween : MonoBehaviour
 
     private void Start()
     {
-        this.mStarted = true;
-        if (this.tweenTarget == null)
+        mStarted = true;
+        if (tweenTarget == null)
         {
-            this.tweenTarget = base.gameObject;
+            tweenTarget = gameObject;
         }
     }
 
     private void Update()
     {
-        if ((this.disableWhenFinished != DisableCondition.DoNotDisable) && (this.mTweens != null))
+        if ((disableWhenFinished != DisableCondition.DoNotDisable) && (mTweens != null))
         {
-            bool flag = true;
-            bool flag2 = true;
-            int index = 0;
-            int length = this.mTweens.Length;
+            var flag = true;
+            var flag2 = true;
+            var index = 0;
+            var length = mTweens.Length;
             while (index < length)
             {
-                UITweener tweener = this.mTweens[index];
-                if (tweener.tweenGroup == this.tweenGroup)
+                var tweener = mTweens[index];
+                if (tweener.tweenGroup == tweenGroup)
                 {
                     if (tweener.enabled)
                     {
                         flag = false;
                         break;
                     }
-                    if (tweener.direction != ((AnimationOrTween.Direction) ((int) this.disableWhenFinished)))
+                    if (tweener.direction != ((Direction) ((int) disableWhenFinished)))
                     {
                         flag2 = false;
                     }
@@ -184,9 +184,9 @@ public class UIButtonTween : MonoBehaviour
             {
                 if (flag2)
                 {
-                    NGUITools.SetActive(this.tweenTarget, false);
+                    NGUITools.SetActive(tweenTarget, false);
                 }
-                this.mTweens = null;
+                mTweens = null;
             }
         }
     }

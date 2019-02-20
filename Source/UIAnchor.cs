@@ -23,147 +23,147 @@ public class UIAnchor : MonoBehaviour
 
     private void Awake()
     {
-        this.mTrans = base.transform;
-        this.mAnim = base.animation;
+        mTrans = transform;
+        mAnim = animation;
     }
 
     private void Start()
     {
-        this.mRoot = NGUITools.FindInParents<UIRoot>(base.gameObject);
-        this.mNeedsHalfPixelOffset = (((Application.platform == RuntimePlatform.WindowsPlayer) || (Application.platform == RuntimePlatform.XBOX360)) || (Application.platform == RuntimePlatform.WindowsWebPlayer)) || (Application.platform == RuntimePlatform.WindowsEditor);
-        if (this.mNeedsHalfPixelOffset)
+        mRoot = NGUITools.FindInParents<UIRoot>(gameObject);
+        mNeedsHalfPixelOffset = (((Application.platform == RuntimePlatform.WindowsPlayer) || (Application.platform == RuntimePlatform.XBOX360)) || (Application.platform == RuntimePlatform.WindowsWebPlayer)) || (Application.platform == RuntimePlatform.WindowsEditor);
+        if (mNeedsHalfPixelOffset)
         {
-            this.mNeedsHalfPixelOffset = SystemInfo.graphicsShaderLevel < 40;
+            mNeedsHalfPixelOffset = SystemInfo.graphicsShaderLevel < 40;
         }
-        if (this.uiCamera == null)
+        if (uiCamera == null)
         {
-            this.uiCamera = NGUITools.FindCameraForLayer(base.gameObject.layer);
+            uiCamera = NGUITools.FindCameraForLayer(gameObject.layer);
         }
-        this.Update();
+        Update();
     }
 
     private void Update()
     {
-        if (((this.mAnim == null) || !this.mAnim.enabled) || !this.mAnim.isPlaying)
+        if (((mAnim == null) || !mAnim.enabled) || !mAnim.isPlaying)
         {
-            bool flag = false;
-            if (this.panelContainer != null)
+            var flag = false;
+            if (panelContainer != null)
             {
-                if (this.panelContainer.clipping == UIDrawCall.Clipping.None)
+                if (panelContainer.clipping == UIDrawCall.Clipping.None)
                 {
-                    float num = (this.mRoot == null) ? 0.5f : ((((float) this.mRoot.activeHeight) / ((float) Screen.height)) * 0.5f);
-                    this.mRect.xMin = -Screen.width * num;
-                    this.mRect.yMin = -Screen.height * num;
-                    this.mRect.xMax = -this.mRect.xMin;
-                    this.mRect.yMax = -this.mRect.yMin;
+                    var num = (mRoot == null) ? 0.5f : ((mRoot.activeHeight / ((float) Screen.height)) * 0.5f);
+                    mRect.xMin = -Screen.width * num;
+                    mRect.yMin = -Screen.height * num;
+                    mRect.xMax = -mRect.xMin;
+                    mRect.yMax = -mRect.yMin;
                 }
                 else
                 {
-                    Vector4 clipRange = this.panelContainer.clipRange;
-                    this.mRect.x = clipRange.x - (clipRange.z * 0.5f);
-                    this.mRect.y = clipRange.y - (clipRange.w * 0.5f);
-                    this.mRect.width = clipRange.z;
-                    this.mRect.height = clipRange.w;
+                    var clipRange = panelContainer.clipRange;
+                    mRect.x = clipRange.x - (clipRange.z * 0.5f);
+                    mRect.y = clipRange.y - (clipRange.w * 0.5f);
+                    mRect.width = clipRange.z;
+                    mRect.height = clipRange.w;
                 }
             }
-            else if (this.widgetContainer != null)
+            else if (widgetContainer != null)
             {
-                Transform cachedTransform = this.widgetContainer.cachedTransform;
-                Vector3 localScale = cachedTransform.localScale;
-                Vector3 localPosition = cachedTransform.localPosition;
-                Vector3 relativeSize = (Vector3) this.widgetContainer.relativeSize;
-                Vector3 pivotOffset = (Vector3) this.widgetContainer.pivotOffset;
+                var cachedTransform = widgetContainer.cachedTransform;
+                var localScale = cachedTransform.localScale;
+                var localPosition = cachedTransform.localPosition;
+                var relativeSize = (Vector3) widgetContainer.relativeSize;
+                var pivotOffset = (Vector3) widgetContainer.pivotOffset;
                 pivotOffset.y--;
-                pivotOffset.x *= this.widgetContainer.relativeSize.x * localScale.x;
-                pivotOffset.y *= this.widgetContainer.relativeSize.y * localScale.y;
-                this.mRect.x = localPosition.x + pivotOffset.x;
-                this.mRect.y = localPosition.y + pivotOffset.y;
-                this.mRect.width = relativeSize.x * localScale.x;
-                this.mRect.height = relativeSize.y * localScale.y;
+                pivotOffset.x *= widgetContainer.relativeSize.x * localScale.x;
+                pivotOffset.y *= widgetContainer.relativeSize.y * localScale.y;
+                mRect.x = localPosition.x + pivotOffset.x;
+                mRect.y = localPosition.y + pivotOffset.y;
+                mRect.width = relativeSize.x * localScale.x;
+                mRect.height = relativeSize.y * localScale.y;
             }
-            else if (this.uiCamera != null)
+            else if (uiCamera != null)
             {
                 flag = true;
-                this.mRect = this.uiCamera.pixelRect;
+                mRect = uiCamera.pixelRect;
             }
             else
             {
                 return;
             }
-            float x = (this.mRect.xMin + this.mRect.xMax) * 0.5f;
-            float y = (this.mRect.yMin + this.mRect.yMax) * 0.5f;
-            Vector3 position = new Vector3(x, y, 0f);
-            if (this.side != Side.Center)
+            var x = (mRect.xMin + mRect.xMax) * 0.5f;
+            var y = (mRect.yMin + mRect.yMax) * 0.5f;
+            var position = new Vector3(x, y, 0f);
+            if (side != Side.Center)
             {
-                if (((this.side == Side.Right) || (this.side == Side.TopRight)) || (this.side == Side.BottomRight))
+                if (((side == Side.Right) || (side == Side.TopRight)) || (side == Side.BottomRight))
                 {
-                    position.x = this.mRect.xMax;
+                    position.x = mRect.xMax;
                 }
-                else if (((this.side == Side.Top) || (this.side == Side.Center)) || (this.side == Side.Bottom))
+                else if (((side == Side.Top) || (side == Side.Center)) || (side == Side.Bottom))
                 {
                     position.x = x;
                 }
                 else
                 {
-                    position.x = this.mRect.xMin;
+                    position.x = mRect.xMin;
                 }
-                if (((this.side == Side.Top) || (this.side == Side.TopRight)) || (this.side == Side.TopLeft))
+                if (((side == Side.Top) || (side == Side.TopRight)) || (side == Side.TopLeft))
                 {
-                    position.y = this.mRect.yMax;
+                    position.y = mRect.yMax;
                 }
-                else if (((this.side == Side.Left) || (this.side == Side.Center)) || (this.side == Side.Right))
+                else if (((side == Side.Left) || (side == Side.Center)) || (side == Side.Right))
                 {
                     position.y = y;
                 }
                 else
                 {
-                    position.y = this.mRect.yMin;
+                    position.y = mRect.yMin;
                 }
             }
-            float width = this.mRect.width;
-            float height = this.mRect.height;
-            position.x += this.relativeOffset.x * width;
-            position.y += this.relativeOffset.y * height;
+            var width = mRect.width;
+            var height = mRect.height;
+            position.x += relativeOffset.x * width;
+            position.y += relativeOffset.y * height;
             if (flag)
             {
-                if (this.uiCamera.orthographic)
+                if (uiCamera.orthographic)
                 {
                     position.x = Mathf.Round(position.x);
                     position.y = Mathf.Round(position.y);
-                    if (this.halfPixelOffset && this.mNeedsHalfPixelOffset)
+                    if (halfPixelOffset && mNeedsHalfPixelOffset)
                     {
                         position.x -= 0.5f;
                         position.y += 0.5f;
                     }
                 }
-                position.z = this.uiCamera.WorldToScreenPoint(this.mTrans.position).z;
-                position = this.uiCamera.ScreenToWorldPoint(position);
+                position.z = uiCamera.WorldToScreenPoint(mTrans.position).z;
+                position = uiCamera.ScreenToWorldPoint(position);
             }
             else
             {
                 position.x = Mathf.Round(position.x);
                 position.y = Mathf.Round(position.y);
-                if (this.panelContainer != null)
+                if (panelContainer != null)
                 {
-                    position = this.panelContainer.cachedTransform.TransformPoint(position);
+                    position = panelContainer.cachedTransform.TransformPoint(position);
                 }
-                else if (this.widgetContainer != null)
+                else if (widgetContainer != null)
                 {
-                    Transform parent = this.widgetContainer.cachedTransform.parent;
+                    var parent = widgetContainer.cachedTransform.parent;
                     if (parent != null)
                     {
                         position = parent.TransformPoint(position);
                     }
                 }
-                position.z = this.mTrans.position.z;
+                position.z = mTrans.position.z;
             }
-            if (this.mTrans.position != position)
+            if (mTrans.position != position)
             {
-                this.mTrans.position = position;
+                mTrans.position = position;
             }
-            if (this.runOnlyOnce && Application.isPlaying)
+            if (runOnlyOnce && Application.isPlaying)
             {
-                UnityEngine.Object.Destroy(this);
+                Destroy(this);
             }
         }
     }

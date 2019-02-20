@@ -24,35 +24,35 @@ public class ServerSettings : ScriptableObject
 
     public override string ToString()
     {
-        object[] objArray1 = new object[] { "ServerSettings: ", this.HostType, " ", this.ServerAddress };
+        var objArray1 = new object[] { "ServerSettings: ", HostType, " ", ServerAddress };
         return string.Concat(objArray1);
     }
 
     public void UseCloud(string cloudAppid)
     {
-        this.HostType = HostingOption.PhotonCloud;
-        this.AppID = cloudAppid;
+        HostType = HostingOption.PhotonCloud;
+        AppID = cloudAppid;
     }
 
     public void UseCloud(string cloudAppid, CloudRegionCode code)
     {
-        this.HostType = HostingOption.PhotonCloud;
-        this.AppID = cloudAppid;
-        this.PreferredRegion = code;
+        HostType = HostingOption.PhotonCloud;
+        AppID = cloudAppid;
+        PreferredRegion = code;
     }
 
     public void UseCloudBestResion(string cloudAppid)
     {
-        this.HostType = HostingOption.BestRegion;
-        this.AppID = cloudAppid;
+        HostType = HostingOption.BestRegion;
+        AppID = cloudAppid;
     }
 
     public void UseMyServer(string serverAddress, int serverPort, string application)
     {
-        this.HostType = HostingOption.SelfHosted;
-        this.AppID = (application == null) ? "master" : application;
-        this.ServerAddress = serverAddress;
-        this.ServerPort = serverPort;
+        HostType = HostingOption.SelfHosted;
+        AppID = (application == null) ? "master" : application;
+        ServerAddress = serverAddress;
+        ServerPort = serverPort;
     }
 
     public enum HostingOption

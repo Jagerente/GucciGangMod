@@ -10,30 +10,30 @@ public class OnAwakeUsePhotonView : Photon.MonoBehaviour
 {
     private void Awake()
     {
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            base.photonView.RPC("OnAwakeRPC", PhotonTargets.All, new object[0]);
+            photonView.RPC("OnAwakeRPC", PhotonTargets.All, new object[0]);
         }
     }
 
     [RPC]
     public void OnAwakeRPC()
     {
-        Debug.Log("RPC: 'OnAwakeRPC' PhotonView: " + base.photonView);
+        Debug.Log("RPC: 'OnAwakeRPC' PhotonView: " + photonView);
     }
 
     [RPC]
     public void OnAwakeRPC(byte myParameter)
     {
-        Debug.Log(string.Concat(new object[] { "RPC: 'OnAwakeRPC' Parameter: ", myParameter, " PhotonView: ", base.photonView }));
+        Debug.Log(string.Concat(new object[] { "RPC: 'OnAwakeRPC' Parameter: ", myParameter, " PhotonView: ", photonView }));
     }
 
     private void Start()
     {
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            object[] parameters = new object[] { (byte) 1 };
-            base.photonView.RPC("OnAwakeRPC", PhotonTargets.All, parameters);
+            var parameters = new object[] { (byte) 1 };
+            photonView.RPC("OnAwakeRPC", PhotonTargets.All, parameters);
         }
     }
 }

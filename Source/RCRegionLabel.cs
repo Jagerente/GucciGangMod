@@ -11,9 +11,9 @@ public class RCRegionLabel : MonoBehaviour
 
     private void Update()
     {
-        if ((this.myLabel != null) && this.myLabel.GetComponent<UILabel>().isVisible)
+        if ((myLabel != null) && myLabel.GetComponent<UILabel>().isVisible)
         {
-            this.myLabel.transform.LookAt(((Vector3) (2f * this.myLabel.transform.position)) - Camera.main.transform.position);
+            myLabel.transform.LookAt(2f * myLabel.transform.position - Camera.main.transform.position);
         }
     }
 }

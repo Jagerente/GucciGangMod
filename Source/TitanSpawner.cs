@@ -9,16 +9,16 @@ public class TitanSpawner
 {
     public TitanSpawner()
     {
-        this.name = string.Empty;
-        this.location = new Vector3(0f, 0f, 0f);
-        this.time = 30f;
-        this.endless = false;
-        this.delay = 30f;
+        name = string.Empty;
+        location = new Vector3(0f, 0f, 0f);
+        time = 30f;
+        endless = false;
+        delay = 30f;
     }
 
     public void resetTime()
     {
-        this.time = this.delay;
+        time = delay;
     }
 
     public float delay { get; set; }

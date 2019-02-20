@@ -15,43 +15,43 @@ public class ScaleAffector : Affector
 
     public ScaleAffector(float x, float y, EffectNode node) : base(node)
     {
-        this.Type = RSTYPE.SIMPLE;
-        this.DeltaX = x;
-        this.DeltaY = y;
+        Type = RSTYPE.SIMPLE;
+        DeltaX = x;
+        DeltaY = y;
     }
 
     public ScaleAffector(AnimationCurve curveX, AnimationCurve curveY, EffectNode node) : base(node)
     {
-        this.Type = RSTYPE.CURVE;
-        this.ScaleXCurve = curveX;
-        this.ScaleYCurve = curveY;
+        Type = RSTYPE.CURVE;
+        ScaleXCurve = curveX;
+        ScaleYCurve = curveY;
     }
 
     public override void Update()
     {
-        float elapsedTime = base.Node.GetElapsedTime();
-        if (this.Type == RSTYPE.CURVE)
+        var elapsedTime = Node.GetElapsedTime();
+        if (Type == RSTYPE.CURVE)
         {
-            if (this.ScaleXCurve != null)
+            if (ScaleXCurve != null)
             {
-                base.Node.Scale.x = this.ScaleXCurve.Evaluate(elapsedTime);
+                Node.Scale.x = ScaleXCurve.Evaluate(elapsedTime);
             }
-            if (this.ScaleYCurve != null)
+            if (ScaleYCurve != null)
             {
-                base.Node.Scale.y = this.ScaleYCurve.Evaluate(elapsedTime);
+                Node.Scale.y = ScaleYCurve.Evaluate(elapsedTime);
             }
         }
-        else if (this.Type == RSTYPE.SIMPLE)
+        else if (Type == RSTYPE.SIMPLE)
         {
-            float num2 = base.Node.Scale.x + (this.DeltaX * Time.deltaTime);
-            float num3 = base.Node.Scale.y + (this.DeltaY * Time.deltaTime);
-            if ((num2 * base.Node.Scale.x) > 0f)
+            var num2 = Node.Scale.x + (DeltaX * Time.deltaTime);
+            var num3 = Node.Scale.y + (DeltaY * Time.deltaTime);
+            if ((num2 * Node.Scale.x) > 0f)
             {
-                base.Node.Scale.x = num2;
+                Node.Scale.x = num2;
             }
-            if ((num3 * base.Node.Scale.y) > 0f)
+            if ((num3 * Node.Scale.y) > 0f)
             {
-                base.Node.Scale.y = num3;
+                Node.Scale.y = num3;
             }
         }
     }

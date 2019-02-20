@@ -15,36 +15,36 @@ public class Spin : MonoBehaviour
     public void ApplyDelta(float delta)
     {
         delta *= 360f;
-        Quaternion quaternion = Quaternion.Euler((Vector3) (this.rotationsPerSecond * delta));
-        if (this.mRb == null)
+        var quaternion = Quaternion.Euler(rotationsPerSecond * delta);
+        if (mRb == null)
         {
-            this.mTrans.rotation *= quaternion;
+            mTrans.rotation *= quaternion;
         }
         else
         {
-            this.mRb.MoveRotation(this.mRb.rotation * quaternion);
+            mRb.MoveRotation(mRb.rotation * quaternion);
         }
     }
 
     private void FixedUpdate()
     {
-        if (this.mRb != null)
+        if (mRb != null)
         {
-            this.ApplyDelta(Time.deltaTime);
+            ApplyDelta(Time.deltaTime);
         }
     }
 
     private void Start()
     {
-        this.mTrans = base.transform;
-        this.mRb = base.rigidbody;
+        mTrans = transform;
+        mRb = rigidbody;
     }
 
     private void Update()
     {
-        if (this.mRb == null)
+        if (mRb == null)
         {
-            this.ApplyDelta(Time.deltaTime);
+            ApplyDelta(Time.deltaTime);
         }
     }
 }

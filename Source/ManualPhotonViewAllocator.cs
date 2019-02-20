@@ -12,15 +12,15 @@ public class ManualPhotonViewAllocator : MonoBehaviour
 
     public void AllocateManualPhotonView()
     {
-        PhotonView photonView = base.gameObject.GetPhotonView();
+        var photonView = gameObject.GetPhotonView();
         if (photonView == null)
         {
             Debug.LogError("Can't do manual instantiation without PhotonView component.");
         }
         else
         {
-            int num = PhotonNetwork.AllocateViewID();
-            object[] parameters = new object[] { num };
+            var num = PhotonNetwork.AllocateViewID();
+            var parameters = new object[] { num };
             photonView.RPC("InstantiateRpc", PhotonTargets.AllBuffered, parameters);
         }
     }
@@ -28,7 +28,7 @@ public class ManualPhotonViewAllocator : MonoBehaviour
     [RPC]
     public void InstantiateRpc(int viewID)
     {
-        GameObject go = UnityEngine.Object.Instantiate(this.Prefab, InputToEvent.inputHitPos + new Vector3(0f, 5f, 0f), Quaternion.identity) as GameObject;
+        var go = Instantiate(Prefab, InputToEvent.inputHitPos + new Vector3(0f, 5f, 0f), Quaternion.identity) as GameObject;
         go.GetPhotonView().viewID = viewID;
         go.GetComponent<OnClickDestroy>().DestroyByRpc = true;
     }

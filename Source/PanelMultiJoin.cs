@@ -17,14 +17,14 @@ public class PanelMultiJoin : MonoBehaviour
 
     public void connectToIndex(int index, string roomName)
     {
-        int num = 0;
+        var num = 0;
         for (num = 0; num < 10; num++)
         {
-            this.items[num].SetActive(false);
+            items[num].SetActive(false);
         }
-        num = (10 * (this.currentPage - 1)) + index;
-        char[] separator = new char[] { "`"[0] };
-        string[] strArray = roomName.Split(separator);
+        num = (10 * (currentPage - 1)) + index;
+        var separator = new char[] { "`"[0] };
+        var strArray = roomName.Split(separator);
         if (strArray[5] != string.Empty)
         {
             PanelMultiJoinPWD.Password = strArray[5];
@@ -40,9 +40,9 @@ public class PanelMultiJoin : MonoBehaviour
 
     private string getServerDataString(RoomInfo room)
     {
-        char[] separator = new char[] { "`"[0] };
-        string[] strArray = room.name.Split(separator);
-        object[] objArray1 = new object[] { !(strArray[5] == string.Empty) ? "[PWD]" : string.Empty, strArray[0], "/", strArray[1], "/", strArray[2], "/", strArray[4], " ", room.playerCount, "/", room.maxPlayers };
+        var separator = new char[] { "`"[0] };
+        var strArray = room.name.Split(separator);
+        var objArray1 = new object[] { !(strArray[5] == string.Empty) ? "[PWD]" : string.Empty, strArray[0], "/", strArray[1], "/", strArray[2], "/", strArray[4], " ", room.playerCount, "/", room.maxPlayers };
         return string.Concat(objArray1);
     }
 
@@ -52,41 +52,41 @@ public class PanelMultiJoin : MonoBehaviour
 
     private void OnEnable()
     {
-        this.currentPage = 1;
-        this.totalPage = 0;
-        this.refresh();
+        currentPage = 1;
+        totalPage = 0;
+        refresh();
     }
 
     private void OnFilterSubmit(string content)
     {
-        this.filter = content;
-        this.updateFilterRooms();
-        this.showlist();
+        filter = content;
+        updateFilterRooms();
+        showlist();
     }
 
     public void pageDown()
     {
-        this.currentPage++;
-        if (this.currentPage > this.totalPage)
+        currentPage++;
+        if (currentPage > totalPage)
         {
-            this.currentPage = 1;
+            currentPage = 1;
         }
-        this.showServerList();
+        showServerList();
     }
 
     public void pageUp()
     {
-        this.currentPage--;
-        if (this.currentPage < 1)
+        currentPage--;
+        if (currentPage < 1)
         {
-            this.currentPage = this.totalPage;
+            currentPage = totalPage;
         }
-        this.showServerList();
+        showServerList();
     }
 
     public void refresh()
     {
-        this.showlist();
+        showlist();
     }
 
     private void showlist()
@@ -102,59 +102,59 @@ public class PanelMultiJoin : MonoBehaviour
                 FengGameManagerMKII.shallRejoin[0] = false;
             }
         }
-        if (this.filter == string.Empty)
+        if (filter == string.Empty)
         {
             if (PhotonNetwork.GetRoomList().Length > 0)
             {
-                this.totalPage = ((PhotonNetwork.GetRoomList().Length - 1) / 10) + 1;
+                totalPage = ((PhotonNetwork.GetRoomList().Length - 1) / 10) + 1;
             }
             else
             {
-                this.totalPage = 1;
+                totalPage = 1;
             }
         }
         else
         {
-            this.updateFilterRooms();
-            if (this.filterRoom.Count > 0)
+            updateFilterRooms();
+            if (filterRoom.Count > 0)
             {
-                this.totalPage = ((this.filterRoom.Count - 1) / 10) + 1;
+                totalPage = ((filterRoom.Count - 1) / 10) + 1;
             }
             else
             {
-                this.totalPage = 1;
+                totalPage = 1;
             }
         }
-        if (this.currentPage < 1)
+        if (currentPage < 1)
         {
-            this.currentPage = this.totalPage;
+            currentPage = totalPage;
         }
-        if (this.currentPage > this.totalPage)
+        if (currentPage > totalPage)
         {
-            this.currentPage = 1;
+            currentPage = 1;
         }
-        this.showServerList();
+        showServerList();
     }
 
     private void showServerList()
     {
         if (PhotonNetwork.GetRoomList().Length != 0)
         {
-            int index = 0;
-            if (this.filter == string.Empty)
+            var index = 0;
+            if (filter == string.Empty)
             {
                 for (index = 0; index < 10; index++)
                 {
-                    int num2 = (10 * (this.currentPage - 1)) + index;
+                    var num2 = (10 * (currentPage - 1)) + index;
                     if (num2 < PhotonNetwork.GetRoomList().Length)
                     {
-                        this.items[index].SetActive(true);
-                        this.items[index].GetComponentInChildren<UILabel>().text = this.getServerDataString(PhotonNetwork.GetRoomList()[num2]);
-                        this.items[index].GetComponentInChildren<BTN_Connect_To_Server_On_List>().roomName = PhotonNetwork.GetRoomList()[num2].name;
+                        items[index].SetActive(true);
+                        items[index].GetComponentInChildren<UILabel>().text = getServerDataString(PhotonNetwork.GetRoomList()[num2]);
+                        items[index].GetComponentInChildren<BTN_Connect_To_Server_On_List>().roomName = PhotonNetwork.GetRoomList()[num2].name;
                     }
                     else
                     {
-                        this.items[index].SetActive(false);
+                        items[index].SetActive(false);
                     }
                 }
             }
@@ -162,63 +162,63 @@ public class PanelMultiJoin : MonoBehaviour
             {
                 for (index = 0; index < 10; index++)
                 {
-                    int num3 = (10 * (this.currentPage - 1)) + index;
-                    if (num3 < this.filterRoom.Count)
+                    var num3 = (10 * (currentPage - 1)) + index;
+                    if (num3 < filterRoom.Count)
                     {
-                        RoomInfo room = (RoomInfo) this.filterRoom[num3];
-                        this.items[index].SetActive(true);
-                        this.items[index].GetComponentInChildren<UILabel>().text = this.getServerDataString(room);
-                        this.items[index].GetComponentInChildren<BTN_Connect_To_Server_On_List>().roomName = room.name;
+                        var room = (RoomInfo) filterRoom[num3];
+                        items[index].SetActive(true);
+                        items[index].GetComponentInChildren<UILabel>().text = getServerDataString(room);
+                        items[index].GetComponentInChildren<BTN_Connect_To_Server_On_List>().roomName = room.name;
                     }
                     else
                     {
-                        this.items[index].SetActive(false);
+                        items[index].SetActive(false);
                     }
                 }
             }
-            GameObject.Find("LabelServerListPage").GetComponent<UILabel>().text = this.currentPage + "/" + this.totalPage;
+            GameObject.Find("LabelServerListPage").GetComponent<UILabel>().text = currentPage + "/" + totalPage;
         }
         else
         {
-            for (int i = 0; i < this.items.Length; i++)
+            for (var i = 0; i < items.Length; i++)
             {
-                this.items[i].SetActive(false);
+                items[i].SetActive(false);
             }
-            GameObject.Find("LabelServerListPage").GetComponent<UILabel>().text = this.currentPage + "/" + this.totalPage;
+            GameObject.Find("LabelServerListPage").GetComponent<UILabel>().text = currentPage + "/" + totalPage;
         }
     }
 
     private void Start()
     {
-        int index = 0;
+        var index = 0;
         for (index = 0; index < 10; index++)
         {
-            this.items[index].SetActive(true);
-            this.items[index].GetComponentInChildren<UILabel>().text = string.Empty;
-            this.items[index].SetActive(false);
+            items[index].SetActive(true);
+            items[index].GetComponentInChildren<UILabel>().text = string.Empty;
+            items[index].SetActive(false);
         }
     }
 
     private void Update()
     {
-        this.elapsedTime += Time.deltaTime;
-        if (this.elapsedTime > 1f)
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > 1f)
         {
-            this.elapsedTime = 0f;
-            this.showlist();
+            elapsedTime = 0f;
+            showlist();
         }
     }
 
     private void updateFilterRooms()
     {
-        this.filterRoom = new ArrayList();
-        if (this.filter != string.Empty)
+        filterRoom = new ArrayList();
+        if (filter != string.Empty)
         {
-            foreach (RoomInfo info in PhotonNetwork.GetRoomList())
+            foreach (var info in PhotonNetwork.GetRoomList())
             {
-                if (info.name.ToUpper().Contains(this.filter.ToUpper()))
+                if (info.name.ToUpper().Contains(filter.ToUpper()))
                 {
-                    this.filterRoom.Add(info);
+                    filterRoom.Add(info);
                 }
             }
         }

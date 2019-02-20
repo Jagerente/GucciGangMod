@@ -20,36 +20,36 @@ public class UITexture : UIWidget
 
     public override void MakePixelPerfect()
     {
-        Texture mainTexture = this.mainTexture;
+        var mainTexture = this.mainTexture;
         if (mainTexture != null)
         {
-            Vector3 localScale = base.cachedTransform.localScale;
-            localScale.x = mainTexture.width * this.uvRect.width;
-            localScale.y = mainTexture.height * this.uvRect.height;
+            var localScale = cachedTransform.localScale;
+            localScale.x = mainTexture.width * uvRect.width;
+            localScale.y = mainTexture.height * uvRect.height;
             localScale.z = 1f;
-            base.cachedTransform.localScale = localScale;
+            cachedTransform.localScale = localScale;
         }
         base.MakePixelPerfect();
     }
 
     private void OnDestroy()
     {
-        NGUITools.Destroy(this.mDynamicMat);
+        NGUITools.Destroy(mDynamicMat);
     }
 
     public override void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
     {
-        Color c = base.color;
-        c.a *= base.mPanel.alpha;
-        Color32 item = !this.premultipliedAlpha ? c : NGUITools.ApplyPMA(c);
+        var c = color;
+        c.a *= mPanel.alpha;
+        Color32 item = !premultipliedAlpha ? c : NGUITools.ApplyPMA(c);
         verts.Add(new Vector3(1f, 0f, 0f));
         verts.Add(new Vector3(1f, -1f, 0f));
         verts.Add(new Vector3(0f, -1f, 0f));
         verts.Add(new Vector3(0f, 0f, 0f));
-        uvs.Add(new Vector2(this.mRect.xMax, this.mRect.yMax));
-        uvs.Add(new Vector2(this.mRect.xMax, this.mRect.yMin));
-        uvs.Add(new Vector2(this.mRect.xMin, this.mRect.yMin));
-        uvs.Add(new Vector2(this.mRect.xMin, this.mRect.yMax));
+        uvs.Add(new Vector2(mRect.xMax, mRect.yMax));
+        uvs.Add(new Vector2(mRect.xMax, mRect.yMin));
+        uvs.Add(new Vector2(mRect.xMin, mRect.yMin));
+        uvs.Add(new Vector2(mRect.xMin, mRect.yMax));
         cols.Add(item);
         cols.Add(item);
         cols.Add(item);
@@ -60,7 +60,7 @@ public class UITexture : UIWidget
     {
         get
         {
-            return (this.mDynamicMat != null);
+            return (mDynamicMat != null);
         }
     }
 
@@ -76,27 +76,27 @@ public class UITexture : UIWidget
     {
         get
         {
-            return ((this.mTexture == null) ? base.mainTexture : this.mTexture);
+            return ((mTexture == null) ? base.mainTexture : mTexture);
         }
         set
         {
-            if ((base.mPanel != null) && (base.mMat != null))
+            if ((mPanel != null) && (mMat != null))
             {
-                base.mPanel.RemoveWidget(this);
+                mPanel.RemoveWidget(this);
             }
-            if (base.mMat == null)
+            if (mMat == null)
             {
-                this.mDynamicMat = new Material(this.shader);
-                this.mDynamicMat.hideFlags = HideFlags.DontSave;
-                base.mMat = this.mDynamicMat;
+                mDynamicMat = new Material(shader);
+                mDynamicMat.hideFlags = HideFlags.DontSave;
+                mMat = mDynamicMat;
             }
-            base.mPanel = null;
-            base.mTex = value;
-            this.mTexture = value;
-            base.mMat.mainTexture = value;
-            if (base.enabled)
+            mPanel = null;
+            mTex = value;
+            mTexture = value;
+            mMat.mainTexture = value;
+            if (enabled)
             {
-                base.CreatePanel();
+                CreatePanel();
             }
         }
     }
@@ -105,34 +105,34 @@ public class UITexture : UIWidget
     {
         get
         {
-            if (!this.mCreatingMat && (base.mMat == null))
+            if (!mCreatingMat && (mMat == null))
             {
-                this.mCreatingMat = true;
-                if (this.mainTexture != null)
+                mCreatingMat = true;
+                if (mainTexture != null)
                 {
-                    if (this.mShader == null)
+                    if (mShader == null)
                     {
-                        this.mShader = Shader.Find("Unlit/Texture");
+                        mShader = Shader.Find("Unlit/Texture");
                     }
-                    this.mDynamicMat = new Material(this.mShader);
-                    this.mDynamicMat.hideFlags = HideFlags.DontSave;
-                    this.mDynamicMat.mainTexture = this.mainTexture;
-                    base.material = this.mDynamicMat;
-                    this.mPMA = 0;
+                    mDynamicMat = new Material(mShader);
+                    mDynamicMat.hideFlags = HideFlags.DontSave;
+                    mDynamicMat.mainTexture = mainTexture;
+                    base.material = mDynamicMat;
+                    mPMA = 0;
                 }
-                this.mCreatingMat = false;
+                mCreatingMat = false;
             }
-            return base.mMat;
+            return mMat;
         }
         set
         {
-            if ((this.mDynamicMat != value) && (this.mDynamicMat != null))
+            if ((mDynamicMat != value) && (mDynamicMat != null))
             {
-                NGUITools.Destroy(this.mDynamicMat);
-                this.mDynamicMat = null;
+                NGUITools.Destroy(mDynamicMat);
+                mDynamicMat = null;
             }
             base.material = value;
-            this.mPMA = -1;
+            mPMA = -1;
         }
     }
 
@@ -140,12 +140,12 @@ public class UITexture : UIWidget
     {
         get
         {
-            if (this.mPMA == -1)
+            if (mPMA == -1)
             {
-                Material material = this.material;
-                this.mPMA = (((material == null) || (material.shader == null)) || !material.shader.name.Contains("Premultiplied")) ? 0 : 1;
+                var material = this.material;
+                mPMA = (((material == null) || (material.shader == null)) || !material.shader.name.Contains("Premultiplied")) ? 0 : 1;
             }
-            return (this.mPMA == 1);
+            return (mPMA == 1);
         }
     }
 
@@ -153,31 +153,31 @@ public class UITexture : UIWidget
     {
         get
         {
-            if (this.mShader == null)
+            if (mShader == null)
             {
-                Material material = this.material;
+                var material = this.material;
                 if (material != null)
                 {
-                    this.mShader = material.shader;
+                    mShader = material.shader;
                 }
-                if (this.mShader == null)
+                if (mShader == null)
                 {
-                    this.mShader = Shader.Find("Unlit/Texture");
+                    mShader = Shader.Find("Unlit/Texture");
                 }
             }
-            return this.mShader;
+            return mShader;
         }
         set
         {
-            if (this.mShader != value)
+            if (mShader != value)
             {
-                this.mShader = value;
-                Material material = this.material;
+                mShader = value;
+                var material = this.material;
                 if (material != null)
                 {
                     material.shader = value;
                 }
-                this.mPMA = -1;
+                mPMA = -1;
             }
         }
     }
@@ -186,14 +186,14 @@ public class UITexture : UIWidget
     {
         get
         {
-            return this.mRect;
+            return mRect;
         }
         set
         {
-            if (this.mRect != value)
+            if (mRect != value)
             {
-                this.mRect = value;
-                this.MarkAsChanged();
+                mRect = value;
+                MarkAsChanged();
             }
         }
     }

@@ -28,7 +28,7 @@ public class LevelInfo
     public static LevelInfo getInfo(string name)
     {
         initData2();
-        foreach (LevelInfo info in levels)
+        foreach (var info in levels)
         {
             if (info.name == name)
             {

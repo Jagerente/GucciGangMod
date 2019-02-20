@@ -11,23 +11,23 @@ public class SliderCameraDist : MonoBehaviour
 
     private void OnSliderChange(float value)
     {
-        if (!this.init)
+        if (!init)
         {
-            this.init = true;
+            init = true;
             if (PlayerPrefs.HasKey("cameraDistance"))
             {
-                float @float = PlayerPrefs.GetFloat("cameraDistance");
-                base.gameObject.GetComponent<UISlider>().sliderValue = @float;
+                var @float = PlayerPrefs.GetFloat("cameraDistance");
+                gameObject.GetComponent<UISlider>().sliderValue = @float;
                 value = @float;
             }
             else
             {
-                PlayerPrefs.SetFloat("cameraDistance", base.gameObject.GetComponent<UISlider>().sliderValue);
+                PlayerPrefs.SetFloat("cameraDistance", gameObject.GetComponent<UISlider>().sliderValue);
             }
         }
         else
         {
-            PlayerPrefs.SetFloat("cameraDistance", base.gameObject.GetComponent<UISlider>().sliderValue);
+            PlayerPrefs.SetFloat("cameraDistance", gameObject.GetComponent<UISlider>().sliderValue);
         }
         IN_GAME_MAIN_CAMERA.cameraDistance = 0.3f + value;
     }

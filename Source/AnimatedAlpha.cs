@@ -13,20 +13,20 @@ public class AnimatedAlpha : MonoBehaviour
 
     private void Awake()
     {
-        this.mWidget = base.GetComponent<UIWidget>();
-        this.mPanel = base.GetComponent<UIPanel>();
-        this.Update();
+        mWidget = GetComponent<UIWidget>();
+        mPanel = GetComponent<UIPanel>();
+        Update();
     }
 
     private void Update()
     {
-        if (this.mWidget != null)
+        if (mWidget != null)
         {
-            this.mWidget.alpha = this.alpha;
+            mWidget.alpha = alpha;
         }
-        if (this.mPanel != null)
+        if (mPanel != null)
         {
-            this.mPanel.alpha = this.alpha;
+            mPanel.alpha = alpha;
         }
     }
 }

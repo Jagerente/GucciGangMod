@@ -15,26 +15,26 @@ public class WindowAutoYaw : MonoBehaviour
 
     private void CoroutineUpdate(float delta)
     {
-        if (this.uiCamera != null)
+        if (uiCamera != null)
         {
-            Vector3 vector = this.uiCamera.WorldToViewportPoint(this.mTrans.position);
-            this.mTrans.localRotation = Quaternion.Euler(0f, ((vector.x * 2f) - 1f) * this.yawAmount, 0f);
+            var vector = uiCamera.WorldToViewportPoint(mTrans.position);
+            mTrans.localRotation = Quaternion.Euler(0f, ((vector.x * 2f) - 1f) * yawAmount, 0f);
         }
     }
 
     private void OnDisable()
     {
-        this.mTrans.localRotation = Quaternion.identity;
+        mTrans.localRotation = Quaternion.identity;
     }
 
     private void Start()
     {
-        if (this.uiCamera == null)
+        if (uiCamera == null)
         {
-            this.uiCamera = NGUITools.FindCameraForLayer(base.gameObject.layer);
+            uiCamera = NGUITools.FindCameraForLayer(gameObject.layer);
         }
-        this.mTrans = base.transform;
-        UpdateManager.AddCoroutine(this, this.updateOrder, new UpdateManager.OnUpdate(this.CoroutineUpdate));
+        mTrans = transform;
+        UpdateManager.AddCoroutine(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
     }
 }
 

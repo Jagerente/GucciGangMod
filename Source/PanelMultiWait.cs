@@ -23,23 +23,23 @@ public class PanelMultiWait : MonoBehaviour
 
     private void showTxt()
     {
-        if (this.lang != Language.type)
+        if (lang != Language.type)
         {
-            this.lang = Language.type;
-            this.label_START.GetComponent<UILabel>().text = Language.btn_start[Language.type];
-            this.label_BACK.GetComponent<UILabel>().text = Language.btn_back[Language.type];
-            this.label_READY.GetComponent<UILabel>().text = Language.btn_ready[Language.type];
-            this.label_camera.GetComponent<UILabel>().text = Language.camera_type[Language.type];
-            this.label_original.GetComponent<UILabel>().text = Language.camera_original[Language.type];
-            this.label_wow.GetComponent<UILabel>().text = Language.camera_wow[Language.type];
-            this.label_tps.GetComponent<UILabel>().text = Language.camera_tps[Language.type];
-            this.label_character.GetComponent<UILabel>().text = Language.choose_character[Language.type];
+            lang = Language.type;
+            label_START.GetComponent<UILabel>().text = Language.btn_start[Language.type];
+            label_BACK.GetComponent<UILabel>().text = Language.btn_back[Language.type];
+            label_READY.GetComponent<UILabel>().text = Language.btn_ready[Language.type];
+            label_camera.GetComponent<UILabel>().text = Language.camera_type[Language.type];
+            label_original.GetComponent<UILabel>().text = Language.camera_original[Language.type];
+            label_wow.GetComponent<UILabel>().text = Language.camera_wow[Language.type];
+            label_tps.GetComponent<UILabel>().text = Language.camera_tps[Language.type];
+            label_character.GetComponent<UILabel>().text = Language.choose_character[Language.type];
         }
     }
 
     private void Update()
     {
-        this.showTxt();
+        showTxt();
     }
 }
 

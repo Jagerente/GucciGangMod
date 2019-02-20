@@ -49,18 +49,18 @@ public class FengCustomInputs : MonoBehaviour
 
     private void checDoubleAxis(string testAxisString, int o, int p)
     {
-        if (!this.allowDuplicates)
+        if (!allowDuplicates)
         {
-            for (int i = 0; i < this.DescriptionString.Length; i++)
+            for (var i = 0; i < DescriptionString.Length; i++)
             {
-                if ((testAxisString == this.joystickString[i]) && ((i != o) || (p == 2)))
+                if ((testAxisString == joystickString[i]) && ((i != o) || (p == 2)))
                 {
-                    this.inputKey[i] = KeyCode.None;
-                    this.inputBool[i] = false;
-                    this.inputString[i] = this.inputKey[i].ToString();
-                    this.joystickActive[i] = false;
-                    this.joystickString[i] = "#";
-                    this.saveInputs();
+                    inputKey[i] = KeyCode.None;
+                    inputBool[i] = false;
+                    inputString[i] = inputKey[i].ToString();
+                    joystickActive[i] = false;
+                    joystickString[i] = "#";
+                    saveInputs();
                 }
             }
         }
@@ -68,18 +68,18 @@ public class FengCustomInputs : MonoBehaviour
 
     private void checDoubles(KeyCode testkey, int o, int p)
     {
-        if (!this.allowDuplicates)
+        if (!allowDuplicates)
         {
-            for (int i = 0; i < this.DescriptionString.Length; i++)
+            for (var i = 0; i < DescriptionString.Length; i++)
             {
-                if ((testkey == this.inputKey[i]) && ((i != o) || (p == 2)))
+                if ((testkey == inputKey[i]) && ((i != o) || (p == 2)))
                 {
-                    this.inputKey[i] = KeyCode.None;
-                    this.inputBool[i] = false;
-                    this.inputString[i] = this.inputKey[i].ToString();
-                    this.joystickActive[i] = false;
-                    this.joystickString[i] = "#";
-                    this.saveInputs();
+                    inputKey[i] = KeyCode.None;
+                    inputBool[i] = false;
+                    inputString[i] = inputKey[i].ToString();
+                    joystickActive[i] = false;
+                    joystickString[i] = "#";
+                    saveInputs();
                 }
             }
         }
@@ -87,430 +87,430 @@ public class FengCustomInputs : MonoBehaviour
 
     private void drawButtons1()
     {
-        bool flag = false;
-        for (int i = 0; i < this.DescriptionString.Length; i++)
+        var flag = false;
+        for (var i = 0; i < DescriptionString.Length; i++)
         {
-            if (!this.joystickActive[i] && (this.inputKey[i] == KeyCode.None))
+            if (!joystickActive[i] && (inputKey[i] == KeyCode.None))
             {
-                this.joystickString[i] = "#";
+                joystickString[i] = "#";
             }
-            bool flag2 = this.inputBool[i];
-            if ((Event.current.type == EventType.KeyDown) && this.inputBool[i])
+            var flag2 = inputBool[i];
+            if ((Event.current.type == EventType.KeyDown) && inputBool[i])
             {
-                this.inputKey[i] = Event.current.keyCode;
-                this.inputBool[i] = false;
-                this.inputString[i] = this.inputKey[i].ToString();
-                this.tempbool = false;
-                this.joystickActive[i] = false;
-                this.joystickString[i] = "#";
-                this.saveInputs();
-                this.checDoubles(this.inputKey[i], i, 1);
+                inputKey[i] = Event.current.keyCode;
+                inputBool[i] = false;
+                inputString[i] = inputKey[i].ToString();
+                tempbool = false;
+                joystickActive[i] = false;
+                joystickString[i] = "#";
+                saveInputs();
+                checDoubles(inputKey[i], i, 1);
             }
-            if (this.mouseButtonsOn)
+            if (mouseButtonsOn)
             {
-                int num2 = 0x143;
-                for (int k = 0; k < 6; k++)
+                var num2 = 0x143;
+                for (var k = 0; k < 6; k++)
                 {
-                    if (Input.GetMouseButton(k) && this.inputBool[i])
+                    if (Input.GetMouseButton(k) && inputBool[i])
                     {
                         num2 += k;
-                        this.inputKey[i] = (KeyCode) num2;
-                        this.inputBool[i] = false;
-                        this.inputString[i] = this.inputKey[i].ToString();
-                        this.joystickActive[i] = false;
-                        this.joystickString[i] = "#";
-                        this.saveInputs();
-                        this.checDoubles(this.inputKey[i], i, 1);
+                        inputKey[i] = (KeyCode) num2;
+                        inputBool[i] = false;
+                        inputString[i] = inputKey[i].ToString();
+                        joystickActive[i] = false;
+                        joystickString[i] = "#";
+                        saveInputs();
+                        checDoubles(inputKey[i], i, 1);
                     }
                 }
             }
-            for (int j = 350; j < 0x199; j++)
+            for (var j = 350; j < 0x199; j++)
             {
-                if (Input.GetKey((KeyCode) j) && this.inputBool[i])
+                if (Input.GetKey((KeyCode) j) && inputBool[i])
                 {
-                    this.inputKey[i] = (KeyCode) j;
-                    this.inputBool[i] = false;
-                    this.inputString[i] = this.inputKey[i].ToString();
-                    this.tempbool = false;
-                    this.joystickActive[i] = false;
-                    this.joystickString[i] = "#";
-                    this.saveInputs();
-                    this.checDoubles(this.inputKey[i], i, 1);
+                    inputKey[i] = (KeyCode) j;
+                    inputBool[i] = false;
+                    inputString[i] = inputKey[i].ToString();
+                    tempbool = false;
+                    joystickActive[i] = false;
+                    joystickString[i] = "#";
+                    saveInputs();
+                    checDoubles(inputKey[i], i, 1);
                 }
             }
-            if (this.mouseAxisOn)
+            if (mouseAxisOn)
             {
-                if ((Input.GetAxis("MouseUp") == 1f) && this.inputBool[i])
+                if ((Input.GetAxis("MouseUp") == 1f) && inputBool[i])
                 {
-                    this.inputKey[i] = KeyCode.None;
-                    this.inputBool[i] = false;
-                    this.joystickActive[i] = true;
-                    this.joystickString[i] = "MouseUp";
-                    this.inputString[i] = "Mouse Up";
-                    this.tempbool = false;
-                    this.saveInputs();
-                    this.checDoubleAxis(this.joystickString[i], i, 1);
+                    inputKey[i] = KeyCode.None;
+                    inputBool[i] = false;
+                    joystickActive[i] = true;
+                    joystickString[i] = "MouseUp";
+                    inputString[i] = "Mouse Up";
+                    tempbool = false;
+                    saveInputs();
+                    checDoubleAxis(joystickString[i], i, 1);
                 }
-                if ((Input.GetAxis("MouseDown") == 1f) && this.inputBool[i])
+                if ((Input.GetAxis("MouseDown") == 1f) && inputBool[i])
                 {
-                    this.inputKey[i] = KeyCode.None;
-                    this.inputBool[i] = false;
-                    this.joystickActive[i] = true;
-                    this.joystickString[i] = "MouseDown";
-                    this.inputString[i] = "Mouse Down";
-                    this.tempbool = false;
-                    this.saveInputs();
-                    this.checDoubleAxis(this.joystickString[i], i, 1);
+                    inputKey[i] = KeyCode.None;
+                    inputBool[i] = false;
+                    joystickActive[i] = true;
+                    joystickString[i] = "MouseDown";
+                    inputString[i] = "Mouse Down";
+                    tempbool = false;
+                    saveInputs();
+                    checDoubleAxis(joystickString[i], i, 1);
                 }
-                if ((Input.GetAxis("MouseLeft") == 1f) && this.inputBool[i])
+                if ((Input.GetAxis("MouseLeft") == 1f) && inputBool[i])
                 {
-                    this.inputKey[i] = KeyCode.None;
-                    this.inputBool[i] = false;
-                    this.joystickActive[i] = true;
-                    this.joystickString[i] = "MouseLeft";
-                    this.inputBool[i] = false;
-                    this.inputString[i] = "Mouse Left";
-                    this.tempbool = false;
-                    this.saveInputs();
-                    this.checDoubleAxis(this.joystickString[i], i, 1);
+                    inputKey[i] = KeyCode.None;
+                    inputBool[i] = false;
+                    joystickActive[i] = true;
+                    joystickString[i] = "MouseLeft";
+                    inputBool[i] = false;
+                    inputString[i] = "Mouse Left";
+                    tempbool = false;
+                    saveInputs();
+                    checDoubleAxis(joystickString[i], i, 1);
                 }
-                if ((Input.GetAxis("MouseRight") == 1f) && this.inputBool[i])
+                if ((Input.GetAxis("MouseRight") == 1f) && inputBool[i])
                 {
-                    this.inputKey[i] = KeyCode.None;
-                    this.inputBool[i] = false;
-                    this.joystickActive[i] = true;
-                    this.joystickString[i] = "MouseRight";
-                    this.inputString[i] = "Mouse Right";
-                    this.tempbool = false;
-                    this.saveInputs();
-                    this.checDoubleAxis(this.joystickString[i], i, 1);
-                }
-            }
-            if (this.mouseButtonsOn)
-            {
-                if ((Input.GetAxis("MouseScrollUp") > 0f) && this.inputBool[i])
-                {
-                    this.inputKey[i] = KeyCode.None;
-                    this.inputBool[i] = false;
-                    this.joystickActive[i] = true;
-                    this.joystickString[i] = "MouseScrollUp";
-                    this.inputBool[i] = false;
-                    this.inputString[i] = "Mouse scroll Up";
-                    this.tempbool = false;
-                    this.saveInputs();
-                    this.checDoubleAxis(this.joystickString[i], i, 1);
-                }
-                if ((Input.GetAxis("MouseScrollDown") > 0f) && this.inputBool[i])
-                {
-                    this.inputKey[i] = KeyCode.None;
-                    this.inputBool[i] = false;
-                    this.joystickActive[i] = true;
-                    this.joystickString[i] = "MouseScrollDown";
-                    this.inputBool[i] = false;
-                    this.inputString[i] = "Mouse scroll Down";
-                    this.tempbool = false;
-                    this.saveInputs();
-                    this.checDoubleAxis(this.joystickString[i], i, 1);
+                    inputKey[i] = KeyCode.None;
+                    inputBool[i] = false;
+                    joystickActive[i] = true;
+                    joystickString[i] = "MouseRight";
+                    inputString[i] = "Mouse Right";
+                    tempbool = false;
+                    saveInputs();
+                    checDoubleAxis(joystickString[i], i, 1);
                 }
             }
-            if ((Input.GetAxis("JoystickUp") > 0.5f) && this.inputBool[i])
+            if (mouseButtonsOn)
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "JoystickUp";
-                this.inputString[i] = "Joystick Up";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                if ((Input.GetAxis("MouseScrollUp") > 0f) && inputBool[i])
+                {
+                    inputKey[i] = KeyCode.None;
+                    inputBool[i] = false;
+                    joystickActive[i] = true;
+                    joystickString[i] = "MouseScrollUp";
+                    inputBool[i] = false;
+                    inputString[i] = "Mouse scroll Up";
+                    tempbool = false;
+                    saveInputs();
+                    checDoubleAxis(joystickString[i], i, 1);
+                }
+                if ((Input.GetAxis("MouseScrollDown") > 0f) && inputBool[i])
+                {
+                    inputKey[i] = KeyCode.None;
+                    inputBool[i] = false;
+                    joystickActive[i] = true;
+                    joystickString[i] = "MouseScrollDown";
+                    inputBool[i] = false;
+                    inputString[i] = "Mouse scroll Down";
+                    tempbool = false;
+                    saveInputs();
+                    checDoubleAxis(joystickString[i], i, 1);
+                }
             }
-            if ((Input.GetAxis("JoystickDown") > 0.5f) && this.inputBool[i])
+            if ((Input.GetAxis("JoystickUp") > 0.5f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "JoystickDown";
-                this.inputString[i] = "Joystick Down";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "JoystickUp";
+                inputString[i] = "Joystick Up";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("JoystickLeft") > 0.5f) && this.inputBool[i])
+            if ((Input.GetAxis("JoystickDown") > 0.5f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "JoystickLeft";
-                this.inputString[i] = "Joystick Left";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "JoystickDown";
+                inputString[i] = "Joystick Down";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("JoystickRight") > 0.5f) && this.inputBool[i])
+            if ((Input.GetAxis("JoystickLeft") > 0.5f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "JoystickRight";
-                this.inputString[i] = "Joystick Right";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "JoystickLeft";
+                inputString[i] = "Joystick Left";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_3a") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("JoystickRight") > 0.5f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_3a";
-                this.inputString[i] = "Joystick Axis 3 +";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "JoystickRight";
+                inputString[i] = "Joystick Right";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_3b") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_3a") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_3b";
-                this.inputString[i] = "Joystick Axis 3 -";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_3a";
+                inputString[i] = "Joystick Axis 3 +";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_4a") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_3b") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_4a";
-                this.inputString[i] = "Joystick Axis 4 +";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_3b";
+                inputString[i] = "Joystick Axis 3 -";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_4b") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_4a") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_4b";
-                this.inputString[i] = "Joystick Axis 4 -";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_4a";
+                inputString[i] = "Joystick Axis 4 +";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_5b") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_4b") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_5b";
-                this.inputString[i] = "Joystick Axis 5 -";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_4b";
+                inputString[i] = "Joystick Axis 4 -";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_6b") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_5b") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_6b";
-                this.inputString[i] = "Joystick Axis 6 -";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_5b";
+                inputString[i] = "Joystick Axis 5 -";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_7a") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_6b") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_7a";
-                this.inputString[i] = "Joystick Axis 7 +";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_6b";
+                inputString[i] = "Joystick Axis 6 -";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_7b") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_7a") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_7b";
-                this.inputString[i] = "Joystick Axis 7 -";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_7a";
+                inputString[i] = "Joystick Axis 7 +";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_8a") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_7b") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_8a";
-                this.inputString[i] = "Joystick Axis 8 +";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_7b";
+                inputString[i] = "Joystick Axis 7 -";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if ((Input.GetAxis("Joystick_8b") > 0.8f) && this.inputBool[i])
+            if ((Input.GetAxis("Joystick_8a") > 0.8f) && inputBool[i])
             {
-                this.inputKey[i] = KeyCode.None;
-                this.inputBool[i] = false;
-                this.joystickActive[i] = true;
-                this.joystickString[i] = "Joystick_8b";
-                this.inputString[i] = "Joystick Axis 8 -";
-                this.tempbool = false;
-                this.saveInputs();
-                this.checDoubleAxis(this.joystickString[i], i, 1);
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_8a";
+                inputString[i] = "Joystick Axis 8 +";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
             }
-            if (flag2 != this.inputBool[i])
+            if ((Input.GetAxis("Joystick_8b") > 0.8f) && inputBool[i])
+            {
+                inputKey[i] = KeyCode.None;
+                inputBool[i] = false;
+                joystickActive[i] = true;
+                joystickString[i] = "Joystick_8b";
+                inputString[i] = "Joystick Axis 8 -";
+                tempbool = false;
+                saveInputs();
+                checDoubleAxis(joystickString[i], i, 1);
+            }
+            if (flag2 != inputBool[i])
             {
                 flag = true;
             }
         }
         if (flag)
         {
-            this.showKeyMap();
+            showKeyMap();
         }
     }
 
     public string getKeyRC(int i)
     {
-        return this.inputString[i];
+        return inputString[i];
     }
 
     private void inputSetBools()
     {
-        for (int i = 0; i < this.DescriptionString.Length; i++)
+        for (var i = 0; i < DescriptionString.Length; i++)
         {
-            if (Input.GetKey(this.inputKey[i]) || (this.joystickActive[i] && (Input.GetAxis(this.joystickString[i]) > 0.95f)))
+            if (Input.GetKey(inputKey[i]) || (joystickActive[i] && (Input.GetAxis(joystickString[i]) > 0.95f)))
             {
-                this.isInput[i] = true;
+                isInput[i] = true;
             }
             else
             {
-                this.isInput[i] = false;
+                isInput[i] = false;
             }
-            if (Input.GetKeyDown(this.inputKey[i]))
+            if (Input.GetKeyDown(inputKey[i]))
             {
-                this.isInputDown[i] = true;
+                isInputDown[i] = true;
             }
             else
             {
-                this.isInputDown[i] = false;
+                isInputDown[i] = false;
             }
-            if (this.joystickActive[i] && (Input.GetAxis(this.joystickString[i]) > 0.95f))
+            if (joystickActive[i] && (Input.GetAxis(joystickString[i]) > 0.95f))
             {
-                if (!this.tempjoy1[i])
+                if (!tempjoy1[i])
                 {
-                    this.isInputDown[i] = false;
+                    isInputDown[i] = false;
                 }
-                if (this.tempjoy1[i])
+                if (tempjoy1[i])
                 {
-                    this.isInputDown[i] = true;
-                    this.tempjoy1[i] = false;
+                    isInputDown[i] = true;
+                    tempjoy1[i] = false;
                 }
             }
-            if ((!this.tempjoy1[i] && this.joystickActive[i]) && (Input.GetAxis(this.joystickString[i]) < 0.1f))
+            if ((!tempjoy1[i] && joystickActive[i]) && (Input.GetAxis(joystickString[i]) < 0.1f))
             {
-                this.isInputDown[i] = false;
-                this.tempjoy1[i] = true;
+                isInputDown[i] = false;
+                tempjoy1[i] = true;
             }
-            if (Input.GetKeyUp(this.inputKey[i]))
+            if (Input.GetKeyUp(inputKey[i]))
             {
-                this.isInputUp[i] = true;
+                isInputUp[i] = true;
             }
             else
             {
-                this.isInputUp[i] = false;
+                isInputUp[i] = false;
             }
         }
     }
 
     public void justUPDATEME()
     {
-        this.Update();
+        Update();
     }
 
     private void loadConfig()
     {
-        string str = PlayerPrefs.GetString("KeyCodes");
-        string str2 = PlayerPrefs.GetString("Joystick_input");
-        string str3 = PlayerPrefs.GetString("Names_input");
-        char[] separator = new char[] { '*' };
-        string[] strArray = str.Split(separator);
-        char[] chArray2 = new char[] { '*' };
-        this.joystickString = str2.Split(chArray2);
-        char[] chArray3 = new char[] { '*' };
-        this.inputString = str3.Split(chArray3);
-        for (int i = 0; i < this.DescriptionString.Length; i++)
+        var str = PlayerPrefs.GetString("KeyCodes");
+        var str2 = PlayerPrefs.GetString("Joystick_input");
+        var str3 = PlayerPrefs.GetString("Names_input");
+        var separator = new char[] { '*' };
+        var strArray = str.Split(separator);
+        var chArray2 = new char[] { '*' };
+        joystickString = str2.Split(chArray2);
+        var chArray3 = new char[] { '*' };
+        inputString = str3.Split(chArray3);
+        for (var i = 0; i < DescriptionString.Length; i++)
         {
             int num2;
             int.TryParse(strArray[i], out num2);
-            this.inputKey[i] = (KeyCode) num2;
-            if (this.joystickString[i] == "#")
+            inputKey[i] = (KeyCode) num2;
+            if (joystickString[i] == "#")
             {
-                this.joystickActive[i] = false;
+                joystickActive[i] = false;
             }
             else
             {
-                this.joystickActive[i] = true;
+                joystickActive[i] = true;
             }
         }
     }
 
     private void OnGUI()
     {
-        if (Time.realtimeSinceStartup > (this.lastInterval + 3f))
+        if (Time.realtimeSinceStartup > (lastInterval + 3f))
         {
-            this.tempbool = false;
+            tempbool = false;
         }
-        if (this.menuOn)
+        if (menuOn)
         {
-            this.drawButtons1();
+            drawButtons1();
         }
     }
 
     private void reset2defaults()
     {
-        if (this.default_inputKeys.Length != this.DescriptionString.Length)
+        if (default_inputKeys.Length != DescriptionString.Length)
         {
-            this.default_inputKeys = new KeyCode[this.DescriptionString.Length];
+            default_inputKeys = new KeyCode[DescriptionString.Length];
         }
-        string str = string.Empty;
-        string str2 = string.Empty;
-        string str3 = string.Empty;
-        for (int i = this.DescriptionString.Length - 1; i > -1; i--)
+        var str = string.Empty;
+        var str2 = string.Empty;
+        var str3 = string.Empty;
+        for (var i = DescriptionString.Length - 1; i > -1; i--)
         {
-            str = ((int) this.default_inputKeys[i]) + "*" + str;
+            str = ((int) default_inputKeys[i]) + "*" + str;
             str2 = str2 + "#*";
-            str3 = this.default_inputKeys[i].ToString() + "*" + str3;
+            str3 = default_inputKeys[i].ToString() + "*" + str3;
             PlayerPrefs.SetString("KeyCodes", str);
             PlayerPrefs.SetString("Joystick_input", str2);
             PlayerPrefs.SetString("Names_input", str3);
-            PlayerPrefs.SetInt("KeyLength", this.DescriptionString.Length);
+            PlayerPrefs.SetInt("KeyLength", DescriptionString.Length);
         }
     }
 
     private void saveInputs()
     {
-        string str = string.Empty;
-        string str2 = string.Empty;
-        string str3 = string.Empty;
-        for (int i = this.DescriptionString.Length - 1; i > -1; i--)
+        var str = string.Empty;
+        var str2 = string.Empty;
+        var str3 = string.Empty;
+        for (var i = DescriptionString.Length - 1; i > -1; i--)
         {
-            str = ((int) this.inputKey[i]) + "*" + str;
-            str2 = this.joystickString[i] + "*" + str2;
-            str3 = this.inputString[i] + "*" + str3;
+            str = ((int) inputKey[i]) + "*" + str;
+            str2 = joystickString[i] + "*" + str2;
+            str3 = inputString[i] + "*" + str3;
         }
         PlayerPrefs.SetString("KeyCodes", str);
         PlayerPrefs.SetString("Joystick_input", str2);
         PlayerPrefs.SetString("Names_input", str3);
-        PlayerPrefs.SetInt("KeyLength", this.DescriptionString.Length);
+        PlayerPrefs.SetInt("KeyLength", DescriptionString.Length);
     }
 
     public void setKeyRC(int i, string setting)
@@ -519,56 +519,56 @@ public class FengCustomInputs : MonoBehaviour
         {
             if (setting == "Scroll Up")
             {
-                this.joystickString[i] = "MouseScrollUp";
-                this.inputString[i] = "Mouse scroll Up";
+                joystickString[i] = "MouseScrollUp";
+                inputString[i] = "Mouse scroll Up";
             }
             else if (setting == "Scroll Down")
             {
-                this.joystickString[i] = "MouseScrollDown";
-                this.inputString[i] = "Mouse scroll Down";
+                joystickString[i] = "MouseScrollDown";
+                inputString[i] = "Mouse scroll Down";
             }
-            this.inputKey[i] = KeyCode.None;
-            this.inputBool[i] = false;
-            this.joystickActive[i] = true;
-            this.inputBool[i] = false;
-            this.tempbool = false;
-            this.saveInputs();
-            this.checDoubleAxis(this.joystickString[i], i, 1);
+            inputKey[i] = KeyCode.None;
+            inputBool[i] = false;
+            joystickActive[i] = true;
+            inputBool[i] = false;
+            tempbool = false;
+            saveInputs();
+            checDoubleAxis(joystickString[i], i, 1);
         }
         else
         {
-            this.inputKey[i] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
-            this.inputBool[i] = false;
-            this.inputString[i] = this.inputKey[i].ToString();
-            this.tempbool = false;
-            this.joystickActive[i] = false;
-            this.joystickString[i] = "#";
-            this.saveInputs();
-            this.checDoubles(this.inputKey[i], i, 1);
+            inputKey[i] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
+            inputBool[i] = false;
+            inputString[i] = inputKey[i].ToString();
+            tempbool = false;
+            joystickActive[i] = false;
+            joystickString[i] = "#";
+            saveInputs();
+            checDoubles(inputKey[i], i, 1);
         }
     }
 
     public void setNameRC(int i, string str)
     {
-        this.inputString[i] = str;
+        inputString[i] = str;
     }
 
     public void setToDefault()
     {
-        this.reset2defaults();
-        this.loadConfig();
+        reset2defaults();
+        loadConfig();
         Settings.LoadConfig();
-        this.saveInputs();
+        saveInputs();
         PlayerPrefs.SetString("version", UIMainReferences.version);
     }
 
     public void showKeyMap()
     {
-        for (int i = 0; i < this.DescriptionString.Length; i++)
+        for (var i = 0; i < DescriptionString.Length; i++)
         {
             if (GameObject.Find("CInput" + i) != null)
             {
-                GameObject.Find("CInput" + i).transform.Find("Label").gameObject.GetComponent<UILabel>().text = this.inputString[i];
+                GameObject.Find("CInput" + i).transform.Find("Label").gameObject.GetComponent<UILabel>().text = inputString[i];
             }
         }
         if (GameObject.Find("ChangeQuality") != null)
@@ -591,50 +591,50 @@ public class FengCustomInputs : MonoBehaviour
 
     private void Start()
     {
-        this.inputBool = new bool[this.DescriptionString.Length];
-        this.inputString = new string[this.DescriptionString.Length];
-        this.inputKey = new KeyCode[this.DescriptionString.Length];
-        this.joystickActive = new bool[this.DescriptionString.Length];
-        this.joystickString = new string[this.DescriptionString.Length];
-        this.isInput = new bool[this.DescriptionString.Length];
-        this.isInputDown = new bool[this.DescriptionString.Length];
-        this.isInputUp = new bool[this.DescriptionString.Length];
-        this.tempLength = PlayerPrefs.GetInt("KeyLength");
-        this.tempjoy1 = new bool[this.DescriptionString.Length];
+        inputBool = new bool[DescriptionString.Length];
+        inputString = new string[DescriptionString.Length];
+        inputKey = new KeyCode[DescriptionString.Length];
+        joystickActive = new bool[DescriptionString.Length];
+        joystickString = new string[DescriptionString.Length];
+        isInput = new bool[DescriptionString.Length];
+        isInputDown = new bool[DescriptionString.Length];
+        isInputUp = new bool[DescriptionString.Length];
+        tempLength = PlayerPrefs.GetInt("KeyLength");
+        tempjoy1 = new bool[DescriptionString.Length];
         if (!PlayerPrefs.HasKey("version"))
         {
-            this.setToDefault();
+            setToDefault();
         }
-        this.tempLength = PlayerPrefs.GetInt("KeyLength");
-        if (PlayerPrefs.HasKey("KeyCodes") && (this.tempLength == this.DescriptionString.Length))
+        tempLength = PlayerPrefs.GetInt("KeyLength");
+        if (PlayerPrefs.HasKey("KeyCodes") && (tempLength == DescriptionString.Length))
         {
-            this.loadConfig();
+            loadConfig();
         }
         else
         {
-            this.setToDefault();
+            setToDefault();
         }
-        for (int i = 0; i < this.DescriptionString.Length; i++)
+        for (var i = 0; i < DescriptionString.Length; i++)
         {
-            this.isInput[i] = false;
-            this.isInputDown[i] = false;
-            this.isInputUp[i] = false;
-            this.tempjoy1[i] = true;
+            isInput[i] = false;
+            isInputDown[i] = false;
+            isInputUp[i] = false;
+            tempjoy1[i] = true;
         }
     }
 
     public void startListening(int n)
     {
-        this.tempbool = true;
-        this.inputBool[n] = true;
-        this.lastInterval = Time.realtimeSinceStartup;
+        tempbool = true;
+        inputBool[n] = true;
+        lastInterval = Time.realtimeSinceStartup;
     }
 
     private void Update()
     {
-        if (!this.menuOn)
+        if (!menuOn)
         {
-            this.inputSetBools();
+            inputSetBools();
         }
     }
 }

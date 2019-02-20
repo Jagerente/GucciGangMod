@@ -20,29 +20,29 @@ public class LanguageSelection : MonoBehaviour
 
     private void Start()
     {
-        this.mList = base.GetComponent<UIPopupList>();
-        this.UpdateList();
-        this.mList.eventReceiver = base.gameObject;
-        this.mList.functionName = "OnLanguageSelection";
+        mList = GetComponent<UIPopupList>();
+        UpdateList();
+        mList.eventReceiver = gameObject;
+        mList.functionName = "OnLanguageSelection";
     }
 
     private void UpdateList()
     {
         if ((Localization.instance != null) && (Localization.instance.languages != null))
         {
-            this.mList.items.Clear();
-            int index = 0;
-            int length = Localization.instance.languages.Length;
+            mList.items.Clear();
+            var index = 0;
+            var length = Localization.instance.languages.Length;
             while (index < length)
             {
-                TextAsset asset = Localization.instance.languages[index];
+                var asset = Localization.instance.languages[index];
                 if (asset != null)
                 {
-                    this.mList.items.Add(asset.name);
+                    mList.items.Add(asset.name);
                 }
                 index++;
             }
-            this.mList.selection = Localization.instance.currentLanguage;
+            mList.selection = Localization.instance.currentLanguage;
         }
     }
 }

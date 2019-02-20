@@ -16,7 +16,7 @@ public class TweenScale : UITweener
 
     public static TweenScale Begin(GameObject go, float duration, Vector3 scale)
     {
-        TweenScale scale2 = UITweener.Begin<TweenScale>(go, duration);
+        var scale2 = UITweener.Begin<TweenScale>(go, duration);
         scale2.from = scale2.scale;
         scale2.to = scale;
         if (duration <= 0f)
@@ -29,19 +29,19 @@ public class TweenScale : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        this.cachedTransform.localScale = (Vector3) ((this.from * (1f - factor)) + (this.to * factor));
-        if (this.updateTable)
+        cachedTransform.localScale = (@from * (1f - factor)) + (to * factor);
+        if (updateTable)
         {
-            if (this.mTable == null)
+            if (mTable == null)
             {
-                this.mTable = NGUITools.FindInParents<UITable>(base.gameObject);
-                if (this.mTable == null)
+                mTable = NGUITools.FindInParents<UITable>(gameObject);
+                if (mTable == null)
                 {
-                    this.updateTable = false;
+                    updateTable = false;
                     return;
                 }
             }
-            this.mTable.repositionNow = true;
+            mTable.repositionNow = true;
         }
     }
 
@@ -49,11 +49,11 @@ public class TweenScale : UITweener
     {
         get
         {
-            if (this.mTrans == null)
+            if (mTrans == null)
             {
-                this.mTrans = base.transform;
+                mTrans = transform;
             }
-            return this.mTrans;
+            return mTrans;
         }
     }
 
@@ -61,11 +61,11 @@ public class TweenScale : UITweener
     {
         get
         {
-            return this.cachedTransform.localScale;
+            return cachedTransform.localScale;
         }
         set
         {
-            this.cachedTransform.localScale = value;
+            cachedTransform.localScale = value;
         }
     }
 }

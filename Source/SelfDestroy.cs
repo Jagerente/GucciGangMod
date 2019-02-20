@@ -15,29 +15,29 @@ public class SelfDestroy : Photon.MonoBehaviour
 
     private void Update()
     {
-        this.CountDown -= Time.deltaTime;
-        if (this.CountDown <= 0f)
+        CountDown -= Time.deltaTime;
+        if (CountDown <= 0f)
         {
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                UnityEngine.Object.Destroy(base.gameObject);
+                Destroy(gameObject);
             }
             else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
             {
-                if (base.photonView != null)
+                if (photonView != null)
                 {
-                    if (base.photonView.viewID == 0)
+                    if (photonView.viewID == 0)
                     {
-                        UnityEngine.Object.Destroy(base.gameObject);
+                        Destroy(gameObject);
                     }
-                    else if (base.photonView.isMine)
+                    else if (photonView.isMine)
                     {
-                        PhotonNetwork.Destroy(base.gameObject);
+                        PhotonNetwork.Destroy(gameObject);
                     }
                 }
                 else
                 {
-                    UnityEngine.Object.Destroy(base.gameObject);
+                    Destroy(gameObject);
                 }
             }
         }

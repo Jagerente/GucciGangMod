@@ -10,7 +10,7 @@ using UnityEngine;
 public class PickupItem : Photon.MonoBehaviour, IPunObservable
 {
     public static HashSet<PickupItem> DisabledPickupItems = new HashSet<PickupItem>();
-    public UnityEngine.MonoBehaviour OnPickedUpCall;
+    public MonoBehaviour OnPickedUpCall;
     public bool PickupIsMine;
     public bool PickupOnTrigger;
     public float SecondsBeforeRespawn = 2f;
@@ -19,61 +19,61 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
 
     public void Drop()
     {
-        if (this.PickupIsMine)
+        if (PickupIsMine)
         {
-            base.photonView.RPC("PunRespawn", PhotonTargets.AllViaServer, new object[0]);
+            photonView.RPC("PunRespawn", PhotonTargets.AllViaServer, new object[0]);
         }
     }
 
     public void Drop(Vector3 newPosition)
     {
-        if (this.PickupIsMine)
+        if (PickupIsMine)
         {
-            object[] parameters = new object[] { newPosition };
-            base.photonView.RPC("PunRespawn", PhotonTargets.AllViaServer, parameters);
+            var parameters = new object[] { newPosition };
+            photonView.RPC("PunRespawn", PhotonTargets.AllViaServer, parameters);
         }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.isWriting && (this.SecondsBeforeRespawn <= 0f))
+        if (stream.isWriting && (SecondsBeforeRespawn <= 0f))
         {
-            stream.SendNext(base.gameObject.transform.position);
+            stream.SendNext(gameObject.transform.position);
         }
         else
         {
-            Vector3 vector = (Vector3) stream.ReceiveNext();
-            base.gameObject.transform.position = vector;
+            var vector = (Vector3) stream.ReceiveNext();
+            gameObject.transform.position = vector;
         }
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        PhotonView component = other.GetComponent<PhotonView>();
-        if ((this.PickupOnTrigger && (component != null)) && component.isMine)
+        var component = other.GetComponent<PhotonView>();
+        if ((PickupOnTrigger && (component != null)) && component.isMine)
         {
-            this.Pickup();
+            Pickup();
         }
     }
 
     internal void PickedUp(float timeUntilRespawn)
     {
-        base.gameObject.SetActive(false);
+        gameObject.SetActive(false);
         DisabledPickupItems.Add(this);
-        this.TimeOfRespawn = 0.0;
+        TimeOfRespawn = 0.0;
         if (timeUntilRespawn > 0f)
         {
-            this.TimeOfRespawn = PhotonNetwork.time + timeUntilRespawn;
-            base.Invoke("PunRespawn", timeUntilRespawn);
+            TimeOfRespawn = PhotonNetwork.time + timeUntilRespawn;
+            Invoke("PunRespawn", timeUntilRespawn);
         }
     }
 
     public void Pickup()
     {
-        if (!this.SentPickup)
+        if (!SentPickup)
         {
-            this.SentPickup = true;
-            base.photonView.RPC("PunPickup", PhotonTargets.AllViaServer, new object[0]);
+            SentPickup = true;
+            photonView.RPC("PunPickup", PhotonTargets.AllViaServer, new object[0]);
         }
     }
 
@@ -82,30 +82,30 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
     {
         if (msgInfo.sender.isLocal)
         {
-            this.SentPickup = false;
+            SentPickup = false;
         }
-        if (!base.gameObject.GetActive())
+        if (!gameObject.GetActive())
         {
-            Debug.Log(string.Concat(new object[] { "Ignored PU RPC, cause item is inactive. ", base.gameObject, " SecondsBeforeRespawn: ", this.SecondsBeforeRespawn, " TimeOfRespawn: ", this.TimeOfRespawn, " respawn in future: ", this.TimeOfRespawn > PhotonNetwork.time }));
+            Debug.Log(string.Concat(new object[] { "Ignored PU RPC, cause item is inactive. ", gameObject, " SecondsBeforeRespawn: ", SecondsBeforeRespawn, " TimeOfRespawn: ", TimeOfRespawn, " respawn in future: ", TimeOfRespawn > PhotonNetwork.time }));
         }
         else
         {
-            this.PickupIsMine = msgInfo.sender.isLocal;
-            if (this.OnPickedUpCall != null)
+            PickupIsMine = msgInfo.sender.isLocal;
+            if (OnPickedUpCall != null)
             {
-                this.OnPickedUpCall.SendMessage("OnPickedUp", this);
+                OnPickedUpCall.SendMessage("OnPickedUp", this);
             }
-            if (this.SecondsBeforeRespawn <= 0f)
+            if (SecondsBeforeRespawn <= 0f)
             {
-                this.PickedUp(0f);
+                PickedUp(0f);
             }
             else
             {
-                double num = PhotonNetwork.time - msgInfo.timestamp;
-                double num2 = this.SecondsBeforeRespawn - num;
+                var num = PhotonNetwork.time - msgInfo.timestamp;
+                var num2 = SecondsBeforeRespawn - num;
                 if (num2 > 0.0)
                 {
-                    this.PickedUp((float) num2);
+                    PickedUp((float) num2);
                 }
             }
         }
@@ -115,11 +115,11 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
     internal void PunRespawn()
     {
         DisabledPickupItems.Remove(this);
-        this.TimeOfRespawn = 0.0;
-        this.PickupIsMine = false;
-        if (base.gameObject != null)
+        TimeOfRespawn = 0.0;
+        PickupIsMine = false;
+        if (gameObject != null)
         {
-            base.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
     }
 
@@ -127,15 +127,15 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
     internal void PunRespawn(Vector3 pos)
     {
         Debug.Log("PunRespawn with Position.");
-        this.PunRespawn();
-        base.gameObject.transform.position = pos;
+        PunRespawn();
+        gameObject.transform.position = pos;
     }
 
     public int ViewID
     {
         get
         {
-            return base.photonView.viewID;
+            return photonView.viewID;
         }
     }
 }

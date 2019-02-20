@@ -16,82 +16,82 @@ public class DragDropItem : MonoBehaviour
 
     private void Awake()
     {
-        this.mTrans = base.transform;
+        mTrans = transform;
     }
 
     private void Drop()
     {
-        Collider collider = UICamera.lastHit.collider;
-        DragDropContainer container = (collider == null) ? null : collider.gameObject.GetComponent<DragDropContainer>();
+        var collider = UICamera.lastHit.collider;
+        var container = (collider == null) ? null : collider.gameObject.GetComponent<DragDropContainer>();
         if (container != null)
         {
-            this.mTrans.parent = container.transform;
-            Vector3 localPosition = this.mTrans.localPosition;
+            mTrans.parent = container.transform;
+            var localPosition = mTrans.localPosition;
             localPosition.z = 0f;
-            this.mTrans.localPosition = localPosition;
+            mTrans.localPosition = localPosition;
         }
         else
         {
-            this.mTrans.parent = this.mParent;
+            mTrans.parent = mParent;
         }
-        this.UpdateTable();
-        NGUITools.MarkParentAsChanged(base.gameObject);
+        UpdateTable();
+        NGUITools.MarkParentAsChanged(gameObject);
     }
 
     private void OnDrag(Vector2 delta)
     {
-        if (base.enabled && (UICamera.currentTouchID > -2))
+        if (enabled && (UICamera.currentTouchID > -2))
         {
-            if (!this.mIsDragging)
+            if (!mIsDragging)
             {
-                this.mIsDragging = true;
-                this.mParent = this.mTrans.parent;
-                this.mTrans.parent = DragDropRoot.root;
-                Vector3 localPosition = this.mTrans.localPosition;
+                mIsDragging = true;
+                mParent = mTrans.parent;
+                mTrans.parent = DragDropRoot.root;
+                var localPosition = mTrans.localPosition;
                 localPosition.z = 0f;
-                this.mTrans.localPosition = localPosition;
-                NGUITools.MarkParentAsChanged(base.gameObject);
+                mTrans.localPosition = localPosition;
+                NGUITools.MarkParentAsChanged(gameObject);
             }
             else
             {
-                this.mTrans.localPosition += (Vector3)delta;
+                mTrans.localPosition += (Vector3)delta;
             }
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if (base.enabled)
+        if (enabled)
         {
             if (isPressed)
             {
                 if (!UICamera.current.stickyPress)
                 {
-                    this.mSticky = true;
+                    mSticky = true;
                     UICamera.current.stickyPress = true;
                 }
             }
-            else if (this.mSticky)
+            else if (mSticky)
             {
-                this.mSticky = false;
+                mSticky = false;
                 UICamera.current.stickyPress = false;
             }
-            this.mIsDragging = false;
-            Collider collider = base.collider;
+            mIsDragging = false;
+            var collider = this.collider;
             if (collider != null)
             {
                 collider.enabled = !isPressed;
             }
             if (!isPressed)
             {
-                this.Drop();
+                Drop();
             }
         }
     }
 
     private void UpdateTable()
     {
-        UITable table = NGUITools.FindInParents<UITable>(base.gameObject);
+        var table = NGUITools.FindInParents<UITable>(gameObject);
         if (table != null)
         {
             table.repositionNow = true;

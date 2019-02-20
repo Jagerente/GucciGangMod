@@ -17,35 +17,35 @@ public class BetterList<T>
 
     public void Add(T item)
     {
-        if ((this.buffer == null) || (this.size == this.buffer.Length))
+        if ((buffer == null) || (size == buffer.Length))
         {
-            this.AllocateMore();
+            AllocateMore();
         }
-        this.buffer[this.size++] = item;
+        buffer[size++] = item;
     }
 
     private void AllocateMore()
     {
-        T[] array = (this.buffer == null) ? new T[0x20] : new T[Mathf.Max(this.buffer.Length << 1, 0x20)];
-        if ((this.buffer != null) && (this.size > 0))
+        var array = (buffer == null) ? new T[0x20] : new T[Mathf.Max(buffer.Length << 1, 0x20)];
+        if ((buffer != null) && (size > 0))
         {
-            this.buffer.CopyTo(array, 0);
+            buffer.CopyTo(array, 0);
         }
-        this.buffer = array;
+        buffer = array;
     }
 
     public void Clear()
     {
-        this.size = 0;
+        size = 0;
     }
 
     public bool Contains(T item)
     {
-        if (this.buffer != null)
+        if (buffer != null)
         {
-            for (int i = 0; i < this.size; i++)
+            for (var i = 0; i < size; i++)
             {
-                if (this.buffer[i].Equals(item))
+                if (buffer[i].Equals(item))
                 {
                     return true;
                 }
@@ -57,36 +57,36 @@ public class BetterList<T>
     [DebuggerHidden]
     public IEnumerator<T> GetEnumerator()
     {
-        return new GetEnumeratorcIterator9<T> { fthis = (BetterList<T>) this };
+        return new GetEnumeratorcIterator9<T> { fthis = this };
     }
 
     public void Insert(int index, T item)
     {
-        if ((this.buffer == null) || (this.size == this.buffer.Length))
+        if ((buffer == null) || (size == buffer.Length))
         {
-            this.AllocateMore();
+            AllocateMore();
         }
-        if (index < this.size)
+        if (index < size)
         {
-            for (int i = this.size; i > index; i--)
+            for (var i = size; i > index; i--)
             {
-                this.buffer[i] = this.buffer[i - 1];
+                buffer[i] = buffer[i - 1];
             }
-            this.buffer[index] = item;
-            this.size++;
+            buffer[index] = item;
+            size++;
         }
         else
         {
-            this.Add(item);
+            Add(item);
         }
     }
 
     public T Pop()
     {
-        if ((this.buffer != null) && (this.size != 0))
+        if ((buffer != null) && (size != 0))
         {
-            T local = this.buffer[--this.size];
-            this.buffer[this.size] = default(T);
+            var local = buffer[--size];
+            buffer[size] = default(T);
             return local;
         }
         return default(T);
@@ -94,24 +94,24 @@ public class BetterList<T>
 
     public void Release()
     {
-        this.size = 0;
-        this.buffer = null;
+        size = 0;
+        buffer = null;
     }
 
     public bool Remove(T item)
     {
-        if (this.buffer != null)
+        if (buffer != null)
         {
-            EqualityComparer<T> comparer = EqualityComparer<T>.Default;
-            for (int i = 0; i < this.size; i++)
+            var comparer = EqualityComparer<T>.Default;
+            for (var i = 0; i < size; i++)
             {
-                if (comparer.Equals(this.buffer[i], item))
+                if (comparer.Equals(buffer[i], item))
                 {
-                    this.size--;
-                    this.buffer[i] = default(T);
-                    for (int j = i; j < this.size; j++)
+                    size--;
+                    buffer[i] = default(T);
+                    for (var j = i; j < size; j++)
                     {
-                        this.buffer[j] = this.buffer[j + 1];
+                        buffer[j] = buffer[j + 1];
                     }
                     return true;
                 }
@@ -122,30 +122,30 @@ public class BetterList<T>
 
     public void RemoveAt(int index)
     {
-        if ((this.buffer != null) && (index < this.size))
+        if ((buffer != null) && (index < size))
         {
-            this.size--;
-            this.buffer[index] = default(T);
-            for (int i = index; i < this.size; i++)
+            size--;
+            buffer[index] = default(T);
+            for (var i = index; i < size; i++)
             {
-                this.buffer[i] = this.buffer[i + 1];
+                buffer[i] = buffer[i + 1];
             }
         }
     }
 
     public void Sort(Comparison<T> comparer)
     {
-        bool flag = true;
+        var flag = true;
         while (flag)
         {
             flag = false;
-            for (int i = 1; i < this.size; i++)
+            for (var i = 1; i < size; i++)
             {
-                if (comparer(this.buffer[i - 1], this.buffer[i]) > 0)
+                if (comparer(buffer[i - 1], buffer[i]) > 0)
                 {
-                    T local = this.buffer[i];
-                    this.buffer[i] = this.buffer[i - 1];
-                    this.buffer[i - 1] = local;
+                    var local = buffer[i];
+                    buffer[i] = buffer[i - 1];
+                    buffer[i - 1] = local;
                     flag = true;
                 }
             }
@@ -154,27 +154,27 @@ public class BetterList<T>
 
     public T[] ToArray()
     {
-        this.Trim();
-        return this.buffer;
+        Trim();
+        return buffer;
     }
 
     private void Trim()
     {
-        if (this.size > 0)
+        if (size > 0)
         {
-            if (this.size < this.buffer.Length)
+            if (size < buffer.Length)
             {
-                T[] localArray = new T[this.size];
-                for (int i = 0; i < this.size; i++)
+                var localArray = new T[size];
+                for (var i = 0; i < size; i++)
                 {
-                    localArray[i] = this.buffer[i];
+                    localArray[i] = buffer[i];
                 }
-                this.buffer = localArray;
+                buffer = localArray;
             }
         }
         else
         {
-            this.buffer = null;
+            buffer = null;
         }
     }
 
@@ -182,11 +182,11 @@ public class BetterList<T>
     {
         get
         {
-            return this.buffer[i];
+            return buffer[i];
         }
         set
         {
-            this.buffer[i] = value;
+            buffer[i] = value;
         }
     }
 
@@ -201,38 +201,38 @@ public class BetterList<T>
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    if (this.fthis.buffer == null)
+                    if (fthis.buffer == null)
                     {
                         goto Label_0086;
                     }
-                    this.i0 = 0;
+                    i0 = 0;
                     break;
 
                 case 1:
-                    this.i0++;
+                    i0++;
                     break;
 
                 default:
                     goto Label_008D;
             }
-            if (this.i0 < this.fthis.size)
+            if (i0 < fthis.size)
             {
-                this.Scurrent = this.fthis.buffer[this.i0];
-                this.SPC = 1;
+                Scurrent = fthis.buffer[i0];
+                SPC = 1;
                 return true;
             }
         Label_0086:
-            this.SPC = -1;
+            SPC = -1;
         Label_008D:
             return false;
         }
@@ -248,7 +248,7 @@ public class BetterList<T>
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -257,7 +257,7 @@ public class BetterList<T>
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }

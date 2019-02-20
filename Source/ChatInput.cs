@@ -15,27 +15,27 @@ public class ChatInput : MonoBehaviour
 
     private void OnSubmit()
     {
-        if (this.textList != null)
+        if (textList != null)
         {
-            string str = NGUITools.StripSymbols(this.mInput.text);
+            var str = NGUITools.StripSymbols(mInput.text);
             if (!string.IsNullOrEmpty(str))
             {
-                this.textList.Add(str);
-                this.mInput.text = string.Empty;
-                this.mInput.selected = false;
+                textList.Add(str);
+                mInput.text = string.Empty;
+                mInput.selected = false;
             }
         }
-        this.mIgnoreNextEnter = true;
+        mIgnoreNextEnter = true;
     }
 
     private void Start()
     {
-        this.mInput = base.GetComponent<UIInput>();
-        if (this.fillWithDummyData && (this.textList != null))
+        mInput = GetComponent<UIInput>();
+        if (fillWithDummyData && (textList != null))
         {
-            for (int i = 0; i < 30; i++)
+            for (var i = 0; i < 30; i++)
             {
-                this.textList.Add(string.Concat(new object[] { ((i % 2) != 0) ? "[AAAAAA]" : "[FFFFFF]", "This is an example paragraph for the text list, testing line ", i, "[-]" }));
+                textList.Add(string.Concat(new object[] { ((i % 2) != 0) ? "[AAAAAA]" : "[FFFFFF]", "This is an example paragraph for the text list, testing line ", i, "[-]" }));
             }
         }
     }
@@ -44,11 +44,11 @@ public class ChatInput : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Return))
         {
-            if (!this.mIgnoreNextEnter && !this.mInput.selected)
+            if (!mIgnoreNextEnter && !mInput.selected)
             {
-                this.mInput.selected = true;
+                mInput.selected = true;
             }
-            this.mIgnoreNextEnter = false;
+            mIgnoreNextEnter = false;
         }
     }
 }

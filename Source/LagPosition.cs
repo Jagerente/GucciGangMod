@@ -17,34 +17,34 @@ public class LagPosition : MonoBehaviour
 
     private void CoroutineUpdate(float delta)
     {
-        Transform parent = this.mTrans.parent;
+        var parent = mTrans.parent;
         if (parent != null)
         {
-            Vector3 vector = parent.position + (parent.rotation * this.mRelative);
-            this.mAbsolute.x = Mathf.Lerp(this.mAbsolute.x, vector.x, Mathf.Clamp01(delta * this.speed.x));
-            this.mAbsolute.y = Mathf.Lerp(this.mAbsolute.y, vector.y, Mathf.Clamp01(delta * this.speed.y));
-            this.mAbsolute.z = Mathf.Lerp(this.mAbsolute.z, vector.z, Mathf.Clamp01(delta * this.speed.z));
-            this.mTrans.position = this.mAbsolute;
+            var vector = parent.position + (parent.rotation * mRelative);
+            mAbsolute.x = Mathf.Lerp(mAbsolute.x, vector.x, Mathf.Clamp01(delta * speed.x));
+            mAbsolute.y = Mathf.Lerp(mAbsolute.y, vector.y, Mathf.Clamp01(delta * speed.y));
+            mAbsolute.z = Mathf.Lerp(mAbsolute.z, vector.z, Mathf.Clamp01(delta * speed.z));
+            mTrans.position = mAbsolute;
         }
     }
 
     private void OnEnable()
     {
-        this.mTrans = base.transform;
-        this.mAbsolute = this.mTrans.position;
+        mTrans = transform;
+        mAbsolute = mTrans.position;
     }
 
     private void Start()
     {
-        this.mTrans = base.transform;
-        this.mRelative = this.mTrans.localPosition;
-        if (this.ignoreTimeScale)
+        mTrans = transform;
+        mRelative = mTrans.localPosition;
+        if (ignoreTimeScale)
         {
-            UpdateManager.AddCoroutine(this, this.updateOrder, new UpdateManager.OnUpdate(this.CoroutineUpdate));
+            UpdateManager.AddCoroutine(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
         }
         else
         {
-            UpdateManager.AddLateUpdate(this, this.updateOrder, new UpdateManager.OnUpdate(this.CoroutineUpdate));
+            UpdateManager.AddLateUpdate(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
         }
     }
 }

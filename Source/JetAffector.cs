@@ -12,16 +12,16 @@ public class JetAffector : Affector
 
     public JetAffector(float min, float max, EffectNode node) : base(node)
     {
-        this.MinAcceleration = min;
-        this.MaxAcceleration = max;
+        MinAcceleration = min;
+        MaxAcceleration = max;
     }
 
     public override void Update()
     {
-        if (Mathf.Abs(base.Node.Acceleration) < 1E-06)
+        if (Mathf.Abs(Node.Acceleration) < 1E-06)
         {
-            float num = UnityEngine.Random.Range(this.MinAcceleration, this.MaxAcceleration);
-            base.Node.Acceleration = num;
+            var num = Random.Range(MinAcceleration, MaxAcceleration);
+            Node.Acceleration = num;
         }
     }
 }

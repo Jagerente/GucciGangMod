@@ -14,33 +14,33 @@ public class PBitStream
 
     public PBitStream()
     {
-        this.streamBytes = new List<byte>(1);
+        streamBytes = new List<byte>(1);
     }
 
     public PBitStream(int bitCount)
     {
-        this.streamBytes = new List<byte>(BytesForBits(bitCount));
+        streamBytes = new List<byte>(BytesForBits(bitCount));
     }
 
     public PBitStream(IEnumerable<byte> bytes, int bitCount)
     {
-        this.streamBytes = new List<byte>(bytes);
-        this.BitCount = bitCount;
+        streamBytes = new List<byte>(bytes);
+        BitCount = bitCount;
     }
 
     public void Add(bool val)
     {
-        int num = this.totalBits / 8;
-        if ((num > (this.streamBytes.Count - 1)) || (this.totalBits == 0))
+        var num = totalBits / 8;
+        if ((num > (streamBytes.Count - 1)) || (totalBits == 0))
         {
-            this.streamBytes.Add(0);
+            streamBytes.Add(0);
         }
         if (val)
         {
-            int currentByteBit = 7 - (this.totalBits % 8);
-			this.streamBytes[num] |= (byte)(1 << currentByteBit);
+            var currentByteBit = 7 - (totalBits % 8);
+			streamBytes[num] |= (byte)(1 << currentByteBit);
         }
-        this.totalBits++;
+        totalBits++;
     }
 
     public static int BytesForBits(int bitCount)
@@ -54,43 +54,43 @@ public class PBitStream
 
     public bool Get(int bitIndex)
     {
-        int num = bitIndex / 8;
-        int num2 = 7 - (bitIndex % 8);
-        return ((this.streamBytes[num] & ((byte) (((int) 1) << num2))) > 0);
+        var num = bitIndex / 8;
+        var num2 = 7 - (bitIndex % 8);
+        return ((streamBytes[num] & ((byte) (1 << num2))) > 0);
     }
 
     public bool GetNext()
     {
         int num;
-        if (this.Position > this.totalBits)
+        if (Position > totalBits)
         {
             throw new Exception("End of PBitStream reached. Can't read more.");
         }
-        this.Position = (num = this.Position) + 1;
-        return this.Get(num);
+        Position = (num = Position) + 1;
+        return Get(num);
     }
 
     public void Set(int bitIndex, bool value)
     {
-        int byteIndex = bitIndex / 8;
-		int bitInByIndex = 7 - (bitIndex % 8);
-		this.streamBytes[byteIndex] |= (byte)(1 << bitInByIndex);
+        var byteIndex = bitIndex / 8;
+		var bitInByIndex = 7 - (bitIndex % 8);
+		streamBytes[byteIndex] |= (byte)(1 << bitInByIndex);
     }
 
     public byte[] ToBytes()
     {
-        return this.streamBytes.ToArray();
+        return streamBytes.ToArray();
     }
 
     public int BitCount
     {
         get
         {
-            return this.totalBits;
+            return totalBits;
         }
         private set
         {
-            this.totalBits = value;
+            totalBits = value;
         }
     }
 
@@ -98,7 +98,7 @@ public class PBitStream
     {
         get
         {
-            return BytesForBits(this.totalBits);
+            return BytesForBits(totalBits);
         }
     }
 

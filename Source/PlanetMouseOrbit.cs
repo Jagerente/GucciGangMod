@@ -37,23 +37,23 @@ public class PlanetMouseOrbit : MonoBehaviour
 
     public void Start()
     {
-        Vector3 eulerAngles = base.transform.eulerAngles;
-        this.x = eulerAngles.y;
-        this.y = eulerAngles.x;
+        var eulerAngles = transform.eulerAngles;
+        x = eulerAngles.y;
+        y = eulerAngles.x;
     }
 
     public void Update()
     {
-        if (this.target != null)
+        if (target != null)
         {
-            this.x += (Input.GetAxis("Mouse X") * this.xSpeed) * 0.02f;
-            this.y -= (Input.GetAxis("Mouse Y") * this.ySpeed) * 0.02f;
-            this.distance += (-(Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime) * this.zoomRate) * Mathf.Abs(this.distance);
-            this.y = ClampAngle(this.y, (float) this.yMinLimit, (float) this.yMaxLimit);
-            Quaternion quaternion = Quaternion.Euler(this.y, this.x, 0f);
-            Vector3 vector = ((Vector3) (quaternion * new Vector3(0f, 0f, -this.distance))) + this.target.position;
-            base.transform.rotation = quaternion;
-            base.transform.position = vector;
+            x += (Input.GetAxis("Mouse X") * xSpeed) * 0.02f;
+            y -= (Input.GetAxis("Mouse Y") * ySpeed) * 0.02f;
+            distance += (-(Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime) * zoomRate) * Mathf.Abs(distance);
+            y = ClampAngle(y, yMinLimit, yMaxLimit);
+            var quaternion = Quaternion.Euler(y, x, 0f);
+            var vector = quaternion * new Vector3(0f, 0f, -distance) + target.position;
+            transform.rotation = quaternion;
+            transform.position = vector;
         }
     }
 }

@@ -13,19 +13,19 @@ public class EquipRandomItem : MonoBehaviour
 
     private void OnClick()
     {
-        if (this.equipment != null)
+        if (equipment != null)
         {
-            List<InvBaseItem> items = InvDatabase.list[0].items;
+            var items = InvDatabase.list[0].items;
             if (items.Count != 0)
             {
-                int max = 12;
-                int id = UnityEngine.Random.Range(0, items.Count);
-                InvBaseItem bi = items[id];
-                InvGameItem item = new InvGameItem(id, bi) {
-                    quality = (InvGameItem.Quality) UnityEngine.Random.Range(0, max),
+                var max = 12;
+                var id = Random.Range(0, items.Count);
+                var bi = items[id];
+                var item = new InvGameItem(id, bi) {
+                    quality = (InvGameItem.Quality) Random.Range(0, max),
                     itemLevel = NGUITools.RandomRange(bi.minItemLevel, bi.maxItemLevel)
                 };
-                this.equipment.Equip(item);
+                equipment.Equip(item);
             }
         }
     }

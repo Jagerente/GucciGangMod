@@ -68,14 +68,14 @@ public class HeroCostume
 
     public void checkstat()
     {
-        int num = 0;
-        num += this.stat.SPD;
-        num += this.stat.GAS;
-        num += this.stat.BLA;
-        num += this.stat.ACL;
+        var num = 0;
+        num += stat.SPD;
+        num += stat.GAS;
+        num += stat.BLA;
+        num += stat.ACL;
         if (num > 400)
         {
-            this.stat.SPD = this.stat.GAS = this.stat.BLA = this.stat.ACL = 100;
+            stat.SPD = stat.GAS = stat.BLA = stat.ACL = 100;
         }
     }
 
@@ -649,7 +649,7 @@ public class HeroCostume
             costume[0x25].skin_color = 3;
             costume[0x25].division = DIVISION.TheMilitaryPolice;
             costume[0x25].costumeId = 0x19;
-            for (int i = 0; i < costume.Length; i++)
+            for (var i = 0; i < costume.Length; i++)
             {
                 costume[i].stat = HeroStat.getInfo("CUSTOM_DEFAULT");
                 costume[i].id = i;
@@ -1246,7 +1246,7 @@ public class HeroCostume
             costume[0x26].skin_color = 3;
             costume[0x26].division = DIVISION.TheMilitaryPolice;
             costume[0x26].costumeId = 0x1a;
-            for (int i = 0; i < costume.Length; i++)
+            for (var i = 0; i < costume.Length; i++)
             {
                 costume[i].stat = HeroStat.getInfo("CUSTOM_DEFAULT");
                 costume[i].id = i;
@@ -1264,325 +1264,325 @@ public class HeroCostume
     {
         if (id == -1)
         {
-            id = this.costumeId;
+            id = costumeId;
         }
-        this.costumeId = id;
-        this.arm_l_mesh = costumeOption[id].arm_l_mesh;
-        this.arm_r_mesh = costumeOption[id].arm_r_mesh;
-        this.body_mesh = costumeOption[id].body_mesh;
-        this.body_texture = costumeOption[id].body_texture;
-        this.uniform_type = costumeOption[id].uniform_type;
-        this.part_chest_1_object_mesh = costumeOption[id].part_chest_1_object_mesh;
-        this.part_chest_1_object_texture = costumeOption[id].part_chest_1_object_texture;
-        this.part_chest_object_mesh = costumeOption[id].part_chest_object_mesh;
-        this.part_chest_object_texture = costumeOption[id].part_chest_object_texture;
-        this.part_chest_skinned_cloth_mesh = costumeOption[id].part_chest_skinned_cloth_mesh;
-        this.part_chest_skinned_cloth_texture = costumeOption[id].part_chest_skinned_cloth_texture;
+        costumeId = id;
+        arm_l_mesh = costumeOption[id].arm_l_mesh;
+        arm_r_mesh = costumeOption[id].arm_r_mesh;
+        body_mesh = costumeOption[id].body_mesh;
+        body_texture = costumeOption[id].body_texture;
+        uniform_type = costumeOption[id].uniform_type;
+        part_chest_1_object_mesh = costumeOption[id].part_chest_1_object_mesh;
+        part_chest_1_object_texture = costumeOption[id].part_chest_1_object_texture;
+        part_chest_object_mesh = costumeOption[id].part_chest_object_mesh;
+        part_chest_object_texture = costumeOption[id].part_chest_object_texture;
+        part_chest_skinned_cloth_mesh = costumeOption[id].part_chest_skinned_cloth_mesh;
+        part_chest_skinned_cloth_texture = costumeOption[id].part_chest_skinned_cloth_texture;
     }
 
     public void setCape()
     {
-        if (this.cape)
+        if (cape)
         {
-            this.cape_mesh = "character_cape";
+            cape_mesh = "character_cape";
         }
         else
         {
-            this.cape_mesh = string.Empty;
+            cape_mesh = string.Empty;
         }
     }
 
     public void setMesh()
     {
-        this.brand1_mesh = string.Empty;
-        this.brand2_mesh = string.Empty;
-        this.brand3_mesh = string.Empty;
-        this.brand4_mesh = string.Empty;
-        this.hand_l_mesh = "character_hand_l";
-        this.hand_r_mesh = "character_hand_r";
-        this.mesh_3dmg = "character_3dmg";
-        this.mesh_3dmg_belt = "character_3dmg_belt";
-        this.mesh_3dmg_gas_l = "character_3dmg_gas_l";
-        this.mesh_3dmg_gas_r = "character_3dmg_gas_r";
-        this.weapon_l_mesh = "character_blade_l";
-        this.weapon_r_mesh = "character_blade_r";
-        if (this.uniform_type == UNIFORM_TYPE.CasualAHSS)
+        brand1_mesh = string.Empty;
+        brand2_mesh = string.Empty;
+        brand3_mesh = string.Empty;
+        brand4_mesh = string.Empty;
+        hand_l_mesh = "character_hand_l";
+        hand_r_mesh = "character_hand_r";
+        mesh_3dmg = "character_3dmg";
+        mesh_3dmg_belt = "character_3dmg_belt";
+        mesh_3dmg_gas_l = "character_3dmg_gas_l";
+        mesh_3dmg_gas_r = "character_3dmg_gas_r";
+        weapon_l_mesh = "character_blade_l";
+        weapon_r_mesh = "character_blade_r";
+        if (uniform_type == UNIFORM_TYPE.CasualAHSS)
         {
-            this.hand_l_mesh = "character_hand_l_ah";
-            this.hand_r_mesh = "character_hand_r_ah";
-            this.arm_l_mesh = "character_arm_casual_l_ah";
-            this.arm_r_mesh = "character_arm_casual_r_ah";
-            this.body_mesh = "character_body_casual_MA";
-            this.mesh_3dmg = "character_3dmg_2";
-            this.mesh_3dmg_belt = string.Empty;
-            this.mesh_3dmg_gas_l = "character_gun_mag_l";
-            this.mesh_3dmg_gas_r = "character_gun_mag_r";
-            this.weapon_l_mesh = "character_gun_l";
-            this.weapon_r_mesh = "character_gun_r";
+            hand_l_mesh = "character_hand_l_ah";
+            hand_r_mesh = "character_hand_r_ah";
+            arm_l_mesh = "character_arm_casual_l_ah";
+            arm_r_mesh = "character_arm_casual_r_ah";
+            body_mesh = "character_body_casual_MA";
+            mesh_3dmg = "character_3dmg_2";
+            mesh_3dmg_belt = string.Empty;
+            mesh_3dmg_gas_l = "character_gun_mag_l";
+            mesh_3dmg_gas_r = "character_gun_mag_r";
+            weapon_l_mesh = "character_gun_l";
+            weapon_r_mesh = "character_gun_r";
         }
-        else if (this.uniform_type == UNIFORM_TYPE.UniformA)
+        else if (uniform_type == UNIFORM_TYPE.UniformA)
         {
-            this.arm_l_mesh = "character_arm_uniform_l";
-            this.arm_r_mesh = "character_arm_uniform_r";
-            this.brand1_mesh = "character_brand_arm_l";
-            this.brand2_mesh = "character_brand_arm_r";
-            if (this.sex == SEX.FEMALE)
+            arm_l_mesh = "character_arm_uniform_l";
+            arm_r_mesh = "character_arm_uniform_r";
+            brand1_mesh = "character_brand_arm_l";
+            brand2_mesh = "character_brand_arm_r";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_uniform_FA";
-                this.brand3_mesh = "character_brand_chest_f";
-                this.brand4_mesh = "character_brand_back_f";
+                body_mesh = "character_body_uniform_FA";
+                brand3_mesh = "character_brand_chest_f";
+                brand4_mesh = "character_brand_back_f";
             }
             else
             {
-                this.body_mesh = "character_body_uniform_MA";
-                this.brand3_mesh = "character_brand_chest_m";
-                this.brand4_mesh = "character_brand_back_m";
+                body_mesh = "character_body_uniform_MA";
+                brand3_mesh = "character_brand_chest_m";
+                brand4_mesh = "character_brand_back_m";
             }
         }
-        else if (this.uniform_type == UNIFORM_TYPE.UniformB)
+        else if (uniform_type == UNIFORM_TYPE.UniformB)
         {
-            this.arm_l_mesh = "character_arm_uniform_l";
-            this.arm_r_mesh = "character_arm_uniform_r";
-            this.brand1_mesh = "character_brand_arm_l";
-            this.brand2_mesh = "character_brand_arm_r";
-            if (this.sex == SEX.FEMALE)
+            arm_l_mesh = "character_arm_uniform_l";
+            arm_r_mesh = "character_arm_uniform_r";
+            brand1_mesh = "character_brand_arm_l";
+            brand2_mesh = "character_brand_arm_r";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_uniform_FB";
-                this.brand3_mesh = "character_brand_chest_f";
-                this.brand4_mesh = "character_brand_back_f";
+                body_mesh = "character_body_uniform_FB";
+                brand3_mesh = "character_brand_chest_f";
+                brand4_mesh = "character_brand_back_f";
             }
             else
             {
-                this.body_mesh = "character_body_uniform_MB";
-                this.brand3_mesh = "character_brand_chest_m";
-                this.brand4_mesh = "character_brand_back_m";
+                body_mesh = "character_body_uniform_MB";
+                brand3_mesh = "character_brand_chest_m";
+                brand4_mesh = "character_brand_back_m";
             }
         }
-        else if (this.uniform_type == UNIFORM_TYPE.CasualA)
+        else if (uniform_type == UNIFORM_TYPE.CasualA)
         {
-            this.arm_l_mesh = "character_arm_casual_l";
-            this.arm_r_mesh = "character_arm_casual_r";
-            if (this.sex == SEX.FEMALE)
+            arm_l_mesh = "character_arm_casual_l";
+            arm_r_mesh = "character_arm_casual_r";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_casual_FA";
+                body_mesh = "character_body_casual_FA";
             }
             else
             {
-                this.body_mesh = "character_body_casual_MA";
+                body_mesh = "character_body_casual_MA";
             }
         }
-        else if (this.uniform_type == UNIFORM_TYPE.CasualB)
+        else if (uniform_type == UNIFORM_TYPE.CasualB)
         {
-            this.arm_l_mesh = "character_arm_casual_l";
-            this.arm_r_mesh = "character_arm_casual_r";
-            if (this.sex == SEX.FEMALE)
+            arm_l_mesh = "character_arm_casual_l";
+            arm_r_mesh = "character_arm_casual_r";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_casual_FB";
+                body_mesh = "character_body_casual_FB";
             }
             else
             {
-                this.body_mesh = "character_body_casual_MB";
+                body_mesh = "character_body_casual_MB";
             }
         }
-        if (this.hairInfo.hair.Length > 0)
+        if (hairInfo.hair.Length > 0)
         {
-            this.hair_mesh = this.hairInfo.hair;
+            hair_mesh = hairInfo.hair;
         }
-        if (this.hairInfo.hasCloth)
+        if (hairInfo.hasCloth)
         {
-            this.hair_1_mesh = this.hairInfo.hair_1;
+            hair_1_mesh = hairInfo.hair_1;
         }
-        if (this.eye_texture_id >= 0)
+        if (eye_texture_id >= 0)
         {
-            this.eye_mesh = "character_eye";
+            eye_mesh = "character_eye";
         }
-        if (this.beard_texture_id >= 0)
+        if (beard_texture_id >= 0)
         {
-            this.beard_mesh = "character_face";
+            beard_mesh = "character_face";
         }
         else
         {
-            this.beard_mesh = string.Empty;
+            beard_mesh = string.Empty;
         }
-        if (this.glass_texture_id >= 0)
+        if (glass_texture_id >= 0)
         {
-            this.glass_mesh = "glass";
+            glass_mesh = "glass";
         }
         else
         {
-            this.glass_mesh = string.Empty;
+            glass_mesh = string.Empty;
         }
-        this.setCape();
+        setCape();
     }
 
     public void setMesh2()
     {
-        this.brand1_mesh = string.Empty;
-        this.brand2_mesh = string.Empty;
-        this.brand3_mesh = string.Empty;
-        this.brand4_mesh = string.Empty;
-        this.hand_l_mesh = "character_hand_l";
-        this.hand_r_mesh = "character_hand_r";
-        this.mesh_3dmg = "character_3dmg";
-        this.mesh_3dmg_belt = "character_3dmg_belt";
-        this.mesh_3dmg_gas_l = "character_3dmg_gas_l";
-        this.mesh_3dmg_gas_r = "character_3dmg_gas_r";
-        this.weapon_l_mesh = "character_blade_l";
-        this.weapon_r_mesh = "character_blade_r";
-        if (this.uniform_type == UNIFORM_TYPE.CasualAHSS)
+        brand1_mesh = string.Empty;
+        brand2_mesh = string.Empty;
+        brand3_mesh = string.Empty;
+        brand4_mesh = string.Empty;
+        hand_l_mesh = "character_hand_l";
+        hand_r_mesh = "character_hand_r";
+        mesh_3dmg = "character_3dmg";
+        mesh_3dmg_belt = "character_3dmg_belt";
+        mesh_3dmg_gas_l = "character_3dmg_gas_l";
+        mesh_3dmg_gas_r = "character_3dmg_gas_r";
+        weapon_l_mesh = "character_blade_l";
+        weapon_r_mesh = "character_blade_r";
+        if (uniform_type == UNIFORM_TYPE.CasualAHSS)
         {
-            this.hand_l_mesh = "character_hand_l_ah";
-            this.hand_r_mesh = "character_hand_r_ah";
-            this.arm_l_mesh = "character_arm_casual_l_ah";
-            this.arm_r_mesh = "character_arm_casual_r_ah";
-            if (this.sex == SEX.FEMALE)
+            hand_l_mesh = "character_hand_l_ah";
+            hand_r_mesh = "character_hand_r_ah";
+            arm_l_mesh = "character_arm_casual_l_ah";
+            arm_r_mesh = "character_arm_casual_r_ah";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_casual_FA";
+                body_mesh = "character_body_casual_FA";
             }
             else
             {
-                this.body_mesh = "character_body_casual_MA";
+                body_mesh = "character_body_casual_MA";
             }
-            this.mesh_3dmg = "character_3dmg_2";
-            this.mesh_3dmg_belt = string.Empty;
-            this.mesh_3dmg_gas_l = "character_gun_mag_l";
-            this.mesh_3dmg_gas_r = "character_gun_mag_r";
-            this.weapon_l_mesh = "character_gun_l";
-            this.weapon_r_mesh = "character_gun_r";
+            mesh_3dmg = "character_3dmg_2";
+            mesh_3dmg_belt = string.Empty;
+            mesh_3dmg_gas_l = "character_gun_mag_l";
+            mesh_3dmg_gas_r = "character_gun_mag_r";
+            weapon_l_mesh = "character_gun_l";
+            weapon_r_mesh = "character_gun_r";
         }
-        else if (this.uniform_type == UNIFORM_TYPE.UniformA)
+        else if (uniform_type == UNIFORM_TYPE.UniformA)
         {
-            this.arm_l_mesh = "character_arm_uniform_l";
-            this.arm_r_mesh = "character_arm_uniform_r";
-            this.brand1_mesh = "character_brand_arm_l";
-            this.brand2_mesh = "character_brand_arm_r";
-            if (this.sex == SEX.FEMALE)
+            arm_l_mesh = "character_arm_uniform_l";
+            arm_r_mesh = "character_arm_uniform_r";
+            brand1_mesh = "character_brand_arm_l";
+            brand2_mesh = "character_brand_arm_r";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_uniform_FA";
-                this.brand3_mesh = "character_brand_chest_f";
-                this.brand4_mesh = "character_brand_back_f";
+                body_mesh = "character_body_uniform_FA";
+                brand3_mesh = "character_brand_chest_f";
+                brand4_mesh = "character_brand_back_f";
             }
             else
             {
-                this.body_mesh = "character_body_uniform_MA";
-                this.brand3_mesh = "character_brand_chest_m";
-                this.brand4_mesh = "character_brand_back_m";
+                body_mesh = "character_body_uniform_MA";
+                brand3_mesh = "character_brand_chest_m";
+                brand4_mesh = "character_brand_back_m";
             }
         }
-        else if (this.uniform_type == UNIFORM_TYPE.UniformB)
+        else if (uniform_type == UNIFORM_TYPE.UniformB)
         {
-            this.arm_l_mesh = "character_arm_uniform_l";
-            this.arm_r_mesh = "character_arm_uniform_r";
-            this.brand1_mesh = "character_brand_arm_l";
-            this.brand2_mesh = "character_brand_arm_r";
-            if (this.sex == SEX.FEMALE)
+            arm_l_mesh = "character_arm_uniform_l";
+            arm_r_mesh = "character_arm_uniform_r";
+            brand1_mesh = "character_brand_arm_l";
+            brand2_mesh = "character_brand_arm_r";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_uniform_FB";
-                this.brand3_mesh = "character_brand_chest_f";
-                this.brand4_mesh = "character_brand_back_f";
+                body_mesh = "character_body_uniform_FB";
+                brand3_mesh = "character_brand_chest_f";
+                brand4_mesh = "character_brand_back_f";
             }
             else
             {
-                this.body_mesh = "character_body_uniform_MB";
-                this.brand3_mesh = "character_brand_chest_m";
-                this.brand4_mesh = "character_brand_back_m";
+                body_mesh = "character_body_uniform_MB";
+                brand3_mesh = "character_brand_chest_m";
+                brand4_mesh = "character_brand_back_m";
             }
         }
-        else if (this.uniform_type == UNIFORM_TYPE.CasualA)
+        else if (uniform_type == UNIFORM_TYPE.CasualA)
         {
-            this.arm_l_mesh = "character_arm_casual_l";
-            this.arm_r_mesh = "character_arm_casual_r";
-            if (this.sex == SEX.FEMALE)
+            arm_l_mesh = "character_arm_casual_l";
+            arm_r_mesh = "character_arm_casual_r";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_casual_FA";
+                body_mesh = "character_body_casual_FA";
             }
             else
             {
-                this.body_mesh = "character_body_casual_MA";
+                body_mesh = "character_body_casual_MA";
             }
         }
-        else if (this.uniform_type == UNIFORM_TYPE.CasualB)
+        else if (uniform_type == UNIFORM_TYPE.CasualB)
         {
-            this.arm_l_mesh = "character_arm_casual_l";
-            this.arm_r_mesh = "character_arm_casual_r";
-            if (this.sex == SEX.FEMALE)
+            arm_l_mesh = "character_arm_casual_l";
+            arm_r_mesh = "character_arm_casual_r";
+            if (sex == SEX.FEMALE)
             {
-                this.body_mesh = "character_body_casual_FB";
+                body_mesh = "character_body_casual_FB";
             }
             else
             {
-                this.body_mesh = "character_body_casual_MB";
+                body_mesh = "character_body_casual_MB";
             }
         }
-        if (this.hairInfo.hair.Length > 0)
+        if (hairInfo.hair.Length > 0)
         {
-            this.hair_mesh = this.hairInfo.hair;
+            hair_mesh = hairInfo.hair;
         }
-        if (this.hairInfo.hasCloth)
+        if (hairInfo.hasCloth)
         {
-            this.hair_1_mesh = this.hairInfo.hair_1;
+            hair_1_mesh = hairInfo.hair_1;
         }
-        if (this.eye_texture_id >= 0)
+        if (eye_texture_id >= 0)
         {
-            this.eye_mesh = "character_eye";
+            eye_mesh = "character_eye";
         }
-        if (this.beard_texture_id >= 0)
+        if (beard_texture_id >= 0)
         {
-            this.beard_mesh = "character_face";
+            beard_mesh = "character_face";
         }
         else
         {
-            this.beard_mesh = string.Empty;
+            beard_mesh = string.Empty;
         }
-        if (this.glass_texture_id >= 0)
+        if (glass_texture_id >= 0)
         {
-            this.glass_mesh = "glass";
+            glass_mesh = "glass";
         }
         else
         {
-            this.glass_mesh = string.Empty;
+            glass_mesh = string.Empty;
         }
-        this.setCape();
+        setCape();
     }
 
     public void setTexture()
     {
-        if (this.uniform_type == UNIFORM_TYPE.CasualAHSS)
+        if (uniform_type == UNIFORM_TYPE.CasualAHSS)
         {
-            this._3dmg_texture = "aottg_hero_AHSS_3dmg";
+            _3dmg_texture = "aottg_hero_AHSS_3dmg";
         }
         else
         {
-            this._3dmg_texture = "AOTTG_HERO_3DMG";
+            _3dmg_texture = "AOTTG_HERO_3DMG";
         }
-        this.face_texture = "aottg_hero_eyes";
-        if (this.division == DIVISION.TheMilitaryPolice)
+        face_texture = "aottg_hero_eyes";
+        if (division == DIVISION.TheMilitaryPolice)
         {
-            this.brand_texture = "aottg_hero_brand_mp";
+            brand_texture = "aottg_hero_brand_mp";
         }
-        if (this.division == DIVISION.TheGarrison)
+        if (division == DIVISION.TheGarrison)
         {
-            this.brand_texture = "aottg_hero_brand_g";
+            brand_texture = "aottg_hero_brand_g";
         }
-        if (this.division == DIVISION.TheSurveryCorps)
+        if (division == DIVISION.TheSurveryCorps)
         {
-            this.brand_texture = "aottg_hero_brand_sc";
+            brand_texture = "aottg_hero_brand_sc";
         }
-        if (this.division == DIVISION.TraineesSquad)
+        if (division == DIVISION.TraineesSquad)
         {
-            this.brand_texture = "aottg_hero_brand_ts";
+            brand_texture = "aottg_hero_brand_ts";
         }
-        if (this.skin_color == 1)
+        if (skin_color == 1)
         {
-            this.skin_texture = "aottg_hero_skin_1";
+            skin_texture = "aottg_hero_skin_1";
         }
-        else if (this.skin_color == 2)
+        else if (skin_color == 2)
         {
-            this.skin_texture = "aottg_hero_skin_2";
+            skin_texture = "aottg_hero_skin_2";
         }
-        else if (this.skin_color == 3)
+        else if (skin_color == 3)
         {
-            this.skin_texture = "aottg_hero_skin_3";
+            skin_texture = "aottg_hero_skin_3";
         }
     }
 }

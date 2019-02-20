@@ -18,97 +18,97 @@ public class UIButtonPlayAnimation : MonoBehaviour
     private bool mHighlighted;
     private bool mStarted;
     public ActiveAnimation.OnFinished onFinished;
-    public AnimationOrTween.Direction playDirection = AnimationOrTween.Direction.Forward;
+    public Direction playDirection = Direction.Forward;
     public bool resetOnPlay;
     public Animation target;
-    public AnimationOrTween.Trigger trigger;
+    public Trigger trigger;
 
     private void OnActivate(bool isActive)
     {
-        if (base.enabled && (((this.trigger == AnimationOrTween.Trigger.OnActivate) || ((this.trigger == AnimationOrTween.Trigger.OnActivateTrue) && isActive)) || ((this.trigger == AnimationOrTween.Trigger.OnActivateFalse) && !isActive)))
+        if (enabled && (((trigger == Trigger.OnActivate) || ((trigger == Trigger.OnActivateTrue) && isActive)) || ((trigger == Trigger.OnActivateFalse) && !isActive)))
         {
-            this.Play(isActive);
+            Play(isActive);
         }
     }
 
     private void OnClick()
     {
-        if (base.enabled && (this.trigger == AnimationOrTween.Trigger.OnClick))
+        if (enabled && (trigger == Trigger.OnClick))
         {
-            this.Play(true);
+            Play(true);
         }
     }
 
     private void OnDoubleClick()
     {
-        if (base.enabled && (this.trigger == AnimationOrTween.Trigger.OnDoubleClick))
+        if (enabled && (trigger == Trigger.OnDoubleClick))
         {
-            this.Play(true);
+            Play(true);
         }
     }
 
     private void OnEnable()
     {
-        if (this.mStarted && this.mHighlighted)
+        if (mStarted && mHighlighted)
         {
-            this.OnHover(UICamera.IsHighlighted(base.gameObject));
+            OnHover(UICamera.IsHighlighted(gameObject));
         }
     }
 
     private void OnHover(bool isOver)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (((this.trigger == AnimationOrTween.Trigger.OnHover) || ((this.trigger == AnimationOrTween.Trigger.OnHoverTrue) && isOver)) || ((this.trigger == AnimationOrTween.Trigger.OnHoverFalse) && !isOver))
+            if (((trigger == Trigger.OnHover) || ((trigger == Trigger.OnHoverTrue) && isOver)) || ((trigger == Trigger.OnHoverFalse) && !isOver))
             {
-                this.Play(isOver);
+                Play(isOver);
             }
-            this.mHighlighted = isOver;
+            mHighlighted = isOver;
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if (base.enabled && (((this.trigger == AnimationOrTween.Trigger.OnPress) || ((this.trigger == AnimationOrTween.Trigger.OnPressTrue) && isPressed)) || ((this.trigger == AnimationOrTween.Trigger.OnPressFalse) && !isPressed)))
+        if (enabled && (((trigger == Trigger.OnPress) || ((trigger == Trigger.OnPressTrue) && isPressed)) || ((trigger == Trigger.OnPressFalse) && !isPressed)))
         {
-            this.Play(isPressed);
+            Play(isPressed);
         }
     }
 
     private void OnSelect(bool isSelected)
     {
-        if (base.enabled && (((this.trigger == AnimationOrTween.Trigger.OnSelect) || ((this.trigger == AnimationOrTween.Trigger.OnSelectTrue) && isSelected)) || ((this.trigger == AnimationOrTween.Trigger.OnSelectFalse) && !isSelected)))
+        if (enabled && (((trigger == Trigger.OnSelect) || ((trigger == Trigger.OnSelectTrue) && isSelected)) || ((trigger == Trigger.OnSelectFalse) && !isSelected)))
         {
-            this.Play(true);
+            Play(true);
         }
     }
 
     private void Play(bool forward)
     {
-        if (this.target == null)
+        if (target == null)
         {
-            this.target = base.GetComponentInChildren<Animation>();
+            target = GetComponentInChildren<Animation>();
         }
-        if (this.target != null)
+        if (target != null)
         {
-            if (this.clearSelection && (UICamera.selectedObject == base.gameObject))
+            if (clearSelection && (UICamera.selectedObject == gameObject))
             {
                 UICamera.selectedObject = null;
             }
-            int num = -(int)this.playDirection;
-            AnimationOrTween.Direction playDirection = !forward ? ((AnimationOrTween.Direction) num) : this.playDirection;
-            ActiveAnimation animation = ActiveAnimation.Play(this.target, this.clipName, playDirection, this.ifDisabledOnPlay, this.disableWhenFinished);
+            var num = -(int)this.playDirection;
+            var playDirection = !forward ? ((Direction) num) : this.playDirection;
+            var animation = ActiveAnimation.Play(target, clipName, playDirection, ifDisabledOnPlay, disableWhenFinished);
             if (animation != null)
             {
-                if (this.resetOnPlay)
+                if (resetOnPlay)
                 {
                     animation.Reset();
                 }
-                animation.onFinished = this.onFinished;
-                if ((this.eventReceiver != null) && !string.IsNullOrEmpty(this.callWhenFinished))
+                animation.onFinished = onFinished;
+                if ((eventReceiver != null) && !string.IsNullOrEmpty(callWhenFinished))
                 {
-                    animation.eventReceiver = this.eventReceiver;
-                    animation.callWhenFinished = this.callWhenFinished;
+                    animation.eventReceiver = eventReceiver;
+                    animation.callWhenFinished = callWhenFinished;
                 }
                 else
                 {
@@ -120,7 +120,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
 
     private void Start()
     {
-        this.mStarted = true;
+        mStarted = true;
     }
 }
 

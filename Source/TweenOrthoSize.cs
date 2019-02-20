@@ -14,7 +14,7 @@ public class TweenOrthoSize : UITweener
 
     public static TweenOrthoSize Begin(GameObject go, float duration, float to)
     {
-        TweenOrthoSize size = UITweener.Begin<TweenOrthoSize>(go, duration);
+        var size = UITweener.Begin<TweenOrthoSize>(go, duration);
         size.from = size.orthoSize;
         size.to = to;
         if (duration <= 0f)
@@ -27,18 +27,18 @@ public class TweenOrthoSize : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        this.cachedCamera.orthographicSize = (this.from * (1f - factor)) + (this.to * factor);
+        cachedCamera.orthographicSize = (from * (1f - factor)) + (to * factor);
     }
 
     public Camera cachedCamera
     {
         get
         {
-            if (this.mCam == null)
+            if (mCam == null)
             {
-                this.mCam = base.camera;
+                mCam = camera;
             }
-            return this.mCam;
+            return mCam;
         }
     }
 
@@ -46,11 +46,11 @@ public class TweenOrthoSize : UITweener
     {
         get
         {
-            return this.cachedCamera.orthographicSize;
+            return cachedCamera.orthographicSize;
         }
         set
         {
-            this.cachedCamera.orthographicSize = value;
+            cachedCamera.orthographicSize = value;
         }
     }
 }

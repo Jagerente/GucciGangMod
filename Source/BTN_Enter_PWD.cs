@@ -9,8 +9,8 @@ public class BTN_Enter_PWD : MonoBehaviour
 {
     private void OnClick()
     {
-        string text = GameObject.Find("InputEnterPWD").GetComponent<UIInput>().label.text;
-        SimpleAES eaes = new SimpleAES();
+        var text = GameObject.Find("InputEnterPWD").GetComponent<UIInput>().label.text;
+        var eaes = new SimpleAES();
         if (text == eaes.Decrypt(PanelMultiJoinPWD.Password))
         {
             PhotonNetwork.JoinRoom(PanelMultiJoinPWD.roomName);

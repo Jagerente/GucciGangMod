@@ -14,7 +14,7 @@ public class CheckBoxCostume : MonoBehaviour
     {
         if (yes)
         {
-            costumeSet = this.set;
+            costumeSet = set;
         }
     }
 }

@@ -15,25 +15,25 @@ public class RCRegion
 
     public RCRegion(Vector3 loc, float x, float y, float z)
     {
-        this.location = loc;
-        this.dimX = x;
-        this.dimY = y;
-        this.dimZ = z;
+        location = loc;
+        dimX = x;
+        dimY = y;
+        dimZ = z;
     }
 
     public float GetRandomX()
     {
-        return (this.location.x + UnityEngine.Random.Range((float) (-this.dimX / 2f), (float) (this.dimX / 2f)));
+        return (location.x + Random.Range(-dimX / 2f, dimX / 2f));
     }
 
     public float GetRandomY()
     {
-        return (this.location.y + UnityEngine.Random.Range((float) (-this.dimY / 2f), (float) (this.dimY / 2f)));
+        return (location.y + Random.Range(-dimY / 2f, dimY / 2f));
     }
 
     public float GetRandomZ()
     {
-        return (this.location.z + UnityEngine.Random.Range((float) (-this.dimZ / 2f), (float) (this.dimZ / 2f)));
+        return (location.z + Random.Range(-dimZ / 2f, dimZ / 2f));
     }
 }
 

@@ -9,7 +9,7 @@ public class Affector
 
     public Affector(EffectNode node)
     {
-        this.Node = node;
+        Node = node;
     }
 
     public virtual void Reset()

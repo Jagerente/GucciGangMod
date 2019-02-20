@@ -13,11 +13,11 @@ public class CheckHitGround : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            this.isGrounded = true;
+            isGrounded = true;
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAABB"))
         {
-            this.isGrounded = true;
+            isGrounded = true;
         }
     }
 
@@ -25,11 +25,11 @@ public class CheckHitGround : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            this.isGrounded = true;
+            isGrounded = true;
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAABB"))
         {
-            this.isGrounded = true;
+            isGrounded = true;
         }
     }
 }

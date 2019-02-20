@@ -16,16 +16,16 @@ public class InRoomRoundTimer : MonoBehaviour
 
     public void OnGUI()
     {
-        double num = PhotonNetwork.time - this.StartTime;
-        double num2 = this.SecondsPerTurn - (num % ((double) this.SecondsPerTurn));
-        int num3 = (int) (num / ((double) this.SecondsPerTurn));
-        GUILayout.BeginArea(this.TextPos);
+        var num = PhotonNetwork.time - StartTime;
+        var num2 = SecondsPerTurn - (num % SecondsPerTurn);
+        var num3 = (int) (num / SecondsPerTurn);
+        GUILayout.BeginArea(TextPos);
         GUILayout.Label(string.Format("elapsed: {0:0.000}", num), new GUILayoutOption[0]);
         GUILayout.Label(string.Format("remaining: {0:0.000}", num2), new GUILayoutOption[0]);
         GUILayout.Label(string.Format("turn: {0:0}", num3), new GUILayoutOption[0]);
         if (GUILayout.Button("new round", new GUILayoutOption[0]))
         {
-            this.StartRoundNow();
+            StartRoundNow();
         }
         GUILayout.EndArea();
     }
@@ -34,7 +34,7 @@ public class InRoomRoundTimer : MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient)
         {
-            this.StartRoundNow();
+            StartRoundNow();
         }
         else
         {
@@ -47,7 +47,7 @@ public class InRoomRoundTimer : MonoBehaviour
         if (!PhotonNetwork.room.customProperties.ContainsKey("st"))
         {
             Debug.Log("The new master starts a new round, cause we didn't start yet.");
-            this.StartRoundNow();
+            StartRoundNow();
         }
     }
 
@@ -55,7 +55,7 @@ public class InRoomRoundTimer : MonoBehaviour
     {
         if (propertiesThatChanged.ContainsKey("st"))
         {
-            this.StartTime = (double) propertiesThatChanged["st"];
+            StartTime = (double) propertiesThatChanged["st"];
         }
     }
 
@@ -63,12 +63,12 @@ public class InRoomRoundTimer : MonoBehaviour
     {
         if (PhotonNetwork.time < 9.9999997473787516E-05)
         {
-            this.startRoundWhenTimeIsSynced = true;
+            startRoundWhenTimeIsSynced = true;
         }
         else
         {
-            this.startRoundWhenTimeIsSynced = false;
-            Hashtable propertiesToSet = new Hashtable();
+            startRoundWhenTimeIsSynced = false;
+            var propertiesToSet = new Hashtable();
             propertiesToSet["st"] = PhotonNetwork.time;
             PhotonNetwork.room.SetCustomProperties(propertiesToSet);
         }
@@ -76,9 +76,9 @@ public class InRoomRoundTimer : MonoBehaviour
 
     private void Update()
     {
-        if (this.startRoundWhenTimeIsSynced)
+        if (startRoundWhenTimeIsSynced)
         {
-            this.StartRoundNow();
+            StartRoundNow();
         }
     }
 }

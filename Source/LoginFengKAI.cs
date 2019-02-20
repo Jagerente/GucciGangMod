@@ -37,14 +37,14 @@ public class LoginFengKAI : MonoBehaviour
     {
         if (playerName == string.Empty)
         {
-            this.logout();
-            NGUITools.SetActive(this.panelChangeGUILDNAME, false);
-            NGUITools.SetActive(this.panelLogin, true);
-            this.output.GetComponent<UILabel>().text = "Please sign in.";
+            logout();
+            NGUITools.SetActive(panelChangeGUILDNAME, false);
+            NGUITools.SetActive(panelLogin, true);
+            output.GetComponent<UILabel>().text = "Please sign in.";
         }
         else
         {
-            base.StartCoroutine(this.changeGuild(name));
+            StartCoroutine(changeGuild(name));
         }
     }
 
@@ -70,14 +70,14 @@ public class LoginFengKAI : MonoBehaviour
     {
         if (playerName == string.Empty)
         {
-            this.logout();
-            NGUITools.SetActive(this.panelChangePassword, false);
-            NGUITools.SetActive(this.panelLogin, true);
-            this.output.GetComponent<UILabel>().text = "Please sign in.";
+            logout();
+            NGUITools.SetActive(panelChangePassword, false);
+            NGUITools.SetActive(panelLogin, true);
+            output.GetComponent<UILabel>().text = "Please sign in.";
         }
         else
         {
-            base.StartCoroutine(this.changePassword(oldpassword, password, password2));
+            StartCoroutine(changePassword(oldpassword, password, password2));
         }
     }
 
@@ -95,7 +95,7 @@ public class LoginFengKAI : MonoBehaviour
 
     public void login(string name, string password)
     {
-        base.StartCoroutine(this.Login(name, password));
+        StartCoroutine(Login(name, password));
     }
 
     [DebuggerHidden]
@@ -106,10 +106,10 @@ public class LoginFengKAI : MonoBehaviour
 
     public void logout()
     {
-        this.clearCOOKIE();
+        clearCOOKIE();
         player = new PlayerInfoPHOTON();
         player.initAsGuest();
-        this.output.GetComponent<UILabel>().text = "Welcome," + player.name;
+        output.GetComponent<UILabel>().text = "Welcome," + player.name;
     }
 
     [DebuggerHidden]
@@ -120,12 +120,12 @@ public class LoginFengKAI : MonoBehaviour
 
     public void resetPassword(string email)
     {
-        base.StartCoroutine(this.ForgetPassword(email));
+        StartCoroutine(ForgetPassword(email));
     }
 
     public void signup(string name, string password, string password2, string email)
     {
-        base.StartCoroutine(this.Register(name, password, password2, email));
+        StartCoroutine(Register(name, password, password2, email));
     }
 
     private void Start()
@@ -137,9 +137,9 @@ public class LoginFengKAI : MonoBehaviour
         }
         if (playerName != string.Empty)
         {
-            NGUITools.SetActive(this.panelLogin, false);
-            NGUITools.SetActive(this.panelStatus, true);
-            base.StartCoroutine(this.getInfo());
+            NGUITools.SetActive(panelLogin, false);
+            NGUITools.SetActive(panelStatus, true);
+            StartCoroutine(getInfo());
         }
         else
         {
@@ -161,44 +161,44 @@ public class LoginFengKAI : MonoBehaviour
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    this.form0 = new WWWForm();
-                    this.form0.AddField("name", LoginFengKAI.playerName);
-                    this.form0.AddField("guildname", this.name);
-                    this.w1 = new WWW(this.fthis.ChangeGuildURL, this.form0);
-                    this.Scurrent = this.w1;
-                    this.SPC = 1;
+                    form0 = new WWWForm();
+                    form0.AddField("name", playerName);
+                    form0.AddField("guildname", name);
+                    w1 = new WWW(fthis.ChangeGuildURL, form0);
+                    Scurrent = w1;
+                    SPC = 1;
                     return true;
 
                 case 1:
-                    if (this.w1.error == null)
+                    if (w1.error == null)
                     {
-                        this.fthis.output.GetComponent<UILabel>().text = this.w1.text;
-                        if (this.w1.text.Contains("Guild name set."))
+                        fthis.output.GetComponent<UILabel>().text = w1.text;
+                        if (w1.text.Contains("Guild name set."))
                         {
-                            NGUITools.SetActive(this.fthis.panelChangeGUILDNAME, false);
-                            NGUITools.SetActive(this.fthis.panelStatus, true);
-                            this.fthis.StartCoroutine(this.fthis.getInfo());
+                            NGUITools.SetActive(fthis.panelChangeGUILDNAME, false);
+                            NGUITools.SetActive(fthis.panelStatus, true);
+                            fthis.StartCoroutine(fthis.getInfo());
                         }
-                        this.w1.Dispose();
+                        w1.Dispose();
                         break;
                     }
-                    MonoBehaviour.print(this.w1.error);
+                    print(w1.error);
                     break;
 
                 default:
                     goto Label_0135;
             }
-            this.SPC = -1;
+            SPC = -1;
         Label_0135:
             return false;
         }
@@ -214,7 +214,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -223,7 +223,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }
@@ -246,45 +246,45 @@ public class LoginFengKAI : MonoBehaviour
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    this.form0 = new WWWForm();
-                    this.form0.AddField("userid", LoginFengKAI.playerName);
-                    this.form0.AddField("old_password", this.oldpassword);
-                    this.form0.AddField("password", this.password);
-                    this.form0.AddField("password2", this.password2);
-                    this.w1 = new WWW(this.fthis.ChangePasswordURL, this.form0);
-                    this.Scurrent = this.w1;
-                    this.SPC = 1;
+                    form0 = new WWWForm();
+                    form0.AddField("userid", playerName);
+                    form0.AddField("old_password", oldpassword);
+                    form0.AddField("password", password);
+                    form0.AddField("password2", password2);
+                    w1 = new WWW(fthis.ChangePasswordURL, form0);
+                    Scurrent = w1;
+                    SPC = 1;
                     return true;
 
                 case 1:
-                    if (this.w1.error == null)
+                    if (w1.error == null)
                     {
-                        this.fthis.output.GetComponent<UILabel>().text = this.w1.text;
-                        if (this.w1.text.Contains("Thanks, Your password changed successfully"))
+                        fthis.output.GetComponent<UILabel>().text = w1.text;
+                        if (w1.text.Contains("Thanks, Your password changed successfully"))
                         {
-                            NGUITools.SetActive(this.fthis.panelChangePassword, false);
-                            NGUITools.SetActive(this.fthis.panelLogin, true);
+                            NGUITools.SetActive(fthis.panelChangePassword, false);
+                            NGUITools.SetActive(fthis.panelLogin, true);
                         }
-                        this.w1.Dispose();
+                        w1.Dispose();
                         break;
                     }
-                    MonoBehaviour.print(this.w1.error);
+                    print(w1.error);
                     break;
 
                 default:
                     goto Label_014A;
             }
-            this.SPC = -1;
+            SPC = -1;
         Label_014A:
             return false;
         }
@@ -300,7 +300,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -309,7 +309,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }
@@ -328,40 +328,40 @@ public class LoginFengKAI : MonoBehaviour
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    this.form0 = new WWWForm();
-                    this.form0.AddField("email", this.email);
-                    this.w1 = new WWW(this.fthis.ForgetPasswordURL, this.form0);
-                    this.Scurrent = this.w1;
-                    this.SPC = 1;
+                    form0 = new WWWForm();
+                    form0.AddField("email", email);
+                    w1 = new WWW(fthis.ForgetPasswordURL, form0);
+                    Scurrent = w1;
+                    SPC = 1;
                     return true;
 
                 case 1:
-                    if (this.w1.error == null)
+                    if (w1.error == null)
                     {
-                        this.fthis.output.GetComponent<UILabel>().text = this.w1.text;
-                        this.w1.Dispose();
-                        NGUITools.SetActive(this.fthis.panelForget, false);
-                        NGUITools.SetActive(this.fthis.panelLogin, true);
+                        fthis.output.GetComponent<UILabel>().text = w1.text;
+                        w1.Dispose();
+                        NGUITools.SetActive(fthis.panelForget, false);
+                        NGUITools.SetActive(fthis.panelLogin, true);
                         break;
                     }
-                    MonoBehaviour.print(this.w1.error);
+                    print(w1.error);
                     break;
 
                 default:
                     goto Label_00FA;
             }
-            this.fthis.clearCOOKIE();
-            this.SPC = -1;
+            fthis.clearCOOKIE();
+            SPC = -1;
         Label_00FA:
             return false;
         }
@@ -377,7 +377,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -386,7 +386,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }
@@ -404,54 +404,54 @@ public class LoginFengKAI : MonoBehaviour
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    this.form0 = new WWWForm();
-                    this.form0.AddField("userid", LoginFengKAI.playerName);
-                    this.form0.AddField("password", LoginFengKAI.playerPassword);
-                    this.w1 = new WWW(this.fthis.GetInfoURL, this.form0);
-                    this.Scurrent = this.w1;
-                    this.SPC = 1;
+                    form0 = new WWWForm();
+                    form0.AddField("userid", playerName);
+                    form0.AddField("password", playerPassword);
+                    w1 = new WWW(fthis.GetInfoURL, form0);
+                    Scurrent = w1;
+                    SPC = 1;
                     return true;
 
                 case 1:
-                    if (this.w1.error == null)
+                    if (w1.error == null)
                     {
-                        if (this.w1.text.Contains("Error,please sign in again."))
+                        if (w1.text.Contains("Error,please sign in again."))
                         {
-                            NGUITools.SetActive(this.fthis.panelLogin, true);
-                            NGUITools.SetActive(this.fthis.panelStatus, false);
-                            this.fthis.output.GetComponent<UILabel>().text = this.w1.text;
-                            LoginFengKAI.playerName = string.Empty;
-                            LoginFengKAI.playerPassword = string.Empty;
+                            NGUITools.SetActive(fthis.panelLogin, true);
+                            NGUITools.SetActive(fthis.panelStatus, false);
+                            fthis.output.GetComponent<UILabel>().text = w1.text;
+                            playerName = string.Empty;
+                            playerPassword = string.Empty;
                         }
                         else
                         {
-                            char[] separator = new char[] { '|' };
-                            this.result2 = this.w1.text.Split(separator);
-                            LoginFengKAI.playerGUILDName = this.result2[0];
-                            this.fthis.output2.GetComponent<UILabel>().text = this.result2[1];
-                            LoginFengKAI.player.name = LoginFengKAI.playerName;
-                            LoginFengKAI.player.guildname = LoginFengKAI.playerGUILDName;
+                            var separator = new char[] { '|' };
+                            result2 = w1.text.Split(separator);
+                            playerGUILDName = result2[0];
+                            fthis.output2.GetComponent<UILabel>().text = result2[1];
+                            player.name = playerName;
+                            player.guildname = playerGUILDName;
                         }
-                        this.w1.Dispose();
+                        w1.Dispose();
                         break;
                     }
-                    MonoBehaviour.print(this.w1.error);
+                    print(w1.error);
                     break;
 
                 default:
                     goto Label_01A7;
             }
-            this.SPC = -1;
+            SPC = -1;
         Label_01A7:
             return false;
         }
@@ -467,7 +467,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -476,7 +476,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }
@@ -497,49 +497,49 @@ public class LoginFengKAI : MonoBehaviour
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    this.form0 = new WWWForm();
-                    this.form0.AddField("userid", this.name);
-                    this.form0.AddField("password", this.password);
-                    this.form0.AddField("version", UIMainReferences.version);
-                    this.w1 = new WWW(this.fthis.CheckUserURL, this.form0);
-                    this.Scurrent = this.w1;
-                    this.SPC = 1;
+                    form0 = new WWWForm();
+                    form0.AddField("userid", name);
+                    form0.AddField("password", password);
+                    form0.AddField("version", UIMainReferences.version);
+                    w1 = new WWW(fthis.CheckUserURL, form0);
+                    Scurrent = w1;
+                    SPC = 1;
                     return true;
 
                 case 1:
-                    this.fthis.clearCOOKIE();
-                    if (this.w1.error == null)
+                    fthis.clearCOOKIE();
+                    if (w1.error == null)
                     {
-                        this.fthis.output.GetComponent<UILabel>().text = this.w1.text;
-                        this.fthis.formText = this.w1.text;
-                        this.w1.Dispose();
-                        if (this.fthis.formText.Contains("Welcome back") && this.fthis.formText.Contains("(^o^)/~"))
+                        fthis.output.GetComponent<UILabel>().text = w1.text;
+                        fthis.formText = w1.text;
+                        w1.Dispose();
+                        if (fthis.formText.Contains("Welcome back") && fthis.formText.Contains("(^o^)/~"))
                         {
-                            NGUITools.SetActive(this.fthis.panelLogin, false);
-                            NGUITools.SetActive(this.fthis.panelStatus, true);
-                            LoginFengKAI.playerName = this.name;
-                            LoginFengKAI.playerPassword = this.password;
-                            this.fthis.StartCoroutine(this.fthis.getInfo());
+                            NGUITools.SetActive(fthis.panelLogin, false);
+                            NGUITools.SetActive(fthis.panelStatus, true);
+                            playerName = name;
+                            playerPassword = password;
+                            fthis.StartCoroutine(fthis.getInfo());
                         }
                         break;
                     }
-                    MonoBehaviour.print(this.w1.error);
+                    print(w1.error);
                     break;
 
                 default:
                     goto Label_019C;
             }
-            this.SPC = -1;
+            SPC = -1;
         Label_019C:
             return false;
         }
@@ -555,7 +555,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -564,7 +564,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }
@@ -589,46 +589,46 @@ public class LoginFengKAI : MonoBehaviour
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    this.form0 = new WWWForm();
-                    this.form0.AddField("userid", this.name);
-                    this.form0.AddField("password", this.password);
-                    this.form0.AddField("password2", this.password2);
-                    this.form0.AddField("email", this.email);
-                    this.w1 = new WWW(this.fthis.RegisterURL, this.form0);
-                    this.Scurrent = this.w1;
-                    this.SPC = 1;
+                    form0 = new WWWForm();
+                    form0.AddField("userid", name);
+                    form0.AddField("password", password);
+                    form0.AddField("password2", password2);
+                    form0.AddField("email", email);
+                    w1 = new WWW(fthis.RegisterURL, form0);
+                    Scurrent = w1;
+                    SPC = 1;
                     return true;
 
                 case 1:
-                    if (this.w1.error == null)
+                    if (w1.error == null)
                     {
-                        this.fthis.output.GetComponent<UILabel>().text = this.w1.text;
-                        if (this.w1.text.Contains("Final step,to activate your account, please click the link in the activation email"))
+                        fthis.output.GetComponent<UILabel>().text = w1.text;
+                        if (w1.text.Contains("Final step,to activate your account, please click the link in the activation email"))
                         {
-                            NGUITools.SetActive(this.fthis.panelRegister, false);
-                            NGUITools.SetActive(this.fthis.panelLogin, true);
+                            NGUITools.SetActive(fthis.panelRegister, false);
+                            NGUITools.SetActive(fthis.panelLogin, true);
                         }
-                        this.w1.Dispose();
+                        w1.Dispose();
                         break;
                     }
-                    MonoBehaviour.print(this.w1.error);
+                    print(w1.error);
                     break;
 
                 default:
                     goto Label_0156;
             }
-            this.fthis.clearCOOKIE();
-            this.SPC = -1;
+            fthis.clearCOOKIE();
+            SPC = -1;
         Label_0156:
             return false;
         }
@@ -644,7 +644,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -653,7 +653,7 @@ public class LoginFengKAI : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }

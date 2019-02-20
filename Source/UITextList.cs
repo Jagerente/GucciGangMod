@@ -24,113 +24,113 @@ public class UITextList : MonoBehaviour
 
     public void Add(string text)
     {
-        this.Add(text, true);
+        Add(text, true);
     }
 
     protected void Add(string text, bool updateVisible)
     {
         Paragraph item = null;
-        if (this.mParagraphs.Count < this.maxEntries)
+        if (mParagraphs.Count < maxEntries)
         {
             item = new Paragraph();
         }
         else
         {
-            item = this.mParagraphs[0];
-            this.mParagraphs.RemoveAt(0);
+            item = mParagraphs[0];
+            mParagraphs.RemoveAt(0);
         }
         item.text = text;
-        this.mParagraphs.Add(item);
-        if ((this.textLabel != null) && (this.textLabel.font != null))
+        mParagraphs.Add(item);
+        if ((textLabel != null) && (textLabel.font != null))
         {
-            item.lines = this.textLabel.font.WrapText(item.text, this.maxWidth / this.textLabel.transform.localScale.y, this.textLabel.maxLineCount, this.textLabel.supportEncoding, this.textLabel.symbolStyle).Split(this.mSeparator);
-            this.mTotalLines = 0;
-            int num = 0;
-            int count = this.mParagraphs.Count;
+            item.lines = textLabel.font.WrapText(item.text, maxWidth / textLabel.transform.localScale.y, textLabel.maxLineCount, textLabel.supportEncoding, textLabel.symbolStyle).Split(mSeparator);
+            mTotalLines = 0;
+            var num = 0;
+            var count = mParagraphs.Count;
             while (num < count)
             {
-                this.mTotalLines += this.mParagraphs[num].lines.Length;
+                mTotalLines += mParagraphs[num].lines.Length;
                 num++;
             }
         }
         if (updateVisible)
         {
-            this.UpdateVisibleText();
+            UpdateVisibleText();
         }
     }
 
     private void Awake()
     {
-        if (this.textLabel == null)
+        if (textLabel == null)
         {
-            this.textLabel = base.GetComponentInChildren<UILabel>();
+            textLabel = GetComponentInChildren<UILabel>();
         }
-        if (this.textLabel != null)
+        if (textLabel != null)
         {
-            this.textLabel.lineWidth = 0;
+            textLabel.lineWidth = 0;
         }
-        Collider collider = base.collider;
+        var collider = this.collider;
         if (collider != null)
         {
-            if (this.maxHeight <= 0f)
+            if (maxHeight <= 0f)
             {
-                this.maxHeight = collider.bounds.size.y / base.transform.lossyScale.y;
+                maxHeight = collider.bounds.size.y / transform.lossyScale.y;
             }
-            if (this.maxWidth <= 0f)
+            if (maxWidth <= 0f)
             {
-                this.maxWidth = collider.bounds.size.x / base.transform.lossyScale.x;
+                maxWidth = collider.bounds.size.x / transform.lossyScale.x;
             }
         }
     }
 
     public void Clear()
     {
-        this.mParagraphs.Clear();
-        this.UpdateVisibleText();
+        mParagraphs.Clear();
+        UpdateVisibleText();
     }
 
     private void OnScroll(float val)
     {
-        if (this.mSelected && this.supportScrollWheel)
+        if (mSelected && supportScrollWheel)
         {
-            val *= (this.style != Style.Chat) ? -10f : 10f;
-            this.mScroll = Mathf.Max((float) 0f, (float) (this.mScroll + val));
-            this.UpdateVisibleText();
+            val *= (style != Style.Chat) ? -10f : 10f;
+            mScroll = Mathf.Max(0f, mScroll + val);
+            UpdateVisibleText();
         }
     }
 
     private void OnSelect(bool selected)
     {
-        this.mSelected = selected;
+        mSelected = selected;
     }
 
     protected void UpdateVisibleText()
     {
-        if ((this.textLabel != null) && (this.textLabel.font != null))
+        if ((textLabel != null) && (textLabel.font != null))
         {
-            int num = 0;
-            int num2 = (this.maxHeight <= 0f) ? 0x186a0 : Mathf.FloorToInt(this.maxHeight / this.textLabel.cachedTransform.localScale.y);
-            int num3 = Mathf.RoundToInt(this.mScroll);
-            if ((num2 + num3) > this.mTotalLines)
+            var num = 0;
+            var num2 = (maxHeight <= 0f) ? 0x186a0 : Mathf.FloorToInt(maxHeight / textLabel.cachedTransform.localScale.y);
+            var num3 = Mathf.RoundToInt(mScroll);
+            if ((num2 + num3) > mTotalLines)
             {
-                num3 = Mathf.Max(0, this.mTotalLines - num2);
-                this.mScroll = num3;
+                num3 = Mathf.Max(0, mTotalLines - num2);
+                mScroll = num3;
             }
-            if (this.style == Style.Chat)
+            if (style == Style.Chat)
             {
-                num3 = Mathf.Max(0, (this.mTotalLines - num2) - num3);
+                num3 = Mathf.Max(0, (mTotalLines - num2) - num3);
             }
-            StringBuilder builder = new StringBuilder();
-            int num4 = 0;
-            int count = this.mParagraphs.Count;
+            var builder = new StringBuilder();
+            var num4 = 0;
+            var count = mParagraphs.Count;
             while (num4 < count)
             {
-                Paragraph paragraph = this.mParagraphs[num4];
-                int index = 0;
-                int length = paragraph.lines.Length;
+                var paragraph = mParagraphs[num4];
+                var index = 0;
+                var length = paragraph.lines.Length;
                 while (index < length)
                 {
-                    string str = paragraph.lines[index];
+                    var str = paragraph.lines[index];
                     if (num3 > 0)
                     {
                         num3--;
@@ -156,7 +156,7 @@ public class UITextList : MonoBehaviour
                 }
                 num4++;
             }
-            this.textLabel.text = builder.ToString();
+            textLabel.text = builder.ToString();
         }
     }
 

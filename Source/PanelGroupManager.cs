@@ -11,11 +11,11 @@ public class PanelGroupManager
 
     public void ActivePanel(int index)
     {
-        foreach (GameObject obj2 in this.panelGroup)
+        foreach (var obj2 in panelGroup)
         {
             obj2.SetActive(false);
         }
-        this.panelGroup[index].SetActive(true);
+        panelGroup[index].SetActive(true);
     }
 }
 

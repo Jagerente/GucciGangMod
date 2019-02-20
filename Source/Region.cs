@@ -14,7 +14,7 @@ public class Region
     public static CloudRegionCode Parse(string codeAsString)
     {
         codeAsString = codeAsString.ToLower();
-        CloudRegionCode none = CloudRegionCode.none;
+        var none = CloudRegionCode.none;
         if (Enum.IsDefined(typeof(CloudRegionCode), codeAsString))
         {
             none = (CloudRegionCode) ((int) Enum.Parse(typeof(CloudRegionCode), codeAsString));
@@ -24,7 +24,7 @@ public class Region
 
     public override string ToString()
     {
-        return string.Format("'{0}' \t{1}ms \t{2}", this.Code, this.Ping, this.HostAndPort);
+        return string.Format("'{0}' \t{1}ms \t{2}", Code, Ping, HostAndPort);
     }
 }
 

@@ -23,63 +23,63 @@ public class UISpriteAnimation : MonoBehaviour
 
     private void RebuildSpriteList()
     {
-        if (this.mSprite == null)
+        if (mSprite == null)
         {
-            this.mSprite = base.GetComponent<UISprite>();
+            mSprite = GetComponent<UISprite>();
         }
-        this.mSpriteNames.Clear();
-        if ((this.mSprite != null) && (this.mSprite.atlas != null))
+        mSpriteNames.Clear();
+        if ((mSprite != null) && (mSprite.atlas != null))
         {
-            List<UIAtlas.Sprite> spriteList = this.mSprite.atlas.spriteList;
-            int num = 0;
-            int count = spriteList.Count;
+            var spriteList = mSprite.atlas.spriteList;
+            var num = 0;
+            var count = spriteList.Count;
             while (num < count)
             {
-                UIAtlas.Sprite sprite = spriteList[num];
-                if (string.IsNullOrEmpty(this.mPrefix) || sprite.name.StartsWith(this.mPrefix))
+                var sprite = spriteList[num];
+                if (string.IsNullOrEmpty(mPrefix) || sprite.name.StartsWith(mPrefix))
                 {
-                    this.mSpriteNames.Add(sprite.name);
+                    mSpriteNames.Add(sprite.name);
                 }
                 num++;
             }
-            this.mSpriteNames.Sort();
+            mSpriteNames.Sort();
         }
     }
 
     public void Reset()
     {
-        this.mActive = true;
-        this.mIndex = 0;
-        if ((this.mSprite != null) && (this.mSpriteNames.Count > 0))
+        mActive = true;
+        mIndex = 0;
+        if ((mSprite != null) && (mSpriteNames.Count > 0))
         {
-            this.mSprite.spriteName = this.mSpriteNames[this.mIndex];
-            this.mSprite.MakePixelPerfect();
+            mSprite.spriteName = mSpriteNames[mIndex];
+            mSprite.MakePixelPerfect();
         }
     }
 
     private void Start()
     {
-        this.RebuildSpriteList();
+        RebuildSpriteList();
     }
 
     private void Update()
     {
-        if ((this.mActive && (this.mSpriteNames.Count > 1)) && (Application.isPlaying && (this.mFPS > 0f)))
+        if ((mActive && (mSpriteNames.Count > 1)) && (Application.isPlaying && (mFPS > 0f)))
         {
-            this.mDelta += Time.deltaTime;
-            float num = 1f / ((float) this.mFPS);
-            if (num < this.mDelta)
+            mDelta += Time.deltaTime;
+            var num = 1f / mFPS;
+            if (num < mDelta)
             {
-                this.mDelta = (num <= 0f) ? 0f : (this.mDelta - num);
-                if (++this.mIndex >= this.mSpriteNames.Count)
+                mDelta = (num <= 0f) ? 0f : (mDelta - num);
+                if (++mIndex >= mSpriteNames.Count)
                 {
-                    this.mIndex = 0;
-                    this.mActive = this.loop;
+                    mIndex = 0;
+                    mActive = loop;
                 }
-                if (this.mActive)
+                if (mActive)
                 {
-                    this.mSprite.spriteName = this.mSpriteNames[this.mIndex];
-                    this.mSprite.MakePixelPerfect();
+                    mSprite.spriteName = mSpriteNames[mIndex];
+                    mSprite.MakePixelPerfect();
                 }
             }
         }
@@ -89,7 +89,7 @@ public class UISpriteAnimation : MonoBehaviour
     {
         get
         {
-            return this.mSpriteNames.Count;
+            return mSpriteNames.Count;
         }
     }
 
@@ -97,11 +97,11 @@ public class UISpriteAnimation : MonoBehaviour
     {
         get
         {
-            return this.mFPS;
+            return mFPS;
         }
         set
         {
-            this.mFPS = value;
+            mFPS = value;
         }
     }
 
@@ -109,7 +109,7 @@ public class UISpriteAnimation : MonoBehaviour
     {
         get
         {
-            return this.mActive;
+            return mActive;
         }
     }
 
@@ -117,11 +117,11 @@ public class UISpriteAnimation : MonoBehaviour
     {
         get
         {
-            return this.mLoop;
+            return mLoop;
         }
         set
         {
-            this.mLoop = value;
+            mLoop = value;
         }
     }
 
@@ -129,14 +129,14 @@ public class UISpriteAnimation : MonoBehaviour
     {
         get
         {
-            return this.mPrefix;
+            return mPrefix;
         }
         set
         {
-            if (this.mPrefix != value)
+            if (mPrefix != value)
             {
-                this.mPrefix = value;
-                this.RebuildSpriteList();
+                mPrefix = value;
+                RebuildSpriteList();
             }
         }
     }

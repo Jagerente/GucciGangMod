@@ -12,12 +12,12 @@ public class CharacterCreationComponent : MonoBehaviour
 
     public void nextOption()
     {
-        this.manager.GetComponent<CustomCharacterManager>().nextOption(this.part);
+        manager.GetComponent<CustomCharacterManager>().nextOption(part);
     }
 
     public void prevOption()
     {
-        this.manager.GetComponent<CustomCharacterManager>().prevOption(this.part);
+        manager.GetComponent<CustomCharacterManager>().prevOption(part);
     }
 }
 

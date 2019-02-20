@@ -21,26 +21,26 @@ public class EanAnimation
 
     public void Load(BinaryReader br, FileStream fs)
     {
-        this.Offset = br.ReadInt32();
-        this.Offset += 0x10;
-        this.FrameCount = br.ReadInt32();
-        this.MipWidth = br.ReadInt32();
-        this.MipHeight = br.ReadInt32();
-        this.StartX = br.ReadInt32();
-        this.StartY = br.ReadInt32();
-        this.TileCount = br.ReadUInt16();
-        this.TotalCount = br.ReadUInt16();
-        this.CellWidth = br.ReadUInt16();
-        this.CellHeight = br.ReadUInt16();
-        this.Frames = new EanFrame[this.TotalCount];
-        long position = fs.Position;
-        fs.Seek((long) this.Offset, SeekOrigin.Begin);
-        for (int i = 0; i < this.TotalCount; i++)
+        Offset = br.ReadInt32();
+        Offset += 0x10;
+        FrameCount = br.ReadInt32();
+        MipWidth = br.ReadInt32();
+        MipHeight = br.ReadInt32();
+        StartX = br.ReadInt32();
+        StartY = br.ReadInt32();
+        TileCount = br.ReadUInt16();
+        TotalCount = br.ReadUInt16();
+        CellWidth = br.ReadUInt16();
+        CellHeight = br.ReadUInt16();
+        Frames = new EanFrame[TotalCount];
+        var position = fs.Position;
+        fs.Seek(Offset, SeekOrigin.Begin);
+        for (var i = 0; i < TotalCount; i++)
         {
-            this.Frames[i].X = br.ReadUInt16();
-            this.Frames[i].Y = br.ReadUInt16();
-            this.Frames[i].Width = br.ReadUInt16();
-            this.Frames[i].Height = br.ReadUInt16();
+            Frames[i].X = br.ReadUInt16();
+            Frames[i].Y = br.ReadUInt16();
+            Frames[i].Width = br.ReadUInt16();
+            Frames[i].Height = br.ReadUInt16();
         }
         fs.Seek(position, SeekOrigin.Begin);
     }

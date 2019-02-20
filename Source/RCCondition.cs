@@ -12,15 +12,15 @@ public class RCCondition
 
     public RCCondition(int sentOperand, int sentType, RCActionHelper sentParam1, RCActionHelper sentParam2)
     {
-        this.operand = sentOperand;
-        this.type = sentType;
-        this.parameter1 = sentParam1;
-        this.parameter2 = sentParam2;
+        operand = sentOperand;
+        type = sentType;
+        parameter1 = sentParam1;
+        parameter2 = sentParam2;
     }
 
     private bool boolCompare(bool baseBool, bool compareBool)
     {
-        switch (this.operand)
+        switch (operand)
         {
             case 2:
                 return (baseBool == compareBool);
@@ -33,32 +33,32 @@ public class RCCondition
 
     public bool checkCondition()
     {
-        switch (this.type)
+        switch (type)
         {
             case 0:
-                return this.intCompare(this.parameter1.returnInt(null), this.parameter2.returnInt(null));
+                return intCompare(parameter1.returnInt(null), parameter2.returnInt(null));
 
             case 1:
-                return this.boolCompare(this.parameter1.returnBool(null), this.parameter2.returnBool(null));
+                return boolCompare(parameter1.returnBool(null), parameter2.returnBool(null));
 
             case 2:
-                return this.stringCompare(this.parameter1.returnString(null), this.parameter2.returnString(null));
+                return stringCompare(parameter1.returnString(null), parameter2.returnString(null));
 
             case 3:
-                return this.floatCompare(this.parameter1.returnFloat(null), this.parameter2.returnFloat(null));
+                return floatCompare(parameter1.returnFloat(null), parameter2.returnFloat(null));
 
             case 4:
-                return this.playerCompare(this.parameter1.returnPlayer(null), this.parameter2.returnPlayer(null));
+                return playerCompare(parameter1.returnPlayer(null), parameter2.returnPlayer(null));
 
             case 5:
-                return this.titanCompare(this.parameter1.returnTitan(null), this.parameter2.returnTitan(null));
+                return titanCompare(parameter1.returnTitan(null), parameter2.returnTitan(null));
         }
         return false;
     }
 
     private bool floatCompare(float baseFloat, float compareFloat)
     {
-        switch (this.operand)
+        switch (operand)
         {
             case 0:
                 if (baseFloat >= compareFloat)
@@ -107,7 +107,7 @@ public class RCCondition
 
     private bool intCompare(int baseInt, int compareInt)
     {
-        switch (this.operand)
+        switch (operand)
         {
             case 0:
                 if (baseInt >= compareInt)
@@ -156,7 +156,7 @@ public class RCCondition
 
     private bool playerCompare(PhotonPlayer basePlayer, PhotonPlayer comparePlayer)
     {
-        switch (this.operand)
+        switch (operand)
         {
             case 2:
                 return (basePlayer == comparePlayer);
@@ -169,7 +169,7 @@ public class RCCondition
 
     private bool stringCompare(string baseString, string compareString)
     {
-        switch (this.operand)
+        switch (operand)
         {
             case 0:
                 if (!(baseString == compareString))
@@ -232,7 +232,7 @@ public class RCCondition
 
     private bool titanCompare(TITAN baseTitan, TITAN compareTitan)
     {
-        switch (this.operand)
+        switch (operand)
         {
             case 2:
                 return (baseTitan == compareTitan);

@@ -25,44 +25,44 @@ public class UIDraggableCamera : IgnoreTimeScale
 
     private void Awake()
     {
-        this.mCam = base.camera;
-        this.mTrans = base.transform;
-        if (this.rootForBounds == null)
+        mCam = camera;
+        mTrans = transform;
+        if (rootForBounds == null)
         {
-            Debug.LogError(NGUITools.GetHierarchy(base.gameObject) + " needs the 'Root For Bounds' parameter to be set", this);
-            base.enabled = false;
+            Debug.LogError(NGUITools.GetHierarchy(gameObject) + " needs the 'Root For Bounds' parameter to be set", this);
+            enabled = false;
         }
     }
 
     private Vector3 CalculateConstrainOffset()
     {
-        if ((this.rootForBounds == null) || (this.rootForBounds.childCount == 0))
+        if ((rootForBounds == null) || (rootForBounds.childCount == 0))
         {
             return Vector3.zero;
         }
-        Vector3 position = new Vector3(this.mCam.rect.xMin * Screen.width, this.mCam.rect.yMin * Screen.height, 0f);
-        Vector3 vector2 = new Vector3(this.mCam.rect.xMax * Screen.width, this.mCam.rect.yMax * Screen.height, 0f);
-        position = this.mCam.ScreenToWorldPoint(position);
-        vector2 = this.mCam.ScreenToWorldPoint(vector2);
-        Vector2 minRect = new Vector2(this.mBounds.min.x, this.mBounds.min.y);
-        Vector2 maxRect = new Vector2(this.mBounds.max.x, this.mBounds.max.y);
-        return (Vector3) NGUIMath.ConstrainRect(minRect, maxRect, position, vector2);
+        var position = new Vector3(mCam.rect.xMin * Screen.width, mCam.rect.yMin * Screen.height, 0f);
+        var vector2 = new Vector3(mCam.rect.xMax * Screen.width, mCam.rect.yMax * Screen.height, 0f);
+        position = mCam.ScreenToWorldPoint(position);
+        vector2 = mCam.ScreenToWorldPoint(vector2);
+        var minRect = new Vector2(mBounds.min.x, mBounds.min.y);
+        var maxRect = new Vector2(mBounds.max.x, mBounds.max.y);
+        return NGUIMath.ConstrainRect(minRect, maxRect, position, vector2);
     }
 
     public bool ConstrainToBounds(bool immediate)
     {
-        if ((this.mTrans != null) && (this.rootForBounds != null))
+        if ((mTrans != null) && (rootForBounds != null))
         {
-            Vector3 vector = this.CalculateConstrainOffset();
+            var vector = CalculateConstrainOffset();
             if (vector.magnitude > 0f)
             {
                 if (immediate)
                 {
-                    this.mTrans.position -= vector;
+                    mTrans.position -= vector;
                 }
                 else
                 {
-                    SpringPosition position = SpringPosition.Begin(base.gameObject, this.mTrans.position - vector, 13f);
+                    var position = SpringPosition.Begin(gameObject, mTrans.position - vector, 13f);
                     position.ignoreTimeScale = true;
                     position.worldSpace = true;
                 }
@@ -74,24 +74,24 @@ public class UIDraggableCamera : IgnoreTimeScale
 
     public void Drag(Vector2 delta)
     {
-        if (this.smoothDragStart && !this.mDragStarted)
+        if (smoothDragStart && !mDragStarted)
         {
-            this.mDragStarted = true;
+            mDragStarted = true;
         }
         else
         {
             UICamera.currentTouch.clickNotification = UICamera.ClickNotification.BasedOnDelta;
-            if (this.mRoot != null)
+            if (mRoot != null)
             {
-                delta = (Vector2) (delta * this.mRoot.pixelSizeAdjustment);
+                delta = delta * mRoot.pixelSizeAdjustment;
             }
-            Vector2 vector = Vector2.Scale(delta, -this.scale);
-            this.mTrans.localPosition += (Vector3)vector;
-            this.mMomentum = Vector2.Lerp(this.mMomentum, this.mMomentum + ((Vector2) (vector * (0.01f * this.momentumAmount))), 0.67f);
-            if ((this.dragEffect != UIDragObject.DragEffect.MomentumAndSpring) && this.ConstrainToBounds(true))
+            var vector = Vector2.Scale(delta, -scale);
+            mTrans.localPosition += (Vector3)vector;
+            mMomentum = Vector2.Lerp(mMomentum, mMomentum + vector * (0.01f * momentumAmount), 0.67f);
+            if ((dragEffect != UIDragObject.DragEffect.MomentumAndSpring) && ConstrainToBounds(true))
             {
-                this.mMomentum = Vector2.zero;
-                this.mScroll = 0f;
+                mMomentum = Vector2.zero;
+                mScroll = 0f;
             }
         }
     }
@@ -100,69 +100,69 @@ public class UIDraggableCamera : IgnoreTimeScale
     {
         if (isPressed)
         {
-            this.mDragStarted = false;
+            mDragStarted = false;
         }
-        if (this.rootForBounds != null)
+        if (rootForBounds != null)
         {
-            this.mPressed = isPressed;
+            mPressed = isPressed;
             if (isPressed)
             {
-                this.mBounds = NGUIMath.CalculateAbsoluteWidgetBounds(this.rootForBounds);
-                this.mMomentum = Vector2.zero;
-                this.mScroll = 0f;
-                SpringPosition component = base.GetComponent<SpringPosition>();
+                mBounds = NGUIMath.CalculateAbsoluteWidgetBounds(rootForBounds);
+                mMomentum = Vector2.zero;
+                mScroll = 0f;
+                var component = GetComponent<SpringPosition>();
                 if (component != null)
                 {
                     component.enabled = false;
                 }
             }
-            else if (this.dragEffect == UIDragObject.DragEffect.MomentumAndSpring)
+            else if (dragEffect == UIDragObject.DragEffect.MomentumAndSpring)
             {
-                this.ConstrainToBounds(false);
+                ConstrainToBounds(false);
             }
         }
     }
 
     public void Scroll(float delta)
     {
-        if (base.enabled && NGUITools.GetActive(base.gameObject))
+        if (enabled && NGUITools.GetActive(gameObject))
         {
-            if (Mathf.Sign(this.mScroll) != Mathf.Sign(delta))
+            if (Mathf.Sign(mScroll) != Mathf.Sign(delta))
             {
-                this.mScroll = 0f;
+                mScroll = 0f;
             }
-            this.mScroll += delta * this.scrollWheelFactor;
+            mScroll += delta * scrollWheelFactor;
         }
     }
 
     private void Start()
     {
-        this.mRoot = NGUITools.FindInParents<UIRoot>(base.gameObject);
+        mRoot = NGUITools.FindInParents<UIRoot>(gameObject);
     }
 
     private void Update()
     {
-        float deltaTime = base.UpdateRealTimeDelta();
-        if (this.mPressed)
+        var deltaTime = UpdateRealTimeDelta();
+        if (mPressed)
         {
-            SpringPosition component = base.GetComponent<SpringPosition>();
+            var component = GetComponent<SpringPosition>();
             if (component != null)
             {
                 component.enabled = false;
             }
-            this.mScroll = 0f;
+            mScroll = 0f;
         }
         else
         {
-            this.mMomentum += (Vector2) (this.scale * (this.mScroll * 20f));
-            this.mScroll = NGUIMath.SpringLerp(this.mScroll, 0f, 20f, deltaTime);
-            if (this.mMomentum.magnitude > 0.01f)
+            mMomentum += scale * (mScroll * 20f);
+            mScroll = NGUIMath.SpringLerp(mScroll, 0f, 20f, deltaTime);
+            if (mMomentum.magnitude > 0.01f)
             {
-                this.mTrans.localPosition += (Vector3)NGUIMath.SpringDampen(ref this.mMomentum, 9f, deltaTime);
-                this.mBounds = NGUIMath.CalculateAbsoluteWidgetBounds(this.rootForBounds);
-                if (!this.ConstrainToBounds(this.dragEffect == UIDragObject.DragEffect.None))
+                mTrans.localPosition += (Vector3)NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
+                mBounds = NGUIMath.CalculateAbsoluteWidgetBounds(rootForBounds);
+                if (!ConstrainToBounds(dragEffect == UIDragObject.DragEffect.None))
                 {
-                    SpringPosition position2 = base.GetComponent<SpringPosition>();
+                    var position2 = GetComponent<SpringPosition>();
                     if (position2 != null)
                     {
                         position2.enabled = false;
@@ -170,20 +170,20 @@ public class UIDraggableCamera : IgnoreTimeScale
                 }
                 return;
             }
-            this.mScroll = 0f;
+            mScroll = 0f;
         }
-        NGUIMath.SpringDampen(ref this.mMomentum, 9f, deltaTime);
+        NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
     }
 
     public Vector2 currentMomentum
     {
         get
         {
-            return this.mMomentum;
+            return mMomentum;
         }
         set
         {
-            this.mMomentum = value;
+            mMomentum = value;
         }
     }
 }

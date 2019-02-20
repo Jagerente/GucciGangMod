@@ -12,7 +12,7 @@ public class BTN_choose_titan : MonoBehaviour
     {
         if (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.PVP_AHSS)
         {
-            string id = "AHSS";
+            var id = "AHSS";
             NGUITools.SetActive(GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0], true);
             GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().needChooseSide = false;
             if (!PhotonNetwork.isMasterClient && (GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().roundTime > 60f))
@@ -29,9 +29,9 @@ public class BTN_choose_titan : MonoBehaviour
             NGUITools.SetActive(GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
             IN_GAME_MAIN_CAMERA.usingTitan = false;
             GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setHUDposition();
-            Hashtable hashtable = new Hashtable();
+            var hashtable = new Hashtable();
             hashtable.Add(PhotonPlayerProperty.character, id);
-            Hashtable propertiesToSet = hashtable;
+            var propertiesToSet = hashtable;
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
         }
         else
@@ -40,8 +40,8 @@ public class BTN_choose_titan : MonoBehaviour
             {
                 GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = GameObject.Find("PVPchkPtT");
             }
-            string selection = GameObject.Find("PopupListCharacterTITAN").GetComponent<UIPopupList>().selection;
-            NGUITools.SetActive(base.transform.parent.gameObject, false);
+            var selection = GameObject.Find("PopupListCharacterTITAN").GetComponent<UIPopupList>().selection;
+            NGUITools.SetActive(transform.parent.gameObject, false);
             NGUITools.SetActive(GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0], true);
             if ((!PhotonNetwork.isMasterClient && (GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().roundTime > 60f)) || GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().justSuicide)
             {
@@ -65,7 +65,7 @@ public class BTN_choose_titan : MonoBehaviour
     {
         if (!LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan)
         {
-            base.gameObject.GetComponent<UIButton>().isEnabled = false;
+            gameObject.GetComponent<UIButton>().isEnabled = false;
         }
     }
 }

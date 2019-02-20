@@ -22,15 +22,15 @@ public class BMGlyph
 
     public int GetKerning(int previousChar)
     {
-        if (this.kerning != null)
+        if (kerning != null)
         {
-            int num = 0;
-            int count = this.kerning.Count;
+            var num = 0;
+            var count = kerning.Count;
             while (num < count)
             {
-                if (this.kerning[num] == previousChar)
+                if (kerning[num] == previousChar)
                 {
-                    return this.kerning[num + 1];
+                    return kerning[num + 1];
                 }
                 num += 2;
             }
@@ -40,47 +40,47 @@ public class BMGlyph
 
     public void SetKerning(int previousChar, int amount)
     {
-        if (this.kerning == null)
+        if (kerning == null)
         {
-            this.kerning = new List<int>();
+            kerning = new List<int>();
         }
-        for (int i = 0; i < this.kerning.Count; i += 2)
+        for (var i = 0; i < kerning.Count; i += 2)
         {
-            if (this.kerning[i] == previousChar)
+            if (kerning[i] == previousChar)
             {
-                this.kerning[i + 1] = amount;
+                kerning[i + 1] = amount;
                 return;
             }
         }
-        this.kerning.Add(previousChar);
-        this.kerning.Add(amount);
+        kerning.Add(previousChar);
+        kerning.Add(amount);
     }
 
     public void Trim(int xMin, int yMin, int xMax, int yMax)
     {
-        int num = this.x + this.width;
-        int num2 = this.y + this.height;
-        if (this.x < xMin)
+        var num = x + width;
+        var num2 = y + height;
+        if (x < xMin)
         {
-            int num3 = xMin - this.x;
-            this.x += num3;
-            this.width -= num3;
-            this.offsetX += num3;
+            var num3 = xMin - x;
+            x += num3;
+            width -= num3;
+            offsetX += num3;
         }
-        if (this.y < yMin)
+        if (y < yMin)
         {
-            int num4 = yMin - this.y;
-            this.y += num4;
-            this.height -= num4;
-            this.offsetY += num4;
+            var num4 = yMin - y;
+            y += num4;
+            height -= num4;
+            offsetY += num4;
         }
         if (num > xMax)
         {
-            this.width -= num - xMax;
+            width -= num - xMax;
         }
         if (num2 > yMax)
         {
-            this.height -= num2 - yMax;
+            height -= num2 - yMax;
         }
     }
 }

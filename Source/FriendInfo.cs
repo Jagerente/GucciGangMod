@@ -7,14 +7,14 @@ public class FriendInfo
 {
     public override string ToString()
     {
-        return string.Format("{0}\t is: {1}", this.Name, this.IsOnline ? (!this.IsInRoom ? "on master" : "playing") : "offline");
+        return string.Format("{0}\t is: {1}", Name, IsOnline ? (!IsInRoom ? "on master" : "playing") : "offline");
     }
 
     public bool IsInRoom
     {
         get
         {
-            return (this.IsOnline && !string.IsNullOrEmpty(this.Room));
+            return (IsOnline && !string.IsNullOrEmpty(Room));
         }
     }
 

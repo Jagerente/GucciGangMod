@@ -15,15 +15,15 @@ internal class EanFile
 
     public void Load(BinaryReader br, FileStream fs)
     {
-        this.Header = br.ReadInt32();
-        this.Version = br.ReadInt32();
-        this.Reserved = br.ReadInt32();
-        this.AnimCount = br.ReadInt32();
-        this.Anims = new EanAnimation[this.AnimCount];
-        for (int i = 0; i < this.AnimCount; i++)
+        Header = br.ReadInt32();
+        Version = br.ReadInt32();
+        Reserved = br.ReadInt32();
+        AnimCount = br.ReadInt32();
+        Anims = new EanAnimation[AnimCount];
+        for (var i = 0; i < AnimCount; i++)
         {
-            this.Anims[i] = new EanAnimation();
-            this.Anims[i].Load(br, fs);
+            Anims[i] = new EanAnimation();
+            Anims[i].Load(br, fs);
         }
     }
 }

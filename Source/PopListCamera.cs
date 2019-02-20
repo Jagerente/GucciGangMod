@@ -11,25 +11,25 @@ public class PopListCamera : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("cameraType"))
         {
-            base.GetComponent<UIPopupList>().selection = PlayerPrefs.GetString("cameraType");
+            GetComponent<UIPopupList>().selection = PlayerPrefs.GetString("cameraType");
         }
     }
 
     private void OnSelectionChange()
     {
-        if (base.GetComponent<UIPopupList>().selection == "ORIGINAL")
+        if (GetComponent<UIPopupList>().selection == "ORIGINAL")
         {
             IN_GAME_MAIN_CAMERA.cameraMode = CAMERA_TYPE.ORIGINAL;
         }
-        if (base.GetComponent<UIPopupList>().selection == "WOW")
+        if (GetComponent<UIPopupList>().selection == "WOW")
         {
             IN_GAME_MAIN_CAMERA.cameraMode = CAMERA_TYPE.WOW;
         }
-        if (base.GetComponent<UIPopupList>().selection == "TPS")
+        if (GetComponent<UIPopupList>().selection == "TPS")
         {
             IN_GAME_MAIN_CAMERA.cameraMode = CAMERA_TYPE.TPS;
         }
-        PlayerPrefs.SetString("cameraType", base.GetComponent<UIPopupList>().selection);
+        PlayerPrefs.SetString("cameraType", GetComponent<UIPopupList>().selection);
     }
 }
 

@@ -19,19 +19,19 @@ public class PanelServerList : MonoBehaviour
 
     private void showTxt()
     {
-        if (this.lang != Language.type)
+        if (lang != Language.type)
         {
-            this.lang = Language.type;
-            this.label_name.GetComponent<UILabel>().text = Language.server_name[Language.type];
-            this.label_refresh.GetComponent<UILabel>().text = Language.btn_refresh[Language.type];
-            this.label_back.GetComponent<UILabel>().text = Language.btn_back[Language.type];
-            this.label_create.GetComponent<UILabel>().text = Language.btn_create_game[Language.type];
+            lang = Language.type;
+            label_name.GetComponent<UILabel>().text = Language.server_name[Language.type];
+            label_refresh.GetComponent<UILabel>().text = Language.btn_refresh[Language.type];
+            label_back.GetComponent<UILabel>().text = Language.btn_back[Language.type];
+            label_create.GetComponent<UILabel>().text = Language.btn_create_game[Language.type];
         }
     }
 
     private void Update()
     {
-        this.showTxt();
+        showTxt();
     }
 }
 

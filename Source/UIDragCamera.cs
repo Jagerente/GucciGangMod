@@ -14,45 +14,45 @@ public class UIDragCamera : IgnoreTimeScale
 
     private void Awake()
     {
-        if (this.target != null)
+        if (target != null)
         {
-            if (this.draggableCamera == null)
+            if (draggableCamera == null)
             {
-                this.draggableCamera = this.target.GetComponent<UIDraggableCamera>();
-                if (this.draggableCamera == null)
+                draggableCamera = target.GetComponent<UIDraggableCamera>();
+                if (draggableCamera == null)
                 {
-                    this.draggableCamera = this.target.gameObject.AddComponent<UIDraggableCamera>();
+                    draggableCamera = target.gameObject.AddComponent<UIDraggableCamera>();
                 }
             }
-            this.target = null;
+            target = null;
         }
-        else if (this.draggableCamera == null)
+        else if (draggableCamera == null)
         {
-            this.draggableCamera = NGUITools.FindInParents<UIDraggableCamera>(base.gameObject);
+            draggableCamera = NGUITools.FindInParents<UIDraggableCamera>(gameObject);
         }
     }
 
     private void OnDrag(Vector2 delta)
     {
-        if ((base.enabled && NGUITools.GetActive(base.gameObject)) && (this.draggableCamera != null))
+        if ((enabled && NGUITools.GetActive(gameObject)) && (draggableCamera != null))
         {
-            this.draggableCamera.Drag(delta);
+            draggableCamera.Drag(delta);
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if ((base.enabled && NGUITools.GetActive(base.gameObject)) && (this.draggableCamera != null))
+        if ((enabled && NGUITools.GetActive(gameObject)) && (draggableCamera != null))
         {
-            this.draggableCamera.Press(isPressed);
+            draggableCamera.Press(isPressed);
         }
     }
 
     private void OnScroll(float delta)
     {
-        if ((base.enabled && NGUITools.GetActive(base.gameObject)) && (this.draggableCamera != null))
+        if ((enabled && NGUITools.GetActive(gameObject)) && (draggableCamera != null))
         {
-            this.draggableCamera.Scroll(delta);
+            draggableCamera.Scroll(delta);
         }
     }
 }

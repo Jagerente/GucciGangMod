@@ -9,7 +9,7 @@ public class LanguageChangeListener : MonoBehaviour
 {
     private void OnSelectionChange()
     {
-        Language.type = Language.GetLangIndex(base.GetComponent<UIPopupList>().selection);
+        Language.type = Language.GetLangIndex(GetComponent<UIPopupList>().selection);
         PlayerPrefs.SetInt("language", Language.type);
     }
 
@@ -27,11 +27,11 @@ public class LanguageChangeListener : MonoBehaviour
                 Language.type = 0;
             }
             Language.init();
-            base.GetComponent<UIPopupList>().selection = Language.GetLang(Language.type);
+            GetComponent<UIPopupList>().selection = Language.GetLang(Language.type);
         }
         else
         {
-            base.GetComponent<UIPopupList>().selection = Language.GetLang(Language.type);
+            GetComponent<UIPopupList>().selection = Language.GetLang(Language.type);
         }
     }
 }

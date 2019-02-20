@@ -11,9 +11,9 @@ public class CatchDestroy : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (this.target != null)
+        if (target != null)
         {
-            UnityEngine.Object.Destroy(this.target);
+            Destroy(target);
         }
     }
 }

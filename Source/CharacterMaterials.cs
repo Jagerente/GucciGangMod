@@ -74,8 +74,8 @@ public class CharacterMaterials
             newMaterial("hair_rico");
             newMaterial("hair_sasha");
             newMaterial("hair_mikasa");
-            Texture texture = (Texture) UnityEngine.Object.Instantiate(Resources.Load("NewTexture/aottg_hero_eyes"));
-            Material material = (Material) UnityEngine.Object.Instantiate(Resources.Load("NewTexture/MaterialGLASS"));
+            var texture = (Texture) Object.Instantiate(Resources.Load("NewTexture/aottg_hero_eyes"));
+            var material = (Material) Object.Instantiate(Resources.Load("NewTexture/MaterialGLASS"));
             material.mainTexture = texture;
             materials.Add("aottg_hero_eyes", material);
         }
@@ -83,8 +83,8 @@ public class CharacterMaterials
 
     private static void newMaterial(string pref)
     {
-        Texture texture = (Texture) UnityEngine.Object.Instantiate(Resources.Load("NewTexture/" + pref));
-        Material material = (Material) UnityEngine.Object.Instantiate(Resources.Load("NewTexture/MaterialCharacter"));
+        var texture = (Texture) Object.Instantiate(Resources.Load("NewTexture/" + pref));
+        var material = (Material) Object.Instantiate(Resources.Load("NewTexture/MaterialCharacter"));
         material.mainTexture = texture;
         materials.Add(pref, material);
     }

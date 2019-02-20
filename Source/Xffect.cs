@@ -18,79 +18,79 @@ public class Xffect : MonoBehaviour
 
     public void Active()
     {
-        IEnumerator enumerator = base.transform.GetEnumerator();
+        var enumerator = transform.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                Transform current = (Transform) enumerator.Current;
+                var current = (Transform) enumerator.Current;
                 current.gameObject.SetActive(true);
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        base.gameObject.SetActive(true);
-        this.ElapsedTime = 0f;
+        gameObject.SetActive(true);
+        ElapsedTime = 0f;
     }
 
     private void Awake()
     {
-        this.Initialize();
+        Initialize();
     }
 
     public void DeActive()
     {
-        IEnumerator enumerator = base.transform.GetEnumerator();
+        var enumerator = transform.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                Transform current = (Transform) enumerator.Current;
+                var current = (Transform) enumerator.Current;
                 current.gameObject.SetActive(false);
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        base.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void Initialize()
     {
-        if (this.EflList.Count <= 0)
+        if (EflList.Count <= 0)
         {
-            IEnumerator enumerator = base.transform.GetEnumerator();
+            var enumerator = transform.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
                 {
-                    Transform current = (Transform) enumerator.Current;
-                    EffectLayer component = (EffectLayer) current.GetComponent(typeof(EffectLayer));
+                    var current = (Transform) enumerator.Current;
+                    var component = (EffectLayer) current.GetComponent(typeof(EffectLayer));
                     if ((component != null) && (component.Material != null))
                     {
                         MeshFilter filter;
                         MeshRenderer renderer;
-                        Material material = component.Material;
-                        this.EflList.Add(component);
-                        Transform transform2 = base.transform.Find("mesh " + material.name);
+                        var material = component.Material;
+                        EflList.Add(component);
+                        var transform2 = transform.Find("mesh " + material.name);
                         if (transform2 != null)
                         {
                             filter = (MeshFilter) transform2.GetComponent(typeof(MeshFilter));
                             renderer = (MeshRenderer) transform2.GetComponent(typeof(MeshRenderer));
                             filter.mesh.Clear();
-                            this.MatDic[material.name] = new VertexPool(filter.mesh, material);
+                            MatDic[material.name] = new VertexPool(filter.mesh, material);
                         }
-                        if (!this.MatDic.ContainsKey(material.name))
+                        if (!MatDic.ContainsKey(material.name))
                         {
-                            GameObject obj2 = new GameObject("mesh " + material.name) {
-                                transform = { parent = base.transform }
+                            var obj2 = new GameObject("mesh " + material.name) {
+                                transform = { parent = transform }
                             };
                             obj2.AddComponent("MeshFilter");
                             obj2.AddComponent("MeshRenderer");
@@ -99,38 +99,38 @@ public class Xffect : MonoBehaviour
                             renderer.castShadows = false;
                             renderer.receiveShadows = false;
                             renderer.renderer.material = material;
-                            this.MatDic[material.name] = new VertexPool(filter.mesh, material);
+                            MatDic[material.name] = new VertexPool(filter.mesh, material);
                         }
                     }
                 }
             }
             finally
             {
-                IDisposable disposable = enumerator as IDisposable;
+                var disposable = enumerator as IDisposable;
                 if (disposable != null)
                 	disposable.Dispose();
             }
-            foreach (EffectLayer layer2 in this.EflList)
+            foreach (var layer2 in EflList)
             {
-                layer2.Vertexpool = this.MatDic[layer2.Material.name];
+                layer2.Vertexpool = MatDic[layer2.Material.name];
             }
         }
     }
 
     private void LateUpdate()
     {
-        foreach (KeyValuePair<string, VertexPool> pair in this.MatDic)
+        foreach (var pair in MatDic)
         {
             pair.Value.LateUpdate();
         }
-        if ((this.ElapsedTime > this.LifeTime) && (this.LifeTime >= 0f))
+        if ((ElapsedTime > LifeTime) && (LifeTime >= 0f))
         {
-            foreach (EffectLayer layer in this.EflList)
+            foreach (var layer in EflList)
             {
                 layer.Reset();
             }
-            this.DeActive();
-            this.ElapsedTime = 0f;
+            DeActive();
+            ElapsedTime = 0f;
         }
     }
 
@@ -140,7 +140,7 @@ public class Xffect : MonoBehaviour
 
     public void SetClient(Transform client)
     {
-        foreach (EffectLayer layer in this.EflList)
+        foreach (var layer in EflList)
         {
             layer.ClientTransform = client;
         }
@@ -148,7 +148,7 @@ public class Xffect : MonoBehaviour
 
     public void SetDirectionAxis(Vector3 axis)
     {
-        foreach (EffectLayer layer in this.EflList)
+        foreach (var layer in EflList)
         {
             layer.OriVelocityAxis = axis;
         }
@@ -156,7 +156,7 @@ public class Xffect : MonoBehaviour
 
     public void SetEmitPosition(Vector3 pos)
     {
-        foreach (EffectLayer layer in this.EflList)
+        foreach (var layer in EflList)
         {
             layer.EmitPoint = pos;
         }
@@ -164,15 +164,15 @@ public class Xffect : MonoBehaviour
 
     private void Start()
     {
-        base.transform.position = Vector3.zero;
-        base.transform.rotation = Quaternion.identity;
-        base.transform.localScale = Vector3.one;
-        IEnumerator enumerator = base.transform.GetEnumerator();
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
+        var enumerator = transform.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                Transform current = (Transform) enumerator.Current;
+                var current = (Transform) enumerator.Current;
                 current.transform.position = Vector3.zero;
                 current.transform.rotation = Quaternion.identity;
                 current.transform.localScale = Vector3.one;
@@ -180,11 +180,11 @@ public class Xffect : MonoBehaviour
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        foreach (EffectLayer layer in this.EflList)
+        foreach (var layer in EflList)
         {
             layer.StartCustom();
         }
@@ -192,10 +192,10 @@ public class Xffect : MonoBehaviour
 
     private void Update()
     {
-        this.ElapsedTime += Time.deltaTime;
-        foreach (EffectLayer layer in this.EflList)
+        ElapsedTime += Time.deltaTime;
+        foreach (var layer in EflList)
         {
-            if (this.ElapsedTime > layer.StartTime)
+            if (ElapsedTime > layer.StartTime)
             {
                 layer.FixedUpdateCustom();
             }

@@ -13,9 +13,9 @@ public class UIButtonActivate : MonoBehaviour
 
     private void OnClick()
     {
-        if (this.target != null)
+        if (target != null)
         {
-            NGUITools.SetActive(this.target, this.state);
+            NGUITools.SetActive(target, state);
         }
     }
 }

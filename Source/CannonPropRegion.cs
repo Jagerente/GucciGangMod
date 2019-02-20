@@ -16,19 +16,19 @@ public class CannonPropRegion : Photon.MonoBehaviour
 
     public void OnDestroy()
     {
-        if (this.storedHero != null)
+        if (storedHero != null)
         {
-            this.storedHero.myCannonRegion = null;
-            this.storedHero.ClearPopup();
+            storedHero.myCannonRegion = null;
+            storedHero.ClearPopup();
         }
     }
 
     public void OnTriggerEnter(Collider collider)
     {
-        GameObject gameObject = collider.transform.root.gameObject;
+        var gameObject = collider.transform.root.gameObject;
         if ((gameObject.layer == 8) && gameObject.GetPhotonView().isMine)
         {
-            HERO component = gameObject.GetComponent<HERO>();
+            var component = gameObject.GetComponent<HERO>();
             if ((component != null) && !component.isCannon)
             {
                 if (component.myCannonRegion != null)
@@ -36,22 +36,22 @@ public class CannonPropRegion : Photon.MonoBehaviour
                     component.myCannonRegion.storedHero = null;
                 }
                 component.myCannonRegion = this;
-                this.storedHero = component;
+                storedHero = component;
             }
         }
     }
 
     public void OnTriggerExit(Collider collider)
     {
-        GameObject gameObject = collider.transform.root.gameObject;
+        var gameObject = collider.transform.root.gameObject;
         if ((gameObject.layer == 8) && gameObject.GetPhotonView().isMine)
         {
-            HERO component = gameObject.GetComponent<HERO>();
-            if (((component != null) && (this.storedHero != null)) && (component == this.storedHero))
+            var component = gameObject.GetComponent<HERO>();
+            if (((component != null) && (storedHero != null)) && (component == storedHero))
             {
                 component.myCannonRegion = null;
                 component.ClearPopup();
-                this.storedHero = null;
+                storedHero = null;
             }
         }
     }
@@ -59,15 +59,15 @@ public class CannonPropRegion : Photon.MonoBehaviour
     [RPC]
     public void RequestControlRPC(int viewID, PhotonMessageInfo info)
     {
-        if ((base.photonView.isMine && PhotonNetwork.isMasterClient) && !this.disabled)
+        if ((photonView.isMine && PhotonNetwork.isMasterClient) && !disabled)
         {
-            HERO component = PhotonView.Find(viewID).gameObject.GetComponent<HERO>();
+            var component = PhotonView.Find(viewID).gameObject.GetComponent<HERO>();
             if (((component != null) && (component.photonView.owner == info.sender)) && !FengGameManagerMKII.instance.allowedToCannon.ContainsKey(info.sender.ID))
             {
-                this.disabled = true;
-                base.StartCoroutine(this.WaitAndEnable());
-                FengGameManagerMKII.instance.allowedToCannon.Add(info.sender.ID, new CannonValues(base.photonView.viewID, this.settings));
-                component.photonView.RPC("SpawnCannonRPC", info.sender, new object[] { this.settings });
+                disabled = true;
+                StartCoroutine(WaitAndEnable());
+                FengGameManagerMKII.instance.allowedToCannon.Add(info.sender.ID, new CannonValues(photonView.viewID, settings));
+                component.photonView.RPC("SpawnCannonRPC", info.sender, new object[] { settings });
             }
         }
     }
@@ -77,12 +77,12 @@ public class CannonPropRegion : Photon.MonoBehaviour
     {
         if (info.sender.isMasterClient)
         {
-            string[] strArray = settings.Split(new char[] { ',' });
+            var strArray = settings.Split(new char[] { ',' });
             if (strArray.Length > 15)
             {
-                float a = 1f;
+                var a = 1f;
                 GameObject gameObject = null;
-                gameObject = base.gameObject;
+                gameObject = this.gameObject;
                 if (strArray[2] != "default")
                 {
                     if (strArray[2].StartsWith("transparent"))
@@ -92,7 +92,7 @@ public class CannonPropRegion : Photon.MonoBehaviour
                         {
                             a = num2;
                         }
-                        foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>())
+                        foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
                             renderer.material = (Material) FengGameManagerMKII.RCassets.Load("transparent");
                             if ((Convert.ToSingle(strArray[10]) != 1f) || (Convert.ToSingle(strArray[11]) != 1f))
@@ -103,7 +103,7 @@ public class CannonPropRegion : Photon.MonoBehaviour
                     }
                     else
                     {
-                        foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>())
+                        foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
                             renderer.material = (Material) FengGameManagerMKII.RCassets.Load(strArray[2]);
                             if ((Convert.ToSingle(strArray[10]) != 1f) || (Convert.ToSingle(strArray[11]) != 1f))
@@ -113,19 +113,19 @@ public class CannonPropRegion : Photon.MonoBehaviour
                         }
                     }
                 }
-                float x = gameObject.transform.localScale.x * Convert.ToSingle(strArray[3]);
+                var x = gameObject.transform.localScale.x * Convert.ToSingle(strArray[3]);
                 x -= 0.001f;
-                float y = gameObject.transform.localScale.y * Convert.ToSingle(strArray[4]);
-                float z = gameObject.transform.localScale.z * Convert.ToSingle(strArray[5]);
+                var y = gameObject.transform.localScale.y * Convert.ToSingle(strArray[4]);
+                var z = gameObject.transform.localScale.z * Convert.ToSingle(strArray[5]);
                 gameObject.transform.localScale = new Vector3(x, y, z);
                 if (strArray[6] != "0")
                 {
-                    Color color = new Color(Convert.ToSingle(strArray[7]), Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]), a);
-                    foreach (MeshFilter filter in gameObject.GetComponentsInChildren<MeshFilter>())
+                    var color = new Color(Convert.ToSingle(strArray[7]), Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]), a);
+                    foreach (var filter in gameObject.GetComponentsInChildren<MeshFilter>())
                     {
-                        Mesh mesh = filter.mesh;
-                        Color[] colorArray = new Color[mesh.vertexCount];
-                        for (int i = 0; i < mesh.vertexCount; i++)
+                        var mesh = filter.mesh;
+                        var colorArray = new Color[mesh.vertexCount];
+                        for (var i = 0; i < mesh.vertexCount; i++)
                         {
                             colorArray[i] = color;
                         }
@@ -140,16 +140,16 @@ public class CannonPropRegion : Photon.MonoBehaviour
     {
         if (((int) FengGameManagerMKII.settings[0x40]) >= 100)
         {
-            base.GetComponent<Collider>().enabled = false;
+            GetComponent<Collider>().enabled = false;
         }
     }
 
     public IEnumerator WaitAndEnable()
     {
         yield return new WaitForSeconds(5f);
-        if (!this.destroyed)
+        if (!destroyed)
         {
-            this.disabled = false;
+            disabled = false;
         }
     }
 

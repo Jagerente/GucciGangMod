@@ -20,28 +20,28 @@ public class BTN_REGISTER : MonoBehaviour
 
     private string DomainMapper(Match match)
     {
-        IdnMapping mapping = new IdnMapping();
-        string unicode = match.Groups[2].Value;
+        var mapping = new IdnMapping();
+        var unicode = match.Groups[2].Value;
         try
         {
             unicode = mapping.GetAscii(unicode);
         }
         catch (ArgumentException)
         {
-            this.invalid = true;
+            invalid = true;
         }
         return (match.Groups[1].Value + unicode);
     }
 
     public bool IsValidEmail(string strIn)
     {
-        this.invalid = false;
+        invalid = false;
         if (string.IsNullOrEmpty(strIn))
         {
             return false;
         }
-        strIn = Regex.Replace(strIn, "(@)(.+)S", new MatchEvaluator(this.DomainMapper));
-        if (this.invalid)
+        strIn = Regex.Replace(strIn, "(@)(.+)S", new MatchEvaluator(DomainMapper));
+        if (invalid)
         {
             return false;
         }
@@ -50,26 +50,26 @@ public class BTN_REGISTER : MonoBehaviour
 
     private void OnClick()
     {
-        if (this.nameGO.GetComponent<UIInput>().text.Length < 3)
+        if (nameGO.GetComponent<UIInput>().text.Length < 3)
         {
-            this.output.GetComponent<UILabel>().text = "User name too short.";
+            output.GetComponent<UILabel>().text = "User name too short.";
         }
-        else if (this.password.GetComponent<UIInput>().text.Length < 3)
+        else if (password.GetComponent<UIInput>().text.Length < 3)
         {
-            this.output.GetComponent<UILabel>().text = "Password too short.";
+            output.GetComponent<UILabel>().text = "Password too short.";
         }
-        else if (this.password.GetComponent<UIInput>().text != this.password2.GetComponent<UIInput>().text)
+        else if (password.GetComponent<UIInput>().text != password2.GetComponent<UIInput>().text)
         {
-            this.output.GetComponent<UILabel>().text = "Password does not match the confirm password.";
+            output.GetComponent<UILabel>().text = "Password does not match the confirm password.";
         }
-        else if (!this.IsValidEmail(this.email.GetComponent<UIInput>().text))
+        else if (!IsValidEmail(email.GetComponent<UIInput>().text))
         {
-            this.output.GetComponent<UILabel>().text = "This e-mail address is not valid.";
+            output.GetComponent<UILabel>().text = "This e-mail address is not valid.";
         }
         else
         {
-            this.logincomponent.GetComponent<LoginFengKAI>().signup(this.nameGO.GetComponent<UIInput>().text, this.password.GetComponent<UIInput>().text, this.password2.GetComponent<UIInput>().text, this.email.GetComponent<UIInput>().text);
-            this.output.GetComponent<UILabel>().text = "please wait...";
+            logincomponent.GetComponent<LoginFengKAI>().signup(nameGO.GetComponent<UIInput>().text, password.GetComponent<UIInput>().text, password2.GetComponent<UIInput>().text, email.GetComponent<UIInput>().text);
+            output.GetComponent<UILabel>().text = "please wait...";
         }
     }
 }

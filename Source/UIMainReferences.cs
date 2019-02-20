@@ -28,7 +28,7 @@ public class UIMainReferences : MonoBehaviour
 
     public IEnumerator request()
     {
-        string url = Application.dataPath + "/RCAssets.unity3d";
+        var url = Application.dataPath + "/RCAssets.unity3d";
         if (!Application.isWebPlayer)
         {
             url = "File://" + url;
@@ -37,8 +37,8 @@ public class UIMainReferences : MonoBehaviour
         {
             yield return null;
         }
-        int version = 1;
-        using (WWW iteratorVariable2 = WWW.LoadFromCacheOrDownload(url, version))
+        var version = 1;
+        using (var iteratorVariable2 = WWW.LoadFromCacheOrDownload(url, version))
         {
             yield return iteratorVariable2;
             if (iteratorVariable2.error != null)
@@ -52,16 +52,16 @@ public class UIMainReferences : MonoBehaviour
 
     private void Start()
     {
-        base.gameObject.AddComponent<Style>();
-        NGUITools.SetActive(this.panelMain, true);
+        gameObject.AddComponent<Style>();
+        NGUITools.SetActive(panelMain, true);
         GameObject.Find("VERSION").GetComponent<UILabel>().text = string.Empty;
         if (isGAMEFirstLaunch)
         {
             version = fengVersion;
             isGAMEFirstLaunch = false;
-            GameObject target = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("InputManagerController"));
+            var target = (GameObject) Instantiate(Resources.Load("InputManagerController"));
             target.name = "InputManagerController";
-            UnityEngine.Object.DontDestroyOnLoad(target);
+            DontDestroyOnLoad(target);
             FengGameManagerMKII.s = (
                 "verified343," +//0
                 "hair," +//1
@@ -96,7 +96,7 @@ public class UIMainReferences : MonoBehaviour
         }
         if (FengGameManagerMKII.shallRejoin[0] is bool && (bool)FengGameManagerMKII.shallRejoin[0])
         {
-            PhotonNetwork.ConnectToMaster((string)FengGameManagerMKII.shallRejoin[1], 0x13bf, FengGameManagerMKII.applicationId, UIMainReferences.version);
+            PhotonNetwork.ConnectToMaster((string)FengGameManagerMKII.shallRejoin[1], 0x13bf, FengGameManagerMKII.applicationId, version);
         }
     }
 

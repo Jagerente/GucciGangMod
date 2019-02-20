@@ -13,47 +13,47 @@
 
         private Vector3 GetNext2Normal()
         {
-            SplineControlPoint nextControlPoint = this.NextControlPoint;
+            var nextControlPoint = NextControlPoint;
             if (nextControlPoint != null)
             {
                 return nextControlPoint.NextNormal;
             }
-            return this.Normal;
+            return Normal;
         }
 
         private Vector3 GetNext2Position()
         {
-            SplineControlPoint nextControlPoint = this.NextControlPoint;
+            var nextControlPoint = NextControlPoint;
             if (nextControlPoint != null)
             {
                 return nextControlPoint.NextPosition;
             }
-            return this.NextPosition;
+            return NextPosition;
         }
 
         public void Init(Spline owner)
         {
-            this.mSpline = owner;
-            this.SegmentIndex = -1;
+            mSpline = owner;
+            SegmentIndex = -1;
         }
 
         public Vector3 Interpolate(float localF)
         {
             localF = Mathf.Clamp01(localF);
-            return Spline.CatmulRom(this.PreviousPosition, this.Position, this.NextPosition, this.GetNext2Position(), localF);
+            return Spline.CatmulRom(PreviousPosition, Position, NextPosition, GetNext2Position(), localF);
         }
 
         public Vector3 InterpolateNormal(float localF)
         {
             localF = Mathf.Clamp01(localF);
-            return Spline.CatmulRom(this.PreviousNormal, this.Normal, this.NextNormal, this.GetNext2Normal(), localF);
+            return Spline.CatmulRom(PreviousNormal, Normal, NextNormal, GetNext2Normal(), localF);
         }
 
         public bool IsValid
         {
             get
             {
-                return (this.NextControlPoint != null);
+                return (NextControlPoint != null);
             }
         }
 
@@ -61,7 +61,7 @@
         {
             get
             {
-                return this.mSpline.NextControlPoint(this);
+                return mSpline.NextControlPoint(this);
             }
         }
 
@@ -69,7 +69,7 @@
         {
             get
             {
-                return this.mSpline.NextNormal(this);
+                return mSpline.NextNormal(this);
             }
         }
 
@@ -77,7 +77,7 @@
         {
             get
             {
-                return this.mSpline.NextPosition(this);
+                return mSpline.NextPosition(this);
             }
         }
 
@@ -85,7 +85,7 @@
         {
             get
             {
-                return this.mSpline.PreviousControlPoint(this);
+                return mSpline.PreviousControlPoint(this);
             }
         }
 
@@ -93,7 +93,7 @@
         {
             get
             {
-                return this.mSpline.PreviousNormal(this);
+                return mSpline.PreviousNormal(this);
             }
         }
 
@@ -101,7 +101,7 @@
         {
             get
             {
-                return this.mSpline.PreviousPosition(this);
+                return mSpline.PreviousPosition(this);
             }
         }
     }

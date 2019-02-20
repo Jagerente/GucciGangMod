@@ -13,12 +13,12 @@ public class AnimatedColor : MonoBehaviour
 
     private void Awake()
     {
-        this.mWidget = base.GetComponent<UIWidget>();
+        mWidget = GetComponent<UIWidget>();
     }
 
     private void Update()
     {
-        this.mWidget.color = this.color;
+        mWidget.color = color;
     }
 }
 

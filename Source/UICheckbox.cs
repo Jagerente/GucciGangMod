@@ -26,108 +26,108 @@ public class UICheckbox : MonoBehaviour
 
     private void Awake()
     {
-        this.mTrans = base.transform;
-        if (this.checkSprite != null)
+        mTrans = transform;
+        if (checkSprite != null)
         {
-            this.checkSprite.alpha = !this.startsChecked ? 0f : 1f;
+            checkSprite.alpha = !startsChecked ? 0f : 1f;
         }
-        if (this.option)
+        if (option)
         {
-            this.option = false;
-            if (this.radioButtonRoot == null)
+            option = false;
+            if (radioButtonRoot == null)
             {
-                this.radioButtonRoot = this.mTrans.parent;
+                radioButtonRoot = mTrans.parent;
             }
         }
     }
 
     private void OnClick()
     {
-        if (base.enabled)
+        if (enabled)
         {
-            this.isChecked = !this.isChecked;
+            isChecked = !isChecked;
         }
     }
 
     private void Set(bool state)
     {
-        if (!this.mStarted)
+        if (!mStarted)
         {
-            this.mChecked = state;
-            this.startsChecked = state;
-            if (this.checkSprite != null)
+            mChecked = state;
+            startsChecked = state;
+            if (checkSprite != null)
             {
-                this.checkSprite.alpha = !state ? 0f : 1f;
+                checkSprite.alpha = !state ? 0f : 1f;
             }
         }
-        else if (this.mChecked != state)
+        else if (mChecked != state)
         {
-            if ((this.radioButtonRoot != null) && state)
+            if ((radioButtonRoot != null) && state)
             {
-                UICheckbox[] componentsInChildren = this.radioButtonRoot.GetComponentsInChildren<UICheckbox>(true);
-                int index = 0;
-                int length = componentsInChildren.Length;
+                var componentsInChildren = radioButtonRoot.GetComponentsInChildren<UICheckbox>(true);
+                var index = 0;
+                var length = componentsInChildren.Length;
                 while (index < length)
                 {
-                    UICheckbox checkbox = componentsInChildren[index];
-                    if ((checkbox != this) && (checkbox.radioButtonRoot == this.radioButtonRoot))
+                    var checkbox = componentsInChildren[index];
+                    if ((checkbox != this) && (checkbox.radioButtonRoot == radioButtonRoot))
                     {
                         checkbox.Set(false);
                     }
                     index++;
                 }
             }
-            this.mChecked = state;
-            if (this.checkSprite != null)
+            mChecked = state;
+            if (checkSprite != null)
             {
-                if (this.instantTween)
+                if (instantTween)
                 {
-                    this.checkSprite.alpha = !this.mChecked ? 0f : 1f;
+                    checkSprite.alpha = !mChecked ? 0f : 1f;
                 }
                 else
                 {
-                    TweenAlpha.Begin(this.checkSprite.gameObject, 0.15f, !this.mChecked ? 0f : 1f);
+                    TweenAlpha.Begin(checkSprite.gameObject, 0.15f, !mChecked ? 0f : 1f);
                 }
             }
             current = this;
-            if (this.onStateChange != null)
+            if (onStateChange != null)
             {
-                this.onStateChange(this.mChecked);
+                onStateChange(mChecked);
             }
-            if ((this.eventReceiver != null) && !string.IsNullOrEmpty(this.functionName))
+            if ((eventReceiver != null) && !string.IsNullOrEmpty(functionName))
             {
-                this.eventReceiver.SendMessage(this.functionName, this.mChecked, SendMessageOptions.DontRequireReceiver);
+                eventReceiver.SendMessage(functionName, mChecked, SendMessageOptions.DontRequireReceiver);
             }
             current = null;
-            if (this.checkAnimation != null)
+            if (checkAnimation != null)
             {
-                ActiveAnimation.Play(this.checkAnimation, !state ? AnimationOrTween.Direction.Reverse : AnimationOrTween.Direction.Forward);
+                ActiveAnimation.Play(checkAnimation, !state ? AnimationOrTween.Direction.Reverse : AnimationOrTween.Direction.Forward);
             }
         }
     }
 
     private void Start()
     {
-        if (this.eventReceiver == null)
+        if (eventReceiver == null)
         {
-            this.eventReceiver = base.gameObject;
+            eventReceiver = gameObject;
         }
-        this.mChecked = !this.startsChecked;
-        this.mStarted = true;
-        this.Set(this.startsChecked);
+        mChecked = !startsChecked;
+        mStarted = true;
+        Set(startsChecked);
     }
 
     public bool isChecked
     {
         get
         {
-            return this.mChecked;
+            return mChecked;
         }
         set
         {
-            if (((this.radioButtonRoot == null) || value) || (this.optionCanBeNone || !this.mStarted))
+            if (((radioButtonRoot == null) || value) || (optionCanBeNone || !mStarted))
             {
-                this.Set(value);
+                Set(value);
             }
         }
     }

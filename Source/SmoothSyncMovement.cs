@@ -21,13 +21,13 @@ public class SmoothSyncMovement : Photon.MonoBehaviour
     {
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
-            base.enabled = false;
+            enabled = false;
         }
-        this.correctPlayerPos = base.transform.position;
-        this.correctPlayerRot = base.transform.rotation;
-        if (base.rigidbody == null)
+        correctPlayerPos = transform.position;
+        correctPlayerRot = transform.rotation;
+        if (rigidbody == null)
         {
-            this.noVelocity = true;
+            noVelocity = true;
         }
     }
 
@@ -35,41 +35,41 @@ public class SmoothSyncMovement : Photon.MonoBehaviour
     {
         if (stream.isWriting)
         {
-            stream.SendNext(base.transform.position);
-            stream.SendNext(base.transform.rotation);
-            if (!this.noVelocity)
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+            if (!noVelocity)
             {
-                stream.SendNext(base.rigidbody.velocity);
+                stream.SendNext(rigidbody.velocity);
             }
-            if (this.PhotonCamera)
+            if (PhotonCamera)
             {
                 stream.SendNext(Camera.main.transform.rotation);
             }
         }
         else
         {
-            this.correctPlayerPos = (Vector3) stream.ReceiveNext();
-            this.correctPlayerRot = (Quaternion) stream.ReceiveNext();
-            if (!this.noVelocity)
+            correctPlayerPos = (Vector3) stream.ReceiveNext();
+            correctPlayerRot = (Quaternion) stream.ReceiveNext();
+            if (!noVelocity)
             {
-                this.correctPlayerVelocity = (Vector3) stream.ReceiveNext();
+                correctPlayerVelocity = (Vector3) stream.ReceiveNext();
             }
-            if (this.PhotonCamera)
+            if (PhotonCamera)
             {
-                this.correctCameraRot = (Quaternion) stream.ReceiveNext();
+                correctCameraRot = (Quaternion) stream.ReceiveNext();
             }
         }
     }
 
     public void Update()
     {
-        if (!this.disabled && !base.photonView.isMine)
+        if (!disabled && !photonView.isMine)
         {
-            base.transform.position = Vector3.Lerp(base.transform.position, this.correctPlayerPos, Time.deltaTime * this.SmoothingDelay);
-            base.transform.rotation = Quaternion.Lerp(base.transform.rotation, this.correctPlayerRot, Time.deltaTime * this.SmoothingDelay);
-            if (!this.noVelocity)
+            transform.position = Vector3.Lerp(transform.position, correctPlayerPos, Time.deltaTime * SmoothingDelay);
+            transform.rotation = Quaternion.Lerp(transform.rotation, correctPlayerRot, Time.deltaTime * SmoothingDelay);
+            if (!noVelocity)
             {
-                base.rigidbody.velocity = this.correctPlayerVelocity;
+                rigidbody.velocity = correctPlayerVelocity;
             }
         }
     }

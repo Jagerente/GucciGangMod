@@ -11,8 +11,8 @@ public class BTN_TO_LOGIN : MonoBehaviour
 
     private void OnClick()
     {
-        NGUITools.SetActive(base.transform.parent.gameObject, false);
-        NGUITools.SetActive(this.loginPanel, true);
+        NGUITools.SetActive(transform.parent.gameObject, false);
+        NGUITools.SetActive(loginPanel, true);
     }
 }
 

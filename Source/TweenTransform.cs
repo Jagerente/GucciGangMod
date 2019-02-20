@@ -23,7 +23,7 @@ public class TweenTransform : UITweener
 
     public static TweenTransform Begin(GameObject go, float duration, Transform from, Transform to)
     {
-        TweenTransform transform = UITweener.Begin<TweenTransform>(go, duration);
+        var transform = UITweener.Begin<TweenTransform>(go, duration);
         transform.from = from;
         transform.to = to;
         if (duration <= 0f)
@@ -36,30 +36,30 @@ public class TweenTransform : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        if (this.to != null)
+        if (to != null)
         {
-            if (this.mTrans == null)
+            if (mTrans == null)
             {
-                this.mTrans = base.transform;
-                this.mPos = this.mTrans.position;
-                this.mRot = this.mTrans.rotation;
-                this.mScale = this.mTrans.localScale;
+                mTrans = transform;
+                mPos = mTrans.position;
+                mRot = mTrans.rotation;
+                mScale = mTrans.localScale;
             }
-            if (this.from != null)
+            if (from != null)
             {
-                this.mTrans.position = (Vector3) ((this.from.position * (1f - factor)) + (this.to.position * factor));
-                this.mTrans.localScale = (Vector3) ((this.from.localScale * (1f - factor)) + (this.to.localScale * factor));
-                this.mTrans.rotation = Quaternion.Slerp(this.from.rotation, this.to.rotation, factor);
+                mTrans.position = (@from.position * (1f - factor)) + (to.position * factor);
+                mTrans.localScale = (@from.localScale * (1f - factor)) + (to.localScale * factor);
+                mTrans.rotation = Quaternion.Slerp(from.rotation, to.rotation, factor);
             }
             else
             {
-                this.mTrans.position = (Vector3) ((this.mPos * (1f - factor)) + (this.to.position * factor));
-                this.mTrans.localScale = (Vector3) ((this.mScale * (1f - factor)) + (this.to.localScale * factor));
-                this.mTrans.rotation = Quaternion.Slerp(this.mRot, this.to.rotation, factor);
+                mTrans.position = (mPos * (1f - factor)) + (to.position * factor);
+                mTrans.localScale = (mScale * (1f - factor)) + (to.localScale * factor);
+                mTrans.rotation = Quaternion.Slerp(mRot, to.rotation, factor);
             }
-            if (this.parentWhenFinished && isFinished)
+            if (parentWhenFinished && isFinished)
             {
-                this.mTrans.parent = this.to;
+                mTrans.parent = to;
             }
         }
     }

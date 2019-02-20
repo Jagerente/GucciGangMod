@@ -15,18 +15,18 @@ public class BTN_ChangePassword : MonoBehaviour
 
     private void OnClick()
     {
-        if (this.password.GetComponent<UIInput>().text.Length < 3)
+        if (password.GetComponent<UIInput>().text.Length < 3)
         {
-            this.output.GetComponent<UILabel>().text = "Password too short.";
+            output.GetComponent<UILabel>().text = "Password too short.";
         }
-        else if (this.password.GetComponent<UIInput>().text != this.password2.GetComponent<UIInput>().text)
+        else if (password.GetComponent<UIInput>().text != password2.GetComponent<UIInput>().text)
         {
-            this.output.GetComponent<UILabel>().text = "Password does not match the confirm password.";
+            output.GetComponent<UILabel>().text = "Password does not match the confirm password.";
         }
         else
         {
-            this.output.GetComponent<UILabel>().text = "please wait...";
-            this.logincomponent.GetComponent<LoginFengKAI>().cpassword(this.oldpassword.GetComponent<UIInput>().text, this.password.GetComponent<UIInput>().text, this.password2.GetComponent<UIInput>().text);
+            output.GetComponent<UILabel>().text = "please wait...";
+            logincomponent.GetComponent<LoginFengKAI>().cpassword(oldpassword.GetComponent<UIInput>().text, password.GetComponent<UIInput>().text, password2.GetComponent<UIInput>().text);
         }
     }
 }

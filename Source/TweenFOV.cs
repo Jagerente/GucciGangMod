@@ -14,7 +14,7 @@ public class TweenFOV : UITweener
 
     public static TweenFOV Begin(GameObject go, float duration, float to)
     {
-        TweenFOV nfov = UITweener.Begin<TweenFOV>(go, duration);
+        var nfov = UITweener.Begin<TweenFOV>(go, duration);
         nfov.from = nfov.fov;
         nfov.to = to;
         if (duration <= 0f)
@@ -27,18 +27,18 @@ public class TweenFOV : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        this.cachedCamera.fieldOfView = (this.from * (1f - factor)) + (this.to * factor);
+        cachedCamera.fieldOfView = (from * (1f - factor)) + (to * factor);
     }
 
     public Camera cachedCamera
     {
         get
         {
-            if (this.mCam == null)
+            if (mCam == null)
             {
-                this.mCam = base.camera;
+                mCam = camera;
             }
-            return this.mCam;
+            return mCam;
         }
     }
 
@@ -46,11 +46,11 @@ public class TweenFOV : UITweener
     {
         get
         {
-            return this.cachedCamera.fieldOfView;
+            return cachedCamera.fieldOfView;
         }
         set
         {
-            this.cachedCamera.fieldOfView = value;
+            cachedCamera.fieldOfView = value;
         }
     }
 }

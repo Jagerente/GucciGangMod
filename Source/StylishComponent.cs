@@ -34,163 +34,163 @@ public class StylishComponent : MonoBehaviour
 
     public StylishComponent()
     {
-        string[,] textArray1 = new string[,] { { "D", "eja Vu" }, { "C", "asual" }, { "B", "oppin!" }, { "A", "mazing!" }, { "S", "ensational!" }, { "S", "pectacular!!" }, { "S", "tylish!!!" }, { "X", "TREEME!!!" } };
-        this.styleRankText = textArray1;
-        this.chainRankMultiplier = new float[] { 1f, 1.1f, 1.2f, 1.3f, 1.5f, 1.7f, 2f, 2.3f, 2.5f };
-        this.styleRankPoints = new int[] { 350, 950, 0x992, 0x11c6, 0x1b58, 0x3a98, 0x186a0 };
-        this.styleRankDepletions = new int[] { 1, 2, 5, 10, 15, 20, 0x19, 0x19 };
+        var textArray1 = new string[,] { { "D", "eja Vu" }, { "C", "asual" }, { "B", "oppin!" }, { "A", "mazing!" }, { "S", "ensational!" }, { "S", "pectacular!!" }, { "S", "tylish!!!" }, { "X", "TREEME!!!" } };
+        styleRankText = textArray1;
+        chainRankMultiplier = new float[] { 1f, 1.1f, 1.2f, 1.3f, 1.5f, 1.7f, 2f, 2.3f, 2.5f };
+        styleRankPoints = new int[] { 350, 950, 0x992, 0x11c6, 0x1b58, 0x3a98, 0x186a0 };
+        styleRankDepletions = new int[] { 1, 2, 5, 10, 15, 20, 0x19, 0x19 };
     }
 
     private int GetRankPercentage()
     {
-        if ((this.styleRank > 0) && (this.styleRank < this.styleRankPoints.Length))
+        if ((styleRank > 0) && (styleRank < styleRankPoints.Length))
         {
-            return (int) (((this.stylePoints - this.styleRankPoints[this.styleRank - 1]) * 100f) / ((float) (this.styleRankPoints[this.styleRank] - this.styleRankPoints[this.styleRank - 1])));
+            return (int) (((stylePoints - styleRankPoints[styleRank - 1]) * 100f) / (styleRankPoints[styleRank] - styleRankPoints[styleRank - 1]));
         }
-        if (this.styleRank == 0)
+        if (styleRank == 0)
         {
-            return (((int) (this.stylePoints * 100f)) / this.styleRankPoints[this.styleRank]);
+            return (((int) (stylePoints * 100f)) / styleRankPoints[styleRank]);
         }
         return 100;
     }
 
     private int GetStyleDepletionRate()
     {
-        return this.styleRankDepletions[this.styleRank];
+        return styleRankDepletions[styleRank];
     }
 
     public void reset()
     {
-        this.styleTotalDamage = 0;
-        this.chainKillRank = 0;
-        this.chainTime = 0f;
-        this.styleRank = 0;
-        this.stylePoints = 0f;
-        this.styleHits = 0;
+        styleTotalDamage = 0;
+        chainKillRank = 0;
+        chainTime = 0f;
+        styleRank = 0;
+        stylePoints = 0f;
+        styleHits = 0;
     }
 
     private void setPosition()
     {
-        this.originalPosition = new Vector3((float) ((int) ((Screen.width * 0.5f) - 2f)), (float) ((int) ((Screen.height * 0.5f) - 150f)), 0f);
-        this.exitPosition = new Vector3((float) Screen.width, this.originalPosition.y, this.originalPosition.z);
+        originalPosition = new Vector3((int) ((Screen.width * 0.5f) - 2f), (int) ((Screen.height * 0.5f) - 150f), 0f);
+        exitPosition = new Vector3(Screen.width, originalPosition.y, originalPosition.z);
     }
 
     private void SetRank()
     {
-        int styleRank = this.styleRank;
-        int index = 0;
-        while ((index < this.styleRankPoints.Length) && (this.stylePoints > this.styleRankPoints[index]))
+        var styleRank = this.styleRank;
+        var index = 0;
+        while ((index < styleRankPoints.Length) && (stylePoints > styleRankPoints[index]))
         {
             index++;
         }
-        if (index < this.styleRankPoints.Length)
+        if (index < styleRankPoints.Length)
         {
             this.styleRank = index;
         }
         else
         {
-            this.styleRank = this.styleRankPoints.Length;
+            this.styleRank = styleRankPoints.Length;
         }
         if (this.styleRank < styleRank)
         {
-            if (this.hasLostRank)
+            if (hasLostRank)
             {
-                this.stylePoints = 0f;
-                this.styleHits = 0;
-                this.styleTotalDamage = 0;
+                stylePoints = 0f;
+                styleHits = 0;
+                styleTotalDamage = 0;
                 this.styleRank = 0;
             }
             else
             {
-                this.hasLostRank = true;
+                hasLostRank = true;
             }
         }
         else if (this.styleRank > styleRank)
         {
-            this.hasLostRank = false;
+            hasLostRank = false;
         }
     }
 
     private void setRankText()
     {
-        this.labelS.GetComponent<UILabel>().text = this.styleRankText[this.styleRank, 0];
-        if (this.styleRank == 5)
+        labelS.GetComponent<UILabel>().text = styleRankText[styleRank, 0];
+        if (styleRank == 5)
         {
-            this.labelS2.GetComponent<UILabel>().text = "[" + ColorSet.color_SS + "]S";
+            labelS2.GetComponent<UILabel>().text = "[" + ColorSet.color_SS + "]S";
         }
         else
         {
-            this.labelS2.GetComponent<UILabel>().text = string.Empty;
+            labelS2.GetComponent<UILabel>().text = string.Empty;
         }
-        if (this.styleRank == 6)
+        if (styleRank == 6)
         {
-            this.labelS2.GetComponent<UILabel>().text = "[" + ColorSet.color_SSS + "]S";
-            this.labelS1.GetComponent<UILabel>().text = "[" + ColorSet.color_SSS + "]S";
+            labelS2.GetComponent<UILabel>().text = "[" + ColorSet.color_SSS + "]S";
+            labelS1.GetComponent<UILabel>().text = "[" + ColorSet.color_SSS + "]S";
         }
         else
         {
-            this.labelS1.GetComponent<UILabel>().text = string.Empty;
+            labelS1.GetComponent<UILabel>().text = string.Empty;
         }
-        if (this.styleRank == 0)
+        if (styleRank == 0)
         {
-            this.labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_D + "]D";
+            labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_D + "]D";
         }
-        if (this.styleRank == 1)
+        if (styleRank == 1)
         {
-            this.labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_C + "]C";
+            labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_C + "]C";
         }
-        if (this.styleRank == 2)
+        if (styleRank == 2)
         {
-            this.labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_B + "]B";
+            labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_B + "]B";
         }
-        if (this.styleRank == 3)
+        if (styleRank == 3)
         {
-            this.labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_A + "]A";
+            labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_A + "]A";
         }
-        if (this.styleRank == 4)
+        if (styleRank == 4)
         {
-            this.labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_S + "]S";
+            labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_S + "]S";
         }
-        if (this.styleRank == 5)
+        if (styleRank == 5)
         {
-            this.labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_SS + "]S";
+            labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_SS + "]S";
         }
-        if (this.styleRank == 6)
+        if (styleRank == 6)
         {
-            this.labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_SSS + "]S";
+            labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_SSS + "]S";
         }
-        if (this.styleRank == 7)
+        if (styleRank == 7)
         {
-            this.labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_X + "]X";
+            labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_X + "]X";
         }
-        this.labelsub.GetComponent<UILabel>().text = this.styleRankText[this.styleRank, 1];
+        labelsub.GetComponent<UILabel>().text = styleRankText[styleRank, 1];
     }
 
     private void shakeUpdate()
     {
-        if (this.duration > 0f)
+        if (duration > 0f)
         {
-            this.duration -= Time.deltaTime;
-            if (this.flip)
+            duration -= Time.deltaTime;
+            if (flip)
             {
-                base.gameObject.transform.localPosition = this.originalPosition + ((Vector3) (Vector3.up * this.R));
+                gameObject.transform.localPosition = originalPosition + Vector3.up * R;
             }
             else
             {
-                base.gameObject.transform.localPosition = this.originalPosition - ((Vector3) (Vector3.up * this.R));
+                gameObject.transform.localPosition = originalPosition - Vector3.up * R;
             }
-            this.flip = !this.flip;
-            if (this.duration <= 0f)
+            flip = !flip;
+            if (duration <= 0f)
             {
-                base.gameObject.transform.localPosition = this.originalPosition;
+                gameObject.transform.localPosition = originalPosition;
             }
         }
     }
 
     private void Start()
     {
-        this.setPosition();
-        base.transform.localPosition = this.exitPosition;
+        setPosition();
+        transform.localPosition = exitPosition;
     }
 
     public void startShake(int R, float duration)
@@ -206,29 +206,29 @@ public class StylishComponent : MonoBehaviour
     {
         if (damage != -1)
         {
-            this.stylePoints += (int) ((damage + 200) * this.chainRankMultiplier[this.chainKillRank]);
-            this.styleTotalDamage += damage;
-            this.chainKillRank = (this.chainKillRank >= (this.chainRankMultiplier.Length - 1)) ? this.chainKillRank : (this.chainKillRank + 1);
-            this.chainTime = 5f;
-            this.styleHits++;
-            this.SetRank();
+            stylePoints += (int) ((damage + 200) * chainRankMultiplier[chainKillRank]);
+            styleTotalDamage += damage;
+            chainKillRank = (chainKillRank >= (chainRankMultiplier.Length - 1)) ? chainKillRank : (chainKillRank + 1);
+            chainTime = 5f;
+            styleHits++;
+            SetRank();
         }
-        else if (this.stylePoints == 0f)
+        else if (stylePoints == 0f)
         {
-            this.stylePoints++;
-            this.SetRank();
+            stylePoints++;
+            SetRank();
         }
-        this.startShake(5, 0.3f);
-        this.setPosition();
-        this.labelTotal.GetComponent<UILabel>().text = ((int) this.stylePoints).ToString();
-        this.labelHits.GetComponent<UILabel>().text = this.styleHits.ToString() + ((this.styleHits <= 1) ? "Hit" : "Hits");
-        if (this.chainKillRank == 0)
+        startShake(5, 0.3f);
+        setPosition();
+        labelTotal.GetComponent<UILabel>().text = ((int) stylePoints).ToString();
+        labelHits.GetComponent<UILabel>().text = styleHits.ToString() + ((styleHits <= 1) ? "Hit" : "Hits");
+        if (chainKillRank == 0)
         {
-            this.labelChain.GetComponent<UILabel>().text = string.Empty;
+            labelChain.GetComponent<UILabel>().text = string.Empty;
         }
         else
         {
-            this.labelChain.GetComponent<UILabel>().text = "x" + this.chainRankMultiplier[this.chainKillRank].ToString() + "!";
+            labelChain.GetComponent<UILabel>().text = "x" + chainRankMultiplier[chainKillRank].ToString() + "!";
         }
     }
 
@@ -236,27 +236,27 @@ public class StylishComponent : MonoBehaviour
     {
         if (!IN_GAME_MAIN_CAMERA.isPausing)
         {
-            if (this.stylePoints > 0f)
+            if (stylePoints > 0f)
             {
-                this.setRankText();
-                this.bar.GetComponent<UISprite>().fillAmount = this.GetRankPercentage() * 0.01f;
-                this.stylePoints -= (this.GetStyleDepletionRate() * Time.deltaTime) * 10f;
-                this.SetRank();
+                setRankText();
+                bar.GetComponent<UISprite>().fillAmount = GetRankPercentage() * 0.01f;
+                stylePoints -= (GetStyleDepletionRate() * Time.deltaTime) * 10f;
+                SetRank();
             }
             else
             {
-                base.transform.localPosition = Vector3.Lerp(base.transform.localPosition, this.exitPosition, Time.deltaTime * 3f);
+                transform.localPosition = Vector3.Lerp(transform.localPosition, exitPosition, Time.deltaTime * 3f);
             }
-            if (this.chainTime > 0f)
+            if (chainTime > 0f)
             {
-                this.chainTime -= Time.deltaTime;
+                chainTime -= Time.deltaTime;
             }
             else
             {
-                this.chainTime = 0f;
-                this.chainKillRank = 0;
+                chainTime = 0f;
+                chainKillRank = 0;
             }
-            this.shakeUpdate();
+            shakeUpdate();
         }
     }
 }

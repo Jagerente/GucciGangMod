@@ -13,36 +13,36 @@ public class UVAffector : Affector
 
     public UVAffector(UVAnimation frame, float time, EffectNode node) : base(node)
     {
-        this.Frames = frame;
-        this.UVTime = time;
+        Frames = frame;
+        UVTime = time;
     }
 
     public override void Reset()
     {
-        this.ElapsedTime = 0f;
-        this.Frames.curFrame = 0;
+        ElapsedTime = 0f;
+        Frames.curFrame = 0;
     }
 
     public override void Update()
     {
         float num;
-        this.ElapsedTime += Time.deltaTime;
-        if (this.UVTime <= 0f)
+        ElapsedTime += Time.deltaTime;
+        if (UVTime <= 0f)
         {
-            num = base.Node.GetLifeTime() / ((float) this.Frames.frames.Length);
+            num = Node.GetLifeTime() / Frames.frames.Length;
         }
         else
         {
-            num = this.UVTime / ((float) this.Frames.frames.Length);
+            num = UVTime / Frames.frames.Length;
         }
-        if (this.ElapsedTime >= num)
+        if (ElapsedTime >= num)
         {
-            Vector2 zero = Vector2.zero;
-            Vector2 dm = Vector2.zero;
-            this.Frames.GetNextFrame(ref zero, ref dm);
-            base.Node.LowerLeftUV = zero;
-            base.Node.UVDimensions = dm;
-            this.ElapsedTime -= num;
+            var zero = Vector2.zero;
+            var dm = Vector2.zero;
+            Frames.GetNextFrame(ref zero, ref dm);
+            Node.LowerLeftUV = zero;
+            Node.UVDimensions = dm;
+            ElapsedTime -= num;
         }
     }
 }

@@ -26,30 +26,30 @@ public class StyledComboBox : StyledItem
 
     private void AddItem(object data)
     {
-        if (this.itemPrefab != null)
+        if (itemPrefab != null)
         {
-            AddItemcAnonStoreyF yf = new AddItemcAnonStoreyF {
+            var yf = new AddItemcAnonStoreyF {
                 fthis = this
             };
-            Vector3[] fourCornersArray = new Vector3[4];
-            this.itemPrefab.GetComponent<RectTransform>().GetLocalCorners(fourCornersArray);
-            Vector3 position = fourCornersArray[0];
-            float num = position.y - fourCornersArray[2].y;
-            position.y = this.items.Count * num;
-            yf.styledItem = UnityEngine.Object.Instantiate(this.itemPrefab, position, this.root.itemRoot.rotation) as StyledItem;
-            RectTransform component = yf.styledItem.GetComponent<RectTransform>();
+            var fourCornersArray = new Vector3[4];
+            itemPrefab.GetComponent<RectTransform>().GetLocalCorners(fourCornersArray);
+            var position = fourCornersArray[0];
+            var num = position.y - fourCornersArray[2].y;
+            position.y = items.Count * num;
+            yf.styledItem = Instantiate(itemPrefab, position, root.itemRoot.rotation) as StyledItem;
+            var component = yf.styledItem.GetComponent<RectTransform>();
             yf.styledItem.Populate(data);
-            component.SetParent(this.root.itemRoot.transform, false);
+            component.SetParent(root.itemRoot.transform, false);
             component.pivot = new Vector2(0f, 1f);
             component.anchorMin = new Vector2(0f, 1f);
             component.anchorMax = Vector2.one;
             component.anchoredPosition = new Vector2(0f, position.y);
-            this.items.Add(yf.styledItem);
+            items.Add(yf.styledItem);
             component.offsetMin = new Vector2(0f, position.y + num);
             component.offsetMax = new Vector2(0f, position.y);
-            this.root.itemRoot.offsetMin = new Vector2(this.root.itemRoot.offsetMin.x, (this.items.Count + 2) * num);
-            Button button = yf.styledItem.GetButton();
-            yf.curIndex = this.items.Count - 1;
+            root.itemRoot.offsetMin = new Vector2(root.itemRoot.offsetMin.x, (items.Count + 2) * num);
+            var button = yf.styledItem.GetButton();
+            yf.curIndex = items.Count - 1;
             if (button != null)
             {
                 button.onClick.AddListener(new UnityAction(yf.m0));
@@ -59,106 +59,106 @@ public class StyledComboBox : StyledItem
 
     public void AddItems(params object[] list)
     {
-        this.ClearItems();
-        for (int i = 0; i < list.Length; i++)
+        ClearItems();
+        for (var i = 0; i < list.Length; i++)
         {
-            this.AddItem(list[i]);
+            AddItem(list[i]);
         }
-        this.SelectedIndex = 0;
+        SelectedIndex = 0;
     }
 
     private void Awake()
     {
-        this.InitControl();
+        InitControl();
     }
 
     public void ClearItems()
     {
-        for (int i = this.items.Count - 1; i >= 0; i--)
+        for (var i = items.Count - 1; i >= 0; i--)
         {
-            UnityEngine.Object.DestroyObject(this.items[i].gameObject);
+            DestroyObject(items[i].gameObject);
         }
     }
 
     private void CreateMenuButton(object data)
     {
-        if (this.root.menuItem.transform.childCount > 0)
+        if (root.menuItem.transform.childCount > 0)
         {
-            for (int i = this.root.menuItem.transform.childCount - 1; i >= 0; i--)
+            for (var i = root.menuItem.transform.childCount - 1; i >= 0; i--)
             {
-                UnityEngine.Object.DestroyObject(this.root.menuItem.transform.GetChild(i).gameObject);
+                DestroyObject(root.menuItem.transform.GetChild(i).gameObject);
             }
         }
-        if ((this.itemMenuPrefab != null) && (this.root.menuItem != null))
+        if ((itemMenuPrefab != null) && (root.menuItem != null))
         {
-            StyledItem item = UnityEngine.Object.Instantiate(this.itemMenuPrefab) as StyledItem;
+            var item = Instantiate(itemMenuPrefab) as StyledItem;
             item.Populate(data);
-            item.transform.SetParent(this.root.menuItem.transform, false);
-            RectTransform component = item.GetComponent<RectTransform>();
+            item.transform.SetParent(root.menuItem.transform, false);
+            var component = item.GetComponent<RectTransform>();
             component.pivot = new Vector2(0.5f, 0.5f);
             component.anchorMin = Vector2.zero;
             component.anchorMax = Vector2.one;
             component.offsetMin = Vector2.zero;
             component.offsetMax = Vector2.zero;
-            this.root.gameObject.hideFlags = HideFlags.HideInHierarchy;
-            Button button = item.GetButton();
+            root.gameObject.hideFlags = HideFlags.HideInHierarchy;
+            var button = item.GetButton();
             if (button != null)
             {
-                button.onClick.AddListener(new UnityAction(this.TogglePanelState));
+                button.onClick.AddListener(new UnityAction(TogglePanelState));
             }
         }
     }
 
     public void InitControl()
     {
-        if (this.root != null)
+        if (root != null)
         {
-            UnityEngine.Object.DestroyImmediate(this.root.gameObject);
+            DestroyImmediate(root.gameObject);
         }
-        if (this.containerPrefab != null)
+        if (containerPrefab != null)
         {
-            RectTransform component = base.GetComponent<RectTransform>();
-            this.root = UnityEngine.Object.Instantiate(this.containerPrefab, component.position, component.rotation) as StyledComboBoxPrefab;
-            this.root.transform.SetParent(base.transform, false);
-            RectTransform transform2 = this.root.GetComponent<RectTransform>();
+            var component = GetComponent<RectTransform>();
+            root = Instantiate(containerPrefab, component.position, component.rotation) as StyledComboBoxPrefab;
+            root.transform.SetParent(transform, false);
+            var transform2 = root.GetComponent<RectTransform>();
             transform2.pivot = new Vector2(0.5f, 0.5f);
             transform2.anchorMin = Vector2.zero;
             transform2.anchorMax = Vector2.one;
             transform2.offsetMax = Vector2.zero;
             transform2.offsetMin = Vector2.zero;
-            this.root.gameObject.hideFlags = HideFlags.HideInHierarchy;
-            this.root.itemPanel.gameObject.SetActive(this.isToggled);
+            root.gameObject.hideFlags = HideFlags.HideInHierarchy;
+            root.itemPanel.gameObject.SetActive(isToggled);
         }
     }
 
     public void OnItemClicked(StyledItem item, int index)
     {
-        this.SelectedIndex = index;
-        this.TogglePanelState();
-        if (this.OnSelectionChanged != null)
+        SelectedIndex = index;
+        TogglePanelState();
+        if (OnSelectionChanged != null)
         {
-            this.OnSelectionChanged(item);
+            OnSelectionChanged(item);
         }
     }
 
     public void TogglePanelState()
     {
-        this.isToggled = !this.isToggled;
-        this.root.itemPanel.gameObject.SetActive(this.isToggled);
+        isToggled = !isToggled;
+        root.itemPanel.gameObject.SetActive(isToggled);
     }
 
     public int SelectedIndex
     {
         get
         {
-            return this.selectedIndex;
+            return selectedIndex;
         }
         set
         {
-            if ((value >= 0) && (value <= this.items.Count))
+            if ((value >= 0) && (value <= items.Count))
             {
-                this.selectedIndex = value;
-                this.CreateMenuButton(this.items[this.selectedIndex].GetText().text);
+                selectedIndex = value;
+                CreateMenuButton(items[selectedIndex].GetText().text);
             }
         }
     }
@@ -167,9 +167,9 @@ public class StyledComboBox : StyledItem
     {
         get
         {
-            if ((this.selectedIndex >= 0) && (this.selectedIndex <= this.items.Count))
+            if ((selectedIndex >= 0) && (selectedIndex <= items.Count))
             {
-                return this.items[this.selectedIndex];
+                return items[selectedIndex];
             }
             return null;
         }
@@ -184,7 +184,7 @@ public class StyledComboBox : StyledItem
 
         internal void m0()
         {
-            this.fthis.OnItemClicked(this.styledItem, this.curIndex);
+            fthis.OnItemClicked(styledItem, curIndex);
         }
     }
 

@@ -15,50 +15,50 @@ public class PanelLoginGroupManager : MonoBehaviour
 
     public void SignIn()
     {
-        this.logincomponent.login(this._loginName, this._loginPassword);
+        logincomponent.login(_loginName, _loginPassword);
     }
 
     private void Start()
     {
-        this.pgm = new PanelGroupManager();
-        this.pgm.panelGroup = this.panels;
+        pgm = new PanelGroupManager();
+        pgm.panelGroup = panels;
     }
 
     public void toChangeGuildNamePanel()
     {
-        this.pgm.ActivePanel(4);
+        pgm.ActivePanel(4);
     }
 
     public void toForgetPasswordPanel()
     {
-        this.pgm.ActivePanel(3);
+        pgm.ActivePanel(3);
     }
 
     public void toLoginPanel()
     {
-        this.pgm.ActivePanel(0);
+        pgm.ActivePanel(0);
     }
 
     public void toNewPasswordPanel()
     {
-        this.pgm.ActivePanel(2);
+        pgm.ActivePanel(2);
     }
 
     public void toSignUpPanel()
     {
-        this.pgm.ActivePanel(1);
+        pgm.ActivePanel(1);
     }
 
     public void toStatusPanel()
     {
-        this.pgm.ActivePanel(5);
+        pgm.ActivePanel(5);
     }
 
     public string loginName
     {
         set
         {
-            this._loginName = value;
+            _loginName = value;
         }
     }
 
@@ -66,7 +66,7 @@ public class PanelLoginGroupManager : MonoBehaviour
     {
         set
         {
-            this._loginPassword = value;
+            _loginPassword = value;
         }
     }
 }

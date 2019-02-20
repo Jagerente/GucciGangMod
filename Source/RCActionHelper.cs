@@ -14,9 +14,9 @@ public class RCActionHelper
 
     public RCActionHelper(int sentClass, int sentType, object options)
     {
-        this.helperClass = sentClass;
-        this.helperType = sentType;
-        this.parameters = options;
+        helperClass = sentClass;
+        helperType = sentType;
+        parameters = options;
     }
 
     public void callException(string str)
@@ -26,128 +26,128 @@ public class RCActionHelper
 
     public bool returnBool(object sentObject)
     {
-        object parameters = sentObject;
+        var parameters = sentObject;
         if (this.parameters != null)
         {
             parameters = this.parameters;
         }
-        switch (this.helperClass)
+        switch (helperClass)
         {
             case 0:
                 return (bool) parameters;
 
             case 1:
             {
-                RCActionHelper helper = (RCActionHelper) parameters;
-                switch (this.helperType)
+                var helper = (RCActionHelper) parameters;
+                switch (helperType)
                 {
                     case 0:
-                        return this.nextHelper.returnBool(FengGameManagerMKII.intVariables[helper.returnString(null)]);
+                        return nextHelper.returnBool(FengGameManagerMKII.intVariables[helper.returnString(null)]);
 
                     case 1:
                         return (bool) FengGameManagerMKII.boolVariables[helper.returnString(null)];
 
                     case 2:
-                        return this.nextHelper.returnBool(FengGameManagerMKII.stringVariables[helper.returnString(null)]);
+                        return nextHelper.returnBool(FengGameManagerMKII.stringVariables[helper.returnString(null)]);
 
                     case 3:
-                        return this.nextHelper.returnBool(FengGameManagerMKII.floatVariables[helper.returnString(null)]);
+                        return nextHelper.returnBool(FengGameManagerMKII.floatVariables[helper.returnString(null)]);
 
                     case 4:
-                        return this.nextHelper.returnBool(FengGameManagerMKII.playerVariables[helper.returnString(null)]);
+                        return nextHelper.returnBool(FengGameManagerMKII.playerVariables[helper.returnString(null)]);
 
                     case 5:
-                        return this.nextHelper.returnBool(FengGameManagerMKII.titanVariables[helper.returnString(null)]);
+                        return nextHelper.returnBool(FengGameManagerMKII.titanVariables[helper.returnString(null)]);
                 }
                 return false;
             }
             case 2:
             {
-                PhotonPlayer player = (PhotonPlayer) parameters;
+                var player = (PhotonPlayer) parameters;
                 if (player != null)
                 {
                     HERO hero;
-                    switch (this.helperType)
+                    switch (helperType)
                     {
                         case 0:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.team]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.team]);
 
                         case 1:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.RCteam]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.RCteam]);
 
                         case 2:
                             return !((bool) player.customProperties[PhotonPlayerProperty.dead]);
 
                         case 3:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.isTitan]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.isTitan]);
 
                         case 4:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.kills]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.kills]);
 
                         case 5:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.deaths]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.deaths]);
 
                         case 6:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.max_dmg]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.max_dmg]);
 
                         case 7:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.total_dmg]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.total_dmg]);
 
                         case 8:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.customInt]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.customInt]);
 
                         case 9:
                             return (bool) player.customProperties[PhotonPlayerProperty.customBool];
 
                         case 10:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.customString]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.customString]);
 
                         case 11:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.customFloat]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.customFloat]);
 
                         case 12:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.name]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.name]);
 
                         case 13:
-                            return this.nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.guildName]);
+                            return nextHelper.returnBool(player.customProperties[PhotonPlayerProperty.guildName]);
 
                         case 14:
                         {
-                            int iD = player.ID;
+                            var iD = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[iD];
-                                return this.nextHelper.returnBool(hero.transform.position.x);
+                                return nextHelper.returnBool(hero.transform.position.x);
                             }
                             return false;
                         }
                         case 15:
                         {
-                            int key = player.ID;
+                            var key = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(key))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[key];
-                                return this.nextHelper.returnBool(hero.transform.position.y);
+                                return nextHelper.returnBool(hero.transform.position.y);
                             }
                             return false;
                         }
                         case 0x10:
                         {
-                            int num6 = player.ID;
+                            var num6 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num6))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[num6];
-                                return this.nextHelper.returnBool(hero.transform.position.z);
+                                return nextHelper.returnBool(hero.transform.position.z);
                             }
                             return false;
                         }
                         case 0x11:
                         {
-                            int num7 = player.ID;
+                            var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[num7];
-                                return this.nextHelper.returnBool(hero.rigidbody.velocity.magnitude);
+                                return nextHelper.returnBool(hero.rigidbody.velocity.magnitude);
                             }
                             return false;
                         }
@@ -157,55 +157,55 @@ public class RCActionHelper
             }
             case 3:
             {
-                TITAN titan = (TITAN) parameters;
+                var titan = (TITAN) parameters;
                 if (titan != null)
                 {
-                    switch (this.helperType)
+                    switch (helperType)
                     {
                         case 0:
-                            return this.nextHelper.returnBool(titan.abnormalType);
+                            return nextHelper.returnBool(titan.abnormalType);
 
                         case 1:
-                            return this.nextHelper.returnBool(titan.myLevel);
+                            return nextHelper.returnBool(titan.myLevel);
 
                         case 2:
-                            return this.nextHelper.returnBool(titan.currentHealth);
+                            return nextHelper.returnBool(titan.currentHealth);
 
                         case 3:
-                            return this.nextHelper.returnBool(titan.transform.position.x);
+                            return nextHelper.returnBool(titan.transform.position.x);
 
                         case 4:
-                            return this.nextHelper.returnBool(titan.transform.position.y);
+                            return nextHelper.returnBool(titan.transform.position.y);
 
                         case 5:
-                            return this.nextHelper.returnBool(titan.transform.position.z);
+                            return nextHelper.returnBool(titan.transform.position.z);
                     }
                 }
                 return false;
             }
             case 4:
             {
-                RCActionHelper helper2 = (RCActionHelper) parameters;
-                RCRegion region = (RCRegion) FengGameManagerMKII.RCRegions[helper2.returnString(null)];
-                switch (this.helperType)
+                var helper2 = (RCActionHelper) parameters;
+                var region = (RCRegion) FengGameManagerMKII.RCRegions[helper2.returnString(null)];
+                switch (helperType)
                 {
                     case 0:
-                        return this.nextHelper.returnBool(region.GetRandomX());
+                        return nextHelper.returnBool(region.GetRandomX());
 
                     case 1:
-                        return this.nextHelper.returnBool(region.GetRandomY());
+                        return nextHelper.returnBool(region.GetRandomY());
 
                     case 2:
-                        return this.nextHelper.returnBool(region.GetRandomZ());
+                        return nextHelper.returnBool(region.GetRandomZ());
                 }
                 return false;
             }
             case 5:
-                switch (this.helperType)
+                switch (helperType)
                 {
                     case 0:
                     {
-                        int num2 = (int) parameters;
+                        var num2 = (int) parameters;
                         return Convert.ToBoolean(num2);
                     }
                     case 1:
@@ -213,12 +213,12 @@ public class RCActionHelper
 
                     case 2:
                     {
-                        string str = (string) parameters;
+                        var str = (string) parameters;
                         return Convert.ToBoolean(str);
                     }
                     case 3:
                     {
-                        float num3 = (float) parameters;
+                        var num3 = (float) parameters;
                         return Convert.ToBoolean(num3);
                     }
                 }
@@ -229,94 +229,94 @@ public class RCActionHelper
 
     public float returnFloat(object sentObject)
     {
-        object parameters = sentObject;
+        var parameters = sentObject;
         if (this.parameters != null)
         {
             parameters = this.parameters;
         }
-        switch (this.helperClass)
+        switch (helperClass)
         {
             case 0:
                 return (float) parameters;
 
             case 1:
             {
-                RCActionHelper helper = (RCActionHelper) parameters;
-                switch (this.helperType)
+                var helper = (RCActionHelper) parameters;
+                switch (helperType)
                 {
                     case 0:
-                        return this.nextHelper.returnFloat(FengGameManagerMKII.intVariables[helper.returnString(null)]);
+                        return nextHelper.returnFloat(FengGameManagerMKII.intVariables[helper.returnString(null)]);
 
                     case 1:
-                        return this.nextHelper.returnFloat(FengGameManagerMKII.boolVariables[helper.returnString(null)]);
+                        return nextHelper.returnFloat(FengGameManagerMKII.boolVariables[helper.returnString(null)]);
 
                     case 2:
-                        return this.nextHelper.returnFloat(FengGameManagerMKII.stringVariables[helper.returnString(null)]);
+                        return nextHelper.returnFloat(FengGameManagerMKII.stringVariables[helper.returnString(null)]);
 
                     case 3:
                         return (float) FengGameManagerMKII.floatVariables[helper.returnString(null)];
 
                     case 4:
-                        return this.nextHelper.returnFloat(FengGameManagerMKII.playerVariables[helper.returnString(null)]);
+                        return nextHelper.returnFloat(FengGameManagerMKII.playerVariables[helper.returnString(null)]);
 
                     case 5:
-                        return this.nextHelper.returnFloat(FengGameManagerMKII.titanVariables[helper.returnString(null)]);
+                        return nextHelper.returnFloat(FengGameManagerMKII.titanVariables[helper.returnString(null)]);
                 }
                 return 0f;
             }
             case 2:
             {
-                PhotonPlayer player = (PhotonPlayer) parameters;
+                var player = (PhotonPlayer) parameters;
                 if (player != null)
                 {
                     HERO hero;
-                    switch (this.helperType)
+                    switch (helperType)
                     {
                         case 0:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.team]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.team]);
 
                         case 1:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.RCteam]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.RCteam]);
 
                         case 2:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.dead]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.dead]);
 
                         case 3:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.isTitan]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.isTitan]);
 
                         case 4:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.kills]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.kills]);
 
                         case 5:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.deaths]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.deaths]);
 
                         case 6:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.max_dmg]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.max_dmg]);
 
                         case 7:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.total_dmg]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.total_dmg]);
 
                         case 8:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.customInt]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.customInt]);
 
                         case 9:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.customBool]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.customBool]);
 
                         case 10:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.customString]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.customString]);
 
                         case 11:
                             return (float) player.customProperties[PhotonPlayerProperty.customFloat];
 
                         case 12:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.name]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.name]);
 
                         case 13:
-                            return this.nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.guildName]);
+                            return nextHelper.returnFloat(player.customProperties[PhotonPlayerProperty.guildName]);
 
                         case 14:
                         {
-                            int iD = player.ID;
+                            var iD = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[iD];
@@ -326,7 +326,7 @@ public class RCActionHelper
                         }
                         case 15:
                         {
-                            int key = player.ID;
+                            var key = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(key))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[key];
@@ -336,7 +336,7 @@ public class RCActionHelper
                         }
                         case 0x10:
                         {
-                            int num7 = player.ID;
+                            var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[num7];
@@ -346,7 +346,7 @@ public class RCActionHelper
                         }
                         case 0x11:
                         {
-                            int num8 = player.ID;
+                            var num8 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num8))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[num8];
@@ -360,19 +360,19 @@ public class RCActionHelper
             }
             case 3:
             {
-                TITAN titan = (TITAN) parameters;
+                var titan = (TITAN) parameters;
                 if (titan != null)
                 {
-                    switch (this.helperType)
+                    switch (helperType)
                     {
                         case 0:
-                            return this.nextHelper.returnFloat(titan.abnormalType);
+                            return nextHelper.returnFloat(titan.abnormalType);
 
                         case 1:
                             return titan.myLevel;
 
                         case 2:
-                            return this.nextHelper.returnFloat(titan.currentHealth);
+                            return nextHelper.returnFloat(titan.currentHealth);
 
                         case 3:
                             return titan.transform.position.x;
@@ -388,9 +388,9 @@ public class RCActionHelper
             }
             case 4:
             {
-                RCActionHelper helper2 = (RCActionHelper) parameters;
-                RCRegion region = (RCRegion) FengGameManagerMKII.RCRegions[helper2.returnString(null)];
-                switch (this.helperType)
+                var helper2 = (RCActionHelper) parameters;
+                var region = (RCRegion) FengGameManagerMKII.RCRegions[helper2.returnString(null)];
+                switch (helperType)
                 {
                     case 0:
                         return region.GetRandomX();
@@ -404,22 +404,22 @@ public class RCActionHelper
                 return 0f;
             }
             case 5:
-                switch (this.helperType)
+                switch (helperType)
                 {
                     case 0:
                     {
-                        int num3 = (int) parameters;
+                        var num3 = (int) parameters;
                         return Convert.ToSingle(num3);
                     }
                     case 1:
                     {
-                        bool flag2 = (bool) parameters;
+                        var flag2 = (bool) parameters;
                         return Convert.ToSingle(flag2);
                     }
                     case 2:
                     {
                         float num4;
-                        string str = (string) parameters;
+                        var str = (string) parameters;
                         if (float.TryParse((string) parameters, out num4))
                         {
                             return num4;
@@ -436,48 +436,48 @@ public class RCActionHelper
 
     public int returnInt(object sentObject)
     {
-        object parameters = sentObject;
+        var parameters = sentObject;
         if (this.parameters != null)
         {
             parameters = this.parameters;
         }
-        switch (this.helperClass)
+        switch (helperClass)
         {
             case 0:
                 return (int) parameters;
 
             case 1:
             {
-                RCActionHelper helper = (RCActionHelper) parameters;
-                switch (this.helperType)
+                var helper = (RCActionHelper) parameters;
+                switch (helperType)
                 {
                     case 0:
                         return (int) FengGameManagerMKII.intVariables[helper.returnString(null)];
 
                     case 1:
-                        return this.nextHelper.returnInt(FengGameManagerMKII.boolVariables[helper.returnString(null)]);
+                        return nextHelper.returnInt(FengGameManagerMKII.boolVariables[helper.returnString(null)]);
 
                     case 2:
-                        return this.nextHelper.returnInt(FengGameManagerMKII.stringVariables[helper.returnString(null)]);
+                        return nextHelper.returnInt(FengGameManagerMKII.stringVariables[helper.returnString(null)]);
 
                     case 3:
-                        return this.nextHelper.returnInt(FengGameManagerMKII.floatVariables[helper.returnString(null)]);
+                        return nextHelper.returnInt(FengGameManagerMKII.floatVariables[helper.returnString(null)]);
 
                     case 4:
-                        return this.nextHelper.returnInt(FengGameManagerMKII.playerVariables[helper.returnString(null)]);
+                        return nextHelper.returnInt(FengGameManagerMKII.playerVariables[helper.returnString(null)]);
 
                     case 5:
-                        return this.nextHelper.returnInt(FengGameManagerMKII.titanVariables[helper.returnString(null)]);
+                        return nextHelper.returnInt(FengGameManagerMKII.titanVariables[helper.returnString(null)]);
                 }
                 return 0;
             }
             case 2:
             {
-                PhotonPlayer player = (PhotonPlayer) parameters;
+                var player = (PhotonPlayer) parameters;
                 if (player != null)
                 {
                     HERO hero;
-                    switch (this.helperType)
+                    switch (helperType)
                     {
                         case 0:
                             return (int) player.customProperties[PhotonPlayerProperty.team];
@@ -486,7 +486,7 @@ public class RCActionHelper
                             return (int) player.customProperties[PhotonPlayerProperty.RCteam];
 
                         case 2:
-                            return this.nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.dead]);
+                            return nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.dead]);
 
                         case 3:
                             return (int) player.customProperties[PhotonPlayerProperty.isTitan];
@@ -507,57 +507,57 @@ public class RCActionHelper
                             return (int) player.customProperties[PhotonPlayerProperty.customInt];
 
                         case 9:
-                            return this.nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.customBool]);
+                            return nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.customBool]);
 
                         case 10:
-                            return this.nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.customString]);
+                            return nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.customString]);
 
                         case 11:
-                            return this.nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.customFloat]);
+                            return nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.customFloat]);
 
                         case 12:
-                            return this.nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.name]);
+                            return nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.name]);
 
                         case 13:
-                            return this.nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.guildName]);
+                            return nextHelper.returnInt(player.customProperties[PhotonPlayerProperty.guildName]);
 
                         case 14:
                         {
-                            int iD = player.ID;
+                            var iD = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[iD];
-                                return this.nextHelper.returnInt(hero.transform.position.x);
+                                return nextHelper.returnInt(hero.transform.position.x);
                             }
                             return 0;
                         }
                         case 15:
                         {
-                            int key = player.ID;
+                            var key = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(key))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[key];
-                                return this.nextHelper.returnInt(hero.transform.position.y);
+                                return nextHelper.returnInt(hero.transform.position.y);
                             }
                             return 0;
                         }
                         case 0x10:
                         {
-                            int num7 = player.ID;
+                            var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[num7];
-                                return this.nextHelper.returnInt(hero.transform.position.z);
+                                return nextHelper.returnInt(hero.transform.position.z);
                             }
                             return 0;
                         }
                         case 0x11:
                         {
-                            int num8 = player.ID;
+                            var num8 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num8))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[num8];
-                                return this.nextHelper.returnInt(hero.rigidbody.velocity.magnitude);
+                                return nextHelper.returnInt(hero.rigidbody.velocity.magnitude);
                             }
                             return 0;
                         }
@@ -567,64 +567,64 @@ public class RCActionHelper
             }
             case 3:
             {
-                TITAN titan = (TITAN) parameters;
+                var titan = (TITAN) parameters;
                 if (titan != null)
                 {
-                    switch (this.helperType)
+                    switch (helperType)
                     {
                         case 0:
                             return (int) titan.abnormalType;
 
                         case 1:
-                            return this.nextHelper.returnInt(titan.myLevel);
+                            return nextHelper.returnInt(titan.myLevel);
 
                         case 2:
                             return titan.currentHealth;
 
                         case 3:
-                            return this.nextHelper.returnInt(titan.transform.position.x);
+                            return nextHelper.returnInt(titan.transform.position.x);
 
                         case 4:
-                            return this.nextHelper.returnInt(titan.transform.position.y);
+                            return nextHelper.returnInt(titan.transform.position.y);
 
                         case 5:
-                            return this.nextHelper.returnInt(titan.transform.position.z);
+                            return nextHelper.returnInt(titan.transform.position.z);
                     }
                 }
                 return 0;
             }
             case 4:
             {
-                RCActionHelper helper2 = (RCActionHelper) parameters;
-                RCRegion region = (RCRegion) FengGameManagerMKII.RCRegions[helper2.returnString(null)];
-                switch (this.helperType)
+                var helper2 = (RCActionHelper) parameters;
+                var region = (RCRegion) FengGameManagerMKII.RCRegions[helper2.returnString(null)];
+                switch (helperType)
                 {
                     case 0:
-                        return this.nextHelper.returnInt(region.GetRandomX());
+                        return nextHelper.returnInt(region.GetRandomX());
 
                     case 1:
-                        return this.nextHelper.returnInt(region.GetRandomY());
+                        return nextHelper.returnInt(region.GetRandomY());
 
                     case 2:
-                        return this.nextHelper.returnInt(region.GetRandomZ());
+                        return nextHelper.returnInt(region.GetRandomZ());
                 }
                 return 0;
             }
             case 5:
-                switch (this.helperType)
+                switch (helperType)
                 {
                     case 0:
                         return (int) parameters;
 
                     case 1:
                     {
-                        bool flag2 = (bool) parameters;
+                        var flag2 = (bool) parameters;
                         return Convert.ToInt32(flag2);
                     }
                     case 2:
                     {
                         int num4;
-                        string str = (string) parameters;
+                        var str = (string) parameters;
                         if (int.TryParse((string) parameters, out num4))
                         {
                             return num4;
@@ -633,7 +633,7 @@ public class RCActionHelper
                     }
                     case 3:
                     {
-                        float num3 = (float) parameters;
+                        var num3 = (float) parameters;
                         return Convert.ToInt32(num3);
                     }
                 }
@@ -644,16 +644,16 @@ public class RCActionHelper
 
     public PhotonPlayer returnPlayer(object objParameter)
     {
-        object parameters = objParameter;
+        var parameters = objParameter;
         if (this.parameters != null)
         {
             parameters = this.parameters;
         }
-        switch (this.helperClass)
+        switch (helperClass)
         {
             case 1:
             {
-                RCActionHelper helper = (RCActionHelper) parameters;
+                var helper = (RCActionHelper) parameters;
                 return (PhotonPlayer) FengGameManagerMKII.playerVariables[helper.returnString(null)];
             }
             case 2:
@@ -664,84 +664,84 @@ public class RCActionHelper
 
     public string returnString(object sentObject)
     {
-        object parameters = sentObject;
+        var parameters = sentObject;
         if (this.parameters != null)
         {
             parameters = this.parameters;
         }
-        switch (this.helperClass)
+        switch (helperClass)
         {
             case 0:
                 return (string) parameters;
 
             case 1:
             {
-                RCActionHelper helper = (RCActionHelper) parameters;
-                switch (this.helperType)
+                var helper = (RCActionHelper) parameters;
+                switch (helperType)
                 {
                     case 0:
-                        return this.nextHelper.returnString(FengGameManagerMKII.intVariables[helper.returnString(null)]);
+                        return nextHelper.returnString(FengGameManagerMKII.intVariables[helper.returnString(null)]);
 
                     case 1:
-                        return this.nextHelper.returnString(FengGameManagerMKII.boolVariables[helper.returnString(null)]);
+                        return nextHelper.returnString(FengGameManagerMKII.boolVariables[helper.returnString(null)]);
 
                     case 2:
                         return (string) FengGameManagerMKII.stringVariables[helper.returnString(null)];
 
                     case 3:
-                        return this.nextHelper.returnString(FengGameManagerMKII.floatVariables[helper.returnString(null)]);
+                        return nextHelper.returnString(FengGameManagerMKII.floatVariables[helper.returnString(null)]);
 
                     case 4:
-                        return this.nextHelper.returnString(FengGameManagerMKII.playerVariables[helper.returnString(null)]);
+                        return nextHelper.returnString(FengGameManagerMKII.playerVariables[helper.returnString(null)]);
 
                     case 5:
-                        return this.nextHelper.returnString(FengGameManagerMKII.titanVariables[helper.returnString(null)]);
+                        return nextHelper.returnString(FengGameManagerMKII.titanVariables[helper.returnString(null)]);
                 }
                 return string.Empty;
             }
             case 2:
             {
-                PhotonPlayer player = (PhotonPlayer) parameters;
+                var player = (PhotonPlayer) parameters;
                 if (player != null)
                 {
                     HERO hero;
-                    switch (this.helperType)
+                    switch (helperType)
                     {
                         case 0:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.team]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.team]);
 
                         case 1:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.RCteam]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.RCteam]);
 
                         case 2:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.dead]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.dead]);
 
                         case 3:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.isTitan]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.isTitan]);
 
                         case 4:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.kills]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.kills]);
 
                         case 5:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.deaths]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.deaths]);
 
                         case 6:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.max_dmg]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.max_dmg]);
 
                         case 7:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.total_dmg]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.total_dmg]);
 
                         case 8:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.customInt]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.customInt]);
 
                         case 9:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.customBool]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.customBool]);
 
                         case 10:
                             return (string) player.customProperties[PhotonPlayerProperty.customString];
 
                         case 11:
-                            return this.nextHelper.returnString(player.customProperties[PhotonPlayerProperty.customFloat]);
+                            return nextHelper.returnString(player.customProperties[PhotonPlayerProperty.customFloat]);
 
                         case 12:
                             return (string) player.customProperties[PhotonPlayerProperty.name];
@@ -751,41 +751,41 @@ public class RCActionHelper
 
                         case 14:
                         {
-                            int iD = player.ID;
+                            var iD = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[iD];
-                                return this.nextHelper.returnString(hero.transform.position.x);
+                                return nextHelper.returnString(hero.transform.position.x);
                             }
                             return string.Empty;
                         }
                         case 15:
                         {
-                            int key = player.ID;
+                            var key = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(key))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[key];
-                                return this.nextHelper.returnString(hero.transform.position.y);
+                                return nextHelper.returnString(hero.transform.position.y);
                             }
                             return string.Empty;
                         }
                         case 0x10:
                         {
-                            int num6 = player.ID;
+                            var num6 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num6))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[num6];
-                                return this.nextHelper.returnString(hero.transform.position.z);
+                                return nextHelper.returnString(hero.transform.position.z);
                             }
                             return string.Empty;
                         }
                         case 0x11:
                         {
-                            int num7 = player.ID;
+                            var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
                             {
                                 hero = (HERO) FengGameManagerMKII.heroHash[num7];
-                                return this.nextHelper.returnString(hero.rigidbody.velocity.magnitude);
+                                return nextHelper.returnString(hero.rigidbody.velocity.magnitude);
                             }
                             return string.Empty;
                         }
@@ -795,60 +795,60 @@ public class RCActionHelper
             }
             case 3:
             {
-                TITAN titan = (TITAN) parameters;
+                var titan = (TITAN) parameters;
                 if (titan != null)
                 {
-                    switch (this.helperType)
+                    switch (helperType)
                     {
                         case 0:
-                            return this.nextHelper.returnString(titan.abnormalType);
+                            return nextHelper.returnString(titan.abnormalType);
 
                         case 1:
-                            return this.nextHelper.returnString(titan.myLevel);
+                            return nextHelper.returnString(titan.myLevel);
 
                         case 2:
-                            return this.nextHelper.returnString(titan.currentHealth);
+                            return nextHelper.returnString(titan.currentHealth);
 
                         case 3:
-                            return this.nextHelper.returnString(titan.transform.position.x);
+                            return nextHelper.returnString(titan.transform.position.x);
 
                         case 4:
-                            return this.nextHelper.returnString(titan.transform.position.y);
+                            return nextHelper.returnString(titan.transform.position.y);
 
                         case 5:
-                            return this.nextHelper.returnString(titan.transform.position.z);
+                            return nextHelper.returnString(titan.transform.position.z);
                     }
                 }
                 return string.Empty;
             }
             case 4:
             {
-                RCActionHelper helper2 = (RCActionHelper) parameters;
-                RCRegion region = (RCRegion) FengGameManagerMKII.RCRegions[helper2.returnString(null)];
-                switch (this.helperType)
+                var helper2 = (RCActionHelper) parameters;
+                var region = (RCRegion) FengGameManagerMKII.RCRegions[helper2.returnString(null)];
+                switch (helperType)
                 {
                     case 0:
-                        return this.nextHelper.returnString(region.GetRandomX());
+                        return nextHelper.returnString(region.GetRandomX());
 
                     case 1:
-                        return this.nextHelper.returnString(region.GetRandomY());
+                        return nextHelper.returnString(region.GetRandomY());
 
                     case 2:
-                        return this.nextHelper.returnString(region.GetRandomZ());
+                        return nextHelper.returnString(region.GetRandomZ());
                 }
                 return string.Empty;
             }
             case 5:
-                switch (this.helperType)
+                switch (helperType)
                 {
                     case 0:
                     {
-                        int num2 = (int) parameters;
+                        var num2 = (int) parameters;
                         return num2.ToString();
                     }
                     case 1:
                     {
-                        bool flag2 = (bool) parameters;
+                        var flag2 = (bool) parameters;
                         return flag2.ToString();
                     }
                     case 2:
@@ -856,7 +856,7 @@ public class RCActionHelper
 
                     case 3:
                     {
-                        float num3 = (float) parameters;
+                        var num3 = (float) parameters;
                         return num3.ToString();
                     }
                 }
@@ -867,16 +867,16 @@ public class RCActionHelper
 
     public TITAN returnTitan(object objParameter)
     {
-        object parameters = objParameter;
+        var parameters = objParameter;
         if (this.parameters != null)
         {
             parameters = this.parameters;
         }
-        switch (this.helperClass)
+        switch (helperClass)
         {
             case 1:
             {
-                RCActionHelper helper = (RCActionHelper) parameters;
+                var helper = (RCActionHelper) parameters;
                 return (TITAN) FengGameManagerMKII.titanVariables[helper.returnString(null)];
             }
             case 3:
@@ -887,7 +887,7 @@ public class RCActionHelper
 
     public void setNextHelper(RCActionHelper sentHelper)
     {
-        this.nextHelper = sentHelper;
+        nextHelper = sentHelper;
     }
 
     public enum helperClasses

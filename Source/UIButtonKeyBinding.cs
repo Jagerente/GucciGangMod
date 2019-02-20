@@ -12,16 +12,16 @@ public class UIButtonKeyBinding : MonoBehaviour
 
     private void Update()
     {
-        if (!UICamera.inputHasFocus && (this.keyCode != KeyCode.None))
+        if (!UICamera.inputHasFocus && (keyCode != KeyCode.None))
         {
-            if (Input.GetKeyDown(this.keyCode))
+            if (Input.GetKeyDown(keyCode))
             {
-                base.SendMessage("OnPress", true, SendMessageOptions.DontRequireReceiver);
+                SendMessage("OnPress", true, SendMessageOptions.DontRequireReceiver);
             }
-            if (Input.GetKeyUp(this.keyCode))
+            if (Input.GetKeyUp(keyCode))
             {
-                base.SendMessage("OnPress", false, SendMessageOptions.DontRequireReceiver);
-                base.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
+                SendMessage("OnPress", false, SendMessageOptions.DontRequireReceiver);
+                SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
             }
         }
     }

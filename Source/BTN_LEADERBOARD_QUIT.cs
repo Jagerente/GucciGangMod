@@ -12,8 +12,8 @@ public class BTN_LEADERBOARD_QUIT : MonoBehaviour
 
     private void OnClick()
     {
-        NGUITools.SetActive(this.mainMenu, true);
-        NGUITools.SetActive(this.leaderboard, false);
+        NGUITools.SetActive(mainMenu, true);
+        NGUITools.SetActive(leaderboard, false);
     }
 }
 

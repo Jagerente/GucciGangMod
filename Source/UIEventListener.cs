@@ -23,7 +23,7 @@ public class UIEventListener : MonoBehaviour
 
     public static UIEventListener Get(GameObject go)
     {
-        UIEventListener component = go.GetComponent<UIEventListener>();
+        var component = go.GetComponent<UIEventListener>();
         if (component == null)
         {
             component = go.AddComponent<UIEventListener>();
@@ -33,89 +33,89 @@ public class UIEventListener : MonoBehaviour
 
     private void OnClick()
     {
-        if (this.onClick != null)
+        if (onClick != null)
         {
-            this.onClick(base.gameObject);
+            onClick(gameObject);
         }
     }
 
     private void OnDoubleClick()
     {
-        if (this.onDoubleClick != null)
+        if (onDoubleClick != null)
         {
-            this.onDoubleClick(base.gameObject);
+            onDoubleClick(gameObject);
         }
     }
 
     private void OnDrag(Vector2 delta)
     {
-        if (this.onDrag != null)
+        if (onDrag != null)
         {
-            this.onDrag(base.gameObject, delta);
+            onDrag(gameObject, delta);
         }
     }
 
     private void OnDrop(GameObject go)
     {
-        if (this.onDrop != null)
+        if (onDrop != null)
         {
-            this.onDrop(base.gameObject, go);
+            onDrop(gameObject, go);
         }
     }
 
     private void OnHover(bool isOver)
     {
-        if (this.onHover != null)
+        if (onHover != null)
         {
-            this.onHover(base.gameObject, isOver);
+            onHover(gameObject, isOver);
         }
     }
 
     private void OnInput(string text)
     {
-        if (this.onInput != null)
+        if (onInput != null)
         {
-            this.onInput(base.gameObject, text);
+            onInput(gameObject, text);
         }
     }
 
     private void OnKey(KeyCode key)
     {
-        if (this.onKey != null)
+        if (onKey != null)
         {
-            this.onKey(base.gameObject, key);
+            onKey(gameObject, key);
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if (this.onPress != null)
+        if (onPress != null)
         {
-            this.onPress(base.gameObject, isPressed);
+            onPress(gameObject, isPressed);
         }
     }
 
     private void OnScroll(float delta)
     {
-        if (this.onScroll != null)
+        if (onScroll != null)
         {
-            this.onScroll(base.gameObject, delta);
+            onScroll(gameObject, delta);
         }
     }
 
     private void OnSelect(bool selected)
     {
-        if (this.onSelect != null)
+        if (onSelect != null)
         {
-            this.onSelect(base.gameObject, selected);
+            onSelect(gameObject, selected);
         }
     }
 
     private void OnSubmit()
     {
-        if (this.onSubmit != null)
+        if (onSubmit != null)
         {
-            this.onSubmit(base.gameObject);
+            onSubmit(gameObject);
         }
     }
 

@@ -246,7 +246,7 @@ namespace GGM
         public static void LoadHumanSkins()
         {
             HumanSkinFields = new List<string[]>();
-            for (int i = 0; i < HumanSkinCount; i++)
+            for (var i = 0; i < HumanSkinCount; i++)
             {
                 HumanSkinFields.Add(PlayerPrefs.GetString("HumanSkin" + i.ToString(), "````````````").Split('`'));
             }
@@ -254,7 +254,7 @@ namespace GGM
             HumanCurrentSkin = PlayerPrefs.GetInt("HumanCurrentSkin", 0);
             HumanSkinSetTitles = PlayerPrefs.GetString("SkinSlotsNames", "Set 1`Set 2`Set 3`Set 4`Set 5").Split('`');
             HumanSetTitles = new List<string>();
-            foreach (string str in HumanSkinSetTitles)
+            foreach (var str in HumanSkinSetTitles)
             {
                 HumanSetTitles.Add(str);
             }
@@ -262,17 +262,17 @@ namespace GGM
         public static void SaveHumanSkins()
         {
             PlayerPrefs.SetInt("HumanCurrentSkin", HumanCurrentSkin);
-            for (int i = 0; i < HumanSkinCount; i++)
+            for (var i = 0; i < HumanSkinCount; i++)
             {
-                string str = "";
-                for (int j = 0; j < 13; j++)
+                var str = "";
+                for (var j = 0; j < 13; j++)
                 {
                     str += HumanSkinFields[i][j] + (j != 12 ? "`" : "");
                 }
                 PlayerPrefs.SetString("HumanSkin" + i.ToString(), str);
             }
-            string str2 = "";
-            for (int i = 0; i < HumanSetTitles.Count; i++)
+            var str2 = "";
+            for (var i = 0; i < HumanSetTitles.Count; i++)
             {
                 str2 += HumanSetTitles[i] + (i != HumanSetTitles.Count - 1 ? "`" : "");
             }
@@ -290,7 +290,7 @@ namespace GGM
             ForestFogStartDistance = new List<float>();
             ForestFogEndDistance = new List<float>();
 
-            for (int i = 0; i < ForestSkinCount; i++)
+            for (var i = 0; i < ForestSkinCount; i++)
             {
                 //Skin Fields
                 ForestSkinFields.Add(PlayerPrefs.GetString("ForestSkin" + i.ToString(),
@@ -337,7 +337,7 @@ namespace GGM
             ForestCurrentSkin = PlayerPrefs.GetInt("ForestCurrentSkin", 0);
             ForestSkinSetTitles = PlayerPrefs.GetString("ForestSetTitles", "Sakura Forest`Sakura Forest`Sakura Forest").Split('`');
             ForestSetTitles = new List<string>();
-            foreach (string str in ForestSkinSetTitles)
+            foreach (var str in ForestSkinSetTitles)
             {
                 ForestSetTitles.Add(str);
             }
@@ -346,10 +346,10 @@ namespace GGM
         {
             PlayerPrefs.SetInt("ForestSkinCount", ForestSkinCount);
             PlayerPrefs.SetInt("ForestCurrentSkin", ForestCurrentSkin);
-            for (int i = 0; i < ForestSkinCount; i++)
+            for (var i = 0; i < ForestSkinCount; i++)
             {
-                string fields = "";
-                for (int j = 0; j < 23; j++)
+                var fields = "";
+                for (var j = 0; j < 23; j++)
                 {
                     fields += ForestSkinFields[i][j] + (j != 22 ? "`" : "");
                 }
@@ -365,8 +365,8 @@ namespace GGM
                 PlayerPrefs.SetFloat("ForestFogStartDistance", ForestFogStartDistance[ForestCurrentSkin]);
                 PlayerPrefs.SetFloat("ForestFogEndDistance", ForestFogEndDistance[ForestCurrentSkin]);
             }
-            string title = "";
-            for (int i = 0; i < ForestSetTitles.Count; i++)
+            var title = "";
+            for (var i = 0; i < ForestSetTitles.Count; i++)
             {
                 title += ForestSetTitles[i] + (i != ForestSetTitles.Count - 1 ? "`" : "");
             }
@@ -384,7 +384,7 @@ namespace GGM
             CityFogStartDistance = new List<float>();
             CityFogEndDistance = new List<float>();
 
-            for (int i = 0; i < CitySkinCount; i++)
+            for (var i = 0; i < CitySkinCount; i++)
             {
                 //Skin Fields
                 CitySkinFields.Add(PlayerPrefs.GetString("CitySkin" + i.ToString(), "````````````````").Split('`'));
@@ -408,7 +408,7 @@ namespace GGM
             CityCurrentSkin = PlayerPrefs.GetInt("CityCurrentSkin", 0);
             CitySkinSetTitles = PlayerPrefs.GetString("CitySetTitles", "Set 1`Set 2`Set 3").Split('`');
             CitySetTitles = new List<string>();
-            foreach (string str in CitySkinSetTitles)
+            foreach (var str in CitySkinSetTitles)
             {
                 CitySetTitles.Add(str);
             }
@@ -417,10 +417,10 @@ namespace GGM
         {
             PlayerPrefs.SetInt("CitySkinCount", CitySkinCount);
             PlayerPrefs.SetInt("CityCurrentSkin", CityCurrentSkin);
-            for (int i = 0; i < CitySkinCount; i++)
+            for (var i = 0; i < CitySkinCount; i++)
             {
-                string fields = "";
-                for (int j = 0; j < 17; j++)
+                var fields = "";
+                for (var j = 0; j < 17; j++)
                 {
                     fields += CitySkinFields[i][j] + (j != 16 ? "`" : "");
                 }
@@ -436,8 +436,8 @@ namespace GGM
                 PlayerPrefs.SetFloat("CityFogStartDistance", CityFogStartDistance[CityCurrentSkin]);
                 PlayerPrefs.SetFloat("CityFogEndDistance", CityFogEndDistance[CityCurrentSkin]);
             }
-            string title = "";
-            for (int i = 0; i < CitySetTitles.Count; i++)
+            var title = "";
+            for (var i = 0; i < CitySetTitles.Count; i++)
             {
                 title += CitySetTitles[i] + (i != CitySetTitles.Count - 1 ? "`" : "");
             }

@@ -14,41 +14,41 @@ public class AttractionForceAffector : Affector
 
     public AttractionForceAffector(float magnitude, Vector3 pos, EffectNode node) : base(node)
     {
-        this.Magnitude = magnitude;
-        this.Position = pos;
-        this.UseCurve = false;
+        Magnitude = magnitude;
+        Position = pos;
+        UseCurve = false;
     }
 
     public AttractionForceAffector(AnimationCurve curve, Vector3 pos, EffectNode node) : base(node)
     {
-        this.AttractionCurve = curve;
-        this.Position = pos;
-        this.UseCurve = true;
+        AttractionCurve = curve;
+        Position = pos;
+        UseCurve = true;
     }
 
     public override void Update()
     {
         Vector3 vector;
         float magnitude;
-        if (base.Node.SyncClient)
+        if (Node.SyncClient)
         {
-            vector = this.Position - base.Node.GetLocalPosition();
+            vector = Position - Node.GetLocalPosition();
         }
         else
         {
-            vector = (base.Node.ClientTrans.position + this.Position) - base.Node.GetLocalPosition();
+            vector = (Node.ClientTrans.position + Position) - Node.GetLocalPosition();
         }
-        float elapsedTime = base.Node.GetElapsedTime();
-        if (this.UseCurve)
+        var elapsedTime = Node.GetElapsedTime();
+        if (UseCurve)
         {
-            magnitude = this.AttractionCurve.Evaluate(elapsedTime);
+            magnitude = AttractionCurve.Evaluate(elapsedTime);
         }
         else
         {
-            magnitude = this.Magnitude;
+            magnitude = Magnitude;
         }
-        float num3 = magnitude;
-        base.Node.Velocity += (Vector3) ((vector.normalized * num3) * Time.deltaTime);
+        var num3 = magnitude;
+        Node.Velocity += (vector.normalized * num3) * Time.deltaTime;
     }
 }
 

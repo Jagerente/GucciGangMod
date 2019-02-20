@@ -958,22 +958,22 @@ namespace GGM
                     }
                     GUI.Label(new Rect(_leftPos + k, (_topPos + 86f) + (j * 25f), 145f, 22f), list7[i], "Label");
                 }
-                bool flag37 = false;
+                var flag37 = false;
                 if (((int)FengGameManagerMKII.settings[97]) == 1)
                 {
                     flag37 = true;
                 }
-                bool flag38 = false;
+                var flag38 = false;
                 if (((int)FengGameManagerMKII.settings[116]) == 1)
                 {
                     flag38 = true;
                 }
-                bool flag39 = false;
+                var flag39 = false;
                 if (((int)FengGameManagerMKII.settings[181]) == 1)
                 {
                     flag39 = true;
                 }
-                bool flag40 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 261f, 40f, 20f), flag37, "On");
+                var flag40 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 261f, 40f, 20f), flag37, "On");
                 if (flag37 != flag40)
                 {
                     if (flag40)
@@ -985,7 +985,7 @@ namespace GGM
                         FengGameManagerMKII.settings[97] = 0;
                     }
                 }
-                bool flag41 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 286f, 40f, 20f), flag38, "On");
+                var flag41 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 286f, 40f, 20f), flag38, "On");
                 if (flag38 != flag41)
                 {
                     if (flag41)
@@ -997,7 +997,7 @@ namespace GGM
                         FengGameManagerMKII.settings[116] = 0;
                     }
                 }
-                bool flag42 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 311f, 40f, 20f), flag39, "On");
+                var flag42 = GUI.Toggle(new Rect(_leftPos + 457f, _topPos + 311f, 40f, 20f), flag39, "On");
                 if (flag39 != flag42)
                 {
                     if (flag42)
@@ -1478,7 +1478,7 @@ namespace GGM
             num30 = (int)FengGameManagerMKII.settings[252];
             GUI.Label(new Rect(_leftPos + 168f, _topPos + 285f, 20f, 22f), num30.ToString(), "Label");
             GUI.Label(new Rect(_leftPos + 168f, _topPos + 310f, 20f, 22f), ((int)FengGameManagerMKII.settings[253]).ToString(), "Label");
-            int num43 = (((20 - ((int)FengGameManagerMKII.settings[250])) - ((int)FengGameManagerMKII.settings[251])) - ((int)FengGameManagerMKII.settings[252])) - ((int)FengGameManagerMKII.settings[253]);
+            var num43 = (((20 - ((int)FengGameManagerMKII.settings[250])) - ((int)FengGameManagerMKII.settings[251])) - ((int)FengGameManagerMKII.settings[252])) - ((int)FengGameManagerMKII.settings[253]);
             GUI.Label(new Rect(_leftPos + 168f, _topPos + 335f, 20f, 22f), num43.ToString(), "Label");
             if (GUI.Button(new Rect(_leftPos + 190f, _topPos + 235f, 20f, 20f), "-"))
             {
@@ -1551,7 +1551,7 @@ namespace GGM
             BetterGUI.Label("Title:", 0, 105f);
             Settings.HumanSetTitles[Settings.HumanCurrentSkin] = GUILayout.TextField(Settings.HumanSetTitles[Settings.HumanCurrentSkin], GUILayout.Width(220f));
             GUILayout.EndHorizontal();
-            for (int i = 0; i < 13; i++)
+            for (var i = 0; i < 13; i++)
             {
                 BetterGUI.TextField(Settings.HumanSkinLabels[i], ref Settings.HumanSkinFields[Settings.HumanCurrentSkin][i], 220f, 105f);
             }
@@ -1751,7 +1751,7 @@ namespace GGM
                 Settings.ForestSetTitles[Settings.ForestCurrentSkin] = GUILayout.TextField(
                     Settings.ForestSetTitles[Settings.ForestCurrentSkin], GUILayout.Width(190f));
                 GUILayout.EndHorizontal();
-                for (int i = 0; i < 23; i++)
+                for (var i = 0; i < 23; i++)
                 {
                     BetterGUI.TextField(Settings.ForestSkinLabels[i],
                         ref Settings.ForestSkinFields[Settings.ForestCurrentSkin][i]);
@@ -1858,7 +1858,7 @@ namespace GGM
                 BetterGUI.Label("Title:");
                 Settings.CitySetTitles[Settings.CityCurrentSkin] = GUILayout.TextField(Settings.CitySetTitles[Settings.CityCurrentSkin], GUILayout.Width(190f));
                 GUILayout.EndHorizontal();
-                for (int i = 0; i < 17; i++)
+                for (var i = 0; i < 17; i++)
                 {
                     BetterGUI.TextField(Settings.CitySkinLabels[i],
                         ref Settings.CitySkinFields[Settings.CityCurrentSkin][i]);

@@ -22,81 +22,81 @@ public class UIForwardEvents : MonoBehaviour
 
     private void OnClick()
     {
-        if (this.onClick && (this.target != null))
+        if (onClick && (target != null))
         {
-            this.target.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnDoubleClick()
     {
-        if (this.onDoubleClick && (this.target != null))
+        if (onDoubleClick && (target != null))
         {
-            this.target.SendMessage("OnDoubleClick", SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnDoubleClick", SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnDrag(Vector2 delta)
     {
-        if (this.onDrag && (this.target != null))
+        if (onDrag && (target != null))
         {
-            this.target.SendMessage("OnDrag", delta, SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnDrag", delta, SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnDrop(GameObject go)
     {
-        if (this.onDrop && (this.target != null))
+        if (onDrop && (target != null))
         {
-            this.target.SendMessage("OnDrop", go, SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnDrop", go, SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnHover(bool isOver)
     {
-        if (this.onHover && (this.target != null))
+        if (onHover && (target != null))
         {
-            this.target.SendMessage("OnHover", isOver, SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnHover", isOver, SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnInput(string text)
     {
-        if (this.onInput && (this.target != null))
+        if (onInput && (target != null))
         {
-            this.target.SendMessage("OnInput", text, SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnInput", text, SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnPress(bool pressed)
     {
-        if (this.onPress && (this.target != null))
+        if (onPress && (target != null))
         {
-            this.target.SendMessage("OnPress", pressed, SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnPress", pressed, SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnScroll(float delta)
     {
-        if (this.onScroll && (this.target != null))
+        if (onScroll && (target != null))
         {
-            this.target.SendMessage("OnScroll", delta, SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnScroll", delta, SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnSelect(bool selected)
     {
-        if (this.onSelect && (this.target != null))
+        if (onSelect && (target != null))
         {
-            this.target.SendMessage("OnSelect", selected, SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnSelect", selected, SendMessageOptions.DontRequireReceiver);
         }
     }
 
     private void OnSubmit()
     {
-        if (this.onSubmit && (this.target != null))
+        if (onSubmit && (target != null))
         {
-            this.target.SendMessage("OnSubmit", SendMessageOptions.DontRequireReceiver);
+            target.SendMessage("OnSubmit", SendMessageOptions.DontRequireReceiver);
         }
     }
 }

@@ -14,18 +14,18 @@ public class UILocalize : MonoBehaviour
 
     public void Localize()
     {
-        Localization instance = Localization.instance;
-        UIWidget component = base.GetComponent<UIWidget>();
-        UILabel label = component as UILabel;
-        UISprite sprite = component as UISprite;
-        if ((string.IsNullOrEmpty(this.mLanguage) && string.IsNullOrEmpty(this.key)) && (label != null))
+        var instance = Localization.instance;
+        var component = GetComponent<UIWidget>();
+        var label = component as UILabel;
+        var sprite = component as UISprite;
+        if ((string.IsNullOrEmpty(mLanguage) && string.IsNullOrEmpty(key)) && (label != null))
         {
-            this.key = label.text;
+            key = label.text;
         }
-        string str = !string.IsNullOrEmpty(this.key) ? instance.Get(this.key) : string.Empty;
+        var str = !string.IsNullOrEmpty(key) ? instance.Get(key) : string.Empty;
         if (label != null)
         {
-            UIInput input = NGUITools.FindInParents<UIInput>(label.gameObject);
+            var input = NGUITools.FindInParents<UIInput>(label.gameObject);
             if ((input != null) && (input.label == label))
             {
                 input.defaultText = str;
@@ -40,31 +40,31 @@ public class UILocalize : MonoBehaviour
             sprite.spriteName = str;
             sprite.MakePixelPerfect();
         }
-        this.mLanguage = instance.currentLanguage;
+        mLanguage = instance.currentLanguage;
     }
 
     private void OnEnable()
     {
-        if (this.mStarted && (Localization.instance != null))
+        if (mStarted && (Localization.instance != null))
         {
-            this.Localize();
+            Localize();
         }
     }
 
     private void OnLocalize(Localization loc)
     {
-        if (this.mLanguage != loc.currentLanguage)
+        if (mLanguage != loc.currentLanguage)
         {
-            this.Localize();
+            Localize();
         }
     }
 
     private void Start()
     {
-        this.mStarted = true;
+        mStarted = true;
         if (Localization.instance != null)
         {
-            this.Localize();
+            Localize();
         }
     }
 }

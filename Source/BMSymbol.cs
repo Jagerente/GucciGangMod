@@ -23,7 +23,7 @@ public class BMSymbol
 
     public void MarkAsDirty()
     {
-        this.mIsValid = false;
+        mIsValid = false;
     }
 
     public bool Validate(UIAtlas atlas)
@@ -32,49 +32,49 @@ public class BMSymbol
         {
             return false;
         }
-        if (!this.mIsValid)
+        if (!mIsValid)
         {
-            if (string.IsNullOrEmpty(this.spriteName))
+            if (string.IsNullOrEmpty(spriteName))
             {
                 return false;
             }
-            this.mSprite = (atlas == null) ? null : atlas.GetSprite(this.spriteName);
-            if (this.mSprite != null)
+            mSprite = (atlas == null) ? null : atlas.GetSprite(spriteName);
+            if (mSprite != null)
             {
-                Texture texture = atlas.texture;
+                var texture = atlas.texture;
                 if (texture == null)
                 {
-                    this.mSprite = null;
+                    mSprite = null;
                 }
                 else
                 {
-                    Rect outer = this.mSprite.outer;
-                    this.mUV = outer;
+                    var outer = mSprite.outer;
+                    mUV = outer;
                     if (atlas.coordinates == UIAtlas.Coordinates.Pixels)
                     {
-                        this.mUV = NGUIMath.ConvertToTexCoords(this.mUV, texture.width, texture.height);
+                        mUV = NGUIMath.ConvertToTexCoords(mUV, texture.width, texture.height);
                     }
                     else
                     {
                         outer = NGUIMath.ConvertToPixels(outer, texture.width, texture.height, true);
                     }
-                    this.mOffsetX = Mathf.RoundToInt(this.mSprite.paddingLeft * outer.width);
-                    this.mOffsetY = Mathf.RoundToInt(this.mSprite.paddingTop * outer.width);
-                    this.mWidth = Mathf.RoundToInt(outer.width);
-                    this.mHeight = Mathf.RoundToInt(outer.height);
-                    this.mAdvance = Mathf.RoundToInt(outer.width + ((this.mSprite.paddingRight + this.mSprite.paddingLeft) * outer.width));
-                    this.mIsValid = true;
+                    mOffsetX = Mathf.RoundToInt(mSprite.paddingLeft * outer.width);
+                    mOffsetY = Mathf.RoundToInt(mSprite.paddingTop * outer.width);
+                    mWidth = Mathf.RoundToInt(outer.width);
+                    mHeight = Mathf.RoundToInt(outer.height);
+                    mAdvance = Mathf.RoundToInt(outer.width + ((mSprite.paddingRight + mSprite.paddingLeft) * outer.width));
+                    mIsValid = true;
                 }
             }
         }
-        return (this.mSprite != null);
+        return (mSprite != null);
     }
 
     public int advance
     {
         get
         {
-            return this.mAdvance;
+            return mAdvance;
         }
     }
 
@@ -82,7 +82,7 @@ public class BMSymbol
     {
         get
         {
-            return this.mHeight;
+            return mHeight;
         }
     }
 
@@ -90,11 +90,11 @@ public class BMSymbol
     {
         get
         {
-            if (this.mLength == 0)
+            if (mLength == 0)
             {
-                this.mLength = this.sequence.Length;
+                mLength = sequence.Length;
             }
-            return this.mLength;
+            return mLength;
         }
     }
 
@@ -102,7 +102,7 @@ public class BMSymbol
     {
         get
         {
-            return this.mOffsetX;
+            return mOffsetX;
         }
     }
 
@@ -110,7 +110,7 @@ public class BMSymbol
     {
         get
         {
-            return this.mOffsetY;
+            return mOffsetY;
         }
     }
 
@@ -118,7 +118,7 @@ public class BMSymbol
     {
         get
         {
-            return this.mUV;
+            return mUV;
         }
     }
 
@@ -126,7 +126,7 @@ public class BMSymbol
     {
         get
         {
-            return this.mWidth;
+            return mWidth;
         }
     }
 }

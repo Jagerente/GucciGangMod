@@ -9,14 +9,14 @@
 
         public TimeKeeper(int interval)
         {
-            this.IsEnabled = true;
-            this.Interval = interval;
+            IsEnabled = true;
+            Interval = interval;
         }
 
         public void Reset()
         {
-            this.shouldExecute = false;
-            this.lastExecutionTime = Environment.TickCount;
+            shouldExecute = false;
+            lastExecutionTime = Environment.TickCount;
         }
 
         public int Interval { get; set; }
@@ -27,11 +27,11 @@
         {
             get
             {
-                return (this.IsEnabled && (this.shouldExecute || ((Environment.TickCount - this.lastExecutionTime) > this.Interval)));
+                return (IsEnabled && (shouldExecute || ((Environment.TickCount - lastExecutionTime) > Interval)));
             }
             set
             {
-                this.shouldExecute = value;
+                shouldExecute = value;
             }
         }
     }

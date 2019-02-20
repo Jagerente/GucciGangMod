@@ -16,16 +16,16 @@ public class PanelResult : MonoBehaviour
 
     private void showTxt()
     {
-        if (this.lang != Language.type)
+        if (lang != Language.type)
         {
-            this.lang = Language.type;
-            this.label_quit.GetComponent<UILabel>().text = Language.btn_quit[Language.type];
+            lang = Language.type;
+            label_quit.GetComponent<UILabel>().text = Language.btn_quit[Language.type];
         }
     }
 
     private void Update()
     {
-        this.showTxt();
+        showTxt();
     }
 }
 

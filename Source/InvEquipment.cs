@@ -15,10 +15,10 @@ public class InvEquipment : MonoBehaviour
     {
         if (item != null)
         {
-            InvBaseItem baseItem = item.baseItem;
+            var baseItem = item.baseItem;
             if (baseItem != null)
             {
-                return this.Replace(baseItem.slot, item);
+                return Replace(baseItem.slot, item);
             }
             Debug.LogWarning("Can't resolve the item ID of " + item.baseItemID);
         }
@@ -29,10 +29,10 @@ public class InvEquipment : MonoBehaviour
     {
         if (slot != InvBaseItem.Slot.None)
         {
-            int index = ((int) slot) - 1;
-            if ((this.mItems != null) && (index < this.mItems.Length))
+            var index = ((int) slot) - 1;
+            if ((mItems != null) && (index < mItems.Length))
             {
-                return this.mItems[index];
+                return mItems[index];
             }
         }
         return null;
@@ -40,13 +40,13 @@ public class InvEquipment : MonoBehaviour
 
     public bool HasEquipped(InvBaseItem.Slot slot)
     {
-        if (this.mItems != null)
+        if (mItems != null)
         {
-            int index = 0;
-            int length = this.mItems.Length;
+            var index = 0;
+            var length = mItems.Length;
             while (index < length)
             {
-                InvBaseItem baseItem = this.mItems[index].baseItem;
+                var baseItem = mItems[index].baseItem;
                 if ((baseItem != null) && (baseItem.slot == slot))
                 {
                     return true;
@@ -59,13 +59,13 @@ public class InvEquipment : MonoBehaviour
 
     public bool HasEquipped(InvGameItem item)
     {
-        if (this.mItems != null)
+        if (mItems != null)
         {
-            int index = 0;
-            int length = this.mItems.Length;
+            var index = 0;
+            var length = mItems.Length;
             while (index < length)
             {
-                if (this.mItems[index] == item)
+                if (mItems[index] == item)
                 {
                     return true;
                 }
@@ -77,35 +77,35 @@ public class InvEquipment : MonoBehaviour
 
     public InvGameItem Replace(InvBaseItem.Slot slot, InvGameItem item)
     {
-        InvBaseItem item2 = (item == null) ? null : item.baseItem;
+        var item2 = (item == null) ? null : item.baseItem;
         if (slot != InvBaseItem.Slot.None)
         {
             if ((item2 != null) && (item2.slot != slot))
             {
                 return item;
             }
-            if (this.mItems == null)
+            if (mItems == null)
             {
-                int num = 8;
-                this.mItems = new InvGameItem[num];
+                var num = 8;
+                mItems = new InvGameItem[num];
             }
-            InvGameItem item3 = this.mItems[((int) slot) - 1];
-            this.mItems[((int) slot) - 1] = item;
-            if (this.mAttachments == null)
+            var item3 = mItems[((int) slot) - 1];
+            mItems[((int) slot) - 1] = item;
+            if (mAttachments == null)
             {
-                this.mAttachments = base.GetComponentsInChildren<InvAttachmentPoint>();
+                mAttachments = GetComponentsInChildren<InvAttachmentPoint>();
             }
-            int index = 0;
-            int length = this.mAttachments.Length;
+            var index = 0;
+            var length = mAttachments.Length;
             while (index < length)
             {
-                InvAttachmentPoint point = this.mAttachments[index];
+                var point = mAttachments[index];
                 if (point.slot == slot)
                 {
-                    GameObject obj2 = point.Attach((item2 == null) ? null : item2.attachment);
+                    var obj2 = point.Attach((item2 == null) ? null : item2.attachment);
                     if ((item2 != null) && (obj2 != null))
                     {
-                        Renderer renderer = obj2.renderer;
+                        var renderer = obj2.renderer;
                         if (renderer != null)
                         {
                             renderer.material.color = item2.color;
@@ -125,17 +125,17 @@ public class InvEquipment : MonoBehaviour
 
     public InvGameItem Unequip(InvBaseItem.Slot slot)
     {
-        return this.Replace(slot, null);
+        return Replace(slot, null);
     }
 
     public InvGameItem Unequip(InvGameItem item)
     {
         if (item != null)
         {
-            InvBaseItem baseItem = item.baseItem;
+            var baseItem = item.baseItem;
             if (baseItem != null)
             {
-                return this.Replace(baseItem.slot, null);
+                return Replace(baseItem.slot, null);
             }
         }
         return item;
@@ -145,7 +145,7 @@ public class InvEquipment : MonoBehaviour
     {
         get
         {
-            return this.mItems;
+            return mItems;
         }
     }
 }

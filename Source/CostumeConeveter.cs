@@ -50,7 +50,7 @@ public class CostumeConeveter
 
     public static void HeroCostumeToPhotonData(HeroCostume costume, PhotonPlayer player)
     {
-        Hashtable propertiesToSet = new Hashtable();
+        var propertiesToSet = new Hashtable();
         propertiesToSet.Add(PhotonPlayerProperty.sex, SexToInt(costume.sex));
         player.SetCustomProperties(propertiesToSet);
         propertiesToSet = new Hashtable();
@@ -108,11 +108,11 @@ public class CostumeConeveter
 
     public static void HeroCostumeToPhotonData2(HeroCostume costume, PhotonPlayer player)
     {
-        Hashtable propertiesToSet = new Hashtable();
+        var propertiesToSet = new Hashtable();
         propertiesToSet.Add(PhotonPlayerProperty.sex, SexToInt(costume.sex));
         player.SetCustomProperties(propertiesToSet);
         propertiesToSet = new Hashtable();
-        int costumeId = costume.costumeId;
+        var costumeId = costume.costumeId;
         if (costumeId == 0x1a)
         {
             costumeId = 0x19;
@@ -230,7 +230,7 @@ public class CostumeConeveter
         {
             return HeroCostume.costume[0];
         }
-        HeroCostume costume = new HeroCostume();
+        var costume = new HeroCostume();
         costume = new HeroCostume {
             sex = IntToSex(PlayerPrefs.GetInt(slot + PhotonPlayerProperty.sex)),
             id = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.heroCostumeId),
@@ -259,7 +259,7 @@ public class CostumeConeveter
 
     public static HeroCostume PhotonDataToHeroCostume(PhotonPlayer player)
     {
-        HeroCostume costume = new HeroCostume();
+        var costume = new HeroCostume();
         costume = new HeroCostume {
             sex = IntToSex((int) player.customProperties[PhotonPlayerProperty.sex]),
             costumeId = (int) player.customProperties[PhotonPlayerProperty.costumeId],
@@ -287,8 +287,8 @@ public class CostumeConeveter
 
     public static HeroCostume PhotonDataToHeroCostume2(PhotonPlayer player)
     {
-        HeroCostume costume = new HeroCostume();
-        SEX sex = IntToSex((int) player.customProperties[PhotonPlayerProperty.sex]);
+        var costume = new HeroCostume();
+        var sex = IntToSex((int) player.customProperties[PhotonPlayerProperty.sex]);
         costume = new HeroCostume {
             sex = sex,
             costumeId = (int) player.customProperties[PhotonPlayerProperty.costumeId],

@@ -15,29 +15,29 @@ public class PunTeams : MonoBehaviour
 
     public void OnJoinedRoom()
     {
-        this.UpdateTeams();
+        UpdateTeams();
     }
 
     public void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
     {
-        this.UpdateTeams();
+        UpdateTeams();
     }
 
     public void Start()
     {
         PlayersPerTeam = new Dictionary<Team, List<PhotonPlayer>>();
-        IEnumerator enumerator = Enum.GetValues(typeof(Team)).GetEnumerator();
+        var enumerator = Enum.GetValues(typeof(Team)).GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                object current = enumerator.Current;
+                var current = enumerator.Current;
                 PlayersPerTeam[(Team) ((byte) current)] = new List<PhotonPlayer>();
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
@@ -45,25 +45,25 @@ public class PunTeams : MonoBehaviour
 
     public void UpdateTeams()
     {
-        IEnumerator enumerator = Enum.GetValues(typeof(Team)).GetEnumerator();
+        var enumerator = Enum.GetValues(typeof(Team)).GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                object current = enumerator.Current;
+                var current = enumerator.Current;
                 PlayersPerTeam[(Team) ((byte) current)].Clear();
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
+        for (var i = 0; i < PhotonNetwork.playerList.Length; i++)
         {
-            PhotonPlayer player = PhotonNetwork.playerList[i];
-            Team team = player.GetTeam();
+            var player = PhotonNetwork.playerList[i];
+            var team = player.GetTeam();
             PlayersPerTeam[team].Add(player);
         }
     }

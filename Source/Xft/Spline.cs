@@ -11,72 +11,72 @@
 
         public SplineControlPoint AddControlPoint(Vector3 pos, Vector3 up)
         {
-            SplineControlPoint item = new SplineControlPoint();
+            var item = new SplineControlPoint();
             item.Init(this);
             item.Position = pos;
             item.Normal = up;
-            this.mControlPoints.Add(item);
-            item.ControlPointIndex = this.mControlPoints.Count - 1;
+            mControlPoints.Add(item);
+            item.ControlPointIndex = mControlPoints.Count - 1;
             return item;
         }
 
         public static Vector3 CatmulRom(Vector3 T0, Vector3 P0, Vector3 P1, Vector3 T1, float f)
         {
-            double num = -0.5;
-            double num2 = 1.5;
-            double num3 = -1.5;
-            double num4 = 0.5;
-            double num5 = -2.5;
-            double num6 = 2.0;
-            double num7 = -0.5;
-            double num8 = -0.5;
-            double num9 = 0.5;
-            double num10 = (((num * T0.x) + (num2 * P0.x)) + (num3 * P1.x)) + (num4 * T1.x);
-            double num11 = ((T0.x + (num5 * P0.x)) + (num6 * P1.x)) + (num7 * T1.x);
-            double num12 = (num8 * T0.x) + (num9 * P1.x);
+            var num = -0.5;
+            var num2 = 1.5;
+            var num3 = -1.5;
+            var num4 = 0.5;
+            var num5 = -2.5;
+            var num6 = 2.0;
+            var num7 = -0.5;
+            var num8 = -0.5;
+            var num9 = 0.5;
+            var num10 = (((num * T0.x) + (num2 * P0.x)) + (num3 * P1.x)) + (num4 * T1.x);
+            var num11 = ((T0.x + (num5 * P0.x)) + (num6 * P1.x)) + (num7 * T1.x);
+            var num12 = (num8 * T0.x) + (num9 * P1.x);
             double x = P0.x;
-            double num14 = (((num * T0.y) + (num2 * P0.y)) + (num3 * P1.y)) + (num4 * T1.y);
-            double num15 = ((T0.y + (num5 * P0.y)) + (num6 * P1.y)) + (num7 * T1.y);
-            double num16 = (num8 * T0.y) + (num9 * P1.y);
+            var num14 = (((num * T0.y) + (num2 * P0.y)) + (num3 * P1.y)) + (num4 * T1.y);
+            var num15 = ((T0.y + (num5 * P0.y)) + (num6 * P1.y)) + (num7 * T1.y);
+            var num16 = (num8 * T0.y) + (num9 * P1.y);
             double y = P0.y;
-            double num18 = (((num * T0.z) + (num2 * P0.z)) + (num3 * P1.z)) + (num4 * T1.z);
-            double num19 = ((T0.z + (num5 * P0.z)) + (num6 * P1.z)) + (num7 * T1.z);
-            double num20 = (num8 * T0.z) + (num9 * P1.z);
+            var num18 = (((num * T0.z) + (num2 * P0.z)) + (num3 * P1.z)) + (num4 * T1.z);
+            var num19 = ((T0.z + (num5 * P0.z)) + (num6 * P1.z)) + (num7 * T1.z);
+            var num20 = (num8 * T0.z) + (num9 * P1.z);
             double z = P0.z;
-            float num22 = (float) ((((((num10 * f) + num11) * f) + num12) * f) + x);
-            float num23 = (float) ((((((num14 * f) + num15) * f) + num16) * f) + y);
+            var num22 = (float) ((((((num10 * f) + num11) * f) + num12) * f) + x);
+            var num23 = (float) ((((((num14 * f) + num15) * f) + num16) * f) + y);
             return new Vector3(num22, num23, (float) ((((((num18 * f) + num19) * f) + num20) * f) + z));
         }
 
         public void Clear()
         {
-            this.mControlPoints.Clear();
+            mControlPoints.Clear();
         }
 
         public Vector3 InterpolateByLen(float tl)
         {
             float num;
-            return this.LenToSegment(tl, out num).Interpolate(num);
+            return LenToSegment(tl, out num).Interpolate(num);
         }
 
         public Vector3 InterpolateNormalByLen(float tl)
         {
             float num;
-            return this.LenToSegment(tl, out num).InterpolateNormal(num);
+            return LenToSegment(tl, out num).InterpolateNormal(num);
         }
 
         public SplineControlPoint LenToSegment(float t, out float localF)
         {
             SplineControlPoint point = null;
             t = Mathf.Clamp01(t);
-            float num = t * this.mSegments[this.mSegments.Count - 1].Dist;
-            int num2 = 0;
+            var num = t * mSegments[mSegments.Count - 1].Dist;
+            var num2 = 0;
             num2 = 0;
-            while (num2 < this.mSegments.Count)
+            while (num2 < mSegments.Count)
             {
-                if (this.mSegments[num2].Dist >= num)
+                if (mSegments[num2].Dist >= num)
                 {
-                    point = this.mSegments[num2];
+                    point = mSegments[num2];
                     break;
                 }
                 num2++;
@@ -86,9 +86,9 @@
                 localF = 0f;
                 return point;
             }
-            float num3 = 0f;
-            int num4 = point.SegmentIndex - 1;
-            SplineControlPoint point2 = this.mSegments[num4];
+            var num3 = 0f;
+            var num4 = point.SegmentIndex - 1;
+            var point2 = mSegments[num4];
             num3 = point.Dist - point2.Dist;
             localF = (num - point2.Dist) / num3;
             return point2;
@@ -96,21 +96,21 @@
 
         public SplineControlPoint NextControlPoint(SplineControlPoint controlpoint)
         {
-            if (this.mControlPoints.Count == 0)
+            if (mControlPoints.Count == 0)
             {
                 return null;
             }
-            int num = controlpoint.ControlPointIndex + 1;
-            if (num >= this.mControlPoints.Count)
+            var num = controlpoint.ControlPointIndex + 1;
+            if (num >= mControlPoints.Count)
             {
                 return null;
             }
-            return this.mControlPoints[num];
+            return mControlPoints[num];
         }
 
         public Vector3 NextNormal(SplineControlPoint controlpoint)
         {
-            SplineControlPoint point = this.NextControlPoint(controlpoint);
+            var point = NextControlPoint(controlpoint);
             if (point != null)
             {
                 return point.Normal;
@@ -120,7 +120,7 @@
 
         public Vector3 NextPosition(SplineControlPoint controlpoint)
         {
-            SplineControlPoint point = this.NextControlPoint(controlpoint);
+            var point = NextControlPoint(controlpoint);
             if (point != null)
             {
                 return point.Position;
@@ -130,21 +130,21 @@
 
         public SplineControlPoint PreviousControlPoint(SplineControlPoint controlpoint)
         {
-            if (this.mControlPoints.Count == 0)
+            if (mControlPoints.Count == 0)
             {
                 return null;
             }
-            int num = controlpoint.ControlPointIndex - 1;
+            var num = controlpoint.ControlPointIndex - 1;
             if (num < 0)
             {
                 return null;
             }
-            return this.mControlPoints[num];
+            return mControlPoints[num];
         }
 
         public Vector3 PreviousNormal(SplineControlPoint controlpoint)
         {
-            SplineControlPoint point = this.PreviousControlPoint(controlpoint);
+            var point = PreviousControlPoint(controlpoint);
             if (point != null)
             {
                 return point.Normal;
@@ -154,7 +154,7 @@
 
         public Vector3 PreviousPosition(SplineControlPoint controlpoint)
         {
-            SplineControlPoint point = this.PreviousControlPoint(controlpoint);
+            var point = PreviousControlPoint(controlpoint);
             if (point != null)
             {
                 return point.Position;
@@ -164,37 +164,37 @@
 
         private void RefreshDistance()
         {
-            if (this.mSegments.Count >= 1)
+            if (mSegments.Count >= 1)
             {
-                this.mSegments[0].Dist = 0f;
-                for (int i = 1; i < this.mSegments.Count; i++)
+                mSegments[0].Dist = 0f;
+                for (var i = 1; i < mSegments.Count; i++)
                 {
-                    Vector3 vector = this.mSegments[i].Position - this.mSegments[i - 1].Position;
-                    float magnitude = vector.magnitude;
-                    this.mSegments[i].Dist = this.mSegments[i - 1].Dist + magnitude;
+                    var vector = mSegments[i].Position - mSegments[i - 1].Position;
+                    var magnitude = vector.magnitude;
+                    mSegments[i].Dist = mSegments[i - 1].Dist + magnitude;
                 }
             }
         }
 
         public void RefreshSpline()
         {
-            this.mSegments.Clear();
-            for (int i = 0; i < this.mControlPoints.Count; i++)
+            mSegments.Clear();
+            for (var i = 0; i < mControlPoints.Count; i++)
             {
-                if (this.mControlPoints[i].IsValid)
+                if (mControlPoints[i].IsValid)
                 {
-                    this.mSegments.Add(this.mControlPoints[i]);
-                    this.mControlPoints[i].SegmentIndex = this.mSegments.Count - 1;
+                    mSegments.Add(mControlPoints[i]);
+                    mControlPoints[i].SegmentIndex = mSegments.Count - 1;
                 }
             }
-            this.RefreshDistance();
+            RefreshDistance();
         }
 
         public List<SplineControlPoint> ControlPoints
         {
             get
             {
-                return this.mControlPoints;
+                return mControlPoints;
             }
         }
 
@@ -202,9 +202,9 @@
         {
             get
             {
-                if ((index > -1) && (index < this.mSegments.Count))
+                if ((index > -1) && (index < mSegments.Count))
                 {
-                    return this.mSegments[index];
+                    return mSegments[index];
                 }
                 return null;
             }
@@ -214,7 +214,7 @@
         {
             get
             {
-                return this.mSegments;
+                return mSegments;
             }
         }
     }

@@ -16,16 +16,16 @@ public class TweenAlpha : UITweener
 
     private void Awake()
     {
-        this.mPanel = base.GetComponent<UIPanel>();
-        if (this.mPanel == null)
+        mPanel = GetComponent<UIPanel>();
+        if (mPanel == null)
         {
-            this.mWidget = base.GetComponentInChildren<UIWidget>();
+            mWidget = GetComponentInChildren<UIWidget>();
         }
     }
 
     public static TweenAlpha Begin(GameObject go, float duration, float alpha)
     {
-        TweenAlpha alpha2 = UITweener.Begin<TweenAlpha>(go, duration);
+        var alpha2 = UITweener.Begin<TweenAlpha>(go, duration);
         alpha2.from = alpha2.alpha;
         alpha2.to = alpha;
         if (duration <= 0f)
@@ -38,32 +38,32 @@ public class TweenAlpha : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        this.alpha = Mathf.Lerp(this.from, this.to, factor);
+        alpha = Mathf.Lerp(from, to, factor);
     }
 
     public float alpha
     {
         get
         {
-            if (this.mWidget != null)
+            if (mWidget != null)
             {
-                return this.mWidget.alpha;
+                return mWidget.alpha;
             }
-            if (this.mPanel != null)
+            if (mPanel != null)
             {
-                return this.mPanel.alpha;
+                return mPanel.alpha;
             }
             return 0f;
         }
         set
         {
-            if (this.mWidget != null)
+            if (mWidget != null)
             {
-                this.mWidget.alpha = value;
+                mWidget.alpha = value;
             }
-            else if (this.mPanel != null)
+            else if (mPanel != null)
             {
-                this.mPanel.alpha = value;
+                mPanel.alpha = value;
             }
         }
     }

@@ -18,12 +18,12 @@ public class UIButtonScale : MonoBehaviour
 
     private void OnDisable()
     {
-        if (this.mStarted && (this.tweenTarget != null))
+        if (mStarted && (tweenTarget != null))
         {
-            TweenScale component = this.tweenTarget.GetComponent<TweenScale>();
+            var component = tweenTarget.GetComponent<TweenScale>();
             if (component != null)
             {
-                component.scale = this.mScale;
+                component.scale = mScale;
                 component.enabled = false;
             }
         }
@@ -31,47 +31,47 @@ public class UIButtonScale : MonoBehaviour
 
     private void OnEnable()
     {
-        if (this.mStarted && this.mHighlighted)
+        if (mStarted && mHighlighted)
         {
-            this.OnHover(UICamera.IsHighlighted(base.gameObject));
+            OnHover(UICamera.IsHighlighted(gameObject));
         }
     }
 
     private void OnHover(bool isOver)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Start();
+                Start();
             }
-            TweenScale.Begin(this.tweenTarget.gameObject, this.duration, !isOver ? this.mScale : Vector3.Scale(this.mScale, this.hover)).method = UITweener.Method.EaseInOut;
-            this.mHighlighted = isOver;
+            TweenScale.Begin(tweenTarget.gameObject, duration, !isOver ? mScale : Vector3.Scale(mScale, hover)).method = UITweener.Method.EaseInOut;
+            mHighlighted = isOver;
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Start();
+                Start();
             }
-            TweenScale.Begin(this.tweenTarget.gameObject, this.duration, !isPressed ? (!UICamera.IsHighlighted(base.gameObject) ? this.mScale : Vector3.Scale(this.mScale, this.hover)) : Vector3.Scale(this.mScale, this.pressed)).method = UITweener.Method.EaseInOut;
+            TweenScale.Begin(tweenTarget.gameObject, duration, !isPressed ? (!UICamera.IsHighlighted(gameObject) ? mScale : Vector3.Scale(mScale, hover)) : Vector3.Scale(mScale, pressed)).method = UITweener.Method.EaseInOut;
         }
     }
 
     private void Start()
     {
-        if (!this.mStarted)
+        if (!mStarted)
         {
-            this.mStarted = true;
-            if (this.tweenTarget == null)
+            mStarted = true;
+            if (tweenTarget == null)
             {
-                this.tweenTarget = base.transform;
+                tweenTarget = transform;
             }
-            this.mScale = this.tweenTarget.localScale;
+            mScale = tweenTarget.localScale;
         }
     }
 }

@@ -17,8 +17,8 @@ public class VertexPool
     protected int IndexUsed;
     public bool IndiceChanged;
     public int[] Indices;
-    public UnityEngine.Material Material;
-    public UnityEngine.Mesh Mesh;
+    public Material Material;
+    public Mesh Mesh;
     public bool UVChanged;
     public Vector2[] UVs;
     public bool VertChanged;
@@ -27,128 +27,128 @@ public class VertexPool
     protected int VertexUsed;
     public Vector3[] Vertices;
 
-    public VertexPool(UnityEngine.Mesh mesh, UnityEngine.Material material)
+    public VertexPool(Mesh mesh, Material material)
     {
-        this.VertexTotal = this.VertexUsed = 0;
-        this.VertCountChanged = false;
-        this.Mesh = mesh;
-        this.Material = material;
-        this.InitArrays();
-        this.Vertices = this.Mesh.vertices;
-        this.Indices = this.Mesh.triangles;
-        this.Colors = this.Mesh.colors;
-        this.UVs = this.Mesh.uv;
-        this.IndiceChanged = this.ColorChanged = this.UVChanged = this.VertChanged = true;
+        VertexTotal = VertexUsed = 0;
+        VertCountChanged = false;
+        Mesh = mesh;
+        Material = material;
+        InitArrays();
+        Vertices = Mesh.vertices;
+        Indices = Mesh.triangles;
+        Colors = Mesh.colors;
+        UVs = Mesh.uv;
+        IndiceChanged = ColorChanged = UVChanged = VertChanged = true;
     }
 
     public RibbonTrail AddRibbonTrail(float width, int maxelemnt, float len, Vector3 pos, int stretchType, float maxFps)
     {
-        return new RibbonTrail(this.GetVertices(maxelemnt * 2, (maxelemnt - 1) * 6), width, maxelemnt, len, pos, stretchType, maxFps);
+        return new RibbonTrail(GetVertices(maxelemnt * 2, (maxelemnt - 1) * 6), width, maxelemnt, len, pos, stretchType, maxFps);
     }
 
     public Sprite AddSprite(float width, float height, STYPE type, ORIPOINT ori, Camera cam, int uvStretch, float maxFps)
     {
-        return new Sprite(this.GetVertices(4, 6), width, height, type, ori, cam, uvStretch, maxFps);
+        return new Sprite(GetVertices(4, 6), width, height, type, ori, cam, uvStretch, maxFps);
     }
 
     public void EnlargeArrays(int count, int icount)
     {
-        Vector3[] vertices = this.Vertices;
-        this.Vertices = new Vector3[this.Vertices.Length + count];
-        vertices.CopyTo(this.Vertices, 0);
-        Vector2[] uVs = this.UVs;
-        this.UVs = new Vector2[this.UVs.Length + count];
-        uVs.CopyTo(this.UVs, 0);
-        Color[] colors = this.Colors;
-        this.Colors = new Color[this.Colors.Length + count];
-        colors.CopyTo(this.Colors, 0);
-        int[] indices = this.Indices;
-        this.Indices = new int[this.Indices.Length + icount];
-        indices.CopyTo(this.Indices, 0);
-        this.VertCountChanged = true;
-        this.IndiceChanged = true;
-        this.ColorChanged = true;
-        this.UVChanged = true;
-        this.VertChanged = true;
+        var vertices = Vertices;
+        Vertices = new Vector3[Vertices.Length + count];
+        vertices.CopyTo(Vertices, 0);
+        var uVs = UVs;
+        UVs = new Vector2[UVs.Length + count];
+        uVs.CopyTo(UVs, 0);
+        var colors = Colors;
+        Colors = new Color[Colors.Length + count];
+        colors.CopyTo(Colors, 0);
+        var indices = Indices;
+        Indices = new int[Indices.Length + icount];
+        indices.CopyTo(Indices, 0);
+        VertCountChanged = true;
+        IndiceChanged = true;
+        ColorChanged = true;
+        UVChanged = true;
+        VertChanged = true;
     }
 
-    public UnityEngine.Material GetMaterial()
+    public Material GetMaterial()
     {
-        return this.Material;
+        return Material;
     }
 
     public VertexSegment GetVertices(int vcount, int icount)
     {
-        int count = 0;
-        int num2 = 0;
-        if ((this.VertexUsed + vcount) >= this.VertexTotal)
+        var count = 0;
+        var num2 = 0;
+        if ((VertexUsed + vcount) >= VertexTotal)
         {
             count = ((vcount / 0x24) + 1) * 0x24;
         }
-        if ((this.IndexUsed + icount) >= this.IndexTotal)
+        if ((IndexUsed + icount) >= IndexTotal)
         {
             num2 = ((icount / 0x24) + 1) * 0x24;
         }
-        this.VertexUsed += vcount;
-        this.IndexUsed += icount;
+        VertexUsed += vcount;
+        IndexUsed += icount;
         if ((count != 0) || (num2 != 0))
         {
-            this.EnlargeArrays(count, num2);
-            this.VertexTotal += count;
-            this.IndexTotal += num2;
+            EnlargeArrays(count, num2);
+            VertexTotal += count;
+            IndexTotal += num2;
         }
-        return new VertexSegment(this.VertexUsed - vcount, vcount, this.IndexUsed - icount, icount, this);
+        return new VertexSegment(VertexUsed - vcount, vcount, IndexUsed - icount, icount, this);
     }
 
     protected void InitArrays()
     {
-        this.Vertices = new Vector3[4];
-        this.UVs = new Vector2[4];
-        this.Colors = new Color[4];
-        this.Indices = new int[6];
-        this.VertexTotal = 4;
-        this.IndexTotal = 6;
+        Vertices = new Vector3[4];
+        UVs = new Vector2[4];
+        Colors = new Color[4];
+        Indices = new int[6];
+        VertexTotal = 4;
+        IndexTotal = 6;
     }
 
     public void LateUpdate()
     {
-        if (this.VertCountChanged)
+        if (VertCountChanged)
         {
-            this.Mesh.Clear();
+            Mesh.Clear();
         }
-        this.Mesh.vertices = this.Vertices;
-        if (this.UVChanged)
+        Mesh.vertices = Vertices;
+        if (UVChanged)
         {
-            this.Mesh.uv = this.UVs;
+            Mesh.uv = UVs;
         }
-        if (this.ColorChanged)
+        if (ColorChanged)
         {
-            this.Mesh.colors = this.Colors;
+            Mesh.colors = Colors;
         }
-        if (this.IndiceChanged)
+        if (IndiceChanged)
         {
-            this.Mesh.triangles = this.Indices;
+            Mesh.triangles = Indices;
         }
-        this.ElapsedTime += Time.deltaTime;
-        if ((this.ElapsedTime > this.BoundsScheduleTime) || this.FirstUpdate)
+        ElapsedTime += Time.deltaTime;
+        if ((ElapsedTime > BoundsScheduleTime) || FirstUpdate)
         {
-            this.RecalculateBounds();
-            this.ElapsedTime = 0f;
+            RecalculateBounds();
+            ElapsedTime = 0f;
         }
-        if (this.ElapsedTime > this.BoundsScheduleTime)
+        if (ElapsedTime > BoundsScheduleTime)
         {
-            this.FirstUpdate = false;
+            FirstUpdate = false;
         }
-        this.VertCountChanged = false;
-        this.IndiceChanged = false;
-        this.ColorChanged = false;
-        this.UVChanged = false;
-        this.VertChanged = false;
+        VertCountChanged = false;
+        IndiceChanged = false;
+        ColorChanged = false;
+        UVChanged = false;
+        VertChanged = false;
     }
 
     public void RecalculateBounds()
     {
-        this.Mesh.RecalculateBounds();
+        Mesh.RecalculateBounds();
     }
 
     public class VertexSegment
@@ -161,11 +161,11 @@ public class VertexPool
 
         public VertexSegment(int start, int count, int istart, int icount, VertexPool pool)
         {
-            this.VertStart = start;
-            this.VertCount = count;
-            this.IndexCount = icount;
-            this.IndexStart = istart;
-            this.Pool = pool;
+            VertStart = start;
+            VertCount = count;
+            IndexCount = icount;
+            IndexStart = istart;
+            Pool = pool;
         }
     }
 }

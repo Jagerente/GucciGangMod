@@ -43,37 +43,37 @@ public class UICursor : MonoBehaviour
 
     private void Start()
     {
-        this.mTrans = base.transform;
-        this.mSprite = base.GetComponentInChildren<UISprite>();
-        this.mAtlas = this.mSprite.atlas;
-        this.mSpriteName = this.mSprite.spriteName;
-        this.mSprite.depth = 100;
-        if (this.uiCamera == null)
+        mTrans = transform;
+        mSprite = GetComponentInChildren<UISprite>();
+        mAtlas = mSprite.atlas;
+        mSpriteName = mSprite.spriteName;
+        mSprite.depth = 100;
+        if (uiCamera == null)
         {
-            this.uiCamera = NGUITools.FindCameraForLayer(base.gameObject.layer);
+            uiCamera = NGUITools.FindCameraForLayer(gameObject.layer);
         }
     }
 
     private void Update()
     {
-        if (this.mSprite.atlas != null)
+        if (mSprite.atlas != null)
         {
-            Vector3 mousePosition = Input.mousePosition;
-            if (this.uiCamera != null)
+            var mousePosition = Input.mousePosition;
+            if (uiCamera != null)
             {
-                mousePosition.x = Mathf.Clamp01(mousePosition.x / ((float) Screen.width));
-                mousePosition.y = Mathf.Clamp01(mousePosition.y / ((float) Screen.height));
-                this.mTrans.position = this.uiCamera.ViewportToWorldPoint(mousePosition);
-                if (this.uiCamera.isOrthoGraphic)
+                mousePosition.x = Mathf.Clamp01(mousePosition.x / Screen.width);
+                mousePosition.y = Mathf.Clamp01(mousePosition.y / Screen.height);
+                mTrans.position = uiCamera.ViewportToWorldPoint(mousePosition);
+                if (uiCamera.isOrthoGraphic)
                 {
-                    this.mTrans.localPosition = NGUIMath.ApplyHalfPixelOffset(this.mTrans.localPosition, this.mTrans.localScale);
+                    mTrans.localPosition = NGUIMath.ApplyHalfPixelOffset(mTrans.localPosition, mTrans.localScale);
                 }
             }
             else
             {
                 mousePosition.x -= Screen.width * 0.5f;
                 mousePosition.y -= Screen.height * 0.5f;
-                this.mTrans.localPosition = NGUIMath.ApplyHalfPixelOffset(mousePosition, this.mTrans.localScale);
+                mTrans.localPosition = NGUIMath.ApplyHalfPixelOffset(mousePosition, mTrans.localScale);
             }
         }
     }

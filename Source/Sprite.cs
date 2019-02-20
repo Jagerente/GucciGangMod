@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Sprite
 {
-    public UnityEngine.Color Color;
+    public Color Color;
     protected bool ColorChanged;
     protected float ElapsedTime;
     protected float Fps;
@@ -33,42 +33,42 @@ public class Sprite
 
     public Sprite(VertexPool.VertexSegment segment, float width, float height, STYPE type, ORIPOINT oripoint, Camera cam, int uvStretch, float maxFps)
     {
-        this.UVChanged = this.ColorChanged = false;
-        this.MyTransform.position = Vector3.zero;
-        this.MyTransform.rotation = Quaternion.identity;
-        this.LocalMat = this.WorldMat = Matrix4x4.identity;
-        this.Vertexsegment = segment;
-        this.UVStretch = uvStretch;
-        this.LastMat = Matrix4x4.identity;
-        this.ElapsedTime = 0f;
-        this.Fps = 1f / maxFps;
-        this.OriPoint = oripoint;
-        this.RotateAxis = Vector3.zero;
-        this.SetSizeXZ(width, height);
-        this.RotateAxis.y = 1f;
-        this.Type = type;
-        this.MainCamera = cam;
-        this.ResetSegment();
+        UVChanged = ColorChanged = false;
+        MyTransform.position = Vector3.zero;
+        MyTransform.rotation = Quaternion.identity;
+        LocalMat = WorldMat = Matrix4x4.identity;
+        Vertexsegment = segment;
+        UVStretch = uvStretch;
+        LastMat = Matrix4x4.identity;
+        ElapsedTime = 0f;
+        Fps = 1f / maxFps;
+        OriPoint = oripoint;
+        RotateAxis = Vector3.zero;
+        SetSizeXZ(width, height);
+        RotateAxis.y = 1f;
+        Type = type;
+        MainCamera = cam;
+        ResetSegment();
     }
 
-    public void Init(UnityEngine.Color color, Vector2 lowerLeftUV, Vector2 uvDimensions)
+    public void Init(Color color, Vector2 lowerLeftUV, Vector2 uvDimensions)
     {
-        this.SetUVCoord(lowerLeftUV, uvDimensions);
-        this.SetColor(color);
-        this.SetRotation(Quaternion.identity);
-        this.SetScale(1f, 1f);
-        this.SetRotation((float) 0f);
+        SetUVCoord(lowerLeftUV, uvDimensions);
+        SetColor(color);
+        SetRotation(Quaternion.identity);
+        SetScale(1f, 1f);
+        SetRotation(0f);
     }
 
     public void Reset()
     {
-        this.MyTransform.Reset();
-        this.SetColor(UnityEngine.Color.white);
-        this.SetUVCoord(Vector2.zero, Vector2.zero);
-        this.ScaleVector = Vector3.one;
-        this.Rotation = Quaternion.identity;
-        VertexPool pool = this.Vertexsegment.Pool;
-        int vertStart = this.Vertexsegment.VertStart;
+        MyTransform.Reset();
+        SetColor(Color.white);
+        SetUVCoord(Vector2.zero, Vector2.zero);
+        ScaleVector = Vector3.one;
+        Rotation = Quaternion.identity;
+        var pool = Vertexsegment.Pool;
+        var vertStart = Vertexsegment.VertStart;
         pool.Vertices[vertStart] = Vector3.zero;
         pool.Vertices[vertStart + 1] = Vector3.zero;
         pool.Vertices[vertStart + 2] = Vector3.zero;
@@ -77,9 +77,9 @@ public class Sprite
 
     public void ResetSegment()
     {
-        VertexPool pool = this.Vertexsegment.Pool;
-        int indexStart = this.Vertexsegment.IndexStart;
-        int vertStart = this.Vertexsegment.VertStart;
+        var pool = Vertexsegment.Pool;
+        var indexStart = Vertexsegment.IndexStart;
+        var vertStart = Vertexsegment.VertStart;
         pool.Indices[indexStart] = vertStart;
         pool.Indices[indexStart + 1] = vertStart + 3;
         pool.Indices[indexStart + 2] = vertStart + 1;
@@ -90,10 +90,10 @@ public class Sprite
         pool.Vertices[vertStart + 1] = Vector3.zero;
         pool.Vertices[vertStart + 2] = Vector3.zero;
         pool.Vertices[vertStart + 3] = Vector3.zero;
-        pool.Colors[vertStart] = UnityEngine.Color.white;
-        pool.Colors[vertStart + 1] = UnityEngine.Color.white;
-        pool.Colors[vertStart + 2] = UnityEngine.Color.white;
-        pool.Colors[vertStart + 3] = UnityEngine.Color.white;
+        pool.Colors[vertStart] = Color.white;
+        pool.Colors[vertStart + 1] = Color.white;
+        pool.Colors[vertStart + 2] = Color.white;
+        pool.Colors[vertStart + 3] = Color.white;
         pool.UVs[vertStart] = Vector2.zero;
         pool.UVs[vertStart + 1] = Vector2.zero;
         pool.UVs[vertStart + 2] = Vector2.zero;
@@ -101,195 +101,195 @@ public class Sprite
         pool.UVChanged = pool.IndiceChanged = pool.ColorChanged = pool.VertChanged = true;
     }
 
-    public void SetColor(UnityEngine.Color c)
+    public void SetColor(Color c)
     {
-        this.Color = c;
-        this.ColorChanged = true;
+        Color = c;
+        ColorChanged = true;
     }
 
     public void SetPosition(Vector3 pos)
     {
-        this.MyTransform.position = pos;
+        MyTransform.position = pos;
     }
 
     public void SetRotation(float angle)
     {
-        this.Rotation = Quaternion.AngleAxis(angle, this.RotateAxis);
+        Rotation = Quaternion.AngleAxis(angle, RotateAxis);
     }
 
     public void SetRotation(Quaternion q)
     {
-        this.MyTransform.rotation = q;
+        MyTransform.rotation = q;
     }
 
     public void SetRotationFaceTo(Vector3 dir)
     {
-        this.MyTransform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        MyTransform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
     }
 
     public void SetRotationTo(Vector3 dir)
     {
         if (dir != Vector3.zero)
         {
-            Quaternion identity = Quaternion.identity;
-            Vector3 toDirection = dir;
+            var identity = Quaternion.identity;
+            var toDirection = dir;
             toDirection.y = 0f;
             if (toDirection == Vector3.zero)
             {
                 toDirection = Vector3.up;
             }
-            if (this.OriPoint == ORIPOINT.CENTER)
+            if (OriPoint == ORIPOINT.CENTER)
             {
-                Quaternion quaternion2 = Quaternion.FromToRotation(new Vector3(0f, 0f, 1f), toDirection);
+                var quaternion2 = Quaternion.FromToRotation(new Vector3(0f, 0f, 1f), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion2;
             }
-            else if (this.OriPoint == ORIPOINT.LEFT_UP)
+            else if (OriPoint == ORIPOINT.LEFT_UP)
             {
-                Quaternion quaternion4 = Quaternion.FromToRotation(this.LocalMat.MultiplyPoint3x4(this.v3), toDirection);
+                var quaternion4 = Quaternion.FromToRotation(LocalMat.MultiplyPoint3x4(v3), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion4;
             }
-            else if (this.OriPoint == ORIPOINT.LEFT_BOTTOM)
+            else if (OriPoint == ORIPOINT.LEFT_BOTTOM)
             {
-                Quaternion quaternion6 = Quaternion.FromToRotation(this.LocalMat.MultiplyPoint3x4(this.v4), toDirection);
+                var quaternion6 = Quaternion.FromToRotation(LocalMat.MultiplyPoint3x4(v4), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion6;
             }
-            else if (this.OriPoint == ORIPOINT.RIGHT_BOTTOM)
+            else if (OriPoint == ORIPOINT.RIGHT_BOTTOM)
             {
-                Quaternion quaternion8 = Quaternion.FromToRotation(this.LocalMat.MultiplyPoint3x4(this.v1), toDirection);
+                var quaternion8 = Quaternion.FromToRotation(LocalMat.MultiplyPoint3x4(v1), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion8;
             }
-            else if (this.OriPoint == ORIPOINT.RIGHT_UP)
+            else if (OriPoint == ORIPOINT.RIGHT_UP)
             {
-                Quaternion quaternion10 = Quaternion.FromToRotation(this.LocalMat.MultiplyPoint3x4(this.v2), toDirection);
+                var quaternion10 = Quaternion.FromToRotation(LocalMat.MultiplyPoint3x4(v2), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion10;
             }
-            else if (this.OriPoint == ORIPOINT.BOTTOM_CENTER)
+            else if (OriPoint == ORIPOINT.BOTTOM_CENTER)
             {
-                Quaternion quaternion12 = Quaternion.FromToRotation(new Vector3(0f, 0f, 1f), toDirection);
+                var quaternion12 = Quaternion.FromToRotation(new Vector3(0f, 0f, 1f), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion12;
             }
-            else if (this.OriPoint == ORIPOINT.TOP_CENTER)
+            else if (OriPoint == ORIPOINT.TOP_CENTER)
             {
-                Quaternion quaternion14 = Quaternion.FromToRotation(new Vector3(0f, 0f, -1f), toDirection);
+                var quaternion14 = Quaternion.FromToRotation(new Vector3(0f, 0f, -1f), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion14;
             }
-            else if (this.OriPoint == ORIPOINT.RIGHT_CENTER)
+            else if (OriPoint == ORIPOINT.RIGHT_CENTER)
             {
-                Quaternion quaternion16 = Quaternion.FromToRotation(new Vector3(-1f, 0f, 0f), toDirection);
+                var quaternion16 = Quaternion.FromToRotation(new Vector3(-1f, 0f, 0f), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion16;
             }
-            else if (this.OriPoint == ORIPOINT.LEFT_CENTER)
+            else if (OriPoint == ORIPOINT.LEFT_CENTER)
             {
-                Quaternion quaternion18 = Quaternion.FromToRotation(new Vector3(1f, 0f, 0f), toDirection);
+                var quaternion18 = Quaternion.FromToRotation(new Vector3(1f, 0f, 0f), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion18;
             }
-            this.MyTransform.rotation = identity;
+            MyTransform.rotation = identity;
         }
     }
 
     public void SetScale(float width, float height)
     {
-        this.ScaleVector.x = width;
-        this.ScaleVector.z = height;
+        ScaleVector.x = width;
+        ScaleVector.z = height;
     }
 
     public void SetSizeXZ(float width, float height)
     {
-        this.v1 = new Vector3(-width / 2f, 0f, height / 2f);
-        this.v2 = new Vector3(-width / 2f, 0f, -height / 2f);
-        this.v3 = new Vector3(width / 2f, 0f, -height / 2f);
-        this.v4 = new Vector3(width / 2f, 0f, height / 2f);
-        Vector3 zero = Vector3.zero;
-        if (this.OriPoint == ORIPOINT.LEFT_UP)
+        v1 = new Vector3(-width / 2f, 0f, height / 2f);
+        v2 = new Vector3(-width / 2f, 0f, -height / 2f);
+        v3 = new Vector3(width / 2f, 0f, -height / 2f);
+        v4 = new Vector3(width / 2f, 0f, height / 2f);
+        var zero = Vector3.zero;
+        if (OriPoint == ORIPOINT.LEFT_UP)
         {
-            zero = this.v3;
+            zero = v3;
         }
-        else if (this.OriPoint == ORIPOINT.LEFT_BOTTOM)
+        else if (OriPoint == ORIPOINT.LEFT_BOTTOM)
         {
-            zero = this.v4;
+            zero = v4;
         }
-        else if (this.OriPoint == ORIPOINT.RIGHT_BOTTOM)
+        else if (OriPoint == ORIPOINT.RIGHT_BOTTOM)
         {
-            zero = this.v1;
+            zero = v1;
         }
-        else if (this.OriPoint == ORIPOINT.RIGHT_UP)
+        else if (OriPoint == ORIPOINT.RIGHT_UP)
         {
-            zero = this.v2;
+            zero = v2;
         }
-        else if (this.OriPoint == ORIPOINT.BOTTOM_CENTER)
+        else if (OriPoint == ORIPOINT.BOTTOM_CENTER)
         {
             zero = new Vector3(0f, 0f, height / 2f);
         }
-        else if (this.OriPoint == ORIPOINT.TOP_CENTER)
+        else if (OriPoint == ORIPOINT.TOP_CENTER)
         {
             zero = new Vector3(0f, 0f, -height / 2f);
         }
-        else if (this.OriPoint == ORIPOINT.LEFT_CENTER)
+        else if (OriPoint == ORIPOINT.LEFT_CENTER)
         {
             zero = new Vector3(width / 2f, 0f, 0f);
         }
-        else if (this.OriPoint == ORIPOINT.RIGHT_CENTER)
+        else if (OriPoint == ORIPOINT.RIGHT_CENTER)
         {
             zero = new Vector3(-width / 2f, 0f, 0f);
         }
-        this.v1 += zero;
-        this.v2 += zero;
-        this.v3 += zero;
-        this.v4 += zero;
+        v1 += zero;
+        v2 += zero;
+        v3 += zero;
+        v4 += zero;
     }
 
     public void SetUVCoord(Vector2 lowerleft, Vector2 dimensions)
     {
-        this.LowerLeftUV = lowerleft;
-        this.UVDimensions = dimensions;
-        this.UVChanged = true;
+        LowerLeftUV = lowerleft;
+        UVDimensions = dimensions;
+        UVChanged = true;
     }
 
     public void Transform()
     {
-        this.LocalMat.SetTRS(Vector3.zero, this.Rotation, this.ScaleVector);
-        if (this.Type == STYPE.BILLBOARD)
+        LocalMat.SetTRS(Vector3.zero, Rotation, ScaleVector);
+        if (Type == STYPE.BILLBOARD)
         {
-            UnityEngine.Transform transform = this.MainCamera.transform;
-            this.MyTransform.LookAt(this.MyTransform.position + (transform.rotation * Vector3.up), (Vector3) (transform.rotation * Vector3.back));
+            var transform = MainCamera.transform;
+            MyTransform.LookAt(MyTransform.position + (transform.rotation * Vector3.up), transform.rotation * Vector3.back);
         }
-        this.WorldMat.SetTRS(this.MyTransform.position, this.MyTransform.rotation, Vector3.one);
-        Matrix4x4 matrixx = this.WorldMat * this.LocalMat;
-        VertexPool pool = this.Vertexsegment.Pool;
-        int vertStart = this.Vertexsegment.VertStart;
-        Vector3 vector = matrixx.MultiplyPoint3x4(this.v1);
-        Vector3 vector2 = matrixx.MultiplyPoint3x4(this.v2);
-        Vector3 vector3 = matrixx.MultiplyPoint3x4(this.v3);
-        Vector3 vector4 = matrixx.MultiplyPoint3x4(this.v4);
-        if (this.Type == STYPE.BILLBOARD_SELF)
+        WorldMat.SetTRS(MyTransform.position, MyTransform.rotation, Vector3.one);
+        var matrixx = WorldMat * LocalMat;
+        var pool = Vertexsegment.Pool;
+        var vertStart = Vertexsegment.VertStart;
+        var vector = matrixx.MultiplyPoint3x4(v1);
+        var vector2 = matrixx.MultiplyPoint3x4(v2);
+        var vector3 = matrixx.MultiplyPoint3x4(v3);
+        var vector4 = matrixx.MultiplyPoint3x4(v4);
+        if (Type == STYPE.BILLBOARD_SELF)
         {
-            Vector3 zero = Vector3.zero;
-            Vector3 vector6 = Vector3.zero;
-            float magnitude = 0f;
-            if (this.UVStretch == 0)
+            var zero = Vector3.zero;
+            var vector6 = Vector3.zero;
+            var magnitude = 0f;
+            if (UVStretch == 0)
             {
-                zero = (Vector3) ((vector + vector4) / 2f);
-                vector6 = (Vector3) ((vector2 + vector3) / 2f);
-                Vector3 vector7 = vector4 - vector;
+                zero = (vector + vector4) / 2f;
+                vector6 = (vector2 + vector3) / 2f;
+                var vector7 = vector4 - vector;
                 magnitude = vector7.magnitude;
             }
             else
             {
-                zero = (Vector3) ((vector + vector2) / 2f);
-                vector6 = (Vector3) ((vector4 + vector3) / 2f);
-                Vector3 vector8 = vector2 - vector;
+                zero = (vector + vector2) / 2f;
+                vector6 = (vector4 + vector3) / 2f;
+                var vector8 = vector2 - vector;
                 magnitude = vector8.magnitude;
             }
-            Vector3 lhs = zero - vector6;
-            Vector3 rhs = this.MainCamera.transform.position - zero;
-            Vector3 vector11 = Vector3.Cross(lhs, rhs);
+            var lhs = zero - vector6;
+            var rhs = MainCamera.transform.position - zero;
+            var vector11 = Vector3.Cross(lhs, rhs);
             vector11.Normalize();
-            vector11 = (Vector3) (vector11 * (magnitude * 0.5f));
-            Vector3 vector12 = this.MainCamera.transform.position - vector6;
-            Vector3 vector13 = Vector3.Cross(lhs, vector12);
+            vector11 = vector11 * (magnitude * 0.5f);
+            var vector12 = MainCamera.transform.position - vector6;
+            var vector13 = Vector3.Cross(lhs, vector12);
             vector13.Normalize();
-            vector13 = (Vector3) (vector13 * (magnitude * 0.5f));
-            if (this.UVStretch == 0)
+            vector13 = vector13 * (magnitude * 0.5f);
+            if (UVStretch == 0)
             {
                 vector = zero - vector11;
                 vector4 = zero + vector11;
@@ -312,56 +312,56 @@ public class Sprite
 
     public void Update(bool force)
     {
-        this.ElapsedTime += Time.deltaTime;
-        if ((this.ElapsedTime > this.Fps) || force)
+        ElapsedTime += Time.deltaTime;
+        if ((ElapsedTime > Fps) || force)
         {
-            this.Transform();
-            if (this.UVChanged)
+            Transform();
+            if (UVChanged)
             {
-                this.UpdateUV();
+                UpdateUV();
             }
-            if (this.ColorChanged)
+            if (ColorChanged)
             {
-                this.UpdateColor();
+                UpdateColor();
             }
-            this.UVChanged = this.ColorChanged = false;
+            UVChanged = ColorChanged = false;
             if (!force)
             {
-                this.ElapsedTime -= this.Fps;
+                ElapsedTime -= Fps;
             }
         }
     }
 
     public void UpdateColor()
     {
-        VertexPool pool = this.Vertexsegment.Pool;
-        int vertStart = this.Vertexsegment.VertStart;
-        pool.Colors[vertStart] = this.Color;
-        pool.Colors[vertStart + 1] = this.Color;
-        pool.Colors[vertStart + 2] = this.Color;
-        pool.Colors[vertStart + 3] = this.Color;
-        this.Vertexsegment.Pool.ColorChanged = true;
+        var pool = Vertexsegment.Pool;
+        var vertStart = Vertexsegment.VertStart;
+        pool.Colors[vertStart] = Color;
+        pool.Colors[vertStart + 1] = Color;
+        pool.Colors[vertStart + 2] = Color;
+        pool.Colors[vertStart + 3] = Color;
+        Vertexsegment.Pool.ColorChanged = true;
     }
 
     public void UpdateUV()
     {
-        VertexPool pool = this.Vertexsegment.Pool;
-        int vertStart = this.Vertexsegment.VertStart;
-        if (this.UVDimensions.y > 0f)
+        var pool = Vertexsegment.Pool;
+        var vertStart = Vertexsegment.VertStart;
+        if (UVDimensions.y > 0f)
         {
-            pool.UVs[vertStart] = this.LowerLeftUV + ((Vector2) (Vector2.up * this.UVDimensions.y));
-            pool.UVs[vertStart + 1] = this.LowerLeftUV;
-            pool.UVs[vertStart + 2] = this.LowerLeftUV + ((Vector2) (Vector2.right * this.UVDimensions.x));
-            pool.UVs[vertStart + 3] = this.LowerLeftUV + this.UVDimensions;
+            pool.UVs[vertStart] = LowerLeftUV + Vector2.up * UVDimensions.y;
+            pool.UVs[vertStart + 1] = LowerLeftUV;
+            pool.UVs[vertStart + 2] = LowerLeftUV + Vector2.right * UVDimensions.x;
+            pool.UVs[vertStart + 3] = LowerLeftUV + UVDimensions;
         }
         else
         {
-            pool.UVs[vertStart] = this.LowerLeftUV;
-            pool.UVs[vertStart + 1] = this.LowerLeftUV + ((Vector2) (Vector2.up * this.UVDimensions.y));
-            pool.UVs[vertStart + 2] = this.LowerLeftUV + this.UVDimensions;
-            pool.UVs[vertStart + 3] = this.LowerLeftUV + ((Vector2) (Vector2.right * this.UVDimensions.x));
+            pool.UVs[vertStart] = LowerLeftUV;
+            pool.UVs[vertStart + 1] = LowerLeftUV + Vector2.up * UVDimensions.y;
+            pool.UVs[vertStart + 2] = LowerLeftUV + UVDimensions;
+            pool.UVs[vertStart + 3] = LowerLeftUV + Vector2.right * UVDimensions.x;
         }
-        this.Vertexsegment.Pool.UVChanged = true;
+        Vertexsegment.Pool.UVChanged = true;
     }
 }
 

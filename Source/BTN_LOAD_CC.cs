@@ -11,7 +11,7 @@ public class BTN_LOAD_CC : MonoBehaviour
 
     private void OnClick()
     {
-        this.manager.GetComponent<CustomCharacterManager>().LoadData();
+        manager.GetComponent<CustomCharacterManager>().LoadData();
     }
 }
 

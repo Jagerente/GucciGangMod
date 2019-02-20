@@ -16,64 +16,64 @@ public class UIGeometry
 
     public void ApplyOffset(Vector3 pivotOffset)
     {
-        for (int i = 0; i < this.verts.size; i++)
+        for (var i = 0; i < verts.size; i++)
         {
-            this.verts.buffer[i] += pivotOffset;
+            verts.buffer[i] += pivotOffset;
         }
     }
 
     public void ApplyTransform(Matrix4x4 widgetToPanel, bool normals)
     {
-        if (this.verts.size > 0)
+        if (verts.size > 0)
         {
-            this.mRtpVerts.Clear();
-            int num = 0;
-            int size = this.verts.size;
+            mRtpVerts.Clear();
+            var num = 0;
+            var size = verts.size;
             while (num < size)
             {
-                this.mRtpVerts.Add(widgetToPanel.MultiplyPoint3x4(this.verts[num]));
+                mRtpVerts.Add(widgetToPanel.MultiplyPoint3x4(verts[num]));
                 num++;
             }
-            this.mRtpNormal = widgetToPanel.MultiplyVector(Vector3.back).normalized;
-            Vector3 normalized = widgetToPanel.MultiplyVector(Vector3.right).normalized;
-            this.mRtpTan = new Vector4(normalized.x, normalized.y, normalized.z, -1f);
+            mRtpNormal = widgetToPanel.MultiplyVector(Vector3.back).normalized;
+            var normalized = widgetToPanel.MultiplyVector(Vector3.right).normalized;
+            mRtpTan = new Vector4(normalized.x, normalized.y, normalized.z, -1f);
         }
         else
         {
-            this.mRtpVerts.Clear();
+            mRtpVerts.Clear();
         }
     }
 
     public void Clear()
     {
-        this.verts.Clear();
-        this.uvs.Clear();
-        this.cols.Clear();
-        this.mRtpVerts.Clear();
+        verts.Clear();
+        uvs.Clear();
+        cols.Clear();
+        mRtpVerts.Clear();
     }
 
     public void WriteToBuffers(BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color32> c, BetterList<Vector3> n, BetterList<Vector4> t)
     {
-        if ((this.mRtpVerts != null) && (this.mRtpVerts.size > 0))
+        if ((mRtpVerts != null) && (mRtpVerts.size > 0))
         {
             if (n == null)
             {
-                for (int i = 0; i < this.mRtpVerts.size; i++)
+                for (var i = 0; i < mRtpVerts.size; i++)
                 {
-                    v.Add(this.mRtpVerts.buffer[i]);
-                    u.Add(this.uvs.buffer[i]);
-                    c.Add(this.cols.buffer[i]);
+                    v.Add(mRtpVerts.buffer[i]);
+                    u.Add(uvs.buffer[i]);
+                    c.Add(cols.buffer[i]);
                 }
             }
             else
             {
-                for (int j = 0; j < this.mRtpVerts.size; j++)
+                for (var j = 0; j < mRtpVerts.size; j++)
                 {
-                    v.Add(this.mRtpVerts.buffer[j]);
-                    u.Add(this.uvs.buffer[j]);
-                    c.Add(this.cols.buffer[j]);
-                    n.Add(this.mRtpNormal);
-                    t.Add(this.mRtpTan);
+                    v.Add(mRtpVerts.buffer[j]);
+                    u.Add(uvs.buffer[j]);
+                    c.Add(cols.buffer[j]);
+                    n.Add(mRtpNormal);
+                    t.Add(mRtpTan);
                 }
             }
         }
@@ -83,7 +83,7 @@ public class UIGeometry
     {
         get
         {
-            return (((this.mRtpVerts != null) && (this.mRtpVerts.size > 0)) && (this.mRtpVerts.size == this.verts.size));
+            return (((mRtpVerts != null) && (mRtpVerts.size > 0)) && (mRtpVerts.size == verts.size));
         }
     }
 
@@ -91,7 +91,7 @@ public class UIGeometry
     {
         get
         {
-            return (this.verts.size > 0);
+            return (verts.size > 0);
         }
     }
 }

@@ -51,15 +51,15 @@ public class UILabel : UIWidget
 
     private void ApplyShadow(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols, int start, int end, float x, float y)
     {
-        Color mEffectColor = this.mEffectColor;
-        mEffectColor.a *= base.alpha * base.mPanel.alpha;
-        Color32 color2 = !this.font.premultipliedAlpha ? mEffectColor : NGUITools.ApplyPMA(mEffectColor);
-        for (int i = start; i < end; i++)
+        var mEffectColor = this.mEffectColor;
+        mEffectColor.a *= alpha * mPanel.alpha;
+        Color32 color2 = !font.premultipliedAlpha ? mEffectColor : NGUITools.ApplyPMA(mEffectColor);
+        for (var i = start; i < end; i++)
         {
             verts.Add(verts.buffer[i]);
             uvs.Add(uvs.buffer[i]);
             cols.Add(cols.buffer[i]);
-            Vector3 vector = verts.buffer[i];
+            var vector = verts.buffer[i];
             vector.x += x;
             vector.y += y;
             verts.buffer[i] = vector;
@@ -69,24 +69,24 @@ public class UILabel : UIWidget
 
     public override void MakePixelPerfect()
     {
-        if (this.mFont != null)
+        if (mFont != null)
         {
-            float pixelSize = this.font.pixelSize;
-            Vector3 localScale = base.cachedTransform.localScale;
-            localScale.x = this.mFont.size * pixelSize;
+            var pixelSize = font.pixelSize;
+            var localScale = cachedTransform.localScale;
+            localScale.x = mFont.size * pixelSize;
             localScale.y = localScale.x;
             localScale.z = 1f;
-            Vector3 localPosition = base.cachedTransform.localPosition;
+            var localPosition = cachedTransform.localPosition;
             localPosition.x = Mathf.CeilToInt((localPosition.x / pixelSize) * 4f) >> 2;
             localPosition.y = Mathf.CeilToInt((localPosition.y / pixelSize) * 4f) >> 2;
             localPosition.z = Mathf.RoundToInt(localPosition.z);
             localPosition.x *= pixelSize;
             localPosition.y *= pixelSize;
-            base.cachedTransform.localPosition = localPosition;
-            base.cachedTransform.localScale = localScale;
-            if (this.shrinkToFit)
+            cachedTransform.localPosition = localPosition;
+            cachedTransform.localScale = localScale;
+            if (shrinkToFit)
             {
-                this.ProcessText();
+                ProcessText();
             }
         }
         else
@@ -97,58 +97,58 @@ public class UILabel : UIWidget
 
     public override void MarkAsChanged()
     {
-        this.hasChanged = true;
+        hasChanged = true;
         base.MarkAsChanged();
     }
 
     public override void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
     {
-        if (this.mFont != null)
+        if (mFont != null)
         {
-            UIWidget.Pivot pivot = base.pivot;
-            int size = verts.size;
-            Color c = base.color;
-            c.a *= base.mPanel.alpha;
-            if (this.font.premultipliedAlpha)
+            var pivot = this.pivot;
+            var size = verts.size;
+            var c = color;
+            c.a *= mPanel.alpha;
+            if (font.premultipliedAlpha)
             {
                 c = NGUITools.ApplyPMA(c);
             }
             switch (pivot)
             {
-                case UIWidget.Pivot.Left:
-                case UIWidget.Pivot.TopLeft:
-                case UIWidget.Pivot.BottomLeft:
-                    this.mFont.Print(this.processedText, c, verts, uvs, cols, this.mEncoding, this.mSymbols, UIFont.Alignment.Left, 0, this.mPremultiply);
+                case Pivot.Left:
+                case Pivot.TopLeft:
+                case Pivot.BottomLeft:
+                    mFont.Print(processedText, c, verts, uvs, cols, mEncoding, mSymbols, UIFont.Alignment.Left, 0, mPremultiply);
                     break;
 
-                case UIWidget.Pivot.Right:
-                case UIWidget.Pivot.TopRight:
-                case UIWidget.Pivot.BottomRight:
-                    this.mFont.Print(this.processedText, c, verts, uvs, cols, this.mEncoding, this.mSymbols, UIFont.Alignment.Right, Mathf.RoundToInt(this.relativeSize.x * this.mFont.size), this.mPremultiply);
+                case Pivot.Right:
+                case Pivot.TopRight:
+                case Pivot.BottomRight:
+                    mFont.Print(processedText, c, verts, uvs, cols, mEncoding, mSymbols, UIFont.Alignment.Right, Mathf.RoundToInt(relativeSize.x * mFont.size), mPremultiply);
                     break;
 
                 default:
-                    this.mFont.Print(this.processedText, c, verts, uvs, cols, this.mEncoding, this.mSymbols, UIFont.Alignment.Center, Mathf.RoundToInt(this.relativeSize.x * this.mFont.size), this.mPremultiply);
+                    mFont.Print(processedText, c, verts, uvs, cols, mEncoding, mSymbols, UIFont.Alignment.Center, Mathf.RoundToInt(relativeSize.x * mFont.size), mPremultiply);
                     break;
             }
-            if (this.effectStyle != Effect.None)
+            if (effectStyle != Effect.None)
             {
-                int end = verts.size;
-                float num3 = 1f / ((float) this.mFont.size);
-                float x = num3 * this.mEffectDistance.x;
-                float y = num3 * this.mEffectDistance.y;
-                this.ApplyShadow(verts, uvs, cols, size, end, x, -y);
-                if (this.effectStyle == Effect.Outline)
+                var end = verts.size;
+                var num3 = 1f / mFont.size;
+                var x = num3 * mEffectDistance.x;
+                var y = num3 * mEffectDistance.y;
+                ApplyShadow(verts, uvs, cols, size, end, x, -y);
+                if (effectStyle == Effect.Outline)
                 {
                     size = end;
                     end = verts.size;
-                    this.ApplyShadow(verts, uvs, cols, size, end, -x, y);
+                    ApplyShadow(verts, uvs, cols, size, end, -x, y);
                     size = end;
                     end = verts.size;
-                    this.ApplyShadow(verts, uvs, cols, size, end, x, y);
+                    ApplyShadow(verts, uvs, cols, size, end, x, y);
                     size = end;
                     end = verts.size;
-                    this.ApplyShadow(verts, uvs, cols, size, end, -x, -y);
+                    ApplyShadow(verts, uvs, cols, size, end, -x, -y);
                 }
             }
         }
@@ -156,80 +156,80 @@ public class UILabel : UIWidget
 
     protected override void OnStart()
     {
-        if (this.mLineWidth > 0f)
+        if (mLineWidth > 0f)
         {
-            this.mMaxLineWidth = Mathf.RoundToInt(this.mLineWidth);
-            this.mLineWidth = 0f;
+            mMaxLineWidth = Mathf.RoundToInt(mLineWidth);
+            mLineWidth = 0f;
         }
-        if (!this.mMultiline)
+        if (!mMultiline)
         {
-            this.mMaxLineCount = 1;
-            this.mMultiline = true;
+            mMaxLineCount = 1;
+            mMultiline = true;
         }
-        this.mPremultiply = ((this.font != null) && (this.font.material != null)) && this.font.material.shader.name.Contains("Premultiplied");
+        mPremultiply = ((font != null) && (font.material != null)) && font.material.shader.name.Contains("Premultiplied");
     }
 
     private void ProcessText()
     {
-        base.mChanged = true;
-        this.hasChanged = false;
-        this.mLastText = this.mText;
-        float b = Mathf.Abs(base.cachedTransform.localScale.x);
-        float num2 = this.mFont.size * this.mMaxLineCount;
+        mChanged = true;
+        hasChanged = false;
+        mLastText = mText;
+        var b = Mathf.Abs(cachedTransform.localScale.x);
+        float num2 = mFont.size * mMaxLineCount;
         if (b <= 0f)
         {
-            this.mSize.x = 1f;
-            b = this.mFont.size;
-            base.cachedTransform.localScale = new Vector3(0.01f, 0.01f, 1f);
-            this.mProcessedText = string.Empty;
+            mSize.x = 1f;
+            b = mFont.size;
+            cachedTransform.localScale = new Vector3(0.01f, 0.01f, 1f);
+            mProcessedText = string.Empty;
             goto Label_037C;
         }
     Label_0057:
-        if (this.mPassword)
+        if (mPassword)
         {
-            this.mProcessedText = string.Empty;
-            if (this.mShowLastChar)
+            mProcessedText = string.Empty;
+            if (mShowLastChar)
             {
-                int num3 = 0;
-                int num4 = this.mText.Length - 1;
+                var num3 = 0;
+                var num4 = mText.Length - 1;
                 while (num3 < num4)
                 {
-                    this.mProcessedText = this.mProcessedText + "*";
+                    mProcessedText = mProcessedText + "*";
                     num3++;
                 }
-                if (this.mText.Length > 0)
+                if (mText.Length > 0)
                 {
-                    this.mProcessedText = this.mProcessedText + this.mText[this.mText.Length - 1];
+                    mProcessedText = mProcessedText + mText[mText.Length - 1];
                 }
             }
             else
             {
-                int num5 = 0;
-                int length = this.mText.Length;
+                var num5 = 0;
+                var length = mText.Length;
                 while (num5 < length)
                 {
-                    this.mProcessedText = this.mProcessedText + "*";
+                    mProcessedText = mProcessedText + "*";
                     num5++;
                 }
             }
-            this.mProcessedText = this.mFont.WrapText(this.mProcessedText, ((float) this.mMaxLineWidth) / b, this.mMaxLineCount, false, UIFont.SymbolStyle.None);
+            mProcessedText = mFont.WrapText(mProcessedText, mMaxLineWidth / b, mMaxLineCount, false, UIFont.SymbolStyle.None);
         }
-        else if (this.mMaxLineWidth > 0)
+        else if (mMaxLineWidth > 0)
         {
-            this.mProcessedText = this.mFont.WrapText(this.mText, ((float) this.mMaxLineWidth) / b, !this.mShrinkToFit ? this.mMaxLineCount : 0, this.mEncoding, this.mSymbols);
+            mProcessedText = mFont.WrapText(mText, mMaxLineWidth / b, !mShrinkToFit ? mMaxLineCount : 0, mEncoding, mSymbols);
         }
-        else if (!this.mShrinkToFit && (this.mMaxLineCount > 0))
+        else if (!mShrinkToFit && (mMaxLineCount > 0))
         {
-            this.mProcessedText = this.mFont.WrapText(this.mText, 100000f, this.mMaxLineCount, this.mEncoding, this.mSymbols);
+            mProcessedText = mFont.WrapText(mText, 100000f, mMaxLineCount, mEncoding, mSymbols);
         }
         else
         {
-            this.mProcessedText = this.mText;
+            mProcessedText = mText;
         }
-        this.mSize = string.IsNullOrEmpty(this.mProcessedText) ? Vector2.one : this.mFont.CalculatePrintedSize(this.mProcessedText, this.mEncoding, this.mSymbols);
-        if (this.mShrinkToFit)
+        mSize = string.IsNullOrEmpty(mProcessedText) ? Vector2.one : mFont.CalculatePrintedSize(mProcessedText, mEncoding, mSymbols);
+        if (mShrinkToFit)
         {
-            if ((this.mMaxLineCount > 0) && ((this.mSize.y * b) > num2))
+            if ((mMaxLineCount > 0) && ((mSize.y * b) > num2))
             {
                 b = Mathf.Round(b - 1f);
                 if (b > 1f)
@@ -237,34 +237,34 @@ public class UILabel : UIWidget
                     goto Label_0057;
                 }
             }
-            if (this.mMaxLineWidth > 0)
+            if (mMaxLineWidth > 0)
             {
-                float num7 = ((float) this.mMaxLineWidth) / b;
-                float a = ((this.mSize.x * b) <= num7) ? b : ((num7 / this.mSize.x) * b);
+                var num7 = mMaxLineWidth / b;
+                var a = ((mSize.x * b) <= num7) ? b : ((num7 / mSize.x) * b);
                 b = Mathf.Min(a, b);
             }
             b = Mathf.Round(b);
-            base.cachedTransform.localScale = new Vector3(b, b, 1f);
+            cachedTransform.localScale = new Vector3(b, b, 1f);
         }
-        this.mSize.x = Mathf.Max(this.mSize.x, (b <= 0f) ? 1f : (((float) this.lineWidth) / b));
+        mSize.x = Mathf.Max(mSize.x, (b <= 0f) ? 1f : (lineWidth / b));
     Label_037C:
-        this.mSize.y = Mathf.Max(this.mSize.y, 1f);
+        mSize.y = Mathf.Max(mSize.y, 1f);
     }
 
     public Color effectColor
     {
         get
         {
-            return this.mEffectColor;
+            return mEffectColor;
         }
         set
         {
-            if (!this.mEffectColor.Equals(value))
+            if (!mEffectColor.Equals(value))
             {
-                this.mEffectColor = value;
-                if (this.mEffectStyle != Effect.None)
+                mEffectColor = value;
+                if (mEffectStyle != Effect.None)
                 {
-                    this.hasChanged = true;
+                    hasChanged = true;
                 }
             }
         }
@@ -274,14 +274,14 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mEffectDistance;
+            return mEffectDistance;
         }
         set
         {
-            if (this.mEffectDistance != value)
+            if (mEffectDistance != value)
             {
-                this.mEffectDistance = value;
-                this.hasChanged = true;
+                mEffectDistance = value;
+                hasChanged = true;
             }
         }
     }
@@ -290,14 +290,14 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mEffectStyle;
+            return mEffectStyle;
         }
         set
         {
-            if (this.mEffectStyle != value)
+            if (mEffectStyle != value)
             {
-                this.mEffectStyle = value;
-                this.hasChanged = true;
+                mEffectStyle = value;
+                hasChanged = true;
             }
         }
     }
@@ -306,17 +306,17 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mFont;
+            return mFont;
         }
         set
         {
-            if (this.mFont != value)
+            if (mFont != value)
             {
-                this.mFont = value;
-                this.material = (this.mFont == null) ? null : this.mFont.material;
-                base.mChanged = true;
-                this.hasChanged = true;
-                this.MarkAsChanged();
+                mFont = value;
+                material = (mFont == null) ? null : mFont.material;
+                mChanged = true;
+                hasChanged = true;
+                MarkAsChanged();
             }
         }
     }
@@ -325,25 +325,25 @@ public class UILabel : UIWidget
     {
         get
         {
-            return ((((this.mShouldBeProcessed || (this.mLastText != this.text)) || ((this.mLastWidth != this.mMaxLineWidth) || (this.mLastEncoding != this.mEncoding))) || (((this.mLastCount != this.mMaxLineCount) || (this.mLastPass != this.mPassword)) || (this.mLastShow != this.mShowLastChar))) || (this.mLastEffect != this.mEffectStyle));
+            return ((((mShouldBeProcessed || (mLastText != text)) || ((mLastWidth != mMaxLineWidth) || (mLastEncoding != mEncoding))) || (((mLastCount != mMaxLineCount) || (mLastPass != mPassword)) || (mLastShow != mShowLastChar))) || (mLastEffect != mEffectStyle));
         }
         set
         {
             if (value)
             {
-                base.mChanged = true;
-                this.mShouldBeProcessed = true;
+                mChanged = true;
+                mShouldBeProcessed = true;
             }
             else
             {
-                this.mShouldBeProcessed = false;
-                this.mLastText = this.text;
-                this.mLastWidth = this.mMaxLineWidth;
-                this.mLastEncoding = this.mEncoding;
-                this.mLastCount = this.mMaxLineCount;
-                this.mLastPass = this.mPassword;
-                this.mLastShow = this.mShowLastChar;
-                this.mLastEffect = this.mEffectStyle;
+                mShouldBeProcessed = false;
+                mLastText = text;
+                mLastWidth = mMaxLineWidth;
+                mLastEncoding = mEncoding;
+                mLastCount = mMaxLineCount;
+                mLastPass = mPassword;
+                mLastShow = mShowLastChar;
+                mLastEffect = mEffectStyle;
             }
         }
     }
@@ -352,17 +352,17 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mMaxLineWidth;
+            return mMaxLineWidth;
         }
         set
         {
-            if (this.mMaxLineWidth != value)
+            if (mMaxLineWidth != value)
             {
-                this.mMaxLineWidth = value;
-                this.hasChanged = true;
-                if (this.shrinkToFit)
+                mMaxLineWidth = value;
+                hasChanged = true;
+                if (shrinkToFit)
                 {
-                    this.MakePixelPerfect();
+                    MakePixelPerfect();
                 }
             }
         }
@@ -372,10 +372,10 @@ public class UILabel : UIWidget
     {
         get
         {
-            Material material = base.material;
+            var material = base.material;
             if (material == null)
             {
-                material = (this.mFont == null) ? null : this.mFont.material;
+                material = (mFont == null) ? null : mFont.material;
                 this.material = material;
             }
             return material;
@@ -386,17 +386,17 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mMaxLineCount;
+            return mMaxLineCount;
         }
         set
         {
-            if (this.mMaxLineCount != value)
+            if (mMaxLineCount != value)
             {
-                this.mMaxLineCount = Mathf.Max(value, 0);
-                this.hasChanged = true;
+                mMaxLineCount = Mathf.Max(value, 0);
+                hasChanged = true;
                 if (value == 1)
                 {
-                    this.mPassword = false;
+                    mPassword = false;
                 }
             }
         }
@@ -406,17 +406,17 @@ public class UILabel : UIWidget
     {
         get
         {
-            return (this.mMaxLineCount != 1);
+            return (mMaxLineCount != 1);
         }
         set
         {
-            if ((this.mMaxLineCount != 1) != value)
+            if ((mMaxLineCount != 1) != value)
             {
-                this.mMaxLineCount = !value ? 1 : 0;
-                this.hasChanged = true;
+                mMaxLineCount = !value ? 1 : 0;
+                hasChanged = true;
                 if (value)
                 {
-                    this.mPassword = false;
+                    mPassword = false;
                 }
             }
         }
@@ -426,19 +426,19 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mPassword;
+            return mPassword;
         }
         set
         {
-            if (this.mPassword != value)
+            if (mPassword != value)
             {
                 if (value)
                 {
-                    this.mMaxLineCount = 1;
-                    this.mEncoding = false;
+                    mMaxLineCount = 1;
+                    mEncoding = false;
                 }
-                this.mPassword = value;
-                this.hasChanged = true;
+                mPassword = value;
+                hasChanged = true;
             }
         }
     }
@@ -447,16 +447,16 @@ public class UILabel : UIWidget
     {
         get
         {
-            if (this.mLastScale != base.cachedTransform.localScale)
+            if (mLastScale != cachedTransform.localScale)
             {
-                this.mLastScale = base.cachedTransform.localScale;
-                this.mShouldBeProcessed = true;
+                mLastScale = cachedTransform.localScale;
+                mShouldBeProcessed = true;
             }
-            if (this.hasChanged)
+            if (hasChanged)
             {
-                this.ProcessText();
+                ProcessText();
             }
-            return this.mProcessedText;
+            return mProcessedText;
         }
     }
 
@@ -464,15 +464,15 @@ public class UILabel : UIWidget
     {
         get
         {
-            if (this.mFont == null)
+            if (mFont == null)
             {
                 return Vector3.one;
             }
-            if (this.hasChanged)
+            if (hasChanged)
             {
-                this.ProcessText();
+                ProcessText();
             }
-            return this.mSize;
+            return mSize;
         }
     }
 
@@ -480,14 +480,14 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mShowLastChar;
+            return mShowLastChar;
         }
         set
         {
-            if (this.mShowLastChar != value)
+            if (mShowLastChar != value)
             {
-                this.mShowLastChar = value;
-                this.hasChanged = true;
+                mShowLastChar = value;
+                hasChanged = true;
             }
         }
     }
@@ -496,14 +496,14 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mShrinkToFit;
+            return mShrinkToFit;
         }
         set
         {
-            if (this.mShrinkToFit != value)
+            if (mShrinkToFit != value)
             {
-                this.mShrinkToFit = value;
-                this.hasChanged = true;
+                mShrinkToFit = value;
+                hasChanged = true;
             }
         }
     }
@@ -512,17 +512,17 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mEncoding;
+            return mEncoding;
         }
         set
         {
-            if (this.mEncoding != value)
+            if (mEncoding != value)
             {
-                this.mEncoding = value;
-                this.hasChanged = true;
+                mEncoding = value;
+                hasChanged = true;
                 if (value)
                 {
-                    this.mPassword = false;
+                    mPassword = false;
                 }
             }
         }
@@ -532,14 +532,14 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mSymbols;
+            return mSymbols;
         }
         set
         {
-            if (this.mSymbols != value)
+            if (mSymbols != value)
             {
-                this.mSymbols = value;
-                this.hasChanged = true;
+                mSymbols = value;
+                hasChanged = true;
             }
         }
     }
@@ -548,25 +548,25 @@ public class UILabel : UIWidget
     {
         get
         {
-            return this.mText;
+            return mText;
         }
         set
         {
             if (string.IsNullOrEmpty(value))
             {
-                if (!string.IsNullOrEmpty(this.mText))
+                if (!string.IsNullOrEmpty(mText))
                 {
-                    this.mText = string.Empty;
+                    mText = string.Empty;
                 }
-                this.hasChanged = true;
+                hasChanged = true;
             }
-            else if (this.mText != value)
+            else if (mText != value)
             {
-                this.mText = value;
-                this.hasChanged = true;
-                if (this.shrinkToFit)
+                mText = value;
+                hasChanged = true;
+                if (shrinkToFit)
                 {
-                    this.MakePixelPerfect();
+                    MakePixelPerfect();
                 }
             }
         }

@@ -14,7 +14,7 @@ public class TweenVolume : UITweener
 
     public static TweenVolume Begin(GameObject go, float duration, float targetVolume)
     {
-        TweenVolume volume = UITweener.Begin<TweenVolume>(go, duration);
+        var volume = UITweener.Begin<TweenVolume>(go, duration);
         volume.from = volume.volume;
         volume.to = targetVolume;
         if (duration <= 0f)
@@ -27,28 +27,28 @@ public class TweenVolume : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        this.volume = (this.from * (1f - factor)) + (this.to * factor);
-        this.mSource.enabled = this.mSource.volume > 0.01f;
+        volume = (from * (1f - factor)) + (to * factor);
+        mSource.enabled = mSource.volume > 0.01f;
     }
 
     public AudioSource audioSource
     {
         get
         {
-            if (this.mSource == null)
+            if (mSource == null)
             {
-                this.mSource = base.audio;
-                if (this.mSource == null)
+                mSource = audio;
+                if (mSource == null)
                 {
-                    this.mSource = base.GetComponentInChildren<AudioSource>();
-                    if (this.mSource == null)
+                    mSource = GetComponentInChildren<AudioSource>();
+                    if (mSource == null)
                     {
                         Debug.LogError("TweenVolume needs an AudioSource to work with", this);
-                        base.enabled = false;
+                        enabled = false;
                     }
                 }
             }
-            return this.mSource;
+            return mSource;
         }
     }
 
@@ -56,11 +56,11 @@ public class TweenVolume : UITweener
     {
         get
         {
-            return this.audioSource.volume;
+            return audioSource.volume;
         }
         set
         {
-            this.audioSource.volume = value;
+            audioSource.volume = value;
         }
     }
 }

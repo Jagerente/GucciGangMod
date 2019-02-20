@@ -13,10 +13,10 @@ public class UICheckboxControlledObject : MonoBehaviour
 
     private void OnActivate(bool isActive)
     {
-        if (this.target != null)
+        if (target != null)
         {
-            NGUITools.SetActive(this.target, !this.inverse ? isActive : !isActive);
-            UIPanel panel = NGUITools.FindInParents<UIPanel>(this.target);
+            NGUITools.SetActive(target, !inverse ? isActive : !isActive);
+            var panel = NGUITools.FindInParents<UIPanel>(target);
             if (panel != null)
             {
                 panel.Refresh();
@@ -26,10 +26,10 @@ public class UICheckboxControlledObject : MonoBehaviour
 
     private void OnEnable()
     {
-        UICheckbox component = base.GetComponent<UICheckbox>();
+        var component = GetComponent<UICheckbox>();
         if (component != null)
         {
-            this.OnActivate(component.isChecked);
+            OnActivate(component.isChecked);
         }
     }
 }

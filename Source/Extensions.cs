@@ -12,7 +12,7 @@ public static class Extensions
 {
     public static bool AlmostEquals(this float target, float second, float floatDiff)
     {
-        return (Mathf.Abs((float) (target - second)) < floatDiff);
+        return (Mathf.Abs(target - second) < floatDiff);
     }
 
     public static bool AlmostEquals(this Quaternion target, Quaternion second, float maxAngle)
@@ -22,13 +22,13 @@ public static class Extensions
 
     public static bool AlmostEquals(this Vector2 target, Vector2 second, float sqrMagnitudePrecision)
     {
-        Vector2 vector = target - second;
+        var vector = target - second;
         return (vector.sqrMagnitude < sqrMagnitudePrecision);
     }
 
     public static bool AlmostEquals(this Vector3 target, Vector3 second, float sqrMagnitudePrecision)
     {
-        Vector3 vector = target - second;
+        var vector = target - second;
         return (vector.sqrMagnitude < sqrMagnitudePrecision);
     }
 
@@ -36,7 +36,7 @@ public static class Extensions
     {
         if (target != null)
         {
-            for (int i = 0; i < target.Length; i++)
+            for (var i = 0; i < target.Length; i++)
             {
                 if (target[i] == nr)
                 {
@@ -61,18 +61,18 @@ public static class Extensions
     {
         if ((addHash != null) && !target.Equals(addHash))
         {
-            IEnumerator enumerator = addHash.Keys.GetEnumerator();
+            var enumerator = addHash.Keys.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
                 {
-                    object current = enumerator.Current;
+                    var current = enumerator.Current;
                     target[current] = addHash[current];
                 }
             }
             finally
             {
-                IDisposable disposable = enumerator as IDisposable;
+                var disposable = enumerator as IDisposable;
                 if (disposable != null)
                 	disposable.Dispose();
             }
@@ -83,12 +83,12 @@ public static class Extensions
     {
         if ((addHash != null) && !target.Equals(addHash))
         {
-            IEnumerator enumerator = addHash.Keys.GetEnumerator();
+            var enumerator = addHash.Keys.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
                 {
-                    object current = enumerator.Current;
+                    var current = enumerator.Current;
                     if (current is string)
                     {
                         target[current] = addHash[current];
@@ -97,7 +97,7 @@ public static class Extensions
             }
             finally
             {
-                IDisposable disposable = enumerator as IDisposable;
+                var disposable = enumerator as IDisposable;
                 if (disposable != null)
                 	disposable.Dispose();
             }
@@ -106,26 +106,26 @@ public static class Extensions
 
     public static void StripKeysWithNullValues(this IDictionary original)
     {
-        object[] objArray = new object[original.Count];
-        int num = 0;
-        IEnumerator enumerator = original.Keys.GetEnumerator();
+        var objArray = new object[original.Count];
+        var num = 0;
+        var enumerator = original.Keys.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                object current = enumerator.Current;
+                var current = enumerator.Current;
                 objArray[num++] = current;
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        for (int i = 0; i < objArray.Length; i++)
+        for (var i = 0; i < objArray.Length; i++)
         {
-            object key = objArray[i];
+            var key = objArray[i];
             if (original[key] == null)
             {
                 original.Remove(key);
@@ -135,13 +135,13 @@ public static class Extensions
 
     public static ExitGames.Client.Photon.Hashtable StripToStringKeys(this IDictionary original)
     {
-        ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable();
-        IDictionaryEnumerator enumerator = original.GetEnumerator();
+        var hashtable = new ExitGames.Client.Photon.Hashtable();
+        var enumerator = original.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                DictionaryEntry current = (DictionaryEntry) enumerator.Current;
+                var current = (DictionaryEntry) enumerator.Current;
                 if (current.Key is string)
                 {
                     hashtable[current.Key] = current.Value;
@@ -150,7 +150,7 @@ public static class Extensions
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }

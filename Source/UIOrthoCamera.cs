@@ -13,19 +13,19 @@ public class UIOrthoCamera : MonoBehaviour
 
     private void Start()
     {
-        this.mCam = base.camera;
-        this.mTrans = base.transform;
-        this.mCam.orthographic = true;
+        mCam = camera;
+        mTrans = transform;
+        mCam.orthographic = true;
     }
 
     private void Update()
     {
-        float num = this.mCam.rect.yMin * Screen.height;
-        float num2 = this.mCam.rect.yMax * Screen.height;
-        float b = ((num2 - num) * 0.5f) * this.mTrans.lossyScale.y;
-        if (!Mathf.Approximately(this.mCam.orthographicSize, b))
+        var num = mCam.rect.yMin * Screen.height;
+        var num2 = mCam.rect.yMax * Screen.height;
+        var b = ((num2 - num) * 0.5f) * mTrans.lossyScale.y;
+        if (!Mathf.Approximately(mCam.orthographicSize, b))
         {
-            this.mCam.orthographicSize = b;
+            mCam.orthographicSize = b;
         }
     }
 }

@@ -57,7 +57,7 @@ public class EffectLayer : MonoBehaviour
     public float LineLengthRight = 1f;
     public int LoopCircles = -1;
     protected Camera MainCamera;
-    public UnityEngine.Material Material;
+    public Material Material;
     public int MaxENodes = 1;
     public float MaxFps = 60f;
     public int MaxRibbonElements = 6;
@@ -109,55 +109,55 @@ public class EffectLayer : MonoBehaviour
 
     public void AddActiveNode(EffectNode node)
     {
-        if (this.AvailableNodeCount == 0)
+        if (AvailableNodeCount == 0)
         {
             Debug.LogError("out index!");
         }
-        if (this.AvailableENodes[node.Index] != null)
+        if (AvailableENodes[node.Index] != null)
         {
-            this.ActiveENodes[node.Index] = node;
-            this.AvailableENodes[node.Index] = null;
-            this.AvailableNodeCount--;
+            ActiveENodes[node.Index] = node;
+            AvailableENodes[node.Index] = null;
+            AvailableNodeCount--;
         }
     }
 
     protected void AddNodes(int num)
     {
-        int num2 = 0;
-        for (int i = 0; i < this.MaxENodes; i++)
+        var num2 = 0;
+        for (var i = 0; i < MaxENodes; i++)
         {
             if (num2 == num)
             {
                 break;
             }
-            EffectNode node = this.AvailableENodes[i];
+            var node = AvailableENodes[i];
             if (node != null)
             {
-                this.AddActiveNode(node);
+                AddActiveNode(node);
                 num2++;
-                this.emitter.SetEmitPosition(node);
-                float life = 0f;
-                if (this.IsNodeLifeLoop)
+                emitter.SetEmitPosition(node);
+                var life = 0f;
+                if (IsNodeLifeLoop)
                 {
                     life = -1f;
                 }
                 else
                 {
-                    life = UnityEngine.Random.Range(this.NodeLifeMin, this.NodeLifeMax);
+                    life = Random.Range(NodeLifeMin, NodeLifeMax);
                 }
-                Vector3 emitRotation = this.emitter.GetEmitRotation(node);
-                node.Init(emitRotation.normalized, this.OriSpeed, life, UnityEngine.Random.Range(this.OriRotationMin, this.OriRotationMax), UnityEngine.Random.Range(this.OriScaleXMin, this.OriScaleXMax), UnityEngine.Random.Range(this.OriScaleYMin, this.OriScaleYMax), this.Color1, this.OriLowerLeftUV, this.OriUVDimensions);
+                var emitRotation = emitter.GetEmitRotation(node);
+                node.Init(emitRotation.normalized, OriSpeed, life, Random.Range(OriRotationMin, OriRotationMax), Random.Range(OriScaleXMin, OriScaleXMax), Random.Range(OriScaleYMin, OriScaleYMax), Color1, OriLowerLeftUV, OriUVDimensions);
             }
         }
     }
 
     public void FixedUpdateCustom()
     {
-        int nodes = this.emitter.GetNodes();
-        this.AddNodes(nodes);
-        for (int i = 0; i < this.MaxENodes; i++)
+        var nodes = emitter.GetNodes();
+        AddNodes(nodes);
+        for (var i = 0; i < MaxENodes; i++)
         {
-            EffectNode node = this.ActiveENodes[i];
+            var node = ActiveENodes[i];
             if (node != null)
             {
                 node.Update();
@@ -167,151 +167,151 @@ public class EffectLayer : MonoBehaviour
 
     public RibbonTrail GetRibbonTrail()
     {
-        if ((!((this.ActiveENodes == null) | (this.ActiveENodes.Length != 1)) && (this.MaxENodes == 1)) && (this.RenderType == 1))
+        if ((!((ActiveENodes == null) | (ActiveENodes.Length != 1)) && (MaxENodes == 1)) && (RenderType == 1))
         {
-            return this.ActiveENodes[0].Ribbon;
+            return ActiveENodes[0].Ribbon;
         }
         return null;
     }
 
     public VertexPool GetVertexPool()
     {
-        return this.Vertexpool;
+        return Vertexpool;
     }
 
     protected void Init()
     {
-        this.AvailableENodes = new EffectNode[this.MaxENodes];
-        this.ActiveENodes = new EffectNode[this.MaxENodes];
-        for (int i = 0; i < this.MaxENodes; i++)
+        AvailableENodes = new EffectNode[MaxENodes];
+        ActiveENodes = new EffectNode[MaxENodes];
+        for (var i = 0; i < MaxENodes; i++)
         {
-            EffectNode node = new EffectNode(i, this.ClientTransform, this.SyncClient, this);
-            ArrayList afts = this.InitAffectors(node);
+            var node = new EffectNode(i, ClientTransform, SyncClient, this);
+            var afts = InitAffectors(node);
             node.SetAffectorList(afts);
-            if (this.RenderType == 0)
+            if (RenderType == 0)
             {
-                node.SetType(this.SpriteWidth, this.SpriteHeight, (STYPE) this.SpriteType, (ORIPOINT) this.OriPoint, this.SpriteUVStretch, this.MaxFps);
+                node.SetType(SpriteWidth, SpriteHeight, (STYPE) SpriteType, (ORIPOINT) OriPoint, SpriteUVStretch, MaxFps);
             }
             else
             {
-                node.SetType(this.RibbonWidth, this.MaxRibbonElements, this.RibbonLen, this.ClientTransform.position, this.StretchType, this.MaxFps);
+                node.SetType(RibbonWidth, MaxRibbonElements, RibbonLen, ClientTransform.position, StretchType, MaxFps);
             }
-            this.AvailableENodes[i] = node;
+            AvailableENodes[i] = node;
         }
-        this.AvailableNodeCount = this.MaxENodes;
-        this.emitter = new Emitter(this);
+        AvailableNodeCount = MaxENodes;
+        emitter = new Emitter(this);
     }
 
     protected ArrayList InitAffectors(EffectNode node)
     {
-        ArrayList list = new ArrayList();
-        if (this.UVAffectorEnable)
+        var list = new ArrayList();
+        if (UVAffectorEnable)
         {
-            UVAnimation frame = new UVAnimation();
-            Texture mainTex = this.Vertexpool.GetMaterial().GetTexture("_MainTex");
-            if (this.UVType == 2)
+            var frame = new UVAnimation();
+            var mainTex = Vertexpool.GetMaterial().GetTexture("_MainTex");
+            if (UVType == 2)
             {
-                frame.BuildFromFile(this.EanPath, this.EanIndex, this.UVTime, mainTex);
-                this.OriLowerLeftUV = frame.frames[0];
-                this.OriUVDimensions = frame.UVDimensions[0];
+                frame.BuildFromFile(EanPath, EanIndex, UVTime, mainTex);
+                OriLowerLeftUV = frame.frames[0];
+                OriUVDimensions = frame.UVDimensions[0];
             }
-            else if (this.UVType == 1)
+            else if (UVType == 1)
             {
-                float num = mainTex.width / this.Cols;
-                float num2 = mainTex.height / this.Rows;
-                Vector2 cellSize = new Vector2(num / ((float) mainTex.width), num2 / ((float) mainTex.height));
-                Vector2 start = new Vector2(0f, 1f);
-                frame.BuildUVAnim(start, cellSize, this.Cols, this.Rows, this.Cols * this.Rows);
-                this.OriLowerLeftUV = start;
-                this.OriUVDimensions = cellSize;
-                this.OriUVDimensions.y = -this.OriUVDimensions.y;
+                float num = mainTex.width / Cols;
+                float num2 = mainTex.height / Rows;
+                var cellSize = new Vector2(num / mainTex.width, num2 / mainTex.height);
+                var start = new Vector2(0f, 1f);
+                frame.BuildUVAnim(start, cellSize, Cols, Rows, Cols * Rows);
+                OriLowerLeftUV = start;
+                OriUVDimensions = cellSize;
+                OriUVDimensions.y = -OriUVDimensions.y;
             }
             if (frame.frames.Length == 1)
             {
-                this.OriLowerLeftUV = frame.frames[0];
-                this.OriUVDimensions = frame.UVDimensions[0];
+                OriLowerLeftUV = frame.frames[0];
+                OriUVDimensions = frame.UVDimensions[0];
             }
             else
             {
-                frame.loopCycles = this.LoopCircles;
-                Affector affector = new UVAffector(frame, this.UVTime, node);
+                frame.loopCycles = LoopCircles;
+                Affector affector = new UVAffector(frame, UVTime, node);
                 list.Add(affector);
             }
         }
-        if (this.RotAffectorEnable && (this.RotateType != RSTYPE.NONE))
+        if (RotAffectorEnable && (RotateType != RSTYPE.NONE))
         {
             Affector affector2;
-            if (this.RotateType == RSTYPE.CURVE)
+            if (RotateType == RSTYPE.CURVE)
             {
-                affector2 = new RotateAffector(this.RotateCurve, node);
+                affector2 = new RotateAffector(RotateCurve, node);
             }
             else
             {
-                affector2 = new RotateAffector(this.DeltaRot, node);
+                affector2 = new RotateAffector(DeltaRot, node);
             }
             list.Add(affector2);
         }
-        if (this.ScaleAffectorEnable && (this.ScaleType != RSTYPE.NONE))
+        if (ScaleAffectorEnable && (ScaleType != RSTYPE.NONE))
         {
             Affector affector3;
-            if (this.ScaleType == RSTYPE.CURVE)
+            if (ScaleType == RSTYPE.CURVE)
             {
-                affector3 = new ScaleAffector(this.ScaleXCurve, this.ScaleYCurve, node);
+                affector3 = new ScaleAffector(ScaleXCurve, ScaleYCurve, node);
             }
             else
             {
-                affector3 = new ScaleAffector(this.DeltaScaleX, this.DeltaScaleY, node);
+                affector3 = new ScaleAffector(DeltaScaleX, DeltaScaleY, node);
             }
             list.Add(affector3);
         }
-        if (this.ColorAffectorEnable && (this.ColorAffectType != 0))
+        if (ColorAffectorEnable && (ColorAffectType != 0))
         {
             ColorAffector affector4;
-            if (this.ColorAffectType == 2)
+            if (ColorAffectType == 2)
             {
-                Color[] colorArr = new Color[] { this.Color1, this.Color2, this.Color3, this.Color4 };
-                affector4 = new ColorAffector(colorArr, this.ColorGradualTimeLength, this.ColorGradualType, node);
+                var colorArr = new Color[] { Color1, Color2, Color3, Color4 };
+                affector4 = new ColorAffector(colorArr, ColorGradualTimeLength, ColorGradualType, node);
             }
             else
             {
-                Color[] colorArray2 = new Color[] { this.Color1, this.Color2 };
-                affector4 = new ColorAffector(colorArray2, this.ColorGradualTimeLength, this.ColorGradualType, node);
+                var colorArray2 = new Color[] { Color1, Color2 };
+                affector4 = new ColorAffector(colorArray2, ColorGradualTimeLength, ColorGradualType, node);
             }
             list.Add(affector4);
         }
-        if (this.LinearForceAffectorEnable)
+        if (LinearForceAffectorEnable)
         {
-            Affector affector5 = new LinearForceAffector((Vector3) (this.LinearForce.normalized * this.LinearMagnitude), node);
+            Affector affector5 = new LinearForceAffector(LinearForce.normalized * LinearMagnitude, node);
             list.Add(affector5);
         }
-        if (this.JetAffectorEnable)
+        if (JetAffectorEnable)
         {
-            Affector affector6 = new JetAffector(this.JetMin, this.JetMax, node);
+            Affector affector6 = new JetAffector(JetMin, JetMax, node);
             list.Add(affector6);
         }
-        if (this.VortexAffectorEnable)
+        if (VortexAffectorEnable)
         {
             Affector affector7;
-            if (this.UseVortexCurve)
+            if (UseVortexCurve)
             {
-                affector7 = new VortexAffector(this.VortexCurve, this.VortexDirection, node);
+                affector7 = new VortexAffector(VortexCurve, VortexDirection, node);
             }
             else
             {
-                affector7 = new VortexAffector(this.VortexMag, this.VortexDirection, node);
+                affector7 = new VortexAffector(VortexMag, VortexDirection, node);
             }
             list.Add(affector7);
         }
-        if (this.AttractionAffectorEnable)
+        if (AttractionAffectorEnable)
         {
             Affector affector8;
-            if (this.UseVortexCurve)
+            if (UseVortexCurve)
             {
-                affector8 = new AttractionForceAffector(this.AttractionCurve, this.AttractionPosition, node);
+                affector8 = new AttractionForceAffector(AttractionCurve, AttractionPosition, node);
             }
             else
             {
-                affector8 = new AttractionForceAffector(this.AttractMag, this.AttractionPosition, node);
+                affector8 = new AttractionForceAffector(AttractMag, AttractionPosition, node);
             }
             list.Add(affector8);
         }
@@ -324,44 +324,44 @@ public class EffectLayer : MonoBehaviour
 
     public void RemoveActiveNode(EffectNode node)
     {
-        if (this.AvailableNodeCount == this.MaxENodes)
+        if (AvailableNodeCount == MaxENodes)
         {
             Debug.LogError("out index!");
         }
-        if (this.ActiveENodes[node.Index] != null)
+        if (ActiveENodes[node.Index] != null)
         {
-            this.ActiveENodes[node.Index] = null;
-            this.AvailableENodes[node.Index] = node;
-            this.AvailableNodeCount++;
+            ActiveENodes[node.Index] = null;
+            AvailableENodes[node.Index] = node;
+            AvailableNodeCount++;
         }
     }
 
     public void Reset()
     {
-        for (int i = 0; i < this.MaxENodes; i++)
+        for (var i = 0; i < MaxENodes; i++)
         {
-            if (this.ActiveENodes == null)
+            if (ActiveENodes == null)
             {
                 return;
             }
-            EffectNode node = this.ActiveENodes[i];
+            var node = ActiveENodes[i];
             if (node != null)
             {
                 node.Reset();
-                this.RemoveActiveNode(node);
+                RemoveActiveNode(node);
             }
         }
-        this.emitter.Reset();
+        emitter.Reset();
     }
 
     public void StartCustom()
     {
-        if (this.MainCamera == null)
+        if (MainCamera == null)
         {
-            this.MainCamera = Camera.main;
+            MainCamera = Camera.main;
         }
-        this.Init();
-        this.LastClientPos = this.ClientTransform.position;
+        Init();
+        LastClientPos = ClientTransform.position;
     }
 }
 

@@ -88,34 +88,34 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private void attack(string type)
     {
-        this.state = "attack";
-        this.attacked = false;
-        if (this.attackAnimation == type)
+        state = "attack";
+        attacked = false;
+        if (attackAnimation == type)
         {
-            this.attackAnimation = type;
-            this.playAnimationAt("attack_" + type, 0f);
+            attackAnimation = type;
+            playAnimationAt("attack_" + type, 0f);
         }
         else
         {
-            this.attackAnimation = type;
-            this.playAnimationAt("attack_" + type, 0f);
+            attackAnimation = type;
+            playAnimationAt("attack_" + type, 0f);
         }
-        this.startJump = false;
-        this.attackChkOnce = false;
-        this.nextAttackAnimation = null;
-        this.fxName = null;
-        this.isAttackMoveByCore = false;
-        this.attackCheckTime = 0f;
-        this.attackCheckTimeA = 0f;
-        this.attackCheckTimeB = 0f;
-        this.fxRotation = Quaternion.Euler(270f, 0f, 0f);
-        string key = type;
+        startJump = false;
+        attackChkOnce = false;
+        nextAttackAnimation = null;
+        fxName = null;
+        isAttackMoveByCore = false;
+        attackCheckTime = 0f;
+        attackCheckTimeA = 0f;
+        attackCheckTimeB = 0f;
+        fxRotation = Quaternion.Euler(270f, 0f, 0f);
+        var key = type;
         if (key != null)
         {
             int num;
             if (fswitchSmap2 == null)
             {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(0x11);
+                var dictionary = new Dictionary<string, int>(0x11);
                 dictionary.Add("combo_1", 0);
                 dictionary.Add("combo_2", 1);
                 dictionary.Add("combo_3", 2);
@@ -140,178 +140,178 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 switch (num)
                 {
                     case 0:
-                        this.attackCheckTimeA = 0.63f;
-                        this.attackCheckTimeB = 0.8f;
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_R/shin_R/foot_R");
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_R");
-                        this.checkHitCapsuleR = 5f;
-                        this.isAttackMoveByCore = true;
-                        this.nextAttackAnimation = "combo_2";
+                        attackCheckTimeA = 0.63f;
+                        attackCheckTimeB = 0.8f;
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/thigh_R/shin_R/foot_R");
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/thigh_R");
+                        checkHitCapsuleR = 5f;
+                        isAttackMoveByCore = true;
+                        nextAttackAnimation = "combo_2";
                         break;
 
                     case 1:
-                        this.attackCheckTimeA = 0.27f;
-                        this.attackCheckTimeB = 0.43f;
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_L/shin_L/foot_L");
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_L");
-                        this.checkHitCapsuleR = 5f;
-                        this.isAttackMoveByCore = true;
-                        this.nextAttackAnimation = "combo_3";
+                        attackCheckTimeA = 0.27f;
+                        attackCheckTimeB = 0.43f;
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/thigh_L/shin_L/foot_L");
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/thigh_L");
+                        checkHitCapsuleR = 5f;
+                        isAttackMoveByCore = true;
+                        nextAttackAnimation = "combo_3";
                         break;
 
                     case 2:
-                        this.attackCheckTimeA = 0.15f;
-                        this.attackCheckTimeB = 0.3f;
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_R/shin_R/foot_R");
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_R");
-                        this.checkHitCapsuleR = 5f;
-                        this.isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.15f;
+                        attackCheckTimeB = 0.3f;
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/thigh_R/shin_R/foot_R");
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/thigh_R");
+                        checkHitCapsuleR = 5f;
+                        isAttackMoveByCore = true;
                         break;
 
                     case 3:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.72f;
-                        this.attackCheckTimeB = 0.83f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-                        this.checkHitCapsuleR = 4f;
-                        this.nextAttackAnimation = "combo_blind_2";
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.72f;
+                        attackCheckTimeB = 0.83f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+                        checkHitCapsuleR = 4f;
+                        nextAttackAnimation = "combo_blind_2";
                         break;
 
                     case 4:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.5f;
-                        this.attackCheckTimeB = 0.6f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-                        this.checkHitCapsuleR = 4f;
-                        this.nextAttackAnimation = "combo_blind_3";
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.5f;
+                        attackCheckTimeB = 0.6f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+                        checkHitCapsuleR = 4f;
+                        nextAttackAnimation = "combo_blind_3";
                         break;
 
                     case 5:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.2f;
-                        this.attackCheckTimeB = 0.28f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-                        this.checkHitCapsuleR = 4f;
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.2f;
+                        attackCheckTimeB = 0.28f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+                        checkHitCapsuleR = 4f;
                         break;
 
                     case 6:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.44f;
-                        this.attackCheckTimeB = 0.55f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-                        this.checkHitCapsuleR = 4f;
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.44f;
+                        attackCheckTimeB = 0.55f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+                        checkHitCapsuleR = 4f;
                         break;
 
                     case 7:
-                        this.isAttackMoveByCore = false;
-                        this.nextAttackAnimation = "jumpCombo_2";
-                        this.abnorma_jump_bite_horizon_v = Vector3.zero;
+                        isAttackMoveByCore = false;
+                        nextAttackAnimation = "jumpCombo_2";
+                        abnorma_jump_bite_horizon_v = Vector3.zero;
                         break;
 
                     case 8:
-                        this.isAttackMoveByCore = false;
-                        this.attackCheckTimeA = 0.48f;
-                        this.attackCheckTimeB = 0.7f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-                        this.checkHitCapsuleR = 4f;
-                        this.nextAttackAnimation = "jumpCombo_3";
+                        isAttackMoveByCore = false;
+                        attackCheckTimeA = 0.48f;
+                        attackCheckTimeB = 0.7f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+                        checkHitCapsuleR = 4f;
+                        nextAttackAnimation = "jumpCombo_3";
                         break;
 
                     case 9:
-                        this.isAttackMoveByCore = false;
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_L/shin_L/foot_L");
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_L");
-                        this.checkHitCapsuleR = 5f;
-                        this.attackCheckTimeA = 0.22f;
-                        this.attackCheckTimeB = 0.42f;
+                        isAttackMoveByCore = false;
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/thigh_L/shin_L/foot_L");
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/thigh_L");
+                        checkHitCapsuleR = 5f;
+                        attackCheckTimeA = 0.22f;
+                        attackCheckTimeB = 0.42f;
                         break;
 
                     case 10:
-                        this.isAttackMoveByCore = false;
+                        isAttackMoveByCore = false;
                         break;
 
                     case 11:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.39f;
-                        this.attackCheckTimeB = 0.6f;
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_R/shin_R/foot_R");
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/thigh_R");
-                        this.checkHitCapsuleR = 5f;
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.39f;
+                        attackCheckTimeB = 0.6f;
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/thigh_R/shin_R/foot_R");
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/thigh_R");
+                        checkHitCapsuleR = 5f;
                         break;
 
                     case 12:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.41f;
-                        this.attackCheckTimeB = 0.48f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-                        this.checkHitCapsuleR = 4f;
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.41f;
+                        attackCheckTimeB = 0.48f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+                        checkHitCapsuleR = 4f;
                         break;
 
                     case 13:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.53f;
-                        this.attackCheckTimeB = 0.63f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-                        this.checkHitCapsuleR = 4f;
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.53f;
+                        attackCheckTimeB = 0.63f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+                        checkHitCapsuleR = 4f;
                         break;
 
                     case 14:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.5f;
-                        this.attackCheckTimeB = 0.62f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
-                        this.checkHitCapsuleR = 4f;
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.5f;
+                        attackCheckTimeB = 0.62f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
+                        checkHitCapsuleR = 4f;
                         break;
 
                     case 15:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.4f;
-                        this.attackCheckTimeB = 0.51f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
-                        this.checkHitCapsuleR = 4f;
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.4f;
+                        attackCheckTimeB = 0.51f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
+                        checkHitCapsuleR = 4f;
                         break;
 
                     case 0x10:
-                        this.isAttackMoveByCore = true;
-                        this.attackCheckTimeA = 0.4f;
-                        this.attackCheckTimeB = 0.51f;
-                        this.checkHitCapsuleStart = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
-                        this.checkHitCapsuleEnd = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-                        this.checkHitCapsuleR = 4f;
+                        isAttackMoveByCore = true;
+                        attackCheckTimeA = 0.4f;
+                        attackCheckTimeB = 0.51f;
+                        checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+                        checkHitCapsuleEnd = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+                        checkHitCapsuleR = 4f;
                         break;
                 }
             }
         }
-        this.checkHitCapsuleEndOld = this.checkHitCapsuleEnd.transform.position;
-        this.needFreshCorePosition = true;
+        checkHitCapsuleEndOld = checkHitCapsuleEnd.transform.position;
+        needFreshCorePosition = true;
     }
 
     private bool attackTarget(GameObject target)
     {
         int num5;
-        float current = 0f;
-        float f = 0f;
-        Vector3 vector = target.transform.position - base.transform.position;
+        var current = 0f;
+        var f = 0f;
+        var vector = target.transform.position - transform.position;
         current = -Mathf.Atan2(vector.z, vector.x) * 57.29578f;
-        f = -Mathf.DeltaAngle(current, base.gameObject.transform.rotation.eulerAngles.y - 90f);
-        if ((this.eren != null) && (this.myDistance < 35f))
+        f = -Mathf.DeltaAngle(current, gameObject.transform.rotation.eulerAngles.y - 90f);
+        if ((eren != null) && (myDistance < 35f))
         {
-            this.attack("combo_1");
+            attack("combo_1");
             return true;
         }
-        int num3 = 0;
-        string str = string.Empty;
-        ArrayList list = new ArrayList();
-        if (this.myDistance < 40f)
+        var num3 = 0;
+        var str = string.Empty;
+        var list = new ArrayList();
+        if (myDistance < 40f)
         {
             if (Mathf.Abs(f) < 90f)
             {
@@ -332,10 +332,10 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             {
                 num3 = 3;
             }
-            float num4 = target.transform.position.y - base.transform.position.y;
+            var num4 = target.transform.position.y - transform.position.y;
             if (Mathf.Abs(f) < 90f)
             {
-                if (((num4 > 0f) && (num4 < 12f)) && (this.myDistance < 22f))
+                if (((num4 > 0f) && (num4 < 12f)) && (myDistance < 22f))
                 {
                     list.Add("attack_sweep");
                 }
@@ -350,16 +350,16 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             }
             if (Mathf.Abs(f) < 30f)
             {
-                if (((num4 > 0f) && (num4 < 12f)) && ((this.myDistance > 20f) && (this.myDistance < 30f)))
+                if (((num4 > 0f) && (num4 < 12f)) && ((myDistance > 20f) && (myDistance < 30f)))
                 {
                     list.Add("attack_front");
                 }
-                if (((this.myDistance < 12f) && (num4 > 33f)) && (num4 < 51f))
+                if (((myDistance < 12f) && (num4 > 33f)) && (num4 < 51f))
                 {
                     list.Add("grab_up");
                 }
             }
-            if (((Mathf.Abs(f) > 100f) && (this.myDistance < 11f)) && ((num4 >= 15f) && (num4 < 32f)))
+            if (((Mathf.Abs(f) > 100f) && (myDistance < 11f)) && ((num4 >= 15f) && (num4 < 32f)))
             {
                 list.Add("attack_sweep_back");
             }
@@ -367,9 +367,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             switch (num5)
             {
                 case 1:
-                    if (this.myDistance >= 11f)
+                    if (myDistance >= 11f)
                     {
-                        if (this.myDistance < 20f)
+                        if (myDistance < 20f)
                         {
                             if ((num4 >= 12f) && (num4 < 21f))
                             {
@@ -393,9 +393,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     break;
 
                 case 2:
-                    if (this.myDistance >= 11f)
+                    if (myDistance >= 11f)
                     {
-                        if (this.myDistance < 20f)
+                        if (myDistance < 20f)
                         {
                             if ((num4 >= 12f) && (num4 < 21f))
                             {
@@ -419,7 +419,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     break;
 
                 case 3:
-                    if (this.myDistance >= 11f)
+                    if (myDistance >= 11f)
                     {
                         list.Add("turn180");
                         break;
@@ -431,7 +431,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     break;
 
                 case 4:
-                    if (this.myDistance >= 11f)
+                    if (myDistance >= 11f)
                     {
                         list.Add("turn180");
                         break;
@@ -449,17 +449,17 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         }
         else if (UnityEngine.Random.Range(0, 100) < 10)
         {
-            GameObject[] objArray = GameObject.FindGameObjectsWithTag("Player");
-            this.myHero = objArray[UnityEngine.Random.Range(0, objArray.Length)];
-            this.attention = UnityEngine.Random.Range((float) 5f, (float) 10f);
+            var objArray = GameObject.FindGameObjectsWithTag("Player");
+            myHero = objArray[UnityEngine.Random.Range(0, objArray.Length)];
+            attention = UnityEngine.Random.Range(5f, 10f);
             return true;
         }
-        string key = str;
+        var key = str;
         if (key != null)
         {
             if (fswitchSmap1 == null)
             {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(0x11);
+                var dictionary = new Dictionary<string, int>(0x11);
                 dictionary.Add("grab_bottom_left", 0);
                 dictionary.Add("grab_bottom_right", 1);
                 dictionary.Add("grab_mid_left", 2);
@@ -484,71 +484,71 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 switch (num5)
                 {
                     case 0:
-                        this.grab("bottom_left");
+                        grab("bottom_left");
                         return true;
 
                     case 1:
-                        this.grab("bottom_right");
+                        grab("bottom_right");
                         return true;
 
                     case 2:
-                        this.grab("mid_left");
+                        grab("mid_left");
                         return true;
 
                     case 3:
-                        this.grab("mid_right");
+                        grab("mid_right");
                         return true;
 
                     case 4:
-                        this.grab("up");
+                        grab("up");
                         return true;
 
                     case 5:
-                        this.grab("up_left");
+                        grab("up_left");
                         return true;
 
                     case 6:
-                        this.grab("up_right");
+                        grab("up_right");
                         return true;
 
                     case 7:
-                        this.attack("combo_1");
+                        attack("combo_1");
                         return true;
 
                     case 8:
-                        this.attack("front");
+                        attack("front");
                         return true;
 
                     case 9:
-                        this.attack("jumpCombo_1");
+                        attack("jumpCombo_1");
                         return true;
 
                     case 10:
-                        this.attack("sweep");
+                        attack("sweep");
                         return true;
 
                     case 11:
-                        this.attack("sweep_back");
+                        attack("sweep_back");
                         return true;
 
                     case 12:
-                        this.attack("sweep_front_left");
+                        attack("sweep_front_left");
                         return true;
 
                     case 13:
-                        this.attack("sweep_front_right");
+                        attack("sweep_front_right");
                         return true;
 
                     case 14:
-                        this.attack("sweep_head_b_l");
+                        attack("sweep_head_b_l");
                         return true;
 
                     case 15:
-                        this.attack("sweep_head_b_r");
+                        attack("sweep_head_b_r");
                         return true;
 
                     case 0x10:
-                        this.turn180();
+                        turn180();
                         return true;
                 }
             }
@@ -558,20 +558,20 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private void Awake()
     {
-        base.rigidbody.freezeRotation = true;
-        base.rigidbody.useGravity = false;
+        rigidbody.freezeRotation = true;
+        rigidbody.useGravity = false;
     }
 
     public void beTauntedBy(GameObject target, float tauntTime)
     {
-        this.whoHasTauntMe = target;
+        whoHasTauntMe = target;
         this.tauntTime = tauntTime;
     }
 
     private void chase()
     {
-        this.state = "chase";
-        this.crossFade("run", 0.5f);
+        state = "chase";
+        crossFade("run", 0.5f);
     }
 
     private RaycastHit[] checkHitCapsule(Vector3 start, Vector3 end, float r)
@@ -581,12 +581,12 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private GameObject checkIfHitHand(Transform hand)
     {
-        float num = 9.6f;
-        foreach (Collider collider in Physics.OverlapSphere(hand.GetComponent<SphereCollider>().transform.position, num + 1f))
+        var num = 9.6f;
+        foreach (var collider in Physics.OverlapSphere(hand.GetComponent<SphereCollider>().transform.position, num + 1f))
         {
             if (collider.transform.root.tag == "Player")
             {
-                GameObject gameObject = collider.transform.root.gameObject;
+                var gameObject = collider.transform.root.gameObject;
                 if (gameObject.GetComponent<TITAN_EREN>() != null)
                 {
                     if (!gameObject.GetComponent<TITAN_EREN>().isHit)
@@ -606,13 +606,13 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private GameObject checkIfHitHead(Transform head, float rad)
     {
-        float num = rad * 4f;
-        foreach (GameObject obj2 in GameObject.FindGameObjectsWithTag("Player"))
+        var num = rad * 4f;
+        foreach (var obj2 in GameObject.FindGameObjectsWithTag("Player"))
         {
             if ((obj2.GetComponent<TITAN_EREN>() == null) && !obj2.GetComponent<HERO>().isInvincible())
             {
-                float num3 = obj2.GetComponent<CapsuleCollider>().height * 0.5f;
-                if (Vector3.Distance(obj2.transform.position + ((Vector3) (Vector3.up * num3)), head.transform.position + ((Vector3) ((Vector3.up * 1.5f) * 4f))) < (num + num3))
+                var num3 = obj2.GetComponent<CapsuleCollider>().height * 0.5f;
+                if (Vector3.Distance(obj2.transform.position + Vector3.up * num3, head.transform.position + (Vector3.up * 1.5f) * 4f) < (num + num3))
                 {
                     return obj2;
                 }
@@ -623,11 +623,11 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private void crossFade(string aniName, float time)
     {
-        base.animation.CrossFade(aniName, time);
+        animation.CrossFade(aniName, time);
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
         {
-            object[] parameters = new object[] { aniName, time };
-            base.photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
+            var parameters = new object[] { aniName, time };
+            photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
         }
     }
 
@@ -635,18 +635,18 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         if (!grabTarget.GetComponent<HERO>().isGrabbed)
         {
-            this.grabToRight();
+            grabToRight();
             if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
             {
-                object[] parameters = new object[] { base.photonView.viewID, false };
+                var parameters = new object[] { photonView.viewID, false };
                 grabTarget.GetPhotonView().RPC("netGrabbed", PhotonTargets.All, parameters);
-                object[] objArray2 = new object[] { "grabbed" };
+                var objArray2 = new object[] { "grabbed" };
                 grabTarget.GetPhotonView().RPC("netPlayAnimation", PhotonTargets.All, objArray2);
-                base.photonView.RPC("grabToRight", PhotonTargets.Others, new object[0]);
+                photonView.RPC("grabToRight", PhotonTargets.Others, new object[0]);
             }
             else
             {
-                grabTarget.GetComponent<HERO>().grabbed(base.gameObject, false);
+                grabTarget.GetComponent<HERO>().grabbed(gameObject, false);
                 grabTarget.GetComponent<HERO>().animation.Play("grabbed");
             }
         }
@@ -656,18 +656,18 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         if (!grabTarget.GetComponent<HERO>().isGrabbed)
         {
-            this.grabToLeft();
+            grabToLeft();
             if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
             {
-                object[] parameters = new object[] { base.photonView.viewID, true };
+                var parameters = new object[] { photonView.viewID, true };
                 grabTarget.GetPhotonView().RPC("netGrabbed", PhotonTargets.All, parameters);
-                object[] objArray2 = new object[] { "grabbed" };
+                var objArray2 = new object[] { "grabbed" };
                 grabTarget.GetPhotonView().RPC("netPlayAnimation", PhotonTargets.All, objArray2);
-                base.photonView.RPC("grabToLeft", PhotonTargets.Others, new object[0]);
+                photonView.RPC("grabToLeft", PhotonTargets.Others, new object[0]);
             }
             else
             {
-                grabTarget.GetComponent<HERO>().grabbed(base.gameObject, true);
+                grabTarget.GetComponent<HERO>().grabbed(gameObject, true);
                 grabTarget.GetComponent<HERO>().animation.Play("grabbed");
             }
         }
@@ -675,27 +675,27 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void erenIsHere(GameObject target)
     {
-        this.myHero = this.eren = target;
+        myHero = eren = target;
     }
 
     private void findNearestFacingHero()
     {
-        GameObject[] objArray = GameObject.FindGameObjectsWithTag("Player");
+        var objArray = GameObject.FindGameObjectsWithTag("Player");
         GameObject obj2 = null;
-        float positiveInfinity = float.PositiveInfinity;
-        Vector3 position = base.transform.position;
-        float current = 0f;
-        float num3 = 180f;
-        float f = 0f;
-        foreach (GameObject obj3 in objArray)
+        var positiveInfinity = float.PositiveInfinity;
+        var position = transform.position;
+        var current = 0f;
+        var num3 = 180f;
+        var f = 0f;
+        foreach (var obj3 in objArray)
         {
-            Vector3 vector2 = obj3.transform.position - position;
-            float sqrMagnitude = vector2.sqrMagnitude;
+            var vector2 = obj3.transform.position - position;
+            var sqrMagnitude = vector2.sqrMagnitude;
             if (sqrMagnitude < positiveInfinity)
             {
-                Vector3 vector3 = obj3.transform.position - base.transform.position;
+                var vector3 = obj3.transform.position - transform.position;
                 current = -Mathf.Atan2(vector3.z, vector3.x) * 57.29578f;
-                f = -Mathf.DeltaAngle(current, base.gameObject.transform.rotation.eulerAngles.y - 90f);
+                f = -Mathf.DeltaAngle(current, gameObject.transform.rotation.eulerAngles.y - 90f);
                 if (Mathf.Abs(f) < num3)
                 {
                     obj2 = obj3;
@@ -705,87 +705,87 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         }
         if (obj2 != null)
         {
-            this.myHero = obj2;
-            this.tauntTime = 5f;
+            myHero = obj2;
+            tauntTime = 5f;
         }
     }
 
     private void findNearestHero()
     {
-        this.myHero = this.getNearestHero();
-        this.attention = UnityEngine.Random.Range((float) 5f, (float) 10f);
+        myHero = getNearestHero();
+        attention = UnityEngine.Random.Range(5f, 10f);
     }
 
     private void FixedUpdate()
     {
-        if ((!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
+        if ((!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine))
         {
-            if (this.bottomObject.GetComponent<CheckHitGround>().isGrounded)
+            if (bottomObject.GetComponent<CheckHitGround>().isGrounded)
             {
-                this.grounded = true;
-                this.bottomObject.GetComponent<CheckHitGround>().isGrounded = false;
+                grounded = true;
+                bottomObject.GetComponent<CheckHitGround>().isGrounded = false;
             }
             else
             {
-                this.grounded = false;
+                grounded = false;
             }
-            if (this.needFreshCorePosition)
+            if (needFreshCorePosition)
             {
-                this.oldCorePosition = base.transform.position - base.transform.Find("Amarture/Core").position;
-                this.needFreshCorePosition = false;
+                oldCorePosition = transform.position - transform.Find("Amarture/Core").position;
+                needFreshCorePosition = false;
             }
-            if (((this.state == "attack") && this.isAttackMoveByCore) || (((this.state == "hit") || (this.state == "turn180")) || (this.state == "anklehurt")))
+            if (((state == "attack") && isAttackMoveByCore) || (((state == "hit") || (state == "turn180")) || (state == "anklehurt")))
             {
-                Vector3 vector = (base.transform.position - base.transform.Find("Amarture/Core").position) - this.oldCorePosition;
-                base.rigidbody.velocity = (Vector3) ((vector / Time.deltaTime) + (Vector3.up * base.rigidbody.velocity.y));
-                this.oldCorePosition = base.transform.position - base.transform.Find("Amarture/Core").position;
+                var vector = (transform.position - transform.Find("Amarture/Core").position) - oldCorePosition;
+                rigidbody.velocity = (vector / Time.deltaTime) + (Vector3.up * rigidbody.velocity.y);
+                oldCorePosition = transform.position - transform.Find("Amarture/Core").position;
             }
-            else if (this.state == "chase")
+            else if (state == "chase")
             {
-                if (this.myHero == null)
+                if (myHero == null)
                 {
                     return;
                 }
-                Vector3 vector3 = (Vector3) (base.transform.forward * this.speed);
-                Vector3 velocity = base.rigidbody.velocity;
-                Vector3 force = vector3 - velocity;
+                var vector3 = transform.forward * speed;
+                var velocity = rigidbody.velocity;
+                var force = vector3 - velocity;
                 force.y = 0f;
-                base.rigidbody.AddForce(force, ForceMode.VelocityChange);
-                float current = 0f;
-                Vector3 vector6 = this.myHero.transform.position - base.transform.position;
+                rigidbody.AddForce(force, ForceMode.VelocityChange);
+                var current = 0f;
+                var vector6 = myHero.transform.position - transform.position;
                 current = -Mathf.Atan2(vector6.z, vector6.x) * 57.29578f;
-                float num2 = -Mathf.DeltaAngle(current, base.gameObject.transform.rotation.eulerAngles.y - 90f);
-                base.gameObject.transform.rotation = Quaternion.Lerp(base.gameObject.transform.rotation, Quaternion.Euler(0f, base.gameObject.transform.rotation.eulerAngles.y + num2, 0f), this.speed * Time.deltaTime);
+                var num2 = -Mathf.DeltaAngle(current, gameObject.transform.rotation.eulerAngles.y - 90f);
+                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, gameObject.transform.rotation.eulerAngles.y + num2, 0f), speed * Time.deltaTime);
             }
-            else if (this.grounded && !base.animation.IsPlaying("attack_jumpCombo_1"))
+            else if (grounded && !animation.IsPlaying("attack_jumpCombo_1"))
             {
-                base.rigidbody.AddForce(new Vector3(-base.rigidbody.velocity.x, 0f, -base.rigidbody.velocity.z), ForceMode.VelocityChange);
+                rigidbody.AddForce(new Vector3(-rigidbody.velocity.x, 0f, -rigidbody.velocity.z), ForceMode.VelocityChange);
             }
-            base.rigidbody.AddForce(new Vector3(0f, -this.gravity * base.rigidbody.mass, 0f));
+            rigidbody.AddForce(new Vector3(0f, -gravity * rigidbody.mass, 0f));
         }
     }
 
     private void getDown()
     {
-        this.state = "anklehurt";
-        this.playAnimation("legHurt");
-        this.AnkleRHP = this.AnkleRHPMAX;
-        this.AnkleLHP = this.AnkleLHPMAX;
-        this.needFreshCorePosition = true;
+        state = "anklehurt";
+        playAnimation("legHurt");
+        AnkleRHP = AnkleRHPMAX;
+        AnkleLHP = AnkleLHPMAX;
+        needFreshCorePosition = true;
     }
 
     private GameObject getNearestHero()
     {
-        GameObject[] objArray = GameObject.FindGameObjectsWithTag("Player");
+        var objArray = GameObject.FindGameObjectsWithTag("Player");
         GameObject obj2 = null;
-        float positiveInfinity = float.PositiveInfinity;
-        Vector3 position = base.transform.position;
-        foreach (GameObject obj3 in objArray)
+        var positiveInfinity = float.PositiveInfinity;
+        var position = transform.position;
+        foreach (var obj3 in objArray)
         {
             if (((obj3.GetComponent<HERO>() == null) || !obj3.GetComponent<HERO>().HasDied()) && ((obj3.GetComponent<TITAN_EREN>() == null) || !obj3.GetComponent<TITAN_EREN>().hasDied))
             {
-                Vector3 vector2 = obj3.transform.position - position;
-                float sqrMagnitude = vector2.sqrMagnitude;
+                var vector2 = obj3.transform.position - position;
+                var sqrMagnitude = vector2.sqrMagnitude;
                 if (sqrMagnitude < positiveInfinity)
                 {
                     obj2 = obj3;
@@ -798,13 +798,13 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private float getNearestHeroDistance()
     {
-        GameObject[] objArray = GameObject.FindGameObjectsWithTag("Player");
-        float positiveInfinity = float.PositiveInfinity;
-        Vector3 position = base.transform.position;
-        foreach (GameObject obj2 in objArray)
+        var objArray = GameObject.FindGameObjectsWithTag("Player");
+        var positiveInfinity = float.PositiveInfinity;
+        var position = transform.position;
+        foreach (var obj2 in objArray)
         {
-            Vector3 vector2 = obj2.transform.position - position;
-            float magnitude = vector2.magnitude;
+            var vector2 = obj2.transform.position - position;
+            var magnitude = vector2.magnitude;
             if (magnitude < positiveInfinity)
             {
                 positiveInfinity = magnitude;
@@ -815,28 +815,28 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private void grab(string type)
     {
-        this.state = "grab";
-        this.attacked = false;
-        this.attackAnimation = type;
-        if (base.animation.IsPlaying("attack_grab_" + type))
+        state = "grab";
+        attacked = false;
+        attackAnimation = type;
+        if (animation.IsPlaying("attack_grab_" + type))
         {
-            base.animation["attack_grab_" + type].normalizedTime = 0f;
-            this.playAnimation("attack_grab_" + type);
+            animation["attack_grab_" + type].normalizedTime = 0f;
+            playAnimation("attack_grab_" + type);
         }
         else
         {
-            this.crossFade("attack_grab_" + type, 0.1f);
+            crossFade("attack_grab_" + type, 0.1f);
         }
-        this.isGrabHandLeft = true;
-        this.grabbedTarget = null;
-        this.attackCheckTime = 0f;
-        string key = type;
+        isGrabHandLeft = true;
+        grabbedTarget = null;
+        attackCheckTime = 0f;
+        var key = type;
         if (key != null)
         {
             int num;
             if (fswitchSmap3 == null)
             {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(7);
+                var dictionary = new Dictionary<string, int>(7);
                 dictionary.Add("bottom_left", 0);
                 dictionary.Add("bottom_right", 1);
                 dictionary.Add("mid_left", 2);
@@ -851,118 +851,118 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 switch (num)
                 {
                     case 0:
-                        this.attackCheckTimeA = 0.28f;
-                        this.attackCheckTimeB = 0.38f;
-                        this.attackCheckTime = 0.65f;
-                        this.isGrabHandLeft = false;
+                        attackCheckTimeA = 0.28f;
+                        attackCheckTimeB = 0.38f;
+                        attackCheckTime = 0.65f;
+                        isGrabHandLeft = false;
                         break;
 
                     case 1:
-                        this.attackCheckTimeA = 0.27f;
-                        this.attackCheckTimeB = 0.37f;
-                        this.attackCheckTime = 0.65f;
+                        attackCheckTimeA = 0.27f;
+                        attackCheckTimeB = 0.37f;
+                        attackCheckTime = 0.65f;
                         break;
 
                     case 2:
-                        this.attackCheckTimeA = 0.27f;
-                        this.attackCheckTimeB = 0.37f;
-                        this.attackCheckTime = 0.65f;
-                        this.isGrabHandLeft = false;
+                        attackCheckTimeA = 0.27f;
+                        attackCheckTimeB = 0.37f;
+                        attackCheckTime = 0.65f;
+                        isGrabHandLeft = false;
                         break;
 
                     case 3:
-                        this.attackCheckTimeA = 0.27f;
-                        this.attackCheckTimeB = 0.36f;
-                        this.attackCheckTime = 0.66f;
+                        attackCheckTimeA = 0.27f;
+                        attackCheckTimeB = 0.36f;
+                        attackCheckTime = 0.66f;
                         break;
 
                     case 4:
-                        this.attackCheckTimeA = 0.25f;
-                        this.attackCheckTimeB = 0.32f;
-                        this.attackCheckTime = 0.67f;
+                        attackCheckTimeA = 0.25f;
+                        attackCheckTimeB = 0.32f;
+                        attackCheckTime = 0.67f;
                         break;
 
                     case 5:
-                        this.attackCheckTimeA = 0.26f;
-                        this.attackCheckTimeB = 0.4f;
-                        this.attackCheckTime = 0.66f;
+                        attackCheckTimeA = 0.26f;
+                        attackCheckTimeB = 0.4f;
+                        attackCheckTime = 0.66f;
                         break;
 
                     case 6:
-                        this.attackCheckTimeA = 0.26f;
-                        this.attackCheckTimeB = 0.4f;
-                        this.attackCheckTime = 0.66f;
-                        this.isGrabHandLeft = false;
+                        attackCheckTimeA = 0.26f;
+                        attackCheckTimeB = 0.4f;
+                        attackCheckTime = 0.66f;
+                        isGrabHandLeft = false;
                         break;
                 }
             }
         }
-        if (this.isGrabHandLeft)
+        if (isGrabHandLeft)
         {
-            this.currentGrabHand = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
+            currentGrabHand = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
         }
         else
         {
-            this.currentGrabHand = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+            currentGrabHand = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
         }
     }
 
     [RPC]
     public void grabbedTargetEscape()
     {
-        this.grabbedTarget = null;
+        grabbedTarget = null;
     }
 
     [RPC]
     public void grabToLeft()
     {
-        Transform transform = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
-        this.grabTF.transform.parent = transform;
-        this.grabTF.transform.parent = transform;
-        this.grabTF.transform.position = transform.GetComponent<SphereCollider>().transform.position;
-        this.grabTF.transform.rotation = transform.GetComponent<SphereCollider>().transform.rotation;
-        Transform transform1 = this.grabTF.transform;
-        transform1.localPosition -= (Vector3) ((Vector3.right * transform.GetComponent<SphereCollider>().radius) * 0.3f);
-        Transform transform2 = this.grabTF.transform;
-        transform2.localPosition -= (Vector3) ((Vector3.up * transform.GetComponent<SphereCollider>().radius) * 0.51f);
-        Transform transform3 = this.grabTF.transform;
-        transform3.localPosition -= (Vector3) ((Vector3.forward * transform.GetComponent<SphereCollider>().radius) * 0.3f);
-        this.grabTF.transform.localRotation = Quaternion.Euler(this.grabTF.transform.localRotation.eulerAngles.x, this.grabTF.transform.localRotation.eulerAngles.y + 180f, this.grabTF.transform.localRotation.eulerAngles.z + 180f);
+        var transform = this.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
+        grabTF.transform.parent = transform;
+        grabTF.transform.parent = transform;
+        grabTF.transform.position = transform.GetComponent<SphereCollider>().transform.position;
+        grabTF.transform.rotation = transform.GetComponent<SphereCollider>().transform.rotation;
+        var transform1 = grabTF.transform;
+        transform1.localPosition -= (Vector3.right * transform.GetComponent<SphereCollider>().radius) * 0.3f;
+        var transform2 = grabTF.transform;
+        transform2.localPosition -= (Vector3.up * transform.GetComponent<SphereCollider>().radius) * 0.51f;
+        var transform3 = grabTF.transform;
+        transform3.localPosition -= (Vector3.forward * transform.GetComponent<SphereCollider>().radius) * 0.3f;
+        grabTF.transform.localRotation = Quaternion.Euler(grabTF.transform.localRotation.eulerAngles.x, grabTF.transform.localRotation.eulerAngles.y + 180f, grabTF.transform.localRotation.eulerAngles.z + 180f);
     }
 
     [RPC]
     public void grabToRight()
     {
-        Transform transform = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
-        this.grabTF.transform.parent = transform;
-        this.grabTF.transform.position = transform.GetComponent<SphereCollider>().transform.position;
-        this.grabTF.transform.rotation = transform.GetComponent<SphereCollider>().transform.rotation;
-        Transform transform1 = this.grabTF.transform;
-        transform1.localPosition -= (Vector3) ((Vector3.right * transform.GetComponent<SphereCollider>().radius) * 0.3f);
-        Transform transform2 = this.grabTF.transform;
-        transform2.localPosition += (Vector3) ((Vector3.up * transform.GetComponent<SphereCollider>().radius) * 0.51f);
-        Transform transform3 = this.grabTF.transform;
-        transform3.localPosition -= (Vector3) ((Vector3.forward * transform.GetComponent<SphereCollider>().radius) * 0.3f);
-        this.grabTF.transform.localRotation = Quaternion.Euler(this.grabTF.transform.localRotation.eulerAngles.x, this.grabTF.transform.localRotation.eulerAngles.y + 180f, this.grabTF.transform.localRotation.eulerAngles.z);
+        var transform = this.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+        grabTF.transform.parent = transform;
+        grabTF.transform.position = transform.GetComponent<SphereCollider>().transform.position;
+        grabTF.transform.rotation = transform.GetComponent<SphereCollider>().transform.rotation;
+        var transform1 = grabTF.transform;
+        transform1.localPosition -= (Vector3.right * transform.GetComponent<SphereCollider>().radius) * 0.3f;
+        var transform2 = grabTF.transform;
+        transform2.localPosition += (Vector3.up * transform.GetComponent<SphereCollider>().radius) * 0.51f;
+        var transform3 = grabTF.transform;
+        transform3.localPosition -= (Vector3.forward * transform.GetComponent<SphereCollider>().radius) * 0.3f;
+        grabTF.transform.localRotation = Quaternion.Euler(grabTF.transform.localRotation.eulerAngles.x, grabTF.transform.localRotation.eulerAngles.y + 180f, grabTF.transform.localRotation.eulerAngles.z);
     }
 
     public void hit(int dmg)
     {
-        this.NapeArmor -= dmg;
-        if (this.NapeArmor <= 0)
+        NapeArmor -= dmg;
+        if (NapeArmor <= 0)
         {
-            this.NapeArmor = 0;
+            NapeArmor = 0;
         }
     }
 
     public void hitAnkleL(int dmg)
     {
-        if (!this.hasDie && (this.state != "anklehurt"))
+        if (!hasDie && (state != "anklehurt"))
         {
-            this.AnkleLHP -= dmg;
-            if (this.AnkleLHP <= 0)
+            AnkleLHP -= dmg;
+            if (AnkleLHP <= 0)
             {
-                this.getDown();
+                getDown();
             }
         }
     }
@@ -970,25 +970,25 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     [RPC]
     public void hitAnkleLRPC(int viewID, int dmg)
     {
-        if (!this.hasDie && (this.state != "anklehurt"))
+        if (!hasDie && (state != "anklehurt"))
         {
-            PhotonView view = PhotonView.Find(viewID);
+            var view = PhotonView.Find(viewID);
             if (view != null)
             {
-                if (this.grabbedTarget != null)
+                if (grabbedTarget != null)
                 {
-                    this.grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
+                    grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
                 }
-                Vector3 vector = view.gameObject.transform.position - base.transform.Find("Amarture/Core/Controller_Body").transform.position;
+                var vector = view.gameObject.transform.position - transform.Find("Amarture/Core/Controller_Body").transform.position;
                 if (vector.magnitude < 20f)
                 {
-                    this.AnkleLHP -= dmg;
-                    if (this.AnkleLHP <= 0)
+                    AnkleLHP -= dmg;
+                    if (AnkleLHP <= 0)
                     {
-                        this.getDown();
+                        getDown();
                     }
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
-                    object[] parameters = new object[] { dmg };
+                    var parameters = new object[] { dmg };
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
             }
@@ -997,12 +997,12 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void hitAnkleR(int dmg)
     {
-        if (!this.hasDie && (this.state != "anklehurt"))
+        if (!hasDie && (state != "anklehurt"))
         {
-            this.AnkleRHP -= dmg;
-            if (this.AnkleRHP <= 0)
+            AnkleRHP -= dmg;
+            if (AnkleRHP <= 0)
             {
-                this.getDown();
+                getDown();
             }
         }
     }
@@ -1010,25 +1010,25 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     [RPC]
     public void hitAnkleRRPC(int viewID, int dmg)
     {
-        if (!this.hasDie && (this.state != "anklehurt"))
+        if (!hasDie && (state != "anklehurt"))
         {
-            PhotonView view = PhotonView.Find(viewID);
+            var view = PhotonView.Find(viewID);
             if (view != null)
             {
-                if (this.grabbedTarget != null)
+                if (grabbedTarget != null)
                 {
-                    this.grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
+                    grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
                 }
-                Vector3 vector = view.gameObject.transform.position - base.transform.Find("Amarture/Core/Controller_Body").transform.position;
+                var vector = view.gameObject.transform.position - transform.Find("Amarture/Core/Controller_Body").transform.position;
                 if (vector.magnitude < 20f)
                 {
-                    this.AnkleRHP -= dmg;
-                    if (this.AnkleRHP <= 0)
+                    AnkleRHP -= dmg;
+                    if (AnkleRHP <= 0)
                     {
-                        this.getDown();
+                        getDown();
                     }
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
-                    object[] parameters = new object[] { dmg };
+                    var parameters = new object[] { dmg };
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
             }
@@ -1037,29 +1037,29 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void hitEye()
     {
-        if (!this.hasDie)
+        if (!hasDie)
         {
-            this.justHitEye();
+            justHitEye();
         }
     }
 
     [RPC]
     public void hitEyeRPC(int viewID)
     {
-        if (!this.hasDie)
+        if (!hasDie)
         {
-            if (this.grabbedTarget != null)
+            if (grabbedTarget != null)
             {
-                this.grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
+                grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
             }
-            Transform transform = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
-            PhotonView view = PhotonView.Find(viewID);
+            var transform = this.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
+            var view = PhotonView.Find(viewID);
             if (view != null)
             {
-                Vector3 vector = view.gameObject.transform.position - transform.transform.position;
+                var vector = view.gameObject.transform.position - transform.transform.position;
                 if (vector.magnitude < 20f)
                 {
-                    this.justHitEye();
+                    justHitEye();
                 }
             }
         }
@@ -1069,13 +1069,13 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         this.sbtime = sbtime;
         this.sbtime = Mathf.Max(0.5f, this.sbtime);
-        this.state = "idle";
-        this.crossFade("idle", 0.2f);
+        state = "idle";
+        crossFade("idle", 0.2f);
     }
 
     public bool IsGrounded()
     {
-        return this.bottomObject.GetComponent<CheckHitGround>().isGrounded;
+        return bottomObject.GetComponent<CheckHitGround>().isGrounded;
     }
 
     private void justEatHero(GameObject target, Transform hand)
@@ -1085,7 +1085,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             if (!target.GetComponent<HERO>().HasDied())
             {
                 target.GetComponent<HERO>().markDie();
-                object[] parameters = new object[] { -1, "Female Titan" };
+                var parameters = new object[] { -1, "Female Titan" };
                 target.GetComponent<HERO>().photonView.RPC("netDie2", PhotonTargets.All, parameters);
             }
         }
@@ -1097,25 +1097,25 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private void justHitEye()
     {
-        this.attack("combo_blind_1");
+        attack("combo_blind_1");
     }
 
     private void killPlayer(GameObject hitHero)
     {
         if (hitHero != null)
         {
-            Vector3 position = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest").position;
+            var position = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest").position;
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
                 if (!hitHero.GetComponent<HERO>().HasDied())
                 {
-                    hitHero.GetComponent<HERO>().die((Vector3) (((hitHero.transform.position - position) * 15f) * 4f), false);
+                    hitHero.GetComponent<HERO>().die(((hitHero.transform.position - position) * 15f) * 4f, false);
                 }
             }
             else if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient) && !hitHero.GetComponent<HERO>().HasDied())
             {
                 hitHero.GetComponent<HERO>().markDie();
-                object[] parameters = new object[] { (Vector3) (((hitHero.transform.position - position) * 15f) * 4f), false, -1, "Female Titan", true };
+                var parameters = new object[] { ((hitHero.transform.position - position) * 15f) * 4f, false, -1, "Female Titan", true };
                 hitHero.GetComponent<HERO>().photonView.RPC("netDie", PhotonTargets.All, parameters);
             }
         }
@@ -1126,29 +1126,29 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         if (health < 0)
         {
-            if (this.healthLabel != null)
+            if (healthLabel != null)
             {
-                UnityEngine.Object.Destroy(this.healthLabel);
+                Destroy(healthLabel);
             }
         }
         else
         {
-            if (this.healthLabel == null)
+            if (healthLabel == null)
             {
-                this.healthLabel = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("UI/LabelNameOverHead"));
-                this.healthLabel.name = "LabelNameOverHead";
-                this.healthLabel.transform.parent = base.transform;
-                this.healthLabel.transform.localPosition = new Vector3(0f, 52f, 0f);
-                float a = 4f;
-                if ((this.size > 0f) && (this.size < 1f))
+                healthLabel = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
+                healthLabel.name = "LabelNameOverHead";
+                healthLabel.transform.parent = transform;
+                healthLabel.transform.localPosition = new Vector3(0f, 52f, 0f);
+                var a = 4f;
+                if ((size > 0f) && (size < 1f))
                 {
-                    a = 4f / this.size;
+                    a = 4f / size;
                     a = Mathf.Min(a, 15f);
                 }
-                this.healthLabel.transform.localScale = new Vector3(a, a, a);
+                healthLabel.transform.localScale = new Vector3(a, a, a);
             }
-            string str = "[7FFF00]";
-            float num2 = ((float) health) / ((float) maxHealth);
+            var str = "[7FFF00]";
+            var num2 = health / ((float) maxHealth);
             if ((num2 < 0.75f) && (num2 >= 0.5f))
             {
                 str = "[f2b50f]";
@@ -1161,7 +1161,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             {
                 str = "[ff3333]";
             }
-            this.healthLabel.GetComponent<UILabel>().text = str + Convert.ToString(health);
+            healthLabel.GetComponent<UILabel>().text = str + Convert.ToString(health);
         }
     }
 
@@ -1169,25 +1169,25 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         if (!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE))
         {
-            if (base.animation.IsPlaying("run"))
+            if (animation.IsPlaying("run"))
             {
-                if ((((base.animation["run"].normalizedTime % 1f) > 0.1f) && ((base.animation["run"].normalizedTime % 1f) < 0.6f)) && (this.stepSoundPhase == 2))
+                if ((((animation["run"].normalizedTime % 1f) > 0.1f) && ((animation["run"].normalizedTime % 1f) < 0.6f)) && (stepSoundPhase == 2))
                 {
-                    this.stepSoundPhase = 1;
-                    Transform transform = base.transform.Find("snd_titan_foot");
+                    stepSoundPhase = 1;
+                    var transform = this.transform.Find("snd_titan_foot");
                     transform.GetComponent<AudioSource>().Stop();
                     transform.GetComponent<AudioSource>().Play();
                 }
-                if (((base.animation["run"].normalizedTime % 1f) > 0.6f) && (this.stepSoundPhase == 1))
+                if (((animation["run"].normalizedTime % 1f) > 0.6f) && (stepSoundPhase == 1))
                 {
-                    this.stepSoundPhase = 2;
-                    Transform transform2 = base.transform.Find("snd_titan_foot");
+                    stepSoundPhase = 2;
+                    var transform2 = transform.Find("snd_titan_foot");
                     transform2.GetComponent<AudioSource>().Stop();
                     transform2.GetComponent<AudioSource>().Play();
                 }
             }
-            this.updateLabel();
-            this.healthTime -= Time.deltaTime;
+            updateLabel();
+            healthTime -= Time.deltaTime;
         }
     }
 
@@ -1195,29 +1195,29 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         if (Settings.TitanSkins == 1)
         {
-            base.photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, new object[] { (string) FengGameManagerMKII.settings[0x42] });
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, new object[] { (string) FengGameManagerMKII.settings[0x42] });
         }
     }
 
     public IEnumerator loadskinE(string url)
     {
-        while (!this.hasspawn)
+        while (!hasspawn)
         {
             yield return null;
         }
-        bool mipmap = true;
-        bool iteratorVariable1 = false;
+        var mipmap = true;
+        var iteratorVariable1 = false;
         if (Settings.MipMapping == 1)
         {
             mipmap = false;
         }
-        foreach (Renderer iteratorVariable4 in this.GetComponentsInChildren<Renderer>())
+        foreach (var iteratorVariable4 in GetComponentsInChildren<Renderer>())
         {
             if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))
             {
-                WWW link = new WWW(url);
+                var link = new WWW(url);
                 yield return link;
-                Texture2D iteratorVariable6 = RCextensions.loadimage(link, mipmap, 0xf4240);
+                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 0xf4240);
                 link.Dispose();
                 if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))
                 {
@@ -1247,37 +1247,37 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         if ((Settings.TitanSkins == 1) && ((url.EndsWith(".jpg") || url.EndsWith(".png")) || url.EndsWith(".jpeg")))
         {
-            base.StartCoroutine(this.loadskinE(url));
+            StartCoroutine(loadskinE(url));
         }
     }
 
     [RPC]
     private void netCrossFade(string aniName, float time)
     {
-        base.animation.CrossFade(aniName, time);
+        animation.CrossFade(aniName, time);
     }
 
     [RPC]
     public void netDie()
     {
-        if (!this.hasDie)
+        if (!hasDie)
         {
-            this.hasDie = true;
-            this.crossFade("die", 0.05f);
+            hasDie = true;
+            crossFade("die", 0.05f);
         }
     }
 
     [RPC]
     private void netPlayAnimation(string aniName)
     {
-        base.animation.Play(aniName);
+        animation.Play(aniName);
     }
 
     [RPC]
     private void netPlayAnimationAt(string aniName, float normalizedTime)
     {
-        base.animation.Play(aniName);
-        base.animation[aniName].normalizedTime = normalizedTime;
+        animation.Play(aniName);
+        animation[aniName].normalizedTime = normalizedTime;
     }
 
     private void OnDestroy()
@@ -1290,39 +1290,39 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private void playAnimation(string aniName)
     {
-        base.animation.Play(aniName);
+        animation.Play(aniName);
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
         {
-            object[] parameters = new object[] { aniName };
-            base.photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
+            var parameters = new object[] { aniName };
+            photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
         }
     }
 
     private void playAnimationAt(string aniName, float normalizedTime)
     {
-        base.animation.Play(aniName);
-        base.animation[aniName].normalizedTime = normalizedTime;
+        animation.Play(aniName);
+        animation[aniName].normalizedTime = normalizedTime;
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
         {
-            object[] parameters = new object[] { aniName, normalizedTime };
-            base.photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
+            var parameters = new object[] { aniName, normalizedTime };
+            photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
         }
     }
 
     private void playSound(string sndname)
     {
-        this.playsoundRPC(sndname);
+        playsoundRPC(sndname);
         if (Network.peerType == NetworkPeerType.Server)
         {
-            object[] parameters = new object[] { sndname };
-            base.photonView.RPC("playsoundRPC", PhotonTargets.Others, parameters);
+            var parameters = new object[] { sndname };
+            photonView.RPC("playsoundRPC", PhotonTargets.Others, parameters);
         }
     }
 
     [RPC]
     private void playsoundRPC(string sndname)
     {
-        base.transform.Find(sndname).GetComponent<AudioSource>().Play();
+        transform.Find(sndname).GetComponent<AudioSource>().Play();
     }
 
     [RPC]
@@ -1331,181 +1331,181 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         size = Mathf.Clamp(size, 0.2f, 30f);
         if (info.sender.isMasterClient)
         {
-            Transform transform = base.transform;
-            transform.localScale = (Vector3) (transform.localScale * (size * 0.25f));
+            var transform = this.transform;
+            transform.localScale = transform.localScale * (size * 0.25f);
             this.size = size;
         }
     }
 
     private void Start()
     {
-        this.startMain();
-        this.size = 4f;
+        startMain();
+        size = 4f;
         if (Minimap.instance != null)
         {
-            Minimap.instance.TrackGameObjectOnMinimap(base.gameObject, Color.black, false, true, Minimap.IconStyle.CIRCLE);
+            Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.black, false, true, Minimap.IconStyle.CIRCLE);
         }
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
             if (RCSettings.sizeMode > 0)
             {
-                float sizeLower = RCSettings.sizeLower;
-                float sizeUpper = RCSettings.sizeUpper;
-                this.size = UnityEngine.Random.Range(sizeLower, sizeUpper);
-                base.photonView.RPC("setSize", PhotonTargets.AllBuffered, new object[] { this.size });
+                var sizeLower = RCSettings.sizeLower;
+                var sizeUpper = RCSettings.sizeUpper;
+                size = UnityEngine.Random.Range(sizeLower, sizeUpper);
+                photonView.RPC("setSize", PhotonTargets.AllBuffered, new object[] { size });
             }
-            this.lagMax = 150f + (this.size * 3f);
-            this.healthTime = 0f;
-            this.maxHealth = this.NapeArmor;
+            lagMax = 150f + (size * 3f);
+            healthTime = 0f;
+            maxHealth = NapeArmor;
             if (RCSettings.healthMode > 0)
             {
-                this.maxHealth = this.NapeArmor = UnityEngine.Random.Range(RCSettings.healthLower, RCSettings.healthUpper);
+                maxHealth = NapeArmor = UnityEngine.Random.Range(RCSettings.healthLower, RCSettings.healthUpper);
             }
-            if (this.NapeArmor > 0)
+            if (NapeArmor > 0)
             {
-                base.photonView.RPC("labelRPC", PhotonTargets.AllBuffered, new object[] { this.NapeArmor, this.maxHealth });
+                photonView.RPC("labelRPC", PhotonTargets.AllBuffered, new object[] { NapeArmor, maxHealth });
             }
-            this.loadskin();
+            loadskin();
         }
-        this.hasspawn = true;
+        hasspawn = true;
     }
 
     private void startMain()
     {
         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addFT(this);
-        base.name = "Female Titan";
-        this.grabTF = new GameObject();
-        this.grabTF.name = "titansTmpGrabTF";
-        this.currentCamera = GameObject.Find("MainCamera");
-        this.oldCorePosition = base.transform.position - base.transform.Find("Amarture/Core").position;
-        if (this.myHero == null)
+        name = "Female Titan";
+        grabTF = new GameObject();
+        grabTF.name = "titansTmpGrabTF";
+        currentCamera = GameObject.Find("MainCamera");
+        oldCorePosition = transform.position - transform.Find("Amarture/Core").position;
+        if (myHero == null)
         {
-            this.findNearestHero();
+            findNearestHero();
         }
-        IEnumerator enumerator = base.animation.GetEnumerator();
+        var enumerator = animation.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                AnimationState current = (AnimationState) enumerator.Current;
+                var current = (AnimationState) enumerator.Current;
                 current.speed = 0.7f;
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        base.animation["turn180"].speed = 0.5f;
-        this.NapeArmor = 0x3e8;
-        this.AnkleLHP = 50;
-        this.AnkleRHP = 50;
-        this.AnkleLHPMAX = 50;
-        this.AnkleRHPMAX = 50;
-        bool flag = false;
+        animation["turn180"].speed = 0.5f;
+        NapeArmor = 0x3e8;
+        AnkleLHP = 50;
+        AnkleRHP = 50;
+        AnkleLHPMAX = 50;
+        AnkleRHPMAX = 50;
+        var flag = false;
         if (LevelInfo.getInfo(FengGameManagerMKII.level).respawnMode == RespawnMode.NEVER)
         {
             flag = true;
         }
         if (IN_GAME_MAIN_CAMERA.difficulty == 0)
         {
-            this.NapeArmor = !flag ? 0x3e8 : 0x3e8;
-            this.AnkleLHP = this.AnkleLHPMAX = !flag ? 50 : 50;
-            this.AnkleRHP = this.AnkleRHPMAX = !flag ? 50 : 50;
+            NapeArmor = !flag ? 0x3e8 : 0x3e8;
+            AnkleLHP = AnkleLHPMAX = !flag ? 50 : 50;
+            AnkleRHP = AnkleRHPMAX = !flag ? 50 : 50;
         }
         else if (IN_GAME_MAIN_CAMERA.difficulty == 1)
         {
-            this.NapeArmor = !flag ? 0xbb8 : 0x9c4;
-            this.AnkleLHP = this.AnkleLHPMAX = !flag ? 200 : 100;
-            this.AnkleRHP = this.AnkleRHPMAX = !flag ? 200 : 100;
-            IEnumerator enumerator2 = base.animation.GetEnumerator();
+            NapeArmor = !flag ? 0xbb8 : 0x9c4;
+            AnkleLHP = AnkleLHPMAX = !flag ? 200 : 100;
+            AnkleRHP = AnkleRHPMAX = !flag ? 200 : 100;
+            var enumerator2 = animation.GetEnumerator();
             try
             {
                 while (enumerator2.MoveNext())
                 {
-                    AnimationState state2 = (AnimationState) enumerator2.Current;
+                    var state2 = (AnimationState) enumerator2.Current;
                     state2.speed = 0.7f;
                 }
             }
             finally
             {
-                IDisposable disposable2 = enumerator2 as IDisposable;
+                var disposable2 = enumerator2 as IDisposable;
                 if (disposable2 != null)
                 	disposable2.Dispose();
             }
-            base.animation["turn180"].speed = 0.7f;
+            animation["turn180"].speed = 0.7f;
         }
         else if (IN_GAME_MAIN_CAMERA.difficulty == 2)
         {
-            this.NapeArmor = !flag ? 0x1770 : 0xfa0;
-            this.AnkleLHP = this.AnkleLHPMAX = !flag ? 0x3e8 : 200;
-            this.AnkleRHP = this.AnkleRHPMAX = !flag ? 0x3e8 : 200;
-            IEnumerator enumerator3 = base.animation.GetEnumerator();
+            NapeArmor = !flag ? 0x1770 : 0xfa0;
+            AnkleLHP = AnkleLHPMAX = !flag ? 0x3e8 : 200;
+            AnkleRHP = AnkleRHPMAX = !flag ? 0x3e8 : 200;
+            var enumerator3 = animation.GetEnumerator();
             try
             {
                 while (enumerator3.MoveNext())
                 {
-                    AnimationState state3 = (AnimationState) enumerator3.Current;
+                    var state3 = (AnimationState) enumerator3.Current;
                     state3.speed = 1f;
                 }
             }
             finally
             {
-                IDisposable disposable3 = enumerator3 as IDisposable;
+                var disposable3 = enumerator3 as IDisposable;
                 if (disposable3 != null)
                 	disposable3.Dispose();
             }
-            base.animation["turn180"].speed = 0.9f;
+            animation["turn180"].speed = 0.9f;
         }
         if (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.PVP_CAPTURE)
         {
-            this.NapeArmor = (int) (this.NapeArmor * 0.8f);
+            NapeArmor = (int) (NapeArmor * 0.8f);
         }
-        base.animation["legHurt"].speed = 1f;
-        base.animation["legHurt_loop"].speed = 1f;
-        base.animation["legHurt_getup"].speed = 1f;
+        animation["legHurt"].speed = 1f;
+        animation["legHurt_loop"].speed = 1f;
+        animation["legHurt_getup"].speed = 1f;
     }
 
     [RPC]
     public void titanGetHit(int viewID, int speed)
     {
-        Transform transform = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
-        PhotonView view = PhotonView.Find(viewID);
+        var transform = this.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
+        var view = PhotonView.Find(viewID);
         if (view != null)
         {
-            Vector3 vector = view.gameObject.transform.position - transform.transform.position;
-            if ((vector.magnitude < this.lagMax) && (this.healthTime <= 0f))
+            var vector = view.gameObject.transform.position - transform.transform.position;
+            if ((vector.magnitude < lagMax) && (healthTime <= 0f))
             {
                 if (speed >= RCSettings.damageMode)
                 {
-                    this.NapeArmor -= speed;
+                    NapeArmor -= speed;
                 }
-                if (this.maxHealth > 0f)
+                if (maxHealth > 0f)
                 {
-                    base.photonView.RPC("labelRPC", PhotonTargets.AllBuffered, new object[] { this.NapeArmor, this.maxHealth });
+                    photonView.RPC("labelRPC", PhotonTargets.AllBuffered, new object[] { NapeArmor, maxHealth });
                 }
-                if (this.NapeArmor <= 0)
+                if (NapeArmor <= 0)
                 {
-                    this.NapeArmor = 0;
-                    if (!this.hasDie)
+                    NapeArmor = 0;
+                    if (!hasDie)
                     {
-                        base.photonView.RPC("netDie", PhotonTargets.OthersBuffered, new object[0]);
-                        if (this.grabbedTarget != null)
+                        photonView.RPC("netDie", PhotonTargets.OthersBuffered, new object[0]);
+                        if (grabbedTarget != null)
                         {
-                            this.grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
+                            grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
                         }
-                        this.netDie();
-                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().titanGetKill(view.owner, speed, base.name);
+                        netDie();
+                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().titanGetKill(view.owner, speed, name);
                     }
                 }
                 else
                 {
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's neck", speed);
-                    object[] parameters = new object[] { speed };
+                    var parameters = new object[] { speed };
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
-                this.healthTime = 0.2f;
+                healthTime = 0.2f;
             }
         }
     }
@@ -1514,355 +1514,355 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         if (d > 0f)
         {
-            this.turnAnimation = "turnaround1";
+            turnAnimation = "turnaround1";
         }
         else
         {
-            this.turnAnimation = "turnaround2";
+            turnAnimation = "turnaround2";
         }
-        this.playAnimation(this.turnAnimation);
-        base.animation[this.turnAnimation].time = 0f;
+        playAnimation(turnAnimation);
+        animation[turnAnimation].time = 0f;
         d = Mathf.Clamp(d, -120f, 120f);
-        this.turnDeg = d;
-        this.desDeg = base.gameObject.transform.rotation.eulerAngles.y + this.turnDeg;
-        this.state = "turn";
+        turnDeg = d;
+        desDeg = gameObject.transform.rotation.eulerAngles.y + turnDeg;
+        state = "turn";
     }
 
     private void turn180()
     {
-        this.turnAnimation = "turn180";
-        this.playAnimation(this.turnAnimation);
-        base.animation[this.turnAnimation].time = 0f;
-        this.state = "turn180";
-        this.needFreshCorePosition = true;
+        turnAnimation = "turn180";
+        playAnimation(turnAnimation);
+        animation[turnAnimation].time = 0f;
+        state = "turn180";
+        needFreshCorePosition = true;
     }
 
     public void update()
     {
-        if ((!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
+        if ((!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine))
         {
-            if (this.hasDie)
+            if (hasDie)
             {
-                this.dieTime += Time.deltaTime;
-                if (base.animation["die"].normalizedTime >= 1f)
+                dieTime += Time.deltaTime;
+                if (animation["die"].normalizedTime >= 1f)
                 {
-                    this.playAnimation("die_cry");
+                    playAnimation("die_cry");
                     if (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.PVP_CAPTURE)
                     {
-                        for (int i = 0; i < 15; i++)
+                        for (var i = 0; i < 15; i++)
                         {
-                            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().randomSpawnOneTitan("titanRespawn", 50).GetComponent<TITAN>().beTauntedBy(base.gameObject, 20f);
+                            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().randomSpawnOneTitan("titanRespawn", 50).GetComponent<TITAN>().beTauntedBy(gameObject, 20f);
                         }
                     }
                 }
-                if ((this.dieTime > 2f) && !this.hasDieSteam)
+                if ((dieTime > 2f) && !hasDieSteam)
                 {
-                    this.hasDieSteam = true;
+                    hasDieSteam = true;
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                     {
-                        GameObject obj3 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("FX/FXtitanDie1"));
-                        obj3.transform.position = base.transform.Find("Amarture/Core/Controller_Body/hip").position;
-                        obj3.transform.localScale = base.transform.localScale;
+                        var obj3 = (GameObject) Instantiate(Resources.Load("FX/FXtitanDie1"));
+                        obj3.transform.position = transform.Find("Amarture/Core/Controller_Body/hip").position;
+                        obj3.transform.localScale = transform.localScale;
                     }
-                    else if (base.photonView.isMine)
+                    else if (photonView.isMine)
                     {
-                        PhotonNetwork.Instantiate("FX/FXtitanDie1", base.transform.Find("Amarture/Core/Controller_Body/hip").position, Quaternion.Euler(-90f, 0f, 0f), 0).transform.localScale = base.transform.localScale;
+                        PhotonNetwork.Instantiate("FX/FXtitanDie1", transform.Find("Amarture/Core/Controller_Body/hip").position, Quaternion.Euler(-90f, 0f, 0f), 0).transform.localScale = transform.localScale;
                     }
                 }
-                if (this.dieTime > ((IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.PVP_CAPTURE) ? 20f : 5f))
+                if (dieTime > ((IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.PVP_CAPTURE) ? 20f : 5f))
                 {
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                     {
-                        GameObject obj5 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("FX/FXtitanDie"));
-                        obj5.transform.position = base.transform.Find("Amarture/Core/Controller_Body/hip").position;
-                        obj5.transform.localScale = base.transform.localScale;
-                        UnityEngine.Object.Destroy(base.gameObject);
+                        var obj5 = (GameObject) Instantiate(Resources.Load("FX/FXtitanDie"));
+                        obj5.transform.position = transform.Find("Amarture/Core/Controller_Body/hip").position;
+                        obj5.transform.localScale = transform.localScale;
+                        Destroy(gameObject);
                     }
-                    else if (base.photonView.isMine)
+                    else if (photonView.isMine)
                     {
-                        PhotonNetwork.Instantiate("FX/FXtitanDie", base.transform.Find("Amarture/Core/Controller_Body/hip").position, Quaternion.Euler(-90f, 0f, 0f), 0).transform.localScale = base.transform.localScale;
-                        PhotonNetwork.Destroy(base.gameObject);
+                        PhotonNetwork.Instantiate("FX/FXtitanDie", transform.Find("Amarture/Core/Controller_Body/hip").position, Quaternion.Euler(-90f, 0f, 0f), 0).transform.localScale = transform.localScale;
+                        PhotonNetwork.Destroy(gameObject);
                     }
                 }
             }
             else
             {
-                if (this.attention > 0f)
+                if (attention > 0f)
                 {
-                    this.attention -= Time.deltaTime;
-                    if (this.attention < 0f)
+                    attention -= Time.deltaTime;
+                    if (attention < 0f)
                     {
-                        this.attention = 0f;
-                        GameObject[] objArray = GameObject.FindGameObjectsWithTag("Player");
-                        this.myHero = objArray[UnityEngine.Random.Range(0, objArray.Length)];
-                        this.attention = UnityEngine.Random.Range((float) 5f, (float) 10f);
+                        attention = 0f;
+                        var objArray = GameObject.FindGameObjectsWithTag("Player");
+                        myHero = objArray[UnityEngine.Random.Range(0, objArray.Length)];
+                        attention = UnityEngine.Random.Range(5f, 10f);
                     }
                 }
-                if (this.whoHasTauntMe != null)
+                if (whoHasTauntMe != null)
                 {
-                    this.tauntTime -= Time.deltaTime;
-                    if (this.tauntTime <= 0f)
+                    tauntTime -= Time.deltaTime;
+                    if (tauntTime <= 0f)
                     {
-                        this.whoHasTauntMe = null;
+                        whoHasTauntMe = null;
                     }
-                    this.myHero = this.whoHasTauntMe;
+                    myHero = whoHasTauntMe;
                 }
-                if (this.eren != null)
+                if (eren != null)
                 {
-                    if (!this.eren.GetComponent<TITAN_EREN>().hasDied)
+                    if (!eren.GetComponent<TITAN_EREN>().hasDied)
                     {
-                        this.myHero = this.eren;
+                        myHero = eren;
                     }
                     else
                     {
-                        this.eren = null;
-                        this.myHero = null;
+                        eren = null;
+                        myHero = null;
                     }
                 }
-                if (this.myHero == null)
+                if (myHero == null)
                 {
-                    this.findNearestHero();
-                    if (this.myHero != null)
+                    findNearestHero();
+                    if (myHero != null)
                     {
                         return;
                     }
                 }
-                if (this.myHero == null)
+                if (myHero == null)
                 {
-                    this.myDistance = float.MaxValue;
+                    myDistance = float.MaxValue;
                 }
                 else
                 {
-                    this.myDistance = Mathf.Sqrt(((this.myHero.transform.position.x - base.transform.position.x) * (this.myHero.transform.position.x - base.transform.position.x)) + ((this.myHero.transform.position.z - base.transform.position.z) * (this.myHero.transform.position.z - base.transform.position.z)));
+                    myDistance = Mathf.Sqrt(((myHero.transform.position.x - transform.position.x) * (myHero.transform.position.x - transform.position.x)) + ((myHero.transform.position.z - transform.position.z) * (myHero.transform.position.z - transform.position.z)));
                 }
-                if (this.state == "idle")
+                if (state == "idle")
                 {
-                    if (this.myHero != null)
+                    if (myHero != null)
                     {
-                        float current = 0f;
-                        float f = 0f;
-                        Vector3 vector9 = this.myHero.transform.position - base.transform.position;
+                        var current = 0f;
+                        var f = 0f;
+                        var vector9 = myHero.transform.position - transform.position;
                         current = -Mathf.Atan2(vector9.z, vector9.x) * 57.29578f;
-                        f = -Mathf.DeltaAngle(current, base.gameObject.transform.rotation.eulerAngles.y - 90f);
-                        if (!this.attackTarget(this.myHero))
+                        f = -Mathf.DeltaAngle(current, gameObject.transform.rotation.eulerAngles.y - 90f);
+                        if (!attackTarget(myHero))
                         {
                             if (Mathf.Abs(f) < 90f)
                             {
-                                this.chase();
+                                chase();
                             }
                             else if (UnityEngine.Random.Range(0, 100) < 1)
                             {
-                                this.turn180();
+                                turn180();
                             }
                             else if (Mathf.Abs(f) > 100f)
                             {
                                 if (UnityEngine.Random.Range(0, 100) < 10)
                                 {
-                                    this.turn180();
+                                    turn180();
                                 }
                             }
                             else if ((Mathf.Abs(f) > 45f) && (UnityEngine.Random.Range(0, 100) < 30))
                             {
-                                this.turn(f);
+                                turn(f);
                             }
                         }
                     }
                 }
-                else if (this.state == "attack")
+                else if (state == "attack")
                 {
-                    if ((!this.attacked && (this.attackCheckTime != 0f)) && (base.animation["attack_" + this.attackAnimation].normalizedTime >= this.attackCheckTime))
+                    if ((!attacked && (attackCheckTime != 0f)) && (animation["attack_" + attackAnimation].normalizedTime >= attackCheckTime))
                     {
                         GameObject obj7;
-                        this.attacked = true;
-                        this.fxPosition = base.transform.Find("ap_" + this.attackAnimation).position;
+                        attacked = true;
+                        fxPosition = transform.Find("ap_" + attackAnimation).position;
                         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
                         {
-                            obj7 = PhotonNetwork.Instantiate("FX/" + this.fxName, this.fxPosition, this.fxRotation, 0);
+                            obj7 = PhotonNetwork.Instantiate("FX/" + fxName, fxPosition, fxRotation, 0);
                         }
                         else
                         {
-                            obj7 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("FX/" + this.fxName), this.fxPosition, this.fxRotation);
+                            obj7 = (GameObject) Instantiate(Resources.Load("FX/" + fxName), fxPosition, fxRotation);
                         }
-                        obj7.transform.localScale = base.transform.localScale;
-                        float b = 1f - (Vector3.Distance(this.currentCamera.transform.position, obj7.transform.position) * 0.05f);
+                        obj7.transform.localScale = transform.localScale;
+                        var b = 1f - (Vector3.Distance(currentCamera.transform.position, obj7.transform.position) * 0.05f);
                         b = Mathf.Min(1f, b);
-                        this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b, 0.95f);
+                        currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b, 0.95f);
                     }
-                    if ((this.attackCheckTimeA != 0f) && (((base.animation["attack_" + this.attackAnimation].normalizedTime >= this.attackCheckTimeA) && (base.animation["attack_" + this.attackAnimation].normalizedTime <= this.attackCheckTimeB)) || (!this.attackChkOnce && (base.animation["attack_" + this.attackAnimation].normalizedTime >= this.attackCheckTimeA))))
+                    if ((attackCheckTimeA != 0f) && (((animation["attack_" + attackAnimation].normalizedTime >= attackCheckTimeA) && (animation["attack_" + attackAnimation].normalizedTime <= attackCheckTimeB)) || (!attackChkOnce && (animation["attack_" + attackAnimation].normalizedTime >= attackCheckTimeA))))
                     {
-                        if (!this.attackChkOnce)
+                        if (!attackChkOnce)
                         {
-                            this.attackChkOnce = true;
-                            this.playSound("snd_eren_swing" + UnityEngine.Random.Range(1, 3));
+                            attackChkOnce = true;
+                            playSound("snd_eren_swing" + UnityEngine.Random.Range(1, 3));
                         }
-                        foreach (RaycastHit hit in this.checkHitCapsule(this.checkHitCapsuleStart.position, this.checkHitCapsuleEnd.position, this.checkHitCapsuleR))
+                        foreach (var hit in checkHitCapsule(checkHitCapsuleStart.position, checkHitCapsuleEnd.position, checkHitCapsuleR))
                         {
-                            GameObject gameObject = hit.collider.gameObject;
+                            var gameObject = hit.collider.gameObject;
                             if (gameObject.tag == "Player")
                             {
-                                this.killPlayer(gameObject);
+                                killPlayer(gameObject);
                             }
                             if (gameObject.tag == "erenHitbox")
                             {
-                                if (this.attackAnimation == "combo_1")
+                                if (attackAnimation == "combo_1")
                                 {
                                     if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
                                     {
                                         gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().hitByFTByServer(1);
                                     }
                                 }
-                                else if (this.attackAnimation == "combo_2")
+                                else if (attackAnimation == "combo_2")
                                 {
                                     if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
                                     {
                                         gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().hitByFTByServer(2);
                                     }
                                 }
-                                else if (((this.attackAnimation == "combo_3") && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)) && PhotonNetwork.isMasterClient)
+                                else if (((attackAnimation == "combo_3") && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)) && PhotonNetwork.isMasterClient)
                                 {
                                     gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().hitByFTByServer(3);
                                 }
                             }
                         }
-                        foreach (RaycastHit hit2 in this.checkHitCapsule(this.checkHitCapsuleEndOld, this.checkHitCapsuleEnd.position, this.checkHitCapsuleR))
+                        foreach (var hit2 in checkHitCapsule(checkHitCapsuleEndOld, checkHitCapsuleEnd.position, checkHitCapsuleR))
                         {
-                            GameObject hitHero = hit2.collider.gameObject;
+                            var hitHero = hit2.collider.gameObject;
                             if (hitHero.tag == "Player")
                             {
-                                this.killPlayer(hitHero);
+                                killPlayer(hitHero);
                             }
                         }
-                        this.checkHitCapsuleEndOld = this.checkHitCapsuleEnd.position;
+                        checkHitCapsuleEndOld = checkHitCapsuleEnd.position;
                     }
-                    if (((this.attackAnimation == "jumpCombo_1") && (base.animation["attack_" + this.attackAnimation].normalizedTime >= 0.65f)) && (!this.startJump && (this.myHero != null)))
+                    if (((attackAnimation == "jumpCombo_1") && (animation["attack_" + attackAnimation].normalizedTime >= 0.65f)) && (!startJump && (myHero != null)))
                     {
-                        this.startJump = true;
-                        float y = this.myHero.rigidbody.velocity.y;
-                        float num7 = -20f;
-                        float gravity = this.gravity;
-                        float num9 = base.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position.y;
-                        float num10 = (num7 - gravity) * 0.5f;
-                        float num11 = y;
-                        float num12 = this.myHero.transform.position.y - num9;
-                        float num13 = Mathf.Abs((float) ((Mathf.Sqrt((num11 * num11) - ((4f * num10) * num12)) - num11) / (2f * num10)));
-                        Vector3 vector14 = (Vector3) ((this.myHero.transform.position + (this.myHero.rigidbody.velocity * num13)) + ((((Vector3.up * 0.5f) * num7) * num13) * num13));
-                        float num14 = vector14.y;
+                        startJump = true;
+                        var y = myHero.rigidbody.velocity.y;
+                        var num7 = -20f;
+                        var gravity = this.gravity;
+                        var num9 = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position.y;
+                        var num10 = (num7 - gravity) * 0.5f;
+                        var num11 = y;
+                        var num12 = myHero.transform.position.y - num9;
+                        var num13 = Mathf.Abs((Mathf.Sqrt((num11 * num11) - ((4f * num10) * num12)) - num11) / (2f * num10));
+                        var vector14 = (myHero.transform.position + (myHero.rigidbody.velocity * num13)) + ((((Vector3.up * 0.5f) * num7) * num13) * num13);
+                        var num14 = vector14.y;
                         if ((num12 < 0f) || ((num14 - num9) < 0f))
                         {
-                            this.idle(0f);
+                            idle(0f);
                             num13 = 0.5f;
-                            vector14 = base.transform.position + ((Vector3) ((num9 + 5f) * Vector3.up));
+                            vector14 = transform.position + (num9 + 5f) * Vector3.up;
                             num14 = vector14.y;
                         }
-                        float num15 = num14 - num9;
-                        float num16 = Mathf.Sqrt((2f * num15) / this.gravity);
-                        float num17 = (this.gravity * num16) + 20f;
+                        var num15 = num14 - num9;
+                        var num16 = Mathf.Sqrt((2f * num15) / this.gravity);
+                        var num17 = (this.gravity * num16) + 20f;
                         num17 = Mathf.Clamp(num17, 20f, 90f);
-                        Vector3 vector15 = (Vector3) ((vector14 - base.transform.position) / num13);
-                        this.abnorma_jump_bite_horizon_v = new Vector3(vector15.x, 0f, vector15.z);
-                        Vector3 velocity = base.rigidbody.velocity;
-                        Vector3 vector17 = new Vector3(this.abnorma_jump_bite_horizon_v.x, num17, this.abnorma_jump_bite_horizon_v.z);
+                        var vector15 = (vector14 - transform.position) / num13;
+                        abnorma_jump_bite_horizon_v = new Vector3(vector15.x, 0f, vector15.z);
+                        var velocity = rigidbody.velocity;
+                        var vector17 = new Vector3(abnorma_jump_bite_horizon_v.x, num17, abnorma_jump_bite_horizon_v.z);
                         if (vector17.magnitude > 90f)
                         {
-                            vector17 = (Vector3) (vector17.normalized * 90f);
+                            vector17 = vector17.normalized * 90f;
                         }
-                        Vector3 force = vector17 - velocity;
-                        base.rigidbody.AddForce(force, ForceMode.VelocityChange);
-                        float num18 = Vector2.Angle(new Vector2(base.transform.position.x, base.transform.position.z), new Vector2(this.myHero.transform.position.x, this.myHero.transform.position.z));
-                        num18 = Mathf.Atan2(this.myHero.transform.position.x - base.transform.position.x, this.myHero.transform.position.z - base.transform.position.z) * 57.29578f;
-                        base.gameObject.transform.rotation = Quaternion.Euler(0f, num18, 0f);
+                        var force = vector17 - velocity;
+                        rigidbody.AddForce(force, ForceMode.VelocityChange);
+                        var num18 = Vector2.Angle(new Vector2(transform.position.x, transform.position.z), new Vector2(myHero.transform.position.x, myHero.transform.position.z));
+                        num18 = Mathf.Atan2(myHero.transform.position.x - transform.position.x, myHero.transform.position.z - transform.position.z) * 57.29578f;
+                        gameObject.transform.rotation = Quaternion.Euler(0f, num18, 0f);
                     }
-                    if (this.attackAnimation == "jumpCombo_3")
+                    if (attackAnimation == "jumpCombo_3")
                     {
-                        if ((base.animation["attack_" + this.attackAnimation].normalizedTime >= 1f) && this.IsGrounded())
+                        if ((animation["attack_" + attackAnimation].normalizedTime >= 1f) && IsGrounded())
                         {
-                            this.attack("jumpCombo_4");
+                            attack("jumpCombo_4");
                         }
                     }
-                    else if (base.animation["attack_" + this.attackAnimation].normalizedTime >= 1f)
+                    else if (animation["attack_" + attackAnimation].normalizedTime >= 1f)
                     {
-                        if (this.nextAttackAnimation != null)
+                        if (nextAttackAnimation != null)
                         {
-                            this.attack(this.nextAttackAnimation);
-                            if (this.eren != null)
+                            attack(nextAttackAnimation);
+                            if (eren != null)
                             {
-                                base.gameObject.transform.rotation = Quaternion.Euler(0f, Quaternion.LookRotation(this.eren.transform.position - base.transform.position).eulerAngles.y, 0f);
+                                gameObject.transform.rotation = Quaternion.Euler(0f, Quaternion.LookRotation(eren.transform.position - transform.position).eulerAngles.y, 0f);
                             }
                         }
                         else
                         {
-                            this.findNearestHero();
-                            this.idle(0f);
+                            findNearestHero();
+                            idle(0f);
                         }
                     }
                 }
-                else if (this.state == "grab")
+                else if (state == "grab")
                 {
-                    if (((base.animation["attack_grab_" + this.attackAnimation].normalizedTime >= this.attackCheckTimeA) && (base.animation["attack_grab_" + this.attackAnimation].normalizedTime <= this.attackCheckTimeB)) && (this.grabbedTarget == null))
+                    if (((animation["attack_grab_" + attackAnimation].normalizedTime >= attackCheckTimeA) && (animation["attack_grab_" + attackAnimation].normalizedTime <= attackCheckTimeB)) && (grabbedTarget == null))
                     {
-                        GameObject grabTarget = this.checkIfHitHand(this.currentGrabHand);
+                        var grabTarget = checkIfHitHand(currentGrabHand);
                         if (grabTarget != null)
                         {
-                            if (this.isGrabHandLeft)
+                            if (isGrabHandLeft)
                             {
-                                this.eatSetL(grabTarget);
-                                this.grabbedTarget = grabTarget;
+                                eatSetL(grabTarget);
+                                grabbedTarget = grabTarget;
                             }
                             else
                             {
-                                this.eatSet(grabTarget);
-                                this.grabbedTarget = grabTarget;
+                                eatSet(grabTarget);
+                                grabbedTarget = grabTarget;
                             }
                         }
                     }
-                    if ((base.animation["attack_grab_" + this.attackAnimation].normalizedTime > this.attackCheckTime) && (this.grabbedTarget != null))
+                    if ((animation["attack_grab_" + attackAnimation].normalizedTime > attackCheckTime) && (grabbedTarget != null))
                     {
-                        this.justEatHero(this.grabbedTarget, this.currentGrabHand);
-                        this.grabbedTarget = null;
+                        justEatHero(grabbedTarget, currentGrabHand);
+                        grabbedTarget = null;
                     }
-                    if (base.animation["attack_grab_" + this.attackAnimation].normalizedTime >= 1f)
+                    if (animation["attack_grab_" + attackAnimation].normalizedTime >= 1f)
                     {
-                        this.idle(0f);
-                    }
-                }
-                else if (this.state == "turn")
-                {
-                    base.gameObject.transform.rotation = Quaternion.Lerp(base.gameObject.transform.rotation, Quaternion.Euler(0f, this.desDeg, 0f), (Time.deltaTime * Mathf.Abs(this.turnDeg)) * 0.1f);
-                    if (base.animation[this.turnAnimation].normalizedTime >= 1f)
-                    {
-                        this.idle(0f);
+                        idle(0f);
                     }
                 }
-                else if (this.state == "chase")
+                else if (state == "turn")
                 {
-                    if (((((this.eren == null) || (this.myDistance >= 35f)) || !this.attackTarget(this.myHero)) && (((this.getNearestHeroDistance() >= 50f) || (UnityEngine.Random.Range(0, 100) >= 20)) || !this.attackTarget(this.getNearestHero()))) && (this.myDistance < (this.attackDistance - 15f)))
+                    gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, desDeg, 0f), (Time.deltaTime * Mathf.Abs(turnDeg)) * 0.1f);
+                    if (animation[turnAnimation].normalizedTime >= 1f)
                     {
-                        this.idle(UnityEngine.Random.Range((float) 0.05f, (float) 0.2f));
+                        idle(0f);
                     }
                 }
-                else if (this.state == "turn180")
+                else if (state == "chase")
                 {
-                    if (base.animation[this.turnAnimation].normalizedTime >= 1f)
+                    if (((((eren == null) || (myDistance >= 35f)) || !attackTarget(myHero)) && (((getNearestHeroDistance() >= 50f) || (UnityEngine.Random.Range(0, 100) >= 20)) || !attackTarget(getNearestHero()))) && (myDistance < (attackDistance - 15f)))
                     {
-                        base.gameObject.transform.rotation = Quaternion.Euler(base.gameObject.transform.rotation.eulerAngles.x, base.gameObject.transform.rotation.eulerAngles.y + 180f, base.gameObject.transform.rotation.eulerAngles.z);
-                        this.idle(0f);
-                        this.playAnimation("idle");
+                        idle(UnityEngine.Random.Range(0.05f, 0.2f));
                     }
                 }
-                else if (this.state == "anklehurt")
+                else if (state == "turn180")
                 {
-                    if (base.animation["legHurt"].normalizedTime >= 1f)
+                    if (animation[turnAnimation].normalizedTime >= 1f)
                     {
-                        this.crossFade("legHurt_loop", 0.2f);
+                        gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles.x, gameObject.transform.rotation.eulerAngles.y + 180f, gameObject.transform.rotation.eulerAngles.z);
+                        idle(0f);
+                        playAnimation("idle");
                     }
-                    if (base.animation["legHurt_loop"].normalizedTime >= 3f)
+                }
+                else if (state == "anklehurt")
+                {
+                    if (animation["legHurt"].normalizedTime >= 1f)
                     {
-                        this.crossFade("legHurt_getup", 0.2f);
+                        crossFade("legHurt_loop", 0.2f);
                     }
-                    if (base.animation["legHurt_getup"].normalizedTime >= 1f)
+                    if (animation["legHurt_loop"].normalizedTime >= 3f)
                     {
-                        this.idle(0f);
-                        this.playAnimation("idle");
+                        crossFade("legHurt_getup", 0.2f);
+                    }
+                    if (animation["legHurt_getup"].normalizedTime >= 1f)
+                    {
+                        idle(0f);
+                        playAnimation("idle");
                     }
                 }
             }
@@ -1871,9 +1871,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void updateLabel()
     {
-        if ((this.healthLabel != null) && this.healthLabel.GetComponent<UILabel>().isVisible)
+        if ((healthLabel != null) && healthLabel.GetComponent<UILabel>().isVisible)
         {
-            this.healthLabel.transform.LookAt(((Vector3) (2f * this.healthLabel.transform.position)) - Camera.main.transform.position);
+            healthLabel.transform.LookAt(2f * healthLabel.transform.position - Camera.main.transform.position);
         }
     }
 

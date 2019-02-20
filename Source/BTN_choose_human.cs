@@ -10,9 +10,9 @@ public class BTN_choose_human : MonoBehaviour
 {
     public bool isPlayerAllDead()
     {
-        int num = 0;
-        int num2 = 0;
-        foreach (PhotonPlayer player in PhotonNetwork.playerList)
+        var num = 0;
+        var num2 = 0;
+        foreach (var player in PhotonNetwork.playerList)
         {
             if (((int) player.customProperties[PhotonPlayerProperty.isTitan]) == 1)
             {
@@ -28,9 +28,9 @@ public class BTN_choose_human : MonoBehaviour
 
     public bool isPlayerAllDead2()
     {
-        int num = 0;
-        int num2 = 0;
-        foreach (PhotonPlayer player in PhotonNetwork.playerList)
+        var num = 0;
+        var num2 = 0;
+        foreach (var player in PhotonNetwork.playerList)
         {
             if (RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.isTitan]) == 1)
             {
@@ -46,7 +46,7 @@ public class BTN_choose_human : MonoBehaviour
 
     private void OnClick()
     {
-        string selection = GameObject.Find("PopupListCharacterHUMAN").GetComponent<UIPopupList>().selection;
+        var selection = GameObject.Find("PopupListCharacterHUMAN").GetComponent<UIPopupList>().selection;
         NGUITools.SetActive(GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0], true);
         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().needChooseSide = false;
         if (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.PVP_CAPTURE)
@@ -55,7 +55,7 @@ public class BTN_choose_human : MonoBehaviour
         }
         if (!PhotonNetwork.isMasterClient && (GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().roundTime > 60f))
         {
-            if (!this.isPlayerAllDead2())
+            if (!isPlayerAllDead2())
             {
                 GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().NOTSpawnPlayer(selection);
             }
@@ -67,7 +67,7 @@ public class BTN_choose_human : MonoBehaviour
         }
         else if (((IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT) || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.TROST)) || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.PVP_CAPTURE))
         {
-            if (this.isPlayerAllDead2())
+            if (isPlayerAllDead2())
             {
                 GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().NOTSpawnPlayer(selection);
                 GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("restartGameByClient", PhotonTargets.MasterClient, new object[0]);
@@ -86,9 +86,9 @@ public class BTN_choose_human : MonoBehaviour
         NGUITools.SetActive(GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
         IN_GAME_MAIN_CAMERA.usingTitan = false;
         GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setHUDposition();
-        Hashtable hashtable = new Hashtable();
+        var hashtable = new Hashtable();
         hashtable.Add(PhotonPlayerProperty.character, selection);
-        Hashtable propertiesToSet = hashtable;
+        var propertiesToSet = hashtable;
         PhotonNetwork.player.SetCustomProperties(propertiesToSet);
     }
 }

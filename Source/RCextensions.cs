@@ -10,8 +10,8 @@ public static class RCextensions
 {
     public static void Add<T>(ref T[] source, T value)
     {
-        T[] localArray = new T[source.Length + 1];
-        for (int i = 0; i < source.Length; i++)
+        var localArray = new T[source.Length + 1];
+        for (var i = 0; i < source.Length; i++)
         {
             localArray[i] = source[i];
         }
@@ -25,15 +25,15 @@ public static class RCextensions
         {
             text = text.Replace("]", ">");
         }
-        bool flag2 = false;
+        var flag2 = false;
         while (text.Contains("[") && !flag2)
         {
-            int index = text.IndexOf("[");
+            var index = text.IndexOf("[");
             if (text.Length >= (index + 7))
             {
-                string str = text.Substring(index + 1, 6);
+                var str = text.Substring(index + 1, 6);
                 text = text.Remove(index, 7).Insert(index, "<color=#" + str);
-                int length = text.Length;
+                var length = text.Length;
                 if (text.Contains("["))
                 {
                     length = text.IndexOf("[");
@@ -54,7 +54,7 @@ public static class RCextensions
 
     public static bool isLowestID(this PhotonPlayer player)
     {
-        foreach (PhotonPlayer player2 in PhotonNetwork.playerList)
+        foreach (var player2 in PhotonNetwork.playerList)
         {
             if (player2.ID < player.ID)
             {
@@ -66,15 +66,15 @@ public static class RCextensions
 
     public static Texture2D loadimage(WWW link, bool mipmap, int size)
     {
-        Texture2D tex = new Texture2D(4, 4, TextureFormat.DXT1, mipmap);
+        var tex = new Texture2D(4, 4, TextureFormat.DXT1, mipmap);
         if (link.size >= size)
         {
             return tex;
         }
-        Texture2D texture = link.texture;
-        int width = texture.width;
-        int height = texture.height;
-        int num3 = 0;
+        var texture = link.texture;
+        var width = texture.width;
+        var height = texture.height;
+        var num3 = 0;
         if ((width < 4) || ((width & (width - 1)) != 0))
         {
             num3 = 4;
@@ -115,7 +115,7 @@ public static class RCextensions
         {
             return tex;
         }
-        Texture2D textured3 = new Texture2D(4, 4, TextureFormat.DXT1, false);
+        var textured3 = new Texture2D(4, 4, TextureFormat.DXT1, false);
         link.LoadImageIntoTexture(textured3);
         if (mipmap)
         {
@@ -144,9 +144,9 @@ public static class RCextensions
         }
         else if (source.Length > 1)
         {
-            T[] localArray = new T[source.Length - 1];
-            int num = 0;
-            int num2 = 0;
+            var localArray = new T[source.Length - 1];
+            var num = 0;
+            var num2 = 0;
             while (num < source.Length)
             {
                 if (num != index)
@@ -187,7 +187,7 @@ public static class RCextensions
     {
         if (obj != null)
         {
-            string str = obj as string;
+            var str = obj as string;
             if (str != null)
             {
                 return str;

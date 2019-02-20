@@ -16,40 +16,40 @@ public class IgnoreTimeScale : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        this.mTimeStarted = true;
-        this.mTimeDelta = 0f;
-        this.mTimeStart = Time.realtimeSinceStartup;
+        mTimeStarted = true;
+        mTimeDelta = 0f;
+        mTimeStart = Time.realtimeSinceStartup;
     }
 
     protected float UpdateRealTimeDelta()
     {
-        this.mRt = Time.realtimeSinceStartup;
-        if (this.mTimeStarted)
+        mRt = Time.realtimeSinceStartup;
+        if (mTimeStarted)
         {
-            float b = this.mRt - this.mTimeStart;
-            this.mActual += Mathf.Max(0f, b);
-            this.mTimeDelta = 0.001f * Mathf.Round(this.mActual * 1000f);
-            this.mActual -= this.mTimeDelta;
-            if (this.mTimeDelta > 1f)
+            var b = mRt - mTimeStart;
+            mActual += Mathf.Max(0f, b);
+            mTimeDelta = 0.001f * Mathf.Round(mActual * 1000f);
+            mActual -= mTimeDelta;
+            if (mTimeDelta > 1f)
             {
-                this.mTimeDelta = 1f;
+                mTimeDelta = 1f;
             }
-            this.mTimeStart = this.mRt;
+            mTimeStart = mRt;
         }
         else
         {
-            this.mTimeStarted = true;
-            this.mTimeStart = this.mRt;
-            this.mTimeDelta = 0f;
+            mTimeStarted = true;
+            mTimeStart = mRt;
+            mTimeDelta = 0f;
         }
-        return this.mTimeDelta;
+        return mTimeDelta;
     }
 
     public float realTime
     {
         get
         {
-            return this.mRt;
+            return mRt;
         }
     }
 
@@ -57,7 +57,7 @@ public class IgnoreTimeScale : MonoBehaviour
     {
         get
         {
-            return this.mTimeDelta;
+            return mTimeDelta;
         }
     }
 }

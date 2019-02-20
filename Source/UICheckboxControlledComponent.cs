@@ -15,27 +15,27 @@ public class UICheckboxControlledComponent : MonoBehaviour
 
     private void OnActivate(bool isActive)
     {
-        if (!this.mUsingDelegates)
+        if (!mUsingDelegates)
         {
-            this.OnActivateDelegate(isActive);
+            OnActivateDelegate(isActive);
         }
     }
 
     private void OnActivateDelegate(bool isActive)
     {
-        if (base.enabled && (this.target != null))
+        if (enabled && (target != null))
         {
-            this.target.enabled = !this.inverse ? isActive : !isActive;
+            target.enabled = !inverse ? isActive : !isActive;
         }
     }
 
     private void Start()
     {
-        UICheckbox component = base.GetComponent<UICheckbox>();
+        var component = GetComponent<UICheckbox>();
         if (component != null)
         {
-            this.mUsingDelegates = true;
-            component.onStateChange = (UICheckbox.OnStateChange) Delegate.Combine(component.onStateChange, new UICheckbox.OnStateChange(this.OnActivateDelegate));
+            mUsingDelegates = true;
+            component.onStateChange = (UICheckbox.OnStateChange) Delegate.Combine(component.onStateChange, new UICheckbox.OnStateChange(OnActivateDelegate));
         }
     }
 }

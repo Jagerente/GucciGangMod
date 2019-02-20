@@ -15,43 +15,43 @@ public class UISavedOption : MonoBehaviour
 
     private void Awake()
     {
-        this.mList = base.GetComponent<UIPopupList>();
-        this.mCheck = base.GetComponent<UICheckbox>();
-        if (this.mList != null)
+        mList = GetComponent<UIPopupList>();
+        mCheck = GetComponent<UICheckbox>();
+        if (mList != null)
         {
-            this.mList.onSelectionChange = (UIPopupList.OnSelectionChange) Delegate.Combine(this.mList.onSelectionChange, new UIPopupList.OnSelectionChange(this.SaveSelection));
+            mList.onSelectionChange = (UIPopupList.OnSelectionChange) Delegate.Combine(mList.onSelectionChange, new UIPopupList.OnSelectionChange(SaveSelection));
         }
-        if (this.mCheck != null)
+        if (mCheck != null)
         {
-            this.mCheck.onStateChange = (UICheckbox.OnStateChange) Delegate.Combine(this.mCheck.onStateChange, new UICheckbox.OnStateChange(this.SaveState));
+            mCheck.onStateChange = (UICheckbox.OnStateChange) Delegate.Combine(mCheck.onStateChange, new UICheckbox.OnStateChange(SaveState));
         }
     }
 
     private void OnDestroy()
     {
-        if (this.mCheck != null)
+        if (mCheck != null)
         {
-            this.mCheck.onStateChange = (UICheckbox.OnStateChange) Delegate.Remove(this.mCheck.onStateChange, new UICheckbox.OnStateChange(this.SaveState));
+            mCheck.onStateChange = (UICheckbox.OnStateChange) Delegate.Remove(mCheck.onStateChange, new UICheckbox.OnStateChange(SaveState));
         }
-        if (this.mList != null)
+        if (mList != null)
         {
-            this.mList.onSelectionChange = (UIPopupList.OnSelectionChange) Delegate.Remove(this.mList.onSelectionChange, new UIPopupList.OnSelectionChange(this.SaveSelection));
+            mList.onSelectionChange = (UIPopupList.OnSelectionChange) Delegate.Remove(mList.onSelectionChange, new UIPopupList.OnSelectionChange(SaveSelection));
         }
     }
 
     private void OnDisable()
     {
-        if ((this.mCheck == null) && (this.mList == null))
+        if ((mCheck == null) && (mList == null))
         {
-            UICheckbox[] componentsInChildren = base.GetComponentsInChildren<UICheckbox>(true);
-            int index = 0;
-            int length = componentsInChildren.Length;
+            var componentsInChildren = GetComponentsInChildren<UICheckbox>(true);
+            var index = 0;
+            var length = componentsInChildren.Length;
             while (index < length)
             {
-                UICheckbox checkbox = componentsInChildren[index];
+                var checkbox = componentsInChildren[index];
                 if (checkbox.isChecked)
                 {
-                    this.SaveSelection(checkbox.name);
+                    SaveSelection(checkbox.name);
                     break;
                 }
                 index++;
@@ -61,27 +61,27 @@ public class UISavedOption : MonoBehaviour
 
     private void OnEnable()
     {
-        if (this.mList != null)
+        if (mList != null)
         {
-            string str = PlayerPrefs.GetString(this.key);
+            var str = PlayerPrefs.GetString(key);
             if (!string.IsNullOrEmpty(str))
             {
-                this.mList.selection = str;
+                mList.selection = str;
             }
         }
-        else if (this.mCheck != null)
+        else if (mCheck != null)
         {
-            this.mCheck.isChecked = PlayerPrefs.GetInt(this.key, 1) != 0;
+            mCheck.isChecked = PlayerPrefs.GetInt(key, 1) != 0;
         }
         else
         {
-            string str2 = PlayerPrefs.GetString(this.key);
-            UICheckbox[] componentsInChildren = base.GetComponentsInChildren<UICheckbox>(true);
-            int index = 0;
-            int length = componentsInChildren.Length;
+            var str2 = PlayerPrefs.GetString(key);
+            var componentsInChildren = GetComponentsInChildren<UICheckbox>(true);
+            var index = 0;
+            var length = componentsInChildren.Length;
             while (index < length)
             {
-                UICheckbox checkbox = componentsInChildren[index];
+                var checkbox = componentsInChildren[index];
                 checkbox.isChecked = checkbox.name == str2;
                 index++;
             }
@@ -90,19 +90,19 @@ public class UISavedOption : MonoBehaviour
 
     private void SaveSelection(string selection)
     {
-        PlayerPrefs.SetString(this.key, selection);
+        PlayerPrefs.SetString(key, selection);
     }
 
     private void SaveState(bool state)
     {
-        PlayerPrefs.SetInt(this.key, !state ? 0 : 1);
+        PlayerPrefs.SetInt(key, !state ? 0 : 1);
     }
 
     private string key
     {
         get
         {
-            return (!string.IsNullOrEmpty(this.keyName) ? this.keyName : ("NGUI State: " + base.name));
+            return (!string.IsNullOrEmpty(keyName) ? keyName : ("NGUI State: " + name));
         }
     }
 }

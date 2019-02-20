@@ -12,12 +12,12 @@ public class CharacterStatComponent : MonoBehaviour
 
     public void nextOption()
     {
-        this.manager.GetComponent<CustomCharacterManager>().nextStatOption(this.type);
+        manager.GetComponent<CustomCharacterManager>().nextStatOption(type);
     }
 
     public void prevOption()
     {
-        this.manager.GetComponent<CustomCharacterManager>().prevStatOption(this.type);
+        manager.GetComponent<CustomCharacterManager>().prevStatOption(type);
     }
 }
 

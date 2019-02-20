@@ -17,27 +17,27 @@ public class WindowDragTilt : MonoBehaviour
 
     private void CoroutineUpdate(float delta)
     {
-        if (this.mInit)
+        if (mInit)
         {
-            this.mInit = false;
-            this.mTrans = base.transform;
-            this.mLastPos = this.mTrans.position;
+            mInit = false;
+            mTrans = transform;
+            mLastPos = mTrans.position;
         }
-        Vector3 vector = this.mTrans.position - this.mLastPos;
-        this.mLastPos = this.mTrans.position;
-        this.mAngle += vector.x * this.degrees;
-        this.mAngle = NGUIMath.SpringLerp(this.mAngle, 0f, 20f, delta);
-        this.mTrans.localRotation = Quaternion.Euler(0f, 0f, -this.mAngle);
+        var vector = mTrans.position - mLastPos;
+        mLastPos = mTrans.position;
+        mAngle += vector.x * degrees;
+        mAngle = NGUIMath.SpringLerp(mAngle, 0f, 20f, delta);
+        mTrans.localRotation = Quaternion.Euler(0f, 0f, -mAngle);
     }
 
     private void OnEnable()
     {
-        this.mInit = true;
+        mInit = true;
     }
 
     private void Start()
     {
-        UpdateManager.AddCoroutine(this, this.updateOrder, new UpdateManager.OnUpdate(this.CoroutineUpdate));
+        UpdateManager.AddCoroutine(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
     }
 }
 

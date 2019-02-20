@@ -22,18 +22,18 @@ public class UpdateManager : MonoBehaviour
 
     private void Add(MonoBehaviour mb, int updateOrder, OnUpdate func, List<UpdateEntry> list)
     {
-        int num = 0;
-        int count = list.Count;
+        var num = 0;
+        var count = list.Count;
         while (num < count)
         {
-            UpdateEntry entry = list[num];
+            var entry = list[num];
             if (entry.func == func)
             {
                 return;
             }
             num++;
         }
-        UpdateEntry item = new UpdateEntry {
+        var item = new UpdateEntry {
             index = updateOrder,
             func = func,
             mb = mb,
@@ -42,7 +42,7 @@ public class UpdateManager : MonoBehaviour
         list.Add(item);
         if (updateOrder != 0)
         {
-            list.Sort(new Comparison<UpdateEntry>(UpdateManager.Compare));
+            list.Sort(new Comparison<UpdateEntry>(Compare));
         }
     }
 
@@ -61,7 +61,7 @@ public class UpdateManager : MonoBehaviour
                 if (delay > 0f)
                 {
                     CreateInstance();
-                    DestroyEntry item = new DestroyEntry {
+                    var item = new DestroyEntry {
                         obj = obj,
                         time = Time.realtimeSinceStartup + delay
                     };
@@ -69,12 +69,12 @@ public class UpdateManager : MonoBehaviour
                 }
                 else
                 {
-                    UnityEngine.Object.Destroy(obj);
+                    Destroy(obj);
                 }
             }
             else
             {
-                UnityEngine.Object.DestroyImmediate(obj);
+                DestroyImmediate(obj);
             }
         }
     }
@@ -112,30 +112,30 @@ public class UpdateManager : MonoBehaviour
 
     private bool CoroutineUpdate()
     {
-        float realtimeSinceStartup = Time.realtimeSinceStartup;
-        float delta = realtimeSinceStartup - this.mTime;
+        var realtimeSinceStartup = Time.realtimeSinceStartup;
+        var delta = realtimeSinceStartup - mTime;
         if (delta >= 0.001f)
         {
-            this.mTime = realtimeSinceStartup;
-            this.UpdateList(this.mOnCoro, delta);
-            bool isPlaying = Application.isPlaying;
-            int size = this.mDest.size;
+            mTime = realtimeSinceStartup;
+            UpdateList(mOnCoro, delta);
+            var isPlaying = Application.isPlaying;
+            var size = mDest.size;
             while (size > 0)
             {
-                DestroyEntry entry = this.mDest.buffer[--size];
-                if (!isPlaying || (entry.time < this.mTime))
+                var entry = mDest.buffer[--size];
+                if (!isPlaying || (entry.time < mTime))
                 {
                     if (entry.obj != null)
                     {
                         NGUITools.Destroy(entry.obj);
                         entry.obj = null;
                     }
-                    this.mDest.RemoveAt(size);
+                    mDest.RemoveAt(size);
                 }
             }
-            if (((this.mOnUpdate.Count == 0) && (this.mOnLate.Count == 0)) && ((this.mOnCoro.Count == 0) && (this.mDest.size == 0)))
+            if (((mOnUpdate.Count == 0) && (mOnLate.Count == 0)) && ((mOnCoro.Count == 0) && (mDest.size == 0)))
             {
-                NGUITools.Destroy(base.gameObject);
+                NGUITools.Destroy(gameObject);
                 return false;
             }
         }
@@ -146,11 +146,11 @@ public class UpdateManager : MonoBehaviour
     {
         if (mInst == null)
         {
-            mInst = UnityEngine.Object.FindObjectOfType(typeof(UpdateManager)) as UpdateManager;
+            mInst = FindObjectOfType(typeof(UpdateManager)) as UpdateManager;
             if ((mInst == null) && Application.isPlaying)
             {
-                GameObject target = new GameObject("_UpdateManager");
-                UnityEngine.Object.DontDestroyOnLoad(target);
+                var target = new GameObject("_UpdateManager");
+                DontDestroyOnLoad(target);
                 mInst = target.AddComponent<UpdateManager>();
             }
         }
@@ -158,24 +158,24 @@ public class UpdateManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        this.UpdateList(this.mOnLate, Time.deltaTime);
+        UpdateList(mOnLate, Time.deltaTime);
         if (!Application.isPlaying)
         {
-            this.CoroutineUpdate();
+            CoroutineUpdate();
         }
     }
 
     private void OnApplicationQuit()
     {
-        UnityEngine.Object.DestroyImmediate(base.gameObject);
+        DestroyImmediate(gameObject);
     }
 
     private void Start()
     {
         if (Application.isPlaying)
         {
-            this.mTime = Time.realtimeSinceStartup;
-            base.StartCoroutine(this.CoroutineFunction());
+            mTime = Time.realtimeSinceStartup;
+            StartCoroutine(CoroutineFunction());
         }
     }
 
@@ -183,20 +183,20 @@ public class UpdateManager : MonoBehaviour
     {
         if (mInst != this)
         {
-            NGUITools.Destroy(base.gameObject);
+            NGUITools.Destroy(gameObject);
         }
         else
         {
-            this.UpdateList(this.mOnUpdate, Time.deltaTime);
+            UpdateList(mOnUpdate, Time.deltaTime);
         }
     }
 
     private void UpdateList(List<UpdateEntry> list, float delta)
     {
-        int count = list.Count;
+        var count = list.Count;
         while (count > 0)
         {
-            UpdateEntry entry = list[--count];
+            var entry = list[--count];
             if (entry.isMonoBehaviour)
             {
                 if (entry.mb == null)
@@ -223,25 +223,25 @@ public class UpdateManager : MonoBehaviour
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
                 case 1:
                     if (Application.isPlaying)
                     {
-                        if (!this.fthis.CoroutineUpdate())
+                        if (!fthis.CoroutineUpdate())
                         {
                             break;
                         }
-                        this.Scurrent = null;
-                        this.SPC = 1;
+                        Scurrent = null;
+                        SPC = 1;
                         return true;
                     }
                     break;
@@ -249,7 +249,7 @@ public class UpdateManager : MonoBehaviour
                 default:
                     goto Label_0061;
             }
-            this.SPC = -1;
+            SPC = -1;
         Label_0061:
             return false;
         }
@@ -265,7 +265,7 @@ public class UpdateManager : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -274,7 +274,7 @@ public class UpdateManager : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }
@@ -289,7 +289,7 @@ public class UpdateManager : MonoBehaviour
 
     public class UpdateEntry
     {
-        public UpdateManager.OnUpdate func;
+        public OnUpdate func;
         public int index;
         public bool isMonoBehaviour;
         public MonoBehaviour mb;

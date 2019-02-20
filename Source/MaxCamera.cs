@@ -44,55 +44,55 @@ public class MaxCamera : MonoBehaviour
 
     public void Init()
     {
-        if (this.target == null)
+        if (target == null)
         {
-            GameObject obj2 = new GameObject("Cam Target") {
-                transform = { position = base.transform.position + (base.transform.forward * this.distance) }
+            var obj2 = new GameObject("Cam Target") {
+                transform = { position = transform.position + (transform.forward * distance) }
             };
-            this.target = obj2.transform;
+            target = obj2.transform;
         }
-        this.distance = Vector3.Distance(base.transform.position, this.target.position);
-        this.currentDistance = this.distance;
-        this.desiredDistance = this.distance;
-        this.position = base.transform.position;
-        this.rotation = base.transform.rotation;
-        this.currentRotation = base.transform.rotation;
-        this.desiredRotation = base.transform.rotation;
-        this.xDeg = Vector3.Angle(Vector3.right, base.transform.right);
-        this.yDeg = Vector3.Angle(Vector3.up, base.transform.up);
+        distance = Vector3.Distance(transform.position, target.position);
+        currentDistance = distance;
+        desiredDistance = distance;
+        position = transform.position;
+        rotation = transform.rotation;
+        currentRotation = transform.rotation;
+        desiredRotation = transform.rotation;
+        xDeg = Vector3.Angle(Vector3.right, transform.right);
+        yDeg = Vector3.Angle(Vector3.up, transform.up);
     }
 
     private void LateUpdate()
     {
         if ((Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt)) && Input.GetKey(KeyCode.LeftControl))
         {
-            this.desiredDistance -= (((Input.GetAxis("Mouse Y") * Time.deltaTime) * this.zoomRate) * 0.125f) * Mathf.Abs(this.desiredDistance);
+            desiredDistance -= (((Input.GetAxis("Mouse Y") * Time.deltaTime) * zoomRate) * 0.125f) * Mathf.Abs(desiredDistance);
         }
         else if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftAlt))
         {
-            this.xDeg += (Input.GetAxis("Mouse X") * this.xSpeed) * 0.02f;
-            this.yDeg -= (Input.GetAxis("Mouse Y") * this.ySpeed) * 0.02f;
-            this.yDeg = ClampAngle(this.yDeg, (float) this.yMinLimit, (float) this.yMaxLimit);
-            this.desiredRotation = Quaternion.Euler(this.yDeg, this.xDeg, 0f);
-            this.currentRotation = base.transform.rotation;
-            this.rotation = Quaternion.Lerp(this.currentRotation, this.desiredRotation, Time.deltaTime * this.zoomDampening);
-            base.transform.rotation = this.rotation;
+            xDeg += (Input.GetAxis("Mouse X") * xSpeed) * 0.02f;
+            yDeg -= (Input.GetAxis("Mouse Y") * ySpeed) * 0.02f;
+            yDeg = ClampAngle(yDeg, yMinLimit, yMaxLimit);
+            desiredRotation = Quaternion.Euler(yDeg, xDeg, 0f);
+            currentRotation = transform.rotation;
+            rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime * zoomDampening);
+            transform.rotation = rotation;
         }
-        this.desiredDistance -= ((Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime) * this.zoomRate) * Mathf.Abs(this.desiredDistance);
-        this.desiredDistance = Mathf.Clamp(this.desiredDistance, this.minDistance, this.maxDistance);
-        this.currentDistance = Mathf.Lerp(this.currentDistance, this.desiredDistance, Time.deltaTime * this.zoomDampening);
-        this.position = this.target.position - (((Vector3) ((this.rotation * Vector3.forward) * this.currentDistance)) + this.targetOffset);
-        base.transform.position = this.position;
+        desiredDistance -= ((Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime) * zoomRate) * Mathf.Abs(desiredDistance);
+        desiredDistance = Mathf.Clamp(desiredDistance, minDistance, maxDistance);
+        currentDistance = Mathf.Lerp(currentDistance, desiredDistance, Time.deltaTime * zoomDampening);
+        position = target.position - ((rotation * Vector3.forward) * currentDistance + targetOffset);
+        transform.position = position;
     }
 
     private void OnEnable()
     {
-        this.Init();
+        Init();
     }
 
     private void Start()
     {
-        this.Init();
+        Init();
     }
 }
 

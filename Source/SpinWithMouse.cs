@@ -15,19 +15,19 @@ public class SpinWithMouse : MonoBehaviour
     private void OnDrag(Vector2 delta)
     {
         UICamera.currentTouch.clickNotification = UICamera.ClickNotification.None;
-        if (this.target != null)
+        if (target != null)
         {
-            this.target.localRotation = Quaternion.Euler(0f, (-0.5f * delta.x) * this.speed, 0f) * this.target.localRotation;
+            target.localRotation = Quaternion.Euler(0f, (-0.5f * delta.x) * speed, 0f) * target.localRotation;
         }
         else
         {
-            this.mTrans.localRotation = Quaternion.Euler(0f, (-0.5f * delta.x) * this.speed, 0f) * this.mTrans.localRotation;
+            mTrans.localRotation = Quaternion.Euler(0f, (-0.5f * delta.x) * speed, 0f) * mTrans.localRotation;
         }
     }
 
     private void Start()
     {
-        this.mTrans = base.transform;
+        mTrans = transform;
     }
 }
 

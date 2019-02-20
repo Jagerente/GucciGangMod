@@ -12,23 +12,23 @@ public class UIInputSaved : UIInput
 
     private void Awake()
     {
-        base.onSubmit = new UIInput.OnSubmit(this.SaveToPlayerPrefs);
-        if (!string.IsNullOrEmpty(this.playerPrefsField) && PlayerPrefs.HasKey(this.playerPrefsField))
+        onSubmit = new OnSubmit(SaveToPlayerPrefs);
+        if (!string.IsNullOrEmpty(playerPrefsField) && PlayerPrefs.HasKey(playerPrefsField))
         {
-            this.text = PlayerPrefs.GetString(this.playerPrefsField);
+            text = PlayerPrefs.GetString(playerPrefsField);
         }
     }
 
     private void OnApplicationQuit()
     {
-        this.SaveToPlayerPrefs(this.text);
+        SaveToPlayerPrefs(text);
     }
 
     private void SaveToPlayerPrefs(string val)
     {
-        if (!string.IsNullOrEmpty(this.playerPrefsField))
+        if (!string.IsNullOrEmpty(playerPrefsField))
         {
-            PlayerPrefs.SetString(this.playerPrefsField, val);
+            PlayerPrefs.SetString(playerPrefsField, val);
         }
     }
 
@@ -41,7 +41,7 @@ public class UIInputSaved : UIInput
         set
         {
             base.text = value;
-            this.SaveToPlayerPrefs(value);
+            SaveToPlayerPrefs(value);
         }
     }
 }

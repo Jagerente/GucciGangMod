@@ -13,7 +13,7 @@ public class ButtonImageFitText : MonoBehaviour
 
     private void Start()
     {
-        MonoBehaviour.print(string.Concat(new object[] { this.text.flexibleWidth, " ", this.text.minWidth, " ", this.text.preferredWidth }));
+        print(string.Concat(new object[] { text.flexibleWidth, " ", text.minWidth, " ", text.preferredWidth }));
     }
 
     private void Update()

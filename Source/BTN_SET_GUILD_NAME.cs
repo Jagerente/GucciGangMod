@@ -13,14 +13,14 @@ public class BTN_SET_GUILD_NAME : MonoBehaviour
 
     private void OnClick()
     {
-        if (this.guildname.GetComponent<UIInput>().text.Length < 3)
+        if (guildname.GetComponent<UIInput>().text.Length < 3)
         {
-            this.output.GetComponent<UILabel>().text = "Guild name too short.";
+            output.GetComponent<UILabel>().text = "Guild name too short.";
         }
         else
         {
-            this.output.GetComponent<UILabel>().text = "please wait...";
-            this.logincomponent.GetComponent<LoginFengKAI>().cGuild(this.guildname.GetComponent<UIInput>().text);
+            output.GetComponent<UILabel>().text = "please wait...";
+            logincomponent.GetComponent<LoginFengKAI>().cGuild(guildname.GetComponent<UIInput>().text);
         }
     }
 }

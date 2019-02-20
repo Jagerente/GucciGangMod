@@ -11,8 +11,8 @@ public class BTN_TO_REGISTER : MonoBehaviour
 
     private void OnClick()
     {
-        NGUITools.SetActive(base.transform.parent.gameObject, false);
-        NGUITools.SetActive(this.registerPanel, true);
+        NGUITools.SetActive(transform.parent.gameObject, false);
+        NGUITools.SetActive(registerPanel, true);
     }
 }
 

@@ -14,8 +14,8 @@ public class BTN_LOGIN : MonoBehaviour
 
     private void OnClick()
     {
-        this.logincomponent.GetComponent<LoginFengKAI>().login(this.username.GetComponent<UIInput>().text, this.password.GetComponent<UIInput>().text);
-        this.output.GetComponent<UILabel>().text = "please wait...";
+        logincomponent.GetComponent<LoginFengKAI>().login(username.GetComponent<UIInput>().text, password.GetComponent<UIInput>().text);
+        output.GetComponent<UILabel>().text = "please wait...";
     }
 }
 

@@ -8,11 +8,11 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class UITiledSprite : UISlicedSprite
 {
-    public override UISprite.Type type
+    public override Type type
     {
         get
         {
-            return UISprite.Type.Tiled;
+            return Type.Tiled;
         }
     }
 }

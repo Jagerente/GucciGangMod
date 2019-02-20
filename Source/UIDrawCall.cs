@@ -26,117 +26,117 @@ public class UIDrawCall : MonoBehaviour
 
     private Mesh GetMesh(ref bool rebuildIndices, int vertexCount)
     {
-        this.mEven = !this.mEven;
-        if (this.mEven)
+        mEven = !mEven;
+        if (mEven)
         {
-            if (this.mMesh0 == null)
+            if (mMesh0 == null)
             {
-                this.mMesh0 = new Mesh();
-                this.mMesh0.hideFlags = HideFlags.DontSave;
-                this.mMesh0.name = "Mesh0 for " + this.mSharedMat.name;
-                this.mMesh0.MarkDynamic();
+                mMesh0 = new Mesh();
+                mMesh0.hideFlags = HideFlags.DontSave;
+                mMesh0.name = "Mesh0 for " + mSharedMat.name;
+                mMesh0.MarkDynamic();
                 rebuildIndices = true;
             }
-            else if (rebuildIndices || (this.mMesh0.vertexCount != vertexCount))
+            else if (rebuildIndices || (mMesh0.vertexCount != vertexCount))
             {
                 rebuildIndices = true;
-                this.mMesh0.Clear();
+                mMesh0.Clear();
             }
-            return this.mMesh0;
+            return mMesh0;
         }
-        if (this.mMesh1 == null)
+        if (mMesh1 == null)
         {
-            this.mMesh1 = new Mesh();
-            this.mMesh1.hideFlags = HideFlags.DontSave;
-            this.mMesh1.name = "Mesh1 for " + this.mSharedMat.name;
-            this.mMesh1.MarkDynamic();
+            mMesh1 = new Mesh();
+            mMesh1.hideFlags = HideFlags.DontSave;
+            mMesh1.name = "Mesh1 for " + mSharedMat.name;
+            mMesh1.MarkDynamic();
             rebuildIndices = true;
         }
-        else if (rebuildIndices || (this.mMesh1.vertexCount != vertexCount))
+        else if (rebuildIndices || (mMesh1.vertexCount != vertexCount))
         {
             rebuildIndices = true;
-            this.mMesh1.Clear();
+            mMesh1.Clear();
         }
-        return this.mMesh1;
+        return mMesh1;
     }
 
     private void OnDestroy()
     {
-        NGUITools.DestroyImmediate(this.mMesh0);
-        NGUITools.DestroyImmediate(this.mMesh1);
-        NGUITools.DestroyImmediate(this.mClippedMat);
-        NGUITools.DestroyImmediate(this.mDepthMat);
+        NGUITools.DestroyImmediate(mMesh0);
+        NGUITools.DestroyImmediate(mMesh1);
+        NGUITools.DestroyImmediate(mClippedMat);
+        NGUITools.DestroyImmediate(mDepthMat);
     }
 
     private void OnWillRenderObject()
     {
-        if (this.mReset)
+        if (mReset)
         {
-            this.mReset = false;
-            this.UpdateMaterials();
+            mReset = false;
+            UpdateMaterials();
         }
-        if (this.mClippedMat != null)
+        if (mClippedMat != null)
         {
-            this.mClippedMat.mainTextureOffset = new Vector2(-this.mClipRange.x / this.mClipRange.z, -this.mClipRange.y / this.mClipRange.w);
-            this.mClippedMat.mainTextureScale = new Vector2(1f / this.mClipRange.z, 1f / this.mClipRange.w);
-            Vector2 vector = new Vector2(1000f, 1000f);
-            if (this.mClipSoft.x > 0f)
+            mClippedMat.mainTextureOffset = new Vector2(-mClipRange.x / mClipRange.z, -mClipRange.y / mClipRange.w);
+            mClippedMat.mainTextureScale = new Vector2(1f / mClipRange.z, 1f / mClipRange.w);
+            var vector = new Vector2(1000f, 1000f);
+            if (mClipSoft.x > 0f)
             {
-                vector.x = this.mClipRange.z / this.mClipSoft.x;
+                vector.x = mClipRange.z / mClipSoft.x;
             }
-            if (this.mClipSoft.y > 0f)
+            if (mClipSoft.y > 0f)
             {
-                vector.y = this.mClipRange.w / this.mClipSoft.y;
+                vector.y = mClipRange.w / mClipSoft.y;
             }
-            this.mClippedMat.SetVector("_ClipSharpness", vector);
+            mClippedMat.SetVector("_ClipSharpness", vector);
         }
     }
 
     public void Set(BetterList<Vector3> verts, BetterList<Vector3> norms, BetterList<Vector4> tans, BetterList<Vector2> uvs, BetterList<Color32> cols)
     {
-        int size = verts.size;
+        var size = verts.size;
         if (((size > 0) && (size == uvs.size)) && ((size == cols.size) && ((size % 4) == 0)))
         {
-            if (this.mFilter == null)
+            if (mFilter == null)
             {
-                this.mFilter = base.gameObject.GetComponent<MeshFilter>();
+                mFilter = gameObject.GetComponent<MeshFilter>();
             }
-            if (this.mFilter == null)
+            if (mFilter == null)
             {
-                this.mFilter = base.gameObject.AddComponent<MeshFilter>();
+                mFilter = gameObject.AddComponent<MeshFilter>();
             }
-            if (this.mRen == null)
+            if (mRen == null)
             {
-                this.mRen = base.gameObject.GetComponent<MeshRenderer>();
+                mRen = gameObject.GetComponent<MeshRenderer>();
             }
-            if (this.mRen == null)
+            if (mRen == null)
             {
-                this.mRen = base.gameObject.AddComponent<MeshRenderer>();
-                this.UpdateMaterials();
+                mRen = gameObject.AddComponent<MeshRenderer>();
+                UpdateMaterials();
             }
-            else if ((this.mClippedMat != null) && (this.mClippedMat.mainTexture != this.mSharedMat.mainTexture))
+            else if ((mClippedMat != null) && (mClippedMat.mainTexture != mSharedMat.mainTexture))
             {
-                this.UpdateMaterials();
+                UpdateMaterials();
             }
             if (verts.size < 0xfde8)
             {
-                int num2 = (size >> 1) * 3;
-                bool rebuildIndices = (this.mIndices == null) || (this.mIndices.Length != num2);
+                var num2 = (size >> 1) * 3;
+                var rebuildIndices = (mIndices == null) || (mIndices.Length != num2);
                 if (rebuildIndices)
                 {
-                    this.mIndices = new int[num2];
-                    int num3 = 0;
-                    for (int i = 0; i < size; i += 4)
+                    mIndices = new int[num2];
+                    var num3 = 0;
+                    for (var i = 0; i < size; i += 4)
                     {
-                        this.mIndices[num3++] = i;
-                        this.mIndices[num3++] = i + 1;
-                        this.mIndices[num3++] = i + 2;
-                        this.mIndices[num3++] = i + 2;
-                        this.mIndices[num3++] = i + 3;
-                        this.mIndices[num3++] = i;
+                        mIndices[num3++] = i;
+                        mIndices[num3++] = i + 1;
+                        mIndices[num3++] = i + 2;
+                        mIndices[num3++] = i + 2;
+                        mIndices[num3++] = i + 3;
+                        mIndices[num3++] = i;
                     }
                 }
-                Mesh mesh = this.GetMesh(ref rebuildIndices, verts.size);
+                var mesh = GetMesh(ref rebuildIndices, verts.size);
                 mesh.vertices = verts.ToArray();
                 if (norms != null)
                 {
@@ -150,25 +150,25 @@ public class UIDrawCall : MonoBehaviour
                 mesh.colors32 = cols.ToArray();
                 if (rebuildIndices)
                 {
-                    mesh.triangles = this.mIndices;
+                    mesh.triangles = mIndices;
                 }
                 mesh.RecalculateBounds();
-                this.mFilter.mesh = mesh;
+                mFilter.mesh = mesh;
             }
             else
             {
-                if (this.mFilter.mesh != null)
+                if (mFilter.mesh != null)
                 {
-                    this.mFilter.mesh.Clear();
+                    mFilter.mesh.Clear();
                 }
                 Debug.LogError("Too many vertices on one panel: " + verts.size);
             }
         }
         else
         {
-            if (this.mFilter.mesh != null)
+            if (mFilter.mesh != null)
             {
-                this.mFilter.mesh.Clear();
+                mFilter.mesh.Clear();
             }
             Debug.LogError("UIWidgets must fill the buffer with 4 vertices per quad. Found " + size);
         }
@@ -176,72 +176,72 @@ public class UIDrawCall : MonoBehaviour
 
     private void UpdateMaterials()
     {
-        if (this.mClipping != Clipping.None)
+        if (mClipping != Clipping.None)
         {
             Shader shader = null;
-            if (this.mClipping != Clipping.None)
+            if (mClipping != Clipping.None)
             {
-                string str = this.mSharedMat.shader.name.Replace(" (AlphaClip)", string.Empty).Replace(" (SoftClip)", string.Empty);
-                if ((this.mClipping == Clipping.HardClip) || (this.mClipping == Clipping.AlphaClip))
+                var str = mSharedMat.shader.name.Replace(" (AlphaClip)", string.Empty).Replace(" (SoftClip)", string.Empty);
+                if ((mClipping == Clipping.HardClip) || (mClipping == Clipping.AlphaClip))
                 {
                     shader = Shader.Find(str + " (AlphaClip)");
                 }
-                else if (this.mClipping == Clipping.SoftClip)
+                else if (mClipping == Clipping.SoftClip)
                 {
                     shader = Shader.Find(str + " (SoftClip)");
                 }
                 if (shader == null)
                 {
-                    this.mClipping = Clipping.None;
+                    mClipping = Clipping.None;
                 }
             }
             if (shader != null)
             {
-                if (this.mClippedMat == null)
+                if (mClippedMat == null)
                 {
-                    this.mClippedMat = new Material(this.mSharedMat);
-                    this.mClippedMat.hideFlags = HideFlags.DontSave;
+                    mClippedMat = new Material(mSharedMat);
+                    mClippedMat.hideFlags = HideFlags.DontSave;
                 }
-                this.mClippedMat.shader = shader;
-                this.mClippedMat.CopyPropertiesFromMaterial(this.mSharedMat);
+                mClippedMat.shader = shader;
+                mClippedMat.CopyPropertiesFromMaterial(mSharedMat);
             }
-            else if (this.mClippedMat != null)
+            else if (mClippedMat != null)
             {
-                NGUITools.Destroy(this.mClippedMat);
-                this.mClippedMat = null;
+                NGUITools.Destroy(mClippedMat);
+                mClippedMat = null;
             }
         }
-        else if (this.mClippedMat != null)
+        else if (mClippedMat != null)
         {
-            NGUITools.Destroy(this.mClippedMat);
-            this.mClippedMat = null;
+            NGUITools.Destroy(mClippedMat);
+            mClippedMat = null;
         }
-        if (this.mDepthPass)
+        if (mDepthPass)
         {
-            if (this.mDepthMat == null)
+            if (mDepthMat == null)
             {
-                Shader shader2 = Shader.Find("Unlit/Depth Cutout");
-                this.mDepthMat = new Material(shader2);
-                this.mDepthMat.hideFlags = HideFlags.DontSave;
+                var shader2 = Shader.Find("Unlit/Depth Cutout");
+                mDepthMat = new Material(shader2);
+                mDepthMat.hideFlags = HideFlags.DontSave;
             }
-            this.mDepthMat.mainTexture = this.mSharedMat.mainTexture;
+            mDepthMat.mainTexture = mSharedMat.mainTexture;
         }
-        else if (this.mDepthMat != null)
+        else if (mDepthMat != null)
         {
-            NGUITools.Destroy(this.mDepthMat);
-            this.mDepthMat = null;
+            NGUITools.Destroy(mDepthMat);
+            mDepthMat = null;
         }
-        Material material = (this.mClippedMat == null) ? this.mSharedMat : this.mClippedMat;
-        if (this.mDepthMat != null)
+        var material = (mClippedMat == null) ? mSharedMat : mClippedMat;
+        if (mDepthMat != null)
         {
-            if (((this.mRen.sharedMaterials == null) || (this.mRen.sharedMaterials.Length != 2)) || (this.mRen.sharedMaterials[1] != material))
+            if (((mRen.sharedMaterials == null) || (mRen.sharedMaterials.Length != 2)) || (mRen.sharedMaterials[1] != material))
             {
-                this.mRen.sharedMaterials = new Material[] { this.mDepthMat, material };
+                mRen.sharedMaterials = new Material[] { mDepthMat, material };
             }
         }
-        else if (this.mRen.sharedMaterial != material)
+        else if (mRen.sharedMaterial != material)
         {
-            this.mRen.sharedMaterials = new Material[] { material };
+            mRen.sharedMaterials = new Material[] { material };
         }
     }
 
@@ -249,11 +249,11 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            if (this.mTrans == null)
+            if (mTrans == null)
             {
-                this.mTrans = base.transform;
+                mTrans = transform;
             }
-            return this.mTrans;
+            return mTrans;
         }
     }
 
@@ -261,14 +261,14 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            return this.mClipping;
+            return mClipping;
         }
         set
         {
-            if (this.mClipping != value)
+            if (mClipping != value)
             {
-                this.mClipping = value;
-                this.mReset = true;
+                mClipping = value;
+                mReset = true;
             }
         }
     }
@@ -277,11 +277,11 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            return this.mClipRange;
+            return mClipRange;
         }
         set
         {
-            this.mClipRange = value;
+            mClipRange = value;
         }
     }
 
@@ -289,11 +289,11 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            return this.mClipSoft;
+            return mClipSoft;
         }
         set
         {
-            this.mClipSoft = value;
+            mClipSoft = value;
         }
     }
 
@@ -301,14 +301,14 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            return this.mDepthPass;
+            return mDepthPass;
         }
         set
         {
-            if (this.mDepthPass != value)
+            if (mDepthPass != value)
             {
-                this.mDepthPass = value;
-                this.mReset = true;
+                mDepthPass = value;
+                mReset = true;
             }
         }
     }
@@ -317,7 +317,7 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            return (this.mClippedMat != null);
+            return (mClippedMat != null);
         }
     }
 
@@ -325,11 +325,11 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            return this.mSharedMat;
+            return mSharedMat;
         }
         set
         {
-            this.mSharedMat = value;
+            mSharedMat = value;
         }
     }
 
@@ -337,7 +337,7 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            Mesh mesh = !this.mEven ? this.mMesh1 : this.mMesh0;
+            var mesh = !mEven ? mMesh1 : mMesh0;
             return ((mesh == null) ? 0 : (mesh.vertexCount >> 1));
         }
     }

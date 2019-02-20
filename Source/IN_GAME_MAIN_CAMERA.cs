@@ -88,102 +88,102 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     {
         isTyping = false;
         isPausing = false;
-        base.name = "MainCamera";
-        this.CreateMinimap();
+        name = "MainCamera";
+        CreateMinimap();
     }
 
     private void camareMovement()
     {
-        this.distanceOffsetMulti = (cameraDistance * (200f - base.camera.fieldOfView)) / 150f;
-        base.transform.position = (this.head == null) ? this.main_object.transform.position : this.head.transform.position;
-        Transform transform = base.transform;
-        transform.position += (Vector3) (Vector3.up * this.heightMulti);
-        Transform transform2 = base.transform;
-        transform2.position -= (Vector3) ((Vector3.up * (0.6f - cameraDistance)) * 2f);
+        distanceOffsetMulti = (cameraDistance * (200f - camera.fieldOfView)) / 150f;
+        this.transform.position = (head == null) ? main_object.transform.position : head.transform.position;
+        var transform = this.transform;
+        transform.position += Vector3.up * heightMulti;
+        var transform2 = this.transform;
+        transform2.position -= (Vector3.up * (0.6f - cameraDistance)) * 2f;
         if (cameraMode == CAMERA_TYPE.WOW)
         {
             if (Input.GetKey(KeyCode.Mouse1))
             {
-                float angle = (Input.GetAxis("Mouse X") * 10f) * this.getSensitivityMulti();
-                float num2 = ((-Input.GetAxis("Mouse Y") * 10f) * this.getSensitivityMulti()) * this.getReverse();
-                base.transform.RotateAround(base.transform.position, Vector3.up, angle);
-                base.transform.RotateAround(base.transform.position, base.transform.right, num2);
+                var angle = (Input.GetAxis("Mouse X") * 10f) * getSensitivityMulti();
+                var num2 = ((-Input.GetAxis("Mouse Y") * 10f) * getSensitivityMulti()) * getReverse();
+                this.transform.RotateAround(this.transform.position, Vector3.up, angle);
+                this.transform.RotateAround(this.transform.position, this.transform.right, num2);
             }
-            Transform transform3 = base.transform;
-            transform3.position -= (Vector3) (((base.transform.forward * this.distance) * this.distanceMulti) * this.distanceOffsetMulti);
+            var transform3 = this.transform;
+            transform3.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
         }
         else if (cameraMode == CAMERA_TYPE.ORIGINAL)
         {
-            float num3 = 0f;
+            var num3 = 0f;
             if (Input.mousePosition.x < (Screen.width * 0.4f))
             {
-                num3 = (-((((Screen.width * 0.4f) - Input.mousePosition.x) / ((float) Screen.width)) * 0.4f) * this.getSensitivityMultiWithDeltaTime()) * 150f;
-                base.transform.RotateAround(base.transform.position, Vector3.up, num3);
+                num3 = (-((((Screen.width * 0.4f) - Input.mousePosition.x) / Screen.width) * 0.4f) * getSensitivityMultiWithDeltaTime()) * 150f;
+                this.transform.RotateAround(this.transform.position, Vector3.up, num3);
             }
             else if (Input.mousePosition.x > (Screen.width * 0.6f))
             {
-                num3 = ((((Input.mousePosition.x - (Screen.width * 0.6f)) / ((float) Screen.width)) * 0.4f) * this.getSensitivityMultiWithDeltaTime()) * 150f;
-                base.transform.RotateAround(base.transform.position, Vector3.up, num3);
+                num3 = ((((Input.mousePosition.x - (Screen.width * 0.6f)) / Screen.width) * 0.4f) * getSensitivityMultiWithDeltaTime()) * 150f;
+                this.transform.RotateAround(this.transform.position, Vector3.up, num3);
             }
-            float x = ((140f * ((Screen.height * 0.6f) - Input.mousePosition.y)) / ((float) Screen.height)) * 0.5f;
-            base.transform.rotation = Quaternion.Euler(x, base.transform.rotation.eulerAngles.y, base.transform.rotation.eulerAngles.z);
-            Transform transform4 = base.transform;
-            transform4.position -= (Vector3) (((base.transform.forward * this.distance) * this.distanceMulti) * this.distanceOffsetMulti);
+            var x = ((140f * ((Screen.height * 0.6f) - Input.mousePosition.y)) / Screen.height) * 0.5f;
+            this.transform.rotation = Quaternion.Euler(x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+            var transform4 = this.transform;
+            transform4.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
         }
         else if (cameraMode == CAMERA_TYPE.TPS)
         {
-            if (!this.inputManager.menuOn)
+            if (!inputManager.menuOn)
             {
                 Screen.lockCursor = true;
             }
-            float num5 = (Input.GetAxis("Mouse X") * 10f) * this.getSensitivityMulti();
-            float num6 = ((-Input.GetAxis("Mouse Y") * 10f) * this.getSensitivityMulti()) * this.getReverse();
-            base.transform.RotateAround(base.transform.position, Vector3.up, num5);
-            float num7 = base.transform.rotation.eulerAngles.x % 360f;
-            float num8 = num7 + num6;
+            var num5 = (Input.GetAxis("Mouse X") * 10f) * getSensitivityMulti();
+            var num6 = ((-Input.GetAxis("Mouse Y") * 10f) * getSensitivityMulti()) * getReverse();
+            this.transform.RotateAround(this.transform.position, Vector3.up, num5);
+            var num7 = this.transform.rotation.eulerAngles.x % 360f;
+            var num8 = num7 + num6;
             if (((num6 <= 0f) || (((num7 >= 260f) || (num8 <= 260f)) && ((num7 >= 80f) || (num8 <= 80f)))) && ((num6 >= 0f) || (((num7 <= 280f) || (num8 >= 280f)) && ((num7 <= 100f) || (num8 >= 100f)))))
             {
-                base.transform.RotateAround(base.transform.position, base.transform.right, num6);
+                this.transform.RotateAround(this.transform.position, this.transform.right, num6);
             }
-            Transform transform5 = base.transform;
-            transform5.position -= (Vector3) (((base.transform.forward * this.distance) * this.distanceMulti) * this.distanceOffsetMulti);
+            var transform5 = this.transform;
+            transform5.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
         }
         if (cameraDistance < 0.65f)
         {
-            Transform transform6 = base.transform;
-            transform6.position += (Vector3) (base.transform.right * Mathf.Max((float) ((0.6f - cameraDistance) * 2f), (float) 0.65f));
+            var transform6 = this.transform;
+            transform6.position += this.transform.right * Mathf.Max((0.6f - cameraDistance) * 2f, 0.65f);
         }
     }
 
     public void CameraMovementLive(HERO hero)
     {
-        float magnitude = hero.rigidbody.velocity.magnitude;
+        var magnitude = hero.rigidbody.velocity.magnitude;
         if (magnitude > 10f)
         {
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, Mathf.Min((float) 100f, (float) (magnitude + 40f)), 0.1f);
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, Mathf.Min(100f, magnitude + 40f), 0.1f);
         }
         else
         {
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 50f, 0.1f);
         }
-        float num2 = (hero.CameraMultiplier * (200f - Camera.main.fieldOfView)) / 150f;
-        base.transform.position = (Vector3) ((this.head.transform.position + (Vector3.up * this.heightMulti)) - ((Vector3.up * (0.6f - cameraDistance)) * 2f));
-        Transform transform = base.transform;
-        transform.position -= (Vector3) (((base.transform.forward * this.distance) * this.distanceMulti) * num2);
+        var num2 = (hero.CameraMultiplier * (200f - Camera.main.fieldOfView)) / 150f;
+        this.transform.position = (head.transform.position + (Vector3.up * heightMulti)) - ((Vector3.up * (0.6f - cameraDistance)) * 2f);
+        var transform = this.transform;
+        transform.position -= ((this.transform.forward * distance) * distanceMulti) * num2;
         if (hero.CameraMultiplier < 0.65f)
         {
-            Transform transform2 = base.transform;
-            transform2.position += (Vector3) (base.transform.right * Mathf.Max((float) ((0.6f - hero.CameraMultiplier) * 2f), (float) 0.65f));
+            var transform2 = this.transform;
+            transform2.position += this.transform.right * Mathf.Max((0.6f - hero.CameraMultiplier) * 2f, 0.65f);
         }
-        base.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, hero.GetComponent<SmoothSyncMovement>().correctCameraRot, Time.deltaTime * 5f);
+        this.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, hero.GetComponent<SmoothSyncMovement>().correctCameraRot, Time.deltaTime * 5f);
     }
 
     private void CreateMinimap()
     {
-        LevelInfo info = LevelInfo.getInfo(FengGameManagerMKII.level);
+        var info = LevelInfo.getInfo(FengGameManagerMKII.level);
         if (info != null)
         {
-            Minimap minimap = base.gameObject.AddComponent<Minimap>();
+            var minimap = gameObject.AddComponent<Minimap>();
             if (Minimap.instance.myCam == null)
             {
                 Minimap.instance.myCam = new GameObject().AddComponent<Camera>();
@@ -201,53 +201,53 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
     public void createSnapShotRT()
     {
-        if (this.snapShotCamera.GetComponent<Camera>().targetTexture != null)
+        if (snapShotCamera.GetComponent<Camera>().targetTexture != null)
         {
-            this.snapShotCamera.GetComponent<Camera>().targetTexture.Release();
+            snapShotCamera.GetComponent<Camera>().targetTexture.Release();
         }
         if (QualitySettings.GetQualityLevel() > 3)
         {
-            this.snapShotCamera.GetComponent<Camera>().targetTexture = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 0x18);
+            snapShotCamera.GetComponent<Camera>().targetTexture = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 0x18);
         }
         else
         {
-            this.snapShotCamera.GetComponent<Camera>().targetTexture = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 0x18);
+            snapShotCamera.GetComponent<Camera>().targetTexture = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 0x18);
         }
     }
 
     public void createSnapShotRT2()
     {
-        if (this.snapshotRT != null)
+        if (snapshotRT != null)
         {
-            this.snapshotRT.Release();
+            snapshotRT.Release();
         }
         if (QualitySettings.GetQualityLevel() > 3)
         {
-            this.snapshotRT = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 0x18);
-            this.snapShotCamera.GetComponent<Camera>().targetTexture = this.snapshotRT;
+            snapshotRT = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 0x18);
+            snapShotCamera.GetComponent<Camera>().targetTexture = snapshotRT;
         }
         else
         {
-            this.snapshotRT = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 0x18);
-            this.snapShotCamera.GetComponent<Camera>().targetTexture = this.snapshotRT;
+            snapshotRT = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 0x18);
+            snapShotCamera.GetComponent<Camera>().targetTexture = snapshotRT;
         }
     }
 
     private GameObject findNearestTitan()
     {
-        GameObject[] objArray = GameObject.FindGameObjectsWithTag("titan");
+        var objArray = GameObject.FindGameObjectsWithTag("titan");
         GameObject obj2 = null;
-        float num2 = this.closestDistance = float.PositiveInfinity;
-        Vector3 position = this.main_object.transform.position;
-        foreach (GameObject obj3 in objArray)
+        var num2 = closestDistance = float.PositiveInfinity;
+        var position = main_object.transform.position;
+        foreach (var obj3 in objArray)
         {
-            Vector3 vector2 = obj3.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position - position;
-            float magnitude = vector2.magnitude;
+            var vector2 = obj3.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position - position;
+            var magnitude = vector2.magnitude;
             if ((magnitude < num2) && ((obj3.GetComponent<TITAN>() == null) || !obj3.GetComponent<TITAN>().hasDie))
             {
                 obj2 = obj3;
                 num2 = magnitude;
-                this.closestDistance = num2;
+                closestDistance = num2;
             }
         }
         return obj2;
@@ -256,7 +256,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public void flashBlind()
     {
         GameObject.Find("flash").GetComponent<UISprite>().alpha = 1f;
-        this.flashDuration = 2f;
+        flashDuration = 2f;
     }
 
     private int getReverse()
@@ -284,13 +284,13 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
     private Texture2D RTImage(Camera cam)
     {
-        RenderTexture active = RenderTexture.active;
+        var active = RenderTexture.active;
         RenderTexture.active = cam.targetTexture;
         cam.Render();
-        Texture2D textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height);
-        int num = (int) (cam.targetTexture.width * 0.04f);
-        int destX = (int) (cam.targetTexture.width * 0.02f);
-        textured.ReadPixels(new Rect((float) num, (float) num, (float) (cam.targetTexture.width - num), (float) (cam.targetTexture.height - num)), destX, destX);
+        var textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height);
+        var num = (int) (cam.targetTexture.width * 0.04f);
+        var destX = (int) (cam.targetTexture.width * 0.02f);
+        textured.ReadPixels(new Rect(num, num, cam.targetTexture.width - num, cam.targetTexture.height - num), destX, destX);
         textured.Apply();
         RenderTexture.active = active;
         return textured;
@@ -298,16 +298,16 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
     private Texture2D RTImage2(Camera cam)
     {
-        RenderTexture active = RenderTexture.active;
+        var active = RenderTexture.active;
         RenderTexture.active = cam.targetTexture;
         cam.Render();
-        Texture2D textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height);
-        int num = (int) (cam.targetTexture.width * 0.04f);
-        int destX = (int) (cam.targetTexture.width * 0.02f);
+        var textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height);
+        var num = (int) (cam.targetTexture.width * 0.04f);
+        var destX = (int) (cam.targetTexture.width * 0.02f);
         try
         {
             textured.SetPixel(0, 0, Color.white);
-            textured.ReadPixels(new Rect((float) num, (float) num, (float) (cam.targetTexture.width - num), (float) (cam.targetTexture.height - num)), destX, destX);
+            textured.ReadPixels(new Rect(num, num, cam.targetTexture.width - num, cam.targetTexture.height - num), destX, destX);
             textured.Apply();
             RenderTexture.active = active;
         }
@@ -325,54 +325,54 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         dayLight = val;
         if (dayLight == DayLight.Night)
         {
-            GameObject obj2 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("flashlight"));
-            obj2.transform.parent = base.transform;
-            obj2.transform.position = base.transform.position;
+            var obj2 = (GameObject) Instantiate(Resources.Load("flashlight"));
+            obj2.transform.parent = transform;
+            obj2.transform.position = transform.position;
             obj2.transform.rotation = Quaternion.Euler(353f, 0f, 0f);
             RenderSettings.ambientLight = FengColor.nightAmbientLight;
             GameObject.Find("mainLight").GetComponent<Light>().color = FengColor.nightLight;
-            base.gameObject.GetComponent<Skybox>().material = this.skyBoxNIGHT;
+            gameObject.GetComponent<Skybox>().material = skyBoxNIGHT;
         }
         if (dayLight == DayLight.Day)
         {
             RenderSettings.ambientLight = FengColor.dayAmbientLight;
             GameObject.Find("mainLight").GetComponent<Light>().color = FengColor.dayLight;
-            base.gameObject.GetComponent<Skybox>().material = this.skyBoxDAY;
+            gameObject.GetComponent<Skybox>().material = skyBoxDAY;
         }
         if (dayLight == DayLight.Dawn)
         {
             RenderSettings.ambientLight = FengColor.dawnAmbientLight;
             GameObject.Find("mainLight").GetComponent<Light>().color = FengColor.dawnAmbientLight;
-            base.gameObject.GetComponent<Skybox>().material = this.skyBoxDAWN;
+            gameObject.GetComponent<Skybox>().material = skyBoxDAWN;
         }
-        this.snapShotCamera.gameObject.GetComponent<Skybox>().material = base.gameObject.GetComponent<Skybox>().material;
+        snapShotCamera.gameObject.GetComponent<Skybox>().material = gameObject.GetComponent<Skybox>().material;
     }
 
     public void setHUDposition()
     {
-        GameObject.Find("Flare").transform.localPosition = new Vector3((float) (((int) (-Screen.width * 0.5f)) + 14), (float) ((int) (-Screen.height * 0.5f)), 0f);
-        GameObject obj2 = GameObject.Find("LabelInfoBottomRight");
-        obj2.transform.localPosition = new Vector3((float) ((int) (Screen.width * 0.5f)), (float) ((int) (-Screen.height * 0.5f)), 0f);
+        GameObject.Find("Flare").transform.localPosition = new Vector3(((int) (-Screen.width * 0.5f)) + 14, (int) (-Screen.height * 0.5f), 0f);
+        var obj2 = GameObject.Find("LabelInfoBottomRight");
+        obj2.transform.localPosition = new Vector3((int) (Screen.width * 0.5f), (int) (-Screen.height * 0.5f), 0f);
         obj2.GetComponent<UILabel>().text = "Pause : " + GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.pause] + " ";
-        GameObject.Find("LabelInfoTopCenter").transform.localPosition = new Vector3(0f, (float) ((int) (Screen.height * 0.5f)), 0f);
-        GameObject.Find("LabelInfoTopRight").transform.localPosition = new Vector3((float) ((int) (Screen.width * 0.5f)), (float) ((int) (Screen.height * 0.5f)), 0f);
-        GameObject.Find("LabelNetworkStatus").transform.localPosition = new Vector3((float) ((int) (-Screen.width * 0.5f)), (float) ((int) (Screen.height * 0.5f)), 0f);
-        GameObject.Find("LabelInfoTopLeft").transform.localPosition = new Vector3((float) ((int) (-Screen.width * 0.5f)), (float) ((int) ((Screen.height * 0.5f) - 20f)), 0f);
-        GameObject.Find("Chatroom").transform.localPosition = new Vector3((float) ((int) (-Screen.width * 0.5f)), (float) ((int) (-Screen.height * 0.5f)), 0f);
+        GameObject.Find("LabelInfoTopCenter").transform.localPosition = new Vector3(0f, (int) (Screen.height * 0.5f), 0f);
+        GameObject.Find("LabelInfoTopRight").transform.localPosition = new Vector3((int) (Screen.width * 0.5f), (int) (Screen.height * 0.5f), 0f);
+        GameObject.Find("LabelNetworkStatus").transform.localPosition = new Vector3((int) (-Screen.width * 0.5f), (int) (Screen.height * 0.5f), 0f);
+        GameObject.Find("LabelInfoTopLeft").transform.localPosition = new Vector3((int) (-Screen.width * 0.5f), (int) ((Screen.height * 0.5f) - 20f), 0f);
+        GameObject.Find("Chatroom").transform.localPosition = new Vector3((int) (-Screen.width * 0.5f), (int) (-Screen.height * 0.5f), 0f);
         if (GameObject.Find("Chatroom") != null)
         {
             GameObject.Find("Chatroom").GetComponent<InRoomChat>().SetPosition();
         }
         if (!usingTitan || (gametype == GAMETYPE.SINGLE))
         {
-            GameObject.Find("skill_cd_bottom").transform.localPosition = new Vector3(0f, (float) ((int) ((-Screen.height * 0.5f) + 5f)), 0f);
+            GameObject.Find("skill_cd_bottom").transform.localPosition = new Vector3(0f, (int) ((-Screen.height * 0.5f) + 5f), 0f);
             GameObject.Find("GasUI").transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
             GameObject.Find("stamina_titan").transform.localPosition = new Vector3(0f, 9999f, 0f);
             GameObject.Find("stamina_titan_bottom").transform.localPosition = new Vector3(0f, 9999f, 0f);
         }
         else
         {
-            Vector3 vector = new Vector3(0f, 9999f, 0f);
+            var vector = new Vector3(0f, 9999f, 0f);
             GameObject.Find("skill_cd_bottom").transform.localPosition = vector;
             GameObject.Find("skill_cd_armin").transform.localPosition = vector;
             GameObject.Find("skill_cd_eren").transform.localPosition = vector;
@@ -383,61 +383,61 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             GameObject.Find("skill_cd_petra").transform.localPosition = vector;
             GameObject.Find("skill_cd_sasha").transform.localPosition = vector;
             GameObject.Find("GasUI").transform.localPosition = vector;
-            GameObject.Find("stamina_titan").transform.localPosition = new Vector3(-160f, (float) ((int) ((-Screen.height * 0.5f) + 15f)), 0f);
-            GameObject.Find("stamina_titan_bottom").transform.localPosition = new Vector3(-160f, (float) ((int) ((-Screen.height * 0.5f) + 15f)), 0f);
+            GameObject.Find("stamina_titan").transform.localPosition = new Vector3(-160f, (int) ((-Screen.height * 0.5f) + 15f), 0f);
+            GameObject.Find("stamina_titan_bottom").transform.localPosition = new Vector3(-160f, (int) ((-Screen.height * 0.5f) + 15f), 0f);
         }
-        if ((this.main_object != null) && (this.main_object.GetComponent<HERO>() != null))
+        if ((main_object != null) && (main_object.GetComponent<HERO>() != null))
         {
             if (gametype == GAMETYPE.SINGLE)
             {
-                this.main_object.GetComponent<HERO>().setSkillHUDPosition2();
+                main_object.GetComponent<HERO>().setSkillHUDPosition2();
             }
-            else if ((this.main_object.GetPhotonView() != null) && this.main_object.GetPhotonView().isMine)
+            else if ((main_object.GetPhotonView() != null) && main_object.GetPhotonView().isMine)
             {
-                this.main_object.GetComponent<HERO>().setSkillHUDPosition2();
+                main_object.GetComponent<HERO>().setSkillHUDPosition2();
             }
         }
         if (stereoType == STEREO_3D_TYPE.SIDE_BY_SIDE)
         {
-            base.gameObject.GetComponent<Camera>().aspect = Screen.width / Screen.height;
+            gameObject.GetComponent<Camera>().aspect = Screen.width / Screen.height;
         }
-        this.createSnapShotRT2();
+        createSnapShotRT2();
     }
 
     public GameObject setMainObject(GameObject obj, bool resetRotation = true, bool lockAngle = false)
     {
-        this.main_object = obj;
+        main_object = obj;
         if (obj == null)
         {
-            this.head = null;
-            this.distanceMulti = this.heightMulti = 1f;
+            head = null;
+            distanceMulti = heightMulti = 1f;
         }
-        else if (this.main_object.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck/head") != null)
+        else if (main_object.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck/head") != null)
         {
-            this.head = this.main_object.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck/head");
-            this.distanceMulti = (this.head != null) ? (Vector3.Distance(this.head.transform.position, this.main_object.transform.position) * 0.2f) : 1f;
-            this.heightMulti = (this.head != null) ? (Vector3.Distance(this.head.transform.position, this.main_object.transform.position) * 0.33f) : 1f;
+            head = main_object.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck/head");
+            distanceMulti = (head != null) ? (Vector3.Distance(head.transform.position, main_object.transform.position) * 0.2f) : 1f;
+            heightMulti = (head != null) ? (Vector3.Distance(head.transform.position, main_object.transform.position) * 0.33f) : 1f;
             if (resetRotation)
             {
-                base.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
-        else if (this.main_object.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head") != null)
+        else if (main_object.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head") != null)
         {
-            this.head = this.main_object.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head");
-            this.distanceMulti = this.heightMulti = 0.64f;
+            head = main_object.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head");
+            distanceMulti = heightMulti = 0.64f;
             if (resetRotation)
             {
-                base.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
         else
         {
-            this.head = null;
-            this.distanceMulti = this.heightMulti = 1f;
+            head = null;
+            distanceMulti = heightMulti = 1f;
             if (resetRotation)
             {
-                base.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
         this.lockAngle = lockAngle;
@@ -446,41 +446,41 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
     public GameObject setMainObjectASTITAN(GameObject obj)
     {
-        this.main_object = obj;
-        if (this.main_object.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck/head") != null)
+        main_object = obj;
+        if (main_object.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck/head") != null)
         {
-            this.head = this.main_object.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck/head");
-            this.distanceMulti = (this.head != null) ? (Vector3.Distance(this.head.transform.position, this.main_object.transform.position) * 0.4f) : 1f;
-            this.heightMulti = (this.head != null) ? (Vector3.Distance(this.head.transform.position, this.main_object.transform.position) * 0.45f) : 1f;
-            base.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            head = main_object.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck/head");
+            distanceMulti = (head != null) ? (Vector3.Distance(head.transform.position, main_object.transform.position) * 0.4f) : 1f;
+            heightMulti = (head != null) ? (Vector3.Distance(head.transform.position, main_object.transform.position) * 0.45f) : 1f;
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
         return obj;
     }
 
     public void setSpectorMode(bool val)
     {
-        this.spectatorMode = val;
+        spectatorMode = val;
         GameObject.Find("MainCamera").GetComponent<SpectatorMovement>().disable = !val;
         GameObject.Find("MainCamera").GetComponent<MouseLook>().disable = !val;
     }
 
     private void shakeUpdate()
     {
-        if (this.duration > 0f)
+        if (duration > 0f)
         {
-            this.duration -= Time.deltaTime;
-            if (this.flip)
+            duration -= Time.deltaTime;
+            if (flip)
             {
-                Transform transform = base.gameObject.transform;
-                transform.position += (Vector3) (Vector3.up * this.R);
+                var transform = gameObject.transform;
+                transform.position += Vector3.up * R;
             }
             else
             {
-                Transform transform2 = base.gameObject.transform;
-                transform2.position -= (Vector3) (Vector3.up * this.R);
+                var transform2 = gameObject.transform;
+                transform2.position -= Vector3.up * R;
             }
-            this.flip = !this.flip;
-            this.R *= this.decay;
+            flip = !flip;
+            R *= decay;
         }
     }
 
@@ -488,79 +488,79 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     {
         Vector3 vector;
         RaycastHit hit;
-        this.snapShotCamera.transform.position = (this.head == null) ? this.main_object.transform.position : this.head.transform.position;
-        Transform transform = this.snapShotCamera.transform;
-        transform.position += (Vector3) (Vector3.up * this.heightMulti);
-        Transform transform2 = this.snapShotCamera.transform;
-        transform2.position -= (Vector3) (Vector3.up * 1.1f);
-        Vector3 worldPosition = vector = this.snapShotCamera.transform.position;
-        Vector3 vector3 = (Vector3) ((worldPosition + this.snapShotTargetPosition) * 0.5f);
-        this.snapShotCamera.transform.position = vector3;
+        snapShotCamera.transform.position = (head == null) ? main_object.transform.position : head.transform.position;
+        var transform = snapShotCamera.transform;
+        transform.position += Vector3.up * heightMulti;
+        var transform2 = snapShotCamera.transform;
+        transform2.position -= Vector3.up * 1.1f;
+        var worldPosition = vector = snapShotCamera.transform.position;
+        var vector3 = (worldPosition + snapShotTargetPosition) * 0.5f;
+        snapShotCamera.transform.position = vector3;
         worldPosition = vector3;
-        this.snapShotCamera.transform.LookAt(this.snapShotTargetPosition);
+        snapShotCamera.transform.LookAt(snapShotTargetPosition);
         if (index == 3)
         {
-            this.snapShotCamera.transform.RotateAround(base.transform.position, Vector3.up, UnityEngine.Random.Range((float) -180f, (float) 180f));
+            snapShotCamera.transform.RotateAround(this.transform.position, Vector3.up, Random.Range(-180f, 180f));
         }
         else
         {
-            this.snapShotCamera.transform.RotateAround(base.transform.position, Vector3.up, UnityEngine.Random.Range((float) -20f, (float) 20f));
+            snapShotCamera.transform.RotateAround(this.transform.position, Vector3.up, Random.Range(-20f, 20f));
         }
-        this.snapShotCamera.transform.LookAt(worldPosition);
-        this.snapShotCamera.transform.RotateAround(worldPosition, base.transform.right, UnityEngine.Random.Range((float) -20f, (float) 20f));
-        float num = Vector3.Distance(this.snapShotTargetPosition, vector);
-        if ((this.snapShotTarget != null) && (this.snapShotTarget.GetComponent<TITAN>() != null))
+        snapShotCamera.transform.LookAt(worldPosition);
+        snapShotCamera.transform.RotateAround(worldPosition, this.transform.right, Random.Range(-20f, 20f));
+        var num = Vector3.Distance(snapShotTargetPosition, vector);
+        if ((snapShotTarget != null) && (snapShotTarget.GetComponent<TITAN>() != null))
         {
-            num += ((index - 1) * this.snapShotTarget.transform.localScale.x) * 10f;
+            num += ((index - 1) * snapShotTarget.transform.localScale.x) * 10f;
         }
-        Transform transform3 = this.snapShotCamera.transform;
-        transform3.position -= (Vector3) (this.snapShotCamera.transform.forward * UnityEngine.Random.Range((float) (num + 3f), (float) (num + 10f)));
-        this.snapShotCamera.transform.LookAt(worldPosition);
-        this.snapShotCamera.transform.RotateAround(worldPosition, base.transform.forward, UnityEngine.Random.Range((float) -30f, (float) 30f));
-        Vector3 end = (this.head == null) ? this.main_object.transform.position : this.head.transform.position;
-        Vector3 vector5 = ((this.head == null) ? this.main_object.transform.position : this.head.transform.position) - this.snapShotCamera.transform.position;
+        var transform3 = snapShotCamera.transform;
+        transform3.position -= snapShotCamera.transform.forward * Random.Range(num + 3f, num + 10f);
+        snapShotCamera.transform.LookAt(worldPosition);
+        snapShotCamera.transform.RotateAround(worldPosition, this.transform.forward, Random.Range(-30f, 30f));
+        var end = (head == null) ? main_object.transform.position : head.transform.position;
+        var vector5 = ((head == null) ? main_object.transform.position : head.transform.position) - snapShotCamera.transform.position;
         end -= vector5;
-        LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-        LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+        LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+        LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
         LayerMask mask3 = mask | mask2;
-        if (this.head != null)
+        if (head != null)
         {
-            if (Physics.Linecast(this.head.transform.position, end, out hit, (int) mask))
+            if (Physics.Linecast(head.transform.position, end, out hit, mask))
             {
-                this.snapShotCamera.transform.position = hit.point;
+                snapShotCamera.transform.position = hit.point;
             }
-            else if (Physics.Linecast(this.head.transform.position - ((Vector3) ((vector5 * this.distanceMulti) * 3f)), end, out hit, (int) mask3))
+            else if (Physics.Linecast(head.transform.position - (vector5 * distanceMulti) * 3f, end, out hit, mask3))
             {
-                this.snapShotCamera.transform.position = hit.point;
+                snapShotCamera.transform.position = hit.point;
             }
         }
-        else if (Physics.Linecast(this.main_object.transform.position + Vector3.up, end, out hit, (int) mask3))
+        else if (Physics.Linecast(main_object.transform.position + Vector3.up, end, out hit, mask3))
         {
-            this.snapShotCamera.transform.position = hit.point;
+            snapShotCamera.transform.position = hit.point;
         }
         switch (index)
         {
             case 1:
-                this.snapshot1 = this.RTImage2(this.snapShotCamera.GetComponent<Camera>());
-                SnapShotSaves.addIMG(this.snapshot1, this.snapShotDmg);
+                snapshot1 = RTImage2(snapShotCamera.GetComponent<Camera>());
+                SnapShotSaves.addIMG(snapshot1, snapShotDmg);
                 break;
 
             case 2:
-                this.snapshot2 = this.RTImage2(this.snapShotCamera.GetComponent<Camera>());
-                SnapShotSaves.addIMG(this.snapshot2, this.snapShotDmg);
+                snapshot2 = RTImage2(snapShotCamera.GetComponent<Camera>());
+                SnapShotSaves.addIMG(snapshot2, snapShotDmg);
                 break;
 
             case 3:
-                this.snapshot3 = this.RTImage2(this.snapShotCamera.GetComponent<Camera>());
-                SnapShotSaves.addIMG(this.snapshot3, this.snapShotDmg);
+                snapshot3 = RTImage2(snapShotCamera.GetComponent<Camera>());
+                SnapShotSaves.addIMG(snapshot3, snapShotDmg);
                 break;
         }
-        this.snapShotCount = index;
-        this.hasSnapShot = true;
-        this.snapShotCountDown = 2f;
+        snapShotCount = index;
+        hasSnapShot = true;
+        snapShotCountDown = 2f;
         if (index == 1)
         {
-            GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().mainTexture = this.snapshot1;
+            GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().mainTexture = snapshot1;
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localScale = new Vector3(Screen.width * 0.4f, Screen.height * 0.4f, 1f);
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localPosition = new Vector3(-Screen.width * 0.225f, Screen.height * 0.225f, 0f);
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.rotation = Quaternion.Euler(0f, 0f, 10f);
@@ -570,40 +570,40 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
     public void snapShotUpdate()
     {
-        if (this.startSnapShotFrameCount)
+        if (startSnapShotFrameCount)
         {
-            this.snapShotStartCountDownTime -= Time.deltaTime;
-            if (this.snapShotStartCountDownTime <= 0f)
+            snapShotStartCountDownTime -= Time.deltaTime;
+            if (snapShotStartCountDownTime <= 0f)
             {
-                this.snapShot2(1);
-                this.startSnapShotFrameCount = false;
+                snapShot2(1);
+                startSnapShotFrameCount = false;
             }
         }
-        if (this.hasSnapShot)
+        if (hasSnapShot)
         {
-            this.snapShotCountDown -= Time.deltaTime;
-            if (this.snapShotCountDown <= 0f)
+            snapShotCountDown -= Time.deltaTime;
+            if (snapShotCountDown <= 0f)
             {
                 GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = false;
-                this.hasSnapShot = false;
-                this.snapShotCountDown = 0f;
+                hasSnapShot = false;
+                snapShotCountDown = 0f;
             }
-            else if (this.snapShotCountDown < 1f)
+            else if (snapShotCountDown < 1f)
             {
-                GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().mainTexture = this.snapshot3;
+                GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().mainTexture = snapshot3;
             }
-            else if (this.snapShotCountDown < 1.5f)
+            else if (snapShotCountDown < 1.5f)
             {
-                GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().mainTexture = this.snapshot2;
+                GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().mainTexture = snapshot2;
             }
-            if (this.snapShotCount < 3)
+            if (snapShotCount < 3)
             {
-                this.snapShotInterval -= Time.deltaTime;
-                if (this.snapShotInterval <= 0f)
+                snapShotInterval -= Time.deltaTime;
+                if (snapShotInterval <= 0f)
                 {
-                    this.snapShotInterval = 0.05f;
-                    this.snapShotCount++;
-                    this.snapShot2(this.snapShotCount);
+                    snapShotInterval = 0.05f;
+                    snapShotCount++;
+                    snapShot2(snapShotCount);
                 }
             }
         }
@@ -613,10 +613,10 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     {
         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addCamera(this);
         isPausing = false;
-        this.inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
-        this.setDayLight(dayLight);
-        this.locker = GameObject.Find("locker");
-        this.createSnapShotRT2();
+        inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
+        setDayLight(dayLight);
+        locker = GameObject.Find("locker");
+        createSnapShotRT2();
     }
 
     public void startShake(float R, float duration, float decay = 0.95f)
@@ -631,13 +631,13 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
     public void startSnapShot(Vector3 p, int dmg, GameObject target = null, float startTime = 0.02f)
     {
-        this.snapShotCount = 1;
-        this.startSnapShotFrameCount = true;
-        this.snapShotTargetPosition = p;
-        this.snapShotTarget = target;
-        this.snapShotStartCountDownTime = startTime;
-        this.snapShotInterval = 0.05f + UnityEngine.Random.Range((float) 0f, (float) 0.03f);
-        this.snapShotDmg = dmg;
+        snapShotCount = 1;
+        startSnapShotFrameCount = true;
+        snapShotTargetPosition = p;
+        snapShotTarget = target;
+        snapShotStartCountDownTime = startTime;
+        snapShotInterval = 0.05f + Random.Range(0f, 0.03f);
+        snapShotDmg = dmg;
     }
 
     public void startSnapShot2(Vector3 p, int dmg, GameObject target, float startTime)
@@ -647,37 +647,37 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             if (dmg >= num)
             {
-                this.snapShotCount = 1;
-                this.startSnapShotFrameCount = true;
-                this.snapShotTargetPosition = p;
-                this.snapShotTarget = target;
-                this.snapShotStartCountDownTime = startTime;
-                this.snapShotInterval = 0.05f + UnityEngine.Random.Range((float) 0f, (float) 0.03f);
-                this.snapShotDmg = dmg;
+                snapShotCount = 1;
+                startSnapShotFrameCount = true;
+                snapShotTargetPosition = p;
+                snapShotTarget = target;
+                snapShotStartCountDownTime = startTime;
+                snapShotInterval = 0.05f + Random.Range(0f, 0.03f);
+                snapShotDmg = dmg;
             }
         }
         else
         {
-            this.snapShotCount = 1;
-            this.startSnapShotFrameCount = true;
-            this.snapShotTargetPosition = p;
-            this.snapShotTarget = target;
-            this.snapShotStartCountDownTime = startTime;
-            this.snapShotInterval = 0.05f + UnityEngine.Random.Range((float) 0f, (float) 0.03f);
-            this.snapShotDmg = dmg;
+            snapShotCount = 1;
+            startSnapShotFrameCount = true;
+            snapShotTargetPosition = p;
+            snapShotTarget = target;
+            snapShotStartCountDownTime = startTime;
+            snapShotInterval = 0.05f + Random.Range(0f, 0.03f);
+            snapShotDmg = dmg;
         }
     }
 
     public void update()
     {
-        if (this.flashDuration > 0f)
+        if (flashDuration > 0f)
         {
-            this.flashDuration -= Time.deltaTime;
-            if (this.flashDuration <= 0f)
+            flashDuration -= Time.deltaTime;
+            if (flashDuration <= 0f)
             {
-                this.flashDuration = 0f;
+                flashDuration = 0f;
             }
-            GameObject.Find("flash").GetComponent<UISprite>().alpha = this.flashDuration * 0.5f;
+            GameObject.Find("flash").GetComponent<UISprite>().alpha = flashDuration * 0.5f;
         }
         if (gametype == GAMETYPE.STOP)
         {
@@ -686,68 +686,68 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         }
         else
         {
-            if ((gametype != GAMETYPE.SINGLE) && this.gameOver)
+            if ((gametype != GAMETYPE.SINGLE) && gameOver)
             {
-                if (this.inputManager.isInputDown[InputCode.attack1])
+                if (inputManager.isInputDown[InputCode.attack1])
                 {
-                    if (this.spectatorMode)
+                    if (spectatorMode)
                     {
-                        this.setSpectorMode(false);
+                        setSpectorMode(false);
                     }
                     else
                     {
-                        this.setSpectorMode(true);
+                        setSpectorMode(true);
                     }
                 }
-                if (this.inputManager.isInputDown[InputCode.flare1])
+                if (inputManager.isInputDown[InputCode.flare1])
                 {
-                    this.currentPeekPlayerIndex++;
-                    int length = GameObject.FindGameObjectsWithTag("Player").Length;
-                    if (this.currentPeekPlayerIndex >= length)
+                    currentPeekPlayerIndex++;
+                    var length = GameObject.FindGameObjectsWithTag("Player").Length;
+                    if (currentPeekPlayerIndex >= length)
                     {
-                        this.currentPeekPlayerIndex = 0;
+                        currentPeekPlayerIndex = 0;
                     }
                     if (length > 0)
                     {
-                        this.setMainObject(GameObject.FindGameObjectsWithTag("Player")[this.currentPeekPlayerIndex], true, false);
-                        this.setSpectorMode(false);
-                        this.lockAngle = false;
+                        setMainObject(GameObject.FindGameObjectsWithTag("Player")[currentPeekPlayerIndex], true, false);
+                        setSpectorMode(false);
+                        lockAngle = false;
                     }
                 }
-                if (this.inputManager.isInputDown[InputCode.flare2])
+                if (inputManager.isInputDown[InputCode.flare2])
                 {
-                    this.currentPeekPlayerIndex--;
-                    int num2 = GameObject.FindGameObjectsWithTag("Player").Length;
-                    if (this.currentPeekPlayerIndex >= num2)
+                    currentPeekPlayerIndex--;
+                    var num2 = GameObject.FindGameObjectsWithTag("Player").Length;
+                    if (currentPeekPlayerIndex >= num2)
                     {
-                        this.currentPeekPlayerIndex = 0;
+                        currentPeekPlayerIndex = 0;
                     }
-                    if (this.currentPeekPlayerIndex < 0)
+                    if (currentPeekPlayerIndex < 0)
                     {
-                        this.currentPeekPlayerIndex = num2;
+                        currentPeekPlayerIndex = num2;
                     }
                     if (num2 > 0)
                     {
-                        this.setMainObject(GameObject.FindGameObjectsWithTag("Player")[this.currentPeekPlayerIndex], true, false);
-                        this.setSpectorMode(false);
-                        this.lockAngle = false;
+                        setMainObject(GameObject.FindGameObjectsWithTag("Player")[currentPeekPlayerIndex], true, false);
+                        setSpectorMode(false);
+                        lockAngle = false;
                     }
                 }
-                if (this.spectatorMode)
+                if (spectatorMode)
                 {
                     return;
                 }
             }
-            if (this.inputManager.isInputDown[InputCode.pause])
+            if (inputManager.isInputDown[InputCode.pause])
             {
                 if (isPausing)
                 {
-                    if (this.main_object != null)
+                    if (main_object != null)
                     {
-                        Vector3 position = base.transform.position;
-                        position = (this.head == null) ? this.main_object.transform.position : this.head.transform.position;
-                        position += (Vector3) (Vector3.up * this.heightMulti);
-                        base.transform.position = Vector3.Lerp(base.transform.position, position - ((Vector3) (base.transform.forward * 5f)), 0.2f);
+                        var position = transform.position;
+                        position = (head == null) ? main_object.transform.position : head.transform.position;
+                        position += Vector3.up * heightMulti;
+                        transform.position = Vector3.Lerp(transform.position, position - transform.forward * 5f, 0.2f);
                     }
                     return;
                 }
@@ -763,14 +763,14 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     Screen.lockCursor = false;
                 }
             }
-            if (this.needSetHUD)
+            if (needSetHUD)
             {
-                this.needSetHUD = false;
-                this.setHUDposition();
+                needSetHUD = false;
+                setHUDposition();
                 Screen.lockCursor = !Screen.lockCursor;
                 Screen.lockCursor = !Screen.lockCursor;
             }
-            if (this.inputManager.isInputDown[InputCode.fullscreen])
+            if (inputManager.isInputDown[InputCode.fullscreen])
             {
                 Screen.fullScreen = !Screen.fullScreen;
                 if (Screen.fullScreen)
@@ -781,17 +781,17 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 {
                     Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
                 }
-                this.needSetHUD = true;
+                needSetHUD = true;
                 Minimap.OnScreenResolutionChanged();
             }
-            if (this.inputManager.isInputDown[InputCode.restart])
+            if (inputManager.isInputDown[InputCode.restart])
             {
-                this.reset();
+                reset();
             }
-            if (this.main_object != null)
+            if (main_object != null)
             {
                 RaycastHit hit;
-                if (this.inputManager.isInputDown[InputCode.camera])
+                if (inputManager.isInputDown[InputCode.camera])
                 {
                     if (cameraMode == CAMERA_TYPE.ORIGINAL)
                     {
@@ -808,30 +808,30 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         cameraMode = CAMERA_TYPE.ORIGINAL;
                         Screen.lockCursor = false;
                     }
-                    this.verticalRotationOffset = 0f;
-                    if ((((int) FengGameManagerMKII.settings[0xf5]) == 1) || (this.main_object.GetComponent<HERO>() == null))
+                    verticalRotationOffset = 0f;
+                    if ((((int) FengGameManagerMKII.settings[0xf5]) == 1) || (main_object.GetComponent<HERO>() == null))
                     {
                         Screen.showCursor = false;
                     }
                 }
-                if (this.inputManager.isInputDown[InputCode.hideCursor])
+                if (inputManager.isInputDown[InputCode.hideCursor])
                 {
                     Screen.showCursor = !Screen.showCursor;
                 }
-                if (this.inputManager.isInputDown[InputCode.focus])
+                if (inputManager.isInputDown[InputCode.focus])
                 {
                     triggerAutoLock = !triggerAutoLock;
                     if (triggerAutoLock)
                     {
-                        this.lockTarget = this.findNearestTitan();
-                        if (this.closestDistance >= 150f)
+                        lockTarget = findNearestTitan();
+                        if (closestDistance >= 150f)
                         {
-                            this.lockTarget = null;
+                            lockTarget = null;
                             triggerAutoLock = false;
                         }
                     }
                 }
-                if (this.gameOver && (this.main_object != null))
+                if (gameOver && (main_object != null))
                 {
                     if (FengGameManagerMKII.inputRC.isInputHumanDown(InputCodeRC.liveCam))
                     {
@@ -844,79 +844,79 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                             FengGameManagerMKII.settings[0x107] = 0;
                         }
                     }
-                    HERO component = this.main_object.GetComponent<HERO>();
+                    var component = main_object.GetComponent<HERO>();
                     if ((((component != null) && (((int) FengGameManagerMKII.settings[0x107]) == 1)) && component.GetComponent<SmoothSyncMovement>().enabled) && component.isPhotonCamera)
                     {
-                        this.CameraMovementLive(component);
+                        CameraMovementLive(component);
                     }
-                    else if (this.lockAngle)
+                    else if (lockAngle)
                     {
-                        base.transform.rotation = Quaternion.Lerp(base.transform.rotation, this.main_object.transform.rotation, 0.2f);
-                        base.transform.position = Vector3.Lerp(base.transform.position, this.main_object.transform.position - ((Vector3) (this.main_object.transform.forward * 5f)), 0.2f);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, main_object.transform.rotation, 0.2f);
+                        transform.position = Vector3.Lerp(transform.position, main_object.transform.position - main_object.transform.forward * 5f, 0.2f);
                     }
                     else
                     {
-                        this.camareMovement();
+                        camareMovement();
                     }
                 }
                 else
                 {
-                    this.camareMovement();
+                    camareMovement();
                 }
-                if (triggerAutoLock && (this.lockTarget != null))
+                if (triggerAutoLock && (lockTarget != null))
                 {
-                    float z = base.transform.eulerAngles.z;
-                    Transform transform = this.lockTarget.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
-                    Vector3 vector2 = transform.position - ((this.head == null) ? this.main_object.transform.position : this.head.transform.position);
+                    var z = this.transform.eulerAngles.z;
+                    var transform = lockTarget.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
+                    var vector2 = transform.position - ((head == null) ? main_object.transform.position : head.transform.position);
                     vector2.Normalize();
-                    this.lockCameraPosition = (this.head == null) ? this.main_object.transform.position : this.head.transform.position;
-                    this.lockCameraPosition -= (Vector3) (((vector2 * this.distance) * this.distanceMulti) * this.distanceOffsetMulti);
-                    this.lockCameraPosition += (Vector3) (((Vector3.up * 3f) * this.heightMulti) * this.distanceOffsetMulti);
-                    base.transform.position = Vector3.Lerp(base.transform.position, this.lockCameraPosition, Time.deltaTime * 4f);
-                    if (this.head != null)
+                    lockCameraPosition = (head == null) ? main_object.transform.position : head.transform.position;
+                    lockCameraPosition -= ((vector2 * distance) * distanceMulti) * distanceOffsetMulti;
+                    lockCameraPosition += ((Vector3.up * 3f) * heightMulti) * distanceOffsetMulti;
+                    this.transform.position = Vector3.Lerp(this.transform.position, lockCameraPosition, Time.deltaTime * 4f);
+                    if (head != null)
                     {
-                        base.transform.LookAt((Vector3) ((this.head.transform.position * 0.8f) + (transform.position * 0.2f)));
+                        this.transform.LookAt((head.transform.position * 0.8f) + (transform.position * 0.2f));
                     }
                     else
                     {
-                        base.transform.LookAt((Vector3) ((this.main_object.transform.position * 0.8f) + (transform.position * 0.2f)));
+                        this.transform.LookAt((main_object.transform.position * 0.8f) + (transform.position * 0.2f));
                     }
-                    base.transform.localEulerAngles = new Vector3(base.transform.eulerAngles.x, base.transform.eulerAngles.y, z);
-                    Vector2 vector3 = base.camera.WorldToScreenPoint(transform.position - ((Vector3) (transform.forward * this.lockTarget.transform.localScale.x)));
-                    this.locker.transform.localPosition = new Vector3(vector3.x - (Screen.width * 0.5f), vector3.y - (Screen.height * 0.5f), 0f);
-                    if ((this.lockTarget.GetComponent<TITAN>() != null) && this.lockTarget.GetComponent<TITAN>().hasDie)
+                    this.transform.localEulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, z);
+                    Vector2 vector3 = camera.WorldToScreenPoint(transform.position - transform.forward * lockTarget.transform.localScale.x);
+                    locker.transform.localPosition = new Vector3(vector3.x - (Screen.width * 0.5f), vector3.y - (Screen.height * 0.5f), 0f);
+                    if ((lockTarget.GetComponent<TITAN>() != null) && lockTarget.GetComponent<TITAN>().hasDie)
                     {
-                        this.lockTarget = null;
+                        lockTarget = null;
                     }
                 }
                 else
                 {
-                    this.locker.transform.localPosition = new Vector3(0f, (-Screen.height * 0.5f) - 50f, 0f);
+                    locker.transform.localPosition = new Vector3(0f, (-Screen.height * 0.5f) - 50f, 0f);
                 }
-                Vector3 end = (this.head == null) ? this.main_object.transform.position : this.head.transform.position;
-                Vector3 vector5 = ((this.head == null) ? this.main_object.transform.position : this.head.transform.position) - base.transform.position;
-                Vector3 normalized = vector5.normalized;
-                end -= (Vector3) ((this.distance * normalized) * this.distanceMulti);
-                LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-                LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+                var end = (head == null) ? main_object.transform.position : head.transform.position;
+                var vector5 = ((head == null) ? main_object.transform.position : head.transform.position) - this.transform.position;
+                var normalized = vector5.normalized;
+                end -= (distance * normalized) * distanceMulti;
+                LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+                LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
                 LayerMask mask3 = mask | mask2;
-                if (this.head != null)
+                if (head != null)
                 {
-                    if (Physics.Linecast(this.head.transform.position, end, out hit, (int) mask))
+                    if (Physics.Linecast(head.transform.position, end, out hit, mask))
                     {
-                        base.transform.position = hit.point;
+                        transform.position = hit.point;
                     }
-                    else if (Physics.Linecast(this.head.transform.position - ((Vector3) ((normalized * this.distanceMulti) * 3f)), end, out hit, (int) mask2))
+                    else if (Physics.Linecast(head.transform.position - (normalized * distanceMulti) * 3f, end, out hit, mask2))
                     {
-                        base.transform.position = hit.point;
+                        transform.position = hit.point;
                     }
-                    Debug.DrawLine(this.head.transform.position - ((Vector3) ((normalized * this.distanceMulti) * 3f)), end, Color.red);
+                    Debug.DrawLine(head.transform.position - (normalized * distanceMulti) * 3f, end, Color.red);
                 }
-                else if (Physics.Linecast(this.main_object.transform.position + Vector3.up, end, out hit, (int) mask3))
+                else if (Physics.Linecast(main_object.transform.position + Vector3.up, end, out hit, mask3))
                 {
-                    base.transform.position = hit.point;
+                    transform.position = hit.point;
                 }
-                this.shakeUpdate();
+                shakeUpdate();
             }
         }
     }

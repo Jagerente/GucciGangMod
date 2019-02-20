@@ -25,30 +25,30 @@ public class UVAnimation
         }
         else
         {
-            FileStream input = new FileStream(path, FileMode.Open);
-            BinaryReader br = new BinaryReader(input);
-            EanFile file = new EanFile();
+            var input = new FileStream(path, FileMode.Open);
+            var br = new BinaryReader(input);
+            var file = new EanFile();
             file.Load(br, input);
             input.Close();
-            EanAnimation animation = file.Anims[index];
-            this.frames = new Vector2[animation.TotalCount];
-            this.UVDimensions = new Vector2[animation.TotalCount];
+            var animation = file.Anims[index];
+            frames = new Vector2[animation.TotalCount];
+            UVDimensions = new Vector2[animation.TotalCount];
             int tileCount = animation.TileCount;
-            int num2 = ((animation.TotalCount + tileCount) - 1) / tileCount;
-            int num3 = 0;
-            int width = mainTex.width;
-            int height = mainTex.height;
-            for (int i = 0; i < num2; i++)
+            var num2 = ((animation.TotalCount + tileCount) - 1) / tileCount;
+            var num3 = 0;
+            var width = mainTex.width;
+            var height = mainTex.height;
+            for (var i = 0; i < num2; i++)
             {
-                for (int j = 0; (j < tileCount) && (num3 < animation.TotalCount); j++)
+                for (var j = 0; (j < tileCount) && (num3 < animation.TotalCount); j++)
                 {
-                    Vector2 zero = Vector2.zero;
-                    zero.x = ((float) animation.Frames[num3].Width) / ((float) width);
-                    zero.y = ((float) animation.Frames[num3].Height) / ((float) height);
-                    this.frames[num3].x = ((float) animation.Frames[num3].X) / ((float) width);
-                    this.frames[num3].y = 1f - (((float) animation.Frames[num3].Y) / ((float) height));
-                    this.UVDimensions[num3] = zero;
-                    this.UVDimensions[num3].y = -this.UVDimensions[num3].y;
+                    var zero = Vector2.zero;
+                    zero.x = animation.Frames[num3].Width / ((float) width);
+                    zero.y = animation.Frames[num3].Height / ((float) height);
+                    frames[num3].x = animation.Frames[num3].X / ((float) width);
+                    frames[num3].y = 1f - (animation.Frames[num3].Y / ((float) height));
+                    UVDimensions[num3] = zero;
+                    UVDimensions[num3].y = -UVDimensions[num3].y;
                     num3++;
                 }
             }
@@ -57,80 +57,80 @@ public class UVAnimation
 
     public Vector2[] BuildUVAnim(Vector2 start, Vector2 cellSize, int cols, int rows, int totalCells)
     {
-        int index = 0;
-        this.frames = new Vector2[totalCells];
-        this.UVDimensions = new Vector2[totalCells];
-        this.frames[0] = start;
-        for (int i = 0; i < rows; i++)
+        var index = 0;
+        frames = new Vector2[totalCells];
+        UVDimensions = new Vector2[totalCells];
+        frames[0] = start;
+        for (var i = 0; i < rows; i++)
         {
-            for (int j = 0; (j < cols) && (index < totalCells); j++)
+            for (var j = 0; (j < cols) && (index < totalCells); j++)
             {
-                this.frames[index].x = start.x + (cellSize.x * j);
-                this.frames[index].y = start.y - (cellSize.y * i);
-                this.UVDimensions[index] = cellSize;
-                this.UVDimensions[index].y = -this.UVDimensions[index].y;
+                frames[index].x = start.x + (cellSize.x * j);
+                frames[index].y = start.y - (cellSize.y * i);
+                UVDimensions[index] = cellSize;
+                UVDimensions[index].y = -UVDimensions[index].y;
                 index++;
             }
         }
-        return this.frames;
+        return frames;
     }
 
     public bool GetNextFrame(ref Vector2 uv, ref Vector2 dm)
     {
-        if (((this.curFrame + this.stepDir) >= this.frames.Length) || ((this.curFrame + this.stepDir) < 0))
+        if (((curFrame + stepDir) >= frames.Length) || ((curFrame + stepDir) < 0))
         {
-            if ((this.stepDir > 0) && this.loopReverse)
+            if ((stepDir > 0) && loopReverse)
             {
-                this.stepDir = -1;
-                this.curFrame += this.stepDir;
-                uv = this.frames[this.curFrame];
-                dm = this.UVDimensions[this.curFrame];
+                stepDir = -1;
+                curFrame += stepDir;
+                uv = frames[curFrame];
+                dm = UVDimensions[curFrame];
             }
             else
             {
-                if (((this.numLoops + 1) > this.loopCycles) && (this.loopCycles != -1))
+                if (((numLoops + 1) > loopCycles) && (loopCycles != -1))
                 {
                     return false;
                 }
-                this.numLoops++;
-                if (this.loopReverse)
+                numLoops++;
+                if (loopReverse)
                 {
-                    this.stepDir *= -1;
-                    this.curFrame += this.stepDir;
+                    stepDir *= -1;
+                    curFrame += stepDir;
                 }
                 else
                 {
-                    this.curFrame = 0;
+                    curFrame = 0;
                 }
-                uv = this.frames[this.curFrame];
-                dm = this.UVDimensions[this.curFrame];
+                uv = frames[curFrame];
+                dm = UVDimensions[curFrame];
             }
         }
         else
         {
-            this.curFrame += this.stepDir;
-            uv = this.frames[this.curFrame];
-            dm = this.UVDimensions[this.curFrame];
+            curFrame += stepDir;
+            uv = frames[curFrame];
+            dm = UVDimensions[curFrame];
         }
         return true;
     }
 
     public void PlayInReverse()
     {
-        this.stepDir = -1;
-        this.curFrame = this.frames.Length - 1;
+        stepDir = -1;
+        curFrame = frames.Length - 1;
     }
 
     public void Reset()
     {
-        this.curFrame = 0;
-        this.stepDir = 1;
-        this.numLoops = 0;
+        curFrame = 0;
+        stepDir = 1;
+        numLoops = 0;
     }
 
     public void SetAnim(Vector2[] anim)
     {
-        this.frames = anim;
+        frames = anim;
     }
 }
 

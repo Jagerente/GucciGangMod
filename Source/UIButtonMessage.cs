@@ -17,78 +17,78 @@ public class UIButtonMessage : MonoBehaviour
 
     private void OnClick()
     {
-        if (base.enabled && (this.trigger == Trigger.OnClick))
+        if (enabled && (trigger == Trigger.OnClick))
         {
-            this.Send();
+            Send();
         }
     }
 
     private void OnDoubleClick()
     {
-        if (base.enabled && (this.trigger == Trigger.OnDoubleClick))
+        if (enabled && (trigger == Trigger.OnDoubleClick))
         {
-            this.Send();
+            Send();
         }
     }
 
     private void OnEnable()
     {
-        if (this.mStarted && this.mHighlighted)
+        if (mStarted && mHighlighted)
         {
-            this.OnHover(UICamera.IsHighlighted(base.gameObject));
+            OnHover(UICamera.IsHighlighted(gameObject));
         }
     }
 
     private void OnHover(bool isOver)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if ((isOver && (this.trigger == Trigger.OnMouseOver)) || (!isOver && (this.trigger == Trigger.OnMouseOut)))
+            if ((isOver && (trigger == Trigger.OnMouseOver)) || (!isOver && (trigger == Trigger.OnMouseOut)))
             {
-                this.Send();
+                Send();
             }
-            this.mHighlighted = isOver;
+            mHighlighted = isOver;
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if (base.enabled && ((isPressed && (this.trigger == Trigger.OnPress)) || (!isPressed && (this.trigger == Trigger.OnRelease))))
+        if (enabled && ((isPressed && (trigger == Trigger.OnPress)) || (!isPressed && (trigger == Trigger.OnRelease))))
         {
-            this.Send();
+            Send();
         }
     }
 
     private void Send()
     {
-        if (!string.IsNullOrEmpty(this.functionName))
+        if (!string.IsNullOrEmpty(functionName))
         {
-            if (this.target == null)
+            if (target == null)
             {
-                this.target = base.gameObject;
+                target = gameObject;
             }
-            if (this.includeChildren)
+            if (includeChildren)
             {
-                Transform[] componentsInChildren = this.target.GetComponentsInChildren<Transform>();
-                int index = 0;
-                int length = componentsInChildren.Length;
+                var componentsInChildren = target.GetComponentsInChildren<Transform>();
+                var index = 0;
+                var length = componentsInChildren.Length;
                 while (index < length)
                 {
-                    Transform transform = componentsInChildren[index];
-                    transform.gameObject.SendMessage(this.functionName, base.gameObject, SendMessageOptions.DontRequireReceiver);
+                    var transform = componentsInChildren[index];
+                    transform.gameObject.SendMessage(functionName, gameObject, SendMessageOptions.DontRequireReceiver);
                     index++;
                 }
             }
             else
             {
-                this.target.SendMessage(this.functionName, base.gameObject, SendMessageOptions.DontRequireReceiver);
+                target.SendMessage(functionName, gameObject, SendMessageOptions.DontRequireReceiver);
             }
         }
     }
 
     private void Start()
     {
-        this.mStarted = true;
+        mStarted = true;
     }
 
     public enum Trigger

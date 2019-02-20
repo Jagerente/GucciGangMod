@@ -12,9 +12,9 @@ public class BTN_SIGNOUT : MonoBehaviour
 
     private void OnClick()
     {
-        NGUITools.SetActive(base.transform.parent.gameObject, false);
-        NGUITools.SetActive(this.loginPanel, true);
-        this.logincomponent.GetComponent<LoginFengKAI>().logout();
+        NGUITools.SetActive(transform.parent.gameObject, false);
+        NGUITools.SetActive(loginPanel, true);
+        logincomponent.GetComponent<LoginFengKAI>().logout();
     }
 }
 

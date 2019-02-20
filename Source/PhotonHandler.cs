@@ -17,7 +17,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
     internal static CloudRegionCode BestRegionCodeCurrently = CloudRegionCode.none;
     private int nextSendTickCount;
     private int nextSendTickCountOnSerialize;
-    public static System.Type PingImplementation;
+    public static Type PingImplementation;
     private const string PlayerPrefsKey = "PUNCloudBestRegion";
     private static bool sendThreadShouldRun;
     public static PhotonHandler SP;
@@ -28,12 +28,12 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
     {
         if (((SP != null) && (SP != this)) && (SP.gameObject != null))
         {
-            UnityEngine.Object.DestroyImmediate(SP.gameObject);
+            DestroyImmediate(SP.gameObject);
         }
         SP = this;
-        UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
-        this.updateInterval = 0x3e8 / PhotonNetwork.sendRate;
-        this.updateIntervalOnSerialize = 0x3e8 / PhotonNetwork.sendRateOnSerialize;
+        DontDestroyOnLoad(gameObject);
+        updateInterval = 0x3e8 / PhotonNetwork.sendRate;
+        updateIntervalOnSerialize = 0x3e8 / PhotonNetwork.sendRateOnSerialize;
         StartFallbackSendAckThread();
     }
 
@@ -117,7 +117,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         if (!sendThreadShouldRun)
         {
             sendThreadShouldRun = true;
-            SupportClass.CallInBackground(new Func<bool>(PhotonHandler.FallbackSendAckThread));
+            SupportClass.CallInBackground(new Func<bool>(FallbackSendAckThread));
         }
     }
 
@@ -134,23 +134,23 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         }
         else if ((((PhotonNetwork.connectionStateDetailed != PeerStates.PeerCreated) && (PhotonNetwork.connectionStateDetailed != PeerStates.Disconnected)) && !PhotonNetwork.offlineMode) && PhotonNetwork.isMessageQueueRunning)
         {
-            for (bool flag = true; PhotonNetwork.isMessageQueueRunning && flag; flag = PhotonNetwork.networkingPeer.DispatchIncomingCommands())
+            for (var flag = true; PhotonNetwork.isMessageQueueRunning && flag; flag = PhotonNetwork.networkingPeer.DispatchIncomingCommands())
             {
             }
-            int num = (int) (Time.realtimeSinceStartup * 1000f);
-            if (PhotonNetwork.isMessageQueueRunning && (num > this.nextSendTickCountOnSerialize))
+            var num = (int) (Time.realtimeSinceStartup * 1000f);
+            if (PhotonNetwork.isMessageQueueRunning && (num > nextSendTickCountOnSerialize))
             {
                 PhotonNetwork.networkingPeer.RunViewUpdate();
-                this.nextSendTickCountOnSerialize = num + this.updateIntervalOnSerialize;
-                this.nextSendTickCount = 0;
+                nextSendTickCountOnSerialize = num + updateIntervalOnSerialize;
+                nextSendTickCount = 0;
             }
             num = (int) (Time.realtimeSinceStartup * 1000f);
-            if (num > this.nextSendTickCount)
+            if (num > nextSendTickCount)
             {
-                for (bool flag2 = true; PhotonNetwork.isMessageQueueRunning && flag2; flag2 = PhotonNetwork.networkingPeer.SendOutgoingCommands())
+                for (var flag2 = true; PhotonNetwork.isMessageQueueRunning && flag2; flag2 = PhotonNetwork.networkingPeer.SendOutgoingCommands())
                 {
                 }
-                this.nextSendTickCount = num + this.updateInterval;
+                nextSendTickCount = num + updateInterval;
             }
         }
     }
@@ -159,7 +159,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
     {
         get
         {
-            string str = PlayerPrefs.GetString("PUNCloudBestRegion", string.Empty);
+            var str = PlayerPrefs.GetString("PUNCloudBestRegion", string.Empty);
             if (!string.IsNullOrEmpty(str))
             {
                 return Region.Parse(str);
@@ -194,17 +194,17 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    PhotonHandler.BestRegionCodeCurrently = CloudRegionCode.none;
+                    BestRegionCodeCurrently = CloudRegionCode.none;
                     break;
 
                 case 1:
@@ -224,8 +224,8 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
                     goto Label_0266;
                 }
                 UnityEngine.Debug.Log(string.Concat(new object[] { "Waiting for AvailableRegions. State: ", PhotonNetwork.connectionStateDetailed, " Server: ", PhotonNetwork.Server, " PhotonNetwork.networkingPeer.AvailableRegions ", PhotonNetwork.networkingPeer.AvailableRegions != null }));
-                this.Scurrent = new WaitForSeconds(0.25f);
-                this.SPC = 1;
+                Scurrent = new WaitForSeconds(0.25f);
+                SPC = 1;
                 //goto Label_0268;
             }
             if ((PhotonNetwork.networkingPeer.AvailableRegions == null) || (PhotonNetwork.networkingPeer.AvailableRegions.Count == 0))
@@ -233,36 +233,36 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
                 UnityEngine.Debug.LogError("No regions available. Are you sure your appid is valid and setup?");
                 goto Label_0266;
             }
-            this.pingManager0 = new PhotonPingManager();
-            this.Ss_891 = PhotonNetwork.networkingPeer.AvailableRegions.GetEnumerator();
+            pingManager0 = new PhotonPingManager();
+            Ss_891 = PhotonNetwork.networkingPeer.AvailableRegions.GetEnumerator();
             try
             {
-                while (this.Ss_891.MoveNext())
+                while (Ss_891.MoveNext())
                 {
-                    this.region2 = this.Ss_891.Current;
-                    PhotonHandler.SP.StartCoroutine(this.pingManager0.PingSocket(this.region2));
+                    region2 = Ss_891.Current;
+                    SP.StartCoroutine(pingManager0.PingSocket(region2));
                 }
             }
             finally
             {
-                this.Ss_891.Dispose();
+                Ss_891.Dispose();
             }
         Label_01A4:
-            while (!this.pingManager0.Done)
+            while (!pingManager0.Done)
             {
-                this.Scurrent = new WaitForSeconds(0.1f);
-                this.SPC = 2;
+                Scurrent = new WaitForSeconds(0.1f);
+                SPC = 2;
                 //goto Label_0268;
             }
-            this.best3 = this.pingManager0.BestRegion;
-            PhotonHandler.BestRegionCodeCurrently = this.best3.Code;
-            PhotonHandler.BestRegionCodeInPreferences = this.best3.Code;
-            UnityEngine.Debug.Log(string.Concat(new object[] { "Found best region: ", this.best3.Code, " ping: ", this.best3.Ping, ". Calling ConnectToRegionMaster() is: ", this.connectToBest }));
-            if (this.connectToBest)
+            best3 = pingManager0.BestRegion;
+            BestRegionCodeCurrently = best3.Code;
+            BestRegionCodeInPreferences = best3.Code;
+            UnityEngine.Debug.Log(string.Concat(new object[] { "Found best region: ", best3.Code, " ping: ", best3.Ping, ". Calling ConnectToRegionMaster() is: ", connectToBest }));
+            if (connectToBest)
             {
-                PhotonNetwork.networkingPeer.ConnectToRegionMaster(this.best3.Code);
+                PhotonNetwork.networkingPeer.ConnectToRegionMaster(best3.Code);
             }
-            this.SPC = -1;
+            SPC = -1;
         Label_0266:
             return false;
         Label_0268:
@@ -280,7 +280,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -289,7 +289,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }

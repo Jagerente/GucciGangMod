@@ -20,22 +20,22 @@ public class UIRoot : MonoBehaviour
 
     private void Awake()
     {
-        this.mTrans = base.transform;
+        mTrans = transform;
         mRoots.Add(this);
-        if (this.automatic)
+        if (automatic)
         {
-            this.scalingStyle = Scaling.PixelPerfect;
-            this.automatic = false;
+            scalingStyle = Scaling.PixelPerfect;
+            automatic = false;
         }
     }
 
     public static void Broadcast(string funcName)
     {
-        int num = 0;
-        int count = mRoots.Count;
+        var num = 0;
+        var count = mRoots.Count;
         while (num < count)
         {
-            UIRoot root = mRoots[num];
+            var root = mRoots[num];
             if (root != null)
             {
                 root.BroadcastMessage(funcName, SendMessageOptions.DontRequireReceiver);
@@ -52,11 +52,11 @@ public class UIRoot : MonoBehaviour
         }
         else
         {
-            int num = 0;
-            int count = mRoots.Count;
+            var num = 0;
+            var count = mRoots.Count;
             while (num < count)
             {
-                UIRoot root = mRoots[num];
+                var root = mRoots[num];
                 if (root != null)
                 {
                     root.BroadcastMessage(funcName, param, SendMessageOptions.DontRequireReceiver);
@@ -69,24 +69,24 @@ public class UIRoot : MonoBehaviour
     public float GetPixelSizeAdjustment(int height)
     {
         height = Mathf.Max(2, height);
-        if (this.scalingStyle == Scaling.FixedSize)
+        if (scalingStyle == Scaling.FixedSize)
         {
-            return (((float) this.manualHeight) / ((float) height));
+            return (manualHeight / ((float) height));
         }
-        if (height < this.minimumHeight)
+        if (height < minimumHeight)
         {
-            return (((float) this.minimumHeight) / ((float) height));
+            return (minimumHeight / ((float) height));
         }
-        if (height > this.maximumHeight)
+        if (height > maximumHeight)
         {
-            return (((float) this.maximumHeight) / ((float) height));
+            return (maximumHeight / ((float) height));
         }
         return 1f;
     }
 
     public static float GetPixelSizeAdjustment(GameObject go)
     {
-        UIRoot root = NGUITools.FindInParents<UIRoot>(go);
+        var root = NGUITools.FindInParents<UIRoot>(go);
         return ((root == null) ? 1f : root.pixelSizeAdjustment);
     }
 
@@ -97,11 +97,11 @@ public class UIRoot : MonoBehaviour
 
     private void Start()
     {
-        UIOrthoCamera componentInChildren = base.GetComponentInChildren<UIOrthoCamera>();
+        var componentInChildren = GetComponentInChildren<UIOrthoCamera>();
         if (componentInChildren != null)
         {
             Debug.LogWarning("UIRoot should not be active at the same time as UIOrthoCamera. Disabling UIOrthoCamera.", componentInChildren);
-            Camera component = componentInChildren.gameObject.GetComponent<Camera>();
+            var component = componentInChildren.gameObject.GetComponent<Camera>();
             componentInChildren.enabled = false;
             if (component != null)
             {
@@ -112,16 +112,16 @@ public class UIRoot : MonoBehaviour
 
     private void Update()
     {
-        if (this.mTrans != null)
+        if (mTrans != null)
         {
             float activeHeight = this.activeHeight;
             if (activeHeight > 0f)
             {
-                float x = 2f / activeHeight;
-                Vector3 localScale = this.mTrans.localScale;
-                if (((Mathf.Abs((float) (localScale.x - x)) > float.Epsilon) || (Mathf.Abs((float) (localScale.y - x)) > float.Epsilon)) || (Mathf.Abs((float) (localScale.z - x)) > float.Epsilon))
+                var x = 2f / activeHeight;
+                var localScale = mTrans.localScale;
+                if (((Mathf.Abs(localScale.x - x) > float.Epsilon) || (Mathf.Abs(localScale.y - x) > float.Epsilon)) || (Mathf.Abs(localScale.z - x) > float.Epsilon))
                 {
-                    this.mTrans.localScale = new Vector3(x, x, x);
+                    mTrans.localScale = new Vector3(x, x, x);
                 }
             }
         }
@@ -131,18 +131,18 @@ public class UIRoot : MonoBehaviour
     {
         get
         {
-            int num = Mathf.Max(2, Screen.height);
-            if (this.scalingStyle == Scaling.FixedSize)
+            var num = Mathf.Max(2, Screen.height);
+            if (scalingStyle == Scaling.FixedSize)
             {
-                return this.manualHeight;
+                return manualHeight;
             }
-            if (num < this.minimumHeight)
+            if (num < minimumHeight)
             {
-                return this.minimumHeight;
+                return minimumHeight;
             }
-            if (num > this.maximumHeight)
+            if (num > maximumHeight)
             {
-                return this.maximumHeight;
+                return maximumHeight;
             }
             return num;
         }
@@ -160,7 +160,7 @@ public class UIRoot : MonoBehaviour
     {
         get
         {
-            return this.GetPixelSizeAdjustment(Screen.height);
+            return GetPixelSizeAdjustment(Screen.height);
         }
     }
 

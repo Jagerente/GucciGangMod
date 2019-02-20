@@ -14,7 +14,7 @@ public class LevelBottom : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (this.type == BottomType.Die)
+            if (type == BottomType.Die)
             {
                 if (other.gameObject.GetComponent<HERO>() != null)
                 {
@@ -22,20 +22,20 @@ public class LevelBottom : MonoBehaviour
                     {
                         if (other.gameObject.GetPhotonView().isMine)
                         {
-                            other.gameObject.GetComponent<HERO>().netDieLocal((Vector3)(base.rigidbody.velocity * 50f), false, -1, string.Empty, true);
+                            other.gameObject.GetComponent<HERO>().netDieLocal(rigidbody.velocity * 50f, false, -1, string.Empty, true);
                         }
                     }
                     else
                     {
-                        other.gameObject.GetComponent<HERO>().die((Vector3) (other.gameObject.rigidbody.velocity * 50f), false);
+                        other.gameObject.GetComponent<HERO>().die(other.gameObject.rigidbody.velocity * 50f, false);
                     }
                 }
             }
-            else if (this.type == BottomType.Teleport)
+            else if (type == BottomType.Teleport)
             {
-                if (this.link != null)
+                if (link != null)
                 {
-                    other.gameObject.transform.position = this.link.transform.position;
+                    other.gameObject.transform.position = link.transform.position;
                 }
                 else
                 {

@@ -13,9 +13,9 @@ public class CameraFacingBillboard : MonoBehaviour
 
     private void Awake()
     {
-        if (this.referenceCamera == null)
+        if (referenceCamera == null)
         {
-            this.referenceCamera = Camera.main;
+            referenceCamera = Camera.main;
         }
     }
 
@@ -43,9 +43,9 @@ public class CameraFacingBillboard : MonoBehaviour
 
     private void Update()
     {
-        Vector3 worldPosition = base.transform.position + (this.referenceCamera.transform.rotation * (!this.reverseFace ? Vector3.back : Vector3.forward));
-        Vector3 worldUp = (Vector3) (this.referenceCamera.transform.rotation * this.GetAxis(this.axis));
-        base.transform.LookAt(worldPosition, worldUp);
+        var worldPosition = transform.position + (referenceCamera.transform.rotation * (!reverseFace ? Vector3.back : Vector3.forward));
+        var worldUp = referenceCamera.transform.rotation * GetAxis(axis);
+        transform.LookAt(worldPosition, worldUp);
     }
 
     public enum Axis

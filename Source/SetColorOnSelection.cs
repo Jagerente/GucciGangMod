@@ -16,17 +16,17 @@ public class SetColorOnSelection : MonoBehaviour
 
     private void OnSelectionChange(string val)
     {
-        if (this.mWidget == null)
+        if (mWidget == null)
         {
-            this.mWidget = base.GetComponent<UIWidget>();
+            mWidget = GetComponent<UIWidget>();
         }
-        string key = val;
+        var key = val;
         if (key != null)
         {
             int num;
             if (fswitchSmap4 == null)
             {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(7);
+                var dictionary = new Dictionary<string, int>(7);
                 dictionary.Add("White", 0);
                 dictionary.Add("Red", 1);
                 dictionary.Add("Green", 2);
@@ -41,31 +41,31 @@ public class SetColorOnSelection : MonoBehaviour
                 switch (num)
                 {
                     case 0:
-                        this.mWidget.color = Color.white;
+                        mWidget.color = Color.white;
                         break;
 
                     case 1:
-                        this.mWidget.color = Color.red;
+                        mWidget.color = Color.red;
                         break;
 
                     case 2:
-                        this.mWidget.color = Color.green;
+                        mWidget.color = Color.green;
                         break;
 
                     case 3:
-                        this.mWidget.color = Color.blue;
+                        mWidget.color = Color.blue;
                         break;
 
                     case 4:
-                        this.mWidget.color = Color.yellow;
+                        mWidget.color = Color.yellow;
                         break;
 
                     case 5:
-                        this.mWidget.color = Color.cyan;
+                        mWidget.color = Color.cyan;
                         break;
 
                     case 6:
-                        this.mWidget.color = Color.magenta;
+                        mWidget.color = Color.magenta;
                         break;
                 }
             }

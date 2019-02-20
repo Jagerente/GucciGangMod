@@ -16,14 +16,14 @@ public class OnClickInstantiate : MonoBehaviour
     {
         if (PhotonNetwork.connectionStateDetailed == PeerStates.Joined)
         {
-            switch (this.InstantiateType)
+            switch (InstantiateType)
             {
                 case 0:
-                    PhotonNetwork.Instantiate(this.Prefab.name, InputToEvent.inputHitPos + new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+                    PhotonNetwork.Instantiate(Prefab.name, InputToEvent.inputHitPos + new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
                     break;
 
                 case 1:
-                    PhotonNetwork.InstantiateSceneObject(this.Prefab.name, InputToEvent.inputHitPos + new Vector3(0f, 5f, 0f), Quaternion.identity, 0, null);
+                    PhotonNetwork.InstantiateSceneObject(Prefab.name, InputToEvent.inputHitPos + new Vector3(0f, 5f, 0f), Quaternion.identity, 0, null);
                     break;
             }
         }
@@ -31,10 +31,10 @@ public class OnClickInstantiate : MonoBehaviour
 
     private void OnGUI()
     {
-        if (this.showGui)
+        if (showGui)
         {
-            GUILayout.BeginArea(new Rect((float) (Screen.width - 180), 0f, 180f, 50f));
-            this.InstantiateType = GUILayout.Toolbar(this.InstantiateType, this.InstantiateTypeNames, new GUILayoutOption[0]);
+            GUILayout.BeginArea(new Rect(Screen.width - 180, 0f, 180f, 50f));
+            InstantiateType = GUILayout.Toolbar(InstantiateType, InstantiateTypeNames, new GUILayoutOption[0]);
             GUILayout.EndArea();
         }
     }

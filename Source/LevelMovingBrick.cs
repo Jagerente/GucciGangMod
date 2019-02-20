@@ -16,28 +16,28 @@ public class LevelMovingBrick : MonoBehaviour
 
     private void Start()
     {
-        this.pointA = this.pointGOA.transform.position;
-        this.pointB = this.pointGOB.transform.position;
-        UnityEngine.Object.Destroy(this.pointGOA);
-        UnityEngine.Object.Destroy(this.pointGOB);
+        pointA = pointGOA.transform.position;
+        pointB = pointGOB.transform.position;
+        Destroy(pointGOA);
+        Destroy(pointGOB);
     }
 
     private void Update()
     {
-        if (this.towardsA)
+        if (towardsA)
         {
-            base.transform.position = Vector3.MoveTowards(base.transform.position, this.pointA, this.speed * Time.deltaTime);
-            if (Vector3.Distance(base.transform.position, this.pointA) < 2f)
+            transform.position = Vector3.MoveTowards(transform.position, pointA, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, pointA) < 2f)
             {
-                this.towardsA = false;
+                towardsA = false;
             }
         }
         else
         {
-            base.transform.position = Vector3.MoveTowards(base.transform.position, this.pointB, this.speed * Time.deltaTime);
-            if (Vector3.Distance(base.transform.position, this.pointB) < 2f)
+            transform.position = Vector3.MoveTowards(transform.position, pointB, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, pointB) < 2f)
             {
-                this.towardsA = true;
+                towardsA = true;
             }
         }
     }

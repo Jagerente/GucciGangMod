@@ -26,7 +26,7 @@ internal static class TeamExtensions
         }
         if (PhotonNetwork.player.GetTeam() != team)
         {
-            Hashtable propertiesToSet = new Hashtable();
+            var propertiesToSet = new Hashtable();
             propertiesToSet.Add("team", (byte) team);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
         }

@@ -46,9 +46,9 @@ public class Minimap : MonoBehaviour
 
     private void AddBorderToTexture(ref Texture2D texture, Color borderColor, int borderPixelSize)
     {
-        int num = texture.width * borderPixelSize;
-        Color[] colors = new Color[num];
-        for (int i = 0; i < num; i++)
+        var num = texture.width * borderPixelSize;
+        var colors = new Color[num];
+        for (var i = 0; i < num; i++)
         {
             colors[i] = borderColor;
         }
@@ -61,51 +61,51 @@ public class Minimap : MonoBehaviour
 
     private void AutomaticSetCameraProperties(Camera cam)
     {
-        Renderer[] rendererArray = UnityEngine.Object.FindObjectsOfType<Renderer>();
+        var rendererArray = FindObjectsOfType<Renderer>();
         if (rendererArray.Length > 0)
         {
-            this.minimapOrthographicBounds = new Bounds(rendererArray[0].transform.position, Vector3.zero);
-            for (int i = 0; i < rendererArray.Length; i++)
+            minimapOrthographicBounds = new Bounds(rendererArray[0].transform.position, Vector3.zero);
+            for (var i = 0; i < rendererArray.Length; i++)
             {
                 if (rendererArray[i].gameObject.layer == 9)
                 {
-                    this.minimapOrthographicBounds.Encapsulate(rendererArray[i].bounds);
+                    minimapOrthographicBounds.Encapsulate(rendererArray[i].bounds);
                 }
             }
         }
-        Vector3 size = this.minimapOrthographicBounds.size;
-        float num2 = (size.x > size.z) ? size.x : size.z;
+        var size = minimapOrthographicBounds.size;
+        var num2 = (size.x > size.z) ? size.x : size.z;
         size.z = size.x = num2;
-        this.minimapOrthographicBounds.size = size;
+        minimapOrthographicBounds.size = size;
         cam.orthographic = true;
         cam.orthographicSize = num2 * 0.5f;
-        Vector3 center = this.minimapOrthographicBounds.center;
+        var center = minimapOrthographicBounds.center;
         center.y = cam.farClipPlane * 0.5f;
-        Transform transform = cam.transform;
+        var transform = cam.transform;
         transform.position = center;
         transform.eulerAngles = new Vector3(90f, 0f, 0f);
         cam.aspect = 1f;
-        this.lastMinimapCenter = center;
-        this.lastMinimapOrthoSize = cam.orthographicSize;
+        lastMinimapCenter = center;
+        lastMinimapOrthoSize = cam.orthographicSize;
     }
 
     private void AutomaticSetOrthoBounds()
     {
-        Renderer[] rendererArray = UnityEngine.Object.FindObjectsOfType<Renderer>();
+        var rendererArray = FindObjectsOfType<Renderer>();
         if (rendererArray.Length > 0)
         {
-            this.minimapOrthographicBounds = new Bounds(rendererArray[0].transform.position, Vector3.zero);
-            for (int i = 0; i < rendererArray.Length; i++)
+            minimapOrthographicBounds = new Bounds(rendererArray[0].transform.position, Vector3.zero);
+            for (var i = 0; i < rendererArray.Length; i++)
             {
-                this.minimapOrthographicBounds.Encapsulate(rendererArray[i].bounds);
+                minimapOrthographicBounds.Encapsulate(rendererArray[i].bounds);
             }
         }
-        Vector3 size = this.minimapOrthographicBounds.size;
-        float num2 = (size.x > size.z) ? size.x : size.z;
+        var size = minimapOrthographicBounds.size;
+        var num2 = (size.x > size.z) ? size.x : size.z;
         size.z = size.x = num2;
-        this.minimapOrthographicBounds.size = size;
-        this.lastMinimapCenter = this.minimapOrthographicBounds.center;
-        this.lastMinimapOrthoSize = num2 * 0.5f;
+        minimapOrthographicBounds.size = size;
+        lastMinimapCenter = minimapOrthographicBounds.center;
+        lastMinimapOrthoSize = num2 * 0.5f;
     }
 
     private void Awake()
@@ -115,13 +115,13 @@ public class Minimap : MonoBehaviour
 
     private Texture2D CaptureMinimap(Camera cam)
     {
-        RenderTexture active = RenderTexture.active;
+        var active = RenderTexture.active;
         RenderTexture.active = cam.targetTexture;
         cam.Render();
-        Texture2D textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height, TextureFormat.RGB24, false) {
+        var textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height, TextureFormat.RGB24, false) {
             filterMode = FilterMode.Bilinear
         };
-        textured.ReadPixels(new Rect(0f, 0f, (float) cam.targetTexture.width, (float) cam.targetTexture.height), 0, 0);
+        textured.ReadPixels(new Rect(0f, 0f, cam.targetTexture.width, cam.targetTexture.height), 0, 0);
         textured.Apply();
         RenderTexture.active = active;
         return textured;
@@ -129,9 +129,9 @@ public class Minimap : MonoBehaviour
 
     private void CaptureMinimapRT(Camera cam)
     {
-        RenderTexture active = RenderTexture.active;
-        RenderTexture.active = this.minimapRT;
-        cam.targetTexture = this.minimapRT;
+        var active = RenderTexture.active;
+        RenderTexture.active = minimapRT;
+        cam.targetTexture = minimapRT;
         cam.Render();
         RenderTexture.active = active;
     }
@@ -140,106 +140,106 @@ public class Minimap : MonoBehaviour
     {
         if (Settings.Minimap == 1 && RCSettings.globalDisableMinimap == 0)
         {
-            if (this.minimapIsCreated)
+            if (minimapIsCreated)
             {
                 if (FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.mapMaximize))
                 {
-                    if (!this.maximized)
+                    if (!maximized)
                     {
-                        this.Maximize();
+                        Maximize();
                     }
                 }
-                else if (this.maximized)
+                else if (maximized)
                 {
-                    this.Minimize();
+                    Minimize();
                 }
                 if (FengGameManagerMKII.inputRC.isInputHumanDown(InputCodeRC.mapToggle))
                 {
-                    this.SetEnabled(!this.isEnabled);
+                    SetEnabled(!isEnabled);
                 }
-                if (this.maximized)
+                if (maximized)
                 {
-                    bool flag2 = false;
+                    var flag2 = false;
                     if (FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.mapReset))
                     {
-                        if (this.initialPreset != null)
+                        if (initialPreset != null)
                         {
-                            this.ManualSetCameraProperties(this.lastUsedCamera, this.initialPreset.center, this.initialPreset.orthographicSize);
+                            ManualSetCameraProperties(lastUsedCamera, initialPreset.center, initialPreset.orthographicSize);
                         }
                         else
                         {
-                            this.AutomaticSetCameraProperties(this.lastUsedCamera);
+                            AutomaticSetCameraProperties(lastUsedCamera);
                         }
                         flag2 = true;
                     }
                     else
                     {
                         float num2;
-                        float axis = Input.GetAxis("Mouse ScrollWheel");
+                        var axis = Input.GetAxis("Mouse ScrollWheel");
                         if (axis != 0f)
                         {
                             if (Input.GetKey(KeyCode.LeftShift))
                             {
                                 axis *= 3f;
                             }
-                            this.lastMinimapOrthoSize = Mathf.Max((float) (this.lastMinimapOrthoSize + axis), (float) 1f);
+                            lastMinimapOrthoSize = Mathf.Max(lastMinimapOrthoSize + axis, 1f);
                             flag2 = true;
                         }
                         if (Input.GetKey(KeyCode.UpArrow))
                         {
-                            num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * this.lastMinimapOrthoSize);
-                            this.lastMinimapCenter.z += num2;
+                            num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * lastMinimapOrthoSize);
+                            lastMinimapCenter.z += num2;
                             flag2 = true;
                         }
                         else if (Input.GetKey(KeyCode.DownArrow))
                         {
-                            num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * this.lastMinimapOrthoSize);
-                            this.lastMinimapCenter.z -= num2;
+                            num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * lastMinimapOrthoSize);
+                            lastMinimapCenter.z -= num2;
                             flag2 = true;
                         }
                         if (Input.GetKey(KeyCode.RightArrow))
                         {
-                            num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * this.lastMinimapOrthoSize);
-                            this.lastMinimapCenter.x += num2;
+                            num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * lastMinimapOrthoSize);
+                            lastMinimapCenter.x += num2;
                             flag2 = true;
                         }
                         else if (Input.GetKey(KeyCode.LeftArrow))
                         {
-                            num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * this.lastMinimapOrthoSize);
-                            this.lastMinimapCenter.x -= num2;
+                            num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * lastMinimapOrthoSize);
+                            lastMinimapCenter.x -= num2;
                             flag2 = true;
                         }
                     }
                     if (flag2)
                     {
-                        this.RecaptureMinimap(this.lastUsedCamera, this.lastMinimapCenter, this.lastMinimapOrthoSize);
+                        RecaptureMinimap(lastUsedCamera, lastMinimapCenter, lastMinimapOrthoSize);
                     }
                 }
             }
         }
-        else if (this.isEnabled)
+        else if (isEnabled)
         {
-            this.SetEnabled(!this.isEnabled);
+            SetEnabled(!isEnabled);
         }
     }
 
     public void CreateMinimap(Camera cam, int minimapResolution = 0x200, float cornerSize = 0.3f, Preset mapPreset = null)
     {
-        this.isEnabled = true;
-        this.lastUsedCamera = cam;
-        if (!this.assetsInitialized)
+        isEnabled = true;
+        lastUsedCamera = cam;
+        if (!assetsInitialized)
         {
-            this.Initialize();
+            Initialize();
         }
-        GameObject obj2 = GameObject.Find("mainLight");
+        var obj2 = GameObject.Find("mainLight");
         Light component = null;
-        Quaternion identity = Quaternion.identity;
-        LightShadows none = LightShadows.None;
-        Color clear = Color.clear;
-        float intensity = 0f;
-        float nearClipPlane = cam.nearClipPlane;
-        float farClipPlane = cam.farClipPlane;
-        int cullingMask = cam.cullingMask;
+        var identity = Quaternion.identity;
+        var none = LightShadows.None;
+        var clear = Color.clear;
+        var intensity = 0f;
+        var nearClipPlane = cam.nearClipPlane;
+        var farClipPlane = cam.farClipPlane;
+        var cullingMask = cam.cullingMask;
         if (obj2 != null)
         {
             component = obj2.GetComponent<Light>();
@@ -256,20 +256,20 @@ public class Minimap : MonoBehaviour
         cam.farClipPlane = 1000f;
         cam.cullingMask = 0x200;
         cam.clearFlags = CameraClearFlags.Color;
-        this.MINIMAP_SIZE = minimapResolution;
-        this.MINIMAP_CORNER_SIZE = this.MINIMAP_SIZE * cornerSize;
-        this.cornerSizeRatio = cornerSize;
-        this.CreateMinimapRT(cam, minimapResolution);
+        MINIMAP_SIZE = minimapResolution;
+        MINIMAP_CORNER_SIZE = MINIMAP_SIZE * cornerSize;
+        cornerSizeRatio = cornerSize;
+        CreateMinimapRT(cam, minimapResolution);
         if (mapPreset != null)
         {
-            this.initialPreset = mapPreset;
-            this.ManualSetCameraProperties(cam, mapPreset.center, mapPreset.orthographicSize);
+            initialPreset = mapPreset;
+            ManualSetCameraProperties(cam, mapPreset.center, mapPreset.orthographicSize);
         }
         else
         {
-            this.AutomaticSetCameraProperties(cam);
+            AutomaticSetCameraProperties(cam);
         }
-        this.CaptureMinimapRT(cam);
+        CaptureMinimapRT(cam);
         if (obj2 != null)
         {
             component.shadows = none;
@@ -282,97 +282,97 @@ public class Minimap : MonoBehaviour
         cam.cullingMask = cullingMask;
         cam.orthographic = false;
         cam.clearFlags = CameraClearFlags.Skybox;
-        this.CreateUnityUIRT(minimapResolution);
-        this.minimapIsCreated = true;
-        base.StartCoroutine(this.HackRoutine());
+        CreateUnityUIRT(minimapResolution);
+        minimapIsCreated = true;
+        StartCoroutine(HackRoutine());
     }
 
     private void CreateMinimapRT(Camera cam, int pixelSize)
     {
-        if (this.minimapRT == null)
+        if (minimapRT == null)
         {
-            bool flag2 = SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.RGB565);
-            RenderTextureFormat format = flag2 ? RenderTextureFormat.RGB565 : RenderTextureFormat.Default;
-            this.minimapRT = new RenderTexture(pixelSize, pixelSize, 0x10, RenderTextureFormat.RGB565);
+            var flag2 = SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.RGB565);
+            var format = flag2 ? RenderTextureFormat.RGB565 : RenderTextureFormat.Default;
+            minimapRT = new RenderTexture(pixelSize, pixelSize, 0x10, RenderTextureFormat.RGB565);
             if (!flag2)
             {
-                UnityEngine.Debug.Log(SystemInfo.graphicsDeviceName + " (" + SystemInfo.graphicsDeviceVendor + ") does not support RGB565 format, the minimap will have transparency issues on certain maps");
+                Debug.Log(SystemInfo.graphicsDeviceName + " (" + SystemInfo.graphicsDeviceVendor + ") does not support RGB565 format, the minimap will have transparency issues on certain maps");
             }
         }
-        cam.targetTexture = this.minimapRT;
+        cam.targetTexture = minimapRT;
     }
 
     private void CreateUnityUI(Texture2D map, int minimapResolution)
     {
-        GameObject obj2 = new GameObject("Canvas");
+        var obj2 = new GameObject("Canvas");
         obj2.AddComponent<RectTransform>();
-        this.canvas = obj2.AddComponent<Canvas>();
-        this.canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        this.scaler = obj2.AddComponent<CanvasScaler>();
-        this.scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        this.scaler.referenceResolution = new Vector2(900f, 600f);
-        this.scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        GameObject obj3 = new GameObject("CircleMask");
+        canvas = obj2.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        scaler = obj2.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(900f, 600f);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        var obj3 = new GameObject("CircleMask");
         obj3.transform.SetParent(obj2.transform, false);
-        this.minimapMaskT = obj3.AddComponent<RectTransform>();
+        minimapMaskT = obj3.AddComponent<RectTransform>();
         obj3.AddComponent<CanvasRenderer>();
-        this.minimapMaskT.anchorMin = this.minimapMaskT.anchorMax = Vector2.one;
-        float num = this.MINIMAP_CORNER_SIZE * 0.5f;
-        this.cornerPosition = new Vector2(-(num + 5f), -(num + 70f));
-        this.minimapMaskT.anchoredPosition = this.cornerPosition;
-        this.minimapMaskT.sizeDelta = new Vector2(this.MINIMAP_CORNER_SIZE, this.MINIMAP_CORNER_SIZE);
-        GameObject obj4 = new GameObject("Minimap");
-        obj4.transform.SetParent(this.minimapMaskT, false);
-        this.minimap = obj4.AddComponent<RectTransform>();
+        minimapMaskT.anchorMin = minimapMaskT.anchorMax = Vector2.one;
+        var num = MINIMAP_CORNER_SIZE * 0.5f;
+        cornerPosition = new Vector2(-(num + 5f), -(num + 70f));
+        minimapMaskT.anchoredPosition = cornerPosition;
+        minimapMaskT.sizeDelta = new Vector2(MINIMAP_CORNER_SIZE, MINIMAP_CORNER_SIZE);
+        var obj4 = new GameObject("Minimap");
+        obj4.transform.SetParent(minimapMaskT, false);
+        minimap = obj4.AddComponent<RectTransform>();
         obj4.AddComponent<CanvasRenderer>();
-        this.minimap.anchorMin = this.minimap.anchorMax = new Vector2(0.5f, 0.5f);
-        this.minimap.anchoredPosition = Vector2.zero;
-        this.minimap.sizeDelta = this.minimapMaskT.sizeDelta;
-        Image image = obj4.AddComponent<Image>();
-        Rect rect = new Rect(0f, 0f, (float) map.width, (float) map.height);
+        minimap.anchorMin = minimap.anchorMax = new Vector2(0.5f, 0.5f);
+        minimap.anchoredPosition = Vector2.zero;
+        minimap.sizeDelta = minimapMaskT.sizeDelta;
+        var image = obj4.AddComponent<Image>();
+        var rect = new Rect(0f, 0f, map.width, map.height);
         image.sprite = UnityEngine.Sprite.Create(map, rect, new Vector3(0.5f, 0.5f));
         image.type = Image.Type.Simple;
     }
 
     private void CreateUnityUIRT(int minimapResolution)
     {
-        GameObject obj2 = new GameObject("Canvas");
+        var obj2 = new GameObject("Canvas");
         obj2.AddComponent<RectTransform>();
-        this.canvas = obj2.AddComponent<Canvas>();
-        this.canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        this.scaler = obj2.AddComponent<CanvasScaler>();
-        this.scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        this.scaler.referenceResolution = new Vector2(800f, 600f);
-        this.scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        this.scaler.matchWidthOrHeight = 1f;
-        GameObject obj3 = new GameObject("Mask");
+        canvas = obj2.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        scaler = obj2.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(800f, 600f);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        scaler.matchWidthOrHeight = 1f;
+        var obj3 = new GameObject("Mask");
         obj3.transform.SetParent(obj2.transform, false);
-        this.minimapMaskT = obj3.AddComponent<RectTransform>();
+        minimapMaskT = obj3.AddComponent<RectTransform>();
         obj3.AddComponent<CanvasRenderer>();
-        this.minimapMaskT.anchorMin = this.minimapMaskT.anchorMax = Vector2.one;
-        float num = this.MINIMAP_CORNER_SIZE * 0.5f;
-        this.cornerPosition = new Vector2(-(num + 5f), -(num + 70f));
-        this.minimapMaskT.anchoredPosition = this.cornerPosition;
-        this.minimapMaskT.sizeDelta = new Vector2(this.MINIMAP_CORNER_SIZE, this.MINIMAP_CORNER_SIZE);
-        GameObject obj4 = new GameObject("MapBorder");
-        obj4.transform.SetParent(this.minimapMaskT, false);
-        this.borderT = obj4.AddComponent<RectTransform>();
-        this.borderT.anchorMin = this.borderT.anchorMax = new Vector2(0.5f, 0.5f);
-        this.borderT.sizeDelta = this.minimapMaskT.sizeDelta;
+        minimapMaskT.anchorMin = minimapMaskT.anchorMax = Vector2.one;
+        var num = MINIMAP_CORNER_SIZE * 0.5f;
+        cornerPosition = new Vector2(-(num + 5f), -(num + 70f));
+        minimapMaskT.anchoredPosition = cornerPosition;
+        minimapMaskT.sizeDelta = new Vector2(MINIMAP_CORNER_SIZE, MINIMAP_CORNER_SIZE);
+        var obj4 = new GameObject("MapBorder");
+        obj4.transform.SetParent(minimapMaskT, false);
+        borderT = obj4.AddComponent<RectTransform>();
+        borderT.anchorMin = borderT.anchorMax = new Vector2(0.5f, 0.5f);
+        borderT.sizeDelta = minimapMaskT.sizeDelta;
         obj4.AddComponent<CanvasRenderer>();
-        Image image = obj4.AddComponent<Image>();
+        var image = obj4.AddComponent<Image>();
         image.sprite = borderSprite;
         image.type = Image.Type.Sliced;
-        GameObject obj5 = new GameObject("Minimap");
-        obj5.transform.SetParent(this.minimapMaskT, false);
-        this.minimap = obj5.AddComponent<RectTransform>();
-        this.minimap.SetAsFirstSibling();
+        var obj5 = new GameObject("Minimap");
+        obj5.transform.SetParent(minimapMaskT, false);
+        minimap = obj5.AddComponent<RectTransform>();
+        minimap.SetAsFirstSibling();
         obj5.AddComponent<CanvasRenderer>();
-        this.minimap.anchorMin = this.minimap.anchorMax = new Vector2(0.5f, 0.5f);
-        this.minimap.anchoredPosition = Vector2.zero;
-        this.minimap.sizeDelta = this.minimapMaskT.sizeDelta;
-        RawImage image2 = obj5.AddComponent<RawImage>();
-        image2.texture = this.minimapRT;
+        minimap.anchorMin = minimap.anchorMax = new Vector2(0.5f, 0.5f);
+        minimap.anchoredPosition = Vector2.zero;
+        minimap.sizeDelta = minimapMaskT.sizeDelta;
+        var image2 = obj5.AddComponent<RawImage>();
+        image2.texture = minimapRT;
         image2.maskable = true;
         obj5.AddComponent<Mask>().showMaskGraphic = true;
     }
@@ -381,11 +381,11 @@ public class Minimap : MonoBehaviour
     {
         if (style == IconStyle.CIRCLE)
         {
-            return this.MINIMAP_ICON_SIZE;
+            return MINIMAP_ICON_SIZE;
         }
         if (style == IconStyle.SUPPLY)
         {
-            return this.MINIMAP_SUPPLY_SIZE;
+            return MINIMAP_SUPPLY_SIZE;
         }
         return Vector2.zero;
     }
@@ -406,111 +406,111 @@ public class Minimap : MonoBehaviour
     private IEnumerator HackRoutine()
     {
         yield return new WaitForEndOfFrame();
-        this.RecaptureMinimap(this.lastUsedCamera, this.lastMinimapCenter, this.lastMinimapOrthoSize);
+        RecaptureMinimap(lastUsedCamera, lastMinimapCenter, lastMinimapOrthoSize);
     }
 
     private void Initialize()
     {
-        Vector3 pivot = new Vector3(0.5f, 0.5f);
-        Texture2D texture = (Texture2D) FengGameManagerMKII.RCassets.Load("icon");
-        Rect rect = new Rect(0f, 0f, (float) texture.width, (float) texture.height);
+        var pivot = new Vector3(0.5f, 0.5f);
+        var texture = (Texture2D) FengGameManagerMKII.RCassets.Load("icon");
+        var rect = new Rect(0f, 0f, texture.width, texture.height);
         whiteIconSprite = UnityEngine.Sprite.Create(texture, rect, pivot);
         texture = (Texture2D) FengGameManagerMKII.RCassets.Load("iconpointer");
-        rect = new Rect(0f, 0f, (float) texture.width, (float) texture.height);
+        rect = new Rect(0f, 0f, texture.width, texture.height);
         pointerSprite = UnityEngine.Sprite.Create(texture, rect, pivot);
         texture = (Texture2D) FengGameManagerMKII.RCassets.Load("supplyicon");
-        rect = new Rect(0f, 0f, (float) texture.width, (float) texture.height);
+        rect = new Rect(0f, 0f, texture.width, texture.height);
         supplySprite = UnityEngine.Sprite.Create(texture, rect, pivot);
         texture = (Texture2D) FengGameManagerMKII.RCassets.Load("mapborder");
-        rect = new Rect(0f, 0f, (float) texture.width, (float) texture.height);
-        Vector4 border = new Vector4(5f, 5f, 5f, 5f);
+        rect = new Rect(0f, 0f, texture.width, texture.height);
+        var border = new Vector4(5f, 5f, 5f, 5f);
         borderSprite = UnityEngine.Sprite.Create(texture, rect, pivot, 100f, 1, SpriteMeshType.FullRect, border);
-        this.MINIMAP_ICON_SIZE = new Vector2((float) whiteIconSprite.texture.width, (float) whiteIconSprite.texture.height);
-        this.MINIMAP_POINTER_SIZE = ((float) (pointerSprite.texture.width + pointerSprite.texture.height)) / 2f;
-        this.MINIMAP_POINTER_DIST = (this.MINIMAP_ICON_SIZE.x + this.MINIMAP_ICON_SIZE.y) * 0.25f;
-        this.MINIMAP_SUPPLY_SIZE = new Vector2((float) supplySprite.texture.width, (float) supplySprite.texture.height);
-        this.assetsInitialized = true;
+        MINIMAP_ICON_SIZE = new Vector2(whiteIconSprite.texture.width, whiteIconSprite.texture.height);
+        MINIMAP_POINTER_SIZE = (pointerSprite.texture.width + pointerSprite.texture.height) / 2f;
+        MINIMAP_POINTER_DIST = (MINIMAP_ICON_SIZE.x + MINIMAP_ICON_SIZE.y) * 0.25f;
+        MINIMAP_SUPPLY_SIZE = new Vector2(supplySprite.texture.width, supplySprite.texture.height);
+        assetsInitialized = true;
     }
 
     private void ManualSetCameraProperties(Camera cam, Vector3 centerPoint, float orthoSize)
     {
-        Transform transform = cam.transform;
+        var transform = cam.transform;
         centerPoint.y = cam.farClipPlane * 0.5f;
         transform.position = centerPoint;
         transform.eulerAngles = new Vector3(90f, 0f, 0f);
         cam.orthographic = true;
         cam.orthographicSize = orthoSize;
-        float x = orthoSize * 2f;
-        this.minimapOrthographicBounds = new Bounds(centerPoint, new Vector3(x, 0f, x));
-        this.lastMinimapCenter = centerPoint;
-        this.lastMinimapOrthoSize = orthoSize;
+        var x = orthoSize * 2f;
+        minimapOrthographicBounds = new Bounds(centerPoint, new Vector3(x, 0f, x));
+        lastMinimapCenter = centerPoint;
+        lastMinimapOrthoSize = orthoSize;
     }
 
     private void ManualSetOrthoBounds(Vector3 centerPoint, float orthoSize)
     {
-        float x = orthoSize * 2f;
-        this.minimapOrthographicBounds = new Bounds(centerPoint, new Vector3(x, 0f, x));
-        this.lastMinimapCenter = centerPoint;
-        this.lastMinimapOrthoSize = orthoSize;
+        var x = orthoSize * 2f;
+        minimapOrthographicBounds = new Bounds(centerPoint, new Vector3(x, 0f, x));
+        lastMinimapCenter = centerPoint;
+        lastMinimapOrthoSize = orthoSize;
     }
 
     public void Maximize()
     {
-        this.isEnabledTemp = true;
-        if (!this.isEnabled)
+        isEnabledTemp = true;
+        if (!isEnabled)
         {
-            this.SetEnabledTemp(true);
+            SetEnabledTemp(true);
         }
-        this.minimapMaskT.anchorMin = this.minimapMaskT.anchorMax = new Vector2(0.5f, 0.5f);
-        this.minimapMaskT.anchoredPosition = Vector2.zero;
-        this.minimapMaskT.sizeDelta = new Vector2((float) this.MINIMAP_SIZE, (float) this.MINIMAP_SIZE);
-        this.minimap.sizeDelta = this.minimapMaskT.sizeDelta;
-        this.borderT.sizeDelta = this.minimapMaskT.sizeDelta;
-        if (this.minimapIcons != null)
+        minimapMaskT.anchorMin = minimapMaskT.anchorMax = new Vector2(0.5f, 0.5f);
+        minimapMaskT.anchoredPosition = Vector2.zero;
+        minimapMaskT.sizeDelta = new Vector2(MINIMAP_SIZE, MINIMAP_SIZE);
+        minimap.sizeDelta = minimapMaskT.sizeDelta;
+        borderT.sizeDelta = minimapMaskT.sizeDelta;
+        if (minimapIcons != null)
         {
-            for (int i = 0; i < this.minimapIcons.Length; i++)
+            for (var i = 0; i < minimapIcons.Length; i++)
             {
-                MinimapIcon icon = this.minimapIcons[i];
+                var icon = minimapIcons[i];
                 if (icon != null)
                 {
-                    icon.SetSize(this.GetSizeForStyle(icon.style));
+                    icon.SetSize(GetSizeForStyle(icon.style));
                     if (icon.rotation)
                     {
-                        icon.SetPointerSize(this.MINIMAP_POINTER_SIZE, this.MINIMAP_POINTER_DIST);
+                        icon.SetPointerSize(MINIMAP_POINTER_SIZE, MINIMAP_POINTER_DIST);
                     }
                 }
             }
         }
-        this.maximized = true;
+        maximized = true;
     }
 
     public void Minimize()
     {
-        this.isEnabledTemp = false;
-        if (!this.isEnabled)
+        isEnabledTemp = false;
+        if (!isEnabled)
         {
-            this.SetEnabledTemp(false);
+            SetEnabledTemp(false);
         }
-        this.minimapMaskT.anchorMin = this.minimapMaskT.anchorMax = Vector2.one;
-        this.minimapMaskT.anchoredPosition = this.cornerPosition;
-        this.minimapMaskT.sizeDelta = new Vector2(this.MINIMAP_CORNER_SIZE, this.MINIMAP_CORNER_SIZE);
-        this.minimap.sizeDelta = this.minimapMaskT.sizeDelta;
-        this.borderT.sizeDelta = this.minimapMaskT.sizeDelta;
-        if (this.minimapIcons != null)
+        minimapMaskT.anchorMin = minimapMaskT.anchorMax = Vector2.one;
+        minimapMaskT.anchoredPosition = cornerPosition;
+        minimapMaskT.sizeDelta = new Vector2(MINIMAP_CORNER_SIZE, MINIMAP_CORNER_SIZE);
+        minimap.sizeDelta = minimapMaskT.sizeDelta;
+        borderT.sizeDelta = minimapMaskT.sizeDelta;
+        if (minimapIcons != null)
         {
-            float num = 1f - ((this.MINIMAP_SIZE - this.MINIMAP_CORNER_SIZE) / ((float) this.MINIMAP_SIZE));
-            float a = this.MINIMAP_POINTER_SIZE * num;
-            a = Mathf.Max(a, this.MINIMAP_POINTER_SIZE * 0.5f);
-            float originDistance = (this.MINIMAP_POINTER_SIZE - a) / this.MINIMAP_POINTER_SIZE;
-            originDistance = this.MINIMAP_POINTER_DIST * originDistance;
-            for (int i = 0; i < this.minimapIcons.Length; i++)
+            var num = 1f - ((MINIMAP_SIZE - MINIMAP_CORNER_SIZE) / MINIMAP_SIZE);
+            var a = MINIMAP_POINTER_SIZE * num;
+            a = Mathf.Max(a, MINIMAP_POINTER_SIZE * 0.5f);
+            var originDistance = (MINIMAP_POINTER_SIZE - a) / MINIMAP_POINTER_SIZE;
+            originDistance = MINIMAP_POINTER_DIST * originDistance;
+            for (var i = 0; i < minimapIcons.Length; i++)
             {
-                MinimapIcon icon = this.minimapIcons[i];
+                var icon = minimapIcons[i];
                 if (icon != null)
                 {
-                    Vector2 sizeForStyle = this.GetSizeForStyle(icon.style);
-                    sizeForStyle.x = Mathf.Max((float) (sizeForStyle.x * num), (float) (sizeForStyle.x * 0.5f));
-                    sizeForStyle.y = Mathf.Max((float) (sizeForStyle.y * num), (float) (sizeForStyle.y * 0.5f));
+                    var sizeForStyle = GetSizeForStyle(icon.style);
+                    sizeForStyle.x = Mathf.Max(sizeForStyle.x * num, sizeForStyle.x * 0.5f);
+                    sizeForStyle.y = Mathf.Max(sizeForStyle.y * num, sizeForStyle.y * 0.5f);
                     icon.SetSize(sizeForStyle);
                     if (icon.rotation)
                     {
@@ -519,39 +519,39 @@ public class Minimap : MonoBehaviour
                 }
             }
         }
-        this.maximized = false;
+        maximized = false;
     }
 
     public static void OnScreenResolutionChanged()
     {
-        if (Minimap.instance != null)
+        if (instance != null)
         {
-            Minimap instance = Minimap.instance;
+            var instance = Minimap.instance;
             instance.StartCoroutine(instance.ScreenResolutionChangedRoutine());
         }
     }
 
     private void RecaptureMinimap()
     {
-        if (this.lastUsedCamera != null)
+        if (lastUsedCamera != null)
         {
-            this.RecaptureMinimap(this.lastUsedCamera, this.lastMinimapCenter, this.lastMinimapOrthoSize);
+            RecaptureMinimap(lastUsedCamera, lastMinimapCenter, lastMinimapOrthoSize);
         }
     }
 
     private void RecaptureMinimap(Camera cam, Vector3 centerPosition, float orthoSize)
     {
-        if (this.minimap != null)
+        if (minimap != null)
         {
-            GameObject obj2 = GameObject.Find("mainLight");
+            var obj2 = GameObject.Find("mainLight");
             Light component = null;
-            Quaternion identity = Quaternion.identity;
-            LightShadows none = LightShadows.None;
-            Color clear = Color.clear;
-            float intensity = 0f;
-            float nearClipPlane = cam.nearClipPlane;
-            float farClipPlane = cam.farClipPlane;
-            int cullingMask = cam.cullingMask;
+            var identity = Quaternion.identity;
+            var none = LightShadows.None;
+            var clear = Color.clear;
+            var intensity = 0f;
+            var nearClipPlane = cam.nearClipPlane;
+            var farClipPlane = cam.farClipPlane;
+            var cullingMask = cam.cullingMask;
             if (obj2 != null)
             {
                 component = obj2.GetComponent<Light>();
@@ -568,9 +568,9 @@ public class Minimap : MonoBehaviour
             cam.farClipPlane = 1000f;
             cam.clearFlags = CameraClearFlags.Color;
             cam.cullingMask = 0x200;
-            this.CreateMinimapRT(cam, this.MINIMAP_SIZE);
-            this.ManualSetCameraProperties(cam, centerPosition, orthoSize);
-            this.CaptureMinimapRT(cam);
+            CreateMinimapRT(cam, MINIMAP_SIZE);
+            ManualSetCameraProperties(cam, centerPosition, orthoSize);
+            CaptureMinimapRT(cam);
             if (obj2 != null)
             {
                 component.shadows = none;
@@ -589,78 +589,78 @@ public class Minimap : MonoBehaviour
     private IEnumerator ScreenResolutionChangedRoutine()
     {
         yield return 0;
-        this.RecaptureMinimap();
+        RecaptureMinimap();
     }
 
     public void SetEnabled(bool enabled)
     {
-        this.isEnabled = enabled;
-        if (this.canvas != null)
+        isEnabled = enabled;
+        if (canvas != null)
         {
-            this.canvas.gameObject.SetActive(enabled);
+            canvas.gameObject.SetActive(enabled);
         }
     }
 
     public void SetEnabledTemp(bool enabled)
     {
-        if (this.canvas != null)
+        if (canvas != null)
         {
-            this.canvas.gameObject.SetActive(enabled);
+            canvas.gameObject.SetActive(enabled);
         }
     }
 
     public void TrackGameObjectOnMinimap(GameObject objToTrack, Color iconColor, bool trackOrientation, bool depthAboveAll = false, IconStyle iconStyle = 0)
     {
-        if (this.minimap != null)
+        if (minimap != null)
         {
             MinimapIcon icon;
             if (trackOrientation)
             {
-                icon = MinimapIcon.CreateWithRotation(this.minimap, objToTrack, iconStyle, this.MINIMAP_POINTER_DIST);
+                icon = MinimapIcon.CreateWithRotation(minimap, objToTrack, iconStyle, MINIMAP_POINTER_DIST);
             }
             else
             {
-                icon = MinimapIcon.Create(this.minimap, objToTrack, iconStyle);
+                icon = MinimapIcon.Create(minimap, objToTrack, iconStyle);
             }
             icon.SetColor(iconColor);
             icon.SetDepth(depthAboveAll);
-            Vector2 sizeForStyle = this.GetSizeForStyle(iconStyle);
-            if (this.maximized)
+            var sizeForStyle = GetSizeForStyle(iconStyle);
+            if (maximized)
             {
                 icon.SetSize(sizeForStyle);
                 if (icon.rotation)
                 {
-                    icon.SetPointerSize(this.MINIMAP_POINTER_SIZE, this.MINIMAP_POINTER_DIST);
+                    icon.SetPointerSize(MINIMAP_POINTER_SIZE, MINIMAP_POINTER_DIST);
                 }
             }
             else
             {
-                float num = 1f - ((this.MINIMAP_SIZE - this.MINIMAP_CORNER_SIZE) / ((float) this.MINIMAP_SIZE));
-                sizeForStyle.x = Mathf.Max((float) (sizeForStyle.x * num), (float) (sizeForStyle.x * 0.5f));
-                sizeForStyle.y = Mathf.Max((float) (sizeForStyle.y * num), (float) (sizeForStyle.y * 0.5f));
+                var num = 1f - ((MINIMAP_SIZE - MINIMAP_CORNER_SIZE) / MINIMAP_SIZE);
+                sizeForStyle.x = Mathf.Max(sizeForStyle.x * num, sizeForStyle.x * 0.5f);
+                sizeForStyle.y = Mathf.Max(sizeForStyle.y * num, sizeForStyle.y * 0.5f);
                 icon.SetSize(sizeForStyle);
                 if (icon.rotation)
                 {
-                    float a = this.MINIMAP_POINTER_SIZE * num;
-                    a = Mathf.Max(a, this.MINIMAP_POINTER_SIZE * 0.5f);
-                    float originDistance = (this.MINIMAP_POINTER_SIZE - a) / this.MINIMAP_POINTER_SIZE;
-                    originDistance = this.MINIMAP_POINTER_DIST * originDistance;
+                    var a = MINIMAP_POINTER_SIZE * num;
+                    a = Mathf.Max(a, MINIMAP_POINTER_SIZE * 0.5f);
+                    var originDistance = (MINIMAP_POINTER_SIZE - a) / MINIMAP_POINTER_SIZE;
+                    originDistance = MINIMAP_POINTER_DIST * originDistance;
                     icon.SetPointerSize(a, originDistance);
                 }
             }
-            if (this.minimapIcons == null)
+            if (minimapIcons == null)
             {
-                this.minimapIcons = new MinimapIcon[] { icon };
+                minimapIcons = new MinimapIcon[] { icon };
             }
             else
             {
-                MinimapIcon[] iconArray2 = new MinimapIcon[this.minimapIcons.Length + 1];
-                for (int i = 0; i < this.minimapIcons.Length; i++)
+                var iconArray2 = new MinimapIcon[minimapIcons.Length + 1];
+                for (var i = 0; i < minimapIcons.Length; i++)
                 {
-                    iconArray2[i] = this.minimapIcons[i];
+                    iconArray2[i] = minimapIcons[i];
                 }
                 iconArray2[iconArray2.Length - 1] = icon;
-                this.minimapIcons = iconArray2;
+                minimapIcons = iconArray2;
             }
         }
     }
@@ -681,20 +681,20 @@ public class Minimap : MonoBehaviour
 
     private void Update()
     {
-        this.CheckUserInput();
-        if (((this.isEnabled || this.isEnabledTemp) && this.minimapIsCreated) && (this.minimapIcons != null))
+        CheckUserInput();
+        if (((isEnabled || isEnabledTemp) && minimapIsCreated) && (minimapIcons != null))
         {
-            for (int i = 0; i < this.minimapIcons.Length; i++)
+            for (var i = 0; i < minimapIcons.Length; i++)
             {
-                MinimapIcon icon = this.minimapIcons[i];
+                var icon = minimapIcons[i];
                 if (icon == null)
                 {
-                    RCextensions.RemoveAt<MinimapIcon>(ref this.minimapIcons, i);
+                    RCextensions.RemoveAt<MinimapIcon>(ref minimapIcons, i);
                 }
-                else if (!icon.UpdateUI(this.minimapOrthographicBounds, this.maximized ? ((float) this.MINIMAP_SIZE) : this.MINIMAP_CORNER_SIZE))
+                else if (!icon.UpdateUI(minimapOrthographicBounds, maximized ? MINIMAP_SIZE : MINIMAP_CORNER_SIZE))
                 {
                     icon.Destroy();
-                    RCextensions.RemoveAt<MinimapIcon>(ref this.minimapIcons, i);
+                    RCextensions.RemoveAt<MinimapIcon>(ref minimapIcons, i);
                 }
             }
         }
@@ -719,23 +719,23 @@ public class Minimap : MonoBehaviour
         private Transform obj;
         private RectTransform pointerRect;
         public readonly bool rotation;
-        public readonly Minimap.IconStyle style;
+        public readonly IconStyle style;
         private RectTransform uiRect;
 
-        public MinimapIcon(GameObject trackedObject, GameObject uiElement, Minimap.IconStyle style)
+        public MinimapIcon(GameObject trackedObject, GameObject uiElement, IconStyle style)
         {
-            this.rotation = false;
+            rotation = false;
             this.style = style;
-            this.obj = trackedObject.transform;
-            this.uiRect = uiElement.GetComponent<RectTransform>();
-            CatchDestroy component = this.obj.GetComponent<CatchDestroy>();
+            obj = trackedObject.transform;
+            uiRect = uiElement.GetComponent<RectTransform>();
+            var component = obj.GetComponent<CatchDestroy>();
             if (component == null)
             {
-                this.obj.gameObject.AddComponent<CatchDestroy>().target = uiElement;
+                obj.gameObject.AddComponent<CatchDestroy>().target = uiElement;
             }
             else if ((component.target != null) && (component.target != uiElement))
             {
-                UnityEngine.Object.Destroy(component.target);
+                Object.Destroy(component.target);
             }
             else
             {
@@ -743,21 +743,21 @@ public class Minimap : MonoBehaviour
             }
         }
 
-        public MinimapIcon(GameObject trackedObject, GameObject uiElement, GameObject uiPointer, Minimap.IconStyle style)
+        public MinimapIcon(GameObject trackedObject, GameObject uiElement, GameObject uiPointer, IconStyle style)
         {
-            this.rotation = true;
+            rotation = true;
             this.style = style;
-            this.obj = trackedObject.transform;
-            this.uiRect = uiElement.GetComponent<RectTransform>();
-            this.pointerRect = uiPointer.GetComponent<RectTransform>();
-            CatchDestroy component = this.obj.GetComponent<CatchDestroy>();
+            obj = trackedObject.transform;
+            uiRect = uiElement.GetComponent<RectTransform>();
+            pointerRect = uiPointer.GetComponent<RectTransform>();
+            var component = obj.GetComponent<CatchDestroy>();
             if (component == null)
             {
-                this.obj.gameObject.AddComponent<CatchDestroy>().target = uiElement;
+                obj.gameObject.AddComponent<CatchDestroy>().target = uiElement;
             }
             else if ((component.target != null) && (component.target != uiElement))
             {
-                UnityEngine.Object.Destroy(component.target);
+                Object.Destroy(component.target);
             }
             else
             {
@@ -765,111 +765,111 @@ public class Minimap : MonoBehaviour
             }
         }
 
-        public static Minimap.MinimapIcon Create(RectTransform parent, GameObject trackedObject, Minimap.IconStyle style)
+        public static MinimapIcon Create(RectTransform parent, GameObject trackedObject, IconStyle style)
         {
-            UnityEngine.Sprite spriteForStyle = Minimap.GetSpriteForStyle(style);
-            GameObject uiElement = new GameObject("MinimapIcon");
-            RectTransform transform = uiElement.AddComponent<RectTransform>();
+            var spriteForStyle = GetSpriteForStyle(style);
+            var uiElement = new GameObject("MinimapIcon");
+            var transform = uiElement.AddComponent<RectTransform>();
             transform.anchorMin = transform.anchorMax = new Vector3(0.5f, 0.5f);
-            transform.sizeDelta = new Vector2((float) spriteForStyle.texture.width, (float) spriteForStyle.texture.height);
-            Image image = uiElement.AddComponent<Image>();
+            transform.sizeDelta = new Vector2(spriteForStyle.texture.width, spriteForStyle.texture.height);
+            var image = uiElement.AddComponent<Image>();
             image.sprite = spriteForStyle;
             image.type = Image.Type.Simple;
             uiElement.transform.SetParent(parent, false);
-            return new Minimap.MinimapIcon(trackedObject, uiElement, style);
+            return new MinimapIcon(trackedObject, uiElement, style);
         }
 
-        public static Minimap.MinimapIcon CreateWithRotation(RectTransform parent, GameObject trackedObject, Minimap.IconStyle style, float pointerDist)
+        public static MinimapIcon CreateWithRotation(RectTransform parent, GameObject trackedObject, IconStyle style, float pointerDist)
         {
-            UnityEngine.Sprite spriteForStyle = Minimap.GetSpriteForStyle(style);
-            GameObject uiElement = new GameObject("MinimapIcon");
-            RectTransform transform = uiElement.AddComponent<RectTransform>();
+            var spriteForStyle = GetSpriteForStyle(style);
+            var uiElement = new GameObject("MinimapIcon");
+            var transform = uiElement.AddComponent<RectTransform>();
             transform.anchorMin = transform.anchorMax = new Vector3(0.5f, 0.5f);
-            transform.sizeDelta = new Vector2((float) spriteForStyle.texture.width, (float) spriteForStyle.texture.height);
-            Image image = uiElement.AddComponent<Image>();
+            transform.sizeDelta = new Vector2(spriteForStyle.texture.width, spriteForStyle.texture.height);
+            var image = uiElement.AddComponent<Image>();
             image.sprite = spriteForStyle;
             image.type = Image.Type.Simple;
             uiElement.transform.SetParent(parent, false);
-            GameObject uiPointer = new GameObject("IconPointer");
-            RectTransform transform2 = uiPointer.AddComponent<RectTransform>();
+            var uiPointer = new GameObject("IconPointer");
+            var transform2 = uiPointer.AddComponent<RectTransform>();
             transform2.anchorMin = transform2.anchorMax = transform.anchorMin;
-            transform2.sizeDelta = new Vector2((float) Minimap.pointerSprite.texture.width, (float) Minimap.pointerSprite.texture.height);
-            Image image2 = uiPointer.AddComponent<Image>();
-            image2.sprite = Minimap.pointerSprite;
+            transform2.sizeDelta = new Vector2(pointerSprite.texture.width, pointerSprite.texture.height);
+            var image2 = uiPointer.AddComponent<Image>();
+            image2.sprite = pointerSprite;
             image2.type = Image.Type.Simple;
             uiPointer.transform.SetParent(transform, false);
             transform2.anchoredPosition = new Vector2(0f, pointerDist);
-            return new Minimap.MinimapIcon(trackedObject, uiElement, uiPointer, style);
+            return new MinimapIcon(trackedObject, uiElement, uiPointer, style);
         }
 
         public void Destroy()
         {
-            if (this.uiRect != null)
+            if (uiRect != null)
             {
-                UnityEngine.Object.Destroy(this.uiRect.gameObject);
+                Object.Destroy(uiRect.gameObject);
             }
         }
 
         public void SetColor(Color color)
         {
-            if (this.uiRect != null)
+            if (uiRect != null)
             {
-                this.uiRect.GetComponent<Image>().color = color;
+                uiRect.GetComponent<Image>().color = color;
             }
         }
 
         public void SetDepth(bool aboveAll)
         {
-            if (this.uiRect != null)
+            if (uiRect != null)
             {
                 if (aboveAll)
                 {
-                    this.uiRect.SetAsLastSibling();
+                    uiRect.SetAsLastSibling();
                 }
                 else
                 {
-                    this.uiRect.SetAsFirstSibling();
+                    uiRect.SetAsFirstSibling();
                 }
             }
         }
 
         public void SetPointerSize(float size, float originDistance)
         {
-            if (this.pointerRect != null)
+            if (pointerRect != null)
             {
-                this.pointerRect.sizeDelta = new Vector2(size, size);
-                this.pointerRect.anchoredPosition = new Vector2(0f, originDistance);
+                pointerRect.sizeDelta = new Vector2(size, size);
+                pointerRect.anchoredPosition = new Vector2(0f, originDistance);
             }
         }
 
         public void SetSize(Vector2 size)
         {
-            if (this.uiRect != null)
+            if (uiRect != null)
             {
-                this.uiRect.sizeDelta = size;
+                uiRect.sizeDelta = size;
             }
         }
 
         public bool UpdateUI(Bounds worldBounds, float minimapSize)
         {
-            if (this.obj == null)
+            if (obj == null)
             {
                 return false;
             }
-            float x = worldBounds.size.x;
-            Vector3 vector = this.obj.position - worldBounds.center;
+            var x = worldBounds.size.x;
+            var vector = obj.position - worldBounds.center;
             vector.y = vector.z;
             vector.z = 0f;
-            float num2 = Mathf.Abs(vector.x) / x;
+            var num2 = Mathf.Abs(vector.x) / x;
             vector.x = (vector.x < 0f) ? -num2 : num2;
-            float num3 = Mathf.Abs(vector.y) / x;
+            var num3 = Mathf.Abs(vector.y) / x;
             vector.y = (vector.y < 0f) ? -num3 : num3;
-            Vector2 vector2 = (Vector2) (vector * minimapSize);
-            this.uiRect.anchoredPosition = vector2;
-            if (this.rotation)
+            var vector2 = (Vector2) (vector * minimapSize);
+            uiRect.anchoredPosition = vector2;
+            if (rotation)
             {
-                float z = (Mathf.Atan2(this.obj.forward.z, this.obj.forward.x) * 57.29578f) - 90f;
-                this.uiRect.eulerAngles = new Vector3(0f, 0f, z);
+                var z = (Mathf.Atan2(obj.forward.z, obj.forward.x) * 57.29578f) - 90f;
+                uiRect.eulerAngles = new Vector3(0f, 0f, z);
             }
             return true;
         }

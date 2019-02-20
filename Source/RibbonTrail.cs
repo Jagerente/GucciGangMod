@@ -8,7 +8,7 @@ using UnityEngine;
 public class RibbonTrail
 {
     public const int CHAIN_EMPTY = 0x1869f;
-    protected UnityEngine.Color Color = UnityEngine.Color.white;
+    protected Color Color = Color.white;
     protected float ElapsedTime;
     public int ElemCount;
     public Element[] ElementArray;
@@ -33,80 +33,80 @@ public class RibbonTrail
         {
             Debug.LogError("ribbon trail's maxelement should > 2!");
         }
-        this.MaxElements = maxelemnt;
-        this.Vertexsegment = segment;
-        this.ElementArray = new Element[this.MaxElements];
-        this.Head = this.Tail = 0x1869f;
-        this.SetTrailLen(len);
-        this.UnitWidth = width;
-        this.HeadPosition = pos;
-        this.StretchType = stretchType;
-        Element dtls = new Element(this.HeadPosition, this.UnitWidth);
-        this.IndexDirty = false;
-        this.Fps = 1f / maxFps;
-        this.AddElememt(dtls);
-        Element element2 = new Element(this.HeadPosition, this.UnitWidth);
-        this.AddElememt(element2);
+        MaxElements = maxelemnt;
+        Vertexsegment = segment;
+        ElementArray = new Element[MaxElements];
+        Head = Tail = 0x1869f;
+        SetTrailLen(len);
+        UnitWidth = width;
+        HeadPosition = pos;
+        StretchType = stretchType;
+        var dtls = new Element(HeadPosition, UnitWidth);
+        IndexDirty = false;
+        Fps = 1f / maxFps;
+        AddElememt(dtls);
+        var element2 = new Element(HeadPosition, UnitWidth);
+        AddElememt(element2);
     }
 
     public void AddElememt(Element dtls)
     {
-        if (this.Head == 0x1869f)
+        if (Head == 0x1869f)
         {
-            this.Tail = this.MaxElements - 1;
-            this.Head = this.Tail;
-            this.IndexDirty = true;
-            this.ElemCount++;
+            Tail = MaxElements - 1;
+            Head = Tail;
+            IndexDirty = true;
+            ElemCount++;
         }
         else
         {
-            if (this.Head == 0)
+            if (Head == 0)
             {
-                this.Head = this.MaxElements - 1;
+                Head = MaxElements - 1;
             }
             else
             {
-                this.Head--;
+                Head--;
             }
-            if (this.Head == this.Tail)
+            if (Head == Tail)
             {
-                if (this.Tail == 0)
+                if (Tail == 0)
                 {
-                    this.Tail = this.MaxElements - 1;
+                    Tail = MaxElements - 1;
                 }
                 else
                 {
-                    this.Tail--;
+                    Tail--;
                 }
             }
             else
             {
-                this.ElemCount++;
+                ElemCount++;
             }
         }
-        this.ElementArray[this.Head] = dtls;
-        this.IndexDirty = true;
+        ElementArray[Head] = dtls;
+        IndexDirty = true;
     }
 
     public void Reset()
     {
-        this.ResetElementsPos();
+        ResetElementsPos();
     }
 
     public void ResetElementsPos()
     {
-        if ((this.Head != 0x1869f) && (this.Head != this.Tail))
+        if ((Head != 0x1869f) && (Head != Tail))
         {
-            int head = this.Head;
+            var head = Head;
             while (true)
             {
-                int index = head;
-                if (index == this.MaxElements)
+                var index = head;
+                if (index == MaxElements)
                 {
                     index = 0;
                 }
-                this.ElementArray[index].Position = this.HeadPosition;
-                if (index == this.Tail)
+                ElementArray[index].Position = HeadPosition;
+                if (index == Tail)
                 {
                     break;
                 }
@@ -115,86 +115,86 @@ public class RibbonTrail
         }
     }
 
-    public void SetColor(UnityEngine.Color color)
+    public void SetColor(Color color)
     {
-        this.Color = color;
+        Color = color;
     }
 
     public void SetHeadPosition(Vector3 pos)
     {
-        this.HeadPosition = pos;
+        HeadPosition = pos;
     }
 
     public void SetTrailLen(float len)
     {
-        this.TrailLength = len;
-        this.ElemLength = this.TrailLength / ((float) (this.MaxElements - 1));
-        this.SquaredElemLength = this.ElemLength * this.ElemLength;
+        TrailLength = len;
+        ElemLength = TrailLength / (MaxElements - 1);
+        SquaredElemLength = ElemLength * ElemLength;
     }
 
     public void SetUVCoord(Vector2 lowerleft, Vector2 dimensions)
     {
-        this.LowerLeftUV = lowerleft;
-        this.UVDimensions = dimensions;
+        LowerLeftUV = lowerleft;
+        UVDimensions = dimensions;
     }
 
     public void Smooth()
     {
-        if (this.ElemCount > 3)
+        if (ElemCount > 3)
         {
-            Element element = this.ElementArray[this.Head];
-            int index = this.Head + 1;
-            if (index == this.MaxElements)
+            var element = ElementArray[Head];
+            var index = Head + 1;
+            if (index == MaxElements)
             {
                 index = 0;
             }
-            int num2 = index + 1;
-            if (num2 == this.MaxElements)
+            var num2 = index + 1;
+            if (num2 == MaxElements)
             {
                 num2 = 0;
             }
-            Element element2 = this.ElementArray[index];
-            Element element3 = this.ElementArray[num2];
-            Vector3 from = element.Position - element2.Position;
-            Vector3 to = element2.Position - element3.Position;
-            float num3 = Vector3.Angle(from, to);
+            var element2 = ElementArray[index];
+            var element3 = ElementArray[num2];
+            var from = element.Position - element2.Position;
+            var to = element2.Position - element3.Position;
+            var num3 = Vector3.Angle(from, to);
             if (num3 > 60f)
             {
-                Vector3 vector3 = (Vector3) ((element.Position + element3.Position) / 2f);
-                Vector3 vector4 = vector3 - element2.Position;
-                Vector3 zero = Vector3.zero;
-                float smoothTime = 0.1f / (num3 / 60f);
-                element2.Position = Vector3.SmoothDamp(element2.Position, element2.Position + ((Vector3) (vector4.normalized * element2.Width)), ref zero, smoothTime);
+                var vector3 = (element.Position + element3.Position) / 2f;
+                var vector4 = vector3 - element2.Position;
+                var zero = Vector3.zero;
+                var smoothTime = 0.1f / (num3 / 60f);
+                element2.Position = Vector3.SmoothDamp(element2.Position, element2.Position + vector4.normalized * element2.Width, ref zero, smoothTime);
             }
         }
     }
 
     public void Update()
     {
-        this.ElapsedTime += Time.deltaTime;
-        if (this.ElapsedTime >= this.Fps)
+        ElapsedTime += Time.deltaTime;
+        if (ElapsedTime >= Fps)
         {
-            this.ElapsedTime -= this.Fps;
-            bool flag = false;
+            ElapsedTime -= Fps;
+            var flag = false;
             while (!flag)
             {
-                Element element = this.ElementArray[this.Head];
-                int index = this.Head + 1;
-                if (index == this.MaxElements)
+                var element = ElementArray[Head];
+                var index = Head + 1;
+                if (index == MaxElements)
                 {
                     index = 0;
                 }
-                Element element2 = this.ElementArray[index];
-                Vector3 headPosition = this.HeadPosition;
-                Vector3 vector2 = headPosition - element2.Position;
-                if (vector2.sqrMagnitude >= this.SquaredElemLength)
+                var element2 = ElementArray[index];
+                var headPosition = HeadPosition;
+                var vector2 = headPosition - element2.Position;
+                if (vector2.sqrMagnitude >= SquaredElemLength)
                 {
-                    Vector3 vector3 = (Vector3) (vector2 * (this.ElemLength / vector2.magnitude));
+                    var vector3 = vector2 * (ElemLength / vector2.magnitude);
                     element.Position = element2.Position + vector3;
-                    Element dtls = new Element(headPosition, this.UnitWidth);
-                    this.AddElememt(dtls);
+                    var dtls = new Element(headPosition, UnitWidth);
+                    AddElememt(dtls);
                     vector2 = headPosition - element.Position;
-                    if (vector2.sqrMagnitude <= this.SquaredElemLength)
+                    if (vector2.sqrMagnitude <= SquaredElemLength)
                     {
                         flag = true;
                     }
@@ -204,48 +204,48 @@ public class RibbonTrail
                     element.Position = headPosition;
                     flag = true;
                 }
-                if (((this.Tail + 1) % this.MaxElements) == this.Head)
+                if (((Tail + 1) % MaxElements) == Head)
                 {
                     int num3;
-                    Element element4 = this.ElementArray[this.Tail];
-                    if (this.Tail == 0)
+                    var element4 = ElementArray[Tail];
+                    if (Tail == 0)
                     {
-                        num3 = this.MaxElements - 1;
+                        num3 = MaxElements - 1;
                     }
                     else
                     {
-                        num3 = this.Tail - 1;
+                        num3 = Tail - 1;
                     }
-                    Element element5 = this.ElementArray[num3];
-                    Vector3 vector4 = element4.Position - element5.Position;
-                    float magnitude = vector4.magnitude;
+                    var element5 = ElementArray[num3];
+                    var vector4 = element4.Position - element5.Position;
+                    var magnitude = vector4.magnitude;
                     if (magnitude > 1E-06)
                     {
-                        float num5 = this.ElemLength - vector2.magnitude;
-                        vector4 = (Vector3) (vector4 * (num5 / magnitude));
+                        var num5 = ElemLength - vector2.magnitude;
+                        vector4 = vector4 * (num5 / magnitude);
                         element4.Position = element5.Position + vector4;
                     }
                 }
             }
-            Vector3 position = Camera.main.transform.position;
-            this.UpdateVertices(position);
-            this.UpdateIndices();
+            var position = Camera.main.transform.position;
+            UpdateVertices(position);
+            UpdateIndices();
         }
     }
 
     public void UpdateIndices()
     {
-        if (this.IndexDirty)
+        if (IndexDirty)
         {
-            VertexPool pool = this.Vertexsegment.Pool;
-            if ((this.Head != 0x1869f) && (this.Head != this.Tail))
+            var pool = Vertexsegment.Pool;
+            if ((Head != 0x1869f) && (Head != Tail))
             {
-                int head = this.Head;
-                int num2 = 0;
+                var head = Head;
+                var num2 = 0;
                 while (true)
                 {
-                    int num3 = head + 1;
-                    if (num3 == this.MaxElements)
+                    var num3 = head + 1;
+                    if (num3 == MaxElements)
                     {
                         num3 = 0;
                     }
@@ -253,16 +253,16 @@ public class RibbonTrail
                     {
                         Debug.LogError("Too many elements!");
                     }
-                    int num4 = this.Vertexsegment.VertStart + (num3 * 2);
-                    int num5 = this.Vertexsegment.VertStart + (head * 2);
-                    int index = this.Vertexsegment.IndexStart + (num2 * 6);
+                    var num4 = Vertexsegment.VertStart + (num3 * 2);
+                    var num5 = Vertexsegment.VertStart + (head * 2);
+                    var index = Vertexsegment.IndexStart + (num2 * 6);
                     pool.Indices[index] = num5;
                     pool.Indices[index + 1] = num5 + 1;
                     pool.Indices[index + 2] = num4;
                     pool.Indices[index + 3] = num5 + 1;
                     pool.Indices[index + 4] = num4 + 1;
                     pool.Indices[index + 5] = num4;
-                    if (num3 == this.Tail)
+                    if (num3 == Tail)
                     {
                         break;
                     }
@@ -271,103 +271,103 @@ public class RibbonTrail
                 }
                 pool.IndiceChanged = true;
             }
-            this.IndexDirty = false;
+            IndexDirty = false;
         }
     }
 
     public void UpdateVertices(Vector3 eyePos)
     {
         Vector3 vector;
-        float num = 0f;
-        float num2 = 0f;
-        float num3 = this.ElemLength * (this.MaxElements - 2);
-        if ((this.Head == 0x1869f) || (this.Head == this.Tail))
+        var num = 0f;
+        var num2 = 0f;
+        var num3 = ElemLength * (MaxElements - 2);
+        if ((Head == 0x1869f) || (Head == Tail))
         {
             return;
         }
-        int head = this.Head;
-        int index = this.Head;
+        var head = Head;
+        var index = Head;
     Label_0052:
-        if (index == this.MaxElements)
+        if (index == MaxElements)
         {
             index = 0;
         }
-        Element element = this.ElementArray[index];
+        var element = ElementArray[index];
         if ((index * 2) >= 0x10000)
         {
             Debug.LogError("Too many elements!");
         }
-        int num6 = this.Vertexsegment.VertStart + (index * 2);
-        int num7 = index + 1;
-        if (num7 == this.MaxElements)
+        var num6 = Vertexsegment.VertStart + (index * 2);
+        var num7 = index + 1;
+        if (num7 == MaxElements)
         {
             num7 = 0;
         }
-        if (index == this.Head)
+        if (index == Head)
         {
-            vector = this.ElementArray[num7].Position - element.Position;
+            vector = ElementArray[num7].Position - element.Position;
         }
-        else if (index == this.Tail)
+        else if (index == Tail)
         {
-            vector = element.Position - this.ElementArray[head].Position;
+            vector = element.Position - ElementArray[head].Position;
         }
         else
         {
-            vector = this.ElementArray[num7].Position - this.ElementArray[head].Position;
+            vector = ElementArray[num7].Position - ElementArray[head].Position;
         }
-        Vector3 rhs = eyePos - element.Position;
-        Vector3 vector3 = Vector3.Cross(vector, rhs);
+        var rhs = eyePos - element.Position;
+        var vector3 = Vector3.Cross(vector, rhs);
         vector3.Normalize();
-        vector3 = (Vector3) (vector3 * (element.Width * 0.5f));
-        Vector3 vector4 = element.Position - vector3;
-        Vector3 vector5 = element.Position + vector3;
-        VertexPool pool = this.Vertexsegment.Pool;
-        if (this.StretchType == 0)
+        vector3 = vector3 * (element.Width * 0.5f);
+        var vector4 = element.Position - vector3;
+        var vector5 = element.Position + vector3;
+        var pool = Vertexsegment.Pool;
+        if (StretchType == 0)
         {
-            num = (num2 / num3) * Mathf.Abs(this.UVDimensions.y);
+            num = (num2 / num3) * Mathf.Abs(UVDimensions.y);
         }
         else
         {
-            num = (num2 / num3) * Mathf.Abs(this.UVDimensions.x);
+            num = (num2 / num3) * Mathf.Abs(UVDimensions.x);
         }
-        Vector2 zero = Vector2.zero;
+        var zero = Vector2.zero;
         pool.Vertices[num6] = vector4;
-        pool.Colors[num6] = this.Color;
-        if (this.StretchType == 0)
+        pool.Colors[num6] = Color;
+        if (StretchType == 0)
         {
-            zero.x = this.LowerLeftUV.x + this.UVDimensions.x;
-            zero.y = this.LowerLeftUV.y - num;
+            zero.x = LowerLeftUV.x + UVDimensions.x;
+            zero.y = LowerLeftUV.y - num;
         }
         else
         {
-            zero.x = this.LowerLeftUV.x + num;
-            zero.y = this.LowerLeftUV.y;
+            zero.x = LowerLeftUV.x + num;
+            zero.y = LowerLeftUV.y;
         }
         pool.UVs[num6] = zero;
         pool.Vertices[num6 + 1] = vector5;
-        pool.Colors[num6 + 1] = this.Color;
-        if (this.StretchType == 0)
+        pool.Colors[num6 + 1] = Color;
+        if (StretchType == 0)
         {
-            zero.x = this.LowerLeftUV.x;
-            zero.y = this.LowerLeftUV.y - num;
+            zero.x = LowerLeftUV.x;
+            zero.y = LowerLeftUV.y - num;
         }
         else
         {
-            zero.x = this.LowerLeftUV.x + num;
-            zero.y = this.LowerLeftUV.y - Mathf.Abs(this.UVDimensions.y);
+            zero.x = LowerLeftUV.x + num;
+            zero.y = LowerLeftUV.y - Mathf.Abs(UVDimensions.y);
         }
         pool.UVs[num6 + 1] = zero;
-        if (index != this.Tail)
+        if (index != Tail)
         {
             head = index;
-            Vector3 vector7 = this.ElementArray[num7].Position - element.Position;
+            var vector7 = ElementArray[num7].Position - element.Position;
             num2 += vector7.magnitude;
             index++;
             goto Label_0052;
         }
-        this.Vertexsegment.Pool.UVChanged = true;
-        this.Vertexsegment.Pool.VertChanged = true;
-        this.Vertexsegment.Pool.ColorChanged = true;
+        Vertexsegment.Pool.UVChanged = true;
+        Vertexsegment.Pool.VertChanged = true;
+        Vertexsegment.Pool.ColorChanged = true;
     }
 
     public class Element
@@ -377,8 +377,8 @@ public class RibbonTrail
 
         public Element(Vector3 position, float width)
         {
-            this.Position = position;
-            this.Width = width;
+            Position = position;
+            Width = width;
         }
     }
 }

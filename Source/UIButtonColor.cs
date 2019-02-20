@@ -18,47 +18,47 @@ public class UIButtonColor : MonoBehaviour
 
     protected void Init()
     {
-        if (this.tweenTarget == null)
+        if (tweenTarget == null)
         {
-            this.tweenTarget = base.gameObject;
+            tweenTarget = gameObject;
         }
-        UIWidget component = this.tweenTarget.GetComponent<UIWidget>();
+        var component = tweenTarget.GetComponent<UIWidget>();
         if (component != null)
         {
-            this.mColor = component.color;
+            mColor = component.color;
         }
         else
         {
-            Renderer renderer = this.tweenTarget.renderer;
+            var renderer = tweenTarget.renderer;
             if (renderer != null)
             {
-                this.mColor = renderer.material.color;
+                mColor = renderer.material.color;
             }
             else
             {
-                Light light = this.tweenTarget.light;
+                var light = tweenTarget.light;
                 if (light != null)
                 {
-                    this.mColor = light.color;
+                    mColor = light.color;
                 }
                 else
                 {
-                    Debug.LogWarning(NGUITools.GetHierarchy(base.gameObject) + " has nothing for UIButtonColor to color", this);
-                    base.enabled = false;
+                    Debug.LogWarning(NGUITools.GetHierarchy(gameObject) + " has nothing for UIButtonColor to color", this);
+                    enabled = false;
                 }
             }
         }
-        this.OnEnable();
+        OnEnable();
     }
 
     private void OnDisable()
     {
-        if (this.mStarted && (this.tweenTarget != null))
+        if (mStarted && (tweenTarget != null))
         {
-            TweenColor component = this.tweenTarget.GetComponent<TweenColor>();
+            var component = tweenTarget.GetComponent<TweenColor>();
             if (component != null)
             {
-                component.color = this.mColor;
+                component.color = mColor;
                 component.enabled = false;
             }
         }
@@ -66,43 +66,43 @@ public class UIButtonColor : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        if (this.mStarted && this.mHighlighted)
+        if (mStarted && mHighlighted)
         {
-            this.OnHover(UICamera.IsHighlighted(base.gameObject));
+            OnHover(UICamera.IsHighlighted(gameObject));
         }
     }
 
     public virtual void OnHover(bool isOver)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Start();
+                Start();
             }
-            TweenColor.Begin(this.tweenTarget, this.duration, !isOver ? this.mColor : this.hover);
-            this.mHighlighted = isOver;
+            TweenColor.Begin(tweenTarget, duration, !isOver ? mColor : hover);
+            mHighlighted = isOver;
         }
     }
 
     public virtual void OnPress(bool isPressed)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Start();
+                Start();
             }
-            TweenColor.Begin(this.tweenTarget, this.duration, !isPressed ? (!UICamera.IsHighlighted(base.gameObject) ? this.mColor : this.hover) : this.pressed);
+            TweenColor.Begin(tweenTarget, duration, !isPressed ? (!UICamera.IsHighlighted(gameObject) ? mColor : hover) : pressed);
         }
     }
 
     private void Start()
     {
-        if (!this.mStarted)
+        if (!mStarted)
         {
-            this.Init();
-            this.mStarted = true;
+            Init();
+            mStarted = true;
         }
     }
 
@@ -110,15 +110,15 @@ public class UIButtonColor : MonoBehaviour
     {
         get
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Init();
+                Init();
             }
-            return this.mColor;
+            return mColor;
         }
         set
         {
-            this.mColor = value;
+            mColor = value;
         }
     }
 }

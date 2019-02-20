@@ -17,26 +17,26 @@ public class LagRotation : MonoBehaviour
 
     private void CoroutineUpdate(float delta)
     {
-        Transform parent = this.mTrans.parent;
+        var parent = mTrans.parent;
         if (parent != null)
         {
-            this.mAbsolute = Quaternion.Slerp(this.mAbsolute, parent.rotation * this.mRelative, delta * this.speed);
-            this.mTrans.rotation = this.mAbsolute;
+            mAbsolute = Quaternion.Slerp(mAbsolute, parent.rotation * mRelative, delta * speed);
+            mTrans.rotation = mAbsolute;
         }
     }
 
     private void Start()
     {
-        this.mTrans = base.transform;
-        this.mRelative = this.mTrans.localRotation;
-        this.mAbsolute = this.mTrans.rotation;
-        if (this.ignoreTimeScale)
+        mTrans = transform;
+        mRelative = mTrans.localRotation;
+        mAbsolute = mTrans.rotation;
+        if (ignoreTimeScale)
         {
-            UpdateManager.AddCoroutine(this, this.updateOrder, new UpdateManager.OnUpdate(this.CoroutineUpdate));
+            UpdateManager.AddCoroutine(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
         }
         else
         {
-            UpdateManager.AddLateUpdate(this, this.updateOrder, new UpdateManager.OnUpdate(this.CoroutineUpdate));
+            UpdateManager.AddLateUpdate(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
         }
     }
 }

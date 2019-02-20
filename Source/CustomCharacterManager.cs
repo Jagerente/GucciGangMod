@@ -54,13 +54,13 @@ public class CustomCharacterManager : MonoBehaviour
 
     private int calTotalPoints()
     {
-        if (this.setup.myCostume != null)
+        if (setup.myCostume != null)
         {
-            int num = 0;
-            num += this.setup.myCostume.stat.SPD;
-            num += this.setup.myCostume.stat.GAS;
-            num += this.setup.myCostume.stat.BLA;
-            return (num + this.setup.myCostume.stat.ACL);
+            var num = 0;
+            num += setup.myCostume.stat.SPD;
+            num += setup.myCostume.stat.GAS;
+            num += setup.myCostume.stat.BLA;
+            return (num + setup.myCostume.stat.ACL);
         }
         return 400;
     }
@@ -85,7 +85,7 @@ public class CustomCharacterManager : MonoBehaviour
 
     private void copyCostume(HeroCostume from, HeroCostume to, bool init = false)
     {
-        this.copyBodyCostume(from, to);
+        copyBodyCostume(from, to);
         to.sex = from.sex;
         to.hair_mesh = from.hair_mesh;
         to.hair_1_mesh = from.hair_1_mesh;
@@ -140,89 +140,89 @@ public class CustomCharacterManager : MonoBehaviour
 
     private void CostumeDataToMyID()
     {
-        int index = 0;
-        for (index = 0; index < this.sexOption.Length; index++)
+        var index = 0;
+        for (index = 0; index < sexOption.Length; index++)
         {
-            if (this.sexOption[index] == this.setup.myCostume.sex)
+            if (sexOption[index] == setup.myCostume.sex)
             {
-                this.sexId = index;
+                sexId = index;
                 break;
             }
         }
         index = 0;
-        while (index < this.eyeOption.Length)
+        while (index < eyeOption.Length)
         {
-            if (this.eyeOption[index] == this.setup.myCostume.eye_texture_id)
+            if (eyeOption[index] == setup.myCostume.eye_texture_id)
             {
-                this.eyeId = index;
+                eyeId = index;
                 break;
             }
             index++;
         }
-        this.faceId = -1;
-        for (index = 0; index < this.faceOption.Length; index++)
+        faceId = -1;
+        for (index = 0; index < faceOption.Length; index++)
         {
-            if (this.faceOption[index] == this.setup.myCostume.beard_texture_id)
+            if (faceOption[index] == setup.myCostume.beard_texture_id)
             {
-                this.faceId = index;
+                faceId = index;
                 break;
             }
         }
-        this.glassId = -1;
-        for (index = 0; index < this.glassOption.Length; index++)
+        glassId = -1;
+        for (index = 0; index < glassOption.Length; index++)
         {
-            if (this.glassOption[index] == this.setup.myCostume.glass_texture_id)
+            if (glassOption[index] == setup.myCostume.glass_texture_id)
             {
-                this.glassId = index;
+                glassId = index;
                 break;
             }
         }
-        for (index = 0; index < this.hairOption.Length; index++)
+        for (index = 0; index < hairOption.Length; index++)
         {
-            if (this.hairOption[index] == this.setup.myCostume.hairInfo.id)
+            if (hairOption[index] == setup.myCostume.hairInfo.id)
             {
-                this.hairId = index;
+                hairId = index;
                 break;
             }
         }
-        for (index = 0; index < this.skinOption.Length; index++)
+        for (index = 0; index < skinOption.Length; index++)
         {
-            if (this.skinOption[index] == this.setup.myCostume.skin_color)
+            if (skinOption[index] == setup.myCostume.skin_color)
             {
-                this.skinId = index;
+                skinId = index;
                 break;
             }
         }
-        if (this.setup.myCostume.cape)
+        if (setup.myCostume.cape)
         {
-            this.capeId = 1;
+            capeId = 1;
         }
         else
         {
-            this.capeId = 0;
+            capeId = 0;
         }
         index = 0;
-        while (index < this.divisionOption.Length)
+        while (index < divisionOption.Length)
         {
-            if (this.divisionOption[index] == this.setup.myCostume.division)
+            if (divisionOption[index] == setup.myCostume.division)
             {
-                this.divisionId = index;
+                divisionId = index;
                 break;
             }
             index++;
         }
-        this.costumeId = this.setup.myCostume.costumeId;
-        float r = this.setup.myCostume.hair_color.r;
-        float g = this.setup.myCostume.hair_color.g;
-        float b = this.setup.myCostume.hair_color.b;
-        this.hairR.GetComponent<UISlider>().sliderValue = r;
-        this.hairG.GetComponent<UISlider>().sliderValue = g;
-        this.hairB.GetComponent<UISlider>().sliderValue = b;
-        for (index = 0; index < this.skillOption.Length; index++)
+        costumeId = setup.myCostume.costumeId;
+        var r = setup.myCostume.hair_color.r;
+        var g = setup.myCostume.hair_color.g;
+        var b = setup.myCostume.hair_color.b;
+        hairR.GetComponent<UISlider>().sliderValue = r;
+        hairG.GetComponent<UISlider>().sliderValue = g;
+        hairB.GetComponent<UISlider>().sliderValue = b;
+        for (index = 0; index < skillOption.Length; index++)
         {
-            if (this.skillOption[index] == this.setup.myCostume.stat.skillId)
+            if (skillOption[index] == setup.myCostume.stat.skillId)
             {
-                this.skillId = index;
+                skillId = index;
                 break;
             }
         }
@@ -230,51 +230,51 @@ public class CustomCharacterManager : MonoBehaviour
 
     private void freshLabel()
     {
-        this.labelSex.GetComponent<UILabel>().text = this.sexOption[this.sexId].ToString();
-        this.labelEye.GetComponent<UILabel>().text = "eye_" + this.eyeId.ToString();
-        this.labelFace.GetComponent<UILabel>().text = "face_" + this.faceId.ToString();
-        this.labelGlass.GetComponent<UILabel>().text = "glass_" + this.glassId.ToString();
-        this.labelHair.GetComponent<UILabel>().text = "hair_" + this.hairId.ToString();
-        this.labelSkin.GetComponent<UILabel>().text = "skin_" + this.skinId.ToString();
-        this.labelCostume.GetComponent<UILabel>().text = "costume_" + this.costumeId.ToString();
-        this.labelCape.GetComponent<UILabel>().text = "cape_" + this.capeId.ToString();
-        this.labelDivision.GetComponent<UILabel>().text = this.divisionOption[this.divisionId].ToString();
-        this.labelPOINT.GetComponent<UILabel>().text = "Points: " + ((400 - this.calTotalPoints())).ToString();
-        this.labelSPD.GetComponent<UILabel>().text = "SPD " + this.setup.myCostume.stat.SPD.ToString();
-        this.labelGAS.GetComponent<UILabel>().text = "GAS " + this.setup.myCostume.stat.GAS.ToString();
-        this.labelBLA.GetComponent<UILabel>().text = "BLA " + this.setup.myCostume.stat.BLA.ToString();
-        this.labelACL.GetComponent<UILabel>().text = "ACL " + this.setup.myCostume.stat.ACL.ToString();
-        this.labelSKILL.GetComponent<UILabel>().text = "SKILL " + this.setup.myCostume.stat.skillId.ToString();
+        labelSex.GetComponent<UILabel>().text = sexOption[sexId].ToString();
+        labelEye.GetComponent<UILabel>().text = "eye_" + eyeId.ToString();
+        labelFace.GetComponent<UILabel>().text = "face_" + faceId.ToString();
+        labelGlass.GetComponent<UILabel>().text = "glass_" + glassId.ToString();
+        labelHair.GetComponent<UILabel>().text = "hair_" + hairId.ToString();
+        labelSkin.GetComponent<UILabel>().text = "skin_" + skinId.ToString();
+        labelCostume.GetComponent<UILabel>().text = "costume_" + costumeId.ToString();
+        labelCape.GetComponent<UILabel>().text = "cape_" + capeId.ToString();
+        labelDivision.GetComponent<UILabel>().text = divisionOption[divisionId].ToString();
+        labelPOINT.GetComponent<UILabel>().text = "Points: " + ((400 - calTotalPoints())).ToString();
+        labelSPD.GetComponent<UILabel>().text = "SPD " + setup.myCostume.stat.SPD.ToString();
+        labelGAS.GetComponent<UILabel>().text = "GAS " + setup.myCostume.stat.GAS.ToString();
+        labelBLA.GetComponent<UILabel>().text = "BLA " + setup.myCostume.stat.BLA.ToString();
+        labelACL.GetComponent<UILabel>().text = "ACL " + setup.myCostume.stat.ACL.ToString();
+        labelSKILL.GetComponent<UILabel>().text = "SKILL " + setup.myCostume.stat.skillId.ToString();
     }
 
     public void LoadData()
     {
-        HeroCostume from = CostumeConeveter.LocalDataToHeroCostume(this.currentSlot);
+        var from = CostumeConeveter.LocalDataToHeroCostume(currentSlot);
         if (from != null)
         {
-            this.copyCostume(from, this.setup.myCostume, false);
-            this.setup.deleteCharacterComponent2();
-            this.setup.setCharacterComponent();
+            copyCostume(from, setup.myCostume, false);
+            setup.deleteCharacterComponent2();
+            setup.setCharacterComponent();
         }
-        this.CostumeDataToMyID();
-        this.freshLabel();
+        CostumeDataToMyID();
+        freshLabel();
     }
 
     public void nextOption(CreatePart part)
     {
         if (part == CreatePart.Preset)
         {
-            this.presetId = this.toNext(this.presetId, HeroCostume.costume.Length, 0);
-            this.copyCostume(HeroCostume.costume[this.presetId], this.setup.myCostume, true);
-            this.CostumeDataToMyID();
-            this.setup.deleteCharacterComponent2();
-            this.setup.setCharacterComponent();
-            this.labelPreset.GetComponent<UILabel>().text = HeroCostume.costume[this.presetId].name;
-            this.freshLabel();
+            presetId = toNext(presetId, HeroCostume.costume.Length, 0);
+            copyCostume(HeroCostume.costume[presetId], setup.myCostume, true);
+            CostumeDataToMyID();
+            setup.deleteCharacterComponent2();
+            setup.setCharacterComponent();
+            labelPreset.GetComponent<UILabel>().text = HeroCostume.costume[presetId].name;
+            freshLabel();
         }
         else
         {
-            this.toOption2(part, true);
+            toOption2(part, true);
         }
     }
 
@@ -282,64 +282,64 @@ public class CustomCharacterManager : MonoBehaviour
     {
         if (type == CreateStat.Skill)
         {
-            this.skillId = this.toNext(this.skillId, this.skillOption.Length, 0);
-            this.setup.myCostume.stat.skillId = this.skillOption[this.skillId];
-            this.character.GetComponent<CharacterCreateAnimationControl>().playAttack(this.setup.myCostume.stat.skillId);
-            this.freshLabel();
+            skillId = toNext(skillId, skillOption.Length, 0);
+            setup.myCostume.stat.skillId = skillOption[skillId];
+            character.GetComponent<CharacterCreateAnimationControl>().playAttack(setup.myCostume.stat.skillId);
+            freshLabel();
         }
-        else if (this.calTotalPoints() < 400)
+        else if (calTotalPoints() < 400)
         {
-            this.setStatPoint(type, 1);
+            setStatPoint(type, 1);
         }
     }
 
     public void OnHairBChange(float value)
     {
-        if (((this.setup != null) && (this.setup.myCostume != null)) && (this.setup.part_hair != null))
+        if (((setup != null) && (setup.myCostume != null)) && (setup.part_hair != null))
         {
-            this.setup.myCostume.hair_color = new Color(this.setup.part_hair.renderer.material.color.r, this.setup.part_hair.renderer.material.color.g, value);
-            this.setHairColor();
+            setup.myCostume.hair_color = new Color(setup.part_hair.renderer.material.color.r, setup.part_hair.renderer.material.color.g, value);
+            setHairColor();
         }
     }
 
     public void OnHairGChange(float value)
     {
-        if ((this.setup.myCostume != null) && (this.setup.part_hair != null))
+        if ((setup.myCostume != null) && (setup.part_hair != null))
         {
-            this.setup.myCostume.hair_color = new Color(this.setup.part_hair.renderer.material.color.r, value, this.setup.part_hair.renderer.material.color.b);
-            this.setHairColor();
+            setup.myCostume.hair_color = new Color(setup.part_hair.renderer.material.color.r, value, setup.part_hair.renderer.material.color.b);
+            setHairColor();
         }
     }
 
     public void OnHairRChange(float value)
     {
-        if ((this.setup.myCostume != null) && (this.setup.part_hair != null))
+        if ((setup.myCostume != null) && (setup.part_hair != null))
         {
-            this.setup.myCostume.hair_color = new Color(value, this.setup.part_hair.renderer.material.color.g, this.setup.part_hair.renderer.material.color.b);
-            this.setHairColor();
+            setup.myCostume.hair_color = new Color(value, setup.part_hair.renderer.material.color.g, setup.part_hair.renderer.material.color.b);
+            setHairColor();
         }
     }
 
     public void OnSoltChange(string id)
     {
-        this.currentSlot = id;
+        currentSlot = id;
     }
 
     public void prevOption(CreatePart part)
     {
         if (part == CreatePart.Preset)
         {
-            this.presetId = this.toPrev(this.presetId, HeroCostume.costume.Length, 0);
-            this.copyCostume(HeroCostume.costume[this.presetId], this.setup.myCostume, true);
-            this.CostumeDataToMyID();
-            this.setup.deleteCharacterComponent2();
-            this.setup.setCharacterComponent();
-            this.labelPreset.GetComponent<UILabel>().text = HeroCostume.costume[this.presetId].name;
-            this.freshLabel();
+            presetId = toPrev(presetId, HeroCostume.costume.Length, 0);
+            copyCostume(HeroCostume.costume[presetId], setup.myCostume, true);
+            CostumeDataToMyID();
+            setup.deleteCharacterComponent2();
+            setup.setCharacterComponent();
+            labelPreset.GetComponent<UILabel>().text = HeroCostume.costume[presetId].name;
+            freshLabel();
         }
         else
         {
-            this.toOption2(part, false);
+            toOption2(part, false);
         }
     }
 
@@ -347,31 +347,31 @@ public class CustomCharacterManager : MonoBehaviour
     {
         if (type == CreateStat.Skill)
         {
-            this.skillId = this.toPrev(this.skillId, this.skillOption.Length, 0);
-            this.setup.myCostume.stat.skillId = this.skillOption[this.skillId];
-            this.character.GetComponent<CharacterCreateAnimationControl>().playAttack(this.setup.myCostume.stat.skillId);
-            this.freshLabel();
+            skillId = toPrev(skillId, skillOption.Length, 0);
+            setup.myCostume.stat.skillId = skillOption[skillId];
+            character.GetComponent<CharacterCreateAnimationControl>().playAttack(setup.myCostume.stat.skillId);
+            freshLabel();
         }
         else
         {
-            this.setStatPoint(type, -1);
+            setStatPoint(type, -1);
         }
     }
 
     public void SaveData()
     {
-        CostumeConeveter.HeroCostumeToLocalData(this.setup.myCostume, this.currentSlot);
+        CostumeConeveter.HeroCostumeToLocalData(setup.myCostume, currentSlot);
     }
 
     private void setHairColor()
     {
-        if (this.setup.part_hair != null)
+        if (setup.part_hair != null)
         {
-            this.setup.part_hair.renderer.material.color = this.setup.myCostume.hair_color;
+            setup.part_hair.renderer.material.color = setup.myCostume.hair_color;
         }
-        if (this.setup.part_hair_1 != null)
+        if (setup.part_hair_1 != null)
         {
-            this.setup.part_hair_1.renderer.material.color = this.setup.myCostume.hair_color;
+            setup.part_hair_1.renderer.material.color = setup.myCostume.hair_color;
         }
     }
 
@@ -380,80 +380,80 @@ public class CustomCharacterManager : MonoBehaviour
         switch (type)
         {
             case CreateStat.SPD:
-                this.setup.myCostume.stat.SPD += pt;
+                setup.myCostume.stat.SPD += pt;
                 break;
 
             case CreateStat.GAS:
-                this.setup.myCostume.stat.GAS += pt;
+                setup.myCostume.stat.GAS += pt;
                 break;
 
             case CreateStat.BLA:
-                this.setup.myCostume.stat.BLA += pt;
+                setup.myCostume.stat.BLA += pt;
                 break;
 
             case CreateStat.ACL:
-                this.setup.myCostume.stat.ACL += pt;
+                setup.myCostume.stat.ACL += pt;
                 break;
         }
-        this.setup.myCostume.stat.SPD = Mathf.Clamp(this.setup.myCostume.stat.SPD, 0x4b, 0x7d);
-        this.setup.myCostume.stat.GAS = Mathf.Clamp(this.setup.myCostume.stat.GAS, 0x4b, 0x7d);
-        this.setup.myCostume.stat.BLA = Mathf.Clamp(this.setup.myCostume.stat.BLA, 0x4b, 0x7d);
-        this.setup.myCostume.stat.ACL = Mathf.Clamp(this.setup.myCostume.stat.ACL, 0x4b, 0x7d);
-        this.freshLabel();
+        setup.myCostume.stat.SPD = Mathf.Clamp(setup.myCostume.stat.SPD, 0x4b, 0x7d);
+        setup.myCostume.stat.GAS = Mathf.Clamp(setup.myCostume.stat.GAS, 0x4b, 0x7d);
+        setup.myCostume.stat.BLA = Mathf.Clamp(setup.myCostume.stat.BLA, 0x4b, 0x7d);
+        setup.myCostume.stat.ACL = Mathf.Clamp(setup.myCostume.stat.ACL, 0x4b, 0x7d);
+        freshLabel();
     }
 
     private void Start()
     {
         int num;
         QualitySettings.SetQualityLevel(5, true);
-        this.costumeOption = HeroCostume.costumeOption;
-        this.setup = this.character.GetComponent<HERO_SETUP>();
-        this.setup.init();
-        this.setup.myCostume = new HeroCostume();
-        this.copyCostume(HeroCostume.costume[2], this.setup.myCostume, false);
-        this.setup.myCostume.setMesh2();
-        this.setup.setCharacterComponent();
-        SEX[] sexArray1 = new SEX[2];
+        costumeOption = HeroCostume.costumeOption;
+        setup = character.GetComponent<HERO_SETUP>();
+        setup.init();
+        setup.myCostume = new HeroCostume();
+        copyCostume(HeroCostume.costume[2], setup.myCostume, false);
+        setup.myCostume.setMesh2();
+        setup.setCharacterComponent();
+        var sexArray1 = new SEX[2];
         sexArray1[1] = SEX.FEMALE;
-        this.sexOption = sexArray1;
-        this.eyeOption = new int[0x1c];
+        sexOption = sexArray1;
+        eyeOption = new int[0x1c];
         for (num = 0; num < 0x1c; num++)
         {
-            this.eyeOption[num] = num;
+            eyeOption[num] = num;
         }
-        this.faceOption = new int[14];
+        faceOption = new int[14];
         for (num = 0; num < 14; num++)
         {
-            this.faceOption[num] = num + 0x20;
+            faceOption[num] = num + 0x20;
         }
-        this.glassOption = new int[10];
+        glassOption = new int[10];
         for (num = 0; num < 10; num++)
         {
-            this.glassOption[num] = num + 0x30;
+            glassOption[num] = num + 0x30;
         }
-        this.hairOption = new int[11];
+        hairOption = new int[11];
         for (num = 0; num < 11; num++)
         {
-            this.hairOption[num] = num;
+            hairOption[num] = num;
         }
-        this.skinOption = new int[3];
+        skinOption = new int[3];
         for (num = 0; num < 3; num++)
         {
-            this.skinOption[num] = num + 1;
+            skinOption[num] = num + 1;
         }
-        this.capeOption = new int[2];
+        capeOption = new int[2];
         for (num = 0; num < 2; num++)
         {
-            this.capeOption[num] = num;
+            capeOption[num] = num;
         }
-        DIVISION[] divisionArray1 = new DIVISION[4];
+        var divisionArray1 = new DIVISION[4];
         divisionArray1[1] = DIVISION.TheGarrison;
         divisionArray1[2] = DIVISION.TheMilitaryPolice;
         divisionArray1[3] = DIVISION.TheSurveryCorps;
-        this.divisionOption = divisionArray1;
-        this.skillOption = new string[] { "mikasa", "levi", "sasha", "jean", "marco", "armin", "petra" };
-        this.CostumeDataToMyID();
-        this.freshLabel();
+        divisionOption = divisionArray1;
+        skillOption = new string[] { "mikasa", "levi", "sasha", "jean", "marco", "armin", "petra" };
+        CostumeDataToMyID();
+        freshLabel();
     }
 
     private int toNext(int id, int Count, int start = 0)
@@ -472,124 +472,124 @@ public class CustomCharacterManager : MonoBehaviour
         switch (part)
         {
             case CreatePart.Sex:
-                this.sexId = !next ? this.toPrev(this.sexId, this.sexOption.Length, 0) : this.toNext(this.sexId, this.sexOption.Length, 0);
-                if (this.sexId != 0)
+                sexId = !next ? toPrev(sexId, sexOption.Length, 0) : toNext(sexId, sexOption.Length, 0);
+                if (sexId != 0)
                 {
-                    this.costumeId = 0;
+                    costumeId = 0;
                     break;
                 }
-                this.costumeId = 11;
+                costumeId = 11;
                 break;
 
             case CreatePart.Eye:
-                this.eyeId = !next ? this.toPrev(this.eyeId, this.eyeOption.Length, 0) : this.toNext(this.eyeId, this.eyeOption.Length, 0);
-                this.setup.myCostume.eye_texture_id = this.eyeId;
-                this.setup.setFacialTexture(this.setup.part_eye, this.eyeOption[this.eyeId]);
+                eyeId = !next ? toPrev(eyeId, eyeOption.Length, 0) : toNext(eyeId, eyeOption.Length, 0);
+                setup.myCostume.eye_texture_id = eyeId;
+                setup.setFacialTexture(setup.part_eye, eyeOption[eyeId]);
                 goto Label_06AE;
 
             case CreatePart.Face:
-                this.faceId = !next ? this.toPrev(this.faceId, this.faceOption.Length, 0) : this.toNext(this.faceId, this.faceOption.Length, 0);
-                this.setup.myCostume.beard_texture_id = this.faceOption[this.faceId];
-                if (this.setup.part_face == null)
+                faceId = !next ? toPrev(faceId, faceOption.Length, 0) : toNext(faceId, faceOption.Length, 0);
+                setup.myCostume.beard_texture_id = faceOption[faceId];
+                if (setup.part_face == null)
                 {
-                    this.setup.createFace();
+                    setup.createFace();
                 }
-                this.setup.setFacialTexture(this.setup.part_face, this.faceOption[this.faceId]);
+                setup.setFacialTexture(setup.part_face, faceOption[faceId]);
                 goto Label_06AE;
 
             case CreatePart.Glass:
-                this.glassId = !next ? this.toPrev(this.glassId, this.glassOption.Length, 0) : this.toNext(this.glassId, this.glassOption.Length, 0);
-                this.setup.myCostume.glass_texture_id = this.glassOption[this.glassId];
-                if (this.setup.part_glass == null)
+                glassId = !next ? toPrev(glassId, glassOption.Length, 0) : toNext(glassId, glassOption.Length, 0);
+                setup.myCostume.glass_texture_id = glassOption[glassId];
+                if (setup.part_glass == null)
                 {
-                    this.setup.createGlass();
+                    setup.createGlass();
                 }
-                this.setup.setFacialTexture(this.setup.part_glass, this.glassOption[this.glassId]);
+                setup.setFacialTexture(setup.part_glass, glassOption[glassId]);
                 goto Label_06AE;
 
             case CreatePart.Hair:
-                this.hairId = !next ? this.toPrev(this.hairId, this.hairOption.Length, 0) : this.toNext(this.hairId, this.hairOption.Length, 0);
-                if (this.sexId != 0)
+                hairId = !next ? toPrev(hairId, hairOption.Length, 0) : toNext(hairId, hairOption.Length, 0);
+                if (sexId != 0)
                 {
-                    this.setup.myCostume.hair_mesh = CostumeHair.hairsF[this.hairOption[this.hairId]].hair;
-                    this.setup.myCostume.hair_1_mesh = CostumeHair.hairsF[this.hairOption[this.hairId]].hair_1;
-                    this.setup.myCostume.hairInfo = CostumeHair.hairsF[this.hairOption[this.hairId]];
+                    setup.myCostume.hair_mesh = CostumeHair.hairsF[hairOption[hairId]].hair;
+                    setup.myCostume.hair_1_mesh = CostumeHair.hairsF[hairOption[hairId]].hair_1;
+                    setup.myCostume.hairInfo = CostumeHair.hairsF[hairOption[hairId]];
                 }
                 else
                 {
-                    this.setup.myCostume.hair_mesh = CostumeHair.hairsM[this.hairOption[this.hairId]].hair;
-                    this.setup.myCostume.hair_1_mesh = CostumeHair.hairsM[this.hairOption[this.hairId]].hair_1;
-                    this.setup.myCostume.hairInfo = CostumeHair.hairsM[this.hairOption[this.hairId]];
+                    setup.myCostume.hair_mesh = CostumeHair.hairsM[hairOption[hairId]].hair;
+                    setup.myCostume.hair_1_mesh = CostumeHair.hairsM[hairOption[hairId]].hair_1;
+                    setup.myCostume.hairInfo = CostumeHair.hairsM[hairOption[hairId]];
                 }
-                this.setup.createHair2();
-                this.setHairColor();
+                setup.createHair2();
+                setHairColor();
                 goto Label_06AE;
 
             case CreatePart.Skin:
-                if (this.setup.myCostume.uniform_type != UNIFORM_TYPE.CasualAHSS)
+                if (setup.myCostume.uniform_type != UNIFORM_TYPE.CasualAHSS)
                 {
-                    this.skinId = !next ? this.toPrev(this.skinId, 2, 0) : this.toNext(this.skinId, 2, 0);
+                    skinId = !next ? toPrev(skinId, 2, 0) : toNext(skinId, 2, 0);
                 }
                 else
                 {
-                    this.skinId = 2;
+                    skinId = 2;
                 }
-                this.setup.myCostume.skin_color = this.skinOption[this.skinId];
-                this.setup.myCostume.setTexture();
-                this.setup.setSkin();
+                setup.myCostume.skin_color = skinOption[skinId];
+                setup.myCostume.setTexture();
+                setup.setSkin();
                 goto Label_06AE;
 
             case CreatePart.Costume:
-                if (this.setup.myCostume.uniform_type != UNIFORM_TYPE.CasualAHSS)
+                if (setup.myCostume.uniform_type != UNIFORM_TYPE.CasualAHSS)
                 {
-                    if (this.sexId == 0)
+                    if (sexId == 0)
                     {
-                        this.costumeId = !next ? this.toPrev(this.costumeId, 0x18, 10) : this.toNext(this.costumeId, 0x18, 10);
+                        costumeId = !next ? toPrev(costumeId, 0x18, 10) : toNext(costumeId, 0x18, 10);
                     }
                     else
                     {
-                        this.costumeId = !next ? this.toPrev(this.costumeId, 10, 0) : this.toNext(this.costumeId, 10, 0);
+                        costumeId = !next ? toPrev(costumeId, 10, 0) : toNext(costumeId, 10, 0);
                     }
                 }
                 else
                 {
-                    this.costumeId = 0x19;
+                    costumeId = 0x19;
                 }
-                this.copyBodyCostume(this.costumeOption[this.costumeId], this.setup.myCostume);
-                this.setup.myCostume.setMesh2();
-                this.setup.myCostume.setTexture();
-                this.setup.createUpperBody2();
-                this.setup.createLeftArm();
-                this.setup.createRightArm();
-                this.setup.createLowerBody();
+                copyBodyCostume(costumeOption[costumeId], setup.myCostume);
+                setup.myCostume.setMesh2();
+                setup.myCostume.setTexture();
+                setup.createUpperBody2();
+                setup.createLeftArm();
+                setup.createRightArm();
+                setup.createLowerBody();
                 goto Label_06AE;
 
             case CreatePart.Cape:
-                this.capeId = !next ? this.toPrev(this.capeId, this.capeOption.Length, 0) : this.toNext(this.capeId, this.capeOption.Length, 0);
-                this.setup.myCostume.cape = this.capeId == 1;
-                this.setup.myCostume.setCape();
-                this.setup.myCostume.setTexture();
-                this.setup.createCape2();
+                capeId = !next ? toPrev(capeId, capeOption.Length, 0) : toNext(capeId, capeOption.Length, 0);
+                setup.myCostume.cape = capeId == 1;
+                setup.myCostume.setCape();
+                setup.myCostume.setTexture();
+                setup.createCape2();
                 goto Label_06AE;
 
             case CreatePart.Division:
-                this.divisionId = !next ? this.toPrev(this.divisionId, this.divisionOption.Length, 0) : this.toNext(this.divisionId, this.divisionOption.Length, 0);
-                this.setup.myCostume.division = this.divisionOption[this.divisionId];
-                this.setup.myCostume.setTexture();
-                this.setup.createUpperBody2();
+                divisionId = !next ? toPrev(divisionId, divisionOption.Length, 0) : toNext(divisionId, divisionOption.Length, 0);
+                setup.myCostume.division = divisionOption[divisionId];
+                setup.myCostume.setTexture();
+                setup.createUpperBody2();
                 goto Label_06AE;
 
             default:
                 goto Label_06AE;
         }
-        this.copyCostume(this.costumeOption[this.costumeId], this.setup.myCostume, true);
-        this.setup.myCostume.sex = this.sexOption[this.sexId];
-        this.character.GetComponent<CharacterCreateAnimationControl>().toStand();
-        this.CostumeDataToMyID();
-        this.setup.deleteCharacterComponent2();
-        this.setup.setCharacterComponent();
+        copyCostume(costumeOption[costumeId], setup.myCostume, true);
+        setup.myCostume.sex = sexOption[sexId];
+        character.GetComponent<CharacterCreateAnimationControl>().toStand();
+        CostumeDataToMyID();
+        setup.deleteCharacterComponent2();
+        setup.setCharacterComponent();
     Label_06AE:
-        this.freshLabel();
+        freshLabel();
     }
 
     public void toOption2(CreatePart part, bool next)
@@ -597,128 +597,128 @@ public class CustomCharacterManager : MonoBehaviour
         switch (part)
         {
             case CreatePart.Sex:
-                this.sexId = !next ? this.toPrev(this.sexId, this.sexOption.Length, 0) : this.toNext(this.sexId, this.sexOption.Length, 0);
-                if (this.sexId == 0)
+                sexId = !next ? toPrev(sexId, sexOption.Length, 0) : toNext(sexId, sexOption.Length, 0);
+                if (sexId == 0)
                 {
-                    this.costumeId = 11;
+                    costumeId = 11;
                 }
                 else
                 {
-                    this.costumeId = 0;
+                    costumeId = 0;
                 }
-                this.copyCostume(this.costumeOption[this.costumeId], this.setup.myCostume, true);
-                this.setup.myCostume.sex = this.sexOption[this.sexId];
-                this.character.GetComponent<CharacterCreateAnimationControl>().toStand();
-                this.CostumeDataToMyID();
-                this.setup.deleteCharacterComponent2();
-                this.setup.setCharacterComponent();
+                copyCostume(costumeOption[costumeId], setup.myCostume, true);
+                setup.myCostume.sex = sexOption[sexId];
+                character.GetComponent<CharacterCreateAnimationControl>().toStand();
+                CostumeDataToMyID();
+                setup.deleteCharacterComponent2();
+                setup.setCharacterComponent();
                 goto Label_0750;
 
             case CreatePart.Eye:
-                this.eyeId = !next ? this.toPrev(this.eyeId, this.eyeOption.Length, 0) : this.toNext(this.eyeId, this.eyeOption.Length, 0);
-                this.setup.myCostume.eye_texture_id = this.eyeId;
-                this.setup.setFacialTexture(this.setup.part_eye, this.eyeOption[this.eyeId]);
+                eyeId = !next ? toPrev(eyeId, eyeOption.Length, 0) : toNext(eyeId, eyeOption.Length, 0);
+                setup.myCostume.eye_texture_id = eyeId;
+                setup.setFacialTexture(setup.part_eye, eyeOption[eyeId]);
                 goto Label_0750;
 
             case CreatePart.Face:
-                this.faceId = !next ? this.toPrev(this.faceId, this.faceOption.Length, 0) : this.toNext(this.faceId, this.faceOption.Length, 0);
-                this.setup.myCostume.beard_texture_id = this.faceOption[this.faceId];
-                if (this.setup.part_face == null)
+                faceId = !next ? toPrev(faceId, faceOption.Length, 0) : toNext(faceId, faceOption.Length, 0);
+                setup.myCostume.beard_texture_id = faceOption[faceId];
+                if (setup.part_face == null)
                 {
-                    this.setup.createFace();
+                    setup.createFace();
                 }
-                this.setup.setFacialTexture(this.setup.part_face, this.faceOption[this.faceId]);
+                setup.setFacialTexture(setup.part_face, faceOption[faceId]);
                 goto Label_0750;
 
             case CreatePart.Glass:
-                this.glassId = !next ? this.toPrev(this.glassId, this.glassOption.Length, 0) : this.toNext(this.glassId, this.glassOption.Length, 0);
-                this.setup.myCostume.glass_texture_id = this.glassOption[this.glassId];
-                if (this.setup.part_glass == null)
+                glassId = !next ? toPrev(glassId, glassOption.Length, 0) : toNext(glassId, glassOption.Length, 0);
+                setup.myCostume.glass_texture_id = glassOption[glassId];
+                if (setup.part_glass == null)
                 {
-                    this.setup.createGlass();
+                    setup.createGlass();
                 }
-                this.setup.setFacialTexture(this.setup.part_glass, this.glassOption[this.glassId]);
+                setup.setFacialTexture(setup.part_glass, glassOption[glassId]);
                 goto Label_0750;
 
             case CreatePart.Hair:
-                this.hairId = !next ? this.toPrev(this.hairId, this.hairOption.Length, 0) : this.toNext(this.hairId, this.hairOption.Length, 0);
-                if (this.sexId == 0)
+                hairId = !next ? toPrev(hairId, hairOption.Length, 0) : toNext(hairId, hairOption.Length, 0);
+                if (sexId == 0)
                 {
-                    this.setup.myCostume.hair_mesh = CostumeHair.hairsM[this.hairOption[this.hairId]].hair;
-                    this.setup.myCostume.hair_1_mesh = CostumeHair.hairsM[this.hairOption[this.hairId]].hair_1;
-                    this.setup.myCostume.hairInfo = CostumeHair.hairsM[this.hairOption[this.hairId]];
+                    setup.myCostume.hair_mesh = CostumeHair.hairsM[hairOption[hairId]].hair;
+                    setup.myCostume.hair_1_mesh = CostumeHair.hairsM[hairOption[hairId]].hair_1;
+                    setup.myCostume.hairInfo = CostumeHair.hairsM[hairOption[hairId]];
                     break;
                 }
-                this.setup.myCostume.hair_mesh = CostumeHair.hairsF[this.hairOption[this.hairId]].hair;
-                this.setup.myCostume.hair_1_mesh = CostumeHair.hairsF[this.hairOption[this.hairId]].hair_1;
-                this.setup.myCostume.hairInfo = CostumeHair.hairsF[this.hairOption[this.hairId]];
+                setup.myCostume.hair_mesh = CostumeHair.hairsF[hairOption[hairId]].hair;
+                setup.myCostume.hair_1_mesh = CostumeHair.hairsF[hairOption[hairId]].hair_1;
+                setup.myCostume.hairInfo = CostumeHair.hairsF[hairOption[hairId]];
                 break;
 
             case CreatePart.Skin:
-                if (this.setup.myCostume.uniform_type == UNIFORM_TYPE.CasualAHSS)
+                if (setup.myCostume.uniform_type == UNIFORM_TYPE.CasualAHSS)
                 {
-                    this.skinId = 2;
+                    skinId = 2;
                 }
                 else
                 {
-                    this.skinId = !next ? this.toPrev(this.skinId, 2, 0) : this.toNext(this.skinId, 2, 0);
+                    skinId = !next ? toPrev(skinId, 2, 0) : toNext(skinId, 2, 0);
                 }
-                this.setup.myCostume.skin_color = this.skinOption[this.skinId];
-                this.setup.myCostume.setTexture();
-                this.setup.setSkin();
+                setup.myCostume.skin_color = skinOption[skinId];
+                setup.myCostume.setTexture();
+                setup.setSkin();
                 goto Label_0750;
 
             case CreatePart.Costume:
-                if (this.setup.myCostume.uniform_type == UNIFORM_TYPE.CasualAHSS)
+                if (setup.myCostume.uniform_type == UNIFORM_TYPE.CasualAHSS)
                 {
-                    if (this.setup.myCostume.sex == SEX.FEMALE)
+                    if (setup.myCostume.sex == SEX.FEMALE)
                     {
-                        this.costumeId = 0x1a;
+                        costumeId = 0x1a;
                     }
-                    else if (this.setup.myCostume.sex == SEX.MALE)
+                    else if (setup.myCostume.sex == SEX.MALE)
                     {
-                        this.costumeId = 0x19;
+                        costumeId = 0x19;
                     }
                 }
-                else if (this.sexId != 0)
+                else if (sexId != 0)
                 {
-                    this.costumeId = !next ? this.toPrev(this.costumeId, 10, 0) : this.toNext(this.costumeId, 10, 0);
+                    costumeId = !next ? toPrev(costumeId, 10, 0) : toNext(costumeId, 10, 0);
                 }
                 else
                 {
-                    this.costumeId = !next ? this.toPrev(this.costumeId, 0x18, 10) : this.toNext(this.costumeId, 0x18, 10);
+                    costumeId = !next ? toPrev(costumeId, 0x18, 10) : toNext(costumeId, 0x18, 10);
                 }
-                this.copyBodyCostume(this.costumeOption[this.costumeId], this.setup.myCostume);
-                this.setup.myCostume.setMesh2();
-                this.setup.myCostume.setTexture();
-                this.setup.createUpperBody2();
-                this.setup.createLeftArm();
-                this.setup.createRightArm();
-                this.setup.createLowerBody();
+                copyBodyCostume(costumeOption[costumeId], setup.myCostume);
+                setup.myCostume.setMesh2();
+                setup.myCostume.setTexture();
+                setup.createUpperBody2();
+                setup.createLeftArm();
+                setup.createRightArm();
+                setup.createLowerBody();
                 goto Label_0750;
 
             case CreatePart.Cape:
-                this.capeId = !next ? this.toPrev(this.capeId, this.capeOption.Length, 0) : this.toNext(this.capeId, this.capeOption.Length, 0);
-                this.setup.myCostume.cape = this.capeId == 1;
-                this.setup.myCostume.setCape();
-                this.setup.myCostume.setTexture();
-                this.setup.createCape2();
+                capeId = !next ? toPrev(capeId, capeOption.Length, 0) : toNext(capeId, capeOption.Length, 0);
+                setup.myCostume.cape = capeId == 1;
+                setup.myCostume.setCape();
+                setup.myCostume.setTexture();
+                setup.createCape2();
                 goto Label_0750;
 
             case CreatePart.Division:
-                this.divisionId = !next ? this.toPrev(this.divisionId, this.divisionOption.Length, 0) : this.toNext(this.divisionId, this.divisionOption.Length, 0);
-                this.setup.myCostume.division = this.divisionOption[this.divisionId];
-                this.setup.myCostume.setTexture();
-                this.setup.createUpperBody2();
+                divisionId = !next ? toPrev(divisionId, divisionOption.Length, 0) : toNext(divisionId, divisionOption.Length, 0);
+                setup.myCostume.division = divisionOption[divisionId];
+                setup.myCostume.setTexture();
+                setup.createUpperBody2();
                 goto Label_0750;
 
             default:
                 goto Label_0750;
         }
-        this.setup.createHair2();
-        this.setHairColor();
+        setup.createHair2();
+        setHairColor();
     Label_0750:
-        this.freshLabel();
+        freshLabel();
     }
 
     private int toPrev(int id, int Count, int start = 0)

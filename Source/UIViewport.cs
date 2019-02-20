@@ -16,29 +16,29 @@ public class UIViewport : MonoBehaviour
 
     private void LateUpdate()
     {
-        if ((this.topLeft != null) && (this.bottomRight != null))
+        if ((topLeft != null) && (bottomRight != null))
         {
-            Vector3 vector = this.sourceCamera.WorldToScreenPoint(this.topLeft.position);
-            Vector3 vector2 = this.sourceCamera.WorldToScreenPoint(this.bottomRight.position);
-            Rect rect = new Rect(vector.x / ((float) Screen.width), vector2.y / ((float) Screen.height), (vector2.x - vector.x) / ((float) Screen.width), (vector.y - vector2.y) / ((float) Screen.height));
-            float num = this.fullSize * rect.height;
-            if (rect != this.mCam.rect)
+            var vector = sourceCamera.WorldToScreenPoint(topLeft.position);
+            var vector2 = sourceCamera.WorldToScreenPoint(bottomRight.position);
+            var rect = new Rect(vector.x / Screen.width, vector2.y / Screen.height, (vector2.x - vector.x) / Screen.width, (vector.y - vector2.y) / Screen.height);
+            var num = fullSize * rect.height;
+            if (rect != mCam.rect)
             {
-                this.mCam.rect = rect;
+                mCam.rect = rect;
             }
-            if (this.mCam.orthographicSize != num)
+            if (mCam.orthographicSize != num)
             {
-                this.mCam.orthographicSize = num;
+                mCam.orthographicSize = num;
             }
         }
     }
 
     private void Start()
     {
-        this.mCam = base.camera;
-        if (this.sourceCamera == null)
+        mCam = camera;
+        if (sourceCamera == null)
         {
-            this.sourceCamera = Camera.main;
+            sourceCamera = Camera.main;
         }
     }
 }

@@ -16,23 +16,23 @@ public class UIImageButton : MonoBehaviour
 
     private void Awake()
     {
-        if (this.target == null)
+        if (target == null)
         {
-            this.target = base.GetComponentInChildren<UISprite>();
+            target = GetComponentInChildren<UISprite>();
         }
     }
 
     private void OnEnable()
     {
-        this.UpdateImage();
+        UpdateImage();
     }
 
     private void OnHover(bool isOver)
     {
-        if (this.isEnabled && (this.target != null))
+        if (isEnabled && (target != null))
         {
-            this.target.spriteName = !isOver ? this.normalSprite : this.hoverSprite;
-            this.target.MakePixelPerfect();
+            target.spriteName = !isOver ? normalSprite : hoverSprite;
+            target.MakePixelPerfect();
         }
     }
 
@@ -40,28 +40,28 @@ public class UIImageButton : MonoBehaviour
     {
         if (pressed)
         {
-            this.target.spriteName = this.pressedSprite;
-            this.target.MakePixelPerfect();
+            target.spriteName = pressedSprite;
+            target.MakePixelPerfect();
         }
         else
         {
-            this.UpdateImage();
+            UpdateImage();
         }
     }
 
     private void UpdateImage()
     {
-        if (this.target != null)
+        if (target != null)
         {
-            if (this.isEnabled)
+            if (isEnabled)
             {
-                this.target.spriteName = !UICamera.IsHighlighted(base.gameObject) ? this.normalSprite : this.hoverSprite;
+                target.spriteName = !UICamera.IsHighlighted(gameObject) ? normalSprite : hoverSprite;
             }
             else
             {
-                this.target.spriteName = this.disabledSprite;
+                target.spriteName = disabledSprite;
             }
-            this.target.MakePixelPerfect();
+            target.MakePixelPerfect();
         }
     }
 
@@ -69,16 +69,16 @@ public class UIImageButton : MonoBehaviour
     {
         get
         {
-            Collider collider = base.collider;
+            var collider = this.collider;
             return ((collider != null) && collider.enabled);
         }
         set
         {
-            Collider collider = base.collider;
+            var collider = this.collider;
             if ((collider != null) && (collider.enabled != value))
             {
                 collider.enabled = value;
-                this.UpdateImage();
+                UpdateImage();
             }
         }
     }

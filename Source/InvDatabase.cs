@@ -17,22 +17,22 @@ public class InvDatabase : MonoBehaviour
 
     public static InvBaseItem FindByID(int id32)
     {
-        InvDatabase database = GetDatabase(id32 >> 0x10);
+        var database = GetDatabase(id32 >> 0x10);
         return ((database == null) ? null : database.GetItem(id32 & 0xffff));
     }
 
     public static InvBaseItem FindByName(string exact)
     {
-        int index = 0;
-        int length = list.Length;
+        var index = 0;
+        var length = list.Length;
         while (index < length)
         {
-            InvDatabase database = list[index];
-            int num3 = 0;
-            int count = database.items.Count;
+            var database = list[index];
+            var num3 = 0;
+            var count = database.items.Count;
             while (num3 < count)
             {
-                InvBaseItem item = database.items[num3];
+                var item = database.items[num3];
                 if (item.name == exact)
                 {
                     return item;
@@ -46,11 +46,11 @@ public class InvDatabase : MonoBehaviour
 
     public static int FindItemID(InvBaseItem item)
     {
-        int index = 0;
-        int length = list.Length;
+        var index = 0;
+        var length = list.Length;
         while (index < length)
         {
-            InvDatabase database = list[index];
+            var database = list[index];
             if (database.items.Contains(item))
             {
                 return ((database.databaseID << 0x10) | item.id16);
@@ -62,11 +62,11 @@ public class InvDatabase : MonoBehaviour
 
     private static InvDatabase GetDatabase(int dbID)
     {
-        int index = 0;
-        int length = list.Length;
+        var index = 0;
+        var length = list.Length;
         while (index < length)
         {
-            InvDatabase database = list[index];
+            var database = list[index];
             if (database.databaseID == dbID)
             {
                 return database;
@@ -78,11 +78,11 @@ public class InvDatabase : MonoBehaviour
 
     private InvBaseItem GetItem(int id16)
     {
-        int num = 0;
-        int count = this.items.Count;
+        var num = 0;
+        var count = items.Count;
         while (num < count)
         {
-            InvBaseItem item = this.items[num];
+            var item = items[num];
             if (item.id16 == id16)
             {
                 return item;

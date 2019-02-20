@@ -43,7 +43,7 @@ public static class PhotonNetwork
     static PhotonNetwork()
     {
         Application.runInBackground = true;
-        GameObject obj2 = new GameObject();
+        var obj2 = new GameObject();
         photonMono = obj2.AddComponent<PhotonHandler>();
         obj2.name = "PhotonMono";
         obj2.hideFlags = HideFlags.HideInHierarchy;
@@ -53,8 +53,8 @@ public static class PhotonNetwork
 
     private static int[] AllocateSceneViewIDs(int countOfNewViews)
     {
-        int[] numArray = new int[countOfNewViews];
-        for (int i = 0; i < countOfNewViews; i++)
+        var numArray = new int[countOfNewViews];
+        for (var i = 0; i < countOfNewViews; i++)
         {
             numArray[i] = AllocateViewID(0);
         }
@@ -63,7 +63,7 @@ public static class PhotonNetwork
 
     public static int AllocateViewID()
     {
-        int item = AllocateViewID(player.ID);
+        var item = AllocateViewID(player.ID);
         manuallyAllocatedViewIds.Add(item);
         return item;
     }
@@ -72,14 +72,14 @@ public static class PhotonNetwork
     {
         if (ownerId == 0)
         {
-            int lastUsedViewSubIdStatic = PhotonNetwork.lastUsedViewSubIdStatic;
-            int num2 = ownerId * MAX_VIEW_IDS;
-            for (int j = 1; j < MAX_VIEW_IDS; j++)
+            var lastUsedViewSubIdStatic = PhotonNetwork.lastUsedViewSubIdStatic;
+            var num2 = ownerId * MAX_VIEW_IDS;
+            for (var j = 1; j < MAX_VIEW_IDS; j++)
             {
                 lastUsedViewSubIdStatic = (lastUsedViewSubIdStatic + 1) % MAX_VIEW_IDS;
                 if (lastUsedViewSubIdStatic != 0)
                 {
-                    int key = lastUsedViewSubIdStatic + num2;
+                    var key = lastUsedViewSubIdStatic + num2;
                     if (!networkingPeer.photonViewList.ContainsKey(key))
                     {
                         PhotonNetwork.lastUsedViewSubIdStatic = lastUsedViewSubIdStatic;
@@ -89,14 +89,14 @@ public static class PhotonNetwork
             }
             throw new Exception(string.Format("AllocateViewID() failed. Room (user {0}) is out of subIds, as all room viewIDs are used.", ownerId));
         }
-        int lastUsedViewSubId = PhotonNetwork.lastUsedViewSubId;
-        int num6 = ownerId * MAX_VIEW_IDS;
-        for (int i = 1; i < MAX_VIEW_IDS; i++)
+        var lastUsedViewSubId = PhotonNetwork.lastUsedViewSubId;
+        var num6 = ownerId * MAX_VIEW_IDS;
+        for (var i = 1; i < MAX_VIEW_IDS; i++)
         {
             lastUsedViewSubId = (lastUsedViewSubId + 1) % MAX_VIEW_IDS;
             if (lastUsedViewSubId != 0)
             {
-                int num8 = lastUsedViewSubId + num6;
+                var num8 = lastUsedViewSubId + num6;
                 if (!networkingPeer.photonViewList.ContainsKey(num8) && !manuallyAllocatedViewIds.Contains(num8))
                 {
                     PhotonNetwork.lastUsedViewSubId = lastUsedViewSubId;
@@ -123,9 +123,9 @@ public static class PhotonNetwork
             Debug.LogError("CloseConnection: No such player connected!");
             return false;
         }
-        RaiseEventOptions options = new RaiseEventOptions();
+        var options = new RaiseEventOptions();
         options.TargetActors = new int[] { kickPlayer.ID };
-        RaiseEventOptions raiseEventOptions = options;
+        var raiseEventOptions = options;
         return networkingPeer.OpRaiseEvent(0xcb, null, true, raiseEventOptions);
     }
 
@@ -142,7 +142,7 @@ public static class PhotonNetwork
         }
         networkingPeer.IsInitialConnect = true;
         networkingPeer.SetApp(PhotonServerSettings.AppID, gameVersion);
-        CloudRegionCode bestRegionCodeInPreferences = PhotonHandler.BestRegionCodeInPreferences;
+        var bestRegionCodeInPreferences = PhotonHandler.BestRegionCodeInPreferences;
         if (bestRegionCodeInPreferences != CloudRegionCode.none)
         {
             Debug.Log("Best region found in PlayerPrefs. Connecting to: " + bestRegionCodeInPreferences);
@@ -239,7 +239,7 @@ public static class PhotonNetwork
     [Obsolete("Use overload with RoomOptions and TypedLobby parameters.")]
     public static bool CreateRoom(string roomName, bool isVisible, bool isOpen, int maxPlayers)
     {
-        RoomOptions roomOptions = new RoomOptions {
+        var roomOptions = new RoomOptions {
             isVisible = isVisible,
             isOpen = isOpen,
             maxPlayers = maxPlayers
@@ -250,7 +250,7 @@ public static class PhotonNetwork
     [Obsolete("Use overload with RoomOptions and TypedLobby parameters.")]
     public static bool CreateRoom(string roomName, bool isVisible, bool isOpen, int maxPlayers, Hashtable customRoomProperties, string[] propsToListInLobby)
     {
-        RoomOptions roomOptions = new RoomOptions {
+        var roomOptions = new RoomOptions {
             isVisible = isVisible,
             isOpen = isOpen,
             maxPlayers = maxPlayers,
@@ -398,12 +398,12 @@ public static class PhotonNetwork
             Debug.LogError("Failed to Instantiate prefab:" + prefabName + ". Prefab must have a PhotonView component.");
             return null;
         }
-        int[] viewIDs = new int[obj2.GetPhotonViewsInChildren().Length];
-        for (int i = 0; i < viewIDs.Length; i++)
+        var viewIDs = new int[obj2.GetPhotonViewsInChildren().Length];
+        for (var i = 0; i < viewIDs.Length; i++)
         {
             viewIDs[i] = AllocateViewID(player.ID);
         }
-        Hashtable evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, false);
+        var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, false);
         return networkingPeer.DoInstantiate2(evData, networkingPeer.mLocalActor, obj2);
     }
 
@@ -438,23 +438,23 @@ public static class PhotonNetwork
             Debug.LogError("Failed to InstantiateSceneObject prefab:" + prefabName + ". Prefab must have a PhotonView component.");
             return null;
         }
-        int[] viewIDs = AllocateSceneViewIDs(obj2.GetPhotonViewsInChildren().Length);
+        var viewIDs = AllocateSceneViewIDs(obj2.GetPhotonViewsInChildren().Length);
         if (viewIDs == null)
         {
             Debug.LogError(string.Concat(new object[] { "Failed to InstantiateSceneObject prefab: ", prefabName, ". No ViewIDs are free to use. Max is: ", MAX_VIEW_IDS }));
             return null;
         }
-        Hashtable evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, true);
+        var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, true);
         return networkingPeer.DoInstantiate2(evData, networkingPeer.mLocalActor, obj2);
     }
 
     public static void InternalCleanPhotonMonoFromSceneIfStuck()
     {
-        PhotonHandler[] handlerArray = UnityEngine.Object.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
+        var handlerArray = UnityEngine.Object.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
         if ((handlerArray != null) && (handlerArray.Length > 0))
         {
             Debug.Log("Cleaning up hidden PhotonHandler instances in scene. Please save it. This is not an issue.");
-            foreach (PhotonHandler handler in handlerArray)
+            foreach (var handler in handlerArray)
             {
                 handler.gameObject.hideFlags = HideFlags.None;
                 if ((handler.gameObject != null) && (handler.gameObject.name == "PhotonMono"))
@@ -481,7 +481,7 @@ public static class PhotonNetwork
         {
             typedLobby = TypedLobby.Default;
         }
-        bool flag = networkingPeer.OpJoinLobby(typedLobby);
+        var flag = networkingPeer.OpJoinLobby(typedLobby);
         if (flag)
         {
             networkingPeer.lobby = typedLobby;
@@ -544,7 +544,7 @@ public static class PhotonNetwork
             Debug.LogError("JoinRandomRoom failed. Client is not on Master Server or not yet ready to call operations. Wait for callback: OnJoinedLobby or OnConnectedToMaster.");
             return false;
         }
-        Hashtable target = new Hashtable();
+        var target = new Hashtable();
         target.MergeStringKeys(expectedCustomRoomProperties);
         if (expectedMaxPlayers > 0)
         {
@@ -614,32 +614,32 @@ public static class PhotonNetwork
 
     public static bool RejoinRoom(string roomName, RoomOptions roomOptions, TypedLobby typedLobby, bool createIfNotExists, Hashtable Hash)
     {
-        bool onGameServer = PhotonNetwork.networkingPeer.server == ServerConnection.GameServer;
+        var onGameServer = networkingPeer.server == ServerConnection.GameServer;
         if (!onGameServer)
         {
-            Room mRoomToGetInto = new Room(roomName, roomOptions);
-            PhotonNetwork.networkingPeer.mRoomToEnterLobby = null;
+            var mRoomToGetInto = new Room(roomName, roomOptions);
+            networkingPeer.mRoomToEnterLobby = null;
             if (createIfNotExists)
             {
                 if (typedLobby == null)
                 {
                 }
-                PhotonNetwork.networkingPeer.mRoomToEnterLobby = !PhotonNetwork.networkingPeer.insideLobby ? null : PhotonNetwork.networkingPeer.lobby;
+                networkingPeer.mRoomToEnterLobby = !networkingPeer.insideLobby ? null : networkingPeer.lobby;
             }
         }
-        return PhotonNetwork.networkingPeer.OpJoinRoom(roomName, roomOptions, PhotonNetwork.networkingPeer.mRoomToEnterLobby, createIfNotExists, Hash, onGameServer);
+        return networkingPeer.OpJoinRoom(roomName, roomOptions, networkingPeer.mRoomToEnterLobby, createIfNotExists, Hash, onGameServer);
     }
 
     public static bool LeaveRoom()
     {
         bWasJustKicked = true;
-         Room CurRoom = PhotonNetwork.room;
+         var CurRoom = room;
 //         networkingPeer.OpLeave();
-         Hashtable MyHash = PhotonNetwork.player.ChangeLocalPlayer(PhotonNetwork.player.ID + 1, GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().name);
+         var MyHash = player.ChangeLocalPlayer(player.ID + 1, GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().name);
        // GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().name = PhotonNetwork.player.name;
 
          RejoinRoom(CurRoom.name, null, null, false, MyHash);
-        if (!PhotonNetwork.isMasterClient)
+        if (!isMasterClient)
         {
             GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("RequireStatus", PhotonTargets.MasterClient, new object[0]);
         }
@@ -812,7 +812,7 @@ public static class PhotonNetwork
         if (customProperties == null)
         {
             customProperties = new Hashtable();
-            foreach (object obj2 in player.customProperties.Keys)
+            foreach (var obj2 in player.customProperties.Keys)
             {
                 customProperties[(string) obj2] = null;
             }
@@ -1434,9 +1434,9 @@ public static class PhotonNetwork
         {
             if (offlineMode)
             {
-                return (double) Time.time;
+                return Time.time;
             }
-            return (((double) networkingPeer.ServerTimeInMilliSeconds) / 1000.0);
+            return (networkingPeer.ServerTimeInMilliSeconds / 1000.0);
         }
     }
 

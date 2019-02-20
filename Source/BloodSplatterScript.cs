@@ -22,12 +22,12 @@ public class BloodSplatterScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            this.bloodRotation.Rotate((float) 0f, (float) this.bloodLocalRotationYOffset, (float) 0f);
-            Transform transform = UnityEngine.Object.Instantiate(this.bloodPrefab, this.bloodPosition.position, this.bloodRotation.rotation) as Transform;
-            this.bloodInstances = GameObject.FindGameObjectsWithTag("blood");
-            if (this.bloodInstances.Length >= this.maxAmountBloodPrefabs)
+            bloodRotation.Rotate(0f, bloodLocalRotationYOffset, 0f);
+            var transform = Instantiate(bloodPrefab, bloodPosition.position, bloodRotation.rotation) as Transform;
+            bloodInstances = GameObject.FindGameObjectsWithTag("blood");
+            if (bloodInstances.Length >= maxAmountBloodPrefabs)
             {
-                UnityEngine.Object.Destroy(this.bloodInstances[0]);
+                Destroy(bloodInstances[0]);
             }
         }
     }

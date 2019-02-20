@@ -11,7 +11,7 @@ public class BTN_SAVE_CC : MonoBehaviour
 
     private void OnClick()
     {
-        this.manager.GetComponent<CustomCharacterManager>().SaveData();
+        manager.GetComponent<CustomCharacterManager>().SaveData();
     }
 }
 

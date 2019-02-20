@@ -14,16 +14,16 @@ public class XffectCache : MonoBehaviour
 
     protected Transform AddObject(string name)
     {
-        Transform original = base.transform.Find(name);
+        var original = transform.Find(name);
         if (original == null)
         {
             Debug.Log("object:" + name + "doesn't exist!");
             return null;
         }
-        Transform transform2 = UnityEngine.Object.Instantiate(original, Vector3.zero, Quaternion.identity) as Transform;
-        this.ObjectDic[name].Add(transform2);
+        var transform2 = Instantiate(original, Vector3.zero, Quaternion.identity) as Transform;
+        ObjectDic[name].Add(transform2);
         transform2.gameObject.SetActive(false);
-        Xffect component = transform2.GetComponent<Xffect>();
+        var component = transform2.GetComponent<Xffect>();
         if (component != null)
         {
             component.Initialize();
@@ -33,15 +33,15 @@ public class XffectCache : MonoBehaviour
 
     private void Awake()
     {
-        IEnumerator enumerator = base.transform.GetEnumerator();
+        var enumerator = transform.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                Transform current = (Transform) enumerator.Current;
-                this.ObjectDic[current.name] = new ArrayList();
-                this.ObjectDic[current.name].Add(current);
-                Xffect component = current.GetComponent<Xffect>();
+                var current = (Transform) enumerator.Current;
+                ObjectDic[current.name] = new ArrayList();
+                ObjectDic[current.name].Add(current);
+                var component = current.GetComponent<Xffect>();
                 if (component != null)
                 {
                     component.Initialize();
@@ -51,7 +51,7 @@ public class XffectCache : MonoBehaviour
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
@@ -59,18 +59,18 @@ public class XffectCache : MonoBehaviour
 
     public Transform GetObject(string name)
     {
-        ArrayList list = this.ObjectDic[name];
+        var list = ObjectDic[name];
         if (list == null)
         {
             Debug.LogError(name + ": cache doesnt exist!");
             return null;
         }
-        IEnumerator enumerator = list.GetEnumerator();
+        var enumerator = list.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                Transform current = (Transform) enumerator.Current;
+                var current = (Transform) enumerator.Current;
                 if (!current.gameObject.active)
                 {
                     current.gameObject.SetActive(true);
@@ -80,16 +80,16 @@ public class XffectCache : MonoBehaviour
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        return this.AddObject(name);
+        return AddObject(name);
     }
 
     public ArrayList GetObjectCache(string name)
     {
-        ArrayList list = this.ObjectDic[name];
+        var list = ObjectDic[name];
         if (list == null)
         {
             Debug.LogError(name + ": cache doesnt exist!");

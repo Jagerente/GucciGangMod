@@ -17,18 +17,18 @@ public class TweenColor : UITweener
 
     private void Awake()
     {
-        this.mWidget = base.GetComponentInChildren<UIWidget>();
-        Renderer renderer = base.renderer;
+        mWidget = GetComponentInChildren<UIWidget>();
+        var renderer = this.renderer;
         if (renderer != null)
         {
-            this.mMat = renderer.material;
+            mMat = renderer.material;
         }
-        this.mLight = base.light;
+        mLight = light;
     }
 
     public static TweenColor Begin(GameObject go, float duration, Color color)
     {
-        TweenColor color2 = UITweener.Begin<TweenColor>(go, duration);
+        var color2 = UITweener.Begin<TweenColor>(go, duration);
         color2.from = color2.color;
         color2.to = color;
         if (duration <= 0f)
@@ -41,41 +41,41 @@ public class TweenColor : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        this.color = Color.Lerp(this.from, this.to, factor);
+        color = Color.Lerp(from, to, factor);
     }
 
     public Color color
     {
         get
         {
-            if (this.mWidget != null)
+            if (mWidget != null)
             {
-                return this.mWidget.color;
+                return mWidget.color;
             }
-            if (this.mLight != null)
+            if (mLight != null)
             {
-                return this.mLight.color;
+                return mLight.color;
             }
-            if (this.mMat != null)
+            if (mMat != null)
             {
-                return this.mMat.color;
+                return mMat.color;
             }
             return Color.black;
         }
         set
         {
-            if (this.mWidget != null)
+            if (mWidget != null)
             {
-                this.mWidget.color = value;
+                mWidget.color = value;
             }
-            if (this.mMat != null)
+            if (mMat != null)
             {
-                this.mMat.color = value;
+                mMat.color = value;
             }
-            if (this.mLight != null)
+            if (mLight != null)
             {
-                this.mLight.color = value;
-                this.mLight.enabled = ((value.r + value.g) + value.b) > 0.01f;
+                mLight.color = value;
+                mLight.enabled = ((value.r + value.g) + value.b) > 0.01f;
             }
         }
     }

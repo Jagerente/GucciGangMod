@@ -65,34 +65,34 @@ public class UICamera : MonoBehaviour
 
     private void Awake()
     {
-        this.cachedCamera.eventMask = 0;
+        cachedCamera.eventMask = 0;
         if ((Application.platform == RuntimePlatform.Android) || (Application.platform == RuntimePlatform.IPhonePlayer))
         {
-            this.useMouse = false;
-            this.useTouch = true;
+            useMouse = false;
+            useTouch = true;
             if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
-                this.useKeyboard = false;
-                this.useController = false;
+                useKeyboard = false;
+                useController = false;
             }
         }
         else if ((Application.platform == RuntimePlatform.PS3) || (Application.platform == RuntimePlatform.XBOX360))
         {
-            this.useMouse = false;
-            this.useTouch = false;
-            this.useKeyboard = false;
-            this.useController = true;
+            useMouse = false;
+            useTouch = false;
+            useKeyboard = false;
+            useController = true;
         }
         else if ((Application.platform == RuntimePlatform.WindowsEditor) || (Application.platform == RuntimePlatform.OSXEditor))
         {
-            this.mIsEditor = true;
+            mIsEditor = true;
         }
         mMouse[0].pos.x = Input.mousePosition.x;
         mMouse[0].pos.y = Input.mousePosition.y;
         lastTouchPosition = mMouse[0].pos;
-        if (this.eventReceiverMask == -1)
+        if (eventReceiverMask == -1)
         {
-            this.eventReceiverMask = this.cachedCamera.cullingMask;
+            eventReceiverMask = cachedCamera.cullingMask;
         }
     }
 
@@ -111,11 +111,11 @@ public class UICamera : MonoBehaviour
 
     public static UICamera FindCameraForLayer(int layer)
     {
-        int num = ((int) 1) << layer;
-        for (int i = 0; i < mList.Count; i++)
+        var num = 1 << layer;
+        for (var i = 0; i < mList.Count; i++)
         {
-            UICamera camera = mList[i];
-            Camera cachedCamera = camera.cachedCamera;
+            var camera = mList[i];
+            var cachedCamera = camera.cachedCamera;
             if ((cachedCamera != null) && ((cachedCamera.cullingMask & num) != 0))
             {
                 return camera;
@@ -126,14 +126,14 @@ public class UICamera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if ((this.useMouse && Application.isPlaying) && this.handlesEvents)
+        if ((useMouse && Application.isPlaying) && handlesEvents)
         {
             hoveredObject = !Raycast(Input.mousePosition, ref lastHit) ? fallThrough : lastHit.collider.gameObject;
             if (hoveredObject == null)
             {
                 hoveredObject = genericEventHandler;
             }
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 mMouse[i].current = hoveredObject;
             }
@@ -142,10 +142,10 @@ public class UICamera : MonoBehaviour
 
     private static int GetDirection(string axis)
     {
-        float realtimeSinceStartup = Time.realtimeSinceStartup;
+        var realtimeSinceStartup = Time.realtimeSinceStartup;
         if (mNextEvent < realtimeSinceStartup)
         {
-            float num2 = Input.GetAxis(axis);
+            var num2 = Input.GetAxis(axis);
             if (num2 > 0.75f)
             {
                 mNextEvent = realtimeSinceStartup + 0.25f;
@@ -203,10 +203,10 @@ public class UICamera : MonoBehaviour
     {
         if (go != null)
         {
-            int count = mHighlighted.Count;
+            var count = mHighlighted.Count;
             while (count > 0)
             {
-                Highlighted item = mHighlighted[--count];
+                var item = mHighlighted[--count];
                 if ((item == null) || (item.go == null))
                 {
                     mHighlighted.RemoveAt(count);
@@ -227,7 +227,7 @@ public class UICamera : MonoBehaviour
             }
             if (highlighted)
             {
-                Highlighted highlighted3 = new Highlighted {
+                var highlighted3 = new Highlighted {
                     go = go,
                     counter = 1
                 };
@@ -239,10 +239,10 @@ public class UICamera : MonoBehaviour
 
     public static bool IsHighlighted(GameObject go)
     {
-        int count = mHighlighted.Count;
+        var count = mHighlighted.Count;
         while (count > 0)
         {
-            Highlighted highlighted = mHighlighted[--count];
+            var highlighted = mHighlighted[--count];
             if (highlighted.go == go)
             {
                 return true;
@@ -253,7 +253,7 @@ public class UICamera : MonoBehaviour
 
     private static bool IsVisible(ref RaycastHit hit)
     {
-        UIPanel panel = NGUITools.FindInParents<UIPanel>(hit.collider.gameObject);
+        var panel = NGUITools.FindInParents<UIPanel>(hit.collider.gameObject);
         if ((panel != null) && !panel.IsVisible(hit.point))
         {
             return false;
@@ -285,10 +285,10 @@ public class UICamera : MonoBehaviour
 
     public void ProcessMouse()
     {
-        bool flag = this.useMouse && (Time.timeScale < 0.9f);
+        var flag = useMouse && (Time.timeScale < 0.9f);
         if (!flag)
         {
-            for (int k = 0; k < 3; k++)
+            for (var k = 0; k < 3; k++)
             {
                 if (Input.GetMouseButton(k) || Input.GetMouseButtonUp(k))
                 {
@@ -299,7 +299,7 @@ public class UICamera : MonoBehaviour
         }
         mMouse[0].pos = Input.mousePosition;
         mMouse[0].delta = mMouse[0].pos - lastTouchPosition;
-        bool flag2 = mMouse[0].pos != lastTouchPosition;
+        var flag2 = mMouse[0].pos != lastTouchPosition;
         lastTouchPosition = mMouse[0].pos;
         if (flag)
         {
@@ -310,14 +310,14 @@ public class UICamera : MonoBehaviour
             }
             mMouse[0].current = hoveredObject;
         }
-        for (int i = 1; i < 3; i++)
+        for (var i = 1; i < 3; i++)
         {
             mMouse[i].pos = mMouse[0].pos;
             mMouse[i].delta = mMouse[0].delta;
             mMouse[i].current = mMouse[0].current;
         }
-        bool flag3 = false;
-        for (int j = 0; j < 3; j++)
+        var flag3 = false;
+        for (var j = 0; j < 3; j++)
         {
             if (Input.GetMouseButton(j))
             {
@@ -327,34 +327,34 @@ public class UICamera : MonoBehaviour
         }
         if (flag3)
         {
-            this.mTooltipTime = 0f;
+            mTooltipTime = 0f;
         }
-        else if ((this.useMouse && flag2) && (!this.stickyTooltip || (mHover != mMouse[0].current)))
+        else if ((useMouse && flag2) && (!stickyTooltip || (mHover != mMouse[0].current)))
         {
-            if (this.mTooltipTime != 0f)
+            if (mTooltipTime != 0f)
             {
-                this.mTooltipTime = Time.realtimeSinceStartup + this.tooltipDelay;
+                mTooltipTime = Time.realtimeSinceStartup + tooltipDelay;
             }
-            else if (this.mTooltip != null)
+            else if (mTooltip != null)
             {
-                this.ShowTooltip(false);
+                ShowTooltip(false);
             }
         }
-        if ((this.useMouse && !flag3) && ((mHover != null) && (mHover != mMouse[0].current)))
+        if ((useMouse && !flag3) && ((mHover != null) && (mHover != mMouse[0].current)))
         {
-            if (this.mTooltip != null)
+            if (mTooltip != null)
             {
-                this.ShowTooltip(false);
+                ShowTooltip(false);
             }
             Highlight(mHover, false);
             mHover = null;
         }
-        if (this.useMouse)
+        if (useMouse)
         {
-            for (int m = 0; m < 3; m++)
+            for (var m = 0; m < 3; m++)
             {
-                bool mouseButtonDown = Input.GetMouseButtonDown(m);
-                bool mouseButtonUp = Input.GetMouseButtonUp(m);
+                var mouseButtonDown = Input.GetMouseButtonDown(m);
+                var mouseButtonUp = Input.GetMouseButtonUp(m);
                 currentTouch = mMouse[m];
                 currentTouchID = -1 - m;
                 if (mouseButtonDown)
@@ -365,13 +365,13 @@ public class UICamera : MonoBehaviour
                 {
                     currentCamera = currentTouch.pressedCam;
                 }
-                this.ProcessTouch(mouseButtonDown, mouseButtonUp);
+                ProcessTouch(mouseButtonDown, mouseButtonUp);
             }
             currentTouch = null;
         }
-        if ((this.useMouse && !flag3) && (mHover != mMouse[0].current))
+        if ((useMouse && !flag3) && (mHover != mMouse[0].current))
         {
-            this.mTooltipTime = Time.realtimeSinceStartup + this.tooltipDelay;
+            mTooltipTime = Time.realtimeSinceStartup + tooltipDelay;
             mHover = mMouse[0].current;
             Highlight(mHover, true);
         }
@@ -382,17 +382,17 @@ public class UICamera : MonoBehaviour
         currentTouchID = -100;
         currentTouch = mController;
         inputHasFocus = (mSel != null) && (mSel.GetComponent<UIInput>() != null);
-        bool pressed = ((this.submitKey0 != KeyCode.None) && Input.GetKeyDown(this.submitKey0)) || ((this.submitKey1 != KeyCode.None) && Input.GetKeyDown(this.submitKey1));
-        bool unpressed = ((this.submitKey0 != KeyCode.None) && Input.GetKeyUp(this.submitKey0)) || ((this.submitKey1 != KeyCode.None) && Input.GetKeyUp(this.submitKey1));
+        var pressed = ((submitKey0 != KeyCode.None) && Input.GetKeyDown(submitKey0)) || ((submitKey1 != KeyCode.None) && Input.GetKeyDown(submitKey1));
+        var unpressed = ((submitKey0 != KeyCode.None) && Input.GetKeyUp(submitKey0)) || ((submitKey1 != KeyCode.None) && Input.GetKeyUp(submitKey1));
         if (pressed || unpressed)
         {
             currentTouch.current = mSel;
-            this.ProcessTouch(pressed, unpressed);
+            ProcessTouch(pressed, unpressed);
             currentTouch.current = null;
         }
-        int num = 0;
-        int num2 = 0;
-        if (this.useKeyboard)
+        var num = 0;
+        var num2 = 0;
+        if (useKeyboard)
         {
             if (inputHasFocus)
             {
@@ -405,15 +405,15 @@ public class UICamera : MonoBehaviour
                 num2 += GetDirection(KeyCode.D, KeyCode.RightArrow, KeyCode.A, KeyCode.LeftArrow);
             }
         }
-        if (this.useController)
+        if (useController)
         {
-            if (!string.IsNullOrEmpty(this.verticalAxisName))
+            if (!string.IsNullOrEmpty(verticalAxisName))
             {
-                num += GetDirection(this.verticalAxisName);
+                num += GetDirection(verticalAxisName);
             }
-            if (!string.IsNullOrEmpty(this.horizontalAxisName))
+            if (!string.IsNullOrEmpty(horizontalAxisName))
             {
-                num2 += GetDirection(this.horizontalAxisName);
+                num2 += GetDirection(horizontalAxisName);
             }
         }
         if (num != 0)
@@ -424,15 +424,15 @@ public class UICamera : MonoBehaviour
         {
             Notify(mSel, "OnKey", (num2 <= 0) ? KeyCode.LeftArrow : KeyCode.RightArrow);
         }
-        if (this.useKeyboard && Input.GetKeyDown(KeyCode.Tab))
+        if (useKeyboard && Input.GetKeyDown(KeyCode.Tab))
         {
             Notify(mSel, "OnKey", KeyCode.Tab);
         }
-        if ((this.cancelKey0 != KeyCode.None) && Input.GetKeyDown(this.cancelKey0))
+        if ((cancelKey0 != KeyCode.None) && Input.GetKeyDown(cancelKey0))
         {
             Notify(mSel, "OnKey", KeyCode.Escape);
         }
-        if ((this.cancelKey1 != KeyCode.None) && Input.GetKeyDown(this.cancelKey1))
+        if ((cancelKey1 != KeyCode.None) && Input.GetKeyDown(cancelKey1))
         {
             Notify(mSel, "OnKey", KeyCode.Escape);
         }
@@ -441,14 +441,14 @@ public class UICamera : MonoBehaviour
 
     public void ProcessTouch(bool pressed, bool unpressed)
     {
-        bool flag = ((currentTouch == mMouse[0]) || (currentTouch == mMouse[1])) || (currentTouch == mMouse[2]);
-        float num = !flag ? this.touchDragThreshold : this.mouseDragThreshold;
-        float num2 = !flag ? this.touchClickThreshold : this.mouseClickThreshold;
+        var flag = ((currentTouch == mMouse[0]) || (currentTouch == mMouse[1])) || (currentTouch == mMouse[2]);
+        var num = !flag ? touchDragThreshold : mouseDragThreshold;
+        var num2 = !flag ? touchClickThreshold : mouseClickThreshold;
         if (pressed)
         {
-            if (this.mTooltip != null)
+            if (mTooltip != null)
             {
-                this.ShowTooltip(false);
+                ShowTooltip(false);
             }
             currentTouch.pressStarted = true;
             Notify(currentTouch.pressed, "OnPress", false);
@@ -460,16 +460,16 @@ public class UICamera : MonoBehaviour
             Notify(currentTouch.pressed, "OnPress", true);
             if (currentTouch.pressed != mSel)
             {
-                if (this.mTooltip != null)
+                if (mTooltip != null)
                 {
-                    this.ShowTooltip(false);
+                    ShowTooltip(false);
                 }
                 selectedObject = null;
             }
         }
         else
         {
-            if ((((currentTouch.clickNotification != ClickNotification.None) && !this.stickyPress) && (!unpressed && currentTouch.pressStarted)) && (currentTouch.pressed != hoveredObject))
+            if ((((currentTouch.clickNotification != ClickNotification.None) && !stickyPress) && (!unpressed && currentTouch.pressStarted)) && (currentTouch.pressed != hoveredObject))
             {
                 isDragging = true;
                 Notify(currentTouch.pressed, "OnPress", false);
@@ -480,7 +480,7 @@ public class UICamera : MonoBehaviour
             if ((currentTouch.pressed != null) && (currentTouch.delta.magnitude != 0f))
             {
                 currentTouch.totalDelta += currentTouch.delta;
-                float magnitude = currentTouch.totalDelta.magnitude;
+                var magnitude = currentTouch.totalDelta.magnitude;
                 if (!currentTouch.dragStarted && (num < magnitude))
                 {
                     currentTouch.dragStarted = true;
@@ -488,12 +488,12 @@ public class UICamera : MonoBehaviour
                 }
                 if (currentTouch.dragStarted)
                 {
-                    if (this.mTooltip != null)
+                    if (mTooltip != null)
                     {
-                        this.ShowTooltip(false);
+                        ShowTooltip(false);
                     }
                     isDragging = true;
-                    bool flag2 = currentTouch.clickNotification == ClickNotification.None;
+                    var flag2 = currentTouch.clickNotification == ClickNotification.None;
                     Notify(currentTouch.dragged, "OnDrag", currentTouch.delta);
                     isDragging = false;
                     if (flag2)
@@ -510,14 +510,14 @@ public class UICamera : MonoBehaviour
         if (unpressed)
         {
             currentTouch.pressStarted = false;
-            if (this.mTooltip != null)
+            if (mTooltip != null)
             {
-                this.ShowTooltip(false);
+                ShowTooltip(false);
             }
             if (currentTouch.pressed != null)
             {
                 Notify(currentTouch.pressed, "OnPress", false);
-                if (this.useMouse && (currentTouch.pressed == mHover))
+                if (useMouse && (currentTouch.pressed == mHover))
                 {
                     Notify(currentTouch.pressed, "OnHover", true);
                 }
@@ -534,7 +534,7 @@ public class UICamera : MonoBehaviour
                     }
                     if (currentTouch.clickNotification != ClickNotification.None)
                     {
-                        float realtimeSinceStartup = Time.realtimeSinceStartup;
+                        var realtimeSinceStartup = Time.realtimeSinceStartup;
                         Notify(currentTouch.pressed, "OnClick", null);
                         if ((currentTouch.clickTime + 0.35f) > realtimeSinceStartup)
                         {
@@ -556,13 +556,13 @@ public class UICamera : MonoBehaviour
 
     public void ProcessTouches()
     {
-        for (int i = 0; i < Input.touchCount; i++)
+        for (var i = 0; i < Input.touchCount; i++)
         {
-            Touch touch = Input.GetTouch(i);
-            currentTouchID = !this.allowMultiTouch ? 1 : touch.fingerId;
+            var touch = Input.GetTouch(i);
+            currentTouchID = !allowMultiTouch ? 1 : touch.fingerId;
             currentTouch = GetTouch(currentTouchID);
-            bool pressed = (touch.phase == TouchPhase.Began) || currentTouch.touchBegan;
-            bool unpressed = (touch.phase == TouchPhase.Canceled) || (touch.phase == TouchPhase.Ended);
+            var pressed = (touch.phase == TouchPhase.Began) || currentTouch.touchBegan;
+            var unpressed = (touch.phase == TouchPhase.Canceled) || (touch.phase == TouchPhase.Ended);
             currentTouch.touchBegan = false;
             if (pressed)
             {
@@ -573,7 +573,7 @@ public class UICamera : MonoBehaviour
                 currentTouch.delta = touch.position - currentTouch.pos;
             }
             currentTouch.pos = touch.position;
-            hoveredObject = !Raycast((Vector3) currentTouch.pos, ref lastHit) ? fallThrough : lastHit.collider.gameObject;
+            hoveredObject = !Raycast(currentTouch.pos, ref lastHit) ? fallThrough : lastHit.collider.gameObject;
             if (hoveredObject == null)
             {
                 hoveredObject = genericEventHandler;
@@ -592,13 +592,13 @@ public class UICamera : MonoBehaviour
             {
                 currentTouch.clickTime = Time.realtimeSinceStartup;
             }
-            this.ProcessTouch(pressed, unpressed);
+            ProcessTouch(pressed, unpressed);
             if (unpressed)
             {
                 RemoveTouch(currentTouchID);
             }
             currentTouch = null;
-            if (!this.allowMultiTouch)
+            if (!allowMultiTouch)
             {
                 break;
             }
@@ -607,21 +607,21 @@ public class UICamera : MonoBehaviour
 
     public static bool Raycast(Vector3 inPos, ref RaycastHit hit)
     {
-        for (int i = 0; i < mList.Count; i++)
+        for (var i = 0; i < mList.Count; i++)
         {
-            UICamera camera = mList[i];
+            var camera = mList[i];
             if (camera.enabled && NGUITools.GetActive(camera.gameObject))
             {
                 currentCamera = camera.cachedCamera;
-                Vector3 vector = currentCamera.ScreenToViewportPoint(inPos);
+                var vector = currentCamera.ScreenToViewportPoint(inPos);
                 if ((((vector.x >= 0f) && (vector.x <= 1f)) && (vector.y >= 0f)) && (vector.y <= 1f))
                 {
-                    Ray ray = currentCamera.ScreenPointToRay(inPos);
-                    int layerMask = currentCamera.cullingMask & camera.eventReceiverMask;
-                    float maxDistance = (camera.rangeDistance <= 0f) ? (currentCamera.farClipPlane - currentCamera.nearClipPlane) : camera.rangeDistance;
+                    var ray = currentCamera.ScreenPointToRay(inPos);
+                    var layerMask = currentCamera.cullingMask & camera.eventReceiverMask;
+                    var maxDistance = (camera.rangeDistance <= 0f) ? (currentCamera.farClipPlane - currentCamera.nearClipPlane) : camera.rangeDistance;
                     if (camera.clipRaycasts)
                     {
-                        RaycastHit[] array = Physics.RaycastAll(ray, maxDistance, layerMask);
+                        var array = Physics.RaycastAll(ray, maxDistance, layerMask);
                         if (array.Length <= 1)
                         {
                             if ((array.Length == 1) && IsVisible(ref array[0]))
@@ -637,8 +637,8 @@ public class UICamera : MonoBehaviour
                                 famScache31 = (r1, r2) => r1.distance.CompareTo(r2.distance);
                             }
                             Array.Sort<RaycastHit>(array, famScache31);
-                            int index = 0;
-                            int length = array.Length;
+                            var index = 0;
+                            var length = array.Length;
                             while (index < length)
                             {
                                 if (IsVisible(ref array[index]))
@@ -667,53 +667,53 @@ public class UICamera : MonoBehaviour
 
     public void ShowTooltip(bool val)
     {
-        this.mTooltipTime = 0f;
-        Notify(this.mTooltip, "OnTooltip", val);
+        mTooltipTime = 0f;
+        Notify(mTooltip, "OnTooltip", val);
         if (!val)
         {
-            this.mTooltip = null;
+            mTooltip = null;
         }
     }
 
     private void Start()
     {
         mList.Add(this);
-        mList.Sort(new Comparison<UICamera>(UICamera.CompareFunc));
+        mList.Sort(new Comparison<UICamera>(CompareFunc));
     }
 
     private void Update()
     {
-        if (Application.isPlaying && this.handlesEvents)
+        if (Application.isPlaying && handlesEvents)
         {
             current = this;
-            if (this.useMouse || (this.useTouch && this.mIsEditor))
+            if (useMouse || (useTouch && mIsEditor))
             {
-                this.ProcessMouse();
+                ProcessMouse();
             }
-            if (this.useTouch)
+            if (useTouch)
             {
-                this.ProcessTouches();
+                ProcessTouches();
             }
             if (onCustomInput != null)
             {
                 onCustomInput();
             }
-            if ((this.useMouse && (mSel != null)) && (((this.cancelKey0 != KeyCode.None) && Input.GetKeyDown(this.cancelKey0)) || ((this.cancelKey1 != KeyCode.None) && Input.GetKeyDown(this.cancelKey1))))
+            if ((useMouse && (mSel != null)) && (((cancelKey0 != KeyCode.None) && Input.GetKeyDown(cancelKey0)) || ((cancelKey1 != KeyCode.None) && Input.GetKeyDown(cancelKey1))))
             {
                 selectedObject = null;
             }
             if (mSel != null)
             {
-                string inputString = Input.inputString;
-                if (this.useKeyboard && Input.GetKeyDown(KeyCode.Delete))
+                var inputString = Input.inputString;
+                if (useKeyboard && Input.GetKeyDown(KeyCode.Delete))
                 {
                     inputString = inputString + "\b";
                 }
                 if (inputString.Length > 0)
                 {
-                    if (!this.stickyTooltip && (this.mTooltip != null))
+                    if (!stickyTooltip && (mTooltip != null))
                     {
-                        this.ShowTooltip(false);
+                        ShowTooltip(false);
                     }
                     Notify(mSel, "OnInput", inputString);
                 }
@@ -724,19 +724,19 @@ public class UICamera : MonoBehaviour
             }
             if (mSel != null)
             {
-                this.ProcessOthers();
+                ProcessOthers();
             }
-            if (this.useMouse && (mHover != null))
+            if (useMouse && (mHover != null))
             {
-                float axis = Input.GetAxis(this.scrollAxisName);
+                var axis = Input.GetAxis(scrollAxisName);
                 if (axis != 0f)
                 {
                     Notify(mHover, "OnScroll", axis);
                 }
-                if ((showTooltips && (this.mTooltipTime != 0f)) && (((this.mTooltipTime < Time.realtimeSinceStartup) || Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.RightShift)))
+                if ((showTooltips && (mTooltipTime != 0f)) && (((mTooltipTime < Time.realtimeSinceStartup) || Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.RightShift)))
                 {
-                    this.mTooltip = mHover;
-                    this.ShowTooltip(true);
+                    mTooltip = mHover;
+                    ShowTooltip(true);
                 }
             }
             current = null;
@@ -747,11 +747,11 @@ public class UICamera : MonoBehaviour
     {
         get
         {
-            if (this.mCam == null)
+            if (mCam == null)
             {
-                this.mCam = base.camera;
+                mCam = camera;
             }
-            return this.mCam;
+            return mCam;
         }
     }
 
@@ -759,15 +759,15 @@ public class UICamera : MonoBehaviour
     {
         get
         {
-            int num = 0;
-            for (int i = 0; i < mTouches.Count; i++)
+            var num = 0;
+            for (var i = 0; i < mTouches.Count; i++)
             {
                 if (mTouches[i].dragged != null)
                 {
                     num++;
                 }
             }
-            for (int j = 0; j < mMouse.Length; j++)
+            for (var j = 0; j < mMouse.Length; j++)
             {
                 if (mMouse[j].dragged != null)
                 {
@@ -786,9 +786,9 @@ public class UICamera : MonoBehaviour
     {
         get
         {
-            for (int i = 0; i < mList.Count; i++)
+            for (var i = 0; i < mList.Count; i++)
             {
-                UICamera camera = mList[i];
+                var camera = mList[i];
                 if (((camera != null) && camera.enabled) && NGUITools.GetActive(camera.gameObject))
                 {
                     return camera;
@@ -810,7 +810,7 @@ public class UICamera : MonoBehaviour
     {
         get
         {
-            UICamera eventHandler = UICamera.eventHandler;
+            var eventHandler = UICamera.eventHandler;
             return ((eventHandler == null) ? null : eventHandler.cachedCamera);
         }
     }
@@ -827,7 +827,7 @@ public class UICamera : MonoBehaviour
             {
                 if (mSel != null)
                 {
-                    UICamera camera = FindCameraForLayer(mSel.layer);
+                    var camera = FindCameraForLayer(mSel.layer);
                     if (camera != null)
                     {
                         current = camera;
@@ -843,7 +843,7 @@ public class UICamera : MonoBehaviour
                 mSel = value;
                 if (mSel != null)
                 {
-                    UICamera camera2 = FindCameraForLayer(mSel.layer);
+                    var camera2 = FindCameraForLayer(mSel.layer);
                     if (camera2 != null)
                     {
                         current = camera2;
@@ -864,15 +864,15 @@ public class UICamera : MonoBehaviour
     {
         get
         {
-            int num = 0;
-            for (int i = 0; i < mTouches.Count; i++)
+            var num = 0;
+            for (var i = 0; i < mTouches.Count; i++)
             {
                 if (mTouches[i].pressed != null)
                 {
                     num++;
                 }
             }
-            for (int j = 0; j < mMouse.Length; j++)
+            for (var j = 0; j < mMouse.Length; j++)
             {
                 if (mMouse[j].pressed != null)
                 {
@@ -902,7 +902,7 @@ public class UICamera : MonoBehaviour
 
     public class MouseOrTouch
     {
-        public UICamera.ClickNotification clickNotification = UICamera.ClickNotification.Always;
+        public ClickNotification clickNotification = ClickNotification.Always;
         public float clickTime;
         public GameObject current;
         public Vector2 delta;

@@ -14,35 +14,35 @@ public class UISliderColors : MonoBehaviour
 
     private void Start()
     {
-        this.mSlider = base.GetComponent<UISlider>();
-        this.Update();
+        mSlider = GetComponent<UISlider>();
+        Update();
     }
 
     private void Update()
     {
-        if ((this.sprite != null) && (this.colors.Length != 0))
+        if ((sprite != null) && (colors.Length != 0))
         {
-            float f = this.mSlider.sliderValue * (this.colors.Length - 1);
-            int index = Mathf.FloorToInt(f);
-            Color color = this.colors[0];
+            var f = mSlider.sliderValue * (colors.Length - 1);
+            var index = Mathf.FloorToInt(f);
+            var color = colors[0];
             if (index >= 0)
             {
-                if ((index + 1) < this.colors.Length)
+                if ((index + 1) < colors.Length)
                 {
-                    float t = f - index;
-                    color = Color.Lerp(this.colors[index], this.colors[index + 1], t);
+                    var t = f - index;
+                    color = Color.Lerp(colors[index], colors[index + 1], t);
                 }
-                else if (index < this.colors.Length)
+                else if (index < colors.Length)
                 {
-                    color = this.colors[index];
+                    color = colors[index];
                 }
                 else
                 {
-                    color = this.colors[this.colors.Length - 1];
+                    color = colors[colors.Length - 1];
                 }
             }
-            color.a = this.sprite.color.a;
-            this.sprite.color = color;
+            color.a = sprite.color.a;
+            sprite.color = color;
         }
     }
 }

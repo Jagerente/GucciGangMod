@@ -13,14 +13,14 @@ public class CameraForLeftEye : MonoBehaviour
 
     private void LateUpdate()
     {
-        this.camera.aspect = this.cameraRightEye.aspect;
-        this.camera.fieldOfView = this.cameraRightEye.fieldOfView;
+        camera.aspect = cameraRightEye.aspect;
+        camera.fieldOfView = cameraRightEye.fieldOfView;
     }
 
     private void Start()
     {
-        this.camera = base.GetComponent<Camera>();
-        this.cameraRightEye = this.rightEye.GetComponent<Camera>();
+        camera = GetComponent<Camera>();
+        cameraRightEye = rightEye.GetComponent<Camera>();
     }
 }
 

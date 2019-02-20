@@ -12,16 +12,16 @@ public class UIInputValidator : MonoBehaviour
 
     private void Start()
     {
-        base.GetComponent<UIInput>().validator = new UIInput.Validator(this.Validate);
+        GetComponent<UIInput>().validator = new UIInput.Validator(Validate);
     }
 
     private char Validate(string text, char ch)
     {
-        if ((this.logic == Validation.None) || !base.enabled)
+        if ((logic == Validation.None) || !enabled)
         {
             return ch;
         }
-        if (this.logic == Validation.Integer)
+        if (logic == Validation.Integer)
         {
             if ((ch >= '0') && (ch <= '9'))
             {
@@ -32,7 +32,7 @@ public class UIInputValidator : MonoBehaviour
                 return ch;
             }
         }
-        else if (this.logic == Validation.Float)
+        else if (logic == Validation.Float)
         {
             if ((ch >= '0') && (ch <= '9'))
             {
@@ -47,7 +47,7 @@ public class UIInputValidator : MonoBehaviour
                 return ch;
             }
         }
-        else if (this.logic == Validation.Alphanumeric)
+        else if (logic == Validation.Alphanumeric)
         {
             if ((ch >= 'A') && (ch <= 'Z'))
             {
@@ -62,7 +62,7 @@ public class UIInputValidator : MonoBehaviour
                 return ch;
             }
         }
-        else if (this.logic == Validation.Username)
+        else if (logic == Validation.Username)
         {
             if ((ch >= 'A') && (ch <= 'Z'))
             {
@@ -77,9 +77,9 @@ public class UIInputValidator : MonoBehaviour
                 return ch;
             }
         }
-        else if (this.logic == Validation.Name)
+        else if (logic == Validation.Name)
         {
-            char ch2 = (text.Length <= 0) ? ' ' : text[text.Length - 1];
+            var ch2 = (text.Length <= 0) ? ' ' : text[text.Length - 1];
             if ((ch >= 'a') && (ch <= 'z'))
             {
                 if (ch2 == ' ')

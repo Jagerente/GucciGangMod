@@ -26,26 +26,26 @@ public class PanelMultiSet : MonoBehaviour
 
     private void showTxt()
     {
-        if (this.lang != Language.type)
+        if (lang != Language.type)
         {
-            this.lang = Language.type;
-            this.label_START.GetComponent<UILabel>().text = Language.btn_start[Language.type];
-            this.label_BACK.GetComponent<UILabel>().text = Language.btn_back[Language.type];
-            this.label_choose_map.GetComponent<UILabel>().text = Language.choose_map[Language.type];
-            this.label_server_name.GetComponent<UILabel>().text = Language.server_name[Language.type];
-            this.label_max_player.GetComponent<UILabel>().text = Language.max_player[Language.type];
-            this.label_max_time.GetComponent<UILabel>().text = Language.max_Time[Language.type];
-            this.label_game_time.GetComponent<UILabel>().text = Language.game_time[Language.type];
-            this.label_difficulty.GetComponent<UILabel>().text = Language.difficulty[Language.type];
-            this.label_normal.GetComponent<UILabel>().text = Language.normal[Language.type];
-            this.label_hard.GetComponent<UILabel>().text = Language.hard[Language.type];
-            this.label_ab.GetComponent<UILabel>().text = Language.abnormal[Language.type];
+            lang = Language.type;
+            label_START.GetComponent<UILabel>().text = Language.btn_start[Language.type];
+            label_BACK.GetComponent<UILabel>().text = Language.btn_back[Language.type];
+            label_choose_map.GetComponent<UILabel>().text = Language.choose_map[Language.type];
+            label_server_name.GetComponent<UILabel>().text = Language.server_name[Language.type];
+            label_max_player.GetComponent<UILabel>().text = Language.max_player[Language.type];
+            label_max_time.GetComponent<UILabel>().text = Language.max_Time[Language.type];
+            label_game_time.GetComponent<UILabel>().text = Language.game_time[Language.type];
+            label_difficulty.GetComponent<UILabel>().text = Language.difficulty[Language.type];
+            label_normal.GetComponent<UILabel>().text = Language.normal[Language.type];
+            label_hard.GetComponent<UILabel>().text = Language.hard[Language.type];
+            label_ab.GetComponent<UILabel>().text = Language.abnormal[Language.type];
         }
     }
 
     private void Update()
     {
-        this.showTxt();
+        showTxt();
     }
 }
 

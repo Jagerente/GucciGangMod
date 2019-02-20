@@ -14,49 +14,49 @@ public class UIDragPanelContents : MonoBehaviour
 
     private void Awake()
     {
-        if (this.panel != null)
+        if (panel != null)
         {
-            if (this.draggablePanel == null)
+            if (draggablePanel == null)
             {
-                this.draggablePanel = this.panel.GetComponent<UIDraggablePanel>();
-                if (this.draggablePanel == null)
+                draggablePanel = panel.GetComponent<UIDraggablePanel>();
+                if (draggablePanel == null)
                 {
-                    this.draggablePanel = this.panel.gameObject.AddComponent<UIDraggablePanel>();
+                    draggablePanel = panel.gameObject.AddComponent<UIDraggablePanel>();
                 }
             }
-            this.panel = null;
+            panel = null;
         }
     }
 
     private void OnDrag(Vector2 delta)
     {
-        if ((base.enabled && NGUITools.GetActive(base.gameObject)) && (this.draggablePanel != null))
+        if ((enabled && NGUITools.GetActive(gameObject)) && (draggablePanel != null))
         {
-            this.draggablePanel.Drag();
+            draggablePanel.Drag();
         }
     }
 
     private void OnPress(bool pressed)
     {
-        if ((base.enabled && NGUITools.GetActive(base.gameObject)) && (this.draggablePanel != null))
+        if ((enabled && NGUITools.GetActive(gameObject)) && (draggablePanel != null))
         {
-            this.draggablePanel.Press(pressed);
+            draggablePanel.Press(pressed);
         }
     }
 
     private void OnScroll(float delta)
     {
-        if ((base.enabled && NGUITools.GetActive(base.gameObject)) && (this.draggablePanel != null))
+        if ((enabled && NGUITools.GetActive(gameObject)) && (draggablePanel != null))
         {
-            this.draggablePanel.Scroll(delta);
+            draggablePanel.Scroll(delta);
         }
     }
 
     private void Start()
     {
-        if (this.draggablePanel == null)
+        if (draggablePanel == null)
         {
-            this.draggablePanel = NGUITools.FindInParents<UIDraggablePanel>(base.gameObject);
+            draggablePanel = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
         }
     }
 }

@@ -178,146 +178,146 @@ public class HERO : Photon.MonoBehaviour
     private void applyForceToBody(GameObject GO, Vector3 v)
     {
         GO.rigidbody.AddForce(v);
-        GO.rigidbody.AddTorque(UnityEngine.Random.Range((float) -10f, (float) 10f), UnityEngine.Random.Range((float) -10f, (float) 10f), UnityEngine.Random.Range((float) -10f, (float) 10f));
+        GO.rigidbody.AddTorque(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f));
     }
 
     public void attackAccordingToMouse()
     {
         if (Input.mousePosition.x < (Screen.width * 0.5))
         {
-            this.attackAnimation = "attack2";
+            attackAnimation = "attack2";
         }
         else
         {
-            this.attackAnimation = "attack1";
+            attackAnimation = "attack1";
         }
     }
 
     public void attackAccordingToTarget(Transform a)
     {
-        Vector3 vector = a.position - base.transform.position;
-        float current = -Mathf.Atan2(vector.z, vector.x) * 57.29578f;
-        float f = -Mathf.DeltaAngle(current, base.transform.rotation.eulerAngles.y - 90f);
-        if (((Mathf.Abs(f) < 90f) && (vector.magnitude < 6f)) && ((a.position.y <= (base.transform.position.y + 2f)) && (a.position.y >= (base.transform.position.y - 5f))))
+        var vector = a.position - transform.position;
+        var current = -Mathf.Atan2(vector.z, vector.x) * 57.29578f;
+        var f = -Mathf.DeltaAngle(current, transform.rotation.eulerAngles.y - 90f);
+        if (((Mathf.Abs(f) < 90f) && (vector.magnitude < 6f)) && ((a.position.y <= (transform.position.y + 2f)) && (a.position.y >= (transform.position.y - 5f))))
         {
-            this.attackAnimation = "attack4";
+            attackAnimation = "attack4";
         }
         else if (f > 0f)
         {
-            this.attackAnimation = "attack1";
+            attackAnimation = "attack1";
         }
         else
         {
-            this.attackAnimation = "attack2";
+            attackAnimation = "attack2";
         }
     }
 
     private void Awake()
     {
-        this.cache();
-        this.setup = base.gameObject.GetComponent<HERO_SETUP>();
-        this.baseRigidBody.freezeRotation = true;
-        this.baseRigidBody.useGravity = false;
-        this.handL = this.baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L");
-        this.handR = this.baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R");
-        this.forearmL = this.baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L");
-        this.forearmR = this.baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R");
-        this.upperarmL = this.baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L");
-        this.upperarmR = this.baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+        cache();
+        setup = gameObject.GetComponent<HERO_SETUP>();
+        baseRigidBody.freezeRotation = true;
+        baseRigidBody.useGravity = false;
+        handL = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L");
+        handR = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R");
+        forearmL = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L");
+        forearmR = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R");
+        upperarmL = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L");
+        upperarmR = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
     }
 
     public void backToHuman()
     {
-        base.gameObject.GetComponent<SmoothSyncMovement>().disabled = false;
-        base.rigidbody.velocity = Vector3.zero;
-        this.titanForm = false;
-        this.ungrabbed();
-        this.falseAttack();
-        this.skillCDDuration = this.skillCDLast;
-        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(base.gameObject, true, false);
+        gameObject.GetComponent<SmoothSyncMovement>().disabled = false;
+        rigidbody.velocity = Vector3.zero;
+        titanForm = false;
+        ungrabbed();
+        falseAttack();
+        skillCDDuration = skillCDLast;
+        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(gameObject, true, false);
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
-            base.photonView.RPC("backToHumanRPC", PhotonTargets.Others, new object[0]);
+            photonView.RPC("backToHumanRPC", PhotonTargets.Others, new object[0]);
         }
     }
 
     [RPC]
     private void backToHumanRPC()
     {
-        this.titanForm = false;
-        this.eren_titan = null;
-        base.gameObject.GetComponent<SmoothSyncMovement>().disabled = false;
+        titanForm = false;
+        eren_titan = null;
+        gameObject.GetComponent<SmoothSyncMovement>().disabled = false;
     }
 
     [RPC]
     public void badGuyReleaseMe()
     {
-        this.hookBySomeOne = false;
-        this.badGuy = null;
+        hookBySomeOne = false;
+        badGuy = null;
     }
 
     [RPC]
     public void blowAway(Vector3 force)
     {
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
-            base.rigidbody.AddForce(force, ForceMode.Impulse);
-            base.transform.LookAt(base.transform.position);
+            rigidbody.AddForce(force, ForceMode.Impulse);
+            transform.LookAt(transform.position);
         }
     }
 
     private void bodyLean()
     {
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
-            float z = 0f;
-            this.needLean = false;
-            if ((!this.useGun && (this.state == HERO_STATE.Attack)) && ((this.attackAnimation != "attack3_1") && (this.attackAnimation != "attack3_2")))
+            var z = 0f;
+            needLean = false;
+            if ((!useGun && (state == HERO_STATE.Attack)) && ((attackAnimation != "attack3_1") && (attackAnimation != "attack3_2")))
             {
-                float y = base.rigidbody.velocity.y;
-                float x = base.rigidbody.velocity.x;
-                float num4 = base.rigidbody.velocity.z;
-                float num5 = Mathf.Sqrt((x * x) + (num4 * num4));
-                float num6 = Mathf.Atan2(y, num5) * 57.29578f;
-                this.targetRotation = Quaternion.Euler(-num6 * (1f - (Vector3.Angle(base.rigidbody.velocity, base.transform.forward) / 90f)), this.facingDirection, 0f);
-                if ((this.isLeftHandHooked && (this.bulletLeft != null)) || (this.isRightHandHooked && (this.bulletRight != null)))
+                var y = rigidbody.velocity.y;
+                var x = rigidbody.velocity.x;
+                var num4 = rigidbody.velocity.z;
+                var num5 = Mathf.Sqrt((x * x) + (num4 * num4));
+                var num6 = Mathf.Atan2(y, num5) * 57.29578f;
+                targetRotation = Quaternion.Euler(-num6 * (1f - (Vector3.Angle(rigidbody.velocity, transform.forward) / 90f)), facingDirection, 0f);
+                if ((isLeftHandHooked && (bulletLeft != null)) || (isRightHandHooked && (bulletRight != null)))
                 {
-                    base.transform.rotation = this.targetRotation;
+                    transform.rotation = targetRotation;
                 }
             }
             else
             {
-                if ((this.isLeftHandHooked && (this.bulletLeft != null)) && (this.isRightHandHooked && (this.bulletRight != null)))
+                if ((isLeftHandHooked && (bulletLeft != null)) && (isRightHandHooked && (bulletRight != null)))
                 {
-                    if (this.almostSingleHook)
+                    if (almostSingleHook)
                     {
-                        this.needLean = true;
-                        z = this.getLeanAngle(this.bulletRight.transform.position, true);
+                        needLean = true;
+                        z = getLeanAngle(bulletRight.transform.position, true);
                     }
                 }
-                else if (this.isLeftHandHooked && (this.bulletLeft != null))
+                else if (isLeftHandHooked && (bulletLeft != null))
                 {
-                    this.needLean = true;
-                    z = this.getLeanAngle(this.bulletLeft.transform.position, true);
+                    needLean = true;
+                    z = getLeanAngle(bulletLeft.transform.position, true);
                 }
-                else if (this.isRightHandHooked && (this.bulletRight != null))
+                else if (isRightHandHooked && (bulletRight != null))
                 {
-                    this.needLean = true;
-                    z = this.getLeanAngle(this.bulletRight.transform.position, false);
+                    needLean = true;
+                    z = getLeanAngle(bulletRight.transform.position, false);
                 }
-                if (this.needLean)
+                if (needLean)
                 {
-                    float a = 0f;
-                    if (!this.useGun && (this.state != HERO_STATE.Attack))
+                    var a = 0f;
+                    if (!useGun && (state != HERO_STATE.Attack))
                     {
-                        a = this.currentSpeed * 0.1f;
+                        a = currentSpeed * 0.1f;
                         a = Mathf.Min(a, 20f);
                     }
-                    this.targetRotation = Quaternion.Euler(-a, this.facingDirection, z);
+                    targetRotation = Quaternion.Euler(-a, facingDirection, z);
                 }
-                else if (this.state != HERO_STATE.Attack)
+                else if (state != HERO_STATE.Attack)
                 {
-                    this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+                    targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
                 }
             }
         }
@@ -325,14 +325,14 @@ public class HERO : Photon.MonoBehaviour
 
     public void bombInit()
     {
-        this.skillIDHUD = this.skillId;
-        this.skillCDDuration = this.skillCDLast;
+        skillIDHUD = skillId;
+        skillCDDuration = skillCDLast;
         if (RCSettings.bombMode == 1)
         {
-            int num = (int) FengGameManagerMKII.settings[250];
-            int num2 = (int) FengGameManagerMKII.settings[0xfb];
-            int num3 = (int) FengGameManagerMKII.settings[0xfc];
-            int num4 = (int) FengGameManagerMKII.settings[0xfd];
+            var num = (int) FengGameManagerMKII.settings[250];
+            var num2 = (int) FengGameManagerMKII.settings[0xfb];
+            var num3 = (int) FengGameManagerMKII.settings[0xfc];
+            var num4 = (int) FengGameManagerMKII.settings[0xfd];
             if ((num < 0) || (num > 10))
             {
                 num = 5;
@@ -364,24 +364,24 @@ public class HERO : Photon.MonoBehaviour
                 FengGameManagerMKII.settings[0xfc] = 5;
                 FengGameManagerMKII.settings[0xfd] = 5;
             }
-            this.bombTimeMax = ((num2 * 60f) + 200f) / ((num3 * 60f) + 200f);
-            this.bombRadius = (num * 4f) + 20f;
-            this.bombCD = (num4 * -0.4f) + 5f;
-            this.bombSpeed = (num3 * 60f) + 200f;
-            ExitGames.Client.Photon.Hashtable propertiesToSet = new ExitGames.Client.Photon.Hashtable();
+            bombTimeMax = ((num2 * 60f) + 200f) / ((num3 * 60f) + 200f);
+            bombRadius = (num * 4f) + 20f;
+            bombCD = (num4 * -0.4f) + 5f;
+            bombSpeed = (num3 * 60f) + 200f;
+            var propertiesToSet = new ExitGames.Client.Photon.Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.RCBombR, (float) FengGameManagerMKII.settings[0xf6]);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombG, (float) FengGameManagerMKII.settings[0xf7]);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombB, (float) FengGameManagerMKII.settings[0xf8]);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombA, (float) FengGameManagerMKII.settings[0xf9]);
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, this.bombRadius);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, bombRadius);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
-            this.skillId = "bomb";
-            this.skillIDHUD = "armin";
-            this.skillCDLast = this.bombCD;
-            this.skillCDDuration = 10f;
+            skillId = "bomb";
+            skillIDHUD = "armin";
+            skillCDLast = bombCD;
+            skillCDDuration = 10f;
             if (FengGameManagerMKII.instance.roundTime > 10f)
             {
-                this.skillCDDuration = 5f;
+                skillCDDuration = 5f;
             }
         }
     }
@@ -393,108 +393,108 @@ public class HERO : Photon.MonoBehaviour
         GameObject obj8;
         GameObject obj9;
         GameObject obj10;
-        GameObject obj2 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
-        obj2.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
+        var obj2 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), this.transform.position, this.transform.rotation);
+        obj2.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
         obj2.GetComponent<HERO_SETUP>().isDeadBody = true;
-        obj2.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.ARM_R);
+        obj2.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.ARM_R);
         if (!isBite)
         {
-            GameObject gO = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
-            GameObject obj4 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
-            GameObject obj5 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), base.transform.position, base.transform.rotation);
-            gO.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
-            obj4.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
-            obj5.gameObject.GetComponent<HERO_SETUP>().myCostume = this.setup.myCostume;
+            var gO = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), this.transform.position, this.transform.rotation);
+            var obj4 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), this.transform.position, this.transform.rotation);
+            var obj5 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), this.transform.position, this.transform.rotation);
+            gO.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
+            obj4.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
+            obj5.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
             gO.GetComponent<HERO_SETUP>().isDeadBody = true;
             obj4.GetComponent<HERO_SETUP>().isDeadBody = true;
             obj5.GetComponent<HERO_SETUP>().isDeadBody = true;
-            gO.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.UPPER);
-            obj4.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.LOWER);
-            obj5.GetComponent<HERO_DEAD_BODY_SETUP>().init(this.currentAnimation, base.animation[this.currentAnimation].normalizedTime, BODY_PARTS.ARM_L);
-            this.applyForceToBody(gO, v);
-            this.applyForceToBody(obj4, v);
-            this.applyForceToBody(obj5, v);
-            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+            gO.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.UPPER);
+            obj4.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.LOWER);
+            obj5.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.ARM_L);
+            applyForceToBody(gO, v);
+            applyForceToBody(obj4, v);
+            applyForceToBody(obj5, v);
+            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
             {
-                this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(gO, false, false);
+                currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(gO, false, false);
             }
         }
-        else if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+        else if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(obj2, false, false);
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(obj2, false, false);
         }
-        this.applyForceToBody(obj2, v);
-        Transform transform = base.transform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L").transform;
-        Transform transform2 = base.transform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R").transform;
-        if (this.useGun)
+        applyForceToBody(obj2, v);
+        var transform = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L").transform;
+        var transform2 = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R").transform;
+        if (useGun)
         {
-            obj6 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
-            obj7 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_r"), transform2.position, transform2.rotation);
-            obj8 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_3dmg_2"), base.transform.position, base.transform.rotation);
-            obj9 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_mag_l"), base.transform.position, base.transform.rotation);
-            obj10 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_mag_r"), base.transform.position, base.transform.rotation);
+            obj6 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
+            obj7 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_r"), transform2.position, transform2.rotation);
+            obj8 = (GameObject) Instantiate(Resources.Load("Character_parts/character_3dmg_2"), this.transform.position, this.transform.rotation);
+            obj9 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_mag_l"), this.transform.position, this.transform.rotation);
+            obj10 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_mag_r"), this.transform.position, this.transform.rotation);
         }
         else
         {
-            obj6 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position, transform.rotation);
-            obj7 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position, transform2.rotation);
-            obj8 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_3dmg"), base.transform.position, base.transform.rotation);
-            obj9 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_3dmg_gas_l"), base.transform.position, base.transform.rotation);
-            obj10 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_3dmg_gas_r"), base.transform.position, base.transform.rotation);
+            obj6 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position, transform.rotation);
+            obj7 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position, transform2.rotation);
+            obj8 = (GameObject) Instantiate(Resources.Load("Character_parts/character_3dmg"), this.transform.position, this.transform.rotation);
+            obj9 = (GameObject) Instantiate(Resources.Load("Character_parts/character_3dmg_gas_l"), this.transform.position, this.transform.rotation);
+            obj10 = (GameObject) Instantiate(Resources.Load("Character_parts/character_3dmg_gas_r"), this.transform.position, this.transform.rotation);
         }
-        obj6.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj7.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj8.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj9.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj10.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        this.applyForceToBody(obj6, v);
-        this.applyForceToBody(obj7, v);
-        this.applyForceToBody(obj8, v);
-        this.applyForceToBody(obj9, v);
-        this.applyForceToBody(obj10, v);
+        obj6.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+        obj7.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+        obj8.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+        obj9.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+        obj10.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+        applyForceToBody(obj6, v);
+        applyForceToBody(obj7, v);
+        applyForceToBody(obj8, v);
+        applyForceToBody(obj9, v);
+        applyForceToBody(obj10, v);
     }
 
     private void bufferUpdate()
     {
-        if (this.buffTime > 0f)
+        if (buffTime > 0f)
         {
-            this.buffTime -= Time.deltaTime;
-            if (this.buffTime <= 0f)
+            buffTime -= Time.deltaTime;
+            if (buffTime <= 0f)
             {
-                this.buffTime = 0f;
-                if ((this.currentBuff == BUFF.SpeedUp) && base.animation.IsPlaying("run_sasha"))
+                buffTime = 0f;
+                if ((currentBuff == BUFF.SpeedUp) && animation.IsPlaying("run_sasha"))
                 {
-                    this.crossFade("run", 0.1f);
+                    crossFade("run", 0.1f);
                 }
-                this.currentBuff = BUFF.NoBuff;
+                currentBuff = BUFF.NoBuff;
             }
         }
     }
 
     public void cache()
     {
-        this.baseTransform = base.transform;
-        this.baseRigidBody = base.rigidbody;
-        this.maincamera = GameObject.Find("MainCamera");
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+        baseTransform = transform;
+        baseRigidBody = rigidbody;
+        maincamera = GameObject.Find("MainCamera");
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
-            this.baseAnimation = base.animation;
-            this.cross1 = GameObject.Find("cross1");
-            this.cross2 = GameObject.Find("cross2");
-            this.crossL1 = GameObject.Find("crossL1");
-            this.crossL2 = GameObject.Find("crossL2");
-            this.crossR1 = GameObject.Find("crossR1");
-            this.crossR2 = GameObject.Find("crossR2");
-            this.LabelDistance = GameObject.Find("LabelDistance");
-            this.cachedSprites = new Dictionary<string, UISprite>();
-            foreach (GameObject obj2 in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+            baseAnimation = animation;
+            cross1 = GameObject.Find("cross1");
+            cross2 = GameObject.Find("cross2");
+            crossL1 = GameObject.Find("crossL1");
+            crossL2 = GameObject.Find("crossL2");
+            crossR1 = GameObject.Find("crossR1");
+            crossR2 = GameObject.Find("crossR2");
+            LabelDistance = GameObject.Find("LabelDistance");
+            cachedSprites = new Dictionary<string, UISprite>();
+            foreach (GameObject obj2 in FindObjectsOfType(typeof(GameObject)))
             {
                 if ((obj2.GetComponent<UISprite>() != null) && obj2.activeInHierarchy)
                 {
-                    string name = obj2.name;
-                    if (!(((!name.Contains("blade") && !name.Contains("bullet")) && ((!name.Contains("gas") && !name.Contains("flare")) && !name.Contains("skill_cd"))) || this.cachedSprites.ContainsKey(name)))
+                    var name = obj2.name;
+                    if (!(((!name.Contains("blade") && !name.Contains("bullet")) && ((!name.Contains("gas") && !name.Contains("flare")) && !name.Contains("skill_cd"))) || cachedSprites.ContainsKey(name)))
                     {
-                        this.cachedSprites.Add(name, obj2.GetComponent<UISprite>());
+                        cachedSprites.Add(name, obj2.GetComponent<UISprite>());
                     }
                 }
             }
@@ -503,195 +503,195 @@ public class HERO : Photon.MonoBehaviour
 
     private void calcFlareCD()
     {
-        if (this.flare1CD > 0f)
+        if (flare1CD > 0f)
         {
-            this.flare1CD -= Time.deltaTime;
-            if (this.flare1CD < 0f)
+            flare1CD -= Time.deltaTime;
+            if (flare1CD < 0f)
             {
-                this.flare1CD = 0f;
+                flare1CD = 0f;
             }
         }
-        if (this.flare2CD > 0f)
+        if (flare2CD > 0f)
         {
-            this.flare2CD -= Time.deltaTime;
-            if (this.flare2CD < 0f)
+            flare2CD -= Time.deltaTime;
+            if (flare2CD < 0f)
             {
-                this.flare2CD = 0f;
+                flare2CD = 0f;
             }
         }
-        if (this.flare3CD > 0f)
+        if (flare3CD > 0f)
         {
-            this.flare3CD -= Time.deltaTime;
-            if (this.flare3CD < 0f)
+            flare3CD -= Time.deltaTime;
+            if (flare3CD < 0f)
             {
-                this.flare3CD = 0f;
+                flare3CD = 0f;
             }
         }
     }
 
     private void calcSkillCD()
     {
-        if (this.skillCDDuration > 0f)
+        if (skillCDDuration > 0f)
         {
-            this.skillCDDuration -= Time.deltaTime;
-            if (this.skillCDDuration < 0f)
+            skillCDDuration -= Time.deltaTime;
+            if (skillCDDuration < 0f)
             {
-                this.skillCDDuration = 0f;
+                skillCDDuration = 0f;
             }
         }
     }
 
     private float CalculateJumpVerticalSpeed()
     {
-        return Mathf.Sqrt((2f * this.jumpHeight) * this.gravity);
+        return Mathf.Sqrt((2f * jumpHeight) * gravity);
     }
 
     private void changeBlade()
     {
-        if ((!this.useGun || this.grounded) || (LevelInfo.getInfo(FengGameManagerMKII.level).type != GAMEMODE.PVP_AHSS))
+        if ((!useGun || grounded) || (LevelInfo.getInfo(FengGameManagerMKII.level).type != GAMEMODE.PVP_AHSS))
         {
-            this.state = HERO_STATE.ChangeBlade;
-            this.throwedBlades = false;
-            if (this.useGun)
+            state = HERO_STATE.ChangeBlade;
+            throwedBlades = false;
+            if (useGun)
             {
-                if (!this.leftGunHasBullet && !this.rightGunHasBullet)
+                if (!leftGunHasBullet && !rightGunHasBullet)
                 {
-                    if (this.grounded)
+                    if (grounded)
                     {
-                        this.reloadAnimation = "AHSS_gun_reload_both";
+                        reloadAnimation = "AHSS_gun_reload_both";
                     }
                     else
                     {
-                        this.reloadAnimation = "AHSS_gun_reload_both_air";
+                        reloadAnimation = "AHSS_gun_reload_both_air";
                     }
                 }
-                else if (!this.leftGunHasBullet)
+                else if (!leftGunHasBullet)
                 {
-                    if (this.grounded)
+                    if (grounded)
                     {
-                        this.reloadAnimation = "AHSS_gun_reload_l";
+                        reloadAnimation = "AHSS_gun_reload_l";
                     }
                     else
                     {
-                        this.reloadAnimation = "AHSS_gun_reload_l_air";
+                        reloadAnimation = "AHSS_gun_reload_l_air";
                     }
                 }
-                else if (!this.rightGunHasBullet)
+                else if (!rightGunHasBullet)
                 {
-                    if (this.grounded)
+                    if (grounded)
                     {
-                        this.reloadAnimation = "AHSS_gun_reload_r";
+                        reloadAnimation = "AHSS_gun_reload_r";
                     }
                     else
                     {
-                        this.reloadAnimation = "AHSS_gun_reload_r_air";
+                        reloadAnimation = "AHSS_gun_reload_r_air";
                     }
                 }
                 else
                 {
-                    if (this.grounded)
+                    if (grounded)
                     {
-                        this.reloadAnimation = "AHSS_gun_reload_both";
+                        reloadAnimation = "AHSS_gun_reload_both";
                     }
                     else
                     {
-                        this.reloadAnimation = "AHSS_gun_reload_both_air";
+                        reloadAnimation = "AHSS_gun_reload_both_air";
                     }
-                    this.leftGunHasBullet = this.rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                    leftGunHasBullet = rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
                 }
-                this.crossFade(this.reloadAnimation, 0.05f);
+                crossFade(reloadAnimation, 0.05f);
             }
             else
             {
-                if (!this.grounded)
+                if (!grounded)
                 {
-                    this.reloadAnimation = "changeBlade_air";
+                    reloadAnimation = "changeBlade_air";
                 }
                 else
                 {
-                    this.reloadAnimation = "changeBlade";
+                    reloadAnimation = "changeBlade";
                 }
-                this.crossFade(this.reloadAnimation, 0.1f);
+                crossFade(reloadAnimation, 0.1f);
             }
         }
     }
 
     private void checkDashDoubleTap()
     {
-        if (this.uTapTime >= 0f)
+        if (uTapTime >= 0f)
         {
-            this.uTapTime += Time.deltaTime;
-            if (this.uTapTime > 0.2f)
+            uTapTime += Time.deltaTime;
+            if (uTapTime > 0.2f)
             {
-                this.uTapTime = -1f;
+                uTapTime = -1f;
             }
         }
-        if (this.dTapTime >= 0f)
+        if (dTapTime >= 0f)
         {
-            this.dTapTime += Time.deltaTime;
-            if (this.dTapTime > 0.2f)
+            dTapTime += Time.deltaTime;
+            if (dTapTime > 0.2f)
             {
-                this.dTapTime = -1f;
+                dTapTime = -1f;
             }
         }
-        if (this.lTapTime >= 0f)
+        if (lTapTime >= 0f)
         {
-            this.lTapTime += Time.deltaTime;
-            if (this.lTapTime > 0.2f)
+            lTapTime += Time.deltaTime;
+            if (lTapTime > 0.2f)
             {
-                this.lTapTime = -1f;
+                lTapTime = -1f;
             }
         }
-        if (this.rTapTime >= 0f)
+        if (rTapTime >= 0f)
         {
-            this.rTapTime += Time.deltaTime;
-            if (this.rTapTime > 0.2f)
+            rTapTime += Time.deltaTime;
+            if (rTapTime > 0.2f)
             {
-                this.rTapTime = -1f;
+                rTapTime = -1f;
             }
         }
-        if (this.inputManager.isInputDown[InputCode.up])
+        if (inputManager.isInputDown[InputCode.up])
         {
-            if (this.uTapTime == -1f)
+            if (uTapTime == -1f)
             {
-                this.uTapTime = 0f;
+                uTapTime = 0f;
             }
-            if (this.uTapTime != 0f)
+            if (uTapTime != 0f)
             {
-                this.dashU = true;
+                dashU = true;
             }
         }
-        if (this.inputManager.isInputDown[InputCode.down])
+        if (inputManager.isInputDown[InputCode.down])
         {
-            if (this.dTapTime == -1f)
+            if (dTapTime == -1f)
             {
-                this.dTapTime = 0f;
+                dTapTime = 0f;
             }
-            if (this.dTapTime != 0f)
+            if (dTapTime != 0f)
             {
-                this.dashD = true;
+                dashD = true;
             }
         }
-        if (this.inputManager.isInputDown[InputCode.left])
+        if (inputManager.isInputDown[InputCode.left])
         {
-            if (this.lTapTime == -1f)
+            if (lTapTime == -1f)
             {
-                this.lTapTime = 0f;
+                lTapTime = 0f;
             }
-            if (this.lTapTime != 0f)
+            if (lTapTime != 0f)
             {
-                this.dashL = true;
+                dashL = true;
             }
         }
-        if (this.inputManager.isInputDown[InputCode.right])
+        if (inputManager.isInputDown[InputCode.right])
         {
-            if (this.rTapTime == -1f)
+            if (rTapTime == -1f)
             {
-                this.rTapTime = 0f;
+                rTapTime = 0f;
             }
-            if (this.rTapTime != 0f)
+            if (rTapTime != 0f)
             {
-                this.dashR = true;
+                dashR = true;
             }
         }
     }
@@ -700,21 +700,21 @@ public class HERO : Photon.MonoBehaviour
     {
         if (FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.dash))
         {
-            if (this.inputManager.isInput[InputCode.up])
+            if (inputManager.isInput[InputCode.up])
             {
-                this.dashU = true;
+                dashU = true;
             }
-            else if (this.inputManager.isInput[InputCode.down])
+            else if (inputManager.isInput[InputCode.down])
             {
-                this.dashD = true;
+                dashD = true;
             }
-            else if (this.inputManager.isInput[InputCode.left])
+            else if (inputManager.isInput[InputCode.left])
             {
-                this.dashL = true;
+                dashL = true;
             }
-            else if (this.inputManager.isInput[InputCode.right])
+            else if (inputManager.isInput[InputCode.right])
             {
-                this.dashR = true;
+                dashR = true;
             }
         }
     }
@@ -722,25 +722,25 @@ public class HERO : Photon.MonoBehaviour
     public void checkTitan()
     {
         int count;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        LayerMask mask = ((int) 1) << LayerMask.NameToLayer("PlayerAttackBox");
-        LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("Ground");
-        LayerMask mask3 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        LayerMask mask = 1 << LayerMask.NameToLayer("PlayerAttackBox");
+        LayerMask mask2 = 1 << LayerMask.NameToLayer("Ground");
+        LayerMask mask3 = 1 << LayerMask.NameToLayer("EnemyBox");
         LayerMask mask4 = (mask | mask2) | mask3;
-        RaycastHit[] hitArray = Physics.RaycastAll(ray, 180f, mask4.value);
-        List<RaycastHit> list = new List<RaycastHit>();
-        List<TITAN> list2 = new List<TITAN>();
+        var hitArray = Physics.RaycastAll(ray, 180f, mask4.value);
+        var list = new List<RaycastHit>();
+        var list2 = new List<TITAN>();
         for (count = 0; count < hitArray.Length; count++)
         {
-            RaycastHit item = hitArray[count];
+            var item = hitArray[count];
             list.Add(item);
         }
-        list.Sort((Comparison<RaycastHit>) ((x, y) => x.distance.CompareTo(y.distance)));
-        float num2 = 180f;
+        list.Sort((x, y) => x.distance.CompareTo(y.distance));
+        var num2 = 180f;
         for (count = 0; count < list.Count; count++)
         {
-            RaycastHit hit2 = list[count];
-            GameObject gameObject = hit2.collider.gameObject;
+            var hit2 = list[count];
+            var gameObject = hit2.collider.gameObject;
             if (gameObject.layer == 0x10)
             {
                 if (gameObject.name.Contains("PlayerDetectorRC") && ((hit2 = list[count]).distance < num2))
@@ -750,7 +750,7 @@ public class HERO : Photon.MonoBehaviour
                     {
                         count = list.Count;
                     }
-                    TITAN component = gameObject.transform.root.gameObject.GetComponent<TITAN>();
+                    var component = gameObject.transform.root.gameObject.GetComponent<TITAN>();
                     if (component != null)
                     {
                         list2.Add(component);
@@ -762,9 +762,9 @@ public class HERO : Photon.MonoBehaviour
                 count = list.Count;
             }
         }
-        for (count = 0; count < this.myTitans.Count; count++)
+        for (count = 0; count < myTitans.Count; count++)
         {
-            TITAN titan2 = this.myTitans[count];
+            var titan2 = myTitans[count];
             if (!list2.Contains(titan2))
             {
                 titan2.isLook = false;
@@ -772,10 +772,10 @@ public class HERO : Photon.MonoBehaviour
         }
         for (count = 0; count < list2.Count; count++)
         {
-            TITAN titan3 = list2[count];
+            var titan3 = list2[count];
             titan3.isLook = true;
         }
-        this.myTitans = list2;
+        myTitans = list2;
     }
 
     public void ClearPopup()
@@ -785,12 +785,12 @@ public class HERO : Photon.MonoBehaviour
 
     public void continueAnimation()
     {
-        IEnumerator enumerator = base.animation.GetEnumerator();
+        var enumerator = animation.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                AnimationState current = (AnimationState) enumerator.Current;
+                var current = (AnimationState) enumerator.Current;
                 if (current.speed == 1f)
                 {
                     return;
@@ -800,38 +800,38 @@ public class HERO : Photon.MonoBehaviour
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        this.customAnimationSpeed();
-        this.playAnimation(this.currentPlayingClipName());
-        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && base.photonView.isMine)
+        customAnimationSpeed();
+        playAnimation(currentPlayingClipName());
+        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && photonView.isMine)
         {
-            base.photonView.RPC("netContinueAnimation", PhotonTargets.Others, new object[0]);
+            photonView.RPC("netContinueAnimation", PhotonTargets.Others, new object[0]);
         }
     }
 
     public void crossFade(string aniName, float time)
     {
-        this.currentAnimation = aniName;
-        base.animation.CrossFade(aniName, time);
-        if (PhotonNetwork.connected && base.photonView.isMine)
+        currentAnimation = aniName;
+        animation.CrossFade(aniName, time);
+        if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = new object[] { aniName, time };
-            base.photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
+            var parameters = new object[] { aniName, time };
+            photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
         }
     }
 
     public string currentPlayingClipName()
     {
-        IEnumerator enumerator = base.animation.GetEnumerator();
+        var enumerator = animation.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                AnimationState current = (AnimationState) enumerator.Current;
-                if (base.animation.IsPlaying(current.name))
+                var current = (AnimationState) enumerator.Current;
+                if (animation.IsPlaying(current.name))
                 {
                     return current.name;
                 }
@@ -839,7 +839,7 @@ public class HERO : Photon.MonoBehaviour
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
@@ -848,132 +848,132 @@ public class HERO : Photon.MonoBehaviour
 
     private void customAnimationSpeed()
     {
-        base.animation["attack5"].speed = 1.85f;
-        base.animation["changeBlade"].speed = 1.2f;
-        base.animation["air_release"].speed = 0.6f;
-        base.animation["changeBlade_air"].speed = 0.8f;
-        base.animation["AHSS_gun_reload_both"].speed = 0.38f;
-        base.animation["AHSS_gun_reload_both_air"].speed = 0.5f;
-        base.animation["AHSS_gun_reload_l"].speed = 0.4f;
-        base.animation["AHSS_gun_reload_l_air"].speed = 0.5f;
-        base.animation["AHSS_gun_reload_r"].speed = 0.4f;
-        base.animation["AHSS_gun_reload_r_air"].speed = 0.5f;
+        animation["attack5"].speed = 1.85f;
+        animation["changeBlade"].speed = 1.2f;
+        animation["air_release"].speed = 0.6f;
+        animation["changeBlade_air"].speed = 0.8f;
+        animation["AHSS_gun_reload_both"].speed = 0.38f;
+        animation["AHSS_gun_reload_both_air"].speed = 0.5f;
+        animation["AHSS_gun_reload_l"].speed = 0.4f;
+        animation["AHSS_gun_reload_l_air"].speed = 0.5f;
+        animation["AHSS_gun_reload_r"].speed = 0.4f;
+        animation["AHSS_gun_reload_r_air"].speed = 0.5f;
     }
 
     private void dash(float horizontal, float vertical)
     {
-        UnityEngine.MonoBehaviour.print(this.dashTime + " " + this.currentGas);
-        if (((this.dashTime <= 0f) && (this.currentGas > 0f)) && !this.isMounted)
+        print(dashTime + " " + currentGas);
+        if (((dashTime <= 0f) && (currentGas > 0f)) && !isMounted)
         {
-            this.useGas(this.totalGas * 0.04f);
-            this.facingDirection = this.getGlobalFacingDirection(horizontal, vertical);
-            this.dashV = this.getGlobaleFacingVector3(this.facingDirection);
-            this.originVM = this.currentSpeed;
-            Quaternion quaternion = Quaternion.Euler(0f, this.facingDirection, 0f);
-            base.rigidbody.rotation = quaternion;
-            this.targetRotation = quaternion;
+            useGas(totalGas * 0.04f);
+            facingDirection = getGlobalFacingDirection(horizontal, vertical);
+            dashV = getGlobaleFacingVector3(facingDirection);
+            originVM = currentSpeed;
+            var quaternion = Quaternion.Euler(0f, facingDirection, 0f);
+            rigidbody.rotation = quaternion;
+            targetRotation = quaternion;
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                UnityEngine.Object.Instantiate(Resources.Load("FX/boost_smoke"), base.transform.position, base.transform.rotation);
+                Instantiate(Resources.Load("FX/boost_smoke"), transform.position, transform.rotation);
             }
             else
             {
-                PhotonNetwork.Instantiate("FX/boost_smoke", base.transform.position, base.transform.rotation, 0);
+                PhotonNetwork.Instantiate("FX/boost_smoke", transform.position, transform.rotation, 0);
             }
-            this.dashTime = Convert.ToSingle(Settings.DashDelay);
-            this.crossFade("dash", 0.1f);
-            base.animation["dash"].time = 0.1f;
-            this.state = HERO_STATE.AirDodge;
-            this.falseAttack();
-            base.rigidbody.AddForce((Vector3) (this.dashV * Convert.ToSingle(Settings.DashForce)), ForceMode.VelocityChange);
+            dashTime = Convert.ToSingle(Settings.DashDelay);
+            crossFade("dash", 0.1f);
+            animation["dash"].time = 0.1f;
+            state = HERO_STATE.AirDodge;
+            falseAttack();
+            rigidbody.AddForce(dashV * Convert.ToSingle(Settings.DashForce), ForceMode.VelocityChange);
         }
     }
 
     public void die(Vector3 v, bool isBite)
     {
-        if (this.invincible <= 0f)
+        if (invincible <= 0f)
         {
-            if (this.titanForm && (this.eren_titan != null))
+            if (titanForm && (eren_titan != null))
             {
-                this.eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
+                eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
             }
-            if (this.bulletLeft != null)
+            if (bulletLeft != null)
             {
-                this.bulletLeft.GetComponent<Bullet>().removeMe();
+                bulletLeft.GetComponent<Bullet>().removeMe();
             }
-            if (this.bulletRight != null)
+            if (bulletRight != null)
             {
-                this.bulletRight.GetComponent<Bullet>().removeMe();
+                bulletRight.GetComponent<Bullet>().removeMe();
             }
-            this.meatDie.Play();
-            if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine) && !this.useGun)
+            meatDie.Play();
+            if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine) && !useGun)
             {
                 leftbladetrail.Deactivate();
                 rightbladetrail.Deactivate();
                 leftbladetrail2.Deactivate();
                 rightbladetrail2.Deactivate();
             }
-            this.breakApart(v, isBite);
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+            breakApart(v, isBite);
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
             GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose2();
-            this.falseAttack();
-            this.hasDied = true;
-            Transform transform = base.transform.Find("audio_die");
+            falseAttack();
+            hasDied = true;
+            var transform = this.transform.Find("audio_die");
             transform.parent = null;
             transform.GetComponent<AudioSource>().Play();
             if (Settings.Snapshots == 1)
             {
-                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(base.transform.position, 0, null, 0.02f);
+                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(this.transform.position, 0, null, 0.02f);
             }
-            UnityEngine.Object.Destroy(base.gameObject);
+            Destroy(gameObject);
         }
     }
 
     public void die2(Transform tf)
     {
-        if (this.invincible <= 0f)
+        if (invincible <= 0f)
         {
-            if (this.titanForm && (this.eren_titan != null))
+            if (titanForm && (eren_titan != null))
             {
-                this.eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
+                eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
             }
-            if (this.bulletLeft != null)
+            if (bulletLeft != null)
             {
-                this.bulletLeft.GetComponent<Bullet>().removeMe();
+                bulletLeft.GetComponent<Bullet>().removeMe();
             }
-            if (this.bulletRight != null)
+            if (bulletRight != null)
             {
-                this.bulletRight.GetComponent<Bullet>().removeMe();
+                bulletRight.GetComponent<Bullet>().removeMe();
             }
-            Transform transform = base.transform.Find("audio_die");
+            var transform = this.transform.Find("audio_die");
             transform.parent = null;
             transform.GetComponent<AudioSource>().Play();
-            this.meatDie.Play();
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null, true, false);
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+            meatDie.Play();
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null, true, false);
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
             GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose2();
-            this.falseAttack();
-            this.hasDied = true;
-            GameObject obj2 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("hitMeat2"));
-            obj2.transform.position = base.transform.position;
-            UnityEngine.Object.Destroy(base.gameObject);
+            falseAttack();
+            hasDied = true;
+            var obj2 = (GameObject) Instantiate(Resources.Load("hitMeat2"));
+            obj2.transform.position = this.transform.position;
+            Destroy(gameObject);
         }
     }
 
     private void dodge(bool offTheWall = false)
     {
-        if (((!FengGameManagerMKII.inputRC.isInputHorse(InputCodeRC.horseMount) || (this.myHorse == null)) || this.isMounted) || (Vector3.Distance(this.myHorse.transform.position, base.transform.position) >= 15f))
+        if (((!FengGameManagerMKII.inputRC.isInputHorse(InputCodeRC.horseMount) || (myHorse == null)) || isMounted) || (Vector3.Distance(myHorse.transform.position, transform.position) >= 15f))
         {
-            this.state = HERO_STATE.GroundDodge;
+            state = HERO_STATE.GroundDodge;
             if (!offTheWall)
             {
                 float num;
                 float num2;
-                if (this.inputManager.isInput[InputCode.up])
+                if (inputManager.isInput[InputCode.up])
                 {
                     num = 1f;
                 }
-                else if (this.inputManager.isInput[InputCode.down])
+                else if (inputManager.isInput[InputCode.down])
                 {
                     num = -1f;
                 }
@@ -981,11 +981,11 @@ public class HERO : Photon.MonoBehaviour
                 {
                     num = 0f;
                 }
-                if (this.inputManager.isInput[InputCode.left])
+                if (inputManager.isInput[InputCode.left])
                 {
                     num2 = -1f;
                 }
-                else if (this.inputManager.isInput[InputCode.right])
+                else if (inputManager.isInput[InputCode.right])
                 {
                     num2 = 1f;
                 }
@@ -993,61 +993,61 @@ public class HERO : Photon.MonoBehaviour
                 {
                     num2 = 0f;
                 }
-                float num3 = this.getGlobalFacingDirection(num2, num);
+                var num3 = getGlobalFacingDirection(num2, num);
                 if ((num2 != 0f) || (num != 0f))
                 {
-                    this.facingDirection = num3 + 180f;
-                    this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+                    facingDirection = num3 + 180f;
+                    targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
                 }
-                this.crossFade("dodge", 0.1f);
+                crossFade("dodge", 0.1f);
             }
             else
             {
-                this.playAnimation("dodge");
-                this.playAnimationAt("dodge", 0.2f);
+                playAnimation("dodge");
+                playAnimationAt("dodge", 0.2f);
             }
-            this.sparks.enableEmission = false;
+            sparks.enableEmission = false;
         }
     }
 
     private void erenTransform()
     {
-        this.skillCDDuration = this.skillCDLast;
-        if (this.bulletLeft != null)
+        skillCDDuration = skillCDLast;
+        if (bulletLeft != null)
         {
-            this.bulletLeft.GetComponent<Bullet>().removeMe();
+            bulletLeft.GetComponent<Bullet>().removeMe();
         }
-        if (this.bulletRight != null)
+        if (bulletRight != null)
         {
-            this.bulletRight.GetComponent<Bullet>().removeMe();
+            bulletRight.GetComponent<Bullet>().removeMe();
         }
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
-            this.eren_titan = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("TITAN_EREN"), base.transform.position, base.transform.rotation);
+            eren_titan = (GameObject) Instantiate(Resources.Load("TITAN_EREN"), transform.position, transform.rotation);
         }
         else
         {
-            this.eren_titan = PhotonNetwork.Instantiate("TITAN_EREN", base.transform.position, base.transform.rotation, 0);
+            eren_titan = PhotonNetwork.Instantiate("TITAN_EREN", transform.position, transform.rotation, 0);
         }
-        this.eren_titan.GetComponent<TITAN_EREN>().realBody = base.gameObject;
+        eren_titan.GetComponent<TITAN_EREN>().realBody = gameObject;
         GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().flashBlind();
-        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(this.eren_titan, true, false);
-        this.eren_titan.GetComponent<TITAN_EREN>().born();
-        this.eren_titan.rigidbody.velocity = base.rigidbody.velocity;
-        base.rigidbody.velocity = Vector3.zero;
-        base.transform.position = this.eren_titan.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position;
-        this.titanForm = true;
+        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(eren_titan, true, false);
+        eren_titan.GetComponent<TITAN_EREN>().born();
+        eren_titan.rigidbody.velocity = rigidbody.velocity;
+        rigidbody.velocity = Vector3.zero;
+        transform.position = eren_titan.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position;
+        titanForm = true;
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
-            object[] parameters = new object[] { this.eren_titan.GetPhotonView().viewID };
-            base.photonView.RPC("whoIsMyErenTitan", PhotonTargets.Others, parameters);
+            var parameters = new object[] { eren_titan.GetPhotonView().viewID };
+            photonView.RPC("whoIsMyErenTitan", PhotonTargets.Others, parameters);
         }
-        if ((this.smoke_3dmg.enableEmission && (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && base.photonView.isMine)
+        if ((smoke_3dmg.enableEmission && (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && photonView.isMine)
         {
-            object[] objArray2 = new object[] { false };
-            base.photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray2);
+            var objArray2 = new object[] { false };
+            photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray2);
         }
-        this.smoke_3dmg.enableEmission = false;
+        smoke_3dmg.enableEmission = false;
     }
 
     private void escapeFromGrab()
@@ -1056,52 +1056,52 @@ public class HERO : Photon.MonoBehaviour
 
     public void falseAttack()
     {
-        this.attackMove = false;
-        if (this.useGun)
+        attackMove = false;
+        if (useGun)
         {
-            if (!this.attackReleased)
+            if (!attackReleased)
             {
-                this.continueAnimation();
-                this.attackReleased = true;
+                continueAnimation();
+                attackReleased = true;
             }
         }
         else
         {
-            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
             {
-                this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
-                this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
-                this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
-                this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                this.leftbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
-                this.rightbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
-                this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
-                this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
+                checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
+                checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
+                checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
+                leftbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                rightbladetrail.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                leftbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
+                rightbladetrail2.StopSmoothly(Convert.ToSingle(Convert.ToSingle(Settings.BladeTrailsFadeTime)));
             }
-            this.attackLoop = 0;
-            if (!this.attackReleased)
+            attackLoop = 0;
+            if (!attackReleased)
             {
-                this.continueAnimation();
-                this.attackReleased = true;
+                continueAnimation();
+                attackReleased = true;
             }
         }
     }
 
     public void fillGas()
     {
-        this.currentGas = this.totalGas;
+        currentGas = totalGas;
     }
 
     private GameObject findNearestTitan()
     {
-        GameObject[] objArray = GameObject.FindGameObjectsWithTag("titan");
+        var objArray = GameObject.FindGameObjectsWithTag("titan");
         GameObject obj2 = null;
-        float positiveInfinity = float.PositiveInfinity;
-        Vector3 position = base.transform.position;
-        foreach (GameObject obj3 in objArray)
+        var positiveInfinity = float.PositiveInfinity;
+        var position = transform.position;
+        foreach (var obj3 in objArray)
         {
-            Vector3 vector2 = obj3.transform.position - position;
-            float sqrMagnitude = vector2.sqrMagnitude;
+            var vector2 = obj3.transform.position - position;
+            var sqrMagnitude = vector2.sqrMagnitude;
             if (sqrMagnitude < positiveInfinity)
             {
                 obj2 = obj3;
@@ -1113,74 +1113,74 @@ public class HERO : Photon.MonoBehaviour
 
     private void FixedUpdate()
     {
-        if ((!this.titanForm && !this.isCannon) && (!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)))
+        if ((!titanForm && !isCannon) && (!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)))
         {
-            this.currentSpeed = this.baseRigidBody.velocity.magnitude;
-            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+            currentSpeed = baseRigidBody.velocity.magnitude;
+            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
             {
-                if (!((this.baseAnimation.IsPlaying("attack3_2") || this.baseAnimation.IsPlaying("attack5")) || this.baseAnimation.IsPlaying("special_petra")))
+                if (!((baseAnimation.IsPlaying("attack3_2") || baseAnimation.IsPlaying("attack5")) || baseAnimation.IsPlaying("special_petra")))
                 {
-                    this.baseRigidBody.rotation = Quaternion.Lerp(base.gameObject.transform.rotation, this.targetRotation, Time.deltaTime * 6f);
+                    baseRigidBody.rotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, Time.deltaTime * 6f);
                 }
-                if (this.state == HERO_STATE.Grab)
+                if (state == HERO_STATE.Grab)
                 {
-                    this.baseRigidBody.AddForce(-this.baseRigidBody.velocity, ForceMode.VelocityChange);
+                    baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
                 }
                 else
                 {
-                    if (this.IsGrounded())
+                    if (IsGrounded())
                     {
-                        if (!this.grounded)
+                        if (!grounded)
                         {
-                            this.justGrounded = true;
+                            justGrounded = true;
                         }
-                        this.grounded = true;
+                        grounded = true;
                     }
                     else
                     {
-                        this.grounded = false;
+                        grounded = false;
                     }
-                    if (this.hookSomeOne)
+                    if (hookSomeOne)
                     {
-                        if (this.hookTarget != null)
+                        if (hookTarget != null)
                         {
-                            Vector3 vector2 = this.hookTarget.transform.position - this.baseTransform.position;
-                            float magnitude = vector2.magnitude;
+                            var vector2 = hookTarget.transform.position - baseTransform.position;
+                            var magnitude = vector2.magnitude;
                             if (magnitude > 2f)
                             {
-                                this.baseRigidBody.AddForce((Vector3) (((vector2.normalized * Mathf.Pow(magnitude, 0.15f)) * 30f) - (this.baseRigidBody.velocity * 0.95f)), ForceMode.VelocityChange);
+                                baseRigidBody.AddForce(((vector2.normalized * Mathf.Pow(magnitude, 0.15f)) * 30f) - (baseRigidBody.velocity * 0.95f), ForceMode.VelocityChange);
                             }
                         }
                         else
                         {
-                            this.hookSomeOne = false;
+                            hookSomeOne = false;
                         }
                     }
-                    else if (this.hookBySomeOne && (this.badGuy != null))
+                    else if (hookBySomeOne && (badGuy != null))
                     {
-                        if (this.badGuy != null)
+                        if (badGuy != null)
                         {
-                            Vector3 vector3 = this.badGuy.transform.position - this.baseTransform.position;
-                            float f = vector3.magnitude;
+                            var vector3 = badGuy.transform.position - baseTransform.position;
+                            var f = vector3.magnitude;
                             if (f > 5f)
                             {
-                                this.baseRigidBody.AddForce((Vector3) ((vector3.normalized * Mathf.Pow(f, 0.15f)) * 0.2f), ForceMode.Impulse);
+                                baseRigidBody.AddForce((vector3.normalized * Mathf.Pow(f, 0.15f)) * 0.2f, ForceMode.Impulse);
                             }
                         }
                         else
                         {
-                            this.hookBySomeOne = false;
+                            hookBySomeOne = false;
                         }
                     }
-                    float x = 0f;
-                    float z = 0f;
+                    var x = 0f;
+                    var z = 0f;
                     if (!IN_GAME_MAIN_CAMERA.isTyping)
                     {
-                        if (this.inputManager.isInput[InputCode.up])
+                        if (inputManager.isInput[InputCode.up])
                         {
                             z = 1f;
                         }
-                        else if (this.inputManager.isInput[InputCode.down])
+                        else if (inputManager.isInput[InputCode.down])
                         {
                             z = -1f;
                         }
@@ -1188,11 +1188,11 @@ public class HERO : Photon.MonoBehaviour
                         {
                             z = 0f;
                         }
-                        if (this.inputManager.isInput[InputCode.left])
+                        if (inputManager.isInput[InputCode.left])
                         {
                             x = -1f;
                         }
-                        else if (this.inputManager.isInput[InputCode.right])
+                        else if (inputManager.isInput[InputCode.right])
                         {
                             x = 1f;
                         }
@@ -1201,479 +1201,479 @@ public class HERO : Photon.MonoBehaviour
                             x = 0f;
                         }
                     }
-                    bool flag2 = false;
-                    bool flag3 = false;
-                    bool flag4 = false;
-                    this.isLeftHandHooked = false;
-                    this.isRightHandHooked = false;
-                    if (this.isLaunchLeft)
+                    var flag2 = false;
+                    var flag3 = false;
+                    var flag4 = false;
+                    isLeftHandHooked = false;
+                    isRightHandHooked = false;
+                    if (isLaunchLeft)
                     {
-                        if ((this.bulletLeft != null) && this.bulletLeft.GetComponent<Bullet>().isHooked())
+                        if ((bulletLeft != null) && bulletLeft.GetComponent<Bullet>().isHooked())
                         {
-                            this.isLeftHandHooked = true;
-                            Vector3 to = this.bulletLeft.transform.position - this.baseTransform.position;
+                            isLeftHandHooked = true;
+                            var to = bulletLeft.transform.position - baseTransform.position;
                             to.Normalize();
-                            to = (Vector3) (to * 10f);
-                            if (!this.isLaunchRight)
+                            to = to * 10f;
+                            if (!isLaunchRight)
                             {
-                                to = (Vector3) (to * 2f);
+                                to = to * 2f;
                             }
-                            if ((Vector3.Angle(this.baseRigidBody.velocity, to) > 90f) && this.inputManager.isInput[InputCode.jump])
+                            if ((Vector3.Angle(baseRigidBody.velocity, to) > 90f) && inputManager.isInput[InputCode.jump])
                             {
                                 flag3 = true;
                                 flag2 = true;
                             }
                             if (!flag3)
                             {
-                                this.baseRigidBody.AddForce(to);
-                                if (Vector3.Angle(this.baseRigidBody.velocity, to) > 90f)
+                                baseRigidBody.AddForce(to);
+                                if (Vector3.Angle(baseRigidBody.velocity, to) > 90f)
                                 {
-                                    this.baseRigidBody.AddForce((Vector3) (-this.baseRigidBody.velocity * 2f), ForceMode.Acceleration);
+                                    baseRigidBody.AddForce(-baseRigidBody.velocity * 2f, ForceMode.Acceleration);
                                 }
                             }
-                            if (Settings.BodyLean == 0 && !this.useGun)
+                            if (Settings.BodyLean == 0 && !useGun)
                             {
-                                this.facingDirection = Mathf.Atan2(to.x, to.z) * 57.29578f;
-                                Quaternion rotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                                this.baseTransform.rotation = rotation;
-                                this.baseTransform.rotation = rotation;
+                                facingDirection = Mathf.Atan2(to.x, to.z) * 57.29578f;
+                                var rotation = Quaternion.Euler(0f, facingDirection, 0f);
+                                baseTransform.rotation = rotation;
+                                baseTransform.rotation = rotation;
                             }
                         }
-                        this.launchElapsedTimeL += Time.deltaTime;
-                        if (this.QHold && (this.currentGas > 0f))
+                        launchElapsedTimeL += Time.deltaTime;
+                        if (QHold && (currentGas > 0f))
                         {
-                            this.useGas(this.useGasSpeed * Time.deltaTime);
+                            useGas(useGasSpeed * Time.deltaTime);
                         }
-                        else if (this.launchElapsedTimeL > 0.3f)
+                        else if (launchElapsedTimeL > 0.3f)
                         {
-                            this.isLaunchLeft = false;
-                            if (this.bulletLeft != null)
+                            isLaunchLeft = false;
+                            if (bulletLeft != null)
                             {
-                                this.bulletLeft.GetComponent<Bullet>().disable();
-                                this.releaseIfIHookSb();
-                                this.bulletLeft = null;
+                                bulletLeft.GetComponent<Bullet>().disable();
+                                releaseIfIHookSb();
+                                bulletLeft = null;
                                 flag3 = false;
                             }
                         }
                     }
-                    if (this.isLaunchRight)
+                    if (isLaunchRight)
                     {
-                        if ((this.bulletRight != null) && this.bulletRight.GetComponent<Bullet>().isHooked())
+                        if ((bulletRight != null) && bulletRight.GetComponent<Bullet>().isHooked())
                         {
-                            this.isRightHandHooked = true;
-                            Vector3 vector5 = this.bulletRight.transform.position - this.baseTransform.position;
+                            isRightHandHooked = true;
+                            var vector5 = bulletRight.transform.position - baseTransform.position;
                             vector5.Normalize();
-                            vector5 = (Vector3) (vector5 * 10f);
-                            if (!this.isLaunchLeft)
+                            vector5 = vector5 * 10f;
+                            if (!isLaunchLeft)
                             {
-                                vector5 = (Vector3) (vector5 * 2f);
+                                vector5 = vector5 * 2f;
                             }
-                            if ((Vector3.Angle(this.baseRigidBody.velocity, vector5) > 90f) && this.inputManager.isInput[InputCode.jump])
+                            if ((Vector3.Angle(baseRigidBody.velocity, vector5) > 90f) && inputManager.isInput[InputCode.jump])
                             {
                                 flag4 = true;
                                 flag2 = true;
                             }
                             if (!flag4)
                             {
-                                this.baseRigidBody.AddForce(vector5);
-                                if (Vector3.Angle(this.baseRigidBody.velocity, vector5) > 90f)
+                                baseRigidBody.AddForce(vector5);
+                                if (Vector3.Angle(baseRigidBody.velocity, vector5) > 90f)
                                 {
-                                    this.baseRigidBody.AddForce((Vector3) (-this.baseRigidBody.velocity * 2f), ForceMode.Acceleration);
+                                    baseRigidBody.AddForce(-baseRigidBody.velocity * 2f, ForceMode.Acceleration);
                                 }
                             }
-                            if (Settings.BodyLean == 0 && !this.useGun)
+                            if (Settings.BodyLean == 0 && !useGun)
                             {
-                                this.facingDirection = Mathf.Atan2(vector5.x, vector5.z) * 57.29578f;
-                                Quaternion rotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                                this.baseTransform.rotation = rotation;
-                                this.baseTransform.rotation = rotation;
+                                facingDirection = Mathf.Atan2(vector5.x, vector5.z) * 57.29578f;
+                                var rotation = Quaternion.Euler(0f, facingDirection, 0f);
+                                baseTransform.rotation = rotation;
+                                baseTransform.rotation = rotation;
                             }
                         }
-                        this.launchElapsedTimeR += Time.deltaTime;
-                        if (this.EHold && (this.currentGas > 0f))
+                        launchElapsedTimeR += Time.deltaTime;
+                        if (EHold && (currentGas > 0f))
                         {
-                            this.useGas(this.useGasSpeed * Time.deltaTime);
+                            useGas(useGasSpeed * Time.deltaTime);
                         }
-                        else if (this.launchElapsedTimeR > 0.3f)
+                        else if (launchElapsedTimeR > 0.3f)
                         {
-                            this.isLaunchRight = false;
-                            if (this.bulletRight != null)
+                            isLaunchRight = false;
+                            if (bulletRight != null)
                             {
-                                this.bulletRight.GetComponent<Bullet>().disable();
-                                this.releaseIfIHookSb();
-                                this.bulletRight = null;
+                                bulletRight.GetComponent<Bullet>().disable();
+                                releaseIfIHookSb();
+                                bulletRight = null;
                                 flag4 = false;
                             }
                         }
                     }
-                    if (this.grounded)
+                    if (grounded)
                     {
                         Vector3 vector7;
-                        Vector3 zero = Vector3.zero;
-                        if (this.state == HERO_STATE.Attack)
+                        var zero = Vector3.zero;
+                        if (state == HERO_STATE.Attack)
                         {
-                            if (this.attackAnimation == "attack5")
+                            if (attackAnimation == "attack5")
                             {
-                                if ((this.baseAnimation[this.attackAnimation].normalizedTime > 0.4f) && (this.baseAnimation[this.attackAnimation].normalizedTime < 0.61f))
+                                if ((baseAnimation[attackAnimation].normalizedTime > 0.4f) && (baseAnimation[attackAnimation].normalizedTime < 0.61f))
                                 {
-                                    this.baseRigidBody.AddForce((Vector3) (base.gameObject.transform.forward * 200f));
+                                    baseRigidBody.AddForce(gameObject.transform.forward * 200f);
                                 }
                             }
-                            else if (this.attackAnimation == "special_petra")
+                            else if (attackAnimation == "special_petra")
                             {
-                                if ((this.baseAnimation[this.attackAnimation].normalizedTime > 0.35f) && (this.baseAnimation[this.attackAnimation].normalizedTime < 0.48f))
+                                if ((baseAnimation[attackAnimation].normalizedTime > 0.35f) && (baseAnimation[attackAnimation].normalizedTime < 0.48f))
                                 {
-                                    this.baseRigidBody.AddForce((Vector3) (base.gameObject.transform.forward * 200f));
+                                    baseRigidBody.AddForce(gameObject.transform.forward * 200f);
                                 }
                             }
-                            else if (this.baseAnimation.IsPlaying("attack3_2"))
+                            else if (baseAnimation.IsPlaying("attack3_2"))
                             {
                                 zero = Vector3.zero;
                             }
-                            else if (this.baseAnimation.IsPlaying("attack1") || this.baseAnimation.IsPlaying("attack2"))
+                            else if (baseAnimation.IsPlaying("attack1") || baseAnimation.IsPlaying("attack2"))
                             {
-                                this.baseRigidBody.AddForce((Vector3) (base.gameObject.transform.forward * 200f));
+                                baseRigidBody.AddForce(gameObject.transform.forward * 200f);
                             }
-                            if (this.baseAnimation.IsPlaying("attack3_2"))
+                            if (baseAnimation.IsPlaying("attack3_2"))
                             {
                                 zero = Vector3.zero;
                             }
                         }
-                        if (this.justGrounded)
+                        if (justGrounded)
                         {
-                            if ((this.state != HERO_STATE.Attack) || (((this.attackAnimation != "attack3_1") && (this.attackAnimation != "attack5")) && (this.attackAnimation != "special_petra")))
+                            if ((state != HERO_STATE.Attack) || (((attackAnimation != "attack3_1") && (attackAnimation != "attack5")) && (attackAnimation != "special_petra")))
                             {
-                                if ((((this.state != HERO_STATE.Attack) && (x == 0f)) && ((z == 0f) && (this.bulletLeft == null))) && ((this.bulletRight == null) && (this.state != HERO_STATE.FillGas)))
+                                if ((((state != HERO_STATE.Attack) && (x == 0f)) && ((z == 0f) && (bulletLeft == null))) && ((bulletRight == null) && (state != HERO_STATE.FillGas)))
                                 {
-                                    this.state = HERO_STATE.Land;
-                                    this.crossFade("dash_land", 0.01f);
+                                    state = HERO_STATE.Land;
+                                    crossFade("dash_land", 0.01f);
                                 }
                                 else
                                 {
-                                    this.buttonAttackRelease = true;
-                                    if (((this.state != HERO_STATE.Attack) && (((this.baseRigidBody.velocity.x * this.baseRigidBody.velocity.x) + (this.baseRigidBody.velocity.z * this.baseRigidBody.velocity.z)) > ((this.speed * this.speed) * 1.5f))) && (this.state != HERO_STATE.FillGas))
+                                    buttonAttackRelease = true;
+                                    if (((state != HERO_STATE.Attack) && (((baseRigidBody.velocity.x * baseRigidBody.velocity.x) + (baseRigidBody.velocity.z * baseRigidBody.velocity.z)) > ((speed * speed) * 1.5f))) && (state != HERO_STATE.FillGas))
                                     {
-                                        this.state = HERO_STATE.Slide;
-                                        this.crossFade("slide", 0.05f);
-                                        this.facingDirection = Mathf.Atan2(this.baseRigidBody.velocity.x, this.baseRigidBody.velocity.z) * 57.29578f;
-                                        this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                                        this.sparks.enableEmission = true;
+                                        state = HERO_STATE.Slide;
+                                        crossFade("slide", 0.05f);
+                                        facingDirection = Mathf.Atan2(baseRigidBody.velocity.x, baseRigidBody.velocity.z) * 57.29578f;
+                                        targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
+                                        sparks.enableEmission = true;
                                     }
                                 }
                             }
-                            this.justGrounded = false;
-                            zero = this.baseRigidBody.velocity;
+                            justGrounded = false;
+                            zero = baseRigidBody.velocity;
                         }
-                        if (((this.state == HERO_STATE.Attack) && (this.attackAnimation == "attack3_1")) && (this.baseAnimation[this.attackAnimation].normalizedTime >= 1f))
+                        if (((state == HERO_STATE.Attack) && (attackAnimation == "attack3_1")) && (baseAnimation[attackAnimation].normalizedTime >= 1f))
                         {
                             if (Settings.Bouncy == 0)
                             {
-                                this.playAnimation("attack3_2");
-                                this.resetAnimationSpeed();
+                                playAnimation("attack3_2");
+                                resetAnimationSpeed();
                                 vector7 = Vector3.zero;
-                                this.baseRigidBody.velocity = vector7;
+                                baseRigidBody.velocity = vector7;
                                 zero = vector7;
-                                this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(0.2f, 0.3f, 0.95f);
+                                currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(0.2f, 0.3f, 0.95f);
                             }
                         }
-                        if (this.state == HERO_STATE.GroundDodge)
+                        if (state == HERO_STATE.GroundDodge)
                         {
-                            if ((this.baseAnimation["dodge"].normalizedTime >= 0.2f) && (this.baseAnimation["dodge"].normalizedTime < 0.8f))
+                            if ((baseAnimation["dodge"].normalizedTime >= 0.2f) && (baseAnimation["dodge"].normalizedTime < 0.8f))
                             {
-                                zero = (Vector3) ((-this.baseTransform.forward * 2.4f) * this.speed);
+                                zero = (-baseTransform.forward * 2.4f) * speed;
                             }
-                            if (this.baseAnimation["dodge"].normalizedTime > 0.8f)
+                            if (baseAnimation["dodge"].normalizedTime > 0.8f)
                             {
-                                zero = (Vector3) (this.baseRigidBody.velocity * 0.9f);
+                                zero = baseRigidBody.velocity * 0.9f;
                             }
                         }
-                        else if (this.state == HERO_STATE.Idle)
+                        else if (state == HERO_STATE.Idle)
                         {
-                            Vector3 vector8 = new Vector3(x, 0f, z);
-                            float resultAngle = this.getGlobalFacingDirection(x, z);
-                            zero = this.getGlobaleFacingVector3(resultAngle);
-                            float num6 = (vector8.magnitude <= 0.95f) ? ((vector8.magnitude >= 0.25f) ? vector8.magnitude : 0f) : 1f;
-                            zero = (Vector3) (zero * num6);
-                            zero = (Vector3) (zero * this.speed);
-                            if ((this.buffTime > 0f) && (this.currentBuff == BUFF.SpeedUp))
+                            var vector8 = new Vector3(x, 0f, z);
+                            var resultAngle = getGlobalFacingDirection(x, z);
+                            zero = getGlobaleFacingVector3(resultAngle);
+                            var num6 = (vector8.magnitude <= 0.95f) ? ((vector8.magnitude >= 0.25f) ? vector8.magnitude : 0f) : 1f;
+                            zero = zero * num6;
+                            zero = zero * speed;
+                            if ((buffTime > 0f) && (currentBuff == BUFF.SpeedUp))
                             {
-                                zero = (Vector3) (zero * 4f);
+                                zero = zero * 4f;
                             }
                             if ((x != 0f) || (z != 0f))
                             {
-                                if (((!this.baseAnimation.IsPlaying("run") && !this.baseAnimation.IsPlaying("jump")) && !this.baseAnimation.IsPlaying("run_sasha")) && (!this.baseAnimation.IsPlaying("horse_geton") || (this.baseAnimation["horse_geton"].normalizedTime >= 0.5f)))
+                                if (((!baseAnimation.IsPlaying("run") && !baseAnimation.IsPlaying("jump")) && !baseAnimation.IsPlaying("run_sasha")) && (!baseAnimation.IsPlaying("horse_geton") || (baseAnimation["horse_geton"].normalizedTime >= 0.5f)))
                                 {
-                                    if ((this.buffTime > 0f) && (this.currentBuff == BUFF.SpeedUp))
+                                    if ((buffTime > 0f) && (currentBuff == BUFF.SpeedUp))
                                     {
-                                        this.crossFade("run_sasha", 0.1f);
+                                        crossFade("run_sasha", 0.1f);
                                     }
                                     else
                                     {
-                                        this.crossFade("run", 0.1f);
+                                        crossFade("run", 0.1f);
                                     }
                                 }
                             }
                             else
                             {
-                                if (!(((this.baseAnimation.IsPlaying(this.standAnimation) || (this.state == HERO_STATE.Land)) || (this.baseAnimation.IsPlaying("jump") || this.baseAnimation.IsPlaying("horse_geton"))) || this.baseAnimation.IsPlaying("grabbed")))
+                                if (!(((baseAnimation.IsPlaying(standAnimation) || (state == HERO_STATE.Land)) || (baseAnimation.IsPlaying("jump") || baseAnimation.IsPlaying("horse_geton"))) || baseAnimation.IsPlaying("grabbed")))
                                 {
-                                    this.crossFade(this.standAnimation, 0.1f);
-                                    zero = (Vector3) (zero * 0f);
+                                    crossFade(standAnimation, 0.1f);
+                                    zero = zero * 0f;
                                 }
                                 resultAngle = -874f;
                             }
                             if (resultAngle != -874f)
                             {
-                                this.facingDirection = resultAngle;
-                                this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+                                facingDirection = resultAngle;
+                                targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
                             }
                         }
-                        else if (this.state == HERO_STATE.Land)
+                        else if (state == HERO_STATE.Land)
                         {
-                            zero = (Vector3) (this.baseRigidBody.velocity * 0.96f);
+                            zero = baseRigidBody.velocity * 0.96f;
                         }
-                        else if (this.state == HERO_STATE.Slide)
+                        else if (state == HERO_STATE.Slide)
                         {
-                            zero = (Vector3) (this.baseRigidBody.velocity * 0.99f);
-                            if (this.currentSpeed < (this.speed * 1.2f))
+                            zero = baseRigidBody.velocity * 0.99f;
+                            if (currentSpeed < (speed * 1.2f))
                             {
-                                this.idle();
-                                this.sparks.enableEmission = false;
+                                idle();
+                                sparks.enableEmission = false;
                             }
                         }
-                        Vector3 velocity = this.baseRigidBody.velocity;
-                        Vector3 force = zero - velocity;
-                        force.x = Mathf.Clamp(force.x, -this.maxVelocityChange, this.maxVelocityChange);
-                        force.z = Mathf.Clamp(force.z, -this.maxVelocityChange, this.maxVelocityChange);
+                        var velocity = baseRigidBody.velocity;
+                        var force = zero - velocity;
+                        force.x = Mathf.Clamp(force.x, -maxVelocityChange, maxVelocityChange);
+                        force.z = Mathf.Clamp(force.z, -maxVelocityChange, maxVelocityChange);
                         force.y = 0f;
-                        if (this.baseAnimation.IsPlaying("jump") && (this.baseAnimation["jump"].normalizedTime > 0.18f))
+                        if (baseAnimation.IsPlaying("jump") && (baseAnimation["jump"].normalizedTime > 0.18f))
                         {
                             force.y += 8f;
                         }
-                        if ((this.baseAnimation.IsPlaying("horse_geton") && (this.baseAnimation["horse_geton"].normalizedTime > 0.18f)) && (this.baseAnimation["horse_geton"].normalizedTime < 1f))
+                        if ((baseAnimation.IsPlaying("horse_geton") && (baseAnimation["horse_geton"].normalizedTime > 0.18f)) && (baseAnimation["horse_geton"].normalizedTime < 1f))
                         {
-                            float num7 = 6f;
-                            force = -this.baseRigidBody.velocity;
+                            var num7 = 6f;
+                            force = -baseRigidBody.velocity;
                             force.y = num7;
-                            float num8 = Vector3.Distance(this.myHorse.transform.position, this.baseTransform.position);
-                            float num9 = ((0.6f * this.gravity) * num8) / (2f * num7);
-                            vector7 = this.myHorse.transform.position - this.baseTransform.position;
-                            force += (Vector3) (num9 * vector7.normalized);
+                            var num8 = Vector3.Distance(myHorse.transform.position, baseTransform.position);
+                            var num9 = ((0.6f * gravity) * num8) / (2f * num7);
+                            vector7 = myHorse.transform.position - baseTransform.position;
+                            force += num9 * vector7.normalized;
                         }
-                        if (!((this.state == HERO_STATE.Attack) && this.useGun))
+                        if (!((state == HERO_STATE.Attack) && useGun))
                         {
-                            this.baseRigidBody.AddForce(force, ForceMode.VelocityChange);
-                            this.baseRigidBody.rotation = Quaternion.Lerp(base.gameObject.transform.rotation, Quaternion.Euler(0f, this.facingDirection, 0f), Time.deltaTime * 10f);
+                            baseRigidBody.AddForce(force, ForceMode.VelocityChange);
+                            baseRigidBody.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, facingDirection, 0f), Time.deltaTime * 10f);
                         }
                     }
                     else
                     {
-                        if (this.sparks.enableEmission)
+                        if (sparks.enableEmission)
                         {
-                            this.sparks.enableEmission = false;
+                            sparks.enableEmission = false;
                         }
-                        if (((this.myHorse != null) && (this.baseAnimation.IsPlaying("horse_geton") || this.baseAnimation.IsPlaying("air_fall"))) && ((this.baseRigidBody.velocity.y < 0f) && (Vector3.Distance(this.myHorse.transform.position + ((Vector3) (Vector3.up * 1.65f)), this.baseTransform.position) < 0.5f)))
+                        if (((myHorse != null) && (baseAnimation.IsPlaying("horse_geton") || baseAnimation.IsPlaying("air_fall"))) && ((baseRigidBody.velocity.y < 0f) && (Vector3.Distance(myHorse.transform.position + Vector3.up * 1.65f, baseTransform.position) < 0.5f)))
                         {
-                            this.baseTransform.position = this.myHorse.transform.position + ((Vector3) (Vector3.up * 1.65f));
-                            this.baseTransform.rotation = this.myHorse.transform.rotation;
-                            this.isMounted = true;
-                            this.crossFade("horse_idle", 0.1f);
-                            this.myHorse.GetComponent<Horse>().mounted();
+                            baseTransform.position = myHorse.transform.position + Vector3.up * 1.65f;
+                            baseTransform.rotation = myHorse.transform.rotation;
+                            isMounted = true;
+                            crossFade("horse_idle", 0.1f);
+                            myHorse.GetComponent<Horse>().mounted();
                         }
-                        if ((((((this.state == HERO_STATE.Idle) && !this.baseAnimation.IsPlaying("dash")) && (!this.baseAnimation.IsPlaying("wallrun") && !this.baseAnimation.IsPlaying("toRoof"))) && ((!this.baseAnimation.IsPlaying("horse_geton") && !this.baseAnimation.IsPlaying("horse_getoff")) && (!this.baseAnimation.IsPlaying("air_release") && !this.isMounted))) && ((!this.baseAnimation.IsPlaying("air_hook_l_just") || (this.baseAnimation["air_hook_l_just"].normalizedTime >= 1f)) && (!this.baseAnimation.IsPlaying("air_hook_r_just") || (this.baseAnimation["air_hook_r_just"].normalizedTime >= 1f)))) || (this.baseAnimation["dash"].normalizedTime >= 0.99f))
+                        if ((((((state == HERO_STATE.Idle) && !baseAnimation.IsPlaying("dash")) && (!baseAnimation.IsPlaying("wallrun") && !baseAnimation.IsPlaying("toRoof"))) && ((!baseAnimation.IsPlaying("horse_geton") && !baseAnimation.IsPlaying("horse_getoff")) && (!baseAnimation.IsPlaying("air_release") && !isMounted))) && ((!baseAnimation.IsPlaying("air_hook_l_just") || (baseAnimation["air_hook_l_just"].normalizedTime >= 1f)) && (!baseAnimation.IsPlaying("air_hook_r_just") || (baseAnimation["air_hook_r_just"].normalizedTime >= 1f)))) || (baseAnimation["dash"].normalizedTime >= 0.99f))
                         {
-                            if (((!this.isLeftHandHooked && !this.isRightHandHooked) && ((this.baseAnimation.IsPlaying("air_hook_l") || this.baseAnimation.IsPlaying("air_hook_r")) || this.baseAnimation.IsPlaying("air_hook"))) && (this.baseRigidBody.velocity.y > 20f))
+                            if (((!isLeftHandHooked && !isRightHandHooked) && ((baseAnimation.IsPlaying("air_hook_l") || baseAnimation.IsPlaying("air_hook_r")) || baseAnimation.IsPlaying("air_hook"))) && (baseRigidBody.velocity.y > 20f))
                             {
-                                this.baseAnimation.CrossFade("air_release");
+                                baseAnimation.CrossFade("air_release");
                             }
                             else
                             {
-                                bool flag5 = (Mathf.Abs(this.baseRigidBody.velocity.x) + Mathf.Abs(this.baseRigidBody.velocity.z)) > 25f;
-                                bool flag6 = this.baseRigidBody.velocity.y < 0f;
+                                var flag5 = (Mathf.Abs(baseRigidBody.velocity.x) + Mathf.Abs(baseRigidBody.velocity.z)) > 25f;
+                                var flag6 = baseRigidBody.velocity.y < 0f;
                                 if (!flag5)
                                 {
                                     if (flag6)
                                     {
-                                        if (!this.baseAnimation.IsPlaying("air_fall"))
+                                        if (!baseAnimation.IsPlaying("air_fall"))
                                         {
-                                            this.crossFade("air_fall", 0.2f);
+                                            crossFade("air_fall", 0.2f);
                                         }
                                     }
-                                    else if (!this.baseAnimation.IsPlaying("air_rise"))
+                                    else if (!baseAnimation.IsPlaying("air_rise"))
                                     {
-                                        this.crossFade("air_rise", 0.2f);
+                                        crossFade("air_rise", 0.2f);
                                     }
                                 }
-                                else if (!this.isLeftHandHooked && !this.isRightHandHooked)
+                                else if (!isLeftHandHooked && !isRightHandHooked)
                                 {
-                                    float current = -Mathf.Atan2(this.baseRigidBody.velocity.z, this.baseRigidBody.velocity.x) * 57.29578f;
-                                    float num11 = -Mathf.DeltaAngle(current, this.baseTransform.rotation.eulerAngles.y - 90f);
+                                    var current = -Mathf.Atan2(baseRigidBody.velocity.z, baseRigidBody.velocity.x) * 57.29578f;
+                                    var num11 = -Mathf.DeltaAngle(current, baseTransform.rotation.eulerAngles.y - 90f);
                                     if (Mathf.Abs(num11) < 45f)
                                     {
-                                        if (!this.baseAnimation.IsPlaying("air2"))
+                                        if (!baseAnimation.IsPlaying("air2"))
                                         {
-                                            this.crossFade("air2", 0.2f);
+                                            crossFade("air2", 0.2f);
                                         }
                                     }
                                     else if ((num11 < 135f) && (num11 > 0f))
                                     {
-                                        if (!this.baseAnimation.IsPlaying("air2_right"))
+                                        if (!baseAnimation.IsPlaying("air2_right"))
                                         {
-                                            this.crossFade("air2_right", 0.2f);
+                                            crossFade("air2_right", 0.2f);
                                         }
                                     }
                                     else if ((num11 > -135f) && (num11 < 0f))
                                     {
-                                        if (!this.baseAnimation.IsPlaying("air2_left"))
+                                        if (!baseAnimation.IsPlaying("air2_left"))
                                         {
-                                            this.crossFade("air2_left", 0.2f);
+                                            crossFade("air2_left", 0.2f);
                                         }
                                     }
-                                    else if (!this.baseAnimation.IsPlaying("air2_backward"))
+                                    else if (!baseAnimation.IsPlaying("air2_backward"))
                                     {
-                                        this.crossFade("air2_backward", 0.2f);
+                                        crossFade("air2_backward", 0.2f);
                                     }
                                 }
-                                else if (this.useGun)
+                                else if (useGun)
                                 {
-                                    if (!this.isRightHandHooked)
+                                    if (!isRightHandHooked)
                                     {
-                                        if (!this.baseAnimation.IsPlaying("AHSS_hook_forward_l"))
+                                        if (!baseAnimation.IsPlaying("AHSS_hook_forward_l"))
                                         {
-                                            this.crossFade("AHSS_hook_forward_l", 0.1f);
+                                            crossFade("AHSS_hook_forward_l", 0.1f);
                                         }
                                     }
-                                    else if (!this.isLeftHandHooked)
+                                    else if (!isLeftHandHooked)
                                     {
-                                        if (!this.baseAnimation.IsPlaying("AHSS_hook_forward_r"))
+                                        if (!baseAnimation.IsPlaying("AHSS_hook_forward_r"))
                                         {
-                                            this.crossFade("AHSS_hook_forward_r", 0.1f);
+                                            crossFade("AHSS_hook_forward_r", 0.1f);
                                         }
                                     }
-                                    else if (!this.baseAnimation.IsPlaying("AHSS_hook_forward_both"))
+                                    else if (!baseAnimation.IsPlaying("AHSS_hook_forward_both"))
                                     {
-                                        this.crossFade("AHSS_hook_forward_both", 0.1f);
+                                        crossFade("AHSS_hook_forward_both", 0.1f);
                                     }
                                 }
-                                else if (!this.isRightHandHooked)
+                                else if (!isRightHandHooked)
                                 {
-                                    if (!this.baseAnimation.IsPlaying("air_hook_l"))
+                                    if (!baseAnimation.IsPlaying("air_hook_l"))
                                     {
-                                        this.crossFade("air_hook_l", 0.1f);
+                                        crossFade("air_hook_l", 0.1f);
                                     }
                                 }
-                                else if (!this.isLeftHandHooked)
+                                else if (!isLeftHandHooked)
                                 {
-                                    if (!this.baseAnimation.IsPlaying("air_hook_r"))
+                                    if (!baseAnimation.IsPlaying("air_hook_r"))
                                     {
-                                        this.crossFade("air_hook_r", 0.1f);
+                                        crossFade("air_hook_r", 0.1f);
                                     }
                                 }
-                                else if (!this.baseAnimation.IsPlaying("air_hook"))
+                                else if (!baseAnimation.IsPlaying("air_hook"))
                                 {
-                                    this.crossFade("air_hook", 0.1f);
+                                    crossFade("air_hook", 0.1f);
                                 }
                             }
                         }
-                        if (((this.state == HERO_STATE.Idle) && this.baseAnimation.IsPlaying("air_release")) && (this.baseAnimation["air_release"].normalizedTime >= 1f))
+                        if (((state == HERO_STATE.Idle) && baseAnimation.IsPlaying("air_release")) && (baseAnimation["air_release"].normalizedTime >= 1f))
                         {
-                            this.crossFade("air_rise", 0.2f);
+                            crossFade("air_rise", 0.2f);
                         }
-                        if (this.baseAnimation.IsPlaying("horse_getoff") && (this.baseAnimation["horse_getoff"].normalizedTime >= 1f))
+                        if (baseAnimation.IsPlaying("horse_getoff") && (baseAnimation["horse_getoff"].normalizedTime >= 1f))
                         {
-                            this.crossFade("air_rise", 0.2f);
+                            crossFade("air_rise", 0.2f);
                         }
-                        if (this.baseAnimation.IsPlaying("toRoof"))
+                        if (baseAnimation.IsPlaying("toRoof"))
                         {
-                            if (this.baseAnimation["toRoof"].normalizedTime < 0.22f)
+                            if (baseAnimation["toRoof"].normalizedTime < 0.22f)
                             {
-                                this.baseRigidBody.velocity = Vector3.zero;
-                                this.baseRigidBody.AddForce(new Vector3(0f, this.gravity * this.baseRigidBody.mass, 0f));
+                                baseRigidBody.velocity = Vector3.zero;
+                                baseRigidBody.AddForce(new Vector3(0f, gravity * baseRigidBody.mass, 0f));
                             }
                             else
                             {
-                                if (!this.wallJump)
+                                if (!wallJump)
                                 {
-                                    this.wallJump = true;
-                                    this.baseRigidBody.AddForce((Vector3) (Vector3.up * 8f), ForceMode.Impulse);
+                                    wallJump = true;
+                                    baseRigidBody.AddForce(Vector3.up * 8f, ForceMode.Impulse);
                                 }
-                                this.baseRigidBody.AddForce((Vector3) (this.baseTransform.forward * 0.05f), ForceMode.Impulse);
+                                baseRigidBody.AddForce(baseTransform.forward * 0.05f, ForceMode.Impulse);
                             }
-                            if (this.baseAnimation["toRoof"].normalizedTime >= 1f)
+                            if (baseAnimation["toRoof"].normalizedTime >= 1f)
                             {
-                                this.playAnimation("air_rise");
+                                playAnimation("air_rise");
                             }
                         }
-                        else if (!(((((this.state != HERO_STATE.Idle) || !this.isPressDirectionTowardsHero(x, z)) || (this.inputManager.isInput[InputCode.jump] || this.inputManager.isInput[InputCode.leftRope])) || ((this.inputManager.isInput[InputCode.rightRope] || this.inputManager.isInput[InputCode.bothRope]) || (!this.IsFrontGrounded() || this.baseAnimation.IsPlaying("wallrun")))) || this.baseAnimation.IsPlaying("dodge")))
+                        else if (!(((((state != HERO_STATE.Idle) || !isPressDirectionTowardsHero(x, z)) || (inputManager.isInput[InputCode.jump] || inputManager.isInput[InputCode.leftRope])) || ((inputManager.isInput[InputCode.rightRope] || inputManager.isInput[InputCode.bothRope]) || (!IsFrontGrounded() || baseAnimation.IsPlaying("wallrun")))) || baseAnimation.IsPlaying("dodge")))
                         {
-                            this.crossFade("wallrun", 0.1f);
-                            this.wallRunTime = 0f;
+                            crossFade("wallrun", 0.1f);
+                            wallRunTime = 0f;
                         }
-                        else if (this.baseAnimation.IsPlaying("wallrun"))
+                        else if (baseAnimation.IsPlaying("wallrun"))
                         {
-                            this.baseRigidBody.AddForce(((Vector3) (Vector3.up * this.speed)) - this.baseRigidBody.velocity, ForceMode.VelocityChange);
-                            this.wallRunTime += Time.deltaTime;
-                            if ((this.wallRunTime > 1f) || ((z == 0f) && (x == 0f)))
+                            baseRigidBody.AddForce(Vector3.up * speed - baseRigidBody.velocity, ForceMode.VelocityChange);
+                            wallRunTime += Time.deltaTime;
+                            if ((wallRunTime > 1f) || ((z == 0f) && (x == 0f)))
                             {
-                                this.baseRigidBody.AddForce((Vector3) ((-this.baseTransform.forward * this.speed) * 0.75f), ForceMode.Impulse);
-                                this.dodge(true);
+                                baseRigidBody.AddForce((-baseTransform.forward * speed) * 0.75f, ForceMode.Impulse);
+                                dodge(true);
                             }
-                            else if (!this.IsUpFrontGrounded())
+                            else if (!IsUpFrontGrounded())
                             {
-                                this.wallJump = false;
-                                this.crossFade("toRoof", 0.1f);
+                                wallJump = false;
+                                crossFade("toRoof", 0.1f);
                             }
-                            else if (!this.IsFrontGrounded())
+                            else if (!IsFrontGrounded())
                             {
-                                this.crossFade("air_fall", 0.1f);
+                                crossFade("air_fall", 0.1f);
                             }
                         }
-                        else if ((!this.baseAnimation.IsPlaying("attack5") && !this.baseAnimation.IsPlaying("special_petra")) && (!this.baseAnimation.IsPlaying("dash") && !this.baseAnimation.IsPlaying("jump")))
+                        else if ((!baseAnimation.IsPlaying("attack5") && !baseAnimation.IsPlaying("special_petra")) && (!baseAnimation.IsPlaying("dash") && !baseAnimation.IsPlaying("jump")))
                         {
-                            Vector3 vector11 = new Vector3(x, 0f, z);
-                            float num12 = this.getGlobalFacingDirection(x, z);
-                            Vector3 vector12 = this.getGlobaleFacingVector3(num12);
-                            float num13 = (vector11.magnitude <= 0.95f) ? ((vector11.magnitude >= 0.25f) ? vector11.magnitude : 0f) : 1f;
-                            vector12 = (Vector3) (vector12 * num13);
-                            vector12 = (Vector3) (vector12 * ((((float) this.setup.myCostume.stat.ACL) / 10f) * 2f));
+                            var vector11 = new Vector3(x, 0f, z);
+                            var num12 = getGlobalFacingDirection(x, z);
+                            var vector12 = getGlobaleFacingVector3(num12);
+                            var num13 = (vector11.magnitude <= 0.95f) ? ((vector11.magnitude >= 0.25f) ? vector11.magnitude : 0f) : 1f;
+                            vector12 = vector12 * num13;
+                            vector12 = vector12 * ((setup.myCostume.stat.ACL / 10f) * 2f);
                             if ((x == 0f) && (z == 0f))
                             {
-                                if (this.state == HERO_STATE.Attack)
+                                if (state == HERO_STATE.Attack)
                                 {
-                                    vector12 = (Vector3) (vector12 * 0f);
+                                    vector12 = vector12 * 0f;
                                 }
                                 num12 = -874f;
                             }
                             if (num12 != -874f)
                             {
-                                this.facingDirection = num12;
-                                this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+                                facingDirection = num12;
+                                targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
                             }
-                            if (((!flag3 && !flag4) && (!this.isMounted && this.inputManager.isInput[InputCode.jump])) && (this.currentGas > 0f))
+                            if (((!flag3 && !flag4) && (!isMounted && inputManager.isInput[InputCode.jump])) && (currentGas > 0f))
                             {
                                 if ((x != 0f) || (z != 0f))
                                 {
-                                    this.baseRigidBody.AddForce(vector12, ForceMode.Acceleration);
+                                    baseRigidBody.AddForce(vector12, ForceMode.Acceleration);
                                 }
                                 else
                                 {
-                                    this.baseRigidBody.AddForce((Vector3) (this.baseTransform.forward * vector12.magnitude), ForceMode.Acceleration);
+                                    baseRigidBody.AddForce(baseTransform.forward * vector12.magnitude, ForceMode.Acceleration);
                                 }
                                 flag2 = true;
                             }
                         }
-                        if ((this.baseAnimation.IsPlaying("air_fall") && (this.currentSpeed < 0.2f)) && this.IsFrontGrounded())
+                        if ((baseAnimation.IsPlaying("air_fall") && (currentSpeed < 0.2f)) && IsFrontGrounded())
                         {
-                            this.crossFade("onWall", 0.3f);
+                            crossFade("onWall", 0.3f);
                         }
                     }
-                    this.spinning = false;
+                    spinning = false;
                     if (flag3 && flag4)
                     {
-                        float num14 = this.currentSpeed + 0.1f;
-                        this.baseRigidBody.AddForce(-this.baseRigidBody.velocity, ForceMode.VelocityChange);
-                        Vector3 vector13 = ((Vector3) ((this.bulletRight.transform.position + this.bulletLeft.transform.position) * 0.5f)) - this.baseTransform.position;
-                        float num15 = 0f;
+                        var num14 = currentSpeed + 0.1f;
+                        baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
+                        var vector13 = (bulletRight.transform.position + bulletLeft.transform.position) * 0.5f - baseTransform.position;
+                        var num15 = 0f;
                         if ((((int) FengGameManagerMKII.settings[0x61]) == 1) && FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
                             num15 = -1f;
@@ -1687,18 +1687,18 @@ public class HERO : Photon.MonoBehaviour
                             num15 = Input.GetAxis("Mouse ScrollWheel") * 5555f;
                         }
                         num15 = Mathf.Clamp(num15, -0.8f, 0.8f);
-                        float num16 = 1f + num15;
-                        Vector3 vector14 = Vector3.RotateTowards(vector13, this.baseRigidBody.velocity, 1.53938f * num16, 1.53938f * num16);
+                        var num16 = 1f + num15;
+                        var vector14 = Vector3.RotateTowards(vector13, baseRigidBody.velocity, 1.53938f * num16, 1.53938f * num16);
                         vector14.Normalize();
-                        this.spinning = true;
-                        this.baseRigidBody.velocity = (Vector3) (vector14 * num14);
+                        spinning = true;
+                        baseRigidBody.velocity = vector14 * num14;
                     }
                     else if (flag3)
                     {
-                        float num17 = this.currentSpeed + 0.1f;
-                        this.baseRigidBody.AddForce(-this.baseRigidBody.velocity, ForceMode.VelocityChange);
-                        Vector3 vector15 = this.bulletLeft.transform.position - this.baseTransform.position;
-                        float num18 = 0f;
+                        var num17 = currentSpeed + 0.1f;
+                        baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
+                        var vector15 = bulletLeft.transform.position - baseTransform.position;
+                        var num18 = 0f;
                         if ((((int) FengGameManagerMKII.settings[0x61]) == 1) && FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
                             num18 = -1f;
@@ -1712,18 +1712,18 @@ public class HERO : Photon.MonoBehaviour
                             num18 = Input.GetAxis("Mouse ScrollWheel") * 5555f;
                         }
                         num18 = Mathf.Clamp(num18, -0.8f, 0.8f);
-                        float num19 = 1f + num18;
-                        Vector3 vector16 = Vector3.RotateTowards(vector15, this.baseRigidBody.velocity, 1.53938f * num19, 1.53938f * num19);
+                        var num19 = 1f + num18;
+                        var vector16 = Vector3.RotateTowards(vector15, baseRigidBody.velocity, 1.53938f * num19, 1.53938f * num19);
                         vector16.Normalize();
-                        this.spinning = true;
-                        this.baseRigidBody.velocity = (Vector3) (vector16 * num17);
+                        spinning = true;
+                        baseRigidBody.velocity = vector16 * num17;
                     }
                     else if (flag4)
                     {
-                        float num20 = this.currentSpeed + 0.1f;
-                        this.baseRigidBody.AddForce(-this.baseRigidBody.velocity, ForceMode.VelocityChange);
-                        Vector3 vector17 = this.bulletRight.transform.position - this.baseTransform.position;
-                        float num21 = 0f;
+                        var num20 = currentSpeed + 0.1f;
+                        baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
+                        var vector17 = bulletRight.transform.position - baseTransform.position;
+                        var num21 = 0f;
                         if ((((int) FengGameManagerMKII.settings[0x61]) == 1) && FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
                             num21 = -1f;
@@ -1737,107 +1737,107 @@ public class HERO : Photon.MonoBehaviour
                             num21 = Input.GetAxis("Mouse ScrollWheel") * 5555f;
                         }
                         num21 = Mathf.Clamp(num21, -0.8f, 0.8f);
-                        float num22 = 1f + num21;
-                        Vector3 vector18 = Vector3.RotateTowards(vector17, this.baseRigidBody.velocity, 1.53938f * num22, 1.53938f * num22);
+                        var num22 = 1f + num21;
+                        var vector18 = Vector3.RotateTowards(vector17, baseRigidBody.velocity, 1.53938f * num22, 1.53938f * num22);
                         vector18.Normalize();
-                        this.spinning = true;
-                        this.baseRigidBody.velocity = (Vector3) (vector18 * num20);
+                        spinning = true;
+                        baseRigidBody.velocity = vector18 * num20;
                     }
-                    if (((this.state == HERO_STATE.Attack) && ((this.attackAnimation == "attack5") || (this.attackAnimation == "special_petra"))) && ((this.baseAnimation[this.attackAnimation].normalizedTime > 0.4f) && !this.attackMove))
+                    if (((state == HERO_STATE.Attack) && ((attackAnimation == "attack5") || (attackAnimation == "special_petra"))) && ((baseAnimation[attackAnimation].normalizedTime > 0.4f) && !attackMove))
                     {
-                        this.attackMove = true;
-                        if (this.launchPointRight.magnitude > 0f)
+                        attackMove = true;
+                        if (launchPointRight.magnitude > 0f)
                         {
-                            Vector3 vector19 = this.launchPointRight - this.baseTransform.position;
+                            var vector19 = launchPointRight - baseTransform.position;
                             vector19.Normalize();
-                            vector19 = (Vector3) (vector19 * 13f);
-                            this.baseRigidBody.AddForce(vector19, ForceMode.Impulse);
+                            vector19 = vector19 * 13f;
+                            baseRigidBody.AddForce(vector19, ForceMode.Impulse);
                         }
-                        if ((this.attackAnimation == "special_petra") && (this.launchPointLeft.magnitude > 0f))
+                        if ((attackAnimation == "special_petra") && (launchPointLeft.magnitude > 0f))
                         {
-                            Vector3 vector20 = this.launchPointLeft - this.baseTransform.position;
+                            var vector20 = launchPointLeft - baseTransform.position;
                             vector20.Normalize();
-                            vector20 = (Vector3) (vector20 * 13f);
-                            this.baseRigidBody.AddForce(vector20, ForceMode.Impulse);
-                            if (this.bulletRight != null)
+                            vector20 = vector20 * 13f;
+                            baseRigidBody.AddForce(vector20, ForceMode.Impulse);
+                            if (bulletRight != null)
                             {
-                                this.bulletRight.GetComponent<Bullet>().disable();
-                                this.releaseIfIHookSb();
+                                bulletRight.GetComponent<Bullet>().disable();
+                                releaseIfIHookSb();
                             }
-                            if (this.bulletLeft != null)
+                            if (bulletLeft != null)
                             {
-                                this.bulletLeft.GetComponent<Bullet>().disable();
-                                this.releaseIfIHookSb();
+                                bulletLeft.GetComponent<Bullet>().disable();
+                                releaseIfIHookSb();
                             }
                         }
-                        this.baseRigidBody.AddForce((Vector3) (Vector3.up * 2f), ForceMode.Impulse);
+                        baseRigidBody.AddForce(Vector3.up * 2f, ForceMode.Impulse);
                     }
-                    bool flag7 = false;
-                    if ((this.bulletLeft != null) || (this.bulletRight != null))
+                    var flag7 = false;
+                    if ((bulletLeft != null) || (bulletRight != null))
                     {
-                        if (((this.bulletLeft != null) && (this.bulletLeft.transform.position.y > base.gameObject.transform.position.y)) && (this.isLaunchLeft && this.bulletLeft.GetComponent<Bullet>().isHooked()))
+                        if (((bulletLeft != null) && (bulletLeft.transform.position.y > gameObject.transform.position.y)) && (isLaunchLeft && bulletLeft.GetComponent<Bullet>().isHooked()))
                         {
                             flag7 = true;
                         }
-                        if (((this.bulletRight != null) && (this.bulletRight.transform.position.y > base.gameObject.transform.position.y)) && (this.isLaunchRight && this.bulletRight.GetComponent<Bullet>().isHooked()))
+                        if (((bulletRight != null) && (bulletRight.transform.position.y > gameObject.transform.position.y)) && (isLaunchRight && bulletRight.GetComponent<Bullet>().isHooked()))
                         {
                             flag7 = true;
                         }
                     }
                     if (flag7)
                     {
-                        this.baseRigidBody.AddForce(new Vector3(0f, -10f * this.baseRigidBody.mass, 0f));
+                        baseRigidBody.AddForce(new Vector3(0f, -10f * baseRigidBody.mass, 0f));
                     }
                     else
                     {
-                        this.baseRigidBody.AddForce(new Vector3(0f, -this.gravity * this.baseRigidBody.mass, 0f));
+                        baseRigidBody.AddForce(new Vector3(0f, -gravity * baseRigidBody.mass, 0f));
                     }
                     if (Settings.FOV == 0)
                     {
-                        if (this.currentSpeed > 10f)
+                        if (currentSpeed > 10f)
                         {
-                            this.currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(this.currentCamera.GetComponent<Camera>().fieldOfView, Mathf.Min((float)100f, (float)(this.currentSpeed + 40f)), 0.1f);
+                            currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCamera.GetComponent<Camera>().fieldOfView, Mathf.Min(100f, currentSpeed + 40f), 0.1f);
                         }
                         else
                         {
-                            this.currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(this.currentCamera.GetComponent<Camera>().fieldOfView, 50f, 0.1f);
+                            currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCamera.GetComponent<Camera>().fieldOfView, 50f, 0.1f);
                         }
                     }
                     else
                     {
-                        this.currentCamera.GetComponent<Camera>().fieldOfView = Settings.FOVvalue;
+                        currentCamera.GetComponent<Camera>().fieldOfView = Settings.FOVvalue;
                     }
                     if (flag2)
                     {
-                        this.useGas(this.useGasSpeed * Time.deltaTime);
-                        if ((!this.smoke_3dmg.enableEmission && (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && base.photonView.isMine)
+                        useGas(useGasSpeed * Time.deltaTime);
+                        if ((!smoke_3dmg.enableEmission && (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && photonView.isMine)
                         {
-                            object[] parameters = new object[] { true };
-                            base.photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
+                            var parameters = new object[] { true };
+                            photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
                         }
-                        this.smoke_3dmg.enableEmission = true;
+                        smoke_3dmg.enableEmission = true;
                     }
                     else
                     {
-                        if ((this.smoke_3dmg.enableEmission && (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && base.photonView.isMine)
+                        if ((smoke_3dmg.enableEmission && (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && photonView.isMine)
                         {
-                            object[] objArray3 = new object[] { false };
-                            base.photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray3);
+                            var objArray3 = new object[] { false };
+                            photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray3);
                         }
-                        this.smoke_3dmg.enableEmission = false;
+                        smoke_3dmg.enableEmission = false;
                     }
-                    if (this.currentSpeed > 80f)
+                    if (currentSpeed > 80f)
                     {
-                        if (!this.speedFXPS.enableEmission)
+                        if (!speedFXPS.enableEmission)
                         {
-                            this.speedFXPS.enableEmission = true;
+                            speedFXPS.enableEmission = true;
                         }
-                        this.speedFXPS.startSpeed = this.currentSpeed;
-                        this.speedFX.transform.LookAt(this.baseTransform.position + this.baseRigidBody.velocity);
+                        speedFXPS.startSpeed = currentSpeed;
+                        speedFX.transform.LookAt(baseTransform.position + baseRigidBody.velocity);
                     }
-                    else if (this.speedFXPS.enableEmission)
+                    else if (speedFXPS.enableEmission)
                     {
-                        this.speedFXPS.enableEmission = false;
+                        speedFXPS.enableEmission = false;
                     }
                 }
             }
@@ -1846,40 +1846,40 @@ public class HERO : Photon.MonoBehaviour
 
     public string getDebugInfo()
     {
-        string str = "\n";
-        str = "Left:" + this.isLeftHandHooked + " ";
-        if (this.isLeftHandHooked && (this.bulletLeft != null))
+        var str = "\n";
+        str = "Left:" + isLeftHandHooked + " ";
+        if (isLeftHandHooked && (bulletLeft != null))
         {
-            Vector3 vector = this.bulletLeft.transform.position - base.transform.position;
+            var vector = bulletLeft.transform.position - transform.position;
             str = str + ((int) (Mathf.Atan2(vector.x, vector.z) * 57.29578f));
         }
-        string str2 = str;
-        object[] objArray1 = new object[] { str2, "\nRight:", this.isRightHandHooked, " " };
+        var str2 = str;
+        var objArray1 = new object[] { str2, "\nRight:", isRightHandHooked, " " };
         str = string.Concat(objArray1);
-        if (this.isRightHandHooked && (this.bulletRight != null))
+        if (isRightHandHooked && (bulletRight != null))
         {
-            Vector3 vector2 = this.bulletRight.transform.position - base.transform.position;
+            var vector2 = bulletRight.transform.position - transform.position;
             str = str + ((int) (Mathf.Atan2(vector2.x, vector2.z) * 57.29578f));
         }
-        str = (((str + "\nfacingDirection:" + ((int) this.facingDirection)) + "\nActual facingDirection:" + ((int) base.transform.rotation.eulerAngles.y)) + "\nState:" + this.state.ToString()) + "\n\n\n\n\n";
-        if (this.state == HERO_STATE.Attack)
+        str = (((str + "\nfacingDirection:" + ((int) facingDirection)) + "\nActual facingDirection:" + ((int) transform.rotation.eulerAngles.y)) + "\nState:" + state.ToString()) + "\n\n\n\n\n";
+        if (state == HERO_STATE.Attack)
         {
-            this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+            targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
         }
         return str;
     }
 
     private Vector3 getGlobaleFacingVector3(float resultAngle)
     {
-        float num = -resultAngle + 90f;
-        float x = Mathf.Cos(num * 0.01745329f);
+        var num = -resultAngle + 90f;
+        var x = Mathf.Cos(num * 0.01745329f);
         return new Vector3(x, 0f, Mathf.Sin(num * 0.01745329f));
     }
 
     private Vector3 getGlobaleFacingVector3(float horizontal, float vertical)
     {
-        float num = -this.getGlobalFacingDirection(horizontal, vertical) + 90f;
-        float x = Mathf.Cos(num * 0.01745329f);
+        var num = -getGlobalFacingDirection(horizontal, vertical) + 90f;
+        var x = Mathf.Cos(num * 0.01745329f);
         return new Vector3(x, 0f, Mathf.Sin(num * 0.01745329f));
     }
 
@@ -1887,47 +1887,47 @@ public class HERO : Photon.MonoBehaviour
     {
         if ((vertical == 0f) && (horizontal == 0f))
         {
-            return base.transform.rotation.eulerAngles.y;
+            return transform.rotation.eulerAngles.y;
         }
-        float y = this.currentCamera.transform.rotation.eulerAngles.y;
-        float num2 = Mathf.Atan2(vertical, horizontal) * 57.29578f;
+        var y = currentCamera.transform.rotation.eulerAngles.y;
+        var num2 = Mathf.Atan2(vertical, horizontal) * 57.29578f;
         num2 = -num2 + 90f;
         return (y + num2);
     }
 
     private float getLeanAngle(Vector3 p, bool left)
     {
-        if (!this.useGun && (this.state == HERO_STATE.Attack))
+        if (!useGun && (state == HERO_STATE.Attack))
         {
             return 0f;
         }
-        float num = p.y - base.transform.position.y;
-        float num2 = Vector3.Distance(p, base.transform.position);
-        float a = Mathf.Acos(num / num2) * 57.29578f;
+        var num = p.y - transform.position.y;
+        var num2 = Vector3.Distance(p, transform.position);
+        var a = Mathf.Acos(num / num2) * 57.29578f;
         a *= 0.1f;
-        a *= 1f + Mathf.Pow(base.rigidbody.velocity.magnitude, 0.2f);
-        Vector3 vector3 = p - base.transform.position;
-        float current = Mathf.Atan2(vector3.x, vector3.z) * 57.29578f;
-        float target = Mathf.Atan2(base.rigidbody.velocity.x, base.rigidbody.velocity.z) * 57.29578f;
-        float num6 = Mathf.DeltaAngle(current, target);
-        a += Mathf.Abs((float) (num6 * 0.5f));
-        if (this.state != HERO_STATE.Attack)
+        a *= 1f + Mathf.Pow(rigidbody.velocity.magnitude, 0.2f);
+        var vector3 = p - transform.position;
+        var current = Mathf.Atan2(vector3.x, vector3.z) * 57.29578f;
+        var target = Mathf.Atan2(rigidbody.velocity.x, rigidbody.velocity.z) * 57.29578f;
+        var num6 = Mathf.DeltaAngle(current, target);
+        a += Mathf.Abs(num6 * 0.5f);
+        if (state != HERO_STATE.Attack)
         {
             a = Mathf.Min(a, 80f);
         }
         if (num6 > 0f)
         {
-            this.leanLeft = true;
+            leanLeft = true;
         }
         else
         {
-            this.leanLeft = false;
+            leanLeft = false;
         }
-        if (this.useGun)
+        if (useGun)
         {
-            return (a * ((num6 >= 0f) ? ((float) 1) : ((float) (-1))));
+            return (a * ((num6 >= 0f) ? 1 : -1));
         }
-        float num7 = 0f;
+        var num7 = 0f;
         if ((left && (num6 < 0f)) || (!left && (num6 > 0f)))
         {
             num7 = 0.1f;
@@ -1941,135 +1941,135 @@ public class HERO : Photon.MonoBehaviour
 
     private void getOffHorse()
     {
-        this.playAnimation("horse_getoff");
-        base.rigidbody.AddForce((Vector3) (((Vector3.up * 10f) - (base.transform.forward * 2f)) - (base.transform.right * 1f)), ForceMode.VelocityChange);
-        this.unmounted();
+        playAnimation("horse_getoff");
+        rigidbody.AddForce(((Vector3.up * 10f) - (transform.forward * 2f)) - (transform.right * 1f), ForceMode.VelocityChange);
+        unmounted();
     }
 
     private void getOnHorse()
     {
-        this.playAnimation("horse_geton");
-        this.facingDirection = this.myHorse.transform.rotation.eulerAngles.y;
-        this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+        playAnimation("horse_geton");
+        facingDirection = myHorse.transform.rotation.eulerAngles.y;
+        targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
     }
 
     public void getSupply()
     {
-        if (((base.animation.IsPlaying(this.standAnimation) || base.animation.IsPlaying("run")) || base.animation.IsPlaying("run_sasha")) && (((this.currentBladeSta != this.totalBladeSta) || (this.currentBladeNum != this.totalBladeNum)) || (((this.currentGas != this.totalGas) || (this.leftBulletLeft != this.bulletMAX)) || (this.rightBulletLeft != this.bulletMAX))))
+        if (((animation.IsPlaying(standAnimation) || animation.IsPlaying("run")) || animation.IsPlaying("run_sasha")) && (((currentBladeSta != totalBladeSta) || (currentBladeNum != totalBladeNum)) || (((currentGas != totalGas) || (leftBulletLeft != bulletMAX)) || (rightBulletLeft != bulletMAX))))
         {
-            this.state = HERO_STATE.FillGas;
-            this.crossFade("supply", 0.1f);
+            state = HERO_STATE.FillGas;
+            crossFade("supply", 0.1f);
         }
     }
 
     public void grabbed(GameObject titan, bool leftHand)
     {
-        if (this.isMounted)
+        if (isMounted)
         {
-            this.unmounted();
+            unmounted();
         }
-        this.state = HERO_STATE.Grab;
-        base.GetComponent<CapsuleCollider>().isTrigger = true;
-        this.falseAttack();
-        this.titanWhoGrabMe = titan;
-        if (this.titanForm && (this.eren_titan != null))
+        state = HERO_STATE.Grab;
+        GetComponent<CapsuleCollider>().isTrigger = true;
+        falseAttack();
+        titanWhoGrabMe = titan;
+        if (titanForm && (eren_titan != null))
         {
-            this.eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
+            eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
         }
-        if (!this.useGun && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
+        if (!useGun && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine))
         {
-            this.leftbladetrail.Deactivate();
-            this.rightbladetrail.Deactivate();
-            this.leftbladetrail2.Deactivate();
-            this.rightbladetrail2.Deactivate();
+            leftbladetrail.Deactivate();
+            rightbladetrail.Deactivate();
+            leftbladetrail2.Deactivate();
+            rightbladetrail2.Deactivate();
         }
-        this.smoke_3dmg.enableEmission = false;
-        this.sparks.enableEmission = false;
+        smoke_3dmg.enableEmission = false;
+        sparks.enableEmission = false;
     }
 
     public bool HasDied()
     {
-        return (this.hasDied || this.isInvincible());
+        return (hasDied || isInvincible());
     }
 
     private void headMovement()
     {
-        Transform transform = base.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head");
-        Transform transform2 = base.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck");
-        float x = Mathf.Sqrt(((this.gunTarget.x - base.transform.position.x) * (this.gunTarget.x - base.transform.position.x)) + ((this.gunTarget.z - base.transform.position.z) * (this.gunTarget.z - base.transform.position.z)));
-        this.targetHeadRotation = transform.rotation;
-        Vector3 vector5 = this.gunTarget - base.transform.position;
-        float current = -Mathf.Atan2(vector5.z, vector5.x) * 57.29578f;
-        float num3 = -Mathf.DeltaAngle(current, base.transform.rotation.eulerAngles.y - 90f);
+        var transform = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head");
+        var transform2 = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck");
+        var x = Mathf.Sqrt(((gunTarget.x - this.transform.position.x) * (gunTarget.x - this.transform.position.x)) + ((gunTarget.z - this.transform.position.z) * (gunTarget.z - this.transform.position.z)));
+        targetHeadRotation = transform.rotation;
+        var vector5 = gunTarget - this.transform.position;
+        var current = -Mathf.Atan2(vector5.z, vector5.x) * 57.29578f;
+        var num3 = -Mathf.DeltaAngle(current, this.transform.rotation.eulerAngles.y - 90f);
         num3 = Mathf.Clamp(num3, -40f, 40f);
-        float y = transform2.position.y - this.gunTarget.y;
-        float num5 = Mathf.Atan2(y, x) * 57.29578f;
+        var y = transform2.position.y - gunTarget.y;
+        var num5 = Mathf.Atan2(y, x) * 57.29578f;
         num5 = Mathf.Clamp(num5, -40f, 30f);
-        this.targetHeadRotation = Quaternion.Euler(transform.rotation.eulerAngles.x + num5, transform.rotation.eulerAngles.y + num3, transform.rotation.eulerAngles.z);
-        this.oldHeadRotation = Quaternion.Lerp(this.oldHeadRotation, this.targetHeadRotation, Time.deltaTime * 60f);
-        transform.rotation = this.oldHeadRotation;
+        targetHeadRotation = Quaternion.Euler(transform.rotation.eulerAngles.x + num5, transform.rotation.eulerAngles.y + num3, transform.rotation.eulerAngles.z);
+        oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 60f);
+        transform.rotation = oldHeadRotation;
     }
 
     public void hookedByHuman(int hooker, Vector3 hookPosition)
     {
-        object[] parameters = new object[] { hooker, hookPosition };
-        base.photonView.RPC("RPCHookedByHuman", base.photonView.owner, parameters);
+        var parameters = new object[] { hooker, hookPosition };
+        photonView.RPC("RPCHookedByHuman", photonView.owner, parameters);
     }
 
     [RPC]
     public void hookFail()
     {
-        this.hookTarget = null;
-        this.hookSomeOne = false;
+        hookTarget = null;
+        hookSomeOne = false;
     }
 
     public void hookToHuman(GameObject target, Vector3 hookPosition)
     {
-        this.releaseIfIHookSb();
-        this.hookTarget = target;
-        this.hookSomeOne = true;
+        releaseIfIHookSb();
+        hookTarget = target;
+        hookSomeOne = true;
         if (target.GetComponent<HERO>() != null)
         {
-            target.GetComponent<HERO>().hookedByHuman(base.photonView.viewID, hookPosition);
+            target.GetComponent<HERO>().hookedByHuman(photonView.viewID, hookPosition);
         }
-        this.launchForce = hookPosition - base.transform.position;
-        float num = Mathf.Pow(this.launchForce.magnitude, 0.1f);
-        if (this.grounded)
+        launchForce = hookPosition - transform.position;
+        var num = Mathf.Pow(launchForce.magnitude, 0.1f);
+        if (grounded)
         {
-            base.rigidbody.AddForce((Vector3) (Vector3.up * Mathf.Min((float) (this.launchForce.magnitude * 0.2f), (float) 10f)), ForceMode.Impulse);
+            rigidbody.AddForce(Vector3.up * Mathf.Min(launchForce.magnitude * 0.2f, 10f), ForceMode.Impulse);
         }
-        base.rigidbody.AddForce((Vector3) ((this.launchForce * num) * 0.1f), ForceMode.Impulse);
+        rigidbody.AddForce((launchForce * num) * 0.1f, ForceMode.Impulse);
     }
 
     private void idle()
     {
-        if (this.state == HERO_STATE.Attack)
+        if (state == HERO_STATE.Attack)
         {
-            this.falseAttack();
+            falseAttack();
         }
-        this.state = HERO_STATE.Idle;
-        this.crossFade(this.standAnimation, 0.1f);
+        state = HERO_STATE.Idle;
+        crossFade(standAnimation, 0.1f);
     }
 
     private bool IsFrontGrounded()
     {
-        LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-        LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+        LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+        LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
         LayerMask mask3 = mask2 | mask;
-        return Physics.Raycast(base.gameObject.transform.position + ((Vector3) (base.gameObject.transform.up * 1f)), base.gameObject.transform.forward, (float) 1f, mask3.value);
+        return Physics.Raycast(gameObject.transform.position + gameObject.transform.up * 1f, gameObject.transform.forward, 1f, mask3.value);
     }
 
     public bool IsGrounded()
     {
-        LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-        LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+        LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+        LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
         LayerMask mask3 = mask2 | mask;
-        return Physics.Raycast(base.gameObject.transform.position + ((Vector3) (Vector3.up * 0.1f)), -Vector3.up, (float) 0.3f, mask3.value);
+        return Physics.Raycast(gameObject.transform.position + Vector3.up * 0.1f, -Vector3.up, 0.3f, mask3.value);
     }
 
     public bool isInvincible()
     {
-        return (this.invincible > 0f);
+        return (invincible > 0f);
     }
 
     private bool isPressDirectionTowardsHero(float h, float v)
@@ -2078,15 +2078,15 @@ public class HERO : Photon.MonoBehaviour
         {
             return false;
         }
-        return (Mathf.Abs(Mathf.DeltaAngle(this.getGlobalFacingDirection(h, v), base.transform.rotation.eulerAngles.y)) < 45f);
+        return (Mathf.Abs(Mathf.DeltaAngle(getGlobalFacingDirection(h, v), transform.rotation.eulerAngles.y)) < 45f);
     }
 
     private bool IsUpFrontGrounded()
     {
-        LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-        LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+        LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+        LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
         LayerMask mask3 = mask2 | mask;
-        return Physics.Raycast(base.gameObject.transform.position + ((Vector3) (base.gameObject.transform.up * 3f)), base.gameObject.transform.forward, (float) 1.2f, mask3.value);
+        return Physics.Raycast(gameObject.transform.position + gameObject.transform.up * 3f, gameObject.transform.forward, 1.2f, mask3.value);
     }
 
     [RPC]
@@ -2097,43 +2097,43 @@ public class HERO : Photon.MonoBehaviour
 
     public void lateUpdate()
     {
-        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && (this.myNetWorkName != null))
+        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && (myNetWorkName != null))
         {
-            if (this.titanForm && (this.eren_titan != null))
+            if (titanForm && (eren_titan != null))
             {
-                this.myNetWorkName.transform.localPosition = (Vector3) ((Vector3.up * Screen.height) * 2f);
+                myNetWorkName.transform.localPosition = (Vector3.up * Screen.height) * 2f;
             }
-            Vector3 start = new Vector3(this.baseTransform.position.x, this.baseTransform.position.y + 2f, this.baseTransform.position.z);
-            GameObject maincamera = this.maincamera;
-            LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-            LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+            var start = new Vector3(baseTransform.position.x, baseTransform.position.y + 2f, baseTransform.position.z);
+            var maincamera = this.maincamera;
+            LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+            LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
             LayerMask mask3 = mask2 | mask;
-            if ((Vector3.Angle(maincamera.transform.forward, start - maincamera.transform.position) > 90f) || Physics.Linecast(start, maincamera.transform.position, (int) mask3))
+            if ((Vector3.Angle(maincamera.transform.forward, start - maincamera.transform.position) > 90f) || Physics.Linecast(start, maincamera.transform.position, mask3))
             {
-                this.myNetWorkName.transform.localPosition = (Vector3) ((Vector3.up * Screen.height) * 2f);
+                myNetWorkName.transform.localPosition = (Vector3.up * Screen.height) * 2f;
             }
             else
             {
                 Vector2 vector2 = this.maincamera.GetComponent<Camera>().WorldToScreenPoint(start);
-                this.myNetWorkName.transform.localPosition = new Vector3((float) ((int) (vector2.x - (Screen.width * 0.5f))), (float) ((int) (vector2.y - (Screen.height * 0.5f))), 0f);
+                myNetWorkName.transform.localPosition = new Vector3((int) (vector2.x - (Screen.width * 0.5f)), (int) (vector2.y - (Screen.height * 0.5f)), 0f);
             }
         }
-        if (!this.titanForm && !this.isCannon)
+        if (!titanForm && !isCannon)
         {
-            if ((IN_GAME_MAIN_CAMERA.cameraTilt == 1) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine))
+            if ((IN_GAME_MAIN_CAMERA.cameraTilt == 1) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine))
             {
                 Quaternion quaternion2;
-                Vector3 zero = Vector3.zero;
-                Vector3 position = Vector3.zero;
-                if ((this.isLaunchLeft && (this.bulletLeft != null)) && this.bulletLeft.GetComponent<Bullet>().isHooked())
+                var zero = Vector3.zero;
+                var position = Vector3.zero;
+                if ((isLaunchLeft && (bulletLeft != null)) && bulletLeft.GetComponent<Bullet>().isHooked())
                 {
-                    zero = this.bulletLeft.transform.position;
+                    zero = bulletLeft.transform.position;
                 }
-                if ((this.isLaunchRight && (this.bulletRight != null)) && this.bulletRight.GetComponent<Bullet>().isHooked())
+                if ((isLaunchRight && (bulletRight != null)) && bulletRight.GetComponent<Bullet>().isHooked())
                 {
-                    position = this.bulletRight.transform.position;
+                    position = bulletRight.transform.position;
                 }
-                Vector3 vector5 = Vector3.zero;
+                var vector5 = Vector3.zero;
                 if ((zero.magnitude != 0f) && (position.magnitude == 0f))
                 {
                     vector5 = zero;
@@ -2144,69 +2144,69 @@ public class HERO : Photon.MonoBehaviour
                 }
                 else if ((zero.magnitude != 0f) && (position.magnitude != 0f))
                 {
-                    vector5 = (Vector3) ((zero + position) * 0.5f);
+                    vector5 = (zero + position) * 0.5f;
                 }
-                Vector3 from = Vector3.Project(vector5 - this.baseTransform.position, this.maincamera.transform.up);
-                Vector3 vector7 = Vector3.Project(vector5 - this.baseTransform.position, this.maincamera.transform.right);
+                var from = Vector3.Project(vector5 - baseTransform.position, maincamera.transform.up);
+                var vector7 = Vector3.Project(vector5 - baseTransform.position, maincamera.transform.right);
                 if (vector5.magnitude > 0f)
                 {
-                    Vector3 to = from + vector7;
-                    float num = Vector3.Angle(vector5 - this.baseTransform.position, this.baseRigidBody.velocity) * 0.005f;
-                    Vector3 vector9 = this.maincamera.transform.right + vector7.normalized;
-                    quaternion2 = Quaternion.Euler(this.maincamera.transform.rotation.eulerAngles.x, this.maincamera.transform.rotation.eulerAngles.y, (vector9.magnitude >= 1f) ? (-Vector3.Angle(from, to) * num) : (Vector3.Angle(from, to) * num));
+                    var to = from + vector7;
+                    var num = Vector3.Angle(vector5 - baseTransform.position, baseRigidBody.velocity) * 0.005f;
+                    var vector9 = maincamera.transform.right + vector7.normalized;
+                    quaternion2 = Quaternion.Euler(maincamera.transform.rotation.eulerAngles.x, maincamera.transform.rotation.eulerAngles.y, (vector9.magnitude >= 1f) ? (-Vector3.Angle(from, to) * num) : (Vector3.Angle(from, to) * num));
                 }
                 else
                 {
-                    quaternion2 = Quaternion.Euler(this.maincamera.transform.rotation.eulerAngles.x, this.maincamera.transform.rotation.eulerAngles.y, 0f);
+                    quaternion2 = Quaternion.Euler(maincamera.transform.rotation.eulerAngles.x, maincamera.transform.rotation.eulerAngles.y, 0f);
                 }
-                this.maincamera.transform.rotation = Quaternion.Lerp(this.maincamera.transform.rotation, quaternion2, Time.deltaTime * 2f);
+                maincamera.transform.rotation = Quaternion.Lerp(maincamera.transform.rotation, quaternion2, Time.deltaTime * 2f);
             }
-            if ((this.state == HERO_STATE.Grab) && (this.titanWhoGrabMe != null))
+            if ((state == HERO_STATE.Grab) && (titanWhoGrabMe != null))
             {
-                if (this.titanWhoGrabMe.GetComponent<TITAN>() != null)
+                if (titanWhoGrabMe.GetComponent<TITAN>() != null)
                 {
-                    this.baseTransform.position = this.titanWhoGrabMe.GetComponent<TITAN>().grabTF.transform.position;
-                    this.baseTransform.rotation = this.titanWhoGrabMe.GetComponent<TITAN>().grabTF.transform.rotation;
+                    baseTransform.position = titanWhoGrabMe.GetComponent<TITAN>().grabTF.transform.position;
+                    baseTransform.rotation = titanWhoGrabMe.GetComponent<TITAN>().grabTF.transform.rotation;
                 }
-                else if (this.titanWhoGrabMe.GetComponent<FEMALE_TITAN>() != null)
+                else if (titanWhoGrabMe.GetComponent<FEMALE_TITAN>() != null)
                 {
-                    this.baseTransform.position = this.titanWhoGrabMe.GetComponent<FEMALE_TITAN>().grabTF.transform.position;
-                    this.baseTransform.rotation = this.titanWhoGrabMe.GetComponent<FEMALE_TITAN>().grabTF.transform.rotation;
+                    baseTransform.position = titanWhoGrabMe.GetComponent<FEMALE_TITAN>().grabTF.transform.position;
+                    baseTransform.rotation = titanWhoGrabMe.GetComponent<FEMALE_TITAN>().grabTF.transform.rotation;
                 }
             }
-            if (this.useGun)
+            if (useGun)
             {
-                if (this.leftArmAim || this.rightArmAim)
+                if (leftArmAim || rightArmAim)
                 {
-                    Vector3 vector10 = this.gunTarget - this.baseTransform.position;
-                    float current = -Mathf.Atan2(vector10.z, vector10.x) * 57.29578f;
-                    float num3 = -Mathf.DeltaAngle(current, this.baseTransform.rotation.eulerAngles.y - 90f);
-                    this.headMovement();
-                    if ((!this.isLeftHandHooked && this.leftArmAim) && ((num3 < 40f) && (num3 > -90f)))
+                    var vector10 = gunTarget - baseTransform.position;
+                    var current = -Mathf.Atan2(vector10.z, vector10.x) * 57.29578f;
+                    var num3 = -Mathf.DeltaAngle(current, baseTransform.rotation.eulerAngles.y - 90f);
+                    headMovement();
+                    if ((!isLeftHandHooked && leftArmAim) && ((num3 < 40f) && (num3 > -90f)))
                     {
-                        this.leftArmAimTo(this.gunTarget);
+                        leftArmAimTo(gunTarget);
                     }
-                    if ((!this.isRightHandHooked && this.rightArmAim) && ((num3 > -40f) && (num3 < 90f)))
+                    if ((!isRightHandHooked && rightArmAim) && ((num3 > -40f) && (num3 < 90f)))
                     {
-                        this.rightArmAimTo(this.gunTarget);
+                        rightArmAimTo(gunTarget);
                     }
                 }
-                else if (!this.grounded)
+                else if (!grounded)
                 {
-                    this.handL.localRotation = Quaternion.Euler(90f, 0f, 0f);
-                    this.handR.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                    handL.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                    handR.localRotation = Quaternion.Euler(-90f, 0f, 0f);
                 }
-                if (this.isLeftHandHooked && (this.bulletLeft != null))
+                if (isLeftHandHooked && (bulletLeft != null))
                 {
-                    this.leftArmAimTo(this.bulletLeft.transform.position);
+                    leftArmAimTo(bulletLeft.transform.position);
                 }
-                if (this.isRightHandHooked && (this.bulletRight != null))
+                if (isRightHandHooked && (bulletRight != null))
                 {
-                    this.rightArmAimTo(this.bulletRight.transform.position);
+                    rightArmAimTo(bulletRight.transform.position);
                 }
             }
-            this.setHookedPplDirection();
-            if (Settings.BodyLean == 1 || this.useGun)
+            setHookedPplDirection();
+            if (Settings.BodyLean == 1 || useGun)
             {
                 bodyLean();
             }
@@ -2215,30 +2215,30 @@ public class HERO : Photon.MonoBehaviour
 
     public void launch(Vector3 des, bool left = true, bool leviMode = false)
     {
-        if (this.isMounted)
+        if (isMounted)
         {
-            this.unmounted();
+            unmounted();
         }
-        if (this.state != HERO_STATE.Attack)
+        if (state != HERO_STATE.Attack)
         {
-            this.idle();
+            idle();
         }
-        Vector3 vector = des - base.transform.position;
+        var vector = des - transform.position;
         if (left)
         {
-            this.launchPointLeft = des;
+            launchPointLeft = des;
         }
         else
         {
-            this.launchPointRight = des;
+            launchPointRight = des;
         }
         vector.Normalize();
-        vector = (Vector3) (vector * 20f);
-        if (((this.bulletLeft != null) && (this.bulletRight != null)) && (this.bulletLeft.GetComponent<Bullet>().isHooked() && this.bulletRight.GetComponent<Bullet>().isHooked()))
+        vector = vector * 20f;
+        if (((bulletLeft != null) && (bulletRight != null)) && (bulletLeft.GetComponent<Bullet>().isHooked() && bulletRight.GetComponent<Bullet>().isHooked()))
         {
-            vector = (Vector3) (vector * 0.8f);
+            vector = vector * 0.8f;
         }
-        if (base.animation.IsPlaying("attack5") || base.animation.IsPlaying("special_petra"))
+        if (animation.IsPlaying("attack5") || animation.IsPlaying("special_petra"))
         {
             leviMode = true;
         }
@@ -2248,167 +2248,167 @@ public class HERO : Photon.MonoBehaviour
         }
         if (!leviMode)
         {
-            this.falseAttack();
-            this.idle();
-            if (this.useGun)
+            falseAttack();
+            idle();
+            if (useGun)
             {
-                this.crossFade("AHSS_hook_forward_both", 0.1f);
+                crossFade("AHSS_hook_forward_both", 0.1f);
             }
             else if (Settings.BodyLean == 1)
             {
-                if (left && !this.isRightHandHooked)
+                if (left && !isRightHandHooked)
                 {
-                    this.crossFade("air_hook_l_just", 0.1f);
+                    crossFade("air_hook_l_just", 0.1f);
                 }
-                else if (!left && !this.isLeftHandHooked)
+                else if (!left && !isLeftHandHooked)
                 {
-                    this.crossFade("air_hook_r_just", 0.1f);
+                    crossFade("air_hook_r_just", 0.1f);
                 }
                 else
                 {
-                    this.crossFade("dash", 0.1f);
-                    base.animation["dash"].time = 0f;
+                    crossFade("dash", 0.1f);
+                    animation["dash"].time = 0f;
                 }
             }
         }
         if (left)
         {
-            this.isLaunchLeft = true;
+            isLaunchLeft = true;
         }
         if (!left)
         {
-            this.isLaunchRight = true;
+            isLaunchRight = true;
         }
-        this.launchForce = vector;
+        launchForce = vector;
         if (!leviMode)
         {
             if (vector.y < 30f)
             {
-                this.launchForce += (Vector3) (Vector3.up * (30f - vector.y));
+                launchForce += Vector3.up * (30f - vector.y);
             }
-            if (des.y >= base.transform.position.y)
+            if (des.y >= transform.position.y)
             {
-                this.launchForce += (Vector3) ((Vector3.up * (des.y - base.transform.position.y)) * 10f);
+                launchForce += (Vector3.up * (des.y - transform.position.y)) * 10f;
             }
-            base.rigidbody.AddForce(this.launchForce);
+            rigidbody.AddForce(launchForce);
         }
-        this.facingDirection = Mathf.Atan2(this.launchForce.x, this.launchForce.z) * 57.29578f;
-        Quaternion quaternion = Quaternion.Euler(0f, this.facingDirection, 0f);
-        base.gameObject.transform.rotation = quaternion;
-        base.rigidbody.rotation = quaternion;
-        this.targetRotation = quaternion;
+        facingDirection = Mathf.Atan2(launchForce.x, launchForce.z) * 57.29578f;
+        var quaternion = Quaternion.Euler(0f, facingDirection, 0f);
+        gameObject.transform.rotation = quaternion;
+        rigidbody.rotation = quaternion;
+        targetRotation = quaternion;
         if (left)
         {
-            this.launchElapsedTimeL = 0f;
+            launchElapsedTimeL = 0f;
         }
         else
         {
-            this.launchElapsedTimeR = 0f;
+            launchElapsedTimeR = 0f;
         }
         if (leviMode)
         {
-            this.launchElapsedTimeR = -100f;
+            launchElapsedTimeR = -100f;
         }
-        if (base.animation.IsPlaying("special_petra"))
+        if (animation.IsPlaying("special_petra"))
         {
-            this.launchElapsedTimeR = -100f;
-            this.launchElapsedTimeL = -100f;
-            if (this.bulletRight != null)
+            launchElapsedTimeR = -100f;
+            launchElapsedTimeL = -100f;
+            if (bulletRight != null)
             {
-                this.bulletRight.GetComponent<Bullet>().disable();
-                this.releaseIfIHookSb();
+                bulletRight.GetComponent<Bullet>().disable();
+                releaseIfIHookSb();
             }
-            if (this.bulletLeft != null)
+            if (bulletLeft != null)
             {
-                this.bulletLeft.GetComponent<Bullet>().disable();
-                this.releaseIfIHookSb();
+                bulletLeft.GetComponent<Bullet>().disable();
+                releaseIfIHookSb();
             }
         }
-        this.sparks.enableEmission = false;
+        sparks.enableEmission = false;
     }
 
     private void launchLeftRope(RaycastHit hit, bool single, int mode = 0)
     {
-        if (this.currentGas != 0f)
+        if (currentGas != 0f)
         {
-            this.useGas(0f);
+            useGas(0f);
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                this.bulletLeft = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("hook"));
+                bulletLeft = (GameObject) Instantiate(Resources.Load("hook"));
             }
-            else if (base.photonView.isMine)
+            else if (photonView.isMine)
             {
-                this.bulletLeft = PhotonNetwork.Instantiate("hook", base.transform.position, base.transform.rotation, 0);
+                bulletLeft = PhotonNetwork.Instantiate("hook", transform.position, transform.rotation, 0);
             }
-            GameObject obj2 = !this.useGun ? this.hookRefL1 : this.hookRefL2;
-            string str = !this.useGun ? "hookRefL1" : "hookRefL2";
-            this.bulletLeft.transform.position = obj2.transform.position;
-            Bullet component = this.bulletLeft.GetComponent<Bullet>();
-            float num = !single ? ((hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f)) : 0f;
-            Vector3 vector = (hit.point - ((Vector3) (base.transform.right * num))) - this.bulletLeft.transform.position;
+            var obj2 = !useGun ? hookRefL1 : hookRefL2;
+            var str = !useGun ? "hookRefL1" : "hookRefL2";
+            bulletLeft.transform.position = obj2.transform.position;
+            var component = bulletLeft.GetComponent<Bullet>();
+            var num = !single ? ((hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f)) : 0f;
+            var vector = (hit.point - transform.right * num) - bulletLeft.transform.position;
             vector.Normalize();
             if (mode == 1)
             {
-                component.launch((Vector3) (vector * 3f), base.rigidbody.velocity, str, true, base.gameObject, true);
+                component.launch(vector * 3f, rigidbody.velocity, str, true, gameObject, true);
             }
             else
             {
-                component.launch((Vector3) (vector * 3f), base.rigidbody.velocity, str, true, base.gameObject, false);
+                component.launch(vector * 3f, rigidbody.velocity, str, true, gameObject, false);
             }
-            this.launchPointLeft = Vector3.zero;
+            launchPointLeft = Vector3.zero;
         }
     }
 
     private void launchRightRope(RaycastHit hit, bool single, int mode = 0)
     {
-        if (this.currentGas != 0f)
+        if (currentGas != 0f)
         {
-            this.useGas(0f);
+            useGas(0f);
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                this.bulletRight = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("hook"));
+                bulletRight = (GameObject) Instantiate(Resources.Load("hook"));
             }
-            else if (base.photonView.isMine)
+            else if (photonView.isMine)
             {
-                this.bulletRight = PhotonNetwork.Instantiate("hook", base.transform.position, base.transform.rotation, 0);
+                bulletRight = PhotonNetwork.Instantiate("hook", transform.position, transform.rotation, 0);
             }
-            GameObject obj2 = !this.useGun ? this.hookRefR1 : this.hookRefR2;
-            string str = !this.useGun ? "hookRefR1" : "hookRefR2";
-            this.bulletRight.transform.position = obj2.transform.position;
-            Bullet component = this.bulletRight.GetComponent<Bullet>();
-            float num = !single ? ((hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f)) : 0f;
-            Vector3 vector = (hit.point + ((Vector3) (base.transform.right * num))) - this.bulletRight.transform.position;
+            var obj2 = !useGun ? hookRefR1 : hookRefR2;
+            var str = !useGun ? "hookRefR1" : "hookRefR2";
+            bulletRight.transform.position = obj2.transform.position;
+            var component = bulletRight.GetComponent<Bullet>();
+            var num = !single ? ((hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f)) : 0f;
+            var vector = (hit.point + transform.right * num) - bulletRight.transform.position;
             vector.Normalize();
             if (mode == 1)
             {
-                component.launch((Vector3) (vector * 5f), base.rigidbody.velocity, str, false, base.gameObject, true);
+                component.launch(vector * 5f, rigidbody.velocity, str, false, gameObject, true);
             }
             else
             {
-                component.launch((Vector3) (vector * 3f), base.rigidbody.velocity, str, false, base.gameObject, false);
+                component.launch(vector * 3f, rigidbody.velocity, str, false, gameObject, false);
             }
-            this.launchPointRight = Vector3.zero;
+            launchPointRight = Vector3.zero;
         }
     }
 
     private void leftArmAimTo(Vector3 target)
     {
-        float y = target.x - this.upperarmL.transform.position.x;
-        float num2 = target.y - this.upperarmL.transform.position.y;
-        float x = target.z - this.upperarmL.transform.position.z;
-        float num4 = Mathf.Sqrt((y * y) + (x * x));
-        this.handL.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        this.forearmL.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-        this.upperarmL.rotation = Quaternion.Euler(0f, 90f + (Mathf.Atan2(y, x) * 57.29578f), -Mathf.Atan2(num2, num4) * 57.29578f);
+        var y = target.x - upperarmL.transform.position.x;
+        var num2 = target.y - upperarmL.transform.position.y;
+        var x = target.z - upperarmL.transform.position.z;
+        var num4 = Mathf.Sqrt((y * y) + (x * x));
+        handL.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        forearmL.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+        upperarmL.rotation = Quaternion.Euler(0f, 90f + (Mathf.Atan2(y, x) * 57.29578f), -Mathf.Atan2(num2, num4) * 57.29578f);
     }
 
     public void loadskin()
     {
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
             if (Settings.Wind == 0)
             {
-                foreach (Renderer renderer in base.GetComponentsInChildren<Renderer>())
+                foreach (var renderer in GetComponentsInChildren<Renderer>())
                 {
                     if (renderer.name.Contains("speed"))
                     {
@@ -2419,24 +2419,24 @@ public class HERO : Photon.MonoBehaviour
             if (Settings.HumanSkins == 1)
             {
                 if (Settings.HumanSkinCount <= 0) return;
-                string url = "";
-                for (int i = 0; i < 13; i++)
+                var url = "";
+                for (var i = 0; i < 13; i++)
                 {
                     url += Settings.HumanSkinFields[Settings.HumanCurrentSkin][i] + (i != 12 ? "," : "");
                 }
 
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                 {
-                    base.StartCoroutine(this.loadskinE(-1, url));
+                    StartCoroutine(loadskinE(-1, url));
                 }
                 else
                 {
-                    int viewID = -1;
-                    if (this.myHorse != null)
+                    var viewID = -1;
+                    if (myHorse != null)
                     {
-                        viewID = this.myHorse.GetPhotonView().viewID;
+                        viewID = myHorse.GetPhotonView().viewID;
                     }
-                    base.photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, new object[] { viewID, url });
+                    photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, new object[] { viewID, url });
                 }
             }
         }
@@ -2444,46 +2444,46 @@ public class HERO : Photon.MonoBehaviour
 
     public IEnumerator loadskinE(int horse, string url)
     {
-        while (!this.hasspawn)
+        while (!hasspawn)
         {
             yield return null;
         }
-        bool mipmap = Settings.MipMapping == 1 ? true : false;
-        bool unloadAssets = false;
-        string[] skins = url.Split(new char[] { ',' });
-        bool customGas = false;
+        var mipmap = Settings.MipMapping == 1 ? true : false;
+        var unloadAssets = false;
+        var skins = url.Split(new char[] { ',' });
+        var customGas = false;
         if (Settings.CustomGas == 0)
         {
             customGas = true;
         }
-        bool customHorse = false;
+        var customHorse = false;
         if (LevelInfo.getInfo(FengGameManagerMKII.level).horse || (RCSettings.horseMode == 1))
         {
             customHorse = true;
         }
-        bool isLocal = false;
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || this.photonView.isMine)
+        var isLocal = false;
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
             isLocal = true;
         }
         #region Hair
-        if (this.setup.part_hair_1 != null)
+        if (setup.part_hair_1 != null)
         {
-            Renderer hairRenderer = this.setup.part_hair_1.renderer;
+            var hairRenderer = setup.part_hair_1.renderer;
             if ((skins[1].EndsWith(".jpg") || skins[1].EndsWith(".png")) || skins[1].EndsWith(".jpeg"))
             {
                 if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[1]))
                 {
-                    WWW hairLink = new WWW(skins[1]);
+                    var hairLink = new WWW(skins[1]);
                     yield return hairLink;
-                    Texture2D hairSkin = RCextensions.loadimage(hairLink, mipmap, 0x30d40);
+                    var hairSkin = RCextensions.loadimage(hairLink, mipmap, 0x30d40);
                     hairLink.Dispose();
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[1]))
                     {
                         unloadAssets = true;
-                        if (this.setup.myCostume.hairInfo.id >= 0)
+                        if (setup.myCostume.hairInfo.id >= 0)
                         {
-                            hairRenderer.material = CharacterMaterials.materials[this.setup.myCostume.hairInfo.texture];
+                            hairRenderer.material = CharacterMaterials.materials[setup.myCostume.hairInfo.texture];
                         }
                         hairRenderer.material.mainTexture = hairSkin;
                         FengGameManagerMKII.linkHash[0].Add(skins[1], hairRenderer.material);
@@ -2506,16 +2506,16 @@ public class HERO : Photon.MonoBehaviour
         }
         #endregion
         #region Cape
-        if (this.setup.part_cape != null)
+        if (setup.part_cape != null)
         {
-            Renderer capeRenderer = this.setup.part_cape.renderer;
+            var capeRenderer = setup.part_cape.renderer;
             if ((skins[7].EndsWith(".jpg") || skins[7].EndsWith(".png")) || skins[7].EndsWith(".jpeg"))
             {
                 if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[7]))
                 {
-                    WWW capeLink = new WWW(skins[7]);
+                    var capeLink = new WWW(skins[7]);
                     yield return capeLink;
-                    Texture2D capeSkin = RCextensions.loadimage(capeLink, mipmap, 0x30d40);
+                    var capeSkin = RCextensions.loadimage(capeLink, mipmap, 0x30d40);
                     capeLink.Dispose();
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[7]))
                     {
@@ -2541,16 +2541,16 @@ public class HERO : Photon.MonoBehaviour
         }
         #endregion
         #region Costume
-        if (this.setup.part_chest_3 != null)
+        if (setup.part_chest_3 != null)
         {
-            Renderer chestRenderer = this.setup.part_chest_3.renderer;
+            var chestRenderer = setup.part_chest_3.renderer;
             if ((skins[6].EndsWith(".jpg") || skins[6].EndsWith(".png")) || skins[6].EndsWith(".jpeg"))
             {
                 if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[6]))
                 {
-                    WWW costumeLink = new WWW(skins[6]);
+                    var costumeLink = new WWW(skins[6]);
                     yield return costumeLink;
-                    Texture2D costumeSkin = RCextensions.loadimage(costumeLink, mipmap, 0x7a120);
+                    var costumeSkin = RCextensions.loadimage(costumeLink, mipmap, 0x7a120);
                     costumeLink.Dispose();
                     if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[6]))
                     {
@@ -2575,7 +2575,7 @@ public class HERO : Photon.MonoBehaviour
             }
         }
         #endregion
-        foreach (Renderer otherRenderer in this.GetComponentsInChildren<Renderer>())
+        foreach (var otherRenderer in GetComponentsInChildren<Renderer>())
         {
             #region Hair
             if (otherRenderer.name.Contains(FengGameManagerMKII.s[1]))
@@ -2584,16 +2584,16 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[1]))
                     {
-                        WWW hairLink = new WWW(skins[1]);
+                        var hairLink = new WWW(skins[1]);
                         yield return hairLink;
-                        Texture2D hairSkin = RCextensions.loadimage(hairLink, mipmap, 0x30d40);
+                        var hairSkin = RCextensions.loadimage(hairLink, mipmap, 0x30d40);
                         hairLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[1]))
                         {
                             unloadAssets = true;
-                            if (this.setup.myCostume.hairInfo.id >= 0)
+                            if (setup.myCostume.hairInfo.id >= 0)
                             {
-                                otherRenderer.material = CharacterMaterials.materials[this.setup.myCostume.hairInfo.texture];
+                                otherRenderer.material = CharacterMaterials.materials[setup.myCostume.hairInfo.texture];
                             }
                             otherRenderer.material.mainTexture = hairSkin;
                             FengGameManagerMKII.linkHash[0].Add(skins[1], otherRenderer.material);
@@ -2622,14 +2622,14 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[2]))
                     {
-                        WWW eyesLink = new WWW(skins[2]);
+                        var eyesLink = new WWW(skins[2]);
                         yield return eyesLink;
-                        Texture2D eyesSkin = RCextensions.loadimage(eyesLink, mipmap, 0x30d40);
+                        var eyesSkin = RCextensions.loadimage(eyesLink, mipmap, 0x30d40);
                         eyesLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[2]))
                         {
                             unloadAssets = true;
-                            otherRenderer.material.mainTextureScale = (Vector2)(otherRenderer.material.mainTextureScale * 8f);
+                            otherRenderer.material.mainTextureScale = otherRenderer.material.mainTextureScale * 8f;
                             otherRenderer.material.mainTextureOffset = new Vector2(0f, 0f);
                             otherRenderer.material.mainTexture = eyesSkin;
                             FengGameManagerMKII.linkHash[0].Add(skins[2], otherRenderer.material);
@@ -2658,14 +2658,14 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[3]))
                     {
-                        WWW glassesLink = new WWW(skins[3]);
+                        var glassesLink = new WWW(skins[3]);
                         yield return glassesLink;
-                        Texture2D glassesSkin = RCextensions.loadimage(glassesLink, mipmap, 0x30d40);
+                        var glassesSkin = RCextensions.loadimage(glassesLink, mipmap, 0x30d40);
                         glassesLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[3]))
                         {
                             unloadAssets = true;
-                            otherRenderer.material.mainTextureScale = (Vector2)(otherRenderer.material.mainTextureScale * 8f);
+                            otherRenderer.material.mainTextureScale = otherRenderer.material.mainTextureScale * 8f;
                             otherRenderer.material.mainTextureOffset = new Vector2(0f, 0f);
                             otherRenderer.material.mainTexture = glassesSkin;
                             FengGameManagerMKII.linkHash[0].Add(skins[3], otherRenderer.material);
@@ -2694,14 +2694,14 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[4]))
                     {
-                        WWW faceLink = new WWW(skins[4]);
+                        var faceLink = new WWW(skins[4]);
                         yield return faceLink;
-                        Texture2D faceSkin = RCextensions.loadimage(faceLink, mipmap, 0x30d40);
+                        var faceSkin = RCextensions.loadimage(faceLink, mipmap, 0x30d40);
                         faceLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[4]))
                         {
                             unloadAssets = true;
-                            otherRenderer.material.mainTextureScale = (Vector2)(otherRenderer.material.mainTextureScale * 8f);
+                            otherRenderer.material.mainTextureScale = otherRenderer.material.mainTextureScale * 8f;
                             otherRenderer.material.mainTextureOffset = new Vector2(0f, 0f);
                             otherRenderer.material.mainTexture = faceSkin;
                             FengGameManagerMKII.linkHash[0].Add(skins[4], otherRenderer.material);
@@ -2730,9 +2730,9 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[5]))
                     {
-                        WWW skinLink = new WWW(skins[5]);
+                        var skinLink = new WWW(skins[5]);
                         yield return skinLink;
-                        Texture2D skinSkin = RCextensions.loadimage(skinLink, mipmap, 0x30d40);
+                        var skinSkin = RCextensions.loadimage(skinLink, mipmap, 0x30d40);
                         skinLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[5]))
                         {
@@ -2764,9 +2764,9 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[6]))
                     {
-                        WWW costumeLink = new WWW(skins[6]);
+                        var costumeLink = new WWW(skins[6]);
                         yield return costumeLink;
-                        Texture2D costumeSkin = RCextensions.loadimage(costumeLink, mipmap, 0x7a120);
+                        var costumeSkin = RCextensions.loadimage(costumeLink, mipmap, 0x7a120);
                         costumeLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[6]))
                         {
@@ -2798,9 +2798,9 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[7]))
                     {
-                        WWW capeLink = new WWW(skins[7]);
+                        var capeLink = new WWW(skins[7]);
                         yield return capeLink;
-                        Texture2D capeSkin = RCextensions.loadimage(capeLink, mipmap, 0x30d40);
+                        var capeSkin = RCextensions.loadimage(capeLink, mipmap, 0x30d40);
                         capeLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[7]))
                         {
@@ -2832,9 +2832,9 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[8]))
                     {
-                        WWW left3DMGLink = new WWW(skins[8]);
+                        var left3DMGLink = new WWW(skins[8]);
                         yield return left3DMGLink;
-                        Texture2D left3DMGSkin = RCextensions.loadimage(left3DMGLink, mipmap, 0x7a120);
+                        var left3DMGSkin = RCextensions.loadimage(left3DMGLink, mipmap, 0x7a120);
                         left3DMGLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[8]))
                         {
@@ -2866,9 +2866,9 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[9]))
                     {
-                        WWW right3DMGLink = new WWW(skins[9]);
+                        var right3DMGLink = new WWW(skins[9]);
                         yield return right3DMGLink;
-                        Texture2D right3DMGSkin = RCextensions.loadimage(right3DMGLink, mipmap, 0x7a120);
+                        var right3DMGSkin = RCextensions.loadimage(right3DMGLink, mipmap, 0x7a120);
                         right3DMGLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[9]))
                         {
@@ -2900,9 +2900,9 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[10]))
                     {
-                        WWW gasLink = new WWW(skins[10]);
+                        var gasLink = new WWW(skins[10]);
                         yield return gasLink;
-                        Texture2D gasSkin = RCextensions.loadimage(gasLink, mipmap, 0x30d40);
+                        var gasSkin = RCextensions.loadimage(gasLink, mipmap, 0x30d40);
                         gasLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[10]))
                         {
@@ -2934,9 +2934,9 @@ public class HERO : Photon.MonoBehaviour
                 {
                     if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[11]))
                     {
-                        WWW hoodieLink = new WWW(skins[11]);
+                        var hoodieLink = new WWW(skins[11]);
                         yield return hoodieLink;
-                        Texture2D hoodieSkin = RCextensions.loadimage(hoodieLink, mipmap, 0x30d40);
+                        var hoodieSkin = RCextensions.loadimage(hoodieLink, mipmap, 0x30d40);
                         hoodieLink.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[11]))
                         {
@@ -2965,10 +2965,10 @@ public class HERO : Photon.MonoBehaviour
         #region Horse
         if (customHorse && (horse >= 0))
         {
-            GameObject horseObj = PhotonView.Find(horse).gameObject;
+            var horseObj = PhotonView.Find(horse).gameObject;
             if (horseObj != null)
             {
-                foreach (Renderer horseRenderer in horseObj.GetComponentsInChildren<Renderer>())
+                foreach (var horseRenderer in horseObj.GetComponentsInChildren<Renderer>())
                 {
                     if (horseRenderer.name.Contains(FengGameManagerMKII.s[0x13]))
                     {
@@ -2976,9 +2976,9 @@ public class HERO : Photon.MonoBehaviour
                         {
                             if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[0]))
                             {
-                                WWW horseLink = new WWW(skins[0]);
+                                var horseLink = new WWW(skins[0]);
                                 yield return horseLink;
-                                Texture2D iteratorVariable41 = RCextensions.loadimage(horseLink, mipmap, 0x7a120);
+                                var iteratorVariable41 = RCextensions.loadimage(horseLink, mipmap, 0x7a120);
                                 horseLink.Dispose();
                                 if (!FengGameManagerMKII.linkHash[1].ContainsKey(skins[0]))
                                 {
@@ -3011,44 +3011,44 @@ public class HERO : Photon.MonoBehaviour
         {
             if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[12]))
             {
-                WWW trailsLink = new WWW(skins[12]);
+                var trailsLink = new WWW(skins[12]);
                 yield return trailsLink;
-                Texture2D trailsSkin = RCextensions.loadimage(trailsLink, mipmap, 0x30d40);
+                var trailsSkin = RCextensions.loadimage(trailsLink, mipmap, 0x30d40);
                 trailsLink.Dispose();
                 if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[12]))
                 {
                     unloadAssets = true;
-                    this.leftbladetrail.MyMaterial.mainTexture = trailsSkin;
-                    this.rightbladetrail.MyMaterial.mainTexture = trailsSkin;
-                    FengGameManagerMKII.linkHash[0].Add(skins[12], this.leftbladetrail.MyMaterial);
-                    this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    leftbladetrail.MyMaterial.mainTexture = trailsSkin;
+                    rightbladetrail.MyMaterial.mainTexture = trailsSkin;
+                    FengGameManagerMKII.linkHash[0].Add(skins[12], leftbladetrail.MyMaterial);
+                    leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     if (Settings.BladeTrailsQuality == 0)
                     {
-                        this.leftbladetrail2.MyMaterial = this.leftbladetrail.MyMaterial;
-                        this.rightbladetrail2.MyMaterial = this.leftbladetrail.MyMaterial;
+                        leftbladetrail2.MyMaterial = leftbladetrail.MyMaterial;
+                        rightbladetrail2.MyMaterial = leftbladetrail.MyMaterial;
                     }
                 }
                 else
                 {
                     if (Settings.BladeTrailsQuality == 0)
                     {
-                        this.leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                        this.rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                        leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                        rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     }
-                    this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 }
             }
             else
             {
                 if (Settings.BladeTrailsQuality == 0)
                 {
-                    this.leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    this.rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                    rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 }
-                this.leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                this.rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
+                rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
             }
         }
         #endregion
@@ -3063,14 +3063,14 @@ public class HERO : Photon.MonoBehaviour
     {
         if (Settings.HumanSkins == 1)
         {
-            base.StartCoroutine(this.loadskinE(horse, url));
+            StartCoroutine(loadskinE(horse, url));
         }
     }
 
     public void markDie()
     {
-        this.hasDied = true;
-        this.state = HERO_STATE.Die;
+        hasDied = true;
+        state = HERO_STATE.Die;
     }
 
     [RPC]
@@ -3078,28 +3078,28 @@ public class HERO : Photon.MonoBehaviour
     {
         if (info.sender.isMasterClient)
         {
-            base.transform.position = new Vector3(posX, posY, posZ);
+            transform.position = new Vector3(posX, posY, posZ);
         }
     }
 
     [RPC]
     private void net3DMGSMOKE(bool ifON)
     {
-        if (this.smoke_3dmg != null)
+        if (smoke_3dmg != null)
         {
-            this.smoke_3dmg.enableEmission = ifON;
+            smoke_3dmg.enableEmission = ifON;
         }
     }
 
     [RPC]
     private void netContinueAnimation()
     {
-        IEnumerator enumerator = base.animation.GetEnumerator();
+        var enumerator = animation.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                AnimationState current = (AnimationState) enumerator.Current;
+                var current = (AnimationState) enumerator.Current;
                 if (current.speed == 1f)
                 {
                     return;
@@ -3109,31 +3109,31 @@ public class HERO : Photon.MonoBehaviour
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        this.playAnimation(this.currentPlayingClipName());
+        playAnimation(currentPlayingClipName());
     }
 
     [RPC]
     private void netCrossFade(string aniName, float time)
     {
-        this.currentAnimation = aniName;
-        if (base.animation != null)
+        currentAnimation = aniName;
+        if (animation != null)
         {
-            base.animation.CrossFade(aniName, time);
+            animation.CrossFade(aniName, time);
         }
     }
 
     [RPC]
     public void netDie(Vector3 v, bool isBite, int viewID = -1, string titanName = "", bool killByTitan = true, PhotonMessageInfo info = null)
     {
-        if ((base.photonView.isMine && (info != null)) && (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT))
+        if ((photonView.isMine && (info != null)) && (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT))
         {
             if (FengGameManagerMKII.ignoreList.Contains(info.sender.ID))
             {
-                base.photonView.RPC("backToHumanRPC", PhotonTargets.Others, new object[0]);
+                photonView.RPC("backToHumanRPC", PhotonTargets.Others, new object[0]);
                 return;
             }
             if (!info.sender.isLocal && !info.sender.isMasterClient)
@@ -3170,79 +3170,79 @@ public class HERO : Photon.MonoBehaviour
         }
         if (PhotonNetwork.isMasterClient)
         {
-            this.onDeathEvent(viewID, killByTitan);
-            int iD = base.photonView.owner.ID;
+            onDeathEvent(viewID, killByTitan);
+            var iD = photonView.owner.ID;
             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
             {
                 FengGameManagerMKII.heroHash.Remove(iD);
             }
         }
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            Vector3 vector = (Vector3)(Vector3.up * 5000f);
-            if (this.myBomb != null)
+            var vector = Vector3.up * 5000f;
+            if (myBomb != null)
             {
-                this.myBomb.destroyMe();
+                myBomb.destroyMe();
             }
-            if (this.myCannon != null)
+            if (myCannon != null)
             {
-                PhotonNetwork.Destroy(this.myCannon);
+                PhotonNetwork.Destroy(myCannon);
             }
-            if (this.titanForm && (this.eren_titan != null))
+            if (titanForm && (eren_titan != null))
             {
-                this.eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
+                eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
             }
-            if (this.skillCD != null)
+            if (skillCD != null)
             {
-                this.skillCD.transform.localPosition = vector;
+                skillCD.transform.localPosition = vector;
             }
         }
-        if (this.bulletLeft != null)
+        if (bulletLeft != null)
         {
-            this.bulletLeft.GetComponent<Bullet>().removeMe();
+            bulletLeft.GetComponent<Bullet>().removeMe();
         }
-        if (this.bulletRight != null)
+        if (bulletRight != null)
         {
-            this.bulletRight.GetComponent<Bullet>().removeMe();
+            bulletRight.GetComponent<Bullet>().removeMe();
         }
-        this.meatDie.Play();
-        if (!(this.useGun || ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !base.photonView.isMine)))
+        meatDie.Play();
+        if (!(useGun || ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !photonView.isMine)))
         {
-            this.leftbladetrail.Deactivate();
-            this.rightbladetrail.Deactivate();
-            this.leftbladetrail2.Deactivate();
-            this.rightbladetrail2.Deactivate();
+            leftbladetrail.Deactivate();
+            rightbladetrail.Deactivate();
+            leftbladetrail2.Deactivate();
+            rightbladetrail2.Deactivate();
         }
-        this.falseAttack();
-        this.breakApart(v, isBite);
-        if (base.photonView.isMine)
+        falseAttack();
+        breakApart(v, isBite);
+        if (photonView.isMine)
         {
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
             FengGameManagerMKII.instance.myRespawnTime = 0f;
         }
-        this.hasDied = true;
-        Transform transform = base.transform.Find("audio_die");
+        hasDied = true;
+        var transform = this.transform.Find("audio_die");
         if (transform != null)
         {
             transform.parent = null;
             transform.GetComponent<AudioSource>().Play();
         }
-        base.gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
-        if (base.photonView.isMine)
+        gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
+        if (photonView.isMine)
         {
-            PhotonNetwork.RemoveRPCs(base.photonView);
-            ExitGames.Client.Photon.Hashtable propertiesToSet = new ExitGames.Client.Photon.Hashtable();
+            PhotonNetwork.RemoveRPCs(photonView);
+            var propertiesToSet = new ExitGames.Client.Photon.Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new ExitGames.Client.Photon.Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
-            object[] parameters = new object[] { !(titanName == string.Empty) ? 1 : 0 };
+            var parameters = new object[] { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
             {
-                PhotonView view2 = PhotonView.Find(viewID);
+                var view2 = PhotonView.Find(viewID);
                 if (view2 != null)
                 {
                     FengGameManagerMKII.instance.sendKillInfo(killByTitan, "[FFC000][" + info.sender.ID.ToString() + "][FFFFFF]" + RCextensions.returnStringFromObject(view2.owner.customProperties[PhotonPlayerProperty.name]), false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
@@ -3256,9 +3256,9 @@ public class HERO : Photon.MonoBehaviour
                 FengGameManagerMKII.instance.sendKillInfo(!(titanName == string.Empty), "[FFC000][" + info.sender.ID.ToString() + "][FFFFFF]" + titanName, false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
         }
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            PhotonNetwork.Destroy(base.photonView);
+            PhotonNetwork.Destroy(photonView);
         }
     }
 
@@ -3266,11 +3266,11 @@ public class HERO : Photon.MonoBehaviour
     private void netDie2(int viewID = -1, string titanName = "", PhotonMessageInfo info = null)
     {
         GameObject obj2;
-        if ((base.photonView.isMine && (info != null)) && (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT))
+        if ((photonView.isMine && (info != null)) && (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT))
         {
             if (FengGameManagerMKII.ignoreList.Contains(info.sender.ID))
             {
-                base.photonView.RPC("backToHumanRPC", PhotonTargets.Others, new object[0]);
+                photonView.RPC("backToHumanRPC", PhotonTargets.Others, new object[0]);
                 return;
             }
             if (!info.sender.isLocal && !info.sender.isMasterClient)
@@ -3305,53 +3305,53 @@ public class HERO : Photon.MonoBehaviour
                 }
             }
         }
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            Vector3 vector = (Vector3) (Vector3.up * 5000f);
-            if (this.myBomb != null)
+            var vector = Vector3.up * 5000f;
+            if (myBomb != null)
             {
-                this.myBomb.destroyMe();
+                myBomb.destroyMe();
             }
-            if (this.myCannon != null)
+            if (myCannon != null)
             {
-                PhotonNetwork.Destroy(this.myCannon);
+                PhotonNetwork.Destroy(myCannon);
             }
-            PhotonNetwork.RemoveRPCs(base.photonView);
-            if (this.titanForm && (this.eren_titan != null))
+            PhotonNetwork.RemoveRPCs(photonView);
+            if (titanForm && (eren_titan != null))
             {
-                this.eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
+                eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
             }
-            if (this.skillCD != null)
+            if (skillCD != null)
             {
-                this.skillCD.transform.localPosition = vector;
+                skillCD.transform.localPosition = vector;
             }
         }
-        this.meatDie.Play();
-        if (this.bulletLeft != null)
+        meatDie.Play();
+        if (bulletLeft != null)
         {
-            this.bulletLeft.GetComponent<Bullet>().removeMe();
+            bulletLeft.GetComponent<Bullet>().removeMe();
         }
-        if (this.bulletRight != null)
+        if (bulletRight != null)
         {
-            this.bulletRight.GetComponent<Bullet>().removeMe();
+            bulletRight.GetComponent<Bullet>().removeMe();
         }
-        Transform transform = base.transform.Find("audio_die");
+        var transform = this.transform.Find("audio_die");
         transform.parent = null;
         transform.GetComponent<AudioSource>().Play();
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null, true, false);
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null, true, false);
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
             FengGameManagerMKII.instance.myRespawnTime = 0f;
         }
-        this.falseAttack();
-        this.hasDied = true;
-        base.gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && base.photonView.isMine)
+        falseAttack();
+        hasDied = true;
+        gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && photonView.isMine)
         {
-            PhotonNetwork.RemoveRPCs(base.photonView);
-            ExitGames.Client.Photon.Hashtable propertiesToSet = new ExitGames.Client.Photon.Hashtable();
+            PhotonNetwork.RemoveRPCs(photonView);
+            var propertiesToSet = new ExitGames.Client.Photon.Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new ExitGames.Client.Photon.Hashtable();
@@ -3359,7 +3359,7 @@ public class HERO : Photon.MonoBehaviour
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             if (viewID != -1)
             {
-                PhotonView view2 = PhotonView.Find(viewID);
+                var view2 = PhotonView.Find(viewID);
                 if (view2 != null)
                 {
                     FengGameManagerMKII.instance.sendKillInfo(true, "[FFC000][" + info.sender.ID.ToString() + "][FFFFFF]" + RCextensions.returnStringFromObject(view2.owner.customProperties[PhotonPlayerProperty.name]), false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
@@ -3372,26 +3372,26 @@ public class HERO : Photon.MonoBehaviour
             {
                 FengGameManagerMKII.instance.sendKillInfo(true, "[FFC000][" + info.sender.ID.ToString() + "][FFFFFF]" + titanName, false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
-            object[] parameters = new object[] { !(titanName == string.Empty) ? 1 : 0 };
+            var parameters = new object[] { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
         }
-        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && photonView.isMine)
         {
-            obj2 = PhotonNetwork.Instantiate("hitMeat2", base.transform.position, Quaternion.Euler(270f, 0f, 0f), 0);
+            obj2 = PhotonNetwork.Instantiate("hitMeat2", this.transform.position, Quaternion.Euler(270f, 0f, 0f), 0);
         }
         else
         {
-            obj2 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("hitMeat2"));
+            obj2 = (GameObject) Instantiate(Resources.Load("hitMeat2"));
         }
-        obj2.transform.position = base.transform.position;
-        if (base.photonView.isMine)
+        obj2.transform.position = this.transform.position;
+        if (photonView.isMine)
         {
-            PhotonNetwork.Destroy(base.photonView);
+            PhotonNetwork.Destroy(photonView);
         }
         if (PhotonNetwork.isMasterClient)
         {
-            this.onDeathEvent(viewID, true);
-            int iD = base.photonView.owner.ID;
+            onDeathEvent(viewID, true);
+            var iD = photonView.owner.ID;
             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
             {
                 FengGameManagerMKII.heroHash.Remove(iD);
@@ -3401,59 +3401,59 @@ public class HERO : Photon.MonoBehaviour
 
     public void netDieLocal(Vector3 v, bool isBite, int viewID = -1, string titanName = "", bool killByTitan = true)
     {
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            Vector3 vector = (Vector3) (Vector3.up * 5000f);
-            if (this.titanForm && (this.eren_titan != null))
+            var vector = Vector3.up * 5000f;
+            if (titanForm && (eren_titan != null))
             {
-                this.eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
+                eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
             }
-            if (this.myBomb != null)
+            if (myBomb != null)
             {
-                this.myBomb.destroyMe();
+                myBomb.destroyMe();
             }
-            if (this.myCannon != null)
+            if (myCannon != null)
             {
-                PhotonNetwork.Destroy(this.myCannon);
+                PhotonNetwork.Destroy(myCannon);
             }
-            if (this.skillCD != null)
+            if (skillCD != null)
             {
-                this.skillCD.transform.localPosition = vector;
+                skillCD.transform.localPosition = vector;
             }
         }
-        if (this.bulletLeft != null)
+        if (bulletLeft != null)
         {
-            this.bulletLeft.GetComponent<Bullet>().removeMe();
+            bulletLeft.GetComponent<Bullet>().removeMe();
         }
-        if (this.bulletRight != null)
+        if (bulletRight != null)
         {
-            this.bulletRight.GetComponent<Bullet>().removeMe();
+            bulletRight.GetComponent<Bullet>().removeMe();
         }
-        this.meatDie.Play();
-        if (!(this.useGun || ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !base.photonView.isMine)))
+        meatDie.Play();
+        if (!(useGun || ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !photonView.isMine)))
         {
-            this.leftbladetrail.Deactivate();
-            this.rightbladetrail.Deactivate();
-            this.leftbladetrail2.Deactivate();
-            this.rightbladetrail2.Deactivate();
+            leftbladetrail.Deactivate();
+            rightbladetrail.Deactivate();
+            leftbladetrail2.Deactivate();
+            rightbladetrail2.Deactivate();
         }
-        this.falseAttack();
-        this.breakApart(v, isBite);
-        if (base.photonView.isMine)
+        falseAttack();
+        breakApart(v, isBite);
+        if (photonView.isMine)
         {
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
-            this.currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
+            currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
             FengGameManagerMKII.instance.myRespawnTime = 0f;
         }
-        this.hasDied = true;
-        Transform transform = base.transform.Find("audio_die");
+        hasDied = true;
+        var transform = this.transform.Find("audio_die");
         transform.parent = null;
         transform.GetComponent<AudioSource>().Play();
-        base.gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
-        if (base.photonView.isMine)
+        gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
+        if (photonView.isMine)
         {
-            PhotonNetwork.RemoveRPCs(base.photonView);
-            ExitGames.Client.Photon.Hashtable propertiesToSet = new ExitGames.Client.Photon.Hashtable();
+            PhotonNetwork.RemoveRPCs(photonView);
+            var propertiesToSet = new ExitGames.Client.Photon.Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             if (!Settings.Suicide)
@@ -3462,11 +3462,11 @@ public class HERO : Photon.MonoBehaviour
                 propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
                 PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             }
-            object[] parameters = new object[] { !(titanName == string.Empty) ? 1 : 0 };
+            var parameters = new object[] { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
             {
-                PhotonView view = PhotonView.Find(viewID);
+                var view = PhotonView.Find(viewID);
                 if (view != null)
                 {
                     FengGameManagerMKII.instance.sendKillInfo(killByTitan, RCextensions.returnStringFromObject(view.owner.customProperties[PhotonPlayerProperty.name]), false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
@@ -3480,14 +3480,14 @@ public class HERO : Photon.MonoBehaviour
                 FengGameManagerMKII.instance.sendKillInfo(!(titanName == string.Empty), titanName, false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
         }
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            PhotonNetwork.Destroy(base.photonView);
+            PhotonNetwork.Destroy(photonView);
         }
         if (PhotonNetwork.isMasterClient)
         {
-            this.onDeathEvent(viewID, killByTitan);
-            int iD = base.photonView.owner.ID;
+            onDeathEvent(viewID, killByTitan);
+            var iD = photonView.owner.ID;
             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
             {
                 FengGameManagerMKII.heroHash.Remove(iD);
@@ -3498,16 +3498,16 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     private void netGrabbed(int id, bool leftHand)
     {
-        this.titanWhoGrabMeID = id;
-        this.grabbed(PhotonView.Find(id).gameObject, leftHand);
+        titanWhoGrabMeID = id;
+        grabbed(PhotonView.Find(id).gameObject, leftHand);
     }
 
     [RPC]
     private void netlaughAttack()
     {
-        foreach (GameObject obj2 in GameObject.FindGameObjectsWithTag("titan"))
+        foreach (var obj2 in GameObject.FindGameObjectsWithTag("titan"))
         {
-            if (((Vector3.Distance(obj2.transform.position, base.transform.position) < 50f) && (Vector3.Angle(obj2.transform.forward, base.transform.position - obj2.transform.position) < 90f)) && (obj2.GetComponent<TITAN>() != null))
+            if (((Vector3.Distance(obj2.transform.position, transform.position) < 50f) && (Vector3.Angle(obj2.transform.forward, transform.position - obj2.transform.position) < 90f)) && (obj2.GetComponent<TITAN>() != null))
             {
                 obj2.GetComponent<TITAN>().beLaughAttacked();
             }
@@ -3517,18 +3517,18 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     private void netPauseAnimation()
     {
-        IEnumerator enumerator = base.animation.GetEnumerator();
+        var enumerator = animation.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                AnimationState current = (AnimationState) enumerator.Current;
+                var current = (AnimationState) enumerator.Current;
                 current.speed = 0f;
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
@@ -3537,38 +3537,38 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     private void netPlayAnimation(string aniName)
     {
-        this.currentAnimation = aniName;
-        if (base.animation != null)
+        currentAnimation = aniName;
+        if (animation != null)
         {
-            base.animation.Play(aniName);
+            animation.Play(aniName);
         }
     }
 
     [RPC]
     private void netPlayAnimationAt(string aniName, float normalizedTime)
     {
-        this.currentAnimation = aniName;
-        if (base.animation != null)
+        currentAnimation = aniName;
+        if (animation != null)
         {
-            base.animation.Play(aniName);
-            base.animation[aniName].normalizedTime = normalizedTime;
+            animation.Play(aniName);
+            animation[aniName].normalizedTime = normalizedTime;
         }
     }
 
     [RPC]
     private void netSetIsGrabbedFalse()
     {
-        this.state = HERO_STATE.Idle;
+        state = HERO_STATE.Idle;
     }
 
     [RPC]
     private void netTauntAttack(float tauntTime, float distance = 100f)
     {
-        foreach (GameObject obj2 in GameObject.FindGameObjectsWithTag("titan"))
+        foreach (var obj2 in GameObject.FindGameObjectsWithTag("titan"))
         {
-            if ((Vector3.Distance(obj2.transform.position, base.transform.position) < distance) && (obj2.GetComponent<TITAN>() != null))
+            if ((Vector3.Distance(obj2.transform.position, transform.position) < distance) && (obj2.GetComponent<TITAN>() != null))
             {
-                obj2.GetComponent<TITAN>().beTauntedBy(base.gameObject, tauntTime);
+                obj2.GetComponent<TITAN>().beTauntedBy(gameObject, tauntTime);
             }
         }
     }
@@ -3576,9 +3576,9 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     private void netUngrabbed()
     {
-        this.ungrabbed();
-        this.netPlayAnimation(this.standAnimation);
-        this.falseAttack();
+        ungrabbed();
+        netPlayAnimation(standAnimation);
+        falseAttack();
     }
 
     public void onDeathEvent(int viewID, bool isTitan)
@@ -3593,11 +3593,11 @@ public class HERO : Photon.MonoBehaviour
                 strArray = (string[]) FengGameManagerMKII.RCVariableNames["OnPlayerDieByTitan"];
                 if (FengGameManagerMKII.playerVariables.ContainsKey(strArray[0]))
                 {
-                    FengGameManagerMKII.playerVariables[strArray[0]] = base.photonView.owner;
+                    FengGameManagerMKII.playerVariables[strArray[0]] = photonView.owner;
                 }
                 else
                 {
-                    FengGameManagerMKII.playerVariables.Add(strArray[0], base.photonView.owner);
+                    FengGameManagerMKII.playerVariables.Add(strArray[0], photonView.owner);
                 }
                 if (FengGameManagerMKII.titanVariables.ContainsKey(strArray[1]))
                 {
@@ -3616,11 +3616,11 @@ public class HERO : Photon.MonoBehaviour
             strArray = (string[]) FengGameManagerMKII.RCVariableNames["OnPlayerDieByPlayer"];
             if (FengGameManagerMKII.playerVariables.ContainsKey(strArray[0]))
             {
-                FengGameManagerMKII.playerVariables[strArray[0]] = base.photonView.owner;
+                FengGameManagerMKII.playerVariables[strArray[0]] = photonView.owner;
             }
             else
             {
-                FengGameManagerMKII.playerVariables.Add(strArray[0], base.photonView.owner);
+                FengGameManagerMKII.playerVariables.Add(strArray[0], photonView.owner);
             }
             if (FengGameManagerMKII.playerVariables.ContainsKey(strArray[1]))
             {
@@ -3636,100 +3636,100 @@ public class HERO : Photon.MonoBehaviour
 
     private void OnDestroy()
     {
-        if (this.myNetWorkName != null)
+        if (myNetWorkName != null)
         {
-            UnityEngine.Object.Destroy(this.myNetWorkName);
+            Destroy(myNetWorkName);
         }
-        if (this.gunDummy != null)
+        if (gunDummy != null)
         {
-            UnityEngine.Object.Destroy(this.gunDummy);
+            Destroy(gunDummy);
         }
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
         {
-            this.releaseIfIHookSb();
+            releaseIfIHookSb();
         }
         if (GameObject.Find("MultiplayerManager") != null)
         {
             GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeHero(this);
         }
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && photonView.isMine)
         {
-            Vector3 vector = (Vector3) (Vector3.up * 5000f);
-            this.cross1.transform.localPosition = vector;
-            this.cross2.transform.localPosition = vector;
-            this.crossL1.transform.localPosition = vector;
-            this.crossL2.transform.localPosition = vector;
-            this.crossR1.transform.localPosition = vector;
-            this.crossR2.transform.localPosition = vector;
-            this.LabelDistance.transform.localPosition = vector;
+            var vector = Vector3.up * 5000f;
+            cross1.transform.localPosition = vector;
+            cross2.transform.localPosition = vector;
+            crossL1.transform.localPosition = vector;
+            crossL2.transform.localPosition = vector;
+            crossR1.transform.localPosition = vector;
+            crossR2.transform.localPosition = vector;
+            LabelDistance.transform.localPosition = vector;
         }
-        if (this.setup.part_cape != null)
+        if (setup.part_cape != null)
         {
-            ClothFactory.DisposeObject(this.setup.part_cape);
+            ClothFactory.DisposeObject(setup.part_cape);
         }
-        if (this.setup.part_hair_1 != null)
+        if (setup.part_hair_1 != null)
         {
-            ClothFactory.DisposeObject(this.setup.part_hair_1);
+            ClothFactory.DisposeObject(setup.part_hair_1);
         }
-        if (this.setup.part_hair_2 != null)
+        if (setup.part_hair_2 != null)
         {
-            ClothFactory.DisposeObject(this.setup.part_hair_2);
+            ClothFactory.DisposeObject(setup.part_hair_2);
         }
     }
 
     public void pauseAnimation()
     {
-        IEnumerator enumerator = base.animation.GetEnumerator();
+        var enumerator = animation.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                AnimationState current = (AnimationState) enumerator.Current;
+                var current = (AnimationState) enumerator.Current;
                 current.speed = 0f;
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && photonView.isMine)
         {
-            base.photonView.RPC("netPauseAnimation", PhotonTargets.Others, new object[0]);
+            photonView.RPC("netPauseAnimation", PhotonTargets.Others, new object[0]);
         }
     }
 
     public void playAnimation(string aniName)
     {
-        this.currentAnimation = aniName;
-        base.animation.Play(aniName);
-        if (PhotonNetwork.connected && base.photonView.isMine)
+        currentAnimation = aniName;
+        animation.Play(aniName);
+        if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = new object[] { aniName };
-            base.photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
+            var parameters = new object[] { aniName };
+            photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
         }
     }
 
     private void playAnimationAt(string aniName, float normalizedTime)
     {
-        this.currentAnimation = aniName;
-        base.animation.Play(aniName);
-        base.animation[aniName].normalizedTime = normalizedTime;
-        if (PhotonNetwork.connected && base.photonView.isMine)
+        currentAnimation = aniName;
+        animation.Play(aniName);
+        animation[aniName].normalizedTime = normalizedTime;
+        if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = new object[] { aniName, normalizedTime };
-            base.photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
+            var parameters = new object[] { aniName, normalizedTime };
+            photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
         }
     }
 
     private void releaseIfIHookSb()
     {
-        if (this.hookSomeOne && (this.hookTarget != null))
+        if (hookSomeOne && (hookTarget != null))
         {
-            this.hookTarget.GetPhotonView().RPC("badGuyReleaseMe", this.hookTarget.GetPhotonView().owner, new object[0]);
-            this.hookTarget = null;
-            this.hookSomeOne = false;
+            hookTarget.GetPhotonView().RPC("badGuyReleaseMe", hookTarget.GetPhotonView().owner, new object[0]);
+            hookTarget = null;
+            hookSomeOne = false;
         }
     }
 
@@ -3744,131 +3744,131 @@ public class HERO : Photon.MonoBehaviour
 
     public void resetAnimationSpeed()
     {
-        IEnumerator enumerator = base.animation.GetEnumerator();
+        var enumerator = animation.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
             {
-                AnimationState current = (AnimationState) enumerator.Current;
+                var current = (AnimationState) enumerator.Current;
                 current.speed = 1f;
             }
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        this.customAnimationSpeed();
+        customAnimationSpeed();
     }
 
     [RPC]
     public void ReturnFromCannon(PhotonMessageInfo info)
     {
-        if (info.sender == base.photonView.owner)
+        if (info.sender == photonView.owner)
         {
-            this.isCannon = false;
-            base.gameObject.GetComponent<SmoothSyncMovement>().disabled = false;
+            isCannon = false;
+            gameObject.GetComponent<SmoothSyncMovement>().disabled = false;
         }
     }
 
     private void rightArmAimTo(Vector3 target)
     {
-        float y = target.x - this.upperarmR.transform.position.x;
-        float num2 = target.y - this.upperarmR.transform.position.y;
-        float x = target.z - this.upperarmR.transform.position.z;
-        float num4 = Mathf.Sqrt((y * y) + (x * x));
-        this.handR.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-        this.forearmR.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        this.upperarmR.rotation = Quaternion.Euler(180f, 90f + (Mathf.Atan2(y, x) * 57.29578f), Mathf.Atan2(num2, num4) * 57.29578f);
+        var y = target.x - upperarmR.transform.position.x;
+        var num2 = target.y - upperarmR.transform.position.y;
+        var x = target.z - upperarmR.transform.position.z;
+        var num4 = Mathf.Sqrt((y * y) + (x * x));
+        handR.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+        forearmR.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        upperarmR.rotation = Quaternion.Euler(180f, 90f + (Mathf.Atan2(y, x) * 57.29578f), Mathf.Atan2(num2, num4) * 57.29578f);
     }
 
     [RPC]
     private void RPCHookedByHuman(int hooker, Vector3 hookPosition)
     {
-        this.hookBySomeOne = true;
-        this.badGuy = PhotonView.Find(hooker).gameObject;
-        if (Vector3.Distance(hookPosition, base.transform.position) < 15f)
+        hookBySomeOne = true;
+        badGuy = PhotonView.Find(hooker).gameObject;
+        if (Vector3.Distance(hookPosition, transform.position) < 15f)
         {
-            this.launchForce = PhotonView.Find(hooker).gameObject.transform.position - base.transform.position;
-            base.rigidbody.AddForce((Vector3) (-base.rigidbody.velocity * 0.9f), ForceMode.VelocityChange);
-            float num = Mathf.Pow(this.launchForce.magnitude, 0.1f);
-            if (this.grounded)
+            launchForce = PhotonView.Find(hooker).gameObject.transform.position - transform.position;
+            rigidbody.AddForce(-rigidbody.velocity * 0.9f, ForceMode.VelocityChange);
+            var num = Mathf.Pow(launchForce.magnitude, 0.1f);
+            if (grounded)
             {
-                base.rigidbody.AddForce((Vector3) (Vector3.up * Mathf.Min((float) (this.launchForce.magnitude * 0.2f), (float) 10f)), ForceMode.Impulse);
+                rigidbody.AddForce(Vector3.up * Mathf.Min(launchForce.magnitude * 0.2f, 10f), ForceMode.Impulse);
             }
-            base.rigidbody.AddForce((Vector3) ((this.launchForce * num) * 0.1f), ForceMode.Impulse);
-            if (this.state != HERO_STATE.Grab)
+            rigidbody.AddForce((launchForce * num) * 0.1f, ForceMode.Impulse);
+            if (state != HERO_STATE.Grab)
             {
-                this.dashTime = 1f;
-                this.crossFade("dash", 0.05f);
-                base.animation["dash"].time = 0.1f;
-                this.state = HERO_STATE.AirDodge;
-                this.falseAttack();
-                this.facingDirection = Mathf.Atan2(this.launchForce.x, this.launchForce.z) * 57.29578f;
-                Quaternion quaternion = Quaternion.Euler(0f, this.facingDirection, 0f);
-                base.gameObject.transform.rotation = quaternion;
-                base.rigidbody.rotation = quaternion;
-                this.targetRotation = quaternion;
+                dashTime = 1f;
+                crossFade("dash", 0.05f);
+                animation["dash"].time = 0.1f;
+                state = HERO_STATE.AirDodge;
+                falseAttack();
+                facingDirection = Mathf.Atan2(launchForce.x, launchForce.z) * 57.29578f;
+                var quaternion = Quaternion.Euler(0f, facingDirection, 0f);
+                gameObject.transform.rotation = quaternion;
+                rigidbody.rotation = quaternion;
+                targetRotation = quaternion;
             }
         }
         else
         {
-            this.hookBySomeOne = false;
-            this.badGuy = null;
+            hookBySomeOne = false;
+            badGuy = null;
             PhotonView.Find(hooker).RPC("hookFail", PhotonView.Find(hooker).owner, new object[0]);
         }
     }
 
     private void salute()
     {
-        this.state = HERO_STATE.Salute;
-        this.crossFade("salute", 0.1f);
+        state = HERO_STATE.Salute;
+        crossFade("salute", 0.1f);
     }
 
     private void setHookedPplDirection()
     {
-        this.almostSingleHook = false;
-        if (this.isRightHandHooked && this.isLeftHandHooked)
+        almostSingleHook = false;
+        if (isRightHandHooked && isLeftHandHooked)
         {
-            if ((this.bulletLeft != null) && (this.bulletRight != null))
+            if ((bulletLeft != null) && (bulletRight != null))
             {
-                Vector3 normal = this.bulletLeft.transform.position - this.bulletRight.transform.position;
+                var normal = bulletLeft.transform.position - bulletRight.transform.position;
                 if (normal.sqrMagnitude < 4f)
                 {
-                    Vector3 vector2 = ((Vector3) ((this.bulletLeft.transform.position + this.bulletRight.transform.position) * 0.5f)) - base.transform.position;
-                    this.facingDirection = Mathf.Atan2(vector2.x, vector2.z) * 57.29578f;
-                    if (this.useGun && (this.state != HERO_STATE.Attack))
+                    var vector2 = (bulletLeft.transform.position + bulletRight.transform.position) * 0.5f - transform.position;
+                    facingDirection = Mathf.Atan2(vector2.x, vector2.z) * 57.29578f;
+                    if (useGun && (state != HERO_STATE.Attack))
                     {
-                        float current = -Mathf.Atan2(base.rigidbody.velocity.z, base.rigidbody.velocity.x) * 57.29578f;
-                        float target = -Mathf.Atan2(vector2.z, vector2.x) * 57.29578f;
-                        float num3 = -Mathf.DeltaAngle(current, target);
-                        this.facingDirection += num3;
+                        var current = -Mathf.Atan2(rigidbody.velocity.z, rigidbody.velocity.x) * 57.29578f;
+                        var target = -Mathf.Atan2(vector2.z, vector2.x) * 57.29578f;
+                        var num3 = -Mathf.DeltaAngle(current, target);
+                        facingDirection += num3;
                     }
-                    this.almostSingleHook = true;
+                    almostSingleHook = true;
                 }
                 else
                 {
-                    Vector3 to = base.transform.position - this.bulletLeft.transform.position;
-                    Vector3 vector6 = base.transform.position - this.bulletRight.transform.position;
-                    Vector3 vector7 = (Vector3) ((this.bulletLeft.transform.position + this.bulletRight.transform.position) * 0.5f);
-                    Vector3 from = base.transform.position - vector7;
+                    var to = transform.position - bulletLeft.transform.position;
+                    var vector6 = transform.position - bulletRight.transform.position;
+                    var vector7 = (bulletLeft.transform.position + bulletRight.transform.position) * 0.5f;
+                    var from = transform.position - vector7;
                     if ((Vector3.Angle(from, to) < 30f) && (Vector3.Angle(from, vector6) < 30f))
                     {
-                        this.almostSingleHook = true;
-                        Vector3 vector9 = vector7 - base.transform.position;
-                        this.facingDirection = Mathf.Atan2(vector9.x, vector9.z) * 57.29578f;
+                        almostSingleHook = true;
+                        var vector9 = vector7 - transform.position;
+                        facingDirection = Mathf.Atan2(vector9.x, vector9.z) * 57.29578f;
                     }
                     else
                     {
-                        this.almostSingleHook = false;
-                        Vector3 forward = base.transform.forward;
+                        almostSingleHook = false;
+                        var forward = transform.forward;
                         Vector3.OrthoNormalize(ref normal, ref forward);
-                        this.facingDirection = Mathf.Atan2(forward.x, forward.z) * 57.29578f;
-                        float num4 = Mathf.Atan2(to.x, to.z) * 57.29578f;
-                        if (Mathf.DeltaAngle(num4, this.facingDirection) > 0f)
+                        facingDirection = Mathf.Atan2(forward.x, forward.z) * 57.29578f;
+                        var num4 = Mathf.Atan2(to.x, to.z) * 57.29578f;
+                        if (Mathf.DeltaAngle(num4, facingDirection) > 0f)
                         {
-                            this.facingDirection += 180f;
+                            facingDirection += 180f;
                         }
                     }
                 }
@@ -3876,34 +3876,34 @@ public class HERO : Photon.MonoBehaviour
         }
         else
         {
-            this.almostSingleHook = true;
-            Vector3 zero = Vector3.zero;
-            if (this.isRightHandHooked && (this.bulletRight != null))
+            almostSingleHook = true;
+            var zero = Vector3.zero;
+            if (isRightHandHooked && (bulletRight != null))
             {
-                zero = this.bulletRight.transform.position - base.transform.position;
+                zero = bulletRight.transform.position - transform.position;
             }
-            else if (this.isLeftHandHooked && (this.bulletLeft != null))
+            else if (isLeftHandHooked && (bulletLeft != null))
             {
-                zero = this.bulletLeft.transform.position - base.transform.position;
+                zero = bulletLeft.transform.position - transform.position;
             }
             else
             {
                 return;
             }
-            this.facingDirection = Mathf.Atan2(zero.x, zero.z) * 57.29578f;
-            if (this.state != HERO_STATE.Attack)
+            facingDirection = Mathf.Atan2(zero.x, zero.z) * 57.29578f;
+            if (state != HERO_STATE.Attack)
             {
-                float num6 = -Mathf.Atan2(base.rigidbody.velocity.z, base.rigidbody.velocity.x) * 57.29578f;
-                float num7 = -Mathf.Atan2(zero.z, zero.x) * 57.29578f;
-                float num8 = -Mathf.DeltaAngle(num6, num7);
-                if (this.useGun)
+                var num6 = -Mathf.Atan2(rigidbody.velocity.z, rigidbody.velocity.x) * 57.29578f;
+                var num7 = -Mathf.Atan2(zero.z, zero.x) * 57.29578f;
+                var num8 = -Mathf.DeltaAngle(num6, num7);
+                if (useGun)
                 {
-                    this.facingDirection += num8;
+                    facingDirection += num8;
                 }
                 else
                 {
-                    float num9 = 0f;
-                    if ((this.isLeftHandHooked && (num8 < 0f)) || (this.isRightHandHooked && (num8 > 0f)))
+                    var num9 = 0f;
+                    if ((isLeftHandHooked && (num8 < 0f)) || (isRightHandHooked && (num8 > 0f)))
                     {
                         num9 = -0.1f;
                     }
@@ -3911,7 +3911,7 @@ public class HERO : Photon.MonoBehaviour
                     {
                         num9 = 0.1f;
                     }
-                    this.facingDirection += num8 * num9;
+                    facingDirection += num8 * num9;
                 }
             }
         }
@@ -3920,17 +3920,17 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     public void SetMyCannon(int viewID, PhotonMessageInfo info)
     {
-        if (info.sender == base.photonView.owner)
+        if (info.sender == photonView.owner)
         {
-            PhotonView view = PhotonView.Find(viewID);
+            var view = PhotonView.Find(viewID);
             if (view != null)
             {
-                this.myCannon = view.gameObject;
-                if (this.myCannon != null)
+                myCannon = view.gameObject;
+                if (myCannon != null)
                 {
-                    this.myCannonBase = this.myCannon.transform;
-                    this.myCannonPlayer = this.myCannonBase.Find("PlayerPoint");
-                    this.isCannon = true;
+                    myCannonBase = myCannon.transform;
+                    myCannonPlayer = myCannonBase.Find("PlayerPoint");
+                    isCannon = true;
                 }
             }
         }
@@ -3939,20 +3939,20 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     public void SetMyPhotonCamera(float offset, PhotonMessageInfo info)
     {
-        if (base.photonView.owner == info.sender)
+        if (photonView.owner == info.sender)
         {
-            this.CameraMultiplier = offset;
-            base.GetComponent<SmoothSyncMovement>().PhotonCamera = true;
-            this.isPhotonCamera = true;
+            CameraMultiplier = offset;
+            GetComponent<SmoothSyncMovement>().PhotonCamera = true;
+            isPhotonCamera = true;
         }
     }
 
     [RPC]
     private void setMyTeam(int val)
     {
-        this.myTeam = val;
-        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().myTeam = val;
-        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().myTeam = val;
+        myTeam = val;
+        checkBoxLeft.GetComponent<TriggerColliderWeapon>().myTeam = val;
+        checkBoxRight.GetComponent<TriggerColliderWeapon>().myTeam = val;
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
         {
             object[] objArray;
@@ -3961,91 +3961,91 @@ public class HERO : Photon.MonoBehaviour
                 if (val != 1)
                 {
                     objArray = new object[] { 1 };
-                    base.photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
+                    photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
                 }
             }
             else if (RCSettings.pvpMode == 1)
             {
-                int num = 0;
-                if (base.photonView.owner.customProperties[PhotonPlayerProperty.RCteam] != null)
+                var num = 0;
+                if (photonView.owner.customProperties[PhotonPlayerProperty.RCteam] != null)
                 {
-                    num = RCextensions.returnIntFromObject(base.photonView.owner.customProperties[PhotonPlayerProperty.RCteam]);
+                    num = RCextensions.returnIntFromObject(photonView.owner.customProperties[PhotonPlayerProperty.RCteam]);
                 }
                 if (val != num)
                 {
                     objArray = new object[] { num };
-                    base.photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
+                    photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
                 }
             }
-            else if ((RCSettings.pvpMode == 2) && (val != base.photonView.owner.ID))
+            else if ((RCSettings.pvpMode == 2) && (val != photonView.owner.ID))
             {
-                objArray = new object[] { base.photonView.owner.ID };
-                base.photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
+                objArray = new object[] { photonView.owner.ID };
+                photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
             }
         }
     }
 
     public void setSkillHUDPosition()
     {
-        this.skillCD = GameObject.Find("skill_cd_" + this.skillId);
-        if (this.skillCD != null)
+        skillCD = GameObject.Find("skill_cd_" + skillId);
+        if (skillCD != null)
         {
-            this.skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
+            skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
         }
-        if (this.useGun)
+        if (useGun)
         {
-            this.skillCD.transform.localPosition = (Vector3) (Vector3.up * 5000f);
+            skillCD.transform.localPosition = Vector3.up * 5000f;
         }
     }
 
     public void setSkillHUDPosition2()
     {
-        this.skillCD = GameObject.Find("skill_cd_" + this.skillIDHUD);
-        if (this.skillCD != null)
+        skillCD = GameObject.Find("skill_cd_" + skillIDHUD);
+        if (skillCD != null)
         {
-            this.skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
+            skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
         }
-        if (this.useGun && (RCSettings.bombMode == 0))
+        if (useGun && (RCSettings.bombMode == 0))
         {
-            this.skillCD.transform.localPosition = (Vector3) (Vector3.up * 5000f);
+            skillCD.transform.localPosition = Vector3.up * 5000f;
         }
     }
 
     public void setStat()
     {
-        this.skillCDLast = 1.5f;
-        this.skillId = this.setup.myCostume.stat.skillId;
-        if (this.skillId == "levi")
+        skillCDLast = 1.5f;
+        skillId = setup.myCostume.stat.skillId;
+        if (skillId == "levi")
         {
-            this.skillCDLast = 3.5f;
+            skillCDLast = 3.5f;
         }
-        this.customAnimationSpeed();
-        if (this.skillId == "armin")
+        customAnimationSpeed();
+        if (skillId == "armin")
         {
-            this.skillCDLast = 5f;
+            skillCDLast = 5f;
         }
-        if (this.skillId == "marco")
+        if (skillId == "marco")
         {
-            this.skillCDLast = 10f;
+            skillCDLast = 10f;
         }
-        if (this.skillId == "jean")
+        if (skillId == "jean")
         {
-            this.skillCDLast = 0.001f;
+            skillCDLast = 0.001f;
         }
-        if (this.skillId == "eren")
+        if (skillId == "eren")
         {
-            this.skillCDLast = 120f;
+            skillCDLast = 120f;
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
             {
                 if ((LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || (LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.RACING)) || ((LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.PVP_CAPTURE) || (LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.TROST)))
                 {
-                    this.skillId = "petra";
-                    this.skillCDLast = 1f;
+                    skillId = "petra";
+                    skillCDLast = 1f;
                 }
                 else
                 {
-                    int num = 0;
-                    foreach (PhotonPlayer player in PhotonNetwork.playerList)
+                    var num = 0;
+                    foreach (var player in PhotonNetwork.playerList)
                     {
                         if ((RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.isTitan]) == 1) && (RCextensions.returnStringFromObject(player.customProperties[PhotonPlayerProperty.character]).ToUpper() == "EREN"))
                         {
@@ -4054,30 +4054,30 @@ public class HERO : Photon.MonoBehaviour
                     }
                     if (num > 1)
                     {
-                        this.skillId = "petra";
-                        this.skillCDLast = 1f;
+                        skillId = "petra";
+                        skillCDLast = 1f;
                     }
                 }
             }
         }
-        if (this.skillId == "sasha")
+        if (skillId == "sasha")
         {
-            this.skillCDLast = 20f;
+            skillCDLast = 20f;
         }
-        if (this.skillId == "petra")
+        if (skillId == "petra")
         {
-            this.skillCDLast = 3.5f;
+            skillCDLast = 3.5f;
         }
-        this.bombInit();
-        this.speed = ((float) this.setup.myCostume.stat.SPD) / 10f;
-        this.totalGas = this.currentGas = this.setup.myCostume.stat.GAS;
-        this.totalBladeSta = this.currentBladeSta = this.setup.myCostume.stat.BLA;
-        this.baseRigidBody.mass = 0.5f - ((this.setup.myCostume.stat.ACL - 100) * 0.001f);
+        bombInit();
+        speed = setup.myCostume.stat.SPD / 10f;
+        totalGas = currentGas = setup.myCostume.stat.GAS;
+        totalBladeSta = currentBladeSta = setup.myCostume.stat.BLA;
+        baseRigidBody.mass = 0.5f - ((setup.myCostume.stat.ACL - 100) * 0.001f);
         GameObject.Find("skill_cd_bottom").transform.localPosition = new Vector3(0f, (-Screen.height * 0.5f) + 5f, 0f);
-        this.skillCD = GameObject.Find("skill_cd_" + this.skillIDHUD);
-        this.skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
+        skillCD = GameObject.Find("skill_cd_" + skillIDHUD);
+        skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
         GameObject.Find("GasUI").transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
             GameObject.Find("bulletL").GetComponent<UISprite>().enabled = false;
             GameObject.Find("bulletR").GetComponent<UISprite>().enabled = false;
@@ -4096,17 +4096,17 @@ public class HERO : Photon.MonoBehaviour
             GameObject.Find("bulletL7").GetComponent<UISprite>().enabled = false;
             GameObject.Find("bulletR7").GetComponent<UISprite>().enabled = false;
         }
-        if (this.setup.myCostume.uniform_type == UNIFORM_TYPE.CasualAHSS)
+        if (setup.myCostume.uniform_type == UNIFORM_TYPE.CasualAHSS)
         {
-            this.standAnimation = "AHSS_stand_gun";
-            this.useGun = true;
-            this.gunDummy = new GameObject();
-            this.gunDummy.name = "gunDummy";
-            this.gunDummy.transform.position = this.baseTransform.position;
-            this.gunDummy.transform.rotation = this.baseTransform.rotation;
-            this.myGroup = GROUP.A;
-            this.setTeam2(2);
-            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+            standAnimation = "AHSS_stand_gun";
+            useGun = true;
+            gunDummy = new GameObject();
+            gunDummy.name = "gunDummy";
+            gunDummy.transform.position = baseTransform.position;
+            gunDummy.transform.rotation = baseTransform.rotation;
+            myGroup = GROUP.A;
+            setTeam2(2);
+            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
             {
                 GameObject.Find("bladeCL").GetComponent<UISprite>().enabled = false;
                 GameObject.Find("bladeCR").GetComponent<UISprite>().enabled = false;
@@ -4136,32 +4136,32 @@ public class HERO : Photon.MonoBehaviour
                 GameObject.Find("bulletR6").GetComponent<UISprite>().enabled = true;
                 GameObject.Find("bulletL7").GetComponent<UISprite>().enabled = true;
                 GameObject.Find("bulletR7").GetComponent<UISprite>().enabled = true;
-                if (this.skillId != "bomb")
+                if (skillId != "bomb")
                 {
-                    this.skillCD.transform.localPosition = (Vector3) (Vector3.up * 5000f);
+                    skillCD.transform.localPosition = Vector3.up * 5000f;
                 }
             }
         }
-        else if (this.setup.myCostume.sex == SEX.FEMALE)
+        else if (setup.myCostume.sex == SEX.FEMALE)
         {
-            this.standAnimation = "stand";
-            this.setTeam2(1);
+            standAnimation = "stand";
+            setTeam2(1);
         }
         else
         {
-            this.standAnimation = "stand_levi";
-            this.setTeam2(1);
+            standAnimation = "stand_levi";
+            setTeam2(1);
         }
     }
 
     public void setTeam(int team)
     {
-        this.setMyTeam(team);
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && base.photonView.isMine)
+        setMyTeam(team);
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && photonView.isMine)
         {
-            object[] parameters = new object[] { team };
-            base.photonView.RPC("setMyTeam", PhotonTargets.OthersBuffered, parameters);
-            ExitGames.Client.Photon.Hashtable propertiesToSet = new ExitGames.Client.Photon.Hashtable();
+            var parameters = new object[] { team };
+            photonView.RPC("setMyTeam", PhotonTargets.OthersBuffered, parameters);
+            var propertiesToSet = new ExitGames.Client.Photon.Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.team, team);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
         }
@@ -4169,49 +4169,49 @@ public class HERO : Photon.MonoBehaviour
 
     public void setTeam2(int team)
     {
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && photonView.isMine)
         {
-            object[] parameters = new object[] { team };
-            base.photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, parameters);
-            ExitGames.Client.Photon.Hashtable propertiesToSet = new ExitGames.Client.Photon.Hashtable();
+            var parameters = new object[] { team };
+            photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, parameters);
+            var propertiesToSet = new ExitGames.Client.Photon.Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.team, team);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
         }
         else
         {
-            this.setMyTeam(team);
+            setMyTeam(team);
         }
     }
 
     public void shootFlare(int type)
     {
-        bool flag = false;
-        if ((type == 1) && (this.flare1CD == 0f))
+        var flag = false;
+        if ((type == 1) && (flare1CD == 0f))
         {
-            this.flare1CD = this.flareTotalCD;
+            flare1CD = flareTotalCD;
             flag = true;
         }
-        if ((type == 2) && (this.flare2CD == 0f))
+        if ((type == 2) && (flare2CD == 0f))
         {
-            this.flare2CD = this.flareTotalCD;
+            flare2CD = flareTotalCD;
             flag = true;
         }
-        if ((type == 3) && (this.flare3CD == 0f))
+        if ((type == 3) && (flare3CD == 0f))
         {
-            this.flare3CD = this.flareTotalCD;
+            flare3CD = flareTotalCD;
             flag = true;
         }
         if (flag)
         {
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                GameObject obj2 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("FX/flareBullet" + type), base.transform.position, base.transform.rotation);
+                var obj2 = (GameObject) Instantiate(Resources.Load("FX/flareBullet" + type), transform.position, transform.rotation);
                 obj2.GetComponent<FlareMovement>().dontShowHint();
-                UnityEngine.Object.Destroy(obj2, 25f);
+                Destroy(obj2, 25f);
             }
             else
             {
-                PhotonNetwork.Instantiate("FX/flareBullet" + type, base.transform.position, base.transform.rotation, 0).GetComponent<FlareMovement>().dontShowHint();
+                PhotonNetwork.Instantiate("FX/flareBullet" + type, transform.position, transform.rotation, 0).GetComponent<FlareMovement>().dontShowHint();
             }
         }
     }
@@ -4221,14 +4221,14 @@ public class HERO : Photon.MonoBehaviour
         Vector3 vector;
         if (Screen.showCursor)
         {
-            GameObject obj2 = this.cross1;
-            GameObject obj3 = this.cross2;
-            GameObject obj4 = this.crossL1;
-            GameObject obj5 = this.crossL2;
-            GameObject obj6 = this.crossR1;
-            GameObject obj7 = this.crossR2;
-            GameObject labelDistance = this.LabelDistance;
-            vector = (Vector3) (Vector3.up * 10000f);
+            var obj2 = cross1;
+            var obj3 = cross2;
+            var obj4 = crossL1;
+            var obj5 = crossL2;
+            var obj6 = crossR1;
+            var obj7 = crossR2;
+            var labelDistance = LabelDistance;
+            vector = Vector3.up * 10000f;
             obj7.transform.localPosition = vector;
             obj6.transform.localPosition = vector;
             obj5.transform.localPosition = vector;
@@ -4240,33 +4240,33 @@ public class HERO : Photon.MonoBehaviour
         else
         {
             RaycastHit hit;
-            this.checkTitan();
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-            LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+            checkTitan();
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+            LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
             LayerMask mask3 = mask2 | mask;
             if (Physics.Raycast(ray, out hit, 1E+07f, mask3.value))
             {
                 RaycastHit hit2;
-                GameObject obj9 = this.cross1;
-                GameObject obj10 = this.cross2;
+                var obj9 = cross1;
+                var obj10 = cross2;
                 obj9.transform.localPosition = Input.mousePosition;
-                Transform transform = obj9.transform;
+                var transform = obj9.transform;
                 transform.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
                 obj10.transform.localPosition = obj9.transform.localPosition;
-                vector = hit.point - this.baseTransform.position;
-                float magnitude = vector.magnitude;
-                GameObject obj11 = this.LabelDistance;
-                string str = (magnitude <= 1000f) ? ((int) magnitude).ToString() : "???";
+                vector = hit.point - baseTransform.position;
+                var magnitude = vector.magnitude;
+                var obj11 = LabelDistance;
+                var str = (magnitude <= 1000f) ? ((int) magnitude).ToString() : "???";
                 if (Settings.Speedometer == 1)
                 {
-                    str = str + "\n" + this.currentSpeed.ToString("F1") + " u/s";
+                    str = str + "\n" + currentSpeed.ToString("F1") + " u/s";
                 }
                 else if (Settings.Speedometer == 2)
                 {
-                    var bdmg = this.currentSpeed * 10f;
-                    var admg = this.currentSpeed * 4f;
-                    var admg2 = this.currentSpeed * 6f;
+                    var bdmg = currentSpeed * 10f;
+                    var admg = currentSpeed * 4f;
+                    var admg2 = currentSpeed * 6f;
                     if (!useGun)
                         str += $"\n{(bdmg/1000).ToString("F1")}K";
                     else
@@ -4275,69 +4275,69 @@ public class HERO : Photon.MonoBehaviour
                 obj11.GetComponent<UILabel>().text = str;
                 if (magnitude > 120f)
                 {
-                    Transform transform11 = obj9.transform;
-                    transform11.localPosition += (Vector3) (Vector3.up * 10000f);
+                    var transform11 = obj9.transform;
+                    transform11.localPosition += Vector3.up * 10000f;
                     obj11.transform.localPosition = obj10.transform.localPosition;
                 }
                 else
                 {
-                    Transform transform12 = obj10.transform;
-                    transform12.localPosition += (Vector3) (Vector3.up * 10000f);
+                    var transform12 = obj10.transform;
+                    transform12.localPosition += Vector3.up * 10000f;
                     obj11.transform.localPosition = obj9.transform.localPosition;
                 }
-                Transform transform13 = obj11.transform;
+                var transform13 = obj11.transform;
                 transform13.localPosition -= new Vector3(0f, 15f, 0f);
-                Vector3 vector2 = new Vector3(0f, 0.4f, 0f);
-                vector2 -= (Vector3) (this.baseTransform.right * 0.3f);
-                Vector3 vector3 = new Vector3(0f, 0.4f, 0f);
-                vector3 += (Vector3) (this.baseTransform.right * 0.3f);
-                float num4 = (hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f);
-                Vector3 vector4 = (hit.point - ((Vector3) (this.baseTransform.right * num4))) - (this.baseTransform.position + vector2);
-                Vector3 vector5 = (hit.point + ((Vector3) (this.baseTransform.right * num4))) - (this.baseTransform.position + vector3);
+                var vector2 = new Vector3(0f, 0.4f, 0f);
+                vector2 -= baseTransform.right * 0.3f;
+                var vector3 = new Vector3(0f, 0.4f, 0f);
+                vector3 += baseTransform.right * 0.3f;
+                var num4 = (hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f);
+                var vector4 = (hit.point - baseTransform.right * num4) - (baseTransform.position + vector2);
+                var vector5 = (hit.point + baseTransform.right * num4) - (baseTransform.position + vector3);
                 vector4.Normalize();
                 vector5.Normalize();
-                vector4 = (Vector3) (vector4 * 1000000f);
-                vector5 = (Vector3) (vector5 * 1000000f);
-                if (Physics.Linecast(this.baseTransform.position + vector2, (this.baseTransform.position + vector2) + vector4, out hit2, mask3.value))
+                vector4 = vector4 * 1000000f;
+                vector5 = vector5 * 1000000f;
+                if (Physics.Linecast(baseTransform.position + vector2, (baseTransform.position + vector2) + vector4, out hit2, mask3.value))
                 {
-                    GameObject obj12 = this.crossL1;
-                    obj12.transform.localPosition = this.currentCamera.WorldToScreenPoint(hit2.point);
-                    Transform transform14 = obj12.transform;
+                    var obj12 = crossL1;
+                    obj12.transform.localPosition = currentCamera.WorldToScreenPoint(hit2.point);
+                    var transform14 = obj12.transform;
                     transform14.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
                     obj12.transform.localRotation = Quaternion.Euler(0f, 0f, (Mathf.Atan2(obj12.transform.localPosition.y - (Input.mousePosition.y - (Screen.height * 0.5f)), obj12.transform.localPosition.x - (Input.mousePosition.x - (Screen.width * 0.5f))) * 57.29578f) + 180f);
-                    GameObject obj13 = this.crossL2;
+                    var obj13 = crossL2;
                     obj13.transform.localPosition = obj12.transform.localPosition;
                     obj13.transform.localRotation = obj12.transform.localRotation;
                     if (hit2.distance > 120f)
                     {
-                        Transform transform15 = obj12.transform;
-                        transform15.localPosition += (Vector3) (Vector3.up * 10000f);
+                        var transform15 = obj12.transform;
+                        transform15.localPosition += Vector3.up * 10000f;
                     }
                     else
                     {
-                        Transform transform16 = obj13.transform;
-                        transform16.localPosition += (Vector3) (Vector3.up * 10000f);
+                        var transform16 = obj13.transform;
+                        transform16.localPosition += Vector3.up * 10000f;
                     }
                 }
-                if (Physics.Linecast(this.baseTransform.position + vector3, (this.baseTransform.position + vector3) + vector5, out hit2, mask3.value))
+                if (Physics.Linecast(baseTransform.position + vector3, (baseTransform.position + vector3) + vector5, out hit2, mask3.value))
                 {
-                    GameObject obj14 = this.crossR1;
-                    obj14.transform.localPosition = this.currentCamera.WorldToScreenPoint(hit2.point);
-                    Transform transform17 = obj14.transform;
+                    var obj14 = crossR1;
+                    obj14.transform.localPosition = currentCamera.WorldToScreenPoint(hit2.point);
+                    var transform17 = obj14.transform;
                     transform17.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
                     obj14.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(obj14.transform.localPosition.y - (Input.mousePosition.y - (Screen.height * 0.5f)), obj14.transform.localPosition.x - (Input.mousePosition.x - (Screen.width * 0.5f))) * 57.29578f);
-                    GameObject obj15 = this.crossR2;
+                    var obj15 = crossR2;
                     obj15.transform.localPosition = obj14.transform.localPosition;
                     obj15.transform.localRotation = obj14.transform.localRotation;
                     if (hit2.distance > 120f)
                     {
-                        Transform transform18 = obj14.transform;
-                        transform18.localPosition += (Vector3) (Vector3.up * 10000f);
+                        var transform18 = obj14.transform;
+                        transform18.localPosition += Vector3.up * 10000f;
                     }
                     else
                     {
-                        Transform transform19 = obj15.transform;
-                        transform19.localPosition += (Vector3) (Vector3.up * 10000f);
+                        var transform19 = obj15.transform;
+                        transform19.localPosition += Vector3.up * 10000f;
                     }
                 }
             }
@@ -4346,122 +4346,122 @@ public class HERO : Photon.MonoBehaviour
 
     private void showFlareCD()
     {
-        if (this.cachedSprites["UIflare1"] != null)
+        if (cachedSprites["UIflare1"] != null)
         {
-            this.cachedSprites["UIflare1"].fillAmount = (this.flareTotalCD - this.flare1CD) / this.flareTotalCD;
-            this.cachedSprites["UIflare2"].fillAmount = (this.flareTotalCD - this.flare2CD) / this.flareTotalCD;
-            this.cachedSprites["UIflare3"].fillAmount = (this.flareTotalCD - this.flare3CD) / this.flareTotalCD;
+            cachedSprites["UIflare1"].fillAmount = (flareTotalCD - flare1CD) / flareTotalCD;
+            cachedSprites["UIflare2"].fillAmount = (flareTotalCD - flare2CD) / flareTotalCD;
+            cachedSprites["UIflare3"].fillAmount = (flareTotalCD - flare3CD) / flareTotalCD;
         }
     }
 
     private void showGas()
     {
-        float num = this.currentGas / this.totalGas;
-        float num2 = this.currentBladeSta / this.totalBladeSta;
-        this.cachedSprites["gasL1"].fillAmount = this.currentGas / this.totalGas;
-        this.cachedSprites["gasR1"].fillAmount = this.currentGas / this.totalGas;
-        if (!this.useGun)
+        var num = currentGas / totalGas;
+        var num2 = currentBladeSta / totalBladeSta;
+        cachedSprites["gasL1"].fillAmount = currentGas / totalGas;
+        cachedSprites["gasR1"].fillAmount = currentGas / totalGas;
+        if (!useGun)
         {
-            this.cachedSprites["bladeCL"].fillAmount = this.currentBladeSta / this.totalBladeSta;
-            this.cachedSprites["bladeCR"].fillAmount = this.currentBladeSta / this.totalBladeSta;
+            cachedSprites["bladeCL"].fillAmount = currentBladeSta / totalBladeSta;
+            cachedSprites["bladeCR"].fillAmount = currentBladeSta / totalBladeSta;
             if (num <= 0f)
             {
-                this.cachedSprites["gasL"].color = Color.red;
-                this.cachedSprites["gasR"].color = Color.red;
+                cachedSprites["gasL"].color = Color.red;
+                cachedSprites["gasR"].color = Color.red;
             }
             else if (num < 0.3f)
             {
-                this.cachedSprites["gasL"].color = Color.yellow;
-                this.cachedSprites["gasR"].color = Color.yellow;
+                cachedSprites["gasL"].color = Color.yellow;
+                cachedSprites["gasR"].color = Color.yellow;
             }
             else
             {
-                this.cachedSprites["gasL"].color = Color.white;
-                this.cachedSprites["gasR"].color = Color.white;
+                cachedSprites["gasL"].color = Color.white;
+                cachedSprites["gasR"].color = Color.white;
             }
             if (num2 <= 0f)
             {
-                this.cachedSprites["bladel1"].color = Color.red;
-                this.cachedSprites["blader1"].color = Color.red;
+                cachedSprites["bladel1"].color = Color.red;
+                cachedSprites["blader1"].color = Color.red;
             }
             else if (num2 < 0.3f)
             {
-                this.cachedSprites["bladel1"].color = Color.yellow;
-                this.cachedSprites["blader1"].color = Color.yellow;
+                cachedSprites["bladel1"].color = Color.yellow;
+                cachedSprites["blader1"].color = Color.yellow;
             }
             else
             {
-                this.cachedSprites["bladel1"].color = Color.white;
-                this.cachedSprites["blader1"].color = Color.white;
+                cachedSprites["bladel1"].color = Color.white;
+                cachedSprites["blader1"].color = Color.white;
             }
-            if (this.currentBladeNum <= 4)
+            if (currentBladeNum <= 4)
             {
-                this.cachedSprites["bladel5"].enabled = false;
-                this.cachedSprites["blader5"].enabled = false;
-            }
-            else
-            {
-                this.cachedSprites["bladel5"].enabled = true;
-                this.cachedSprites["blader5"].enabled = true;
-            }
-            if (this.currentBladeNum <= 3)
-            {
-                this.cachedSprites["bladel4"].enabled = false;
-                this.cachedSprites["blader4"].enabled = false;
+                cachedSprites["bladel5"].enabled = false;
+                cachedSprites["blader5"].enabled = false;
             }
             else
             {
-                this.cachedSprites["bladel4"].enabled = true;
-                this.cachedSprites["blader4"].enabled = true;
+                cachedSprites["bladel5"].enabled = true;
+                cachedSprites["blader5"].enabled = true;
             }
-            if (this.currentBladeNum <= 2)
+            if (currentBladeNum <= 3)
             {
-                this.cachedSprites["bladel3"].enabled = false;
-                this.cachedSprites["blader3"].enabled = false;
-            }
-            else
-            {
-                this.cachedSprites["bladel3"].enabled = true;
-                this.cachedSprites["blader3"].enabled = true;
-            }
-            if (this.currentBladeNum <= 1)
-            {
-                this.cachedSprites["bladel2"].enabled = false;
-                this.cachedSprites["blader2"].enabled = false;
+                cachedSprites["bladel4"].enabled = false;
+                cachedSprites["blader4"].enabled = false;
             }
             else
             {
-                this.cachedSprites["bladel2"].enabled = true;
-                this.cachedSprites["blader2"].enabled = true;
+                cachedSprites["bladel4"].enabled = true;
+                cachedSprites["blader4"].enabled = true;
             }
-            if (this.currentBladeNum <= 0)
+            if (currentBladeNum <= 2)
             {
-                this.cachedSprites["bladel1"].enabled = false;
-                this.cachedSprites["blader1"].enabled = false;
+                cachedSprites["bladel3"].enabled = false;
+                cachedSprites["blader3"].enabled = false;
             }
             else
             {
-                this.cachedSprites["bladel1"].enabled = true;
-                this.cachedSprites["blader1"].enabled = true;
+                cachedSprites["bladel3"].enabled = true;
+                cachedSprites["blader3"].enabled = true;
+            }
+            if (currentBladeNum <= 1)
+            {
+                cachedSprites["bladel2"].enabled = false;
+                cachedSprites["blader2"].enabled = false;
+            }
+            else
+            {
+                cachedSprites["bladel2"].enabled = true;
+                cachedSprites["blader2"].enabled = true;
+            }
+            if (currentBladeNum <= 0)
+            {
+                cachedSprites["bladel1"].enabled = false;
+                cachedSprites["blader1"].enabled = false;
+            }
+            else
+            {
+                cachedSprites["bladel1"].enabled = true;
+                cachedSprites["blader1"].enabled = true;
             }
         }
         else
         {
-            if (this.leftGunHasBullet)
+            if (leftGunHasBullet)
             {
-                this.cachedSprites["bulletL"].enabled = true;
+                cachedSprites["bulletL"].enabled = true;
             }
             else
             {
-                this.cachedSprites["bulletL"].enabled = false;
+                cachedSprites["bulletL"].enabled = false;
             }
-            if (this.rightGunHasBullet)
+            if (rightGunHasBullet)
             {
-                this.cachedSprites["bulletR"].enabled = true;
+                cachedSprites["bulletR"].enabled = true;
             }
             else
             {
-                this.cachedSprites["bulletR"].enabled = false;
+                cachedSprites["bulletR"].enabled = false;
             }
         }
     }
@@ -4469,108 +4469,108 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     private void showHitDamage()
     {
-        GameObject target = GameObject.Find("LabelScore");
+        var target = GameObject.Find("LabelScore");
         if (target != null)
         {
-            this.speed = Mathf.Max(10f, this.speed);
-            target.GetComponent<UILabel>().text = this.speed.ToString();
+            speed = Mathf.Max(10f, speed);
+            target.GetComponent<UILabel>().text = speed.ToString();
             target.transform.localScale = Vector3.zero;
-            this.speed = (int) (this.speed * 0.1f);
-            this.speed = Mathf.Clamp(this.speed, 40f, 150f);
+            speed = (int) (speed * 0.1f);
+            speed = Mathf.Clamp(speed, 40f, 150f);
             iTween.Stop(target);
-            object[] args = new object[] { "x", this.speed, "y", this.speed, "z", this.speed, "easetype", iTween.EaseType.easeOutElastic, "time", 1f };
+            var args = new object[] { "x", speed, "y", speed, "z", speed, "easetype", iTween.EaseType.easeOutElastic, "time", 1f };
             iTween.ScaleTo(target, iTween.Hash(args));
-            object[] objArray2 = new object[] { "x", 0, "y", 0, "z", 0, "easetype", iTween.EaseType.easeInBounce, "time", 0.5f, "delay", 2f };
+            var objArray2 = new object[] { "x", 0, "y", 0, "z", 0, "easetype", iTween.EaseType.easeInBounce, "time", 0.5f, "delay", 2f };
             iTween.ScaleTo(target, iTween.Hash(objArray2));
         }
     }
 
     private void showSkillCD()
     {
-        if (this.skillCD != null)
+        if (skillCD != null)
         {
-            this.skillCD.GetComponent<UISprite>().fillAmount = (this.skillCDLast - this.skillCDDuration) / this.skillCDLast;
+            skillCD.GetComponent<UISprite>().fillAmount = (skillCDLast - skillCDDuration) / skillCDLast;
         }
     }
 
     [RPC]
     public void SpawnCannonRPC(string settings, PhotonMessageInfo info)
     {
-        if ((info.sender.isMasterClient && base.photonView.isMine) && (this.myCannon == null))
+        if ((info.sender.isMasterClient && photonView.isMine) && (myCannon == null))
         {
-            if ((this.myHorse != null) && this.isMounted)
+            if ((myHorse != null) && isMounted)
             {
-                this.getOffHorse();
+                getOffHorse();
             }
-            this.idle();
-            if (this.bulletLeft != null)
+            idle();
+            if (bulletLeft != null)
             {
-                this.bulletLeft.GetComponent<Bullet>().removeMe();
+                bulletLeft.GetComponent<Bullet>().removeMe();
             }
-            if (this.bulletRight != null)
+            if (bulletRight != null)
             {
-                this.bulletRight.GetComponent<Bullet>().removeMe();
+                bulletRight.GetComponent<Bullet>().removeMe();
             }
-            if ((this.smoke_3dmg.enableEmission && (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && base.photonView.isMine)
+            if ((smoke_3dmg.enableEmission && (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && photonView.isMine)
             {
-                object[] parameters = new object[] { false };
-                base.photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
+                var parameters = new object[] { false };
+                photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
             }
-            this.smoke_3dmg.enableEmission = false;
-            base.rigidbody.velocity = Vector3.zero;
-            string[] strArray = settings.Split(new char[] { ',' });
+            smoke_3dmg.enableEmission = false;
+            rigidbody.velocity = Vector3.zero;
+            var strArray = settings.Split(new char[] { ',' });
             if (strArray.Length > 15)
             {
-                this.myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1], new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]), Convert.ToSingle(strArray[14])), new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]), Convert.ToSingle(strArray[0x11]), Convert.ToSingle(strArray[0x12])), 0);
+                myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1], new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]), Convert.ToSingle(strArray[14])), new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]), Convert.ToSingle(strArray[0x11]), Convert.ToSingle(strArray[0x12])), 0);
             }
             else
             {
-                this.myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1], new Vector3(Convert.ToSingle(strArray[2]), Convert.ToSingle(strArray[3]), Convert.ToSingle(strArray[4])), new Quaternion(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]), Convert.ToSingle(strArray[7]), Convert.ToSingle(strArray[8])), 0);
+                myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1], new Vector3(Convert.ToSingle(strArray[2]), Convert.ToSingle(strArray[3]), Convert.ToSingle(strArray[4])), new Quaternion(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]), Convert.ToSingle(strArray[7]), Convert.ToSingle(strArray[8])), 0);
             }
-            this.myCannonBase = this.myCannon.transform;
-            this.myCannonPlayer = this.myCannon.transform.Find("PlayerPoint");
-            this.isCannon = true;
-            this.myCannon.GetComponent<Cannon>().myHero = this;
-            this.myCannonRegion = null;
-            Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(this.myCannon.transform.Find("Barrel").Find("FiringPoint").gameObject, true, false);
+            myCannonBase = myCannon.transform;
+            myCannonPlayer = myCannon.transform.Find("PlayerPoint");
+            isCannon = true;
+            myCannon.GetComponent<Cannon>().myHero = this;
+            myCannonRegion = null;
+            Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(myCannon.transform.Find("Barrel").Find("FiringPoint").gameObject, true, false);
             Camera.main.fieldOfView = 55f;
-            base.photonView.RPC("SetMyCannon", PhotonTargets.OthersBuffered, new object[] { this.myCannon.GetPhotonView().viewID });
-            this.skillCDLastCannon = this.skillCDLast;
-            this.skillCDLast = 3.5f;
-            this.skillCDDuration = 3.5f;
+            photonView.RPC("SetMyCannon", PhotonTargets.OthersBuffered, new object[] { myCannon.GetPhotonView().viewID });
+            skillCDLastCannon = skillCDLast;
+            skillCDLast = 3.5f;
+            skillCDDuration = 3.5f;
         }
     }
 
     private void Start()
     {
         FengGameManagerMKII.instance.addHero(this);
-        if (((LevelInfo.getInfo(FengGameManagerMKII.level).horse || (RCSettings.horseMode == 1)) && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)) && base.photonView.isMine)
+        if (((LevelInfo.getInfo(FengGameManagerMKII.level).horse || (RCSettings.horseMode == 1)) && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)) && photonView.isMine)
         {
-            this.myHorse = PhotonNetwork.Instantiate("horse", this.baseTransform.position + ((Vector3) (Vector3.up * 5f)), this.baseTransform.rotation, 0);
-            this.myHorse.GetComponent<Horse>().myHero = base.gameObject;
-            this.myHorse.GetComponent<TITAN_CONTROLLER>().isHorse = true;
+            myHorse = PhotonNetwork.Instantiate("horse", baseTransform.position + Vector3.up * 5f, baseTransform.rotation, 0);
+            myHorse.GetComponent<Horse>().myHero = gameObject;
+            myHorse.GetComponent<TITAN_CONTROLLER>().isHorse = true;
         }
-        this.sparks = this.baseTransform.Find("slideSparks").GetComponent<ParticleSystem>();
-        this.smoke_3dmg = this.baseTransform.Find("3dmg_smoke").GetComponent<ParticleSystem>();
-        this.baseTransform.localScale = new Vector3(this.myScale, this.myScale, this.myScale);
-        this.facingDirection = this.baseTransform.rotation.eulerAngles.y;
-        this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-        this.smoke_3dmg.enableEmission = false;
-        this.sparks.enableEmission = false;
-        this.speedFXPS = this.speedFX1.GetComponent<ParticleSystem>();
-        this.speedFXPS.enableEmission = false;
+        sparks = baseTransform.Find("slideSparks").GetComponent<ParticleSystem>();
+        smoke_3dmg = baseTransform.Find("3dmg_smoke").GetComponent<ParticleSystem>();
+        baseTransform.localScale = new Vector3(myScale, myScale, myScale);
+        facingDirection = baseTransform.rotation.eulerAngles.y;
+        targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
+        smoke_3dmg.enableEmission = false;
+        sparks.enableEmission = false;
+        speedFXPS = speedFX1.GetComponent<ParticleSystem>();
+        speedFXPS.enableEmission = false;
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER)
         {
             if (Minimap.instance != null)
             {
-                Minimap.instance.TrackGameObjectOnMinimap(base.gameObject, Color.green, false, true, Minimap.IconStyle.CIRCLE);
+                Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.green, false, true, Minimap.IconStyle.CIRCLE);
             }
         }
         else
         {
             if (PhotonNetwork.isMasterClient)
             {
-                int iD = base.photonView.owner.ID;
+                var iD = photonView.owner.ID;
                 if (FengGameManagerMKII.heroHash.ContainsKey(iD))
                 {
                     FengGameManagerMKII.heroHash[iD] = this;
@@ -4580,33 +4580,33 @@ public class HERO : Photon.MonoBehaviour
                     FengGameManagerMKII.heroHash.Add(iD, this);
                 }
             }
-            GameObject obj2 = GameObject.Find("UI_IN_GAME");
-            this.myNetWorkName = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("UI/LabelNameOverHead"));
-            this.myNetWorkName.name = "LabelNameOverHead";
-            this.myNetWorkName.transform.parent = obj2.GetComponent<UIReferArray>().panels[0].transform;
-            this.myNetWorkName.transform.localScale = new Vector3(14f, 14f, 14f);
-            this.myNetWorkName.GetComponent<UILabel>().text = string.Empty;
-            if (base.photonView.isMine)
+            var obj2 = GameObject.Find("UI_IN_GAME");
+            myNetWorkName = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
+            myNetWorkName.name = "LabelNameOverHead";
+            myNetWorkName.transform.parent = obj2.GetComponent<UIReferArray>().panels[0].transform;
+            myNetWorkName.transform.localScale = new Vector3(14f, 14f, 14f);
+            myNetWorkName.GetComponent<UILabel>().text = string.Empty;
+            if (photonView.isMine)
             {
                 if (Minimap.instance != null)
                 {
-                    Minimap.instance.TrackGameObjectOnMinimap(base.gameObject, Color.green, false, true, Minimap.IconStyle.CIRCLE);
+                    Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.green, false, true, Minimap.IconStyle.CIRCLE);
                 }
-                base.GetComponent<SmoothSyncMovement>().PhotonCamera = true;
-                base.photonView.RPC("SetMyPhotonCamera", PhotonTargets.OthersBuffered, new object[] { PlayerPrefs.GetFloat("cameraDistance") + 0.3f });
+                GetComponent<SmoothSyncMovement>().PhotonCamera = true;
+                photonView.RPC("SetMyPhotonCamera", PhotonTargets.OthersBuffered, new object[] { PlayerPrefs.GetFloat("cameraDistance") + 0.3f });
             }
             else
             {
-                bool flag2 = false;
-                if (base.photonView.owner.customProperties[PhotonPlayerProperty.RCteam] != null)
+                var flag2 = false;
+                if (photonView.owner.customProperties[PhotonPlayerProperty.RCteam] != null)
                 {
-                    switch (RCextensions.returnIntFromObject(base.photonView.owner.customProperties[PhotonPlayerProperty.RCteam]))
+                    switch (RCextensions.returnIntFromObject(photonView.owner.customProperties[PhotonPlayerProperty.RCteam]))
                     {
                         case 1:
                             flag2 = true;
                             if (Minimap.instance != null)
                             {
-                                Minimap.instance.TrackGameObjectOnMinimap(base.gameObject, Color.cyan, false, true, Minimap.IconStyle.CIRCLE);
+                                Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.cyan, false, true, Minimap.IconStyle.CIRCLE);
                             }
                             break;
 
@@ -4614,80 +4614,80 @@ public class HERO : Photon.MonoBehaviour
                             flag2 = true;
                             if (Minimap.instance != null)
                             {
-                                Minimap.instance.TrackGameObjectOnMinimap(base.gameObject, Color.magenta, false, true, Minimap.IconStyle.CIRCLE);
+                                Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.magenta, false, true, Minimap.IconStyle.CIRCLE);
                             }
                             break;
                     }
                 }
-                if (RCextensions.returnIntFromObject(base.photonView.owner.customProperties[PhotonPlayerProperty.team]) == 2)
+                if (RCextensions.returnIntFromObject(photonView.owner.customProperties[PhotonPlayerProperty.team]) == 2)
                 {
-                    this.myNetWorkName.GetComponent<UILabel>().text = "[FF0000]AHSS\n[FFFFFF]";
+                    myNetWorkName.GetComponent<UILabel>().text = "[FF0000]AHSS\n[FFFFFF]";
                     if (!flag2 && (Minimap.instance != null))
                     {
-                        Minimap.instance.TrackGameObjectOnMinimap(base.gameObject, Color.red, false, true, Minimap.IconStyle.CIRCLE);
+                        Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.red, false, true, Minimap.IconStyle.CIRCLE);
                     }
                 }
                 else if (!flag2 && (Minimap.instance != null))
                 {
-                    Minimap.instance.TrackGameObjectOnMinimap(base.gameObject, Color.blue, false, true, Minimap.IconStyle.CIRCLE);
+                    Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.blue, false, true, Minimap.IconStyle.CIRCLE);
                 }
             }
-            string str = RCextensions.returnStringFromObject(base.photonView.owner.customProperties[PhotonPlayerProperty.guildName]);
+            var str = RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.guildName]);
             if (str != string.Empty)
             {
-                UILabel component = this.myNetWorkName.GetComponent<UILabel>();
-                string text = component.text;
-                string[] strArray2 = new string[] { text, "[FFFF00]", str, "\n[FFFFFF]", RCextensions.returnStringFromObject(base.photonView.owner.customProperties[PhotonPlayerProperty.name]) };
+                var component = myNetWorkName.GetComponent<UILabel>();
+                var text = component.text;
+                var strArray2 = new string[] { text, "[FFFF00]", str, "\n[FFFFFF]", RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.name]) };
                 component.text = string.Concat(strArray2);
             }
             else
             {
-                UILabel label2 = this.myNetWorkName.GetComponent<UILabel>();
-                label2.text = label2.text + RCextensions.returnStringFromObject(base.photonView.owner.customProperties[PhotonPlayerProperty.name]);
+                var label2 = myNetWorkName.GetComponent<UILabel>();
+                label2.text = label2.text + RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.name]);
             }
         }
-        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !base.photonView.isMine)
+        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !photonView.isMine)
         {
-            base.gameObject.layer = LayerMask.NameToLayer("NetworkObject");
+            gameObject.layer = LayerMask.NameToLayer("NetworkObject");
             if (IN_GAME_MAIN_CAMERA.dayLight == DayLight.Night)
             {
-                GameObject obj3 = (GameObject)UnityEngine.Object.Instantiate(Resources.Load("flashlight"));
-                obj3.transform.parent = this.baseTransform;
-                obj3.transform.position = this.baseTransform.position + Vector3.up;
+                var obj3 = (GameObject)Instantiate(Resources.Load("flashlight"));
+                obj3.transform.parent = baseTransform;
+                obj3.transform.position = baseTransform.position + Vector3.up;
                 obj3.transform.rotation = Quaternion.Euler(353f, 0f, 0f);
             }
-            this.setup.init();
-            this.setup.myCostume = new HeroCostume();
-            this.setup.myCostume = CostumeConeveter.PhotonDataToHeroCostume2(base.photonView.owner);
-            this.setup.setCharacterComponent();
-            UnityEngine.Object.Destroy(this.checkBoxLeft);
-            UnityEngine.Object.Destroy(this.checkBoxRight);
-            UnityEngine.Object.Destroy(this.leftbladetrail);
-            UnityEngine.Object.Destroy(this.rightbladetrail);
-            UnityEngine.Object.Destroy(this.leftbladetrail2);
-            UnityEngine.Object.Destroy(this.rightbladetrail2);
-            this.hasspawn = true;
+            setup.init();
+            setup.myCostume = new HeroCostume();
+            setup.myCostume = CostumeConeveter.PhotonDataToHeroCostume2(photonView.owner);
+            setup.setCharacterComponent();
+            Destroy(checkBoxLeft);
+            Destroy(checkBoxRight);
+            Destroy(leftbladetrail);
+            Destroy(rightbladetrail);
+            Destroy(leftbladetrail2);
+            Destroy(rightbladetrail2);
+            hasspawn = true;
         }
         else
         {
-            this.currentCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
-            this.inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
-            this.loadskin();
-            this.hasspawn = true;
-            base.StartCoroutine(this.reloadSky());
+            currentCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
+            inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
+            loadskin();
+            hasspawn = true;
+            StartCoroutine(reloadSky());
         }
-        this.bombImmune = false;
+        bombImmune = false;
         if (RCSettings.bombMode == 1)
         {
-            this.bombImmune = true;
-            base.StartCoroutine(this.stopImmunity());
+            bombImmune = true;
+            StartCoroutine(stopImmunity());
         }
     }
 
     public IEnumerator stopImmunity()
     {
         yield return new WaitForSeconds(5f);
-        this.bombImmune = false;
+        bombImmune = false;
     }
 
     private void suicide()
@@ -4695,7 +4695,7 @@ public class HERO : Photon.MonoBehaviour
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
             Settings.Suicide = true;
-            this.netDieLocal((Vector3) (base.rigidbody.velocity * 50f), false, -1, string.Empty, true);
+            netDieLocal(rigidbody.velocity * 50f, false, -1, string.Empty, true);
             Settings.Suicide = false;
             FengGameManagerMKII.instance.needChooseSide = true;
             FengGameManagerMKII.instance.justSuicide = true;
@@ -4704,556 +4704,556 @@ public class HERO : Photon.MonoBehaviour
 
     private void throwBlades()
     {
-        Transform transform = this.setup.part_blade_l.transform;
-        Transform transform2 = this.setup.part_blade_r.transform;
-        GameObject obj2 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position, transform.rotation);
-        GameObject obj3 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position, transform2.rotation);
-        obj2.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        obj3.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-        Vector3 force = (base.transform.forward + ((Vector3) (base.transform.up * 2f))) - base.transform.right;
+        var transform = setup.part_blade_l.transform;
+        var transform2 = setup.part_blade_r.transform;
+        var obj2 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position, transform.rotation);
+        var obj3 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position, transform2.rotation);
+        obj2.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+        obj3.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+        var force = (this.transform.forward + this.transform.up * 2f) - this.transform.right;
         obj2.rigidbody.AddForce(force, ForceMode.Impulse);
-        Vector3 vector2 = (base.transform.forward + ((Vector3) (base.transform.up * 2f))) + base.transform.right;
+        var vector2 = (this.transform.forward + this.transform.up * 2f) + this.transform.right;
         obj3.rigidbody.AddForce(vector2, ForceMode.Impulse);
-        Vector3 torque = new Vector3((float) UnityEngine.Random.Range(-100, 100), (float) UnityEngine.Random.Range(-100, 100), (float) UnityEngine.Random.Range(-100, 100));
+        var torque = new Vector3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100));
         torque.Normalize();
         obj2.rigidbody.AddTorque(torque);
-        torque = new Vector3((float) UnityEngine.Random.Range(-100, 100), (float) UnityEngine.Random.Range(-100, 100), (float) UnityEngine.Random.Range(-100, 100));
+        torque = new Vector3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100));
         torque.Normalize();
         obj3.rigidbody.AddTorque(torque);
-        this.setup.part_blade_l.SetActive(false);
-        this.setup.part_blade_r.SetActive(false);
-        this.currentBladeNum--;
-        if (this.currentBladeNum == 0)
+        setup.part_blade_l.SetActive(false);
+        setup.part_blade_r.SetActive(false);
+        currentBladeNum--;
+        if (currentBladeNum == 0)
         {
-            this.currentBladeSta = 0f;
+            currentBladeSta = 0f;
         }
-        if (this.state == HERO_STATE.Attack)
+        if (state == HERO_STATE.Attack)
         {
-            this.falseAttack();
+            falseAttack();
         }
     }
 
     public void ungrabbed()
     {
-        this.facingDirection = 0f;
-        this.targetRotation = Quaternion.Euler(0f, 0f, 0f);
-        base.transform.parent = null;
-        base.GetComponent<CapsuleCollider>().isTrigger = false;
-        this.state = HERO_STATE.Idle;
+        facingDirection = 0f;
+        targetRotation = Quaternion.Euler(0f, 0f, 0f);
+        transform.parent = null;
+        GetComponent<CapsuleCollider>().isTrigger = false;
+        state = HERO_STATE.Idle;
     }
 
     private void unmounted()
     {
-        this.myHorse.GetComponent<Horse>().unmounted();
-        this.isMounted = false;
+        myHorse.GetComponent<Horse>().unmounted();
+        isMounted = false;
     }
 
     public void update()
     {
         if (!IN_GAME_MAIN_CAMERA.isPausing)
         {
-            if (this.invincible > 0f)
+            if (invincible > 0f)
             {
-                this.invincible -= Time.deltaTime;
+                invincible -= Time.deltaTime;
             }
-            if (!this.hasDied)
+            if (!hasDied)
             {
-                if (this.titanForm && (this.eren_titan != null))
+                if (titanForm && (eren_titan != null))
                 {
-                    this.baseTransform.position = this.eren_titan.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position;
-                    base.gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
+                    baseTransform.position = eren_titan.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position;
+                    gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
                 }
-                else if (this.isCannon && (this.myCannon != null))
+                else if (isCannon && (myCannon != null))
                 {
-                    this.updateCannon();
-                    base.gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
+                    updateCannon();
+                    gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
                 }
-                if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+                if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
                 {
-                    if (this.myCannonRegion != null)
+                    if (myCannonRegion != null)
                     {
                         FengGameManagerMKII.instance.ShowHUDInfoCenter("Press 'Cannon Mount' key to use Cannon.");
                         if (FengGameManagerMKII.inputRC.isInputCannonDown(InputCodeRC.cannonMount))
                         {
-                            this.myCannonRegion.photonView.RPC("RequestControlRPC", PhotonTargets.MasterClient, new object[] { base.photonView.viewID });
+                            myCannonRegion.photonView.RPC("RequestControlRPC", PhotonTargets.MasterClient, new object[] { photonView.viewID });
                         }
                     }
-                    if ((this.state == HERO_STATE.Grab) && !this.useGun)
+                    if ((state == HERO_STATE.Grab) && !useGun)
                     {
-                        if (this.skillId == "jean")
+                        if (skillId == "jean")
                         {
-                            if (((this.state != HERO_STATE.Attack) && (this.inputManager.isInputDown[InputCode.attack0] || this.inputManager.isInputDown[InputCode.attack1])) && ((this.escapeTimes > 0) && !this.baseAnimation.IsPlaying("grabbed_jean")))
+                            if (((state != HERO_STATE.Attack) && (inputManager.isInputDown[InputCode.attack0] || inputManager.isInputDown[InputCode.attack1])) && ((escapeTimes > 0) && !baseAnimation.IsPlaying("grabbed_jean")))
                             {
-                                this.playAnimation("grabbed_jean");
-                                this.baseAnimation["grabbed_jean"].time = 0f;
-                                this.escapeTimes--;
+                                playAnimation("grabbed_jean");
+                                baseAnimation["grabbed_jean"].time = 0f;
+                                escapeTimes--;
                             }
-                            if ((this.baseAnimation.IsPlaying("grabbed_jean") && (this.baseAnimation["grabbed_jean"].normalizedTime > 0.64f)) && (this.titanWhoGrabMe.GetComponent<TITAN>() != null))
+                            if ((baseAnimation.IsPlaying("grabbed_jean") && (baseAnimation["grabbed_jean"].normalizedTime > 0.64f)) && (titanWhoGrabMe.GetComponent<TITAN>() != null))
                             {
-                                this.ungrabbed();
-                                this.baseRigidBody.velocity = (Vector3) (Vector3.up * 30f);
+                                ungrabbed();
+                                baseRigidBody.velocity = Vector3.up * 30f;
                                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                                 {
-                                    this.titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
+                                    titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
                                 }
                                 else
                                 {
-                                    base.photonView.RPC("netSetIsGrabbedFalse", PhotonTargets.All, new object[0]);
+                                    photonView.RPC("netSetIsGrabbedFalse", PhotonTargets.All, new object[0]);
                                     if (PhotonNetwork.isMasterClient)
                                     {
-                                        this.titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
+                                        titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
                                     }
                                     else
                                     {
-                                        PhotonView.Find(this.titanWhoGrabMeID).RPC("grabbedTargetEscape", PhotonTargets.MasterClient, new object[0]);
+                                        PhotonView.Find(titanWhoGrabMeID).RPC("grabbedTargetEscape", PhotonTargets.MasterClient, new object[0]);
                                     }
                                 }
                             }
                         }
-                        else if (this.skillId == "eren")
+                        else if (skillId == "eren")
                         {
-                            this.showSkillCD();
+                            showSkillCD();
                             if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) || ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) && !IN_GAME_MAIN_CAMERA.isPausing))
                             {
-                                this.calcSkillCD();
-                                this.calcFlareCD();
+                                calcSkillCD();
+                                calcFlareCD();
                             }
-                            if (this.inputManager.isInputDown[InputCode.attack1])
+                            if (inputManager.isInputDown[InputCode.attack1])
                             {
-                                bool flag2 = false;
-                                if ((this.skillCDDuration > 0f) || flag2)
+                                var flag2 = false;
+                                if ((skillCDDuration > 0f) || flag2)
                                 {
                                     flag2 = true;
                                 }
                                 else
                                 {
-                                    this.skillCDDuration = this.skillCDLast;
-                                    if ((this.skillId == "eren") && (this.titanWhoGrabMe.GetComponent<TITAN>() != null))
+                                    skillCDDuration = skillCDLast;
+                                    if ((skillId == "eren") && (titanWhoGrabMe.GetComponent<TITAN>() != null))
                                     {
-                                        this.ungrabbed();
+                                        ungrabbed();
                                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                                         {
-                                            this.titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
+                                            titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
                                         }
                                         else
                                         {
-                                            base.photonView.RPC("netSetIsGrabbedFalse", PhotonTargets.All, new object[0]);
+                                            photonView.RPC("netSetIsGrabbedFalse", PhotonTargets.All, new object[0]);
                                             if (PhotonNetwork.isMasterClient)
                                             {
-                                                this.titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
+                                                titanWhoGrabMe.GetComponent<TITAN>().grabbedTargetEscape();
                                             }
                                             else
                                             {
-                                                PhotonView.Find(this.titanWhoGrabMeID).photonView.RPC("grabbedTargetEscape", PhotonTargets.MasterClient, new object[0]);
+                                                PhotonView.Find(titanWhoGrabMeID).photonView.RPC("grabbedTargetEscape", PhotonTargets.MasterClient, new object[0]);
                                             }
                                         }
-                                        this.erenTransform();
+                                        erenTransform();
                                     }
                                 }
                             }
                         }
                     }
-                    else if (!this.titanForm && !this.isCannon)
+                    else if (!titanForm && !isCannon)
                     {
-                        this.bufferUpdate();
-                        this.updateExt();
-                        if (!this.grounded && (this.state != HERO_STATE.AirDodge))
+                        bufferUpdate();
+                        updateExt();
+                        if (!grounded && (state != HERO_STATE.AirDodge))
                         {
                             if (((int) FengGameManagerMKII.settings[0xb5]) == 1)
                             {
-                                this.checkDashRebind();
+                                checkDashRebind();
                             }
                             else
                             {
-                                this.checkDashDoubleTap();
+                                checkDashDoubleTap();
                             }
-                            if (this.dashD)
+                            if (dashD)
                             {
-                                this.dashD = false;
-                                this.dash(0f, -1f);
+                                dashD = false;
+                                dash(0f, -1f);
                                 return;
                             }
-                            if (this.dashU)
+                            if (dashU)
                             {
-                                this.dashU = false;
-                                this.dash(0f, 1f);
+                                dashU = false;
+                                dash(0f, 1f);
                                 return;
                             }
-                            if (this.dashL)
+                            if (dashL)
                             {
-                                this.dashL = false;
-                                this.dash(-1f, 0f);
+                                dashL = false;
+                                dash(-1f, 0f);
                                 return;
                             }
-                            if (this.dashR)
+                            if (dashR)
                             {
-                                this.dashR = false;
-                                this.dash(1f, 0f);
-                                return;
-                            }
-                        }
-                        if (this.grounded && ((this.state == HERO_STATE.Idle) || (this.state == HERO_STATE.Slide)))
-                        {
-                            if (!((!this.inputManager.isInputDown[InputCode.jump] || this.baseAnimation.IsPlaying("jump")) || this.baseAnimation.IsPlaying("horse_geton")))
-                            {
-                                this.idle();
-                                this.crossFade("jump", 0.1f);
-                                this.sparks.enableEmission = false;
-                            }
-                            if (((FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount) && !this.baseAnimation.IsPlaying("jump")) && !this.baseAnimation.IsPlaying("horse_geton")) && (((this.myHorse != null) && !this.isMounted) && (Vector3.Distance(this.myHorse.transform.position, base.transform.position) < 15f)))
-                            {
-                                this.getOnHorse();
-                            }
-                            if (!((!this.inputManager.isInputDown[InputCode.dodge] || this.baseAnimation.IsPlaying("jump")) || this.baseAnimation.IsPlaying("horse_geton")))
-                            {
-                                this.dodge(false);
+                                dashR = false;
+                                dash(1f, 0f);
                                 return;
                             }
                         }
-                        if (this.state == HERO_STATE.Idle)
+                        if (grounded && ((state == HERO_STATE.Idle) || (state == HERO_STATE.Slide)))
                         {
-                            if (this.inputManager.isInputDown[InputCode.flare1])
+                            if (!((!inputManager.isInputDown[InputCode.jump] || baseAnimation.IsPlaying("jump")) || baseAnimation.IsPlaying("horse_geton")))
                             {
-                                this.shootFlare(1);
+                                idle();
+                                crossFade("jump", 0.1f);
+                                sparks.enableEmission = false;
                             }
-                            if (this.inputManager.isInputDown[InputCode.flare2])
+                            if (((FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount) && !baseAnimation.IsPlaying("jump")) && !baseAnimation.IsPlaying("horse_geton")) && (((myHorse != null) && !isMounted) && (Vector3.Distance(myHorse.transform.position, transform.position) < 15f)))
                             {
-                                this.shootFlare(2);
+                                getOnHorse();
                             }
-                            if (this.inputManager.isInputDown[InputCode.flare3])
+                            if (!((!inputManager.isInputDown[InputCode.dodge] || baseAnimation.IsPlaying("jump")) || baseAnimation.IsPlaying("horse_geton")))
                             {
-                                this.shootFlare(3);
-                            }
-                            if (this.inputManager.isInputDown[InputCode.restart])
-                            {
-                                this.suicide();
-                            }
-                            if (((this.myHorse != null) && this.isMounted) && FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount))
-                            {
-                                this.getOffHorse();
-                            }
-                            if (((base.animation.IsPlaying(this.standAnimation) || !this.grounded) && this.inputManager.isInputDown[InputCode.reload]) && ((!this.useGun || (RCSettings.ahssReload != 1)) || this.grounded))
-                            {
-                                this.changeBlade();
+                                dodge(false);
                                 return;
                             }
-                            if (this.baseAnimation.IsPlaying(this.standAnimation) && this.inputManager.isInputDown[InputCode.salute])
+                        }
+                        if (state == HERO_STATE.Idle)
+                        {
+                            if (inputManager.isInputDown[InputCode.flare1])
                             {
-                                this.salute();
+                                shootFlare(1);
+                            }
+                            if (inputManager.isInputDown[InputCode.flare2])
+                            {
+                                shootFlare(2);
+                            }
+                            if (inputManager.isInputDown[InputCode.flare3])
+                            {
+                                shootFlare(3);
+                            }
+                            if (inputManager.isInputDown[InputCode.restart])
+                            {
+                                suicide();
+                            }
+                            if (((myHorse != null) && isMounted) && FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount))
+                            {
+                                getOffHorse();
+                            }
+                            if (((animation.IsPlaying(standAnimation) || !grounded) && inputManager.isInputDown[InputCode.reload]) && ((!useGun || (RCSettings.ahssReload != 1)) || grounded))
+                            {
+                                changeBlade();
                                 return;
                             }
-                            if ((!this.isMounted && (this.inputManager.isInputDown[InputCode.attack0] || this.inputManager.isInputDown[InputCode.attack1])) && !this.useGun)
+                            if (baseAnimation.IsPlaying(standAnimation) && inputManager.isInputDown[InputCode.salute])
                             {
-                                bool flag3 = false;
-                                if (this.inputManager.isInputDown[InputCode.attack1])
+                                salute();
+                                return;
+                            }
+                            if ((!isMounted && (inputManager.isInputDown[InputCode.attack0] || inputManager.isInputDown[InputCode.attack1])) && !useGun)
+                            {
+                                var flag3 = false;
+                                if (inputManager.isInputDown[InputCode.attack1])
                                 {
-                                    if ((this.skillCDDuration > 0f) || flag3)
+                                    if ((skillCDDuration > 0f) || flag3)
                                     {
                                         flag3 = true;
                                     }
                                     else
                                     {
-                                        this.skillCDDuration = this.skillCDLast;
-                                        if (this.skillId == "eren")
+                                        skillCDDuration = skillCDLast;
+                                        if (skillId == "eren")
                                         {
-                                            this.erenTransform();
+                                            erenTransform();
                                             return;
                                         }
-                                        if (this.skillId == "marco")
+                                        if (skillId == "marco")
                                         {
-                                            if (this.IsGrounded())
+                                            if (IsGrounded())
                                             {
-                                                this.attackAnimation = (UnityEngine.Random.Range(0, 2) != 0) ? "special_marco_1" : "special_marco_0";
-                                                this.playAnimation(this.attackAnimation);
+                                                attackAnimation = (UnityEngine.Random.Range(0, 2) != 0) ? "special_marco_1" : "special_marco_0";
+                                                playAnimation(attackAnimation);
                                             }
                                             else
                                             {
                                                 flag3 = true;
-                                                this.skillCDDuration = 0f;
+                                                skillCDDuration = 0f;
                                             }
                                         }
-                                        else if (this.skillId == "armin")
+                                        else if (skillId == "armin")
                                         {
-                                            if (this.IsGrounded())
+                                            if (IsGrounded())
                                             {
-                                                this.attackAnimation = "special_armin";
-                                                this.playAnimation("special_armin");
+                                                attackAnimation = "special_armin";
+                                                playAnimation("special_armin");
                                             }
                                             else
                                             {
                                                 flag3 = true;
-                                                this.skillCDDuration = 0f;
+                                                skillCDDuration = 0f;
                                             }
                                         }
-                                        else if (this.skillId == "sasha")
+                                        else if (skillId == "sasha")
                                         {
-                                            if (this.IsGrounded())
+                                            if (IsGrounded())
                                             {
-                                                this.attackAnimation = "special_sasha";
-                                                this.playAnimation("special_sasha");
-                                                this.currentBuff = BUFF.SpeedUp;
-                                                this.buffTime = 10f;
+                                                attackAnimation = "special_sasha";
+                                                playAnimation("special_sasha");
+                                                currentBuff = BUFF.SpeedUp;
+                                                buffTime = 10f;
                                             }
                                             else
                                             {
                                                 flag3 = true;
-                                                this.skillCDDuration = 0f;
+                                                skillCDDuration = 0f;
                                             }
                                         }
-                                        else if (this.skillId == "mikasa")
+                                        else if (skillId == "mikasa")
                                         {
-                                            this.attackAnimation = "attack3_1";
-                                            this.playAnimation("attack3_1");
-                                            this.baseRigidBody.velocity = (Vector3) (Vector3.up * 10f);
+                                            attackAnimation = "attack3_1";
+                                            playAnimation("attack3_1");
+                                            baseRigidBody.velocity = Vector3.up * 10f;
                                         }
-                                        else if (this.skillId == "levi")
+                                        else if (skillId == "levi")
                                         {
                                             RaycastHit hit;
-                                            this.attackAnimation = "attack5";
-                                            this.playAnimation("attack5");
-                                            this.baseRigidBody.velocity += (Vector3) (Vector3.up * 5f);
-                                            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                            LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                            LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+                                            attackAnimation = "attack5";
+                                            playAnimation("attack5");
+                                            baseRigidBody.velocity += Vector3.up * 5f;
+                                            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                            LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+                                            LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
                                             LayerMask mask3 = mask2 | mask;
                                             if (Physics.Raycast(ray, out hit, 1E+07f, mask3.value))
                                             {
-                                                if (this.bulletRight != null)
+                                                if (bulletRight != null)
                                                 {
-                                                    this.bulletRight.GetComponent<Bullet>().disable();
-                                                    this.releaseIfIHookSb();
+                                                    bulletRight.GetComponent<Bullet>().disable();
+                                                    releaseIfIHookSb();
                                                 }
-                                                this.dashDirection = hit.point - this.baseTransform.position;
-                                                this.launchRightRope(hit, true, 1);
-                                                this.rope.Play();
+                                                dashDirection = hit.point - baseTransform.position;
+                                                launchRightRope(hit, true, 1);
+                                                rope.Play();
                                             }
-                                            this.facingDirection = Mathf.Atan2(this.dashDirection.x, this.dashDirection.z) * 57.29578f;
-                                            this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                                            this.attackLoop = 3;
+                                            facingDirection = Mathf.Atan2(dashDirection.x, dashDirection.z) * 57.29578f;
+                                            targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
+                                            attackLoop = 3;
                                         }
-                                        else if (this.skillId == "petra")
+                                        else if (skillId == "petra")
                                         {
                                             RaycastHit hit2;
-                                            this.attackAnimation = "special_petra";
-                                            this.playAnimation("special_petra");
-                                            this.baseRigidBody.velocity += (Vector3) (Vector3.up * 5f);
-                                            Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                            LayerMask mask4 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                            LayerMask mask5 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+                                            attackAnimation = "special_petra";
+                                            playAnimation("special_petra");
+                                            baseRigidBody.velocity += Vector3.up * 5f;
+                                            var ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                            LayerMask mask4 = 1 << LayerMask.NameToLayer("Ground");
+                                            LayerMask mask5 = 1 << LayerMask.NameToLayer("EnemyBox");
                                             LayerMask mask6 = mask5 | mask4;
                                             if (Physics.Raycast(ray2, out hit2, 1E+07f, mask6.value))
                                             {
-                                                if (this.bulletRight != null)
+                                                if (bulletRight != null)
                                                 {
-                                                    this.bulletRight.GetComponent<Bullet>().disable();
-                                                    this.releaseIfIHookSb();
+                                                    bulletRight.GetComponent<Bullet>().disable();
+                                                    releaseIfIHookSb();
                                                 }
-                                                if (this.bulletLeft != null)
+                                                if (bulletLeft != null)
                                                 {
-                                                    this.bulletLeft.GetComponent<Bullet>().disable();
-                                                    this.releaseIfIHookSb();
+                                                    bulletLeft.GetComponent<Bullet>().disable();
+                                                    releaseIfIHookSb();
                                                 }
-                                                this.dashDirection = hit2.point - this.baseTransform.position;
-                                                this.launchLeftRope(hit2, true, 0);
-                                                this.launchRightRope(hit2, true, 0);
-                                                this.rope.Play();
+                                                dashDirection = hit2.point - baseTransform.position;
+                                                launchLeftRope(hit2, true, 0);
+                                                launchRightRope(hit2, true, 0);
+                                                rope.Play();
                                             }
-                                            this.facingDirection = Mathf.Atan2(this.dashDirection.x, this.dashDirection.z) * 57.29578f;
-                                            this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
-                                            this.attackLoop = 3;
+                                            facingDirection = Mathf.Atan2(dashDirection.x, dashDirection.z) * 57.29578f;
+                                            targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
+                                            attackLoop = 3;
                                         }
                                         else
                                         {
-                                            if (this.needLean)
+                                            if (needLean)
                                             {
-                                                if (this.leanLeft)
+                                                if (leanLeft)
                                                 {
-                                                    this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
+                                                    attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
                                                 }
                                                 else
                                                 {
-                                                    this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
+                                                    attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
                                                 }
                                             }
                                             else
                                             {
-                                                this.attackAnimation = "attack1";
+                                                attackAnimation = "attack1";
                                             }
-                                            this.playAnimation(this.attackAnimation);
+                                            playAnimation(attackAnimation);
                                         }
                                     }
                                 }
-                                else if (this.inputManager.isInputDown[InputCode.attack0])
+                                else if (inputManager.isInputDown[InputCode.attack0])
                                 {
-                                    if (this.needLean)
+                                    if (needLean)
                                     {
-                                        if (this.inputManager.isInput[InputCode.left])
+                                        if (inputManager.isInput[InputCode.left])
                                         {
-                                            this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
+                                            attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
                                         }
-                                        else if (this.inputManager.isInput[InputCode.right])
+                                        else if (inputManager.isInput[InputCode.right])
                                         {
-                                            this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
+                                            attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
                                         }
-                                        else if (this.leanLeft)
+                                        else if (leanLeft)
                                         {
-                                            this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
+                                            attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_l1" : "attack1_hook_l2";
                                         }
                                         else
                                         {
-                                            this.attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
+                                            attackAnimation = (UnityEngine.Random.Range(0, 100) >= 50) ? "attack1_hook_r1" : "attack1_hook_r2";
                                         }
                                     }
-                                    else if (this.inputManager.isInput[InputCode.left])
+                                    else if (inputManager.isInput[InputCode.left])
                                     {
-                                        this.attackAnimation = "attack2";
+                                        attackAnimation = "attack2";
                                     }
-                                    else if (this.inputManager.isInput[InputCode.right])
+                                    else if (inputManager.isInput[InputCode.right])
                                     {
-                                        this.attackAnimation = "attack1";
+                                        attackAnimation = "attack1";
                                     }
-                                    else if (this.lastHook != null)
+                                    else if (lastHook != null)
                                     {
-                                        if (this.lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck") != null)
+                                        if (lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck") != null)
                                         {
-                                            this.attackAccordingToTarget(this.lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck"));
+                                            attackAccordingToTarget(lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck"));
                                         }
                                         else
                                         {
                                             flag3 = true;
                                         }
                                     }
-                                    else if ((this.bulletLeft != null) && (this.bulletLeft.transform.parent != null))
+                                    else if ((bulletLeft != null) && (bulletLeft.transform.parent != null))
                                     {
-                                        Transform a = this.bulletLeft.transform.parent.transform.root.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
+                                        var a = bulletLeft.transform.parent.transform.root.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                         if (a != null)
                                         {
-                                            this.attackAccordingToTarget(a);
+                                            attackAccordingToTarget(a);
                                         }
                                         else
                                         {
-                                            this.attackAccordingToMouse();
+                                            attackAccordingToMouse();
                                         }
                                     }
-                                    else if ((this.bulletRight != null) && (this.bulletRight.transform.parent != null))
+                                    else if ((bulletRight != null) && (bulletRight.transform.parent != null))
                                     {
-                                        Transform transform2 = this.bulletRight.transform.parent.transform.root.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
+                                        var transform2 = bulletRight.transform.parent.transform.root.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                         if (transform2 != null)
                                         {
-                                            this.attackAccordingToTarget(transform2);
+                                            attackAccordingToTarget(transform2);
                                         }
                                         else
                                         {
-                                            this.attackAccordingToMouse();
+                                            attackAccordingToMouse();
                                         }
                                     }
                                     else
                                     {
-                                        GameObject obj2 = this.findNearestTitan();
+                                        var obj2 = findNearestTitan();
                                         if (obj2 != null)
                                         {
-                                            Transform transform3 = obj2.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
+                                            var transform3 = obj2.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                             if (transform3 != null)
                                             {
-                                                this.attackAccordingToTarget(transform3);
+                                                attackAccordingToTarget(transform3);
                                             }
                                             else
                                             {
-                                                this.attackAccordingToMouse();
+                                                attackAccordingToMouse();
                                             }
                                         }
                                         else
                                         {
-                                            this.attackAccordingToMouse();
+                                            attackAccordingToMouse();
                                         }
                                     }
                                 }
                                 if (!flag3)
                                 {
-                                    this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
-                                    this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                    if (this.grounded)
+                                    checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
+                                    checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
+                                    if (grounded)
                                     {
-                                        this.baseRigidBody.AddForce((Vector3) (base.gameObject.transform.forward * 200f));
+                                        baseRigidBody.AddForce(gameObject.transform.forward * 200f);
                                     }
-                                    this.playAnimation(this.attackAnimation);
-                                    this.baseAnimation[this.attackAnimation].time = 0f;
-                                    this.buttonAttackRelease = false;
-                                    this.state = HERO_STATE.Attack;
-                                    if ((this.grounded || (this.attackAnimation == "attack3_1")) || ((this.attackAnimation == "attack5") || (this.attackAnimation == "special_petra")))
+                                    playAnimation(attackAnimation);
+                                    baseAnimation[attackAnimation].time = 0f;
+                                    buttonAttackRelease = false;
+                                    state = HERO_STATE.Attack;
+                                    if ((grounded || (attackAnimation == "attack3_1")) || ((attackAnimation == "attack5") || (attackAnimation == "special_petra")))
                                     {
-                                        this.attackReleased = true;
-                                        this.buttonAttackRelease = true;
+                                        attackReleased = true;
+                                        buttonAttackRelease = true;
                                     }
                                     else
                                     {
-                                        this.attackReleased = false;
+                                        attackReleased = false;
                                     }
-                                    this.sparks.enableEmission = false;
+                                    sparks.enableEmission = false;
                                 }
                             }
-                            if (this.useGun)
+                            if (useGun)
                             {
-                                if (this.inputManager.isInput[InputCode.attack1])
+                                if (inputManager.isInput[InputCode.attack1])
                                 {
-                                    this.leftArmAim = true;
-                                    this.rightArmAim = true;
+                                    leftArmAim = true;
+                                    rightArmAim = true;
                                 }
-                                else if (this.inputManager.isInput[InputCode.attack0])
+                                else if (inputManager.isInput[InputCode.attack0])
                                 {
-                                    if (this.leftGunHasBullet)
+                                    if (leftGunHasBullet)
                                     {
-                                        this.leftArmAim = true;
-                                        this.rightArmAim = false;
+                                        leftArmAim = true;
+                                        rightArmAim = false;
                                     }
                                     else
                                     {
-                                        this.leftArmAim = false;
-                                        if (this.rightGunHasBullet)
+                                        leftArmAim = false;
+                                        if (rightGunHasBullet)
                                         {
-                                            this.rightArmAim = true;
+                                            rightArmAim = true;
                                         }
                                         else
                                         {
-                                            this.rightArmAim = false;
+                                            rightArmAim = false;
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    this.leftArmAim = false;
-                                    this.rightArmAim = false;
+                                    leftArmAim = false;
+                                    rightArmAim = false;
                                 }
-                                if (this.leftArmAim || this.rightArmAim)
+                                if (leftArmAim || rightArmAim)
                                 {
                                     RaycastHit hit3;
-                                    Ray ray3 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                    LayerMask mask7 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                    LayerMask mask8 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+                                    var ray3 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                    LayerMask mask7 = 1 << LayerMask.NameToLayer("Ground");
+                                    LayerMask mask8 = 1 << LayerMask.NameToLayer("EnemyBox");
                                     LayerMask mask9 = mask8 | mask7;
                                     if (Physics.Raycast(ray3, out hit3, 1E+07f, mask9.value))
                                     {
-                                        this.gunTarget = hit3.point;
+                                        gunTarget = hit3.point;
                                     }
                                 }
-                                bool flag4 = false;
-                                bool flag5 = false;
-                                bool flag6 = false;
-                                if (this.inputManager.isInputUp[InputCode.attack1] && (this.skillId != "bomb"))
+                                var flag4 = false;
+                                var flag5 = false;
+                                var flag6 = false;
+                                if (inputManager.isInputUp[InputCode.attack1] && (skillId != "bomb"))
                                 {
-                                    if (this.leftGunHasBullet && this.rightGunHasBullet)
+                                    if (leftGunHasBullet && rightGunHasBullet)
                                     {
-                                        if (this.grounded)
+                                        if (grounded)
                                         {
-                                            this.attackAnimation = "AHSS_shoot_both";
+                                            attackAnimation = "AHSS_shoot_both";
                                         }
                                         else
                                         {
-                                            this.attackAnimation = "AHSS_shoot_both_air";
+                                            attackAnimation = "AHSS_shoot_both_air";
                                         }
                                         flag4 = true;
                                     }
-                                    else if (!(this.leftGunHasBullet || this.rightGunHasBullet))
+                                    else if (!(leftGunHasBullet || rightGunHasBullet))
                                     {
                                         flag5 = true;
                                     }
@@ -5262,50 +5262,50 @@ public class HERO : Photon.MonoBehaviour
                                         flag6 = true;
                                     }
                                 }
-                                if (flag6 || this.inputManager.isInputUp[InputCode.attack0])
+                                if (flag6 || inputManager.isInputUp[InputCode.attack0])
                                 {
-                                    if (this.grounded)
+                                    if (grounded)
                                     {
-                                        if (this.leftGunHasBullet && this.rightGunHasBullet)
+                                        if (leftGunHasBullet && rightGunHasBullet)
                                         {
-                                            if (this.isLeftHandHooked)
+                                            if (isLeftHandHooked)
                                             {
-                                                this.attackAnimation = "AHSS_shoot_r";
+                                                attackAnimation = "AHSS_shoot_r";
                                             }
                                             else
                                             {
-                                                this.attackAnimation = "AHSS_shoot_l";
+                                                attackAnimation = "AHSS_shoot_l";
                                             }
                                         }
-                                        else if (this.leftGunHasBullet)
+                                        else if (leftGunHasBullet)
                                         {
-                                            this.attackAnimation = "AHSS_shoot_l";
+                                            attackAnimation = "AHSS_shoot_l";
                                         }
-                                        else if (this.rightGunHasBullet)
+                                        else if (rightGunHasBullet)
                                         {
-                                            this.attackAnimation = "AHSS_shoot_r";
+                                            attackAnimation = "AHSS_shoot_r";
                                         }
                                     }
-                                    else if (this.leftGunHasBullet && this.rightGunHasBullet)
+                                    else if (leftGunHasBullet && rightGunHasBullet)
                                     {
-                                        if (this.isLeftHandHooked)
+                                        if (isLeftHandHooked)
                                         {
-                                            this.attackAnimation = "AHSS_shoot_r_air";
+                                            attackAnimation = "AHSS_shoot_r_air";
                                         }
                                         else
                                         {
-                                            this.attackAnimation = "AHSS_shoot_l_air";
+                                            attackAnimation = "AHSS_shoot_l_air";
                                         }
                                     }
-                                    else if (this.leftGunHasBullet)
+                                    else if (leftGunHasBullet)
                                     {
-                                        this.attackAnimation = "AHSS_shoot_l_air";
+                                        attackAnimation = "AHSS_shoot_l_air";
                                     }
-                                    else if (this.rightGunHasBullet)
+                                    else if (rightGunHasBullet)
                                     {
-                                        this.attackAnimation = "AHSS_shoot_r_air";
+                                        attackAnimation = "AHSS_shoot_r_air";
                                     }
-                                    if (this.leftGunHasBullet || this.rightGunHasBullet)
+                                    if (leftGunHasBullet || rightGunHasBullet)
                                     {
                                         flag4 = true;
                                     }
@@ -5316,107 +5316,107 @@ public class HERO : Photon.MonoBehaviour
                                 }
                                 if (flag4)
                                 {
-                                    this.state = HERO_STATE.Attack;
-                                    this.crossFade(this.attackAnimation, 0.05f);
-                                    this.gunDummy.transform.position = this.baseTransform.position;
-                                    this.gunDummy.transform.rotation = this.baseTransform.rotation;
-                                    this.gunDummy.transform.LookAt(this.gunTarget);
-                                    this.attackReleased = false;
-                                    this.facingDirection = this.gunDummy.transform.rotation.eulerAngles.y;
-                                    this.targetRotation = Quaternion.Euler(0f, this.facingDirection, 0f);
+                                    state = HERO_STATE.Attack;
+                                    crossFade(attackAnimation, 0.05f);
+                                    gunDummy.transform.position = baseTransform.position;
+                                    gunDummy.transform.rotation = baseTransform.rotation;
+                                    gunDummy.transform.LookAt(gunTarget);
+                                    attackReleased = false;
+                                    facingDirection = gunDummy.transform.rotation.eulerAngles.y;
+                                    targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
                                 }
-                                else if (flag5 && (this.grounded || ((LevelInfo.getInfo(FengGameManagerMKII.level).type != GAMEMODE.PVP_AHSS) && (RCSettings.ahssReload == 0))))
+                                else if (flag5 && (grounded || ((LevelInfo.getInfo(FengGameManagerMKII.level).type != GAMEMODE.PVP_AHSS) && (RCSettings.ahssReload == 0))))
                                 {
-                                    this.changeBlade();
+                                    changeBlade();
                                 }
                             }
                         }
-                        else if (this.state == HERO_STATE.Attack)
+                        else if (state == HERO_STATE.Attack)
                         {
-                            if (!this.useGun)
+                            if (!useGun)
                             {
-                                if (!this.inputManager.isInput[InputCode.attack0])
+                                if (!inputManager.isInput[InputCode.attack0])
                                 {
-                                    this.buttonAttackRelease = true;
+                                    buttonAttackRelease = true;
                                 }
-                                if (!this.attackReleased)
+                                if (!attackReleased)
                                 {
-                                    if (this.buttonAttackRelease)
+                                    if (buttonAttackRelease)
                                     {
-                                        this.continueAnimation();
-                                        this.attackReleased = true;
+                                        continueAnimation();
+                                        attackReleased = true;
                                     }
-                                    else if (this.baseAnimation[this.attackAnimation].normalizedTime >= 0.32f)
+                                    else if (baseAnimation[attackAnimation].normalizedTime >= 0.32f)
                                     {
-                                        this.pauseAnimation();
+                                        pauseAnimation();
                                     }
                                 }
-                                if ((this.attackAnimation == "attack3_1") && (this.currentBladeSta > 0f))
+                                if ((attackAnimation == "attack3_1") && (currentBladeSta > 0f))
                                 {
-                                    if (this.baseAnimation[this.attackAnimation].normalizedTime >= 0.8f)
+                                    if (baseAnimation[attackAnimation].normalizedTime >= 0.8f)
                                     {
-                                        if (!this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
+                                        if (!checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
                                         {
-                                            this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
+                                            checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
                                             if (Settings.BladeTrails == 1)
                                             {
-                                                this.leftbladetrail2.Activate();
-                                                this.rightbladetrail2.Activate();
+                                                leftbladetrail2.Activate();
+                                                rightbladetrail2.Activate();
                                                 if (Settings.BladeTrailsQuality == 1)
                                                 {
-                                                    this.leftbladetrail.Activate();
-                                                    this.rightbladetrail.Activate();
+                                                    leftbladetrail.Activate();
+                                                    rightbladetrail.Activate();
                                                 }
                                             }
-                                            this.baseRigidBody.velocity = (Vector3)(-Vector3.up * 30f);
+                                            baseRigidBody.velocity = -Vector3.up * 30f;
                                         }
-                                        if (!this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me)
+                                        if (!checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me)
                                         {
-                                            this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = true;
-                                            this.slash.Play();
+                                            checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = true;
+                                            slash.Play();
                                         }
                                     }
-                                    else if (this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
+                                    else if (checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
                                     {
-                                        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
-                                        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
-                                        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                        this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                        this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                        this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
+                                        checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
+                                        checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
+                                        checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
+                                        leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                     }
                                 }
                                 else
                                 {
                                     float num;
                                     float num2;
-                                    if (this.currentBladeSta == 0f)
+                                    if (currentBladeSta == 0f)
                                     {
                                         num2 = num = -1f;
                                     }
-                                    else if (this.attackAnimation == "attack5")
+                                    else if (attackAnimation == "attack5")
                                     {
                                         num2 = 0.35f;
                                         num = 0.5f;
                                     }
-                                    else if (this.attackAnimation == "special_petra")
+                                    else if (attackAnimation == "special_petra")
                                     {
                                         num2 = 0.35f;
                                         num = 0.48f;
                                     }
-                                    else if (this.attackAnimation == "special_armin")
+                                    else if (attackAnimation == "special_armin")
                                     {
                                         num2 = 0.25f;
                                         num = 0.35f;
                                     }
-                                    else if (this.attackAnimation == "attack4")
+                                    else if (attackAnimation == "attack4")
                                     {
                                         num2 = 0.6f;
                                         num = 0.9f;
                                     }
-                                    else if (this.attackAnimation == "special_sasha")
+                                    else if (attackAnimation == "special_sasha")
                                     {
                                         num2 = num = -1f;
                                     }
@@ -5425,457 +5425,457 @@ public class HERO : Photon.MonoBehaviour
                                         num2 = 0.5f;
                                         num = 0.85f;
                                     }
-                                    if ((this.baseAnimation[this.attackAnimation].normalizedTime > num2) && (this.baseAnimation[this.attackAnimation].normalizedTime < num))
+                                    if ((baseAnimation[attackAnimation].normalizedTime > num2) && (baseAnimation[attackAnimation].normalizedTime < num))
                                     {
-                                        if (!this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
+                                        if (!checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
                                         {
-                                            this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
-                                            this.slash.Play();
+                                            checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
+                                            slash.Play();
                                             if (Settings.BladeTrails == 1)
                                             {
-                                                this.leftbladetrail2.Activate();
-                                                this.rightbladetrail2.Activate();
+                                                leftbladetrail2.Activate();
+                                                rightbladetrail2.Activate();
                                                 if (Settings.BladeTrailsQuality == 1)
                                                 {
-                                                    this.leftbladetrail.Activate();
-                                                    this.rightbladetrail.Activate();
+                                                    leftbladetrail.Activate();
+                                                    rightbladetrail.Activate();
                                                 }
                                             }
                                         }
-                                        if (!this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me)
+                                        if (!checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me)
                                         {
-                                            this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = true;
+                                            checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = true;
                                         }
                                     }
-                                    else if (this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
+                                    else if (checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
                                     {
-                                        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
-                                        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
-                                        this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
-                                        this.leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                        this.rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
+                                        checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
+                                        checkBoxLeft.GetComponent<TriggerColliderWeapon>().clearHits();
+                                        checkBoxRight.GetComponent<TriggerColliderWeapon>().clearHits();
+                                        leftbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                        rightbladetrail2.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                         if (Settings.BladeTrailsQuality == 1)
                                         {
-                                            this.leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
-                                            this.rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                            leftbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
+                                            rightbladetrail.StopSmoothly(Convert.ToSingle(Settings.BladeTrailsFadeTime));
                                         }
                                     }
-                                    if ((this.attackLoop > 0) && (this.baseAnimation[this.attackAnimation].normalizedTime > num))
+                                    if ((attackLoop > 0) && (baseAnimation[attackAnimation].normalizedTime > num))
                                     {
-                                        this.attackLoop--;
-                                        this.playAnimationAt(this.attackAnimation, num2);
+                                        attackLoop--;
+                                        playAnimationAt(attackAnimation, num2);
                                     }
                                 }
-                                if (this.baseAnimation[this.attackAnimation].normalizedTime >= 1f)
+                                if (baseAnimation[attackAnimation].normalizedTime >= 1f)
                                 {
-                                    if ((this.attackAnimation == "special_marco_0") || (this.attackAnimation == "special_marco_1"))
+                                    if ((attackAnimation == "special_marco_0") || (attackAnimation == "special_marco_1"))
                                     {
                                         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
                                         {
                                             if (!PhotonNetwork.isMasterClient)
                                             {
-                                                object[] parameters = new object[] { 5f, 100f };
-                                                base.photonView.RPC("netTauntAttack", PhotonTargets.MasterClient, parameters);
+                                                var parameters = new object[] { 5f, 100f };
+                                                photonView.RPC("netTauntAttack", PhotonTargets.MasterClient, parameters);
                                             }
                                             else
                                             {
-                                                this.netTauntAttack(5f, 100f);
+                                                netTauntAttack(5f, 100f);
                                             }
                                         }
                                         else
                                         {
-                                            this.netTauntAttack(5f, 100f);
+                                            netTauntAttack(5f, 100f);
                                         }
-                                        this.falseAttack();
-                                        this.idle();
+                                        falseAttack();
+                                        idle();
                                     }
-                                    else if (this.attackAnimation == "special_armin")
+                                    else if (attackAnimation == "special_armin")
                                     {
                                         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
                                         {
                                             if (!PhotonNetwork.isMasterClient)
                                             {
-                                                base.photonView.RPC("netlaughAttack", PhotonTargets.MasterClient, new object[0]);
+                                                photonView.RPC("netlaughAttack", PhotonTargets.MasterClient, new object[0]);
                                             }
                                             else
                                             {
-                                                this.netlaughAttack();
+                                                netlaughAttack();
                                             }
                                         }
                                         else
                                         {
-                                            foreach (GameObject obj3 in GameObject.FindGameObjectsWithTag("titan"))
+                                            foreach (var obj3 in GameObject.FindGameObjectsWithTag("titan"))
                                             {
-                                                if (((Vector3.Distance(obj3.transform.position, this.baseTransform.position) < 50f) && (Vector3.Angle(obj3.transform.forward, this.baseTransform.position - obj3.transform.position) < 90f)) && (obj3.GetComponent<TITAN>() != null))
+                                                if (((Vector3.Distance(obj3.transform.position, baseTransform.position) < 50f) && (Vector3.Angle(obj3.transform.forward, baseTransform.position - obj3.transform.position) < 90f)) && (obj3.GetComponent<TITAN>() != null))
                                                 {
                                                     obj3.GetComponent<TITAN>().beLaughAttacked();
                                                 }
                                             }
                                         }
-                                        this.falseAttack();
-                                        this.idle();
+                                        falseAttack();
+                                        idle();
                                     }
-                                    else if (this.attackAnimation == "attack3_1")
+                                    else if (attackAnimation == "attack3_1")
                                     {
                                         #region Plane
                                         if (Input.GetKey(KeyCode.Q))
-                                            this.baseRigidBody.velocity += (Vector3)(Vector3.up * Time.deltaTime * 30f);
+                                            baseRigidBody.velocity += Vector3.up * Time.deltaTime * 30f;
                                         else if (Input.GetKey(KeyCode.E))
-                                            this.baseRigidBody.velocity = this.baseRigidBody.velocity;
+                                            baseRigidBody.velocity = baseRigidBody.velocity;
                                         #endregion
                                         else
-                                            this.baseRigidBody.velocity -= (Vector3)((Vector3.up * Time.deltaTime) * 30f);
+                                            baseRigidBody.velocity -= (Vector3.up * Time.deltaTime) * 30f;
                                     }
                                     else
                                     {
-                                        this.falseAttack();
-                                        this.idle();
+                                        falseAttack();
+                                        idle();
                                     }
                                 }
-                                if (this.baseAnimation.IsPlaying("attack3_2") && (this.baseAnimation["attack3_2"].normalizedTime >= 1f))
+                                if (baseAnimation.IsPlaying("attack3_2") && (baseAnimation["attack3_2"].normalizedTime >= 1f))
                                 {
-                                    this.falseAttack();
-                                    this.idle();
+                                    falseAttack();
+                                    idle();
                                 }
                             }
                             else
                             {
-                                this.baseTransform.rotation = Quaternion.Lerp(this.baseTransform.rotation, this.gunDummy.transform.rotation, Time.deltaTime * 30f);
-                                if (!this.attackReleased && (this.baseAnimation[this.attackAnimation].normalizedTime > 0.167f))
+                                baseTransform.rotation = Quaternion.Lerp(baseTransform.rotation, gunDummy.transform.rotation, Time.deltaTime * 30f);
+                                if (!attackReleased && (baseAnimation[attackAnimation].normalizedTime > 0.167f))
                                 {
                                     GameObject obj4;
-                                    this.attackReleased = true;
-                                    bool flag7 = false;
-                                    if ((this.attackAnimation == "AHSS_shoot_both") || (this.attackAnimation == "AHSS_shoot_both_air"))
+                                    attackReleased = true;
+                                    var flag7 = false;
+                                    if ((attackAnimation == "AHSS_shoot_both") || (attackAnimation == "AHSS_shoot_both_air"))
                                     {
                                         flag7 = true;
-                                        this.leftGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
-                                        this.rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
-                                        this.baseRigidBody.AddForce((Vector3)(-this.baseTransform.forward * 1000f), ForceMode.Acceleration);
+                                        leftGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                                        rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                                        baseRigidBody.AddForce(-baseTransform.forward * 1000f, ForceMode.Acceleration);
                                     }
                                     else
                                     {
-                                        if ((this.attackAnimation == "AHSS_shoot_l") || (this.attackAnimation == "AHSS_shoot_l_air"))
+                                        if ((attackAnimation == "AHSS_shoot_l") || (attackAnimation == "AHSS_shoot_l_air"))
                                         {
-                                            this.leftGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                                            leftGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
                                         }
                                         else
                                         {
-                                            this.rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
+                                            rightGunHasBullet = Settings.InfiniteBullets == 1 ? true : false;
                                         }
-                                        this.baseRigidBody.AddForce((Vector3) (-this.baseTransform.forward * 600f), ForceMode.Acceleration);
+                                        baseRigidBody.AddForce(-baseTransform.forward * 600f, ForceMode.Acceleration);
                                     }
-                                    this.baseRigidBody.AddForce((Vector3) (Vector3.up * 200f), ForceMode.Acceleration);
-                                    string prefabName = "FX/shotGun";
+                                    baseRigidBody.AddForce(Vector3.up * 200f, ForceMode.Acceleration);
+                                    var prefabName = "FX/shotGun";
                                     if (flag7)
                                     {
                                         prefabName = "FX/shotGun 1";
                                     }
-                                    if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && base.photonView.isMine)
+                                    if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && photonView.isMine)
                                     {
-                                        obj4 = PhotonNetwork.Instantiate(prefabName, (Vector3) ((this.baseTransform.position + (this.baseTransform.up * 0.8f)) - (this.baseTransform.right * 0.1f)), this.baseTransform.rotation, 0);
+                                        obj4 = PhotonNetwork.Instantiate(prefabName, (baseTransform.position + (baseTransform.up * 0.8f)) - (baseTransform.right * 0.1f), baseTransform.rotation, 0);
                                         if (obj4.GetComponent<EnemyfxIDcontainer>() != null)
                                         {
-                                            obj4.GetComponent<EnemyfxIDcontainer>().myOwnerViewID = base.photonView.viewID;
+                                            obj4.GetComponent<EnemyfxIDcontainer>().myOwnerViewID = photonView.viewID;
                                         }
                                     }
                                     else
                                     {
-                                        obj4 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load(prefabName), (Vector3) ((this.baseTransform.position + (this.baseTransform.up * 0.8f)) - (this.baseTransform.right * 0.1f)), this.baseTransform.rotation);
+                                        obj4 = (GameObject) Instantiate(Resources.Load(prefabName), (baseTransform.position + (baseTransform.up * 0.8f)) - (baseTransform.right * 0.1f), baseTransform.rotation);
                                     }
                                 }
-                                if (this.baseAnimation[this.attackAnimation].normalizedTime >= 1f)
+                                if (baseAnimation[attackAnimation].normalizedTime >= 1f)
                                 {
-                                    this.falseAttack();
-                                    this.idle();
+                                    falseAttack();
+                                    idle();
                                 }
-                                if (!this.baseAnimation.IsPlaying(this.attackAnimation))
+                                if (!baseAnimation.IsPlaying(attackAnimation))
                                 {
-                                    this.falseAttack();
-                                    this.idle();
+                                    falseAttack();
+                                    idle();
                                 }
                             }
                         }
-                        else if (this.state == HERO_STATE.ChangeBlade)
+                        else if (state == HERO_STATE.ChangeBlade)
                         {
-                            if (this.useGun)
+                            if (useGun)
                             {
-                                if (this.baseAnimation[this.reloadAnimation].normalizedTime > 0.22f)
+                                if (baseAnimation[reloadAnimation].normalizedTime > 0.22f)
                                 {
-                                    if (!(this.leftGunHasBullet || !this.setup.part_blade_l.activeSelf))
+                                    if (!(leftGunHasBullet || !setup.part_blade_l.activeSelf))
                                     {
-                                        this.setup.part_blade_l.SetActive(false);
-                                        Transform transform = this.setup.part_blade_l.transform;
-                                        GameObject obj5 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
-                                        obj5.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-                                        Vector3 force = ((Vector3) ((-this.baseTransform.forward * 10f) + (this.baseTransform.up * 5f))) - this.baseTransform.right;
+                                        setup.part_blade_l.SetActive(false);
+                                        var transform = setup.part_blade_l.transform;
+                                        var obj5 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
+                                        obj5.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+                                        var force = (-baseTransform.forward * 10f) + (baseTransform.up * 5f) - baseTransform.right;
                                         obj5.rigidbody.AddForce(force, ForceMode.Impulse);
-                                        Vector3 torque = new Vector3((float) UnityEngine.Random.Range(-100, 100), (float) UnityEngine.Random.Range(-100, 100), (float) UnityEngine.Random.Range(-100, 100));
+                                        var torque = new Vector3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100));
                                         obj5.rigidbody.AddTorque(torque, ForceMode.Acceleration);
                                     }
-                                    if (!(this.rightGunHasBullet || !this.setup.part_blade_r.activeSelf))
+                                    if (!(rightGunHasBullet || !setup.part_blade_r.activeSelf))
                                     {
-                                        this.setup.part_blade_r.SetActive(false);
-                                        Transform transform5 = this.setup.part_blade_r.transform;
-                                        GameObject obj6 = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Character_parts/character_gun_r"), transform5.position, transform5.rotation);
-                                        obj6.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-                                        Vector3 vector3 = ((Vector3) ((-this.baseTransform.forward * 10f) + (this.baseTransform.up * 5f))) + this.baseTransform.right;
+                                        setup.part_blade_r.SetActive(false);
+                                        var transform5 = setup.part_blade_r.transform;
+                                        var obj6 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_r"), transform5.position, transform5.rotation);
+                                        obj6.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+                                        var vector3 = (-baseTransform.forward * 10f) + (baseTransform.up * 5f) + baseTransform.right;
                                         obj6.rigidbody.AddForce(vector3, ForceMode.Impulse);
-                                        Vector3 vector4 = new Vector3((float) UnityEngine.Random.Range(-300, 300), (float) UnityEngine.Random.Range(-300, 300), (float) UnityEngine.Random.Range(-300, 300));
+                                        var vector4 = new Vector3(UnityEngine.Random.Range(-300, 300), UnityEngine.Random.Range(-300, 300), UnityEngine.Random.Range(-300, 300));
                                         obj6.rigidbody.AddTorque(vector4, ForceMode.Acceleration);
                                     }
                                 }
-                                if ((this.baseAnimation[this.reloadAnimation].normalizedTime > 0.62f) && !this.throwedBlades)
+                                if ((baseAnimation[reloadAnimation].normalizedTime > 0.62f) && !throwedBlades)
                                 {
-                                    this.throwedBlades = true;
-                                    if (!((this.leftBulletLeft <= 0) || this.leftGunHasBullet))
+                                    throwedBlades = true;
+                                    if (!((leftBulletLeft <= 0) || leftGunHasBullet))
                                     {
                                         if (Settings.InfiniteBullets == 0)
-                                            this.leftBulletLeft--;
-                                        this.setup.part_blade_l.SetActive(true);
-                                        this.leftGunHasBullet = true;
+                                            leftBulletLeft--;
+                                        setup.part_blade_l.SetActive(true);
+                                        leftGunHasBullet = true;
                                     }
-                                    if (!((this.rightBulletLeft <= 0) || this.rightGunHasBullet))
+                                    if (!((rightBulletLeft <= 0) || rightGunHasBullet))
                                     {
                                         if (Settings.InfiniteBullets == 0)
-                                            this.rightBulletLeft--;
-                                        this.setup.part_blade_r.SetActive(true);
-                                        this.rightGunHasBullet = true;
+                                            rightBulletLeft--;
+                                        setup.part_blade_r.SetActive(true);
+                                        rightGunHasBullet = true;
                                     }
-                                    this.updateRightMagUI();
-                                    this.updateLeftMagUI();
+                                    updateRightMagUI();
+                                    updateLeftMagUI();
                                 }
-                                if (this.baseAnimation[this.reloadAnimation].normalizedTime > 1f)
+                                if (baseAnimation[reloadAnimation].normalizedTime > 1f)
                                 {
-                                    this.idle();
+                                    idle();
                                 }
                             }
                             else
                             {
-                                if (!this.grounded)
+                                if (!grounded)
                                 {
-                                    if ((base.animation[this.reloadAnimation].normalizedTime >= 0.2f) && !this.throwedBlades)
+                                    if ((animation[reloadAnimation].normalizedTime >= 0.2f) && !throwedBlades)
                                     {
-                                        this.throwedBlades = true;
-                                        if (this.setup.part_blade_l.activeSelf)
+                                        throwedBlades = true;
+                                        if (setup.part_blade_l.activeSelf)
                                         {
-                                            this.throwBlades();
+                                            throwBlades();
                                         }
                                     }
-                                    if ((base.animation[this.reloadAnimation].normalizedTime >= 0.56f) && (this.currentBladeNum > 0))
+                                    if ((animation[reloadAnimation].normalizedTime >= 0.56f) && (currentBladeNum > 0))
                                     {
-                                        this.setup.part_blade_l.SetActive(true);
-                                        this.setup.part_blade_r.SetActive(true);
-                                        this.currentBladeSta = this.totalBladeSta;
+                                        setup.part_blade_l.SetActive(true);
+                                        setup.part_blade_r.SetActive(true);
+                                        currentBladeSta = totalBladeSta;
                                     }
                                 }
                                 else
                                 {
-                                    if ((this.baseAnimation[this.reloadAnimation].normalizedTime >= 0.13f) && !this.throwedBlades)
+                                    if ((baseAnimation[reloadAnimation].normalizedTime >= 0.13f) && !throwedBlades)
                                     {
-                                        this.throwedBlades = true;
-                                        if (this.setup.part_blade_l.activeSelf)
+                                        throwedBlades = true;
+                                        if (setup.part_blade_l.activeSelf)
                                         {
-                                            this.throwBlades();
+                                            throwBlades();
                                         }
                                     }
-                                    if ((this.baseAnimation[this.reloadAnimation].normalizedTime >= 0.37f) && (this.currentBladeNum > 0))
+                                    if ((baseAnimation[reloadAnimation].normalizedTime >= 0.37f) && (currentBladeNum > 0))
                                     {
-                                        this.setup.part_blade_l.SetActive(true);
-                                        this.setup.part_blade_r.SetActive(true);
-                                        this.currentBladeSta = this.totalBladeSta;
+                                        setup.part_blade_l.SetActive(true);
+                                        setup.part_blade_r.SetActive(true);
+                                        currentBladeSta = totalBladeSta;
                                     }
                                 }
-                                if (this.baseAnimation[this.reloadAnimation].normalizedTime >= 1f)
+                                if (baseAnimation[reloadAnimation].normalizedTime >= 1f)
                                 {
-                                    this.idle();
+                                    idle();
                                 }
                             }
                         }
-                        else if (this.state == HERO_STATE.Salute)
+                        else if (state == HERO_STATE.Salute)
                         {
-                            if (this.baseAnimation["salute"].normalizedTime >= 1f)
+                            if (baseAnimation["salute"].normalizedTime >= 1f)
                             {
-                                this.idle();
+                                idle();
                             }
                         }
-                        else if (this.state == HERO_STATE.GroundDodge)
+                        else if (state == HERO_STATE.GroundDodge)
                         {
-                            if (this.baseAnimation.IsPlaying("dodge"))
+                            if (baseAnimation.IsPlaying("dodge"))
                             {
-                                if (!(this.grounded || (this.baseAnimation["dodge"].normalizedTime <= 0.6f)))
+                                if (!(grounded || (baseAnimation["dodge"].normalizedTime <= 0.6f)))
                                 {
-                                    this.idle();
+                                    idle();
                                 }
-                                if (this.baseAnimation["dodge"].normalizedTime >= 1f)
+                                if (baseAnimation["dodge"].normalizedTime >= 1f)
                                 {
-                                    this.idle();
+                                    idle();
                                 }
                             }
                         }
-                        else if (this.state == HERO_STATE.Land)
+                        else if (state == HERO_STATE.Land)
                         {
-                            if (this.baseAnimation.IsPlaying("dash_land") && (this.baseAnimation["dash_land"].normalizedTime >= 1f))
+                            if (baseAnimation.IsPlaying("dash_land") && (baseAnimation["dash_land"].normalizedTime >= 1f))
                             {
-                                this.idle();
+                                idle();
                             }
                         }
-                        else if (this.state == HERO_STATE.FillGas)
+                        else if (state == HERO_STATE.FillGas)
                         {
-                            if (this.baseAnimation.IsPlaying("supply") && (this.baseAnimation["supply"].normalizedTime >= 1f))
+                            if (baseAnimation.IsPlaying("supply") && (baseAnimation["supply"].normalizedTime >= 1f))
                             {
-                                this.currentBladeSta = this.totalBladeSta;
-                                this.currentBladeNum = this.totalBladeNum;
-                                this.currentGas = this.totalGas;
-                                if (!this.useGun)
+                                currentBladeSta = totalBladeSta;
+                                currentBladeNum = totalBladeNum;
+                                currentGas = totalGas;
+                                if (!useGun)
                                 {
-                                    this.setup.part_blade_l.SetActive(true);
-                                    this.setup.part_blade_r.SetActive(true);
+                                    setup.part_blade_l.SetActive(true);
+                                    setup.part_blade_r.SetActive(true);
                                 }
                                 else
                                 {
-                                    this.leftBulletLeft = this.rightBulletLeft = this.bulletMAX;
-                                    this.leftGunHasBullet = this.rightGunHasBullet = true;
-                                    this.setup.part_blade_l.SetActive(true);
-                                    this.setup.part_blade_r.SetActive(true);
-                                    this.updateRightMagUI();
-                                    this.updateLeftMagUI();
+                                    leftBulletLeft = rightBulletLeft = bulletMAX;
+                                    leftGunHasBullet = rightGunHasBullet = true;
+                                    setup.part_blade_l.SetActive(true);
+                                    setup.part_blade_r.SetActive(true);
+                                    updateRightMagUI();
+                                    updateLeftMagUI();
                                 }
-                                this.idle();
+                                idle();
                             }
                         }
-                        else if (this.state == HERO_STATE.Slide)
+                        else if (state == HERO_STATE.Slide)
                         {
-                            if (!this.grounded)
+                            if (!grounded)
                             {
-                                this.idle();
+                                idle();
                             }
                         }
-                        else if (this.state == HERO_STATE.AirDodge)
+                        else if (state == HERO_STATE.AirDodge)
                         {
-                            if (this.dashTime > 0f)
+                            if (dashTime > 0f)
                             {
-                                this.dashTime -= Time.deltaTime;
-                                if (this.currentSpeed > this.originVM)
+                                dashTime -= Time.deltaTime;
+                                if (currentSpeed > originVM)
                                 {
-                                    this.baseRigidBody.AddForce((Vector3) ((-this.baseRigidBody.velocity * Time.deltaTime) * 1.7f), ForceMode.VelocityChange);
+                                    baseRigidBody.AddForce((-baseRigidBody.velocity * Time.deltaTime) * 1.7f, ForceMode.VelocityChange);
                                 }
                             }
                             else
                             {
-                                this.dashTime = 0f;
-                                this.idle();
+                                dashTime = 0f;
+                                idle();
                             }
                         }
-                        if (this.inputManager.isInput[InputCode.leftRope] && (((!this.baseAnimation.IsPlaying("attack3_1") && !this.baseAnimation.IsPlaying("attack5")) && (!this.baseAnimation.IsPlaying("special_petra") && (this.state != HERO_STATE.Grab))) || (this.state == HERO_STATE.Idle)))
+                        if (inputManager.isInput[InputCode.leftRope] && (((!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5")) && (!baseAnimation.IsPlaying("special_petra") && (state != HERO_STATE.Grab))) || (state == HERO_STATE.Idle)))
                         {
-                            if (this.bulletLeft != null)
+                            if (bulletLeft != null)
                             {
-                                this.QHold = true;
+                                QHold = true;
                             }
                             else
                             {
                                 RaycastHit hit4;
-                                Ray ray4 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                LayerMask mask10 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                LayerMask mask11 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+                                var ray4 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                LayerMask mask10 = 1 << LayerMask.NameToLayer("Ground");
+                                LayerMask mask11 = 1 << LayerMask.NameToLayer("EnemyBox");
                                 LayerMask mask12 = mask11 | mask10;
                                 if (Physics.Raycast(ray4, out hit4, 10000f, mask12.value))
                                 {
-                                    this.launchLeftRope(hit4, true, 0);
-                                    this.rope.Play();
+                                    launchLeftRope(hit4, true, 0);
+                                    rope.Play();
                                 }
                             }
                         }
                         else
                         {
-                            this.QHold = false;
+                            QHold = false;
                         }
-                        if (this.inputManager.isInput[InputCode.rightRope] && (((!this.baseAnimation.IsPlaying("attack3_1") && !this.baseAnimation.IsPlaying("attack5")) && (!this.baseAnimation.IsPlaying("special_petra") && (this.state != HERO_STATE.Grab))) || (this.state == HERO_STATE.Idle)))
+                        if (inputManager.isInput[InputCode.rightRope] && (((!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5")) && (!baseAnimation.IsPlaying("special_petra") && (state != HERO_STATE.Grab))) || (state == HERO_STATE.Idle)))
                         {
-                            if (this.bulletRight != null)
+                            if (bulletRight != null)
                             {
-                                this.EHold = true;
+                                EHold = true;
                             }
                             else
                             {
                                 RaycastHit hit5;
-                                Ray ray5 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                LayerMask mask13 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                LayerMask mask14 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+                                var ray5 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                LayerMask mask13 = 1 << LayerMask.NameToLayer("Ground");
+                                LayerMask mask14 = 1 << LayerMask.NameToLayer("EnemyBox");
                                 LayerMask mask15 = mask14 | mask13;
                                 if (Physics.Raycast(ray5, out hit5, 10000f, mask15.value))
                                 {
-                                    this.launchRightRope(hit5, true, 0);
-                                    this.rope.Play();
+                                    launchRightRope(hit5, true, 0);
+                                    rope.Play();
                                 }
                             }
                         }
                         else
                         {
-                            this.EHold = false;
+                            EHold = false;
                         }
-                        if (this.inputManager.isInput[InputCode.bothRope] && (((!this.baseAnimation.IsPlaying("attack3_1") && !this.baseAnimation.IsPlaying("attack5")) && (!this.baseAnimation.IsPlaying("special_petra") && (this.state != HERO_STATE.Grab))) || (this.state == HERO_STATE.Idle)))
+                        if (inputManager.isInput[InputCode.bothRope] && (((!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5")) && (!baseAnimation.IsPlaying("special_petra") && (state != HERO_STATE.Grab))) || (state == HERO_STATE.Idle)))
                         {
-                            this.QHold = true;
-                            this.EHold = true;
-                            if ((this.bulletLeft == null) && (this.bulletRight == null))
+                            QHold = true;
+                            EHold = true;
+                            if ((bulletLeft == null) && (bulletRight == null))
                             {
                                 RaycastHit hit6;
-                                Ray ray6 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                                LayerMask mask16 = ((int) 1) << LayerMask.NameToLayer("Ground");
-                                LayerMask mask17 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+                                var ray6 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                LayerMask mask16 = 1 << LayerMask.NameToLayer("Ground");
+                                LayerMask mask17 = 1 << LayerMask.NameToLayer("EnemyBox");
                                 LayerMask mask18 = mask17 | mask16;
                                 if (Physics.Raycast(ray6, out hit6, 1000000f, mask18.value))
                                 {
-                                    this.launchLeftRope(hit6, false, 0);
-                                    this.launchRightRope(hit6, false, 0);
-                                    this.rope.Play();
+                                    launchLeftRope(hit6, false, 0);
+                                    launchRightRope(hit6, false, 0);
+                                    rope.Play();
                                 }
                             }
                         }
                         if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) || ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) && !IN_GAME_MAIN_CAMERA.isPausing))
                         {
-                            this.calcSkillCD();
-                            this.calcFlareCD();
+                            calcSkillCD();
+                            calcFlareCD();
                         }
-                        if (!this.useGun)
+                        if (!useGun)
                         {
-                            if (this.leftbladetrail.gameObject.GetActive())
+                            if (leftbladetrail.gameObject.GetActive())
                             {
-                                this.leftbladetrail.update();
-                                this.rightbladetrail.update();
+                                leftbladetrail.update();
+                                rightbladetrail.update();
                             }
-                            if (this.leftbladetrail2.gameObject.GetActive())
+                            if (leftbladetrail2.gameObject.GetActive())
                             {
-                                this.leftbladetrail2.update();
-                                this.rightbladetrail2.update();
+                                leftbladetrail2.update();
+                                rightbladetrail2.update();
                             }
-                            if (this.leftbladetrail.gameObject.GetActive())
+                            if (leftbladetrail.gameObject.GetActive())
                             {
-                                this.leftbladetrail.lateUpdate();
-                                this.rightbladetrail.lateUpdate();
+                                leftbladetrail.lateUpdate();
+                                rightbladetrail.lateUpdate();
                             }
-                            if (this.leftbladetrail2.gameObject.GetActive())
+                            if (leftbladetrail2.gameObject.GetActive())
                             {
-                                this.leftbladetrail2.lateUpdate();
-                                this.rightbladetrail2.lateUpdate();
+                                leftbladetrail2.lateUpdate();
+                                rightbladetrail2.lateUpdate();
                             }
                         }
                         if (!IN_GAME_MAIN_CAMERA.isPausing)
                         {
-                            this.showSkillCD();
-                            this.showFlareCD();
-                            this.showGas();
-                            this.showAimUI();
+                            showSkillCD();
+                            showFlareCD();
+                            showGas();
+                            showAimUI();
                         }
                     }
-                    else if (this.isCannon && !IN_GAME_MAIN_CAMERA.isPausing)
+                    else if (isCannon && !IN_GAME_MAIN_CAMERA.isPausing)
                     {
-                        this.showAimUI();
-                        this.calcSkillCD();
-                        this.showSkillCD();
+                        showAimUI();
+                        calcSkillCD();
+                        showSkillCD();
                     }
                 }
             }
@@ -5884,60 +5884,60 @@ public class HERO : Photon.MonoBehaviour
 
     public void updateCannon()
     {
-        this.baseTransform.position = this.myCannonPlayer.position;
-        this.baseTransform.rotation = this.myCannonBase.rotation;
+        baseTransform.position = myCannonPlayer.position;
+        baseTransform.rotation = myCannonBase.rotation;
     }
 
     public void updateExt()
     {
-        if (this.skillId == "bomb")
+        if (skillId == "bomb")
         {
-            if (this.inputManager.isInputDown[InputCode.attack1] && (this.skillCDDuration <= 0f))
+            if (inputManager.isInputDown[InputCode.attack1] && (skillCDDuration <= 0f))
             {
-                if (!((this.myBomb == null) || this.myBomb.disabled))
+                if (!((myBomb == null) || myBomb.disabled))
                 {
-                    this.myBomb.Explode(this.bombRadius);
+                    myBomb.Explode(bombRadius);
                 }
-                this.detonate = false;
-                this.skillCDDuration = this.bombCD;
-                RaycastHit hitInfo = new RaycastHit();
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                LayerMask mask = ((int) 1) << LayerMask.NameToLayer("Ground");
-                LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+                detonate = false;
+                skillCDDuration = bombCD;
+                var hitInfo = new RaycastHit();
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
+                LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
                 LayerMask mask3 = mask2 | mask;
-                this.currentV = this.baseTransform.position;
-                this.targetV = this.currentV + ((Vector3) (Vector3.forward * 200f));
+                currentV = baseTransform.position;
+                targetV = currentV + Vector3.forward * 200f;
                 if (Physics.Raycast(ray, out hitInfo, 1000000f, mask3.value))
                 {
-                    this.targetV = hitInfo.point;
+                    targetV = hitInfo.point;
                 }
-                Vector3 vector = Vector3.Normalize(this.targetV - this.currentV);
-                GameObject obj2 = PhotonNetwork.Instantiate("RCAsset/BombMain", this.currentV + ((Vector3) (vector * 4f)), new Quaternion(0f, 0f, 0f, 1f), 0);
-                obj2.rigidbody.velocity = (Vector3) (vector * this.bombSpeed);
-                this.myBomb = obj2.GetComponent<Bomb>();
-                this.bombTime = 0f;
+                var vector = Vector3.Normalize(targetV - currentV);
+                var obj2 = PhotonNetwork.Instantiate("RCAsset/BombMain", currentV + vector * 4f, new Quaternion(0f, 0f, 0f, 1f), 0);
+                obj2.rigidbody.velocity = vector * bombSpeed;
+                myBomb = obj2.GetComponent<Bomb>();
+                bombTime = 0f;
             }
-            else if ((this.myBomb != null) && !this.myBomb.disabled)
+            else if ((myBomb != null) && !myBomb.disabled)
             {
-                this.bombTime += Time.deltaTime;
-                bool flag2 = false;
-                if (this.inputManager.isInputUp[InputCode.attack1])
+                bombTime += Time.deltaTime;
+                var flag2 = false;
+                if (inputManager.isInputUp[InputCode.attack1])
                 {
-                    this.detonate = true;
+                    detonate = true;
                 }
-                else if (this.inputManager.isInputDown[InputCode.attack1] && this.detonate)
+                else if (inputManager.isInputDown[InputCode.attack1] && detonate)
                 {
-                    this.detonate = false;
+                    detonate = false;
                     flag2 = true;
                 }
-                if (this.bombTime >= this.bombTimeMax)
+                if (bombTime >= bombTimeMax)
                 {
                     flag2 = true;
                 }
                 if (flag2)
                 {
-                    this.myBomb.Explode(this.bombRadius);
-                    this.detonate = false;
+                    myBomb.Explode(bombRadius);
+                    detonate = false;
                 }
             }
         }
@@ -5945,11 +5945,11 @@ public class HERO : Photon.MonoBehaviour
 
     private void updateLeftMagUI()
     {
-        for (int i = 1; i <= this.bulletMAX; i++)
+        for (var i = 1; i <= bulletMAX; i++)
         {
             GameObject.Find("bulletL" + i).GetComponent<UISprite>().enabled = false;
         }
-        for (int j = 1; j <= this.leftBulletLeft; j++)
+        for (var j = 1; j <= leftBulletLeft; j++)
         {
             GameObject.Find("bulletL" + j).GetComponent<UISprite>().enabled = true;
         }
@@ -5957,11 +5957,11 @@ public class HERO : Photon.MonoBehaviour
 
     private void updateRightMagUI()
     {
-        for (int i = 1; i <= this.bulletMAX; i++)
+        for (var i = 1; i <= bulletMAX; i++)
         {
             GameObject.Find("bulletR" + i).GetComponent<UISprite>().enabled = false;
         }
-        for (int j = 1; j <= this.rightBulletLeft; j++)
+        for (var j = 1; j <= rightBulletLeft; j++)
         {
             GameObject.Find("bulletR" + j).GetComponent<UISprite>().enabled = true;
         }
@@ -5974,22 +5974,22 @@ public class HERO : Photon.MonoBehaviour
             amount = 1;
         }
         amount *= 2;
-        if (this.currentBladeSta > 0f && Settings.InfiniteBlades == 0)
+        if (currentBladeSta > 0f && Settings.InfiniteBlades == 0)
         {
-            this.currentBladeSta -= amount;
-            if (this.currentBladeSta <= 0f)
+            currentBladeSta -= amount;
+            if (currentBladeSta <= 0f)
             {
-                if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || base.photonView.isMine)
+                if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
                 {
-                    this.leftbladetrail.Deactivate();
-                    this.rightbladetrail.Deactivate();
-                    this.leftbladetrail2.Deactivate();
-                    this.rightbladetrail2.Deactivate();
-                    this.checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
-                    this.checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
+                    leftbladetrail.Deactivate();
+                    rightbladetrail.Deactivate();
+                    leftbladetrail2.Deactivate();
+                    rightbladetrail2.Deactivate();
+                    checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = false;
+                    checkBoxRight.GetComponent<TriggerColliderWeapon>().active_me = false;
                 }
-                this.currentBladeSta = 0f;
-                this.throwBlades();
+                currentBladeSta = 0f;
+                throwBlades();
             }
         }
     }
@@ -5998,14 +5998,14 @@ public class HERO : Photon.MonoBehaviour
     {
         if (amount == 0f)
         {
-            amount = this.useGasSpeed;
+            amount = useGasSpeed;
         }
-        if (this.currentGas > 0f && Settings.InfiniteGas == 0)
+        if (currentGas > 0f && Settings.InfiniteGas == 0)
         {
-            this.currentGas -= amount;
-            if (this.currentGas < 0f)
+            currentGas -= amount;
+            if (currentGas < 0f)
             {
-                this.currentGas = 0f;
+                currentGas = 0f;
             }
         }
     }
@@ -6013,15 +6013,15 @@ public class HERO : Photon.MonoBehaviour
     [RPC]
     private void whoIsMyErenTitan(int id)
     {
-        this.eren_titan = PhotonView.Find(id).gameObject;
-        this.titanForm = true;
+        eren_titan = PhotonView.Find(id).gameObject;
+        titanForm = true;
     }
 
     public bool isGrabbed
     {
         get
         {
-            return (this.state == HERO_STATE.Grab);
+            return (state == HERO_STATE.Grab);
         }
     }
 
@@ -6029,15 +6029,15 @@ public class HERO : Photon.MonoBehaviour
     {
         get
         {
-            return this._state;
+            return _state;
         }
         set
         {
-            if ((this._state == HERO_STATE.AirDodge) || (this._state == HERO_STATE.GroundDodge))
+            if ((_state == HERO_STATE.AirDodge) || (_state == HERO_STATE.GroundDodge))
             {
-                this.dashTime = 0f;
+                dashTime = 0f;
             }
-            this._state = value;
+            _state = value;
         }
     }
 

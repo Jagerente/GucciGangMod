@@ -17,34 +17,34 @@ public class PhotonPlayer
     protected internal PhotonPlayer(bool isLocal, int actorID, Hashtable properties)
     {
         this.actorID = -1;
-        this.nameField = string.Empty;
-        this.customProperties = new Hashtable();
+        nameField = string.Empty;
+        customProperties = new Hashtable();
         this.isLocal = isLocal;
         this.actorID = actorID;
-        this.InternalCacheProperties(properties);
+        InternalCacheProperties(properties);
     }
 
     public PhotonPlayer(bool isLocal, int actorID, string name)
     {
         this.actorID = -1;
-        this.nameField = string.Empty;
-        this.customProperties = new Hashtable();
+        nameField = string.Empty;
+        customProperties = new Hashtable();
         this.isLocal = isLocal;
         this.actorID = actorID;
-        this.nameField = name;
+        nameField = name;
     }
 
     public override bool Equals(object p)
     {
-        PhotonPlayer player = p as PhotonPlayer;
-        return ((player != null) && (this.GetHashCode() == player.GetHashCode()));
+        var player = p as PhotonPlayer;
+        return ((player != null) && (GetHashCode() == player.GetHashCode()));
     }
 
     public static PhotonPlayer Find(int ID)
     {
-        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
+        for (var i = 0; i < PhotonNetwork.playerList.Length; i++)
         {
-            PhotonPlayer player = PhotonNetwork.playerList[i];
+            var player = PhotonNetwork.playerList[i];
             if (player.ID == ID)
             {
                 return player;
@@ -56,10 +56,10 @@ public class PhotonPlayer
     public Hashtable ChangeLocalPlayer(int NewID, string inputname)
     {
         /*PhotonNetwork.UnAllocateViewID(PhotonView.fi);*/
-        this.actorID = NewID;
+        actorID = NewID;
         string memes;
-        this.nameField = memes = string.Format("{0}_ID:{1}", inputname, NewID);
-        Hashtable hashtable = new Hashtable();
+        nameField = memes = string.Format("{0}_ID:{1}", inputname, NewID);
+        var hashtable = new Hashtable();
         hashtable.Add(PhotonPlayerProperty.name, memes);
         hashtable.Add(PhotonPlayerProperty.guildName, LoginFengKAI.player.guildname);
         hashtable.Add(PhotonPlayerProperty.kills, 0);
@@ -70,7 +70,7 @@ public class PhotonPlayer
         hashtable.Add(PhotonPlayerProperty.isTitan, 0);
         hashtable.Add(PhotonPlayerProperty.RCteam, 0);
         hashtable.Add(PhotonPlayerProperty.currentLevel, string.Empty);
-        Hashtable propertiesToSet = hashtable;
+        var propertiesToSet = hashtable;
         PhotonNetwork.AllocateViewID();
         PhotonNetwork.player.SetCustomProperties(propertiesToSet);
         return propertiesToSet;
@@ -83,12 +83,12 @@ public class PhotonPlayer
 
     public override int GetHashCode()
     {
-        return this.ID;
+        return ID;
     }
 
     public PhotonPlayer GetNext()
     {
-        return this.GetNextFor(this.ID);
+        return GetNextFor(ID);
     }
 
     public PhotonPlayer GetNextFor(PhotonPlayer currentPlayer)
@@ -97,7 +97,7 @@ public class PhotonPlayer
         {
             return null;
         }
-        return this.GetNextFor(currentPlayer.ID);
+        return GetNextFor(currentPlayer.ID);
     }
 
     public PhotonPlayer GetNextFor(int currentPlayerId)
@@ -106,10 +106,10 @@ public class PhotonPlayer
         {
             return null;
         }
-        Dictionary<int, PhotonPlayer> mActors = PhotonNetwork.networkingPeer.mActors;
-        int num = 0x7fffffff;
-        int num2 = currentPlayerId;
-        foreach (int num3 in mActors.Keys)
+        var mActors = PhotonNetwork.networkingPeer.mActors;
+        var num = 0x7fffffff;
+        var num2 = currentPlayerId;
+        foreach (var num3 in mActors.Keys)
         {
             if (num3 < num2)
             {
@@ -125,26 +125,26 @@ public class PhotonPlayer
 
     internal void InternalCacheProperties(Hashtable properties)
     {
-        if (((properties != null) && (properties.Count != 0)) && !this.customProperties.Equals(properties))
+        if (((properties != null) && (properties.Count != 0)) && !customProperties.Equals(properties))
         {
             if (properties.ContainsKey((byte) 0xff))
             {
-                this.nameField = (string) properties[(byte) 0xff];
+                nameField = (string) properties[(byte) 0xff];
             }
-            this.customProperties.MergeStringKeys(properties);
-            this.customProperties.StripKeysWithNullValues();
+            customProperties.MergeStringKeys(properties);
+            customProperties.StripKeysWithNullValues();
         }
     }
 
     internal void InternalChangeLocalID(int newID)
     {
-        if (!this.isLocal)
+        if (!isLocal)
         {
             Debug.LogError("ERROR You should never change PhotonPlayer IDs!");
         }
         else
         {
-            this.actorID = newID;
+            actorID = newID;
         }
     }
 
@@ -152,39 +152,39 @@ public class PhotonPlayer
     {
         if (propertiesToSet != null)
         {
-            this.customProperties.MergeStringKeys(propertiesToSet);
-            this.customProperties.StripKeysWithNullValues();
-            Hashtable actorProperties = propertiesToSet.StripToStringKeys();
-            if ((this.actorID > 0) && !PhotonNetwork.offlineMode)
+            customProperties.MergeStringKeys(propertiesToSet);
+            customProperties.StripKeysWithNullValues();
+            var actorProperties = propertiesToSet.StripToStringKeys();
+            if ((actorID > 0) && !PhotonNetwork.offlineMode)
             {
-                PhotonNetwork.networkingPeer.OpSetCustomPropertiesOfActor(this.actorID, actorProperties, true, 0);
+                PhotonNetwork.networkingPeer.OpSetCustomPropertiesOfActor(actorID, actorProperties, true, 0);
             }
-            object[] parameters = new object[] { this, propertiesToSet };
+            var parameters = new object[] { this, propertiesToSet };
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnPhotonPlayerPropertiesChanged, parameters);
         }
     }
 
     public override string ToString()
     {
-        if (string.IsNullOrEmpty(this.name))
+        if (string.IsNullOrEmpty(name))
         {
-            return string.Format("#{0:00}{1}", this.ID, !this.isMasterClient ? string.Empty : "(master)");
+            return string.Format("#{0:00}{1}", ID, !isMasterClient ? string.Empty : "(master)");
         }
-        return string.Format("'{0}'{1}", this.name, !this.isMasterClient ? string.Empty : "(master)");
+        return string.Format("'{0}'{1}", name, !isMasterClient ? string.Empty : "(master)");
     }
 
     public string ToStringFull()
     {
-        return string.Format("#{0:00} '{1}' {2}", this.ID, this.name, this.customProperties.ToStringFull());
+        return string.Format("#{0:00} '{1}' {2}", ID, name, customProperties.ToStringFull());
     }
 
     public Hashtable allProperties
     {
         get
         {
-            Hashtable target = new Hashtable();
-            target.Merge(this.customProperties);
-            target[(byte) 0xff] = this.name;
+            var target = new Hashtable();
+            target.Merge(customProperties);
+            target[(byte) 0xff] = name;
             return target;
         }
     }
@@ -195,7 +195,7 @@ public class PhotonPlayer
     {
         get
         {
-            return this.actorID;
+            return actorID;
         }
     }
 
@@ -226,17 +226,17 @@ public class PhotonPlayer
     {
         get
         {
-            return this.nameField;
+            return nameField;
         }
         set
         {
-            if (!this.isLocal)
+            if (!isLocal)
             {
                 Debug.LogError("Error: Cannot change the name of a remote player!");
             }
             else
             {
-                this.nameField = value;
+                nameField = value;
             }
         }
     }

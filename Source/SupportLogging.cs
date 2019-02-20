@@ -12,7 +12,7 @@ public class SupportLogging : MonoBehaviour
 
     private void LogBasics()
     {
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
         builder.AppendFormat("SupportLogger Info: PUN {0}: ", "1.28");
         builder.AppendFormat("AppID: {0}*** GameVersion: {1} ", PhotonNetwork.networkingPeer.mAppId.Substring(0, 8), PhotonNetwork.networkingPeer.mAppVersionPun);
         builder.AppendFormat("Server: {0}. Region: {1} ", PhotonNetwork.ServerAddress, PhotonNetwork.networkingPeer.CloudRegion);
@@ -22,7 +22,7 @@ public class SupportLogging : MonoBehaviour
 
     public void LogStats()
     {
-        if (this.LogTrafficStats)
+        if (LogTrafficStats)
         {
             Debug.Log("SupportLogger " + PhotonNetwork.NetworkStatisticsToString());
         }
@@ -30,14 +30,14 @@ public class SupportLogging : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        base.CancelInvoke();
+        CancelInvoke();
     }
 
     public void OnConnectedToPhoton()
     {
         Debug.Log("SupportLogger OnConnectedToPhoton().");
-        this.LogBasics();
-        if (this.LogTrafficStats)
+        LogBasics();
+        if (LogTrafficStats)
         {
             PhotonNetwork.NetworkStatisticsEnabled = true;
         }
@@ -51,7 +51,7 @@ public class SupportLogging : MonoBehaviour
     public void OnFailedToConnectToPhoton(DisconnectCause cause)
     {
         Debug.Log("SupportLogger OnFailedToConnectToPhoton(" + cause + ").");
-        this.LogBasics();
+        LogBasics();
     }
 
     public void OnJoinedLobby()
@@ -71,9 +71,9 @@ public class SupportLogging : MonoBehaviour
 
     public void Start()
     {
-        if (this.LogTrafficStats)
+        if (LogTrafficStats)
         {
-            base.InvokeRepeating("LogStats", 10f, 10f);
+            InvokeRepeating("LogStats", 10f, 10f);
         }
     }
 }

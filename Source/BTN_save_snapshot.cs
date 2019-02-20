@@ -18,13 +18,13 @@ public class BTN_save_snapshot : MonoBehaviour
 
     private void OnClick()
     {
-        foreach (GameObject obj2 in this.thingsNeedToHide)
+        foreach (var obj2 in thingsNeedToHide)
         {
-            Transform transform = obj2.transform;
-            transform.position += (Vector3) (Vector3.up * 10000f);
+            var transform = obj2.transform;
+            transform.position += Vector3.up * 10000f;
         }
-        base.StartCoroutine(this.ScreenshotEncode());
-        this.info.GetComponent<UILabel>().text = "trying..";
+        StartCoroutine(ScreenshotEncode());
+        info.GetComponent<UILabel>().text = "trying..";
     }
 
     [DebuggerHidden]
@@ -49,46 +49,46 @@ public class BTN_save_snapshot : MonoBehaviour
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    this.Scurrent = new WaitForEndOfFrame();
-                    this.SPC = 1;
+                    Scurrent = new WaitForEndOfFrame();
+                    SPC = 1;
                     goto Label_0308;
 
                 case 1:
-                    this.r0 = ((float) Screen.height) / 600f;
-                    this.texture1 = new Texture2D((int) (this.r0 * this.fthis.targetTexture.transform.localScale.x), (int) (this.r0 * this.fthis.targetTexture.transform.localScale.y), TextureFormat.RGB24, false);
-                    this.texture1.ReadPixels(new Rect((Screen.width * 0.5f) - (this.texture1.width * 0.5f), ((Screen.height * 0.5f) - (this.texture1.height * 0.5f)) - (this.r0 * 0f), (float) this.texture1.width, (float) this.texture1.height), 0, 0);
-                    this.texture1.Apply();
-                    this.Scurrent = 0;
-                    this.SPC = 2;
+                    r0 = Screen.height / 600f;
+                    texture1 = new Texture2D((int) (r0 * fthis.targetTexture.transform.localScale.x), (int) (r0 * fthis.targetTexture.transform.localScale.y), TextureFormat.RGB24, false);
+                    texture1.ReadPixels(new Rect((Screen.width * 0.5f) - (texture1.width * 0.5f), ((Screen.height * 0.5f) - (texture1.height * 0.5f)) - (r0 * 0f), texture1.width, texture1.height), 0, 0);
+                    texture1.Apply();
+                    Scurrent = 0;
+                    SPC = 2;
                     goto Label_0308;
 
                 case 2:
                 {
-                    this.Ss_52 = this.fthis.thingsNeedToHide;
-                    this.Ss_63 = 0;
-                    while (this.Ss_63 < this.Ss_52.Length)
+                    Ss_52 = fthis.thingsNeedToHide;
+                    Ss_63 = 0;
+                    while (Ss_63 < Ss_52.Length)
                     {
-                        this.go4 = this.Ss_52[this.Ss_63];
-                        Transform transform = this.go4.transform;
-                        transform.position -= (Vector3) (Vector3.up * 10000f);
-                        this.Ss_63++;
+                        go4 = Ss_52[Ss_63];
+                        var transform = go4.transform;
+                        transform.position -= Vector3.up * 10000f;
+                        Ss_63++;
                     }
-                    string[] textArray1 = new string[] { "aottg_ss-", DateTime.Today.Month.ToString(), "_", DateTime.Today.Day.ToString(), "_", DateTime.Today.Year.ToString(), "-", DateTime.Now.Hour.ToString(), "_", DateTime.Now.Minute.ToString(), "_", DateTime.Now.Second.ToString(), ".png" };
-                    this.img_name5 = string.Concat(textArray1);
-                    object[] args = new object[] { this.img_name5, this.texture1.width, this.texture1.height, Convert.ToBase64String(this.texture1.EncodeToPNG()) };
+                    var textArray1 = new string[] { "aottg_ss-", DateTime.Today.Month.ToString(), "_", DateTime.Today.Day.ToString(), "_", DateTime.Today.Year.ToString(), "-", DateTime.Now.Hour.ToString(), "_", DateTime.Now.Minute.ToString(), "_", DateTime.Now.Second.ToString(), ".png" };
+                    img_name5 = string.Concat(textArray1);
+                    var args = new object[] { img_name5, texture1.width, texture1.height, Convert.ToBase64String(texture1.EncodeToPNG()) };
                     Application.ExternalCall("SaveImg", args);
-                    UnityEngine.Object.DestroyObject(this.texture1);
-                    this.SPC = -1;
+                    DestroyObject(texture1);
+                    SPC = -1;
                     break;
                 }
             }
@@ -108,7 +108,7 @@ public class BTN_save_snapshot : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -117,7 +117,7 @@ public class BTN_save_snapshot : MonoBehaviour
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }

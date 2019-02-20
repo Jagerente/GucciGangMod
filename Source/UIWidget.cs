@@ -43,23 +43,23 @@ public abstract class UIWidget : MonoBehaviour
 
     protected virtual void Awake()
     {
-        this.mGo = base.gameObject;
-        this.mPlayMode = Application.isPlaying;
+        mGo = gameObject;
+        mPlayMode = Application.isPlaying;
     }
 
     public void CheckLayer()
     {
-        if ((this.mPanel != null) && (this.mPanel.gameObject.layer != base.gameObject.layer))
+        if ((mPanel != null) && (mPanel.gameObject.layer != gameObject.layer))
         {
             Debug.LogWarning("You can't place widgets on a layer different than the UIPanel that manages them.\nIf you want to move widgets to a different layer, parent them to a new panel instead.", this);
-            base.gameObject.layer = this.mPanel.gameObject.layer;
+            gameObject.layer = mPanel.gameObject.layer;
         }
     }
 
     [Obsolete("Use ParentHasChanged() instead")]
     public void CheckParent()
     {
-        this.ParentHasChanged();
+        ParentHasChanged();
     }
 
     public static int CompareFunc(UIWidget left, UIWidget right)
@@ -77,29 +77,29 @@ public abstract class UIWidget : MonoBehaviour
 
     public void CreatePanel()
     {
-        if (((this.mPanel == null) && base.enabled) && (NGUITools.GetActive(base.gameObject) && (this.material != null)))
+        if (((mPanel == null) && enabled) && (NGUITools.GetActive(gameObject) && (material != null)))
         {
-            this.mPanel = UIPanel.Find(this.cachedTransform);
-            if (this.mPanel != null)
+            mPanel = UIPanel.Find(cachedTransform);
+            if (mPanel != null)
             {
-                this.CheckLayer();
-                this.mPanel.AddWidget(this);
-                this.mChanged = true;
+                CheckLayer();
+                mPanel.AddWidget(this);
+                mChanged = true;
             }
         }
     }
 
     public virtual void MakePixelPerfect()
     {
-        Vector3 localScale = this.cachedTransform.localScale;
-        int num = Mathf.RoundToInt(localScale.x);
-        int num2 = Mathf.RoundToInt(localScale.y);
+        var localScale = cachedTransform.localScale;
+        var num = Mathf.RoundToInt(localScale.x);
+        var num2 = Mathf.RoundToInt(localScale.y);
         localScale.x = num;
         localScale.y = num2;
         localScale.z = 1f;
-        Vector3 localPosition = this.cachedTransform.localPosition;
+        var localPosition = cachedTransform.localPosition;
         localPosition.z = Mathf.RoundToInt(localPosition.z);
-        if (((num % 2) == 1) && (((this.pivot == Pivot.Top) || (this.pivot == Pivot.Center)) || (this.pivot == Pivot.Bottom)))
+        if (((num % 2) == 1) && (((pivot == Pivot.Top) || (pivot == Pivot.Center)) || (pivot == Pivot.Bottom)))
         {
             localPosition.x = Mathf.Floor(localPosition.x) + 0.5f;
         }
@@ -107,7 +107,7 @@ public abstract class UIWidget : MonoBehaviour
         {
             localPosition.x = Mathf.Round(localPosition.x);
         }
-        if (((num2 % 2) == 1) && (((this.pivot == Pivot.Left) || (this.pivot == Pivot.Center)) || (this.pivot == Pivot.Right)))
+        if (((num2 % 2) == 1) && (((pivot == Pivot.Left) || (pivot == Pivot.Center)) || (pivot == Pivot.Right)))
         {
             localPosition.y = Mathf.Ceil(localPosition.y) - 0.5f;
         }
@@ -115,56 +115,56 @@ public abstract class UIWidget : MonoBehaviour
         {
             localPosition.y = Mathf.Round(localPosition.y);
         }
-        this.cachedTransform.localPosition = localPosition;
-        this.cachedTransform.localScale = localScale;
+        cachedTransform.localPosition = localPosition;
+        cachedTransform.localScale = localScale;
     }
 
     public virtual void MarkAsChanged()
     {
-        this.mChanged = true;
-        if ((((this.mPanel != null) && base.enabled) && (NGUITools.GetActive(base.gameObject) && !Application.isPlaying)) && (this.material != null))
+        mChanged = true;
+        if ((((mPanel != null) && enabled) && (NGUITools.GetActive(gameObject) && !Application.isPlaying)) && (material != null))
         {
-            this.mPanel.AddWidget(this);
-            this.CheckLayer();
+            mPanel.AddWidget(this);
+            CheckLayer();
         }
     }
 
     public void MarkAsChangedLite()
     {
-        this.mChanged = true;
+        mChanged = true;
     }
 
     private void OnDestroy()
     {
-        if (this.mPanel != null)
+        if (mPanel != null)
         {
-            this.mPanel.RemoveWidget(this);
-            this.mPanel = null;
+            mPanel.RemoveWidget(this);
+            mPanel = null;
         }
     }
 
     private void OnDisable()
     {
-        if (!this.keepMaterial)
+        if (!keepMaterial)
         {
-            this.material = null;
+            material = null;
         }
-        else if (this.mPanel != null)
+        else if (mPanel != null)
         {
-            this.mPanel.RemoveWidget(this);
+            mPanel.RemoveWidget(this);
         }
-        this.mPanel = null;
+        mPanel = null;
     }
 
     protected virtual void OnEnable()
     {
-        this.mChanged = true;
-        if (!this.keepMaterial)
+        mChanged = true;
+        if (!keepMaterial)
         {
-            this.mMat = null;
-            this.mTex = null;
+            mMat = null;
+            mTex = null;
         }
-        this.mPanel = null;
+        mPanel = null;
     }
 
     public virtual void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
@@ -177,30 +177,30 @@ public abstract class UIWidget : MonoBehaviour
 
     public void ParentHasChanged()
     {
-        if (this.mPanel != null)
+        if (mPanel != null)
         {
-            UIPanel panel = UIPanel.Find(this.cachedTransform);
-            if (this.mPanel != panel)
+            var panel = UIPanel.Find(cachedTransform);
+            if (mPanel != panel)
             {
-                this.mPanel.RemoveWidget(this);
-                if (!this.keepMaterial || Application.isPlaying)
+                mPanel.RemoveWidget(this);
+                if (!keepMaterial || Application.isPlaying)
                 {
-                    this.material = null;
+                    material = null;
                 }
-                this.mPanel = null;
-                this.CreatePanel();
+                mPanel = null;
+                CreatePanel();
             }
         }
     }
 
     public static BetterList<UIWidget> Raycast(GameObject root, Vector2 mousePos)
     {
-        BetterList<UIWidget> list = new BetterList<UIWidget>();
-        UICamera camera = UICamera.FindCameraForLayer(root.layer);
+        var list = new BetterList<UIWidget>();
+        var camera = UICamera.FindCameraForLayer(root.layer);
         if (camera != null)
         {
-            Camera cachedCamera = camera.cachedCamera;
-            foreach (UIWidget widget in root.GetComponentsInChildren<UIWidget>())
+            var cachedCamera = camera.cachedCamera;
+            foreach (var widget in root.GetComponentsInChildren<UIWidget>())
             {
                 if (NGUIMath.DistanceToRectangle(NGUIMath.CalculateWidgetCorners(widget), mousePos, cachedCamera) == 0f)
                 {
@@ -218,98 +218,98 @@ public abstract class UIWidget : MonoBehaviour
 
     private void Start()
     {
-        this.OnStart();
-        this.CreatePanel();
+        OnStart();
+        CreatePanel();
     }
 
     public virtual void Update()
     {
-        if (this.mPanel == null)
+        if (mPanel == null)
         {
-            this.CreatePanel();
+            CreatePanel();
         }
     }
 
     public bool UpdateGeometry(UIPanel p, bool forceVisible)
     {
-        if ((this.material != null) && (p != null))
+        if ((material != null) && (p != null))
         {
-            this.mPanel = p;
-            bool flag = false;
-            float finalAlpha = this.finalAlpha;
-            bool flag2 = finalAlpha > 0.001f;
-            bool flag3 = forceVisible || this.mVisibleByPanel;
-            if (this.cachedTransform.hasChanged)
+            mPanel = p;
+            var flag = false;
+            var finalAlpha = this.finalAlpha;
+            var flag2 = finalAlpha > 0.001f;
+            var flag3 = forceVisible || mVisibleByPanel;
+            if (cachedTransform.hasChanged)
             {
-                this.mTrans.hasChanged = false;
-                if (!this.mPanel.widgetsAreStatic)
+                mTrans.hasChanged = false;
+                if (!mPanel.widgetsAreStatic)
                 {
-                    Vector2 relativeSize = this.relativeSize;
-                    Vector2 pivotOffset = this.pivotOffset;
-                    Vector4 relativePadding = this.relativePadding;
-                    float x = (pivotOffset.x * relativeSize.x) - relativePadding.x;
-                    float y = (pivotOffset.y * relativeSize.y) + relativePadding.y;
-                    float num4 = ((x + relativeSize.x) + relativePadding.x) + relativePadding.z;
-                    float num5 = ((y - relativeSize.y) - relativePadding.y) - relativePadding.w;
-                    this.mLocalToPanel = p.worldToLocal * this.cachedTransform.localToWorldMatrix;
+                    var relativeSize = this.relativeSize;
+                    var pivotOffset = this.pivotOffset;
+                    var relativePadding = this.relativePadding;
+                    var x = (pivotOffset.x * relativeSize.x) - relativePadding.x;
+                    var y = (pivotOffset.y * relativeSize.y) + relativePadding.y;
+                    var num4 = ((x + relativeSize.x) + relativePadding.x) + relativePadding.z;
+                    var num5 = ((y - relativeSize.y) - relativePadding.y) - relativePadding.w;
+                    mLocalToPanel = p.worldToLocal * cachedTransform.localToWorldMatrix;
                     flag = true;
-                    Vector3 v = new Vector3(x, y, 0f);
-                    Vector3 vector5 = new Vector3(num4, num5, 0f);
-                    v = this.mLocalToPanel.MultiplyPoint3x4(v);
-                    vector5 = this.mLocalToPanel.MultiplyPoint3x4(vector5);
-                    if ((Vector3.SqrMagnitude(this.mOldV0 - v) > 1E-06f) || (Vector3.SqrMagnitude(this.mOldV1 - vector5) > 1E-06f))
+                    var v = new Vector3(x, y, 0f);
+                    var vector5 = new Vector3(num4, num5, 0f);
+                    v = mLocalToPanel.MultiplyPoint3x4(v);
+                    vector5 = mLocalToPanel.MultiplyPoint3x4(vector5);
+                    if ((Vector3.SqrMagnitude(mOldV0 - v) > 1E-06f) || (Vector3.SqrMagnitude(mOldV1 - vector5) > 1E-06f))
                     {
-                        this.mChanged = true;
-                        this.mOldV0 = v;
-                        this.mOldV1 = vector5;
+                        mChanged = true;
+                        mOldV0 = v;
+                        mOldV1 = vector5;
                     }
                 }
-                if (flag2 || (this.mForceVisible != forceVisible))
+                if (flag2 || (mForceVisible != forceVisible))
                 {
-                    this.mForceVisible = forceVisible;
-                    flag3 = forceVisible || this.mPanel.IsVisible(this);
+                    mForceVisible = forceVisible;
+                    flag3 = forceVisible || mPanel.IsVisible(this);
                 }
             }
-            else if (flag2 && (this.mForceVisible != forceVisible))
+            else if (flag2 && (mForceVisible != forceVisible))
             {
-                this.mForceVisible = forceVisible;
-                flag3 = this.mPanel.IsVisible(this);
+                mForceVisible = forceVisible;
+                flag3 = mPanel.IsVisible(this);
             }
-            if (this.mVisibleByPanel != flag3)
+            if (mVisibleByPanel != flag3)
             {
-                this.mVisibleByPanel = flag3;
-                this.mChanged = true;
+                mVisibleByPanel = flag3;
+                mChanged = true;
             }
-            if (this.mVisibleByPanel && (this.mLastAlpha != finalAlpha))
+            if (mVisibleByPanel && (mLastAlpha != finalAlpha))
             {
-                this.mChanged = true;
+                mChanged = true;
             }
-            this.mLastAlpha = finalAlpha;
-            if (this.mChanged)
+            mLastAlpha = finalAlpha;
+            if (mChanged)
             {
-                this.mChanged = false;
-                if (this.isVisible)
+                mChanged = false;
+                if (isVisible)
                 {
-                    this.mGeom.Clear();
-                    this.OnFill(this.mGeom.verts, this.mGeom.uvs, this.mGeom.cols);
-                    if (this.mGeom.hasVertices)
+                    mGeom.Clear();
+                    OnFill(mGeom.verts, mGeom.uvs, mGeom.cols);
+                    if (mGeom.hasVertices)
                     {
-                        Vector3 vector6 = (Vector3) this.pivotOffset;
-                        Vector2 vector7 = this.relativeSize;
+                        var vector6 = (Vector3) pivotOffset;
+                        var vector7 = relativeSize;
                         vector6.x *= vector7.x;
                         vector6.y *= vector7.y;
                         if (!flag)
                         {
-                            this.mLocalToPanel = p.worldToLocal * this.cachedTransform.localToWorldMatrix;
+                            mLocalToPanel = p.worldToLocal * cachedTransform.localToWorldMatrix;
                         }
-                        this.mGeom.ApplyOffset(vector6);
-                        this.mGeom.ApplyTransform(this.mLocalToPanel, p.generateNormals);
+                        mGeom.ApplyOffset(vector6);
+                        mGeom.ApplyTransform(mLocalToPanel, p.generateNormals);
                     }
                     return true;
                 }
-                if (this.mGeom.hasVertices)
+                if (mGeom.hasVertices)
                 {
-                    this.mGeom.Clear();
+                    mGeom.Clear();
                     return true;
                 }
             }
@@ -319,20 +319,20 @@ public abstract class UIWidget : MonoBehaviour
 
     public void WriteToBuffers(BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color32> c, BetterList<Vector3> n, BetterList<Vector4> t)
     {
-        this.mGeom.WriteToBuffers(v, u, c, n, t);
+        mGeom.WriteToBuffers(v, u, c, n, t);
     }
 
     public float alpha
     {
         get
         {
-            return this.mColor.a;
+            return mColor.a;
         }
         set
         {
-            Color mColor = this.mColor;
+            var mColor = this.mColor;
             mColor.a = value;
-            this.color = mColor;
+            color = mColor;
         }
     }
 
@@ -348,11 +348,11 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            if (this.mGo == null)
+            if (mGo == null)
             {
-                this.mGo = base.gameObject;
+                mGo = gameObject;
             }
-            return this.mGo;
+            return mGo;
         }
     }
 
@@ -360,11 +360,11 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            if (this.mTrans == null)
+            if (mTrans == null)
             {
-                this.mTrans = base.transform;
+                mTrans = transform;
             }
-            return this.mTrans;
+            return mTrans;
         }
     }
 
@@ -372,14 +372,14 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            return this.mColor;
+            return mColor;
         }
         set
         {
-            if (!this.mColor.Equals(value))
+            if (!mColor.Equals(value))
             {
-                this.mColor = value;
-                this.mChanged = true;
+                mColor = value;
+                mChanged = true;
             }
         }
     }
@@ -388,16 +388,16 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            return this.mDepth;
+            return mDepth;
         }
         set
         {
-            if (this.mDepth != value)
+            if (mDepth != value)
             {
-                this.mDepth = value;
-                if (this.mPanel != null)
+                mDepth = value;
+                if (mPanel != null)
                 {
-                    this.mPanel.MarkMaterialAsChanged(this.material, true);
+                    mPanel.MarkMaterialAsChanged(material, true);
                 }
             }
         }
@@ -407,11 +407,11 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            if (this.mPanel == null)
+            if (mPanel == null)
             {
-                this.CreatePanel();
+                CreatePanel();
             }
-            return ((this.mPanel == null) ? this.mColor.a : (this.mColor.a * this.mPanel.alpha));
+            return ((mPanel == null) ? mColor.a : (mColor.a * mPanel.alpha));
         }
     }
 
@@ -419,7 +419,7 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            return (this.mVisibleByPanel && (this.finalAlpha > 0.001f));
+            return (mVisibleByPanel && (finalAlpha > 0.001f));
         }
     }
 
@@ -435,47 +435,47 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            Material material = this.material;
+            var material = this.material;
             if (material != null)
             {
                 if (material.mainTexture != null)
                 {
-                    this.mTex = material.mainTexture;
+                    mTex = material.mainTexture;
                 }
-                else if (this.mTex != null)
+                else if (mTex != null)
                 {
-                    if (this.mPanel != null)
+                    if (mPanel != null)
                     {
-                        this.mPanel.RemoveWidget(this);
+                        mPanel.RemoveWidget(this);
                     }
-                    this.mPanel = null;
-                    this.mMat.mainTexture = this.mTex;
-                    if (base.enabled)
+                    mPanel = null;
+                    mMat.mainTexture = mTex;
+                    if (enabled)
                     {
-                        this.CreatePanel();
+                        CreatePanel();
                     }
                 }
             }
-            return this.mTex;
+            return mTex;
         }
         set
         {
-            Material material = this.material;
+            var material = this.material;
             if ((material == null) || (material.mainTexture != value))
             {
-                if (this.mPanel != null)
+                if (mPanel != null)
                 {
-                    this.mPanel.RemoveWidget(this);
+                    mPanel.RemoveWidget(this);
                 }
-                this.mPanel = null;
-                this.mTex = value;
+                mPanel = null;
+                mTex = value;
                 material = this.material;
                 if (material != null)
                 {
                     material.mainTexture = value;
-                    if (base.enabled)
+                    if (enabled)
                     {
-                        this.CreatePanel();
+                        CreatePanel();
                     }
                 }
             }
@@ -486,22 +486,22 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            return this.mMat;
+            return mMat;
         }
         set
         {
-            if (this.mMat != value)
+            if (mMat != value)
             {
-                if ((this.mMat != null) && (this.mPanel != null))
+                if ((mMat != null) && (mPanel != null))
                 {
-                    this.mPanel.RemoveWidget(this);
+                    mPanel.RemoveWidget(this);
                 }
-                this.mPanel = null;
-                this.mMat = value;
-                this.mTex = null;
-                if (this.mMat != null)
+                mPanel = null;
+                mMat = value;
+                mTex = null;
+                if (mMat != null)
                 {
-                    this.CreatePanel();
+                    CreatePanel();
                 }
             }
         }
@@ -511,15 +511,15 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            if (this.mPanel == null)
+            if (mPanel == null)
             {
-                this.CreatePanel();
+                CreatePanel();
             }
-            return this.mPanel;
+            return mPanel;
         }
         set
         {
-            this.mPanel = value;
+            mPanel = value;
         }
     }
 
@@ -527,19 +527,19 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            return this.mPivot;
+            return mPivot;
         }
         set
         {
-            if (this.mPivot != value)
+            if (mPivot != value)
             {
-                Vector3 vector = NGUIMath.CalculateWidgetCorners(this)[0];
-                this.mPivot = value;
-                this.mChanged = true;
-                Vector3 vector2 = NGUIMath.CalculateWidgetCorners(this)[0];
-                Transform cachedTransform = this.cachedTransform;
-                Vector3 position = cachedTransform.position;
-                float z = cachedTransform.localPosition.z;
+                var vector = NGUIMath.CalculateWidgetCorners(this)[0];
+                mPivot = value;
+                mChanged = true;
+                var vector2 = NGUIMath.CalculateWidgetCorners(this)[0];
+                var cachedTransform = this.cachedTransform;
+                var position = cachedTransform.position;
+                var z = cachedTransform.localPosition.z;
                 position.x += vector.x - vector2.x;
                 position.y += vector.y - vector2.y;
                 this.cachedTransform.position = position;
@@ -556,9 +556,9 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            Vector2 zero = Vector2.zero;
-            Vector4 relativePadding = this.relativePadding;
-            Pivot pivot = this.pivot;
+            var zero = Vector2.zero;
+            var relativePadding = this.relativePadding;
+            var pivot = this.pivot;
             switch (pivot)
             {
                 case Pivot.Top:

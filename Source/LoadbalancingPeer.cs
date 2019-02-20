@@ -15,15 +15,15 @@ internal class LoadbalancingPeer : PhotonPeer
 
     public virtual bool OpAuthenticate(string appId, string appVersion, string userId, AuthenticationValues authValues, string regionCode)
     {
-        if (base.DebugOut >= DebugLevel.INFO)
+        if (DebugOut >= DebugLevel.INFO)
         {
-            base.Listener.DebugReturn(DebugLevel.INFO, "OpAuthenticate()");
+            Listener.DebugReturn(DebugLevel.INFO, "OpAuthenticate()");
         }
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         if ((authValues != null) && (authValues.Secret != null))
         {
             customOpParameters[0xdd] = authValues.Secret;
-            return this.OpCustom(230, customOpParameters, true, 0, false);
+            return OpCustom(230, customOpParameters, true, 0, false);
         }
         customOpParameters[220] = appVersion;
         customOpParameters[0xe0] = appId;
@@ -37,9 +37,9 @@ internal class LoadbalancingPeer : PhotonPeer
         }
         if ((authValues != null) && (authValues.AuthType != CustomAuthenticationType.None))
         {
-            if (!base.IsEncryptionAvailable)
+            if (!IsEncryptionAvailable)
             {
-                base.Listener.DebugReturn(DebugLevel.ERROR, "OpAuthenticate() failed. When you want Custom Authentication encryption is mandatory.");
+                Listener.DebugReturn(DebugLevel.ERROR, "OpAuthenticate() failed. When you want Custom Authentication encryption is mandatory.");
                 return false;
             }
             customOpParameters[0xd9] = (byte) authValues.AuthType;
@@ -56,21 +56,21 @@ internal class LoadbalancingPeer : PhotonPeer
                 customOpParameters[0xd6] = authValues.AuthPostData;
             }
         }
-        bool flag = this.OpCustom(230, customOpParameters, true, 0, base.IsEncryptionAvailable);
+        var flag = OpCustom(230, customOpParameters, true, 0, IsEncryptionAvailable);
         if (!flag)
         {
-            base.Listener.DebugReturn(DebugLevel.ERROR, "Error calling OpAuthenticate! Did not work. Check log output, CustomAuthenticationValues and if you're connected.");
+            Listener.DebugReturn(DebugLevel.ERROR, "Error calling OpAuthenticate! Did not work. Check log output, CustomAuthenticationValues and if you're connected.");
         }
         return flag;
     }
 
     public virtual bool OpChangeGroups(byte[] groupsToRemove, byte[] groupsToAdd)
     {
-        if (base.DebugOut >= DebugLevel.ALL)
+        if (DebugOut >= DebugLevel.ALL)
         {
-            base.Listener.DebugReturn(DebugLevel.ALL, "OpChangeGroups()");
+            Listener.DebugReturn(DebugLevel.ALL, "OpChangeGroups()");
         }
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         if (groupsToRemove != null)
         {
             customOpParameters[0xef] = groupsToRemove;
@@ -79,16 +79,16 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             customOpParameters[0xee] = groupsToAdd;
         }
-        return this.OpCustom(0xf8, customOpParameters, true, 0);
+        return OpCustom(0xf8, customOpParameters, true, 0);
     }
 
     public virtual bool OpCreateRoom(string roomName, RoomOptions roomOptions, TypedLobby lobby, Hashtable playerProperties, bool onGameServer)
     {
-        if (base.DebugOut >= DebugLevel.INFO)
+        if (DebugOut >= DebugLevel.INFO)
         {
-            base.Listener.DebugReturn(DebugLevel.INFO, "OpCreateRoom()");
+            Listener.DebugReturn(DebugLevel.INFO, "OpCreateRoom()");
         }
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         if (!string.IsNullOrEmpty(roomName))
         {
             customOpParameters[0xff] = roomName;
@@ -109,7 +109,7 @@ internal class LoadbalancingPeer : PhotonPeer
             {
                 roomOptions = new RoomOptions();
             }
-            Hashtable target = new Hashtable();
+            var target = new Hashtable();
             customOpParameters[0xf8] = target;
             target.MergeStringKeys(roomOptions.customRoomProperties);
             target[(byte) 0xfd] = roomOptions.isOpen;
@@ -125,31 +125,31 @@ internal class LoadbalancingPeer : PhotonPeer
                 target[(byte) 0xf9] = true;
             }
         }
-        return this.OpCustom(0xe3, customOpParameters, true);
+        return OpCustom(0xe3, customOpParameters, true);
     }
 
     public virtual bool OpFindFriends(string[] friendsToFind)
     {
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         if ((friendsToFind != null) && (friendsToFind.Length > 0))
         {
             customOpParameters[1] = friendsToFind;
         }
-        return this.OpCustom(0xde, customOpParameters, true);
+        return OpCustom(0xde, customOpParameters, true);
     }
 
     public virtual bool OpGetRegions(string appId)
     {
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         customOpParameters[0xe0] = appId;
-        return this.OpCustom(220, customOpParameters, true, 0, true);
+        return OpCustom(220, customOpParameters, true, 0, true);
     }
 
     public virtual bool OpJoinLobby(TypedLobby lobby)
     {
-        if (base.DebugOut >= DebugLevel.INFO)
+        if (DebugOut >= DebugLevel.INFO)
         {
-            base.Listener.DebugReturn(DebugLevel.INFO, "OpJoinLobby()");
+            Listener.DebugReturn(DebugLevel.INFO, "OpJoinLobby()");
         }
         Dictionary<byte, object> customOpParameters = null;
         if ((lobby != null) && !lobby.IsDefault)
@@ -158,22 +158,22 @@ internal class LoadbalancingPeer : PhotonPeer
             customOpParameters[0xd5] = lobby.Name;
             customOpParameters[0xd4] = (byte) lobby.Type;
         }
-        return this.OpCustom(0xe5, customOpParameters, true);
+        return OpCustom(0xe5, customOpParameters, true);
     }
 
     public virtual bool OpJoinRandomRoom(Hashtable expectedCustomRoomProperties, byte expectedMaxPlayers, Hashtable playerProperties, MatchmakingMode matchingType, TypedLobby typedLobby, string sqlLobbyFilter)
     {
-        if (base.DebugOut >= DebugLevel.INFO)
+        if (DebugOut >= DebugLevel.INFO)
         {
-            base.Listener.DebugReturn(DebugLevel.INFO, "OpJoinRandomRoom()");
+            Listener.DebugReturn(DebugLevel.INFO, "OpJoinRandomRoom()");
         }
-        Hashtable target = new Hashtable();
+        var target = new Hashtable();
         target.MergeStringKeys(expectedCustomRoomProperties);
         if (expectedMaxPlayers > 0)
         {
             target[(byte) 0xff] = expectedMaxPlayers;
         }
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         if (target.Count > 0)
         {
             customOpParameters[0xf8] = target;
@@ -195,12 +195,12 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             customOpParameters[0xf5] = sqlLobbyFilter;
         }
-        return this.OpCustom(0xe1, customOpParameters, true);
+        return OpCustom(0xe1, customOpParameters, true);
     }
 
     public virtual bool OpJoinRoom(string roomName, RoomOptions roomOptions, TypedLobby lobby, bool createIfNotExists, Hashtable playerProperties, bool onGameServer)
     {
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         if (!string.IsNullOrEmpty(roomName))
         {
             customOpParameters[0xff] = roomName;
@@ -227,7 +227,7 @@ internal class LoadbalancingPeer : PhotonPeer
                 {
                     roomOptions = new RoomOptions();
                 }
-                Hashtable target = new Hashtable();
+                var target = new Hashtable();
                 customOpParameters[0xf8] = target;
                 target.MergeStringKeys(roomOptions.customRoomProperties);
                 target[(byte) 0xfd] = roomOptions.isOpen;
@@ -244,21 +244,21 @@ internal class LoadbalancingPeer : PhotonPeer
                 }
             }
         }
-        return this.OpCustom(0xe2, customOpParameters, true);
+        return OpCustom(0xe2, customOpParameters, true);
     }
 
     public virtual bool OpLeaveLobby()
     {
-        if (base.DebugOut >= DebugLevel.INFO)
+        if (DebugOut >= DebugLevel.INFO)
         {
-            base.Listener.DebugReturn(DebugLevel.INFO, "OpLeaveLobby()");
+            Listener.DebugReturn(DebugLevel.INFO, "OpLeaveLobby()");
         }
-        return this.OpCustom(0xe4, null, true);
+        return OpCustom(0xe4, null, true);
     }
 
     public virtual bool OpRaiseEvent(byte eventCode, object customEventContent, bool sendReliable, RaiseEventOptions raiseEventOptions)
     {
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         customOpParameters[0xf4] = eventCode;
         if (customEventContent != null)
         {
@@ -291,63 +291,63 @@ internal class LoadbalancingPeer : PhotonPeer
                 customOpParameters[0xea] = true;
             }
         }
-        return this.OpCustom(0xfd, customOpParameters, sendReliable, raiseEventOptions.SequenceChannel, false);
+        return OpCustom(0xfd, customOpParameters, sendReliable, raiseEventOptions.SequenceChannel, false);
     }
 
     public bool OpSetCustomPropertiesOfActor(int actorNr, Hashtable actorProperties, bool broadcast, byte channelId)
     {
-        return this.OpSetPropertiesOfActor(actorNr, actorProperties.StripToStringKeys(), broadcast, channelId);
+        return OpSetPropertiesOfActor(actorNr, actorProperties.StripToStringKeys(), broadcast, channelId);
     }
 
     public bool OpSetCustomPropertiesOfRoom(Hashtable gameProperties, bool broadcast, byte channelId)
     {
-        return this.OpSetPropertiesOfRoom(gameProperties.StripToStringKeys(), broadcast, channelId);
+        return OpSetPropertiesOfRoom(gameProperties.StripToStringKeys(), broadcast, channelId);
     }
 
     protected bool OpSetPropertiesOfActor(int actorNr, Hashtable actorProperties, bool broadcast, byte channelId)
     {
-        if (base.DebugOut >= DebugLevel.INFO)
+        if (DebugOut >= DebugLevel.INFO)
         {
-            base.Listener.DebugReturn(DebugLevel.INFO, "OpSetPropertiesOfActor()");
+            Listener.DebugReturn(DebugLevel.INFO, "OpSetPropertiesOfActor()");
         }
         if ((actorNr <= 0) || (actorProperties == null))
         {
-            if (base.DebugOut >= DebugLevel.INFO)
+            if (DebugOut >= DebugLevel.INFO)
             {
-                base.Listener.DebugReturn(DebugLevel.INFO, "OpSetPropertiesOfActor not sent. ActorNr must be > 0 and actorProperties != null.");
+                Listener.DebugReturn(DebugLevel.INFO, "OpSetPropertiesOfActor not sent. ActorNr must be > 0 and actorProperties != null.");
             }
             return false;
         }
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         customOpParameters.Add(0xfb, actorProperties);
         customOpParameters.Add(0xfe, actorNr);
         if (broadcast)
         {
             customOpParameters.Add(250, broadcast);
         }
-        return this.OpCustom(0xfc, customOpParameters, broadcast, channelId);
+        return OpCustom(0xfc, customOpParameters, broadcast, channelId);
     }
 
     public bool OpSetPropertiesOfRoom(Hashtable gameProperties, bool broadcast, byte channelId)
     {
-        if (base.DebugOut >= DebugLevel.INFO)
+        if (DebugOut >= DebugLevel.INFO)
         {
-            base.Listener.DebugReturn(DebugLevel.INFO, "OpSetPropertiesOfRoom()");
+            Listener.DebugReturn(DebugLevel.INFO, "OpSetPropertiesOfRoom()");
         }
-        Dictionary<byte, object> customOpParameters = new Dictionary<byte, object>();
+        var customOpParameters = new Dictionary<byte, object>();
         customOpParameters.Add(0xfb, gameProperties);
         if (broadcast)
         {
             customOpParameters.Add(250, true);
         }
-        return this.OpCustom(0xfc, customOpParameters, broadcast, channelId);
+        return OpCustom(0xfc, customOpParameters, broadcast, channelId);
     }
 
     protected void OpSetPropertyOfRoom(byte propCode, object value)
     {
-        Hashtable gameProperties = new Hashtable();
+        var gameProperties = new Hashtable();
         gameProperties[propCode] = value;
-        this.OpSetPropertiesOfRoom(gameProperties, true, 0);
+        OpSetPropertiesOfRoom(gameProperties, true, 0);
     }
 }
 

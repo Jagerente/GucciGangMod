@@ -19,13 +19,13 @@ public class PanelMain : MonoBehaviour
 
     private void showTxt()
     {
-        if (this.lang != Language.type)
+        if (lang != Language.type)
         {
-            this.lang = Language.type;
-            this.label_single.GetComponent<UILabel>().text = Language.btn_single[Language.type];
-            this.label_multi.GetComponent<UILabel>().text = Language.btn_multiplayer[Language.type];
-            this.label_option.GetComponent<UILabel>().text = Language.btn_option[Language.type];
-            this.label_credits.GetComponent<UILabel>().text = Language.btn_credits[Language.type];
+            lang = Language.type;
+            label_single.GetComponent<UILabel>().text = Language.btn_single[Language.type];
+            label_multi.GetComponent<UILabel>().text = Language.btn_multiplayer[Language.type];
+            label_option.GetComponent<UILabel>().text = Language.btn_option[Language.type];
+            label_credits.GetComponent<UILabel>().text = Language.btn_credits[Language.type];
         }
     }
 
@@ -35,7 +35,7 @@ public class PanelMain : MonoBehaviour
         label_multi.GetComponent<UILabel>().enabled = false;
         label_option.GetComponent<UILabel>().enabled = false;
         label_credits.GetComponent<UILabel>().enabled = false;
-        foreach (UIButton button in base.gameObject.GetComponentsInChildren<UIButton>())
+        foreach (var button in gameObject.GetComponentsInChildren<UIButton>())
         {
             button.transform.position = new Vector3(0, 9999, 0);
         }

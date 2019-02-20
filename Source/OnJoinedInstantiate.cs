@@ -13,20 +13,20 @@ public class OnJoinedInstantiate : MonoBehaviour
 
     public void OnJoinedRoom()
     {
-        if (this.PrefabsToInstantiate != null)
+        if (PrefabsToInstantiate != null)
         {
-            foreach (GameObject obj2 in this.PrefabsToInstantiate)
+            foreach (var obj2 in PrefabsToInstantiate)
             {
                 Debug.Log("Instantiating: " + obj2.name);
-                Vector3 up = Vector3.up;
-                if (this.SpawnPosition != null)
+                var up = Vector3.up;
+                if (SpawnPosition != null)
                 {
-                    up = this.SpawnPosition.position;
+                    up = SpawnPosition.position;
                 }
-                Vector3 insideUnitSphere = UnityEngine.Random.insideUnitSphere;
+                var insideUnitSphere = Random.insideUnitSphere;
                 insideUnitSphere.y = 0f;
                 insideUnitSphere = insideUnitSphere.normalized;
-                Vector3 position = up + ((Vector3) (this.PositionOffset * insideUnitSphere));
+                var position = up + PositionOffset * insideUnitSphere;
                 PhotonNetwork.Instantiate(obj2.name, position, Quaternion.identity, 0);
             }
         }

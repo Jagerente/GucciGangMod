@@ -12,24 +12,24 @@ public class EquipItems : MonoBehaviour
 
     private void Start()
     {
-        if ((this.itemIDs != null) && (this.itemIDs.Length > 0))
+        if ((itemIDs != null) && (itemIDs.Length > 0))
         {
-            InvEquipment component = base.GetComponent<InvEquipment>();
+            var component = GetComponent<InvEquipment>();
             if (component == null)
             {
-                component = base.gameObject.AddComponent<InvEquipment>();
+                component = gameObject.AddComponent<InvEquipment>();
             }
-            int max = 12;
-            int index = 0;
-            int length = this.itemIDs.Length;
+            var max = 12;
+            var index = 0;
+            var length = itemIDs.Length;
             while (index < length)
             {
-                int num4 = this.itemIDs[index];
-                InvBaseItem bi = InvDatabase.FindByID(num4);
+                var num4 = itemIDs[index];
+                var bi = InvDatabase.FindByID(num4);
                 if (bi != null)
                 {
-                    InvGameItem item = new InvGameItem(num4, bi) {
-                        quality = (InvGameItem.Quality) UnityEngine.Random.Range(0, max),
+                    var item = new InvGameItem(num4, bi) {
+                        quality = (InvGameItem.Quality) Random.Range(0, max),
                         itemLevel = NGUITools.RandomRange(bi.minItemLevel, bi.maxItemLevel)
                     };
                     component.Equip(item);
@@ -41,7 +41,7 @@ public class EquipItems : MonoBehaviour
                 index++;
             }
         }
-        UnityEngine.Object.Destroy(this);
+        Destroy(this);
     }
 }
 

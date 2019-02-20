@@ -17,178 +17,178 @@ public class PhotonStream
         this.write = write;
         if (incomingData == null)
         {
-            this.data = new List<object>();
+            data = new List<object>();
         }
         else
         {
-            this.data = new List<object>(incomingData);
+            data = new List<object>(incomingData);
         }
     }
 
     public object ReceiveNext()
     {
-        if (this.write)
+        if (write)
         {
             Debug.LogError("Error: you cannot read this stream that you are writing!");
             return null;
         }
-        object obj2 = this.data[this.currentItem];
-        this.currentItem = (byte) (this.currentItem + 1);
+        var obj2 = data[currentItem];
+        currentItem = (byte) (currentItem + 1);
         return obj2;
     }
 
     public void SendNext(object obj)
     {
-        if (!this.write)
+        if (!write)
         {
             Debug.LogError("Error: you cannot write/send to this stream that you are reading!");
         }
         else
         {
-            this.data.Add(obj);
+            data.Add(obj);
         }
     }
 
     public void Serialize(ref PhotonPlayer obj)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add(obj);
+            data.Add(obj);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            obj = (PhotonPlayer) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            obj = (PhotonPlayer) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref bool myBool)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add((bool) myBool);
+            data.Add(myBool);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            myBool = (bool) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            myBool = (bool) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref char value)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add((char) value);
+            data.Add(value);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            value = (char) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            value = (char) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref short value)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add((short) value);
+            data.Add(value);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            value = (short) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            value = (short) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref int myInt)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add((int) myInt);
+            data.Add(myInt);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            myInt = (int) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            myInt = (int) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref float obj)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add((float) obj);
+            data.Add(obj);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            obj = (float) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            obj = (float) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref string value)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add(value);
+            data.Add(value);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            value = (string) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            value = (string) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref Quaternion obj)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add((Quaternion) obj);
+            data.Add(obj);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            obj = (Quaternion) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            obj = (Quaternion) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref Vector2 obj)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add((Vector2) obj);
+            data.Add(obj);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            obj = (Vector2) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            obj = (Vector2) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public void Serialize(ref Vector3 obj)
     {
-        if (this.write)
+        if (write)
         {
-            this.data.Add((Vector3) obj);
+            data.Add(obj);
         }
-        else if (this.data.Count > this.currentItem)
+        else if (data.Count > currentItem)
         {
-            obj = (Vector3) this.data[this.currentItem];
-            this.currentItem = (byte) (this.currentItem + 1);
+            obj = (Vector3) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
     public object[] ToArray()
     {
-        return this.data.ToArray();
+        return data.ToArray();
     }
 
     public int Count
     {
         get
         {
-            return this.data.Count;
+            return data.Count;
         }
     }
 
@@ -196,7 +196,7 @@ public class PhotonStream
     {
         get
         {
-            return !this.write;
+            return !write;
         }
     }
 
@@ -204,7 +204,7 @@ public class PhotonStream
     {
         get
         {
-            return this.write;
+            return write;
         }
     }
 }

@@ -12,7 +12,7 @@ public class EffectNode
     public float Acceleration;
     protected ArrayList AffectorList;
     public Transform ClientTrans;
-    public UnityEngine.Color Color;
+    public Color Color;
     protected Vector3 CurDirection;
     protected Vector3 CurWorldPos;
     protected float ElapsedTime;
@@ -37,76 +37,76 @@ public class EffectNode
 
     public EffectNode(int index, Transform clienttrans, bool sync, EffectLayer owner)
     {
-        this.Index = index;
-        this.ClientTrans = clienttrans;
-        this.SyncClient = sync;
-        this.Owner = owner;
-        this.LowerLeftUV = Vector2.zero;
-        this.UVDimensions = Vector2.one;
-        this.Scale = Vector2.one;
-        this.RotateAngle = 0f;
-        this.Color = UnityEngine.Color.white;
+        Index = index;
+        ClientTrans = clienttrans;
+        SyncClient = sync;
+        Owner = owner;
+        LowerLeftUV = Vector2.zero;
+        UVDimensions = Vector2.one;
+        Scale = Vector2.one;
+        RotateAngle = 0f;
+        Color = Color.white;
     }
 
     public float GetElapsedTime()
     {
-        return this.ElapsedTime;
+        return ElapsedTime;
     }
 
     public float GetLifeTime()
     {
-        return this.LifeTime;
+        return LifeTime;
     }
 
     public Vector3 GetLocalPosition()
     {
-        return this.Position;
+        return Position;
     }
 
-    public void Init(Vector3 oriDir, float speed, float life, int oriRot, float oriScaleX, float oriScaleY, UnityEngine.Color oriColor, Vector2 oriLowerUv, Vector2 oriUVDimension)
+    public void Init(Vector3 oriDir, float speed, float life, int oriRot, float oriScaleX, float oriScaleY, Color oriColor, Vector2 oriLowerUv, Vector2 oriUVDimension)
     {
-        this.OriDirection = oriDir;
-        this.LifeTime = life;
-        this.OriRotateAngle = oriRot;
-        this.OriScaleX = oriScaleX;
-        this.OriScaleY = oriScaleY;
-        this.Color = oriColor;
-        this.ElapsedTime = 0f;
-        this.Velocity = (Vector3) (this.OriDirection * speed);
-        this.Acceleration = 0f;
-        this.LowerLeftUV = oriLowerUv;
-        this.UVDimensions = oriUVDimension;
-        if (this.Type == 1)
+        OriDirection = oriDir;
+        LifeTime = life;
+        OriRotateAngle = oriRot;
+        OriScaleX = oriScaleX;
+        OriScaleY = oriScaleY;
+        Color = oriColor;
+        ElapsedTime = 0f;
+        Velocity = OriDirection * speed;
+        Acceleration = 0f;
+        LowerLeftUV = oriLowerUv;
+        UVDimensions = oriUVDimension;
+        if (Type == 1)
         {
-            this.Sprite.SetUVCoord(this.LowerLeftUV, this.UVDimensions);
-            this.Sprite.SetColor(oriColor);
+            Sprite.SetUVCoord(LowerLeftUV, UVDimensions);
+            Sprite.SetColor(oriColor);
         }
-        else if (this.Type == 2)
+        else if (Type == 2)
         {
-            this.Ribbon.SetUVCoord(this.LowerLeftUV, this.UVDimensions);
-            this.Ribbon.SetColor(oriColor);
-            this.Ribbon.SetHeadPosition((this.ClientTrans.position + this.Position) + ((Vector3) (this.OriDirection.normalized * this.Owner.TailDistance)));
-            this.Ribbon.ResetElementsPos();
+            Ribbon.SetUVCoord(LowerLeftUV, UVDimensions);
+            Ribbon.SetColor(oriColor);
+            Ribbon.SetHeadPosition((ClientTrans.position + Position) + OriDirection.normalized * Owner.TailDistance);
+            Ribbon.ResetElementsPos();
         }
-        if (this.Type == 1)
+        if (Type == 1)
         {
-            this.Sprite.SetRotationTo(this.OriDirection);
+            Sprite.SetRotationTo(OriDirection);
         }
     }
 
     public void Remove()
     {
-        this.Owner.RemoveActiveNode(this);
+        Owner.RemoveActiveNode(this);
     }
 
     public void Reset()
     {
-        this.Position = (Vector3) (Vector3.up * 9999f);
-        this.Velocity = Vector3.zero;
-        this.Acceleration = 0f;
-        this.ElapsedTime = 0f;
-        this.LastWorldPos = this.CurWorldPos = Vector3.zero;
-        IEnumerator enumerator = this.AffectorList.GetEnumerator();
+        Position = Vector3.up * 9999f;
+        Velocity = Vector3.zero;
+        Acceleration = 0f;
+        ElapsedTime = 0f;
+        LastWorldPos = CurWorldPos = Vector3.zero;
+        var enumerator = AffectorList.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
@@ -116,53 +116,53 @@ public class EffectNode
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        if (this.Type == 1)
+        if (Type == 1)
         {
-            this.Sprite.SetRotation((float) this.OriRotateAngle);
-            this.Sprite.SetPosition(this.Position);
-            this.Sprite.SetColor(UnityEngine.Color.clear);
-            this.Sprite.Update(true);
-            this.Scale = Vector2.one;
+            Sprite.SetRotation(OriRotateAngle);
+            Sprite.SetPosition(Position);
+            Sprite.SetColor(Color.clear);
+            Sprite.Update(true);
+            Scale = Vector2.one;
         }
-        else if (this.Type == 2)
+        else if (Type == 2)
         {
-            this.Ribbon.SetHeadPosition(this.ClientTrans.position + ((Vector3) (this.OriDirection.normalized * this.Owner.TailDistance)));
-            this.Ribbon.Reset();
-            this.Ribbon.SetColor(UnityEngine.Color.clear);
-            this.Ribbon.UpdateVertices(Vector3.zero);
+            Ribbon.SetHeadPosition(ClientTrans.position + OriDirection.normalized * Owner.TailDistance);
+            Ribbon.Reset();
+            Ribbon.SetColor(Color.clear);
+            Ribbon.UpdateVertices(Vector3.zero);
         }
     }
 
     public void SetAffectorList(ArrayList afts)
     {
-        this.AffectorList = afts;
+        AffectorList = afts;
     }
 
     public void SetLocalPosition(Vector3 pos)
     {
-        this.Position = pos;
+        Position = pos;
     }
 
     public void SetType(float width, int maxelemnt, float len, Vector3 pos, int stretchType, float maxFps)
     {
-        this.Type = 2;
-        this.Ribbon = this.Owner.GetVertexPool().AddRibbonTrail(width, maxelemnt, len, pos, stretchType, maxFps);
+        Type = 2;
+        Ribbon = Owner.GetVertexPool().AddRibbonTrail(width, maxelemnt, len, pos, stretchType, maxFps);
     }
 
     public void SetType(float width, float height, STYPE type, ORIPOINT orip, int uvStretch, float maxFps)
     {
-        this.Type = 1;
-        this.Sprite = this.Owner.GetVertexPool().AddSprite(width, height, type, orip, Camera.main, uvStretch, maxFps);
+        Type = 1;
+        Sprite = Owner.GetVertexPool().AddSprite(width, height, type, orip, Camera.main, uvStretch, maxFps);
     }
 
     public void Update()
     {
-        this.ElapsedTime += Time.deltaTime;
-        IEnumerator enumerator = this.AffectorList.GetEnumerator();
+        ElapsedTime += Time.deltaTime;
+        var enumerator = AffectorList.GetEnumerator();
         try
         {
             while (enumerator.MoveNext())
@@ -172,58 +172,58 @@ public class EffectNode
         }
         finally
         {
-            IDisposable disposable = enumerator as IDisposable;
+            var disposable = enumerator as IDisposable;
             if (disposable != null)
             	disposable.Dispose();
         }
-        this.Position += (Vector3) (this.Velocity * Time.deltaTime);
-        if (Mathf.Abs(this.Acceleration) > 0.0001)
+        Position += Velocity * Time.deltaTime;
+        if (Mathf.Abs(Acceleration) > 0.0001)
         {
-            this.Velocity += (Vector3) ((this.Velocity.normalized * this.Acceleration) * Time.deltaTime);
+            Velocity += (Velocity.normalized * Acceleration) * Time.deltaTime;
         }
-        if (this.SyncClient)
+        if (SyncClient)
         {
-            this.CurWorldPos = this.ClientTrans.TransformPoint(this.Position);
+            CurWorldPos = ClientTrans.TransformPoint(Position);
         }
         else
         {
-            this.CurWorldPos = this.Position;
+            CurWorldPos = Position;
         }
-        if (this.Type == 1)
+        if (Type == 1)
         {
-            this.UpdateSprite();
+            UpdateSprite();
         }
-        else if (this.Type == 2)
+        else if (Type == 2)
         {
-            this.UpdateRibbonTrail();
+            UpdateRibbonTrail();
         }
-        this.LastWorldPos = this.CurWorldPos;
-        if ((this.ElapsedTime > this.LifeTime) && (this.LifeTime > 0f))
+        LastWorldPos = CurWorldPos;
+        if ((ElapsedTime > LifeTime) && (LifeTime > 0f))
         {
-            this.Reset();
-            this.Remove();
+            Reset();
+            Remove();
         }
     }
 
     public void UpdateRibbonTrail()
     {
-        this.Ribbon.SetHeadPosition(this.CurWorldPos);
-        if (this.Owner.UVAffectorEnable)
+        Ribbon.SetHeadPosition(CurWorldPos);
+        if (Owner.UVAffectorEnable)
         {
-            this.Ribbon.SetUVCoord(this.LowerLeftUV, this.UVDimensions);
+            Ribbon.SetUVCoord(LowerLeftUV, UVDimensions);
         }
-        this.Ribbon.SetColor(this.Color);
-        this.Ribbon.Update();
+        Ribbon.SetColor(Color);
+        Ribbon.Update();
     }
 
     public void UpdateSprite()
     {
-        if (this.Owner.AlongVelocity)
+        if (Owner.AlongVelocity)
         {
-            Vector3 zero = Vector3.zero;
-            if (this.LastWorldPos != Vector3.zero)
+            var zero = Vector3.zero;
+            if (LastWorldPos != Vector3.zero)
             {
-                zero = this.CurWorldPos - this.LastWorldPos;
+                zero = CurWorldPos - LastWorldPos;
             }
             else
             {
@@ -231,22 +231,22 @@ public class EffectNode
             }
             if (zero != Vector3.zero)
             {
-                this.CurDirection = zero;
-                this.Sprite.SetRotationTo(this.CurDirection);
+                CurDirection = zero;
+                Sprite.SetRotationTo(CurDirection);
             }
         }
-        this.Sprite.SetScale(this.Scale.x * this.OriScaleX, this.Scale.y * this.OriScaleY);
-        if (this.Owner.ColorAffectorEnable)
+        Sprite.SetScale(Scale.x * OriScaleX, Scale.y * OriScaleY);
+        if (Owner.ColorAffectorEnable)
         {
-            this.Sprite.SetColor(this.Color);
+            Sprite.SetColor(Color);
         }
-        if (this.Owner.UVAffectorEnable)
+        if (Owner.UVAffectorEnable)
         {
-            this.Sprite.SetUVCoord(this.LowerLeftUV, this.UVDimensions);
+            Sprite.SetUVCoord(LowerLeftUV, UVDimensions);
         }
-        this.Sprite.SetRotation((float) (this.OriRotateAngle + this.RotateAngle));
-        this.Sprite.SetPosition(this.CurWorldPos);
-        this.Sprite.Update(false);
+        Sprite.SetRotation(OriRotateAngle + RotateAngle);
+        Sprite.SetPosition(CurWorldPos);
+        Sprite.Update(false);
     }
 }
 

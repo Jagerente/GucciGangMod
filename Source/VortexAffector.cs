@@ -14,46 +14,46 @@ public class VortexAffector : Affector
 
     public VortexAffector(float mag, Vector3 dir, EffectNode node) : base(node)
     {
-        this.Magnitude = mag;
-        this.Direction = dir;
-        this.UseCurve = false;
+        Magnitude = mag;
+        Direction = dir;
+        UseCurve = false;
     }
 
     public VortexAffector(AnimationCurve vortexCurve, Vector3 dir, EffectNode node) : base(node)
     {
-        this.VortexCurve = vortexCurve;
-        this.Direction = dir;
-        this.UseCurve = true;
+        VortexCurve = vortexCurve;
+        Direction = dir;
+        UseCurve = true;
     }
 
     public override void Update()
     {
-        Vector3 rhs = base.Node.GetLocalPosition() - base.Node.Owner.EmitPoint;
+        var rhs = Node.GetLocalPosition() - Node.Owner.EmitPoint;
         if (rhs.magnitude != 0f)
         {
             float magnitude;
-            float num2 = Vector3.Dot(this.Direction, rhs);
-            rhs -= (Vector3) (num2 * this.Direction);
-            Vector3 zero = Vector3.zero;
+            var num2 = Vector3.Dot(Direction, rhs);
+            rhs -= num2 * Direction;
+            var zero = Vector3.zero;
             if (rhs == Vector3.zero)
             {
                 zero = rhs;
             }
             else
             {
-                zero = Vector3.Cross(this.Direction, rhs).normalized;
+                zero = Vector3.Cross(Direction, rhs).normalized;
             }
-            float elapsedTime = base.Node.GetElapsedTime();
-            if (this.UseCurve)
+            var elapsedTime = Node.GetElapsedTime();
+            if (UseCurve)
             {
-                magnitude = this.VortexCurve.Evaluate(elapsedTime);
+                magnitude = VortexCurve.Evaluate(elapsedTime);
             }
             else
             {
-                magnitude = this.Magnitude;
+                magnitude = Magnitude;
             }
-            zero = (Vector3) (zero * (magnitude * Time.deltaTime));
-            base.Node.Position += zero;
+            zero = zero * (magnitude * Time.deltaTime);
+            Node.Position += zero;
         }
     }
 }

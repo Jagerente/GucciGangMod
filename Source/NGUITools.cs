@@ -17,8 +17,8 @@ public static class NGUITools
     private static void Activate(Transform t)
     {
         SetActiveSelf(t.gameObject, true);
-        int index = 0;
-        int childCount = t.childCount;
+        var index = 0;
+        var childCount = t.childCount;
         while (index < childCount)
         {
             if (t.GetChild(index).gameObject.activeSelf)
@@ -27,8 +27,8 @@ public static class NGUITools
             }
             index++;
         }
-        int num3 = 0;
-        int num4 = t.childCount;
+        var num3 = 0;
+        var num4 = t.childCount;
         while (num3 < num4)
         {
             Activate(t.GetChild(num3));
@@ -38,10 +38,10 @@ public static class NGUITools
 
     public static GameObject AddChild(GameObject parent)
     {
-        GameObject obj2 = new GameObject();
+        var obj2 = new GameObject();
         if (parent != null)
         {
-            Transform transform = obj2.transform;
+            var transform = obj2.transform;
             transform.parent = parent.transform;
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
@@ -53,17 +53,17 @@ public static class NGUITools
 
     public static T AddChild<T>(GameObject parent) where T: Component
     {
-        GameObject obj2 = AddChild(parent);
+        var obj2 = AddChild(parent);
         obj2.name = GetName<T>();
         return obj2.AddComponent<T>();
     }
 
     public static GameObject AddChild(GameObject parent, GameObject prefab)
     {
-        GameObject obj2 = UnityEngine.Object.Instantiate(prefab) as GameObject;
+        var obj2 = UnityEngine.Object.Instantiate(prefab) as GameObject;
         if ((obj2 != null) && (parent != null))
         {
-            Transform transform = obj2.transform;
+            var transform = obj2.transform;
             transform.parent = parent.transform;
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
@@ -75,8 +75,8 @@ public static class NGUITools
 
     public static UISprite AddSprite(GameObject go, UIAtlas atlas, string spriteName)
     {
-        UIAtlas.Sprite sprite = (atlas == null) ? null : atlas.GetSprite(spriteName);
-        UISprite sprite2 = AddWidget<UISprite>(go);
+        var sprite = (atlas == null) ? null : atlas.GetSprite(spriteName);
+        var sprite2 = AddWidget<UISprite>(go);
         sprite2.type = ((sprite != null) && !(sprite.inner == sprite.outer)) ? UISprite.Type.Sliced : UISprite.Type.Simple;
         sprite2.atlas = atlas;
         sprite2.spriteName = spriteName;
@@ -85,10 +85,10 @@ public static class NGUITools
 
     public static T AddWidget<T>(GameObject go) where T: UIWidget
     {
-        int num = CalculateNextDepth(go);
-        T local = AddChild<T>(go);
+        var num = CalculateNextDepth(go);
+        var local = AddChild<T>(go);
         local.depth = num;
-        Transform transform = local.transform;
+        var transform = local.transform;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         transform.localScale = new Vector3(100f, 100f, 1f);
@@ -102,8 +102,8 @@ public static class NGUITools
         {
             return null;
         }
-        Collider component = go.GetComponent<Collider>();
-        BoxCollider collider2 = component as BoxCollider;
+        var component = go.GetComponent<Collider>();
+        var collider2 = component as BoxCollider;
         if (collider2 == null)
         {
             if (component != null)
@@ -119,10 +119,10 @@ public static class NGUITools
             }
             collider2 = go.AddComponent<BoxCollider>();
         }
-        int num = CalculateNextDepth(go);
-        Bounds bounds = NGUIMath.CalculateRelativeWidgetBounds(go.transform);
+        var num = CalculateNextDepth(go);
+        var bounds = NGUIMath.CalculateRelativeWidgetBounds(go.transform);
         collider2.isTrigger = true;
-        collider2.center = bounds.center + ((Vector3) (Vector3.back * (num * 0.25f)));
+        collider2.center = bounds.center + Vector3.back * (num * 0.25f);
         collider2.size = new Vector3(bounds.size.x, bounds.size.y, 0f);
         return collider2;
     }
@@ -140,9 +140,9 @@ public static class NGUITools
 
     public static void Broadcast(string funcName)
     {
-        GameObject[] objArray = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
-        int index = 0;
-        int length = objArray.Length;
+        var objArray = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var index = 0;
+        var length = objArray.Length;
         while (index < length)
         {
             objArray[index].SendMessage(funcName, SendMessageOptions.DontRequireReceiver);
@@ -152,9 +152,9 @@ public static class NGUITools
 
     public static void Broadcast(string funcName, object param)
     {
-        GameObject[] objArray = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
-        int index = 0;
-        int length = objArray.Length;
+        var objArray = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var index = 0;
+        var length = objArray.Length;
         while (index < length)
         {
             objArray[index].SendMessage(funcName, param, SendMessageOptions.DontRequireReceiver);
@@ -164,10 +164,10 @@ public static class NGUITools
 
     public static int CalculateNextDepth(GameObject go)
     {
-        int a = -1;
-        UIWidget[] componentsInChildren = go.GetComponentsInChildren<UIWidget>();
-        int index = 0;
-        int length = componentsInChildren.Length;
+        var a = -1;
+        var componentsInChildren = go.GetComponentsInChildren<UIWidget>();
+        var index = 0;
+        var length = componentsInChildren.Length;
         while (index < length)
         {
             a = Mathf.Max(a, componentsInChildren[index].depth);
@@ -189,7 +189,7 @@ public static class NGUITools
             {
                 if (obj is GameObject)
                 {
-                    GameObject obj2 = obj as GameObject;
+                    var obj2 = obj as GameObject;
                     obj2.transform.parent = null;
                 }
                 UnityEngine.Object.Destroy(obj);
@@ -218,7 +218,7 @@ public static class NGUITools
 
     public static string EncodeColor(Color c)
     {
-        int num = 0xffffff & (NGUIMath.ColorToInt(c) >> 8);
+        var num = 0xffffff & (NGUIMath.ColorToInt(c) >> 8);
         return NGUIMath.DecimalToHex(num);
     }
 
@@ -229,13 +229,13 @@ public static class NGUITools
 
     public static Camera FindCameraForLayer(int layer)
     {
-        int num = ((int) 1) << layer;
-        Camera[] cameraArray = FindActive<Camera>();
-        int index = 0;
-        int length = cameraArray.Length;
+        var num = 1 << layer;
+        var cameraArray = FindActive<Camera>();
+        var index = 0;
+        var length = cameraArray.Length;
         while (index < length)
         {
-            Camera camera = cameraArray[index];
+            var camera = cameraArray[index];
             if ((camera.cullingMask & num) != 0)
             {
                 return camera;
@@ -254,7 +254,7 @@ public static class NGUITools
         object component = go.GetComponent<T>();
         if (component == null)
         {
-            for (Transform transform = go.transform.parent; (transform != null) && (component == null); transform = transform.parent)
+            for (var transform = go.transform.parent; (transform != null) && (component == null); transform = transform.parent)
             {
                 component = transform.gameObject.GetComponent<T>();
             }
@@ -269,7 +269,7 @@ public static class NGUITools
 
     public static string GetHierarchy(GameObject obj)
     {
-        string name = obj.name;
+        var name = obj.name;
         while (obj.transform.parent != null)
         {
             obj = obj.transform.parent.gameObject;
@@ -280,7 +280,7 @@ public static class NGUITools
 
     public static string GetName<T>() where T: Component
     {
-        string str = typeof(T).ToString();
+        var str = typeof(T).ToString();
         if (str.StartsWith("UI"))
         {
             return str.Substring(2);
@@ -294,10 +294,10 @@ public static class NGUITools
 
     public static GameObject GetRoot(GameObject go)
     {
-        Transform transform = go.transform;
+        var transform = go.transform;
         while (true)
         {
-            Transform parent = transform.parent;
+            var parent = transform.parent;
             if (parent == null)
             {
                 return transform.gameObject;
@@ -329,7 +329,7 @@ public static class NGUITools
 
     public static void MakePixelPerfect(Transform t)
     {
-        UIWidget component = t.GetComponent<UIWidget>();
+        var component = t.GetComponent<UIWidget>();
         if (component != null)
         {
             component.MakePixelPerfect();
@@ -338,8 +338,8 @@ public static class NGUITools
         {
             t.localPosition = Round(t.localPosition);
             t.localScale = Round(t.localScale);
-            int index = 0;
-            int childCount = t.childCount;
+            var index = 0;
+            var childCount = t.childCount;
             while (index < childCount)
             {
                 MakePixelPerfect(t.GetChild(index));
@@ -350,9 +350,9 @@ public static class NGUITools
 
     public static void MarkParentAsChanged(GameObject go)
     {
-        UIWidget[] componentsInChildren = go.GetComponentsInChildren<UIWidget>();
-        int index = 0;
-        int length = componentsInChildren.Length;
+        var componentsInChildren = go.GetComponentsInChildren<UIWidget>();
+        var index = 0;
+        var length = componentsInChildren.Length;
         while (index < length)
         {
             componentsInChildren[index].ParentHasChanged();
@@ -394,16 +394,16 @@ public static class NGUITools
 
     public static Color ParseColor(string text, int offset)
     {
-        int num = (NGUIMath.HexToDecimal(text[offset]) << 4) | NGUIMath.HexToDecimal(text[offset + 1]);
-        int num2 = (NGUIMath.HexToDecimal(text[offset + 2]) << 4) | NGUIMath.HexToDecimal(text[offset + 3]);
-        int num3 = (NGUIMath.HexToDecimal(text[offset + 4]) << 4) | NGUIMath.HexToDecimal(text[offset + 5]);
-        float num4 = 0.003921569f;
+        var num = (NGUIMath.HexToDecimal(text[offset]) << 4) | NGUIMath.HexToDecimal(text[offset + 1]);
+        var num2 = (NGUIMath.HexToDecimal(text[offset + 2]) << 4) | NGUIMath.HexToDecimal(text[offset + 3]);
+        var num3 = (NGUIMath.HexToDecimal(text[offset + 4]) << 4) | NGUIMath.HexToDecimal(text[offset + 5]);
+        var num4 = 0.003921569f;
         return new Color(num4 * num, num4 * num2, num4 * num3);
     }
 
     public static int ParseSymbol(string text, int index, List<Color> colors, bool premultiply)
     {
-        int length = text.Length;
+        var length = text.Length;
         if ((index + 2) < length)
         {
             if (text[index + 1] == '-')
@@ -421,12 +421,12 @@ public static class NGUITools
             {
                 if (colors != null)
                 {
-                    Color c = ParseColor(text, index + 1);
+                    var c = ParseColor(text, index + 1);
                     if (EncodeColor(c) != text.Substring(index + 1, 6).ToUpper())
                     {
                         return 0;
                     }
-                    Color color2 = colors[colors.Count - 1];
+                    var color2 = colors[colors.Count - 1];
                     c.a = color2.a;
                     if (premultiply && (c.a != 1f))
                     {
@@ -460,7 +460,7 @@ public static class NGUITools
                 mListener = UnityEngine.Object.FindObjectOfType(typeof(AudioListener)) as AudioListener;
                 if (mListener == null)
                 {
-                    Camera main = Camera.main;
+                    var main = Camera.main;
                     if (main == null)
                     {
                         main = UnityEngine.Object.FindObjectOfType(typeof(Camera)) as Camera;
@@ -473,7 +473,7 @@ public static class NGUITools
             }
             if (((mListener != null) && mListener.enabled) && GetActive(mListener.gameObject))
             {
-                AudioSource source = mListener.audio;
+                var source = mListener.audio;
                 if (source == null)
                 {
                     source = mListener.gameObject.AddComponent<AudioSource>();
@@ -522,11 +522,11 @@ public static class NGUITools
 
     public static void SetActiveChildren(GameObject go, bool state)
     {
-        Transform transform = go.transform;
+        var transform = go.transform;
         if (state)
         {
-            int index = 0;
-            int childCount = transform.childCount;
+            var index = 0;
+            var childCount = transform.childCount;
             while (index < childCount)
             {
                 Activate(transform.GetChild(index));
@@ -535,8 +535,8 @@ public static class NGUITools
         }
         else
         {
-            int num3 = 0;
-            int num4 = transform.childCount;
+            var num3 = 0;
+            var num4 = transform.childCount;
             while (num3 < num4)
             {
                 Deactivate(transform.GetChild(num3));
@@ -553,9 +553,9 @@ public static class NGUITools
     public static void SetLayer(GameObject go, int layer)
     {
         go.layer = layer;
-        Transform transform = go.transform;
-        int index = 0;
-        int childCount = transform.childCount;
+        var transform = go.transform;
+        var index = 0;
+        var childCount = transform.childCount;
         while (index < childCount)
         {
             SetLayer(transform.GetChild(index).gameObject, layer);
@@ -567,14 +567,14 @@ public static class NGUITools
     {
         if (text != null)
         {
-            int index = 0;
-            int length = text.Length;
+            var index = 0;
+            var length = text.Length;
             while (index < length)
             {
-                char ch = text[index];
+                var ch = text[index];
                 if (ch == '[')
                 {
-                    int count = ParseSymbol(text, index, null, false);
+                    var count = ParseSymbol(text, index, null, false);
                     if (count > 0)
                     {
                         text = text.Remove(index, count);

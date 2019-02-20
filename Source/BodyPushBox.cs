@@ -13,13 +13,13 @@ public class BodyPushBox : MonoBehaviour
     {
         if (other.gameObject.tag == "bodyCollider")
         {
-            BodyPushBox component = other.gameObject.GetComponent<BodyPushBox>();
+            var component = other.gameObject.GetComponent<BodyPushBox>();
             if ((component != null) && (component.parent != null))
             {
                 float num3;
-                Vector3 vector = component.parent.transform.position - this.parent.transform.position;
-                float radius = base.gameObject.GetComponent<CapsuleCollider>().radius;
-                float num2 = base.gameObject.GetComponent<CapsuleCollider>().radius;
+                var vector = component.parent.transform.position - parent.transform.position;
+                var radius = gameObject.GetComponent<CapsuleCollider>().radius;
+                var num2 = gameObject.GetComponent<CapsuleCollider>().radius;
                 vector.y = 0f;
                 if (vector.magnitude > 0f)
                 {

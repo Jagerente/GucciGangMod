@@ -32,169 +32,169 @@
 
         public void Activate()
         {
-            this.MaxFrame = Convert.ToInt32(Settings.BladeTrailsFrameRate);
-            this.Init();
-            if (this.mMeshObj == null)
+            MaxFrame = Convert.ToInt32(Settings.BladeTrailsFrameRate);
+            Init();
+            if (mMeshObj == null)
             {
-                this.InitMeshObj();
+                InitMeshObj();
             }
             else
             {
-                base.gameObject.SetActive(true);
-                if (this.mMeshObj != null)
+                gameObject.SetActive(true);
+                if (mMeshObj != null)
                 {
-                    this.mMeshObj.SetActive(true);
+                    mMeshObj.SetActive(true);
                 }
-                this.mFadeT = 1f;
-                this.mIsFading = false;
-                this.mFadeTime = 1f;
-                this.mFadeElapsedime = 0f;
-                this.mElapsedTime = 0f;
-                for (int i = 0; i < this.mSnapshotList.Count; i++)
+                mFadeT = 1f;
+                mIsFading = false;
+                mFadeTime = 1f;
+                mFadeElapsedime = 0f;
+                mElapsedTime = 0f;
+                for (var i = 0; i < mSnapshotList.Count; i++)
                 {
-                    this.mSnapshotList[i].PointStart = this.PointStart.position;
-                    this.mSnapshotList[i].PointEnd = this.PointEnd.position;
-                    this.mSpline.ControlPoints[i].Position = this.mSnapshotList[i].Pos;
-                    this.mSpline.ControlPoints[i].Normal = this.mSnapshotList[i].PointEnd - this.mSnapshotList[i].PointStart;
+                    mSnapshotList[i].PointStart = PointStart.position;
+                    mSnapshotList[i].PointEnd = PointEnd.position;
+                    mSpline.ControlPoints[i].Position = mSnapshotList[i].Pos;
+                    mSpline.ControlPoints[i].Normal = mSnapshotList[i].PointEnd - mSnapshotList[i].PointStart;
                 }
-                this.RefreshSpline();
-                this.UpdateVertex();
+                RefreshSpline();
+                UpdateVertex();
             }
         }
 
         public void Deactivate()
         {
-            base.gameObject.SetActive(false);
-            if (this.mMeshObj != null)
+            gameObject.SetActive(false);
+            if (mMeshObj != null)
             {
-                this.mMeshObj.SetActive(false);
+                mMeshObj.SetActive(false);
             }
         }
 
         public void Init()
         {
-            if (!this.mInited)
+            if (!mInited)
             {
-                Vector3 vector = this.PointStart.position - this.PointEnd.position;
-                this.mTrailWidth = vector.magnitude;
-                this.InitMeshObj();
-                this.InitOriginalElements();
-                this.InitSpline();
-                this.mInited = true;
+                var vector = PointStart.position - PointEnd.position;
+                mTrailWidth = vector.magnitude;
+                InitMeshObj();
+                InitOriginalElements();
+                InitSpline();
+                mInited = true;
             }
         }
 
         private void InitMeshObj()
         {
-            this.mMeshObj = new GameObject("_XWeaponTrailMesh: " + base.gameObject.name);
-            this.mMeshObj.layer = base.gameObject.layer;
-            this.mMeshObj.SetActive(true);
-            MeshFilter filter = this.mMeshObj.AddComponent<MeshFilter>();
-            MeshRenderer renderer = this.mMeshObj.AddComponent<MeshRenderer>();
+            mMeshObj = new GameObject("_XWeaponTrailMesh: " + gameObject.name);
+            mMeshObj.layer = gameObject.layer;
+            mMeshObj.SetActive(true);
+            var filter = mMeshObj.AddComponent<MeshFilter>();
+            var renderer = mMeshObj.AddComponent<MeshRenderer>();
             renderer.castShadows = false;
             renderer.receiveShadows = false;
-            renderer.renderer.sharedMaterial = this.MyMaterial;
+            renderer.renderer.sharedMaterial = MyMaterial;
             filter.sharedMesh = new Mesh();
-            this.mVertexPool = new VertexPool(filter.sharedMesh, this.MyMaterial);
-            this.mVertexSegment = this.mVertexPool.GetVertices(this.Granularity * 3, (this.Granularity - 1) * 12);
-            this.UpdateIndices();
+            mVertexPool = new VertexPool(filter.sharedMesh, MyMaterial);
+            mVertexSegment = mVertexPool.GetVertices(Granularity * 3, (Granularity - 1) * 12);
+            UpdateIndices();
         }
 
         private void InitOriginalElements()
         {
-            this.mSnapshotList.Clear();
-            this.mSnapshotList.Add(new Element(this.PointStart.position, this.PointEnd.position));
-            this.mSnapshotList.Add(new Element(this.PointStart.position, this.PointEnd.position));
+            mSnapshotList.Clear();
+            mSnapshotList.Add(new Element(PointStart.position, PointEnd.position));
+            mSnapshotList.Add(new Element(PointStart.position, PointEnd.position));
         }
 
         private void InitSpline()
         {
-            this.mSpline.Granularity = this.Granularity;
-            this.mSpline.Clear();
-            for (int i = 0; i < this.MaxFrame; i++)
+            mSpline.Granularity = Granularity;
+            mSpline.Clear();
+            for (var i = 0; i < MaxFrame; i++)
             {
-                this.mSpline.AddControlPoint(this.CurHeadPos, this.PointStart.position - this.PointEnd.position);
+                mSpline.AddControlPoint(CurHeadPos, PointStart.position - PointEnd.position);
             }
         }
 
         public void lateUpdate()
         {
-            if (this.mInited)
+            if (mInited)
             {
-                this.mVertexPool.LateUpdate();
+                mVertexPool.LateUpdate();
             }
         }
 
         private void OnDrawGizmos()
         {
-            if ((this.PointEnd != null) && (this.PointStart != null))
+            if ((PointEnd != null) && (PointStart != null))
             {
-                Vector3 vector = this.PointStart.position - this.PointEnd.position;
-                float magnitude = vector.magnitude;
+                var vector = PointStart.position - PointEnd.position;
+                var magnitude = vector.magnitude;
                 if (magnitude >= float.Epsilon)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawSphere(this.PointStart.position, magnitude * 0.04f);
+                    Gizmos.DrawSphere(PointStart.position, magnitude * 0.04f);
                     Gizmos.color = Color.blue;
-                    Gizmos.DrawSphere(this.PointEnd.position, magnitude * 0.04f);
+                    Gizmos.DrawSphere(PointEnd.position, magnitude * 0.04f);
                 }
             }
         }
 
         private void RecordCurElem()
         {
-            Element item = new Element(this.PointStart.position, this.PointEnd.position);
-            if (this.mSnapshotList.Count < this.MaxFrame)
+            var item = new Element(PointStart.position, PointEnd.position);
+            if (mSnapshotList.Count < MaxFrame)
             {
-                this.mSnapshotList.Insert(1, item);
+                mSnapshotList.Insert(1, item);
             }
             else
             {
-                this.mSnapshotList.RemoveAt(this.mSnapshotList.Count - 1);
-                this.mSnapshotList.Insert(1, item);
+                mSnapshotList.RemoveAt(mSnapshotList.Count - 1);
+                mSnapshotList.Insert(1, item);
             }
         }
 
         private void RefreshSpline()
         {
-            for (int i = 0; i < this.mSnapshotList.Count; i++)
+            for (var i = 0; i < mSnapshotList.Count; i++)
             {
-                this.mSpline.ControlPoints[i].Position = this.mSnapshotList[i].Pos;
-                this.mSpline.ControlPoints[i].Normal = this.mSnapshotList[i].PointEnd - this.mSnapshotList[i].PointStart;
+                mSpline.ControlPoints[i].Position = mSnapshotList[i].Pos;
+                mSpline.ControlPoints[i].Normal = mSnapshotList[i].PointEnd - mSnapshotList[i].PointStart;
             }
-            this.mSpline.RefreshSpline();
+            mSpline.RefreshSpline();
         }
 
         private void Start()
         {
-            this.Init();
+            Init();
         }
 
         public void StopSmoothly(float fadeTime)
         {
-            this.mIsFading = true;
-            this.mFadeTime = fadeTime;
+            mIsFading = true;
+            mFadeTime = fadeTime;
         }
 
         public void update()
         {
-            if (this.mInited)
+            if (mInited)
             {
-                if (this.mMeshObj == null)
+                if (mMeshObj == null)
                 {
-                    this.InitMeshObj();
+                    InitMeshObj();
                 }
                 else
                 {
-                    this.UpdateHeadElem();
-                    this.mElapsedTime += Time.deltaTime;
-                    if (this.mElapsedTime >= this.UpdateInterval)
+                    UpdateHeadElem();
+                    mElapsedTime += Time.deltaTime;
+                    if (mElapsedTime >= UpdateInterval)
                     {
-                        this.mElapsedTime -= this.UpdateInterval;
-                        this.RecordCurElem();
-                        this.RefreshSpline();
-                        this.UpdateFade();
-                        this.UpdateVertex();
+                        mElapsedTime -= UpdateInterval;
+                        RecordCurElem();
+                        RefreshSpline();
+                        UpdateFade();
+                        UpdateVertex();
                     }
                 }
             }
@@ -204,32 +204,32 @@
 
         private void UpdateFade()
         {
-            if (this.mIsFading)
+            if (mIsFading)
             {
-                this.mFadeElapsedime += Time.deltaTime;
-                float num = this.mFadeElapsedime / this.mFadeTime;
-                this.mFadeT = 1f - num;
-                if (this.mFadeT < 0f)
+                mFadeElapsedime += Time.deltaTime;
+                var num = mFadeElapsedime / mFadeTime;
+                mFadeT = 1f - num;
+                if (mFadeT < 0f)
                 {
-                    this.Deactivate();
+                    Deactivate();
                 }
             }
         }
 
         private void UpdateHeadElem()
         {
-            this.mSnapshotList[0].PointStart = this.PointStart.position;
-            this.mSnapshotList[0].PointEnd = this.PointEnd.position;
+            mSnapshotList[0].PointStart = PointStart.position;
+            mSnapshotList[0].PointEnd = PointEnd.position;
         }
 
         private void UpdateIndices()
         {
-            VertexPool pool = this.mVertexSegment.Pool;
-            for (int i = 0; i < (this.Granularity - 1); i++)
+            var pool = mVertexSegment.Pool;
+            for (var i = 0; i < (Granularity - 1); i++)
             {
-                int num2 = this.mVertexSegment.VertStart + (i * 3);
-                int num3 = this.mVertexSegment.VertStart + ((i + 1) * 3);
-                int index = this.mVertexSegment.IndexStart + (i * 12);
+                var num2 = mVertexSegment.VertStart + (i * 3);
+                var num3 = mVertexSegment.VertStart + ((i + 1) * 3);
+                var index = mVertexSegment.IndexStart + (i * 12);
                 pool.Indices[index] = num3;
                 pool.Indices[index + 1] = num3 + 1;
                 pool.Indices[index + 2] = num2;
@@ -248,43 +248,43 @@
 
         private void UpdateVertex()
         {
-            VertexPool pool = this.mVertexSegment.Pool;
-            for (int i = 0; i < this.Granularity; i++)
+            var pool = mVertexSegment.Pool;
+            for (var i = 0; i < Granularity; i++)
             {
-                int index = this.mVertexSegment.VertStart + (i * 3);
-                float num3 = ((float) i) / ((float) this.Granularity);
-                float tl = num3 * this.mFadeT;
-                Vector2 zero = Vector2.zero;
-                Vector3 vector2 = this.mSpline.InterpolateByLen(tl);
-                Vector3 vector3 = this.mSpline.InterpolateNormalByLen(tl);
-                Vector3 vector4 = vector2 + ((Vector3) ((vector3.normalized * this.mTrailWidth) * 0.5f));
-                Vector3 vector5 = vector2 - ((Vector3) ((vector3.normalized * this.mTrailWidth) * 0.5f));
+                var index = mVertexSegment.VertStart + (i * 3);
+                var num3 = i / ((float) Granularity);
+                var tl = num3 * mFadeT;
+                var zero = Vector2.zero;
+                var vector2 = mSpline.InterpolateByLen(tl);
+                var vector3 = mSpline.InterpolateNormalByLen(tl);
+                var vector4 = vector2 + (vector3.normalized * mTrailWidth) * 0.5f;
+                var vector5 = vector2 - (vector3.normalized * mTrailWidth) * 0.5f;
                 pool.Vertices[index] = vector4;
-                pool.Colors[index] = this.MyColor;
+                pool.Colors[index] = MyColor;
                 zero.x = 0f;
                 zero.y = num3;
                 pool.UVs[index] = zero;
                 pool.Vertices[index + 1] = vector2;
-                pool.Colors[index + 1] = this.MyColor;
+                pool.Colors[index + 1] = MyColor;
                 zero.x = 0.5f;
                 zero.y = num3;
                 pool.UVs[index + 1] = zero;
                 pool.Vertices[index + 2] = vector5;
-                pool.Colors[index + 2] = this.MyColor;
+                pool.Colors[index + 2] = MyColor;
                 zero.x = 1f;
                 zero.y = num3;
                 pool.UVs[index + 2] = zero;
             }
-            this.mVertexSegment.Pool.UVChanged = true;
-            this.mVertexSegment.Pool.VertChanged = true;
-            this.mVertexSegment.Pool.ColorChanged = true;
+            mVertexSegment.Pool.UVChanged = true;
+            mVertexSegment.Pool.VertChanged = true;
+            mVertexSegment.Pool.ColorChanged = true;
         }
 
         public Vector3 CurHeadPos
         {
             get
             {
-                return (Vector3) ((this.PointStart.position + this.PointEnd.position) / 2f);
+                return (PointStart.position + PointEnd.position) / 2f;
             }
         }
 
@@ -292,7 +292,7 @@
         {
             get
             {
-                return this.mTrailWidth;
+                return mTrailWidth;
             }
         }
 
@@ -315,15 +315,15 @@
 
             public Element(Vector3 start, Vector3 end)
             {
-                this.PointStart = start;
-                this.PointEnd = end;
+                PointStart = start;
+                PointEnd = end;
             }
 
             public Vector3 Pos
             {
                 get
                 {
-                    return (Vector3) ((this.PointStart + this.PointEnd) / 2f);
+                    return (PointStart + PointEnd) / 2f;
                 }
             }
         }

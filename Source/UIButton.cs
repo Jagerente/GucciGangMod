@@ -12,19 +12,19 @@ public class UIButton : UIButtonColor
 
     protected override void OnEnable()
     {
-        if (this.isEnabled)
+        if (isEnabled)
         {
             base.OnEnable();
         }
         else
         {
-            this.UpdateColor(false, true);
+            UpdateColor(false, true);
         }
     }
 
     public override void OnHover(bool isOver)
     {
-        if (this.isEnabled)
+        if (isEnabled)
         {
             base.OnHover(isOver);
         }
@@ -32,7 +32,7 @@ public class UIButton : UIButtonColor
 
     public override void OnPress(bool isPressed)
     {
-        if (this.isEnabled)
+        if (isEnabled)
         {
             base.OnPress(isPressed);
         }
@@ -40,15 +40,15 @@ public class UIButton : UIButtonColor
 
     public void UpdateColor(bool shouldBeEnabled, bool immediate)
     {
-        if (base.tweenTarget != null)
+        if (tweenTarget != null)
         {
-            if (!base.mStarted)
+            if (!mStarted)
             {
-                base.mStarted = true;
-                base.Init();
+                mStarted = true;
+                Init();
             }
-            Color color = !shouldBeEnabled ? this.disabledColor : base.defaultColor;
-            TweenColor color2 = TweenColor.Begin(base.tweenTarget, 0.15f, color);
+            var color = !shouldBeEnabled ? disabledColor : defaultColor;
+            var color2 = TweenColor.Begin(tweenTarget, 0.15f, color);
             if (immediate)
             {
                 color2.color = color;
@@ -61,16 +61,16 @@ public class UIButton : UIButtonColor
     {
         get
         {
-            Collider collider = base.collider;
+            var collider = this.collider;
             return ((collider != null) && collider.enabled);
         }
         set
         {
-            Collider collider = base.collider;
+            var collider = this.collider;
             if ((collider != null) && (collider.enabled != value))
             {
                 collider.enabled = value;
-                this.UpdateColor(value, false);
+                UpdateColor(value, false);
             }
         }
     }

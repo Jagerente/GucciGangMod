@@ -226,20 +226,20 @@ public class Language
 
     public static void init()
     {
-        char[] separator = new char[] { "\n"[0] };
-        string[] strArray = ((TextAsset) Resources.Load("lang")).text.Split(separator);
-        string txt = string.Empty;
-        int index = 0;
-        string str3 = string.Empty;
-        string str4 = string.Empty;
-        for (int i = 0; i < strArray.Length; i++)
+        var separator = new char[] { "\n"[0] };
+        var strArray = ((TextAsset) Resources.Load("lang")).text.Split(separator);
+        var txt = string.Empty;
+        var index = 0;
+        var str3 = string.Empty;
+        var str4 = string.Empty;
+        for (var i = 0; i < strArray.Length; i++)
         {
-            string str5 = strArray[i];
+            var str5 = strArray[i];
             if (!str5.Contains("//"))
             {
                 if (str5.Contains("#START"))
                 {
-                    char[] chArray2 = new char[] { "@"[0] };
+                    var chArray2 = new char[] { "@"[0] };
                     txt = str5.Split(chArray2)[1];
                     index = GetLangIndex(txt);
                 }
@@ -249,9 +249,9 @@ public class Language
                 }
                 else if ((txt != string.Empty) && str5.Contains("@"))
                 {
-                    char[] chArray3 = new char[] { "@"[0] };
+                    var chArray3 = new char[] { "@"[0] };
                     str3 = str5.Split(chArray3)[0];
-                    char[] chArray4 = new char[] { "@"[0] };
+                    var chArray4 = new char[] { "@"[0] };
                     str4 = str5.Split(chArray4)[1];
                     switch (str3)
                     {

@@ -29,24 +29,24 @@ public class PlayerInfoPHOTON
 
     public void initAsGuest()
     {
-        this.name = "GUEST" + UnityEngine.Random.Range(0, 0x186a0);
-        this.kills = 0;
-        this.die = 0;
-        this.maxDamage = 0;
-        this.totalDamage = 0;
-        this.assistancePt = 0;
-        this.dead = false;
-        this.resourceId = "not choose";
-        this.SET = false;
-        this.totalKills = 0;
-        this.totalDeaths = 0;
-        this.totalKillsInOneLifeNormal = 0;
-        this.totalKillsInOneLifeHard = 0;
-        this.totalKillsInOneLifeAB = 0;
-        this.airKills = 0;
-        this.totalCrawlerKills = 0;
-        this.totalJumperKills = 0;
-        this.totalNonAIKills = 0;
+        name = "GUEST" + UnityEngine.Random.Range(0, 0x186a0);
+        kills = 0;
+        die = 0;
+        maxDamage = 0;
+        totalDamage = 0;
+        assistancePt = 0;
+        dead = false;
+        resourceId = "not choose";
+        SET = false;
+        totalKills = 0;
+        totalDeaths = 0;
+        totalKillsInOneLifeNormal = 0;
+        totalKillsInOneLifeHard = 0;
+        totalKillsInOneLifeAB = 0;
+        airKills = 0;
+        totalCrawlerKills = 0;
+        totalJumperKills = 0;
+        totalNonAIKills = 0;
     }
 }
 

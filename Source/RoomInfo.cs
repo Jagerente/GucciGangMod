@@ -16,66 +16,66 @@ public class RoomInfo
 
     protected internal RoomInfo(string roomName, Hashtable properties)
     {
-        this.CacheProperties(properties);
-        this.nameField = roomName;
+        CacheProperties(properties);
+        nameField = roomName;
     }
 
     protected internal void CacheProperties(Hashtable propertiesToCache)
     {
-        if (((propertiesToCache != null) && (propertiesToCache.Count != 0)) && !this.customPropertiesField.Equals(propertiesToCache))
+        if (((propertiesToCache != null) && (propertiesToCache.Count != 0)) && !customPropertiesField.Equals(propertiesToCache))
         {
             if (propertiesToCache.ContainsKey((byte) 0xfb))
             {
-                this.removedFromList = (bool) propertiesToCache[(byte) 0xfb];
-                if (this.removedFromList)
+                removedFromList = (bool) propertiesToCache[(byte) 0xfb];
+                if (removedFromList)
                 {
                     return;
                 }
             }
             if (propertiesToCache.ContainsKey((byte) 0xff))
             {
-                this.maxPlayersField = (byte) propertiesToCache[(byte) 0xff];
+                maxPlayersField = (byte) propertiesToCache[(byte) 0xff];
             }
             if (propertiesToCache.ContainsKey((byte) 0xfd))
             {
-                this.openField = (bool) propertiesToCache[(byte) 0xfd];
+                openField = (bool) propertiesToCache[(byte) 0xfd];
             }
             if (propertiesToCache.ContainsKey((byte) 0xfe))
             {
-                this.visibleField = (bool) propertiesToCache[(byte) 0xfe];
+                visibleField = (bool) propertiesToCache[(byte) 0xfe];
             }
             if (propertiesToCache.ContainsKey((byte) 0xfc))
             {
-                this.playerCount = (byte) propertiesToCache[(byte) 0xfc];
+                playerCount = (byte) propertiesToCache[(byte) 0xfc];
             }
             if (propertiesToCache.ContainsKey((byte) 0xf9))
             {
-                this.autoCleanUpField = (bool) propertiesToCache[(byte) 0xf9];
+                autoCleanUpField = (bool) propertiesToCache[(byte) 0xf9];
             }
-            this.customPropertiesField.MergeStringKeys(propertiesToCache);
+            customPropertiesField.MergeStringKeys(propertiesToCache);
         }
     }
 
     public override bool Equals(object p)
     {
-        Room room = p as Room;
-        return ((room != null) && this.nameField.Equals(room.nameField));
+        var room = p as Room;
+        return ((room != null) && nameField.Equals(room.nameField));
     }
 
     public override int GetHashCode()
     {
-        return this.nameField.GetHashCode();
+        return nameField.GetHashCode();
     }
 
     public override string ToString()
     {
-        object[] args = new object[] { this.nameField, !this.visibleField ? "hidden" : "visible", !this.openField ? "closed" : "open", this.maxPlayersField, this.playerCount };
+        var args = new object[] { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount };
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.", args);
     }
 
     public string ToStringFull()
     {
-        object[] args = new object[] { this.nameField, !this.visibleField ? "hidden" : "visible", !this.openField ? "closed" : "open", this.maxPlayersField, this.playerCount, this.customPropertiesField.ToStringFull() };
+        var args = new object[] { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount, customPropertiesField.ToStringFull() };
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", args);
     }
 
@@ -83,7 +83,7 @@ public class RoomInfo
     {
         get
         {
-            return this.customPropertiesField;
+            return customPropertiesField;
         }
     }
 
@@ -93,7 +93,7 @@ public class RoomInfo
     {
         get
         {
-            return this.maxPlayersField;
+            return maxPlayersField;
         }
     }
 
@@ -101,7 +101,7 @@ public class RoomInfo
     {
         get
         {
-            return this.nameField;
+            return nameField;
         }
     }
 
@@ -109,7 +109,7 @@ public class RoomInfo
     {
         get
         {
-            return this.openField;
+            return openField;
         }
     }
 
@@ -121,7 +121,7 @@ public class RoomInfo
     {
         get
         {
-            return this.visibleField;
+            return visibleField;
         }
     }
 }

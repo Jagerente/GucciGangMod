@@ -97,14 +97,14 @@ public class HeroStat
         SASHA.GAS = 100;
         SASHA.BLA = 100;
         SASHA.ACL = 0x73;
-        HeroStat stat = new HeroStat {
+        var stat = new HeroStat {
             skillId = "petra",
             SPD = 100,
             GAS = 100,
             BLA = 100,
             ACL = 100
         };
-        HeroStat stat2 = new HeroStat();
+        var stat2 = new HeroStat();
         SASHA.name = "AHSS";
         stat2.skillId = "sasha";
         stat2.SPD = 100;

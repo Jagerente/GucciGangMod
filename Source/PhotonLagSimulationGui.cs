@@ -19,53 +19,53 @@ public class PhotonLagSimulationGui : MonoBehaviour
 
     private void NetSimWindow(int windowId)
     {
-        GUILayout.Label(string.Format("Rtt:{0,4} +/-{1,3}", this.Peer.RoundTripTime, this.Peer.RoundTripTimeVariance), new GUILayoutOption[0]);
-        bool isSimulationEnabled = this.Peer.IsSimulationEnabled;
-        bool flag2 = GUILayout.Toggle(isSimulationEnabled, "Simulate", new GUILayoutOption[0]);
+        GUILayout.Label(string.Format("Rtt:{0,4} +/-{1,3}", Peer.RoundTripTime, Peer.RoundTripTimeVariance), new GUILayoutOption[0]);
+        var isSimulationEnabled = Peer.IsSimulationEnabled;
+        var flag2 = GUILayout.Toggle(isSimulationEnabled, "Simulate", new GUILayoutOption[0]);
         if (flag2 != isSimulationEnabled)
         {
-            this.Peer.IsSimulationEnabled = flag2;
+            Peer.IsSimulationEnabled = flag2;
         }
-        float incomingLag = this.Peer.NetworkSimulationSettings.IncomingLag;
+        float incomingLag = Peer.NetworkSimulationSettings.IncomingLag;
         GUILayout.Label("Lag " + incomingLag, new GUILayoutOption[0]);
         incomingLag = GUILayout.HorizontalSlider(incomingLag, 0f, 500f, new GUILayoutOption[0]);
-        this.Peer.NetworkSimulationSettings.IncomingLag = (int) incomingLag;
-        this.Peer.NetworkSimulationSettings.OutgoingLag = (int) incomingLag;
-        float incomingJitter = this.Peer.NetworkSimulationSettings.IncomingJitter;
+        Peer.NetworkSimulationSettings.IncomingLag = (int) incomingLag;
+        Peer.NetworkSimulationSettings.OutgoingLag = (int) incomingLag;
+        float incomingJitter = Peer.NetworkSimulationSettings.IncomingJitter;
         GUILayout.Label("Jit " + incomingJitter, new GUILayoutOption[0]);
         incomingJitter = GUILayout.HorizontalSlider(incomingJitter, 0f, 100f, new GUILayoutOption[0]);
-        this.Peer.NetworkSimulationSettings.IncomingJitter = (int) incomingJitter;
-        this.Peer.NetworkSimulationSettings.OutgoingJitter = (int) incomingJitter;
-        float incomingLossPercentage = this.Peer.NetworkSimulationSettings.IncomingLossPercentage;
+        Peer.NetworkSimulationSettings.IncomingJitter = (int) incomingJitter;
+        Peer.NetworkSimulationSettings.OutgoingJitter = (int) incomingJitter;
+        float incomingLossPercentage = Peer.NetworkSimulationSettings.IncomingLossPercentage;
         GUILayout.Label("Loss " + incomingLossPercentage, new GUILayoutOption[0]);
         incomingLossPercentage = GUILayout.HorizontalSlider(incomingLossPercentage, 0f, 10f, new GUILayoutOption[0]);
-        this.Peer.NetworkSimulationSettings.IncomingLossPercentage = (int) incomingLossPercentage;
-        this.Peer.NetworkSimulationSettings.OutgoingLossPercentage = (int) incomingLossPercentage;
+        Peer.NetworkSimulationSettings.IncomingLossPercentage = (int) incomingLossPercentage;
+        Peer.NetworkSimulationSettings.OutgoingLossPercentage = (int) incomingLossPercentage;
         if (GUI.changed)
         {
-            this.WindowRect.height = 100f;
+            WindowRect.height = 100f;
         }
         GUI.DragWindow();
     }
 
     public void OnGUI()
     {
-        if (this.Visible)
+        if (Visible)
         {
-            if (this.Peer == null)
+            if (Peer == null)
             {
-                this.WindowRect = GUILayout.Window(this.WindowId, this.WindowRect, new GUI.WindowFunction(this.NetSimHasNoPeerWindow), "Netw. Sim.", new GUILayoutOption[0]);
+                WindowRect = GUILayout.Window(WindowId, WindowRect, new GUI.WindowFunction(NetSimHasNoPeerWindow), "Netw. Sim.", new GUILayoutOption[0]);
             }
             else
             {
-                this.WindowRect = GUILayout.Window(this.WindowId, this.WindowRect, new GUI.WindowFunction(this.NetSimWindow), "Netw. Sim.", new GUILayoutOption[0]);
+                WindowRect = GUILayout.Window(WindowId, WindowRect, new GUI.WindowFunction(NetSimWindow), "Netw. Sim.", new GUILayoutOption[0]);
             }
         }
     }
 
     public void Start()
     {
-        this.Peer = PhotonNetwork.networkingPeer;
+        Peer = PhotonNetwork.networkingPeer;
     }
 
     public PhotonPeer Peer { get; set; }

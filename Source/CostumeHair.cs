@@ -38,7 +38,7 @@ public class CostumeHair
         hairsM[9].hair = hairsM[9].texture = "hair_mike";
         hairsM[10] = new CostumeHair();
         hairsM[10].hair = hairsM[10].texture = string.Empty;
-        for (int i = 0; i <= 10; i++)
+        for (var i = 0; i <= 10; i++)
         {
             hairsM[i].id = i;
         }
@@ -71,7 +71,7 @@ public class CostumeHair
         hairsF[10].hair = hairsF[10].texture = "hair_sasha";
         hairsF[10].hasCloth = true;
         hairsF[10].hair_1 = "hair_sasha_cloth";
-        for (int j = 0; j <= 10; j++)
+        for (var j = 0; j <= 10; j++)
         {
             hairsF[j].id = j;
         }

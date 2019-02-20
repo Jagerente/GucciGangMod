@@ -50,50 +50,50 @@ public class UIPanel : MonoBehaviour
 
     public void AddWidget(UIWidget w)
     {
-        if ((w != null) && !this.mWidgets.Contains(w))
+        if ((w != null) && !mWidgets.Contains(w))
         {
-            this.mWidgets.Add(w);
-            if (!this.mChanged.Contains(w.material))
+            mWidgets.Add(w);
+            if (!mChanged.Contains(w.material))
             {
-                this.mChanged.Add(w.material);
+                mChanged.Add(w.material);
             }
-            this.mDepthChanged = true;
+            mDepthChanged = true;
         }
     }
 
     private void Awake()
     {
-        this.mGo = base.gameObject;
-        this.mTrans = base.transform;
+        mGo = gameObject;
+        mTrans = transform;
     }
 
     public Vector3 CalculateConstrainOffset(Vector2 min, Vector2 max)
     {
-        float num = this.clipRange.z * 0.5f;
-        float num2 = this.clipRange.w * 0.5f;
-        Vector2 minRect = new Vector2(min.x, min.y);
-        Vector2 maxRect = new Vector2(max.x, max.y);
-        Vector2 minArea = new Vector2(this.clipRange.x - num, this.clipRange.y - num2);
-        Vector2 maxArea = new Vector2(this.clipRange.x + num, this.clipRange.y + num2);
-        if (this.clipping == UIDrawCall.Clipping.SoftClip)
+        var num = clipRange.z * 0.5f;
+        var num2 = clipRange.w * 0.5f;
+        var minRect = new Vector2(min.x, min.y);
+        var maxRect = new Vector2(max.x, max.y);
+        var minArea = new Vector2(clipRange.x - num, clipRange.y - num2);
+        var maxArea = new Vector2(clipRange.x + num, clipRange.y + num2);
+        if (clipping == UIDrawCall.Clipping.SoftClip)
         {
-            minArea.x += this.clipSoftness.x;
-            minArea.y += this.clipSoftness.y;
-            maxArea.x -= this.clipSoftness.x;
-            maxArea.y -= this.clipSoftness.y;
+            minArea.x += clipSoftness.x;
+            minArea.y += clipSoftness.y;
+            maxArea.x -= clipSoftness.x;
+            maxArea.y -= clipSoftness.y;
         }
-        return (Vector3) NGUIMath.ConstrainRect(minRect, maxRect, minArea, maxArea);
+        return NGUIMath.ConstrainRect(minRect, maxRect, minArea, maxArea);
     }
 
     public bool ConstrainTargetToBounds(Transform target, bool immediate)
     {
-        Bounds targetBounds = NGUIMath.CalculateRelativeWidgetBounds(this.cachedTransform, target);
-        return this.ConstrainTargetToBounds(target, ref targetBounds, immediate);
+        var targetBounds = NGUIMath.CalculateRelativeWidgetBounds(cachedTransform, target);
+        return ConstrainTargetToBounds(target, ref targetBounds, immediate);
     }
 
     public bool ConstrainTargetToBounds(Transform target, ref Bounds targetBounds, bool immediate)
     {
-        Vector3 vector = this.CalculateConstrainOffset(targetBounds.min, targetBounds.max);
+        var vector = CalculateConstrainOffset(targetBounds.min, targetBounds.max);
         if (vector.magnitude <= 0f)
         {
             return false;
@@ -102,7 +102,7 @@ public class UIPanel : MonoBehaviour
         {
             target.localPosition += vector;
             targetBounds.center += vector;
-            SpringPosition component = target.GetComponent<SpringPosition>();
+            var component = target.GetComponent<SpringPosition>();
             if (component != null)
             {
                 component.enabled = false;
@@ -110,7 +110,7 @@ public class UIPanel : MonoBehaviour
         }
         else
         {
-            SpringPosition position2 = SpringPosition.Begin(target.gameObject, target.localPosition + vector, 13f);
+            var position2 = SpringPosition.Begin(target.gameObject, target.localPosition + vector, 13f);
             position2.ignoreTimeScale = true;
             position2.worldSpace = false;
         }
@@ -119,13 +119,13 @@ public class UIPanel : MonoBehaviour
 
     private void Fill(Material mat)
     {
-        int index = 0;
-        while (index < this.mWidgets.size)
+        var index = 0;
+        while (index < mWidgets.size)
         {
-            UIWidget widget = this.mWidgets.buffer[index];
+            var widget = mWidgets.buffer[index];
             if (widget == null)
             {
-                this.mWidgets.RemoveAt(index);
+                mWidgets.RemoveAt(index);
             }
             else
             {
@@ -133,44 +133,44 @@ public class UIPanel : MonoBehaviour
                 {
                     if (widget.panel == this)
                     {
-                        if (this.generateNormals)
+                        if (generateNormals)
                         {
-                            widget.WriteToBuffers(this.mVerts, this.mUvs, this.mCols, this.mNorms, this.mTans);
+                            widget.WriteToBuffers(mVerts, mUvs, mCols, mNorms, mTans);
                         }
                         else
                         {
-                            widget.WriteToBuffers(this.mVerts, this.mUvs, this.mCols, null, null);
+                            widget.WriteToBuffers(mVerts, mUvs, mCols, null, null);
                         }
                     }
                     else
                     {
-                        this.mWidgets.RemoveAt(index);
+                        mWidgets.RemoveAt(index);
                         continue;
                     }
                 }
                 index++;
             }
         }
-        if (this.mVerts.size > 0)
+        if (mVerts.size > 0)
         {
-            UIDrawCall drawCall = this.GetDrawCall(mat, true);
-            drawCall.depthPass = this.depthPass && (this.mClipping == UIDrawCall.Clipping.None);
-            drawCall.Set(this.mVerts, !this.generateNormals ? null : this.mNorms, !this.generateNormals ? null : this.mTans, this.mUvs, this.mCols);
+            var drawCall = GetDrawCall(mat, true);
+            drawCall.depthPass = depthPass && (mClipping == UIDrawCall.Clipping.None);
+            drawCall.Set(mVerts, !generateNormals ? null : mNorms, !generateNormals ? null : mTans, mUvs, mCols);
         }
         else
         {
-            UIDrawCall item = this.GetDrawCall(mat, false);
+            var item = GetDrawCall(mat, false);
             if (item != null)
             {
-                this.mDrawCalls.Remove(item);
+                mDrawCalls.Remove(item);
                 NGUITools.DestroyImmediate(item.gameObject);
             }
         }
-        this.mVerts.Clear();
-        this.mNorms.Clear();
-        this.mTans.Clear();
-        this.mUvs.Clear();
-        this.mCols.Clear();
+        mVerts.Clear();
+        mNorms.Clear();
+        mTans.Clear();
+        mUvs.Clear();
+        mCols.Clear();
     }
 
     public static UIPanel Find(Transform trans)
@@ -180,7 +180,7 @@ public class UIPanel : MonoBehaviour
 
     public static UIPanel Find(Transform trans, bool createIfMissing)
     {
-        Transform transform = trans;
+        var transform = trans;
         UIPanel component = null;
         while ((component == null) && (trans != null))
         {
@@ -201,11 +201,11 @@ public class UIPanel : MonoBehaviour
 
     private UIDrawCall GetDrawCall(Material mat, bool createIfMissing)
     {
-        int index = 0;
-        int size = this.drawCalls.size;
+        var index = 0;
+        var size = drawCalls.size;
         while (index < size)
         {
-            UIDrawCall call = this.drawCalls.buffer[index];
+            var call = drawCalls.buffer[index];
             if (call.material == mat)
             {
                 return call;
@@ -215,19 +215,19 @@ public class UIPanel : MonoBehaviour
         UIDrawCall item = null;
         if (createIfMissing)
         {
-            GameObject target = new GameObject("_UIDrawCall [" + mat.name + "]");
-            UnityEngine.Object.DontDestroyOnLoad(target);
-            target.layer = this.cachedGameObject.layer;
+            var target = new GameObject("_UIDrawCall [" + mat.name + "]");
+            DontDestroyOnLoad(target);
+            target.layer = cachedGameObject.layer;
             item = target.AddComponent<UIDrawCall>();
             item.material = mat;
-            this.mDrawCalls.Add(item);
+            mDrawCalls.Add(item);
         }
         return item;
     }
 
     public bool IsVisible(UIWidget w)
     {
-        if (this.mAlpha < 0.001f)
+        if (mAlpha < 0.001f)
         {
             return false;
         }
@@ -235,46 +235,46 @@ public class UIPanel : MonoBehaviour
         {
             return false;
         }
-        if (this.mClipping == UIDrawCall.Clipping.None)
+        if (mClipping == UIDrawCall.Clipping.None)
         {
             return true;
         }
-        Vector2 relativeSize = w.relativeSize;
-        Vector2 vector2 = Vector2.Scale(w.pivotOffset, relativeSize);
-        Vector2 vector3 = vector2;
+        var relativeSize = w.relativeSize;
+        var vector2 = Vector2.Scale(w.pivotOffset, relativeSize);
+        var vector3 = vector2;
         vector2.x += relativeSize.x;
         vector2.y -= relativeSize.y;
-        Transform cachedTransform = w.cachedTransform;
-        Vector3 a = cachedTransform.TransformPoint((Vector3) vector2);
-        Vector3 b = cachedTransform.TransformPoint((Vector3) new Vector2(vector2.x, vector3.y));
-        Vector3 c = cachedTransform.TransformPoint((Vector3) new Vector2(vector3.x, vector2.y));
-        Vector3 d = cachedTransform.TransformPoint((Vector3) vector3);
-        return this.IsVisible(a, b, c, d);
+        var cachedTransform = w.cachedTransform;
+        var a = cachedTransform.TransformPoint(vector2);
+        var b = cachedTransform.TransformPoint(new Vector2(vector2.x, vector3.y));
+        var c = cachedTransform.TransformPoint(new Vector2(vector3.x, vector2.y));
+        var d = cachedTransform.TransformPoint(vector3);
+        return IsVisible(a, b, c, d);
     }
 
     public bool IsVisible(Vector3 worldPos)
     {
-        if (this.mAlpha < 0.001f)
+        if (mAlpha < 0.001f)
         {
             return false;
         }
-        if (this.mClipping != UIDrawCall.Clipping.None)
+        if (mClipping != UIDrawCall.Clipping.None)
         {
-            this.UpdateTransformMatrix();
-            Vector3 vector = this.worldToLocal.MultiplyPoint3x4(worldPos);
-            if (vector.x < this.mMin.x)
+            UpdateTransformMatrix();
+            var vector = worldToLocal.MultiplyPoint3x4(worldPos);
+            if (vector.x < mMin.x)
             {
                 return false;
             }
-            if (vector.y < this.mMin.y)
+            if (vector.y < mMin.y)
             {
                 return false;
             }
-            if (vector.x > this.mMax.x)
+            if (vector.x > mMax.x)
             {
                 return false;
             }
-            if (vector.y > this.mMax.y)
+            if (vector.y > mMax.y)
             {
                 return false;
             }
@@ -284,36 +284,36 @@ public class UIPanel : MonoBehaviour
 
     private bool IsVisible(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
     {
-        this.UpdateTransformMatrix();
-        a = this.worldToLocal.MultiplyPoint3x4(a);
-        b = this.worldToLocal.MultiplyPoint3x4(b);
-        c = this.worldToLocal.MultiplyPoint3x4(c);
-        d = this.worldToLocal.MultiplyPoint3x4(d);
+        UpdateTransformMatrix();
+        a = worldToLocal.MultiplyPoint3x4(a);
+        b = worldToLocal.MultiplyPoint3x4(b);
+        c = worldToLocal.MultiplyPoint3x4(c);
+        d = worldToLocal.MultiplyPoint3x4(d);
         mTemp[0] = a.x;
         mTemp[1] = b.x;
         mTemp[2] = c.x;
         mTemp[3] = d.x;
-        float num = Mathf.Min(mTemp);
-        float num2 = Mathf.Max(mTemp);
+        var num = Mathf.Min(mTemp);
+        var num2 = Mathf.Max(mTemp);
         mTemp[0] = a.y;
         mTemp[1] = b.y;
         mTemp[2] = c.y;
         mTemp[3] = d.y;
-        float num3 = Mathf.Min(mTemp);
-        float num4 = Mathf.Max(mTemp);
-        if (num2 < this.mMin.x)
+        var num3 = Mathf.Min(mTemp);
+        var num4 = Mathf.Max(mTemp);
+        if (num2 < mMin.x)
         {
             return false;
         }
-        if (num4 < this.mMin.y)
+        if (num4 < mMin.y)
         {
             return false;
         }
-        if (num > this.mMax.x)
+        if (num > mMax.x)
         {
             return false;
         }
-        if (num3 > this.mMax.y)
+        if (num3 > mMax.y)
         {
             return false;
         }
@@ -322,52 +322,52 @@ public class UIPanel : MonoBehaviour
 
     private void LateUpdate()
     {
-        this.mUpdateTime = Time.realtimeSinceStartup;
-        this.UpdateTransformMatrix();
-        if (this.mLayer != this.cachedGameObject.layer)
+        mUpdateTime = Time.realtimeSinceStartup;
+        UpdateTransformMatrix();
+        if (mLayer != cachedGameObject.layer)
         {
-            this.mLayer = this.mGo.layer;
-            UICamera camera = UICamera.FindCameraForLayer(this.mLayer);
-            this.mCam = (camera == null) ? NGUITools.FindCameraForLayer(this.mLayer) : camera.cachedCamera;
-            SetChildLayer(this.cachedTransform, this.mLayer);
-            int num = 0;
-            int num2 = this.drawCalls.size;
+            mLayer = mGo.layer;
+            var camera = UICamera.FindCameraForLayer(mLayer);
+            mCam = (camera == null) ? NGUITools.FindCameraForLayer(mLayer) : camera.cachedCamera;
+            SetChildLayer(cachedTransform, mLayer);
+            var num = 0;
+            var num2 = drawCalls.size;
             while (num < num2)
             {
-                this.mDrawCalls.buffer[num].gameObject.layer = this.mLayer;
+                mDrawCalls.buffer[num].gameObject.layer = mLayer;
                 num++;
             }
         }
-        bool forceVisible = !this.cullWhileDragging ? ((this.clipping == UIDrawCall.Clipping.None) || (this.mCullTime > this.mUpdateTime)) : false;
-        int num3 = 0;
-        int size = this.mWidgets.size;
+        var forceVisible = !cullWhileDragging ? ((clipping == UIDrawCall.Clipping.None) || (mCullTime > mUpdateTime)) : false;
+        var num3 = 0;
+        var size = mWidgets.size;
         while (num3 < size)
         {
-            UIWidget widget = this.mWidgets[num3];
-            if (widget.UpdateGeometry(this, forceVisible) && !this.mChanged.Contains(widget.material))
+            var widget = mWidgets[num3];
+            if (widget.UpdateGeometry(this, forceVisible) && !mChanged.Contains(widget.material))
             {
-                this.mChanged.Add(widget.material);
+                mChanged.Add(widget.material);
             }
             num3++;
         }
-        if ((this.mChanged.size != 0) && (this.onChange != null))
+        if ((mChanged.size != 0) && (onChange != null))
         {
-            this.onChange();
+            onChange();
         }
-        if (this.mDepthChanged)
+        if (mDepthChanged)
         {
-            this.mDepthChanged = false;
-            this.mWidgets.Sort(new Comparison<UIWidget>(UIWidget.CompareFunc));
+            mDepthChanged = false;
+            mWidgets.Sort(new Comparison<UIWidget>(UIWidget.CompareFunc));
         }
-        int index = 0;
-        int num6 = this.mChanged.size;
+        var index = 0;
+        var num6 = mChanged.size;
         while (index < num6)
         {
-            this.Fill(this.mChanged.buffer[index]);
+            Fill(mChanged.buffer[index]);
             index++;
         }
-        this.UpdateDrawcalls();
-        this.mChanged.Clear();
+        UpdateDrawcalls();
+        mChanged.Clear();
     }
 
     public void MarkMaterialAsChanged(Material mat, bool sort)
@@ -376,89 +376,89 @@ public class UIPanel : MonoBehaviour
         {
             if (sort)
             {
-                this.mDepthChanged = true;
+                mDepthChanged = true;
             }
-            if (!this.mChanged.Contains(mat))
+            if (!mChanged.Contains(mat))
             {
-                this.mChanged.Add(mat);
+                mChanged.Add(mat);
             }
         }
     }
 
     private void OnDisable()
     {
-        int size = this.mDrawCalls.size;
+        var size = mDrawCalls.size;
         while (size > 0)
         {
-            UIDrawCall call = this.mDrawCalls.buffer[--size];
+            var call = mDrawCalls.buffer[--size];
             if (call != null)
             {
                 NGUITools.DestroyImmediate(call.gameObject);
             }
         }
-        this.mDrawCalls.Clear();
-        this.mChanged.Clear();
+        mDrawCalls.Clear();
+        mChanged.Clear();
     }
 
     private void OnEnable()
     {
-        int index = 0;
-        while (index < this.mWidgets.size)
+        var index = 0;
+        while (index < mWidgets.size)
         {
-            UIWidget widget = this.mWidgets.buffer[index];
+            var widget = mWidgets.buffer[index];
             if (widget != null)
             {
-                this.MarkMaterialAsChanged(widget.material, true);
+                MarkMaterialAsChanged(widget.material, true);
                 index++;
             }
             else
             {
-                this.mWidgets.RemoveAt(index);
+                mWidgets.RemoveAt(index);
             }
         }
     }
 
     public void Refresh()
     {
-        UIWidget[] componentsInChildren = base.GetComponentsInChildren<UIWidget>();
-        int index = 0;
-        int length = componentsInChildren.Length;
+        var componentsInChildren = GetComponentsInChildren<UIWidget>();
+        var index = 0;
+        var length = componentsInChildren.Length;
         while (index < length)
         {
             componentsInChildren[index].Update();
             index++;
         }
-        this.LateUpdate();
+        LateUpdate();
     }
 
     public void RemoveWidget(UIWidget w)
     {
-        if (((w != null) && (w != null)) && (this.mWidgets.Remove(w) && (w.material != null)))
+        if (((w != null) && (w != null)) && (mWidgets.Remove(w) && (w.material != null)))
         {
-            this.mChanged.Add(w.material);
+            mChanged.Add(w.material);
         }
     }
 
     public void SetAlphaRecursive(float val, bool rebuildList)
     {
-        if (rebuildList || (this.mChildPanels == null))
+        if (rebuildList || (mChildPanels == null))
         {
-            this.mChildPanels = base.GetComponentsInChildren<UIPanel>(true);
+            mChildPanels = GetComponentsInChildren<UIPanel>(true);
         }
-        int index = 0;
-        int length = this.mChildPanels.Length;
+        var index = 0;
+        var length = mChildPanels.Length;
         while (index < length)
         {
-            this.mChildPanels[index].alpha = val;
+            mChildPanels[index].alpha = val;
             index++;
         }
     }
 
     private static void SetChildLayer(Transform t, int layer)
     {
-        for (int i = 0; i < t.childCount; i++)
+        for (var i = 0; i < t.childCount; i++)
         {
-            Transform child = t.GetChild(i);
+            var child = t.GetChild(i);
             if (child.GetComponent<UIPanel>() == null)
             {
                 if (child.GetComponent<UIWidget>() != null)
@@ -472,17 +472,17 @@ public class UIPanel : MonoBehaviour
 
     private void Start()
     {
-        this.mLayer = this.mGo.layer;
-        UICamera camera = UICamera.FindCameraForLayer(this.mLayer);
-        this.mCam = (camera == null) ? NGUITools.FindCameraForLayer(this.mLayer) : camera.cachedCamera;
+        mLayer = mGo.layer;
+        var camera = UICamera.FindCameraForLayer(mLayer);
+        mCam = (camera == null) ? NGUITools.FindCameraForLayer(mLayer) : camera.cachedCamera;
     }
 
     public void UpdateDrawcalls()
     {
-        Vector4 zero = Vector4.zero;
-        if (this.mClipping != UIDrawCall.Clipping.None)
+        var zero = Vector4.zero;
+        if (mClipping != UIDrawCall.Clipping.None)
         {
-            zero = new Vector4(this.mClipRange.x, this.mClipRange.y, this.mClipRange.z * 0.5f, this.mClipRange.w * 0.5f);
+            zero = new Vector4(mClipRange.x, mClipRange.y, mClipRange.z * 0.5f, mClipRange.w * 0.5f);
         }
         if (zero.z == 0f)
         {
@@ -501,17 +501,17 @@ public class UIPanel : MonoBehaviour
                 zero.y += 0.5f;
                 break;
         }
-        Transform cachedTransform = this.cachedTransform;
-        int index = 0;
-        int size = this.mDrawCalls.size;
+        var cachedTransform = this.cachedTransform;
+        var index = 0;
+        var size = mDrawCalls.size;
         while (index < size)
         {
-            UIDrawCall call = this.mDrawCalls.buffer[index];
-            call.clipping = this.mClipping;
+            var call = mDrawCalls.buffer[index];
+            call.clipping = mClipping;
             call.clipRange = zero;
-            call.clipSoftness = this.mClipSoftness;
-            call.depthPass = this.depthPass && (this.mClipping == UIDrawCall.Clipping.None);
-            Transform transform = call.transform;
+            call.clipSoftness = mClipSoftness;
+            call.depthPass = depthPass && (mClipping == UIDrawCall.Clipping.None);
+            var transform = call.transform;
             transform.position = cachedTransform.position;
             transform.rotation = cachedTransform.rotation;
             transform.localScale = cachedTransform.lossyScale;
@@ -521,26 +521,26 @@ public class UIPanel : MonoBehaviour
 
     private void UpdateTransformMatrix()
     {
-        if ((this.mUpdateTime == 0f) || (this.mMatrixTime != this.mUpdateTime))
+        if ((mUpdateTime == 0f) || (mMatrixTime != mUpdateTime))
         {
-            this.mMatrixTime = this.mUpdateTime;
-            this.worldToLocal = this.cachedTransform.worldToLocalMatrix;
-            if (this.mClipping != UIDrawCall.Clipping.None)
+            mMatrixTime = mUpdateTime;
+            worldToLocal = cachedTransform.worldToLocalMatrix;
+            if (mClipping != UIDrawCall.Clipping.None)
             {
-                Vector2 vector = new Vector2(this.mClipRange.z, this.mClipRange.w);
+                var vector = new Vector2(mClipRange.z, mClipRange.w);
                 if (vector.x == 0f)
                 {
-                    vector.x = (this.mCam != null) ? this.mCam.pixelWidth : ((float) Screen.width);
+                    vector.x = (mCam != null) ? mCam.pixelWidth : Screen.width;
                 }
                 if (vector.y == 0f)
                 {
-                    vector.y = (this.mCam != null) ? this.mCam.pixelHeight : ((float) Screen.height);
+                    vector.y = (mCam != null) ? mCam.pixelHeight : Screen.height;
                 }
-                vector = (Vector2) (vector * 0.5f);
-                this.mMin.x = this.mClipRange.x - vector.x;
-                this.mMin.y = this.mClipRange.y - vector.y;
-                this.mMax.x = this.mClipRange.x + vector.x;
-                this.mMax.y = this.mClipRange.y + vector.y;
+                vector = vector * 0.5f;
+                mMin.x = mClipRange.x - vector.x;
+                mMin.y = mClipRange.y - vector.y;
+                mMax.x = mClipRange.x + vector.x;
+                mMax.y = mClipRange.y + vector.y;
             }
         }
     }
@@ -549,22 +549,22 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            return this.mAlpha;
+            return mAlpha;
         }
         set
         {
-            float num = Mathf.Clamp01(value);
-            if (this.mAlpha != num)
+            var num = Mathf.Clamp01(value);
+            if (mAlpha != num)
             {
-                this.mAlpha = num;
-                for (int i = 0; i < this.mDrawCalls.size; i++)
+                mAlpha = num;
+                for (var i = 0; i < mDrawCalls.size; i++)
                 {
-                    UIDrawCall call = this.mDrawCalls[i];
-                    this.MarkMaterialAsChanged(call.material, false);
+                    var call = mDrawCalls[i];
+                    MarkMaterialAsChanged(call.material, false);
                 }
-                for (int j = 0; j < this.mWidgets.size; j++)
+                for (var j = 0; j < mWidgets.size; j++)
                 {
-                    this.mWidgets[j].MarkAsChangedLite();
+                    mWidgets[j].MarkAsChangedLite();
                 }
             }
         }
@@ -574,11 +574,11 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            if (this.mGo == null)
+            if (mGo == null)
             {
-                this.mGo = base.gameObject;
+                mGo = gameObject;
             }
-            return this.mGo;
+            return mGo;
         }
     }
 
@@ -586,11 +586,11 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            if (this.mTrans == null)
+            if (mTrans == null)
             {
-                this.mTrans = base.transform;
+                mTrans = transform;
             }
-            return this.mTrans;
+            return mTrans;
         }
     }
 
@@ -598,15 +598,15 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            return this.mClipping;
+            return mClipping;
         }
         set
         {
-            if (this.mClipping != value)
+            if (mClipping != value)
             {
-                this.mClipping = value;
-                this.mMatrixTime = 0f;
-                this.UpdateDrawcalls();
+                mClipping = value;
+                mMatrixTime = 0f;
+                UpdateDrawcalls();
             }
         }
     }
@@ -615,16 +615,16 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            return this.mClipRange;
+            return mClipRange;
         }
         set
         {
-            if (this.mClipRange != value)
+            if (mClipRange != value)
             {
-                this.mCullTime = (this.mCullTime != 0f) ? (Time.realtimeSinceStartup + 0.15f) : 0.001f;
-                this.mClipRange = value;
-                this.mMatrixTime = 0f;
-                this.UpdateDrawcalls();
+                mCullTime = (mCullTime != 0f) ? (Time.realtimeSinceStartup + 0.15f) : 0.001f;
+                mClipRange = value;
+                mMatrixTime = 0f;
+                UpdateDrawcalls();
             }
         }
     }
@@ -633,14 +633,14 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            return this.mClipSoftness;
+            return mClipSoftness;
         }
         set
         {
-            if (this.mClipSoftness != value)
+            if (mClipSoftness != value)
             {
-                this.mClipSoftness = value;
-                this.UpdateDrawcalls();
+                mClipSoftness = value;
+                UpdateDrawcalls();
             }
         }
     }
@@ -649,21 +649,21 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            return this.mDebugInfo;
+            return mDebugInfo;
         }
         set
         {
-            if (this.mDebugInfo != value)
+            if (mDebugInfo != value)
             {
-                this.mDebugInfo = value;
-                BetterList<UIDrawCall> drawCalls = this.drawCalls;
-                HideFlags flags = (this.mDebugInfo != DebugInfo.Geometry) ? (HideFlags.NotEditable | HideFlags.DontSave | HideFlags.HideInHierarchy) : (HideFlags.NotEditable | HideFlags.DontSave);
-                int num = 0;
-                int size = drawCalls.size;
+                mDebugInfo = value;
+                var drawCalls = this.drawCalls;
+                var flags = (mDebugInfo != DebugInfo.Geometry) ? (HideFlags.NotEditable | HideFlags.DontSave | HideFlags.HideInHierarchy) : (HideFlags.NotEditable | HideFlags.DontSave);
+                var num = 0;
+                var size = drawCalls.size;
                 while (num < size)
                 {
-                    UIDrawCall call = drawCalls[num];
-                    GameObject gameObject = call.gameObject;
+                    var call = drawCalls[num];
+                    var gameObject = call.gameObject;
                     NGUITools.SetActiveSelf(gameObject, false);
                     gameObject.hideFlags = flags;
                     NGUITools.SetActiveSelf(gameObject, true);
@@ -677,16 +677,16 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            int size = this.mDrawCalls.size;
+            var size = mDrawCalls.size;
             while (size > 0)
             {
-                UIDrawCall call = this.mDrawCalls[--size];
+                var call = mDrawCalls[--size];
                 if (call == null)
                 {
-                    this.mDrawCalls.RemoveAt(size);
+                    mDrawCalls.RemoveAt(size);
                 }
             }
-            return this.mDrawCalls;
+            return mDrawCalls;
         }
     }
 
@@ -694,7 +694,7 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            return this.mWidgets;
+            return mWidgets;
         }
     }
 

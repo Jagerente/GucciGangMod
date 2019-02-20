@@ -25,68 +25,68 @@ public class UITable : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (this.repositionNow)
+        if (repositionNow)
         {
-            this.repositionNow = false;
-            this.Reposition();
+            repositionNow = false;
+            Reposition();
         }
     }
 
     public void Reposition()
     {
-        if (this.mStarted)
+        if (mStarted)
         {
-            Transform target = base.transform;
-            this.mChildren.Clear();
-            List<Transform> children = this.children;
+            var target = transform;
+            mChildren.Clear();
+            var children = this.children;
             if (children.Count > 0)
             {
-                this.RepositionVariableSize(children);
+                RepositionVariableSize(children);
             }
-            if (this.mDrag != null)
+            if (mDrag != null)
             {
-                this.mDrag.UpdateScrollbars(true);
-                this.mDrag.RestrictWithinBounds(true);
+                mDrag.UpdateScrollbars(true);
+                mDrag.RestrictWithinBounds(true);
             }
-            else if (this.mPanel != null)
+            else if (mPanel != null)
             {
-                this.mPanel.ConstrainTargetToBounds(target, true);
+                mPanel.ConstrainTargetToBounds(target, true);
             }
-            if (this.onReposition != null)
+            if (onReposition != null)
             {
-                this.onReposition();
+                onReposition();
             }
         }
         else
         {
-            this.repositionNow = true;
+            repositionNow = true;
         }
     }
 
     private void RepositionVariableSize(List<Transform> children)
     {
-        float num = 0f;
-        float num2 = 0f;
-        int num3 = (this.columns <= 0) ? 1 : ((children.Count / this.columns) + 1);
-        int num4 = (this.columns <= 0) ? children.Count : this.columns;
-        Bounds[,] boundsArray = new Bounds[num3, num4];
-        Bounds[] boundsArray2 = new Bounds[num4];
-        Bounds[] boundsArray3 = new Bounds[num3];
-        int index = 0;
-        int num6 = 0;
-        int num7 = 0;
-        int count = children.Count;
+        var num = 0f;
+        var num2 = 0f;
+        var num3 = (columns <= 0) ? 1 : ((children.Count / columns) + 1);
+        var num4 = (columns <= 0) ? children.Count : columns;
+        var boundsArray = new Bounds[num3, num4];
+        var boundsArray2 = new Bounds[num4];
+        var boundsArray3 = new Bounds[num3];
+        var index = 0;
+        var num6 = 0;
+        var num7 = 0;
+        var count = children.Count;
         while (num7 < count)
         {
-            Transform trans = children[num7];
-            Bounds bounds = NGUIMath.CalculateRelativeWidgetBounds(trans);
-            Vector3 localScale = trans.localScale;
+            var trans = children[num7];
+            var bounds = NGUIMath.CalculateRelativeWidgetBounds(trans);
+            var localScale = trans.localScale;
             bounds.min = Vector3.Scale(bounds.min, localScale);
             bounds.max = Vector3.Scale(bounds.max, localScale);
             boundsArray[num6, index] = bounds;
             boundsArray2[index].Encapsulate(bounds);
             boundsArray3[num6].Encapsulate(bounds);
-            if ((++index >= this.columns) && (this.columns > 0))
+            if ((++index >= columns) && (columns > 0))
             {
                 index = 0;
                 num6++;
@@ -95,35 +95,35 @@ public class UITable : MonoBehaviour
         }
         index = 0;
         num6 = 0;
-        int num9 = 0;
-        int num10 = children.Count;
+        var num9 = 0;
+        var num10 = children.Count;
         while (num9 < num10)
         {
-            Transform transform2 = children[num9];
-            Bounds bounds2 = boundsArray[num6, index];
-            Bounds bounds3 = boundsArray2[index];
-            Bounds bounds4 = boundsArray3[num6];
-            Vector3 localPosition = transform2.localPosition;
+            var transform2 = children[num9];
+            var bounds2 = boundsArray[num6, index];
+            var bounds3 = boundsArray2[index];
+            var bounds4 = boundsArray3[num6];
+            var localPosition = transform2.localPosition;
             localPosition.x = (num + bounds2.extents.x) - bounds2.center.x;
-            localPosition.x += (bounds2.min.x - bounds3.min.x) + this.padding.x;
-            if (this.direction == Direction.Down)
+            localPosition.x += (bounds2.min.x - bounds3.min.x) + padding.x;
+            if (direction == Direction.Down)
             {
                 localPosition.y = (-num2 - bounds2.extents.y) - bounds2.center.y;
-                localPosition.y += ((((bounds2.max.y - bounds2.min.y) - bounds4.max.y) + bounds4.min.y) * 0.5f) - this.padding.y;
+                localPosition.y += ((((bounds2.max.y - bounds2.min.y) - bounds4.max.y) + bounds4.min.y) * 0.5f) - padding.y;
             }
             else
             {
                 localPosition.y = (num2 + bounds2.extents.y) - bounds2.center.y;
-                localPosition.y += ((((bounds2.max.y - bounds2.min.y) - bounds4.max.y) + bounds4.min.y) * 0.5f) - this.padding.y;
+                localPosition.y += ((((bounds2.max.y - bounds2.min.y) - bounds4.max.y) + bounds4.min.y) * 0.5f) - padding.y;
             }
-            num += (bounds3.max.x - bounds3.min.x) + (this.padding.x * 2f);
+            num += (bounds3.max.x - bounds3.min.x) + (padding.x * 2f);
             transform2.localPosition = localPosition;
-            if ((++index >= this.columns) && (this.columns > 0))
+            if ((++index >= columns) && (columns > 0))
             {
                 index = 0;
                 num6++;
                 num = 0f;
-                num2 += bounds4.size.y + (this.padding.y * 2f);
+                num2 += bounds4.size.y + (padding.y * 2f);
             }
             num9++;
         }
@@ -136,37 +136,37 @@ public class UITable : MonoBehaviour
 
     private void Start()
     {
-        this.mStarted = true;
-        if (this.keepWithinPanel)
+        mStarted = true;
+        if (keepWithinPanel)
         {
-            this.mPanel = NGUITools.FindInParents<UIPanel>(base.gameObject);
-            this.mDrag = NGUITools.FindInParents<UIDraggablePanel>(base.gameObject);
+            mPanel = NGUITools.FindInParents<UIPanel>(gameObject);
+            mDrag = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
         }
-        this.Reposition();
+        Reposition();
     }
 
     public List<Transform> children
     {
         get
         {
-            if (this.mChildren.Count == 0)
+            if (mChildren.Count == 0)
             {
-                Transform transform = base.transform;
-                this.mChildren.Clear();
-                for (int i = 0; i < transform.childCount; i++)
+                var transform = this.transform;
+                mChildren.Clear();
+                for (var i = 0; i < transform.childCount; i++)
                 {
-                    Transform child = transform.GetChild(i);
-                    if (((child != null) && (child.gameObject != null)) && (!this.hideInactive || NGUITools.GetActive(child.gameObject)))
+                    var child = transform.GetChild(i);
+                    if (((child != null) && (child.gameObject != null)) && (!hideInactive || NGUITools.GetActive(child.gameObject)))
                     {
-                        this.mChildren.Add(child);
+                        mChildren.Add(child);
                     }
                 }
-                if (this.sorted)
+                if (sorted)
                 {
-                    this.mChildren.Sort(new Comparison<Transform>(UITable.SortByName));
+                    mChildren.Sort(new Comparison<Transform>(SortByName));
                 }
             }
-            return this.mChildren;
+            return mChildren;
         }
     }
 

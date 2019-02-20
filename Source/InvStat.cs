@@ -14,8 +14,8 @@ public class InvStat
 
     public static int CompareArmor(InvStat a, InvStat b)
     {
-        int id = (int) a.id;
-        int num2 = (int) b.id;
+        var id = (int) a.id;
+        var num2 = (int) b.id;
         if (a.id == Identifier.Armor)
         {
             id -= 0x2710;
@@ -61,8 +61,8 @@ public class InvStat
 
     public static int CompareWeapon(InvStat a, InvStat b)
     {
-        int id = (int) a.id;
-        int num2 = (int) b.id;
+        var id = (int) a.id;
+        var num2 = (int) b.id;
         if (a.id == Identifier.Damage)
         {
             id -= 0x2710;

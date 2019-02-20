@@ -18,21 +18,21 @@ public class CameraShake : MonoBehaviour
 
     private void shakeUpdate()
     {
-        if (this.duration > 0f)
+        if (duration > 0f)
         {
-            this.duration -= Time.deltaTime;
-            if (this.flip)
+            duration -= Time.deltaTime;
+            if (flip)
             {
-                Transform transform = base.gameObject.transform;
-                transform.position += (Vector3) (Vector3.up * this.R);
+                var transform = gameObject.transform;
+                transform.position += Vector3.up * R;
             }
             else
             {
-                Transform transform2 = base.gameObject.transform;
-                transform2.position -= (Vector3) (Vector3.up * this.R);
+                var transform2 = gameObject.transform;
+                transform2.position -= Vector3.up * R;
             }
-            this.flip = !this.flip;
-            this.R *= this.decay;
+            flip = !flip;
+            R *= decay;
         }
     }
 

@@ -30,17 +30,17 @@ public class PhotonPingManager
     {
         try
         {
-            IPAddress[] hostAddresses = Dns.GetHostAddresses(hostName);
+            var hostAddresses = Dns.GetHostAddresses(hostName);
             if (hostAddresses.Length == 1)
             {
                 return hostAddresses[0].ToString();
             }
-            for (int i = 0; i < hostAddresses.Length; i++)
+            for (var i = 0; i < hostAddresses.Length; i++)
             {
-                IPAddress address = hostAddresses[i];
+                var address = hostAddresses[i];
                 if (address != null)
                 {
-                    string str2 = address.ToString();
+                    var str2 = address.ToString();
                     if (str2.IndexOf('.') >= 0)
                     {
                         return str2;
@@ -60,8 +60,8 @@ public class PhotonPingManager
         get
         {
             Region region = null;
-            int ping = 0x7fffffff;
-            foreach (Region region2 in PhotonNetwork.networkingPeer.AvailableRegions)
+            var ping = 0x7fffffff;
+            foreach (var region2 in PhotonNetwork.networkingPeer.AvailableRegions)
             {
                 UnityEngine.Debug.Log("BestRegion checks region: " + region2);
                 if ((region2.Ping != 0) && (region2.Ping < ping))
@@ -78,7 +78,7 @@ public class PhotonPingManager
     {
         get
         {
-            return (this.PingsRunning == 0);
+            return (PingsRunning == 0);
         }
     }
 
@@ -104,25 +104,25 @@ public class PhotonPingManager
         [DebuggerHidden]
         public void Dispose()
         {
-            this.SPC = -1;
+            SPC = -1;
         }
 
         public bool MoveNext()
         {
-            uint num = (uint) this.SPC;
-            this.SPC = -1;
+            var num = (uint) SPC;
+            SPC = -1;
             switch (num)
             {
                 case 0:
-                    this.region.Ping = PhotonPingManager.Attempts * PhotonPingManager.MaxMilliseconsPerPing;
-                    this.fthis.PingsRunning++;
+                    region.Ping = Attempts * MaxMilliseconsPerPing;
+                    fthis.PingsRunning++;
                     if (PhotonHandler.PingImplementation != typeof(PingNativeDynamic))
                     {
-                        this.ping0 = (PhotonPing) Activator.CreateInstance(PhotonHandler.PingImplementation);
+                        ping0 = (PhotonPing) Activator.CreateInstance(PhotonHandler.PingImplementation);
                         break;
                     }
                     UnityEngine.Debug.Log("Using constructor for new PingNativeDynamic()");
-                    this.ping0 = new PingNativeDynamic();
+                    ping0 = new PingNativeDynamic();
                     break;
 
                 case 1:
@@ -132,66 +132,66 @@ public class PhotonPingManager
                     //goto Label_0265;
 
                 case 3:
-                    this.SPC = -1;
+                    SPC = -1;
                     goto Label_02B0;
 
                 default:
                     goto Label_02B0;
             }
-            this.rttSum1 = 0f;
-            this.replyCount2 = 0;
-            this.cleanIpOfRegion3 = this.region.HostAndPort;
-            this.indexOfColon4 = this.cleanIpOfRegion3.LastIndexOf(':');
-            if (this.indexOfColon4 > 1)
+            rttSum1 = 0f;
+            replyCount2 = 0;
+            cleanIpOfRegion3 = region.HostAndPort;
+            indexOfColon4 = cleanIpOfRegion3.LastIndexOf(':');
+            if (indexOfColon4 > 1)
             {
-                this.cleanIpOfRegion3 = this.cleanIpOfRegion3.Substring(0, this.indexOfColon4);
+                cleanIpOfRegion3 = cleanIpOfRegion3.Substring(0, indexOfColon4);
             }
-            this.cleanIpOfRegion3 = PhotonPingManager.ResolveHost(this.cleanIpOfRegion3);
-            this.i5 = 0;
-            while (this.i5 < PhotonPingManager.Attempts)
+            cleanIpOfRegion3 = ResolveHost(cleanIpOfRegion3);
+            i5 = 0;
+            while (i5 < Attempts)
             {
-                this.overtime6 = false;
-                this.sw7 = new Stopwatch();
-                this.sw7.Start();
+                overtime6 = false;
+                sw7 = new Stopwatch();
+                sw7.Start();
                 try
                 {
-                    this.ping0.StartPing(this.cleanIpOfRegion3);
+                    ping0.StartPing(cleanIpOfRegion3);
                 }
                 catch (Exception exception)
                 {
-                    this.e8 = exception;
-                    UnityEngine.Debug.Log("catched: " + this.e8);
-                    this.fthis.PingsRunning--;
+                    e8 = exception;
+                    UnityEngine.Debug.Log("catched: " + e8);
+                    fthis.PingsRunning--;
                     break;
                 }
             Label_01B9:
-                while (!this.ping0.Done())
+                while (!ping0.Done())
                 {
-                    if (this.sw7.ElapsedMilliseconds >= PhotonPingManager.MaxMilliseconsPerPing)
+                    if (sw7.ElapsedMilliseconds >= MaxMilliseconsPerPing)
                     {
-                        this.overtime6 = true;
+                        overtime6 = true;
                         break;
                     }
-                    this.Scurrent = 0;
-                    this.SPC = 1;
+                    Scurrent = 0;
+                    SPC = 1;
                     goto Label_02B2;
                 }
-                this.rtt9 = (int) this.sw7.ElapsedMilliseconds;
-                if ((!PhotonPingManager.IgnoreInitialAttempt || (this.i5 != 0)) && (this.ping0.Successful && !this.overtime6))
+                rtt9 = (int) sw7.ElapsedMilliseconds;
+                if ((!IgnoreInitialAttempt || (i5 != 0)) && (ping0.Successful && !overtime6))
                 {
-                    this.rttSum1 += this.rtt9;
-                    this.replyCount2++;
-                    this.region.Ping = (int) (this.rttSum1 / ((float) this.replyCount2));
+                    rttSum1 += rtt9;
+                    replyCount2++;
+                    region.Ping = (int) (rttSum1 / replyCount2);
                 }
-                this.Scurrent = new WaitForSeconds(0.1f);
-                this.SPC = 2;
+                Scurrent = new WaitForSeconds(0.1f);
+                SPC = 2;
                 goto Label_02B2;
             Label_0265:
-                this.i5++;
+                i5++;
             }
-            this.fthis.PingsRunning--;
-            this.Scurrent = null;
-            this.SPC = 3;
+            fthis.PingsRunning--;
+            Scurrent = null;
+            SPC = 3;
             goto Label_02B2;
         Label_02B0:
             return false;
@@ -210,7 +210,7 @@ public class PhotonPingManager
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
 
@@ -219,7 +219,7 @@ public class PhotonPingManager
             [DebuggerHidden]
             get
             {
-                return this.Scurrent;
+                return Scurrent;
             }
         }
     }

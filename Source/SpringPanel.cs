@@ -18,7 +18,7 @@ public class SpringPanel : IgnoreTimeScale
 
     public static SpringPanel Begin(GameObject go, Vector3 pos, float strength)
     {
-        SpringPanel component = go.GetComponent<SpringPanel>();
+        var component = go.GetComponent<SpringPanel>();
         if (component == null)
         {
             component = go.AddComponent<SpringPanel>();
@@ -36,41 +36,41 @@ public class SpringPanel : IgnoreTimeScale
 
     private void Start()
     {
-        this.mPanel = base.GetComponent<UIPanel>();
-        this.mDrag = base.GetComponent<UIDraggablePanel>();
-        this.mTrans = base.transform;
+        mPanel = GetComponent<UIPanel>();
+        mDrag = GetComponent<UIDraggablePanel>();
+        mTrans = transform;
     }
 
     private void Update()
     {
-        float deltaTime = base.UpdateRealTimeDelta();
-        if (this.mThreshold == 0f)
+        var deltaTime = UpdateRealTimeDelta();
+        if (mThreshold == 0f)
         {
-            Vector3 vector = this.target - this.mTrans.localPosition;
-            this.mThreshold = vector.magnitude * 0.005f;
+            var vector = this.target - mTrans.localPosition;
+            mThreshold = vector.magnitude * 0.005f;
         }
-        bool flag = false;
-        Vector3 localPosition = this.mTrans.localPosition;
-        Vector3 target = NGUIMath.SpringLerp(this.mTrans.localPosition, this.target, this.strength, deltaTime);
-        if (this.mThreshold >= Vector3.Magnitude(target - this.target))
+        var flag = false;
+        var localPosition = mTrans.localPosition;
+        var target = NGUIMath.SpringLerp(mTrans.localPosition, this.target, strength, deltaTime);
+        if (mThreshold >= Vector3.Magnitude(target - this.target))
         {
             target = this.target;
-            base.enabled = false;
+            enabled = false;
             flag = true;
         }
-        this.mTrans.localPosition = target;
-        Vector3 vector4 = target - localPosition;
-        Vector4 clipRange = this.mPanel.clipRange;
+        mTrans.localPosition = target;
+        var vector4 = target - localPosition;
+        var clipRange = mPanel.clipRange;
         clipRange.x -= vector4.x;
         clipRange.y -= vector4.y;
-        this.mPanel.clipRange = clipRange;
-        if (this.mDrag != null)
+        mPanel.clipRange = clipRange;
+        if (mDrag != null)
         {
-            this.mDrag.UpdateScrollbars(false);
+            mDrag.UpdateScrollbars(false);
         }
-        if (flag && (this.onFinished != null))
+        if (flag && (onFinished != null))
         {
-            this.onFinished();
+            onFinished();
         }
     }
 

@@ -14,7 +14,7 @@ public class TweenRotation : UITweener
 
     public static TweenRotation Begin(GameObject go, float duration, Quaternion rot)
     {
-        TweenRotation rotation = UITweener.Begin<TweenRotation>(go, duration);
+        var rotation = UITweener.Begin<TweenRotation>(go, duration);
         rotation.from = rotation.rotation.eulerAngles;
         rotation.to = rot.eulerAngles;
         if (duration <= 0f)
@@ -27,18 +27,18 @@ public class TweenRotation : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        this.cachedTransform.localRotation = Quaternion.Slerp(Quaternion.Euler(this.from), Quaternion.Euler(this.to), factor);
+        cachedTransform.localRotation = Quaternion.Slerp(Quaternion.Euler(from), Quaternion.Euler(to), factor);
     }
 
     public Transform cachedTransform
     {
         get
         {
-            if (this.mTrans == null)
+            if (mTrans == null)
             {
-                this.mTrans = base.transform;
+                mTrans = transform;
             }
-            return this.mTrans;
+            return mTrans;
         }
     }
 
@@ -46,11 +46,11 @@ public class TweenRotation : UITweener
     {
         get
         {
-            return this.cachedTransform.localRotation;
+            return cachedTransform.localRotation;
         }
         set
         {
-            this.cachedTransform.localRotation = value;
+            cachedTransform.localRotation = value;
         }
     }
 }

@@ -16,54 +16,54 @@ public class RCEvent
 
     public RCEvent(RCCondition sentCondition, List<RCAction> sentTrueActions, int sentClass, int sentType)
     {
-        this.condition = sentCondition;
-        this.trueActions = sentTrueActions;
-        this.eventClass = sentClass;
-        this.eventType = sentType;
+        condition = sentCondition;
+        trueActions = sentTrueActions;
+        eventClass = sentClass;
+        eventType = sentType;
     }
 
     public void checkEvent()
     {
         int num2;
-        switch (this.eventClass)
+        switch (eventClass)
         {
             case 0:
-                for (num2 = 0; num2 < this.trueActions.Count; num2++)
+                for (num2 = 0; num2 < trueActions.Count; num2++)
                 {
-                    this.trueActions[num2].doAction();
+                    trueActions[num2].doAction();
                 }
                 break;
 
             case 1:
-                if (!this.condition.checkCondition())
+                if (!condition.checkCondition())
                 {
-                    if (this.elseAction != null)
+                    if (elseAction != null)
                     {
-                        this.elseAction.doAction();
+                        elseAction.doAction();
                     }
                     break;
                 }
-                for (num2 = 0; num2 < this.trueActions.Count; num2++)
+                for (num2 = 0; num2 < trueActions.Count; num2++)
                 {
-                    this.trueActions[num2].doAction();
+                    trueActions[num2].doAction();
                 }
                 break;
 
             case 2:
-                switch (this.eventType)
+                switch (eventType)
                 {
                     case 0:
                         foreach (TITAN titan in FengGameManagerMKII.instance.getTitans())
                         {
-                            if (FengGameManagerMKII.titanVariables.ContainsKey(this.foreachVariableName))
+                            if (FengGameManagerMKII.titanVariables.ContainsKey(foreachVariableName))
                             {
-                                FengGameManagerMKII.titanVariables[this.foreachVariableName] = titan;
+                                FengGameManagerMKII.titanVariables[foreachVariableName] = titan;
                             }
                             else
                             {
-                                FengGameManagerMKII.titanVariables.Add(this.foreachVariableName, titan);
+                                FengGameManagerMKII.titanVariables.Add(foreachVariableName, titan);
                             }
-                            foreach (RCAction action in this.trueActions)
+                            foreach (var action in trueActions)
                             {
                                 action.doAction();
                             }
@@ -71,17 +71,17 @@ public class RCEvent
                         return;
 
                     case 1:
-                        foreach (PhotonPlayer player in PhotonNetwork.playerList)
+                        foreach (var player in PhotonNetwork.playerList)
                         {
-                            if (FengGameManagerMKII.playerVariables.ContainsKey(this.foreachVariableName))
+                            if (FengGameManagerMKII.playerVariables.ContainsKey(foreachVariableName))
                             {
-                                FengGameManagerMKII.playerVariables[this.foreachVariableName] = player;
+                                FengGameManagerMKII.playerVariables[foreachVariableName] = player;
                             }
                             else
                             {
-                                FengGameManagerMKII.titanVariables.Add(this.foreachVariableName, player);
+                                FengGameManagerMKII.titanVariables.Add(foreachVariableName, player);
                             }
-                            foreach (RCAction action in this.trueActions)
+                            foreach (var action in trueActions)
                             {
                                 action.doAction();
                             }
@@ -91,9 +91,9 @@ public class RCEvent
                 break;
 
             case 3:
-                while (this.condition.checkCondition())
+                while (condition.checkCondition())
                 {
-                    foreach (RCAction action in this.trueActions)
+                    foreach (var action in trueActions)
                     {
                         action.doAction();
                     }
@@ -104,7 +104,7 @@ public class RCEvent
 
     public void setElse(RCAction sentElse)
     {
-        this.elseAction = sentElse;
+        elseAction = sentElse;
     }
 
     public enum foreachType

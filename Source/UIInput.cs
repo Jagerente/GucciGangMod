@@ -32,287 +32,287 @@ public class UIInput : MonoBehaviour
 
     private void Append(string input)
     {
-        int num = 0;
-        int length = input.Length;
+        var num = 0;
+        var length = input.Length;
         while (num < length)
         {
-            char nextChar = input[num];
+            var nextChar = input[num];
             switch (nextChar)
             {
                 case '\b':
-                    if (this.mText.Length > 0)
+                    if (mText.Length > 0)
                     {
-                        this.mText = this.mText.Substring(0, this.mText.Length - 1);
-                        base.SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
+                        mText = mText.Substring(0, mText.Length - 1);
+                        SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
                     }
                     break;
 
                 case '\r':
                 case '\n':
-                    if (((UICamera.current.submitKey0 == KeyCode.Return) || (UICamera.current.submitKey1 == KeyCode.Return)) && (!this.label.multiLine || (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))))
+                    if (((UICamera.current.submitKey0 == KeyCode.Return) || (UICamera.current.submitKey1 == KeyCode.Return)) && (!label.multiLine || (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))))
                     {
                         current = this;
-                        if (this.onSubmit != null)
+                        if (onSubmit != null)
                         {
-                            this.onSubmit(this.mText);
+                            onSubmit(mText);
                         }
-                        if (this.eventReceiver == null)
+                        if (eventReceiver == null)
                         {
-                            this.eventReceiver = base.gameObject;
+                            eventReceiver = gameObject;
                         }
-                        this.eventReceiver.SendMessage(this.functionName, this.mText, SendMessageOptions.DontRequireReceiver);
+                        eventReceiver.SendMessage(functionName, mText, SendMessageOptions.DontRequireReceiver);
                         current = null;
-                        this.selected = false;
+                        selected = false;
                         return;
                     }
-                    if (this.validator != null)
+                    if (validator != null)
                     {
-                        nextChar = this.validator(this.mText, nextChar);
+                        nextChar = validator(mText, nextChar);
                     }
                     if (nextChar != '\0')
                     {
                         if ((nextChar == '\n') || (nextChar == '\r'))
                         {
-                            if (this.label.multiLine)
+                            if (label.multiLine)
                             {
-                                this.mText = this.mText + "\n";
+                                mText = mText + "\n";
                             }
                         }
                         else
                         {
-                            this.mText = this.mText + nextChar;
+                            mText = mText + nextChar;
                         }
-                        base.SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
+                        SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
                     }
                     break;
 
                 default:
                     if (nextChar >= ' ')
                     {
-                        if (this.validator != null)
+                        if (validator != null)
                         {
-                            nextChar = this.validator(this.mText, nextChar);
+                            nextChar = validator(mText, nextChar);
                         }
                         if (nextChar != '\0')
                         {
-                            this.mText = this.mText + nextChar;
-                            base.SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
+                            mText = mText + nextChar;
+                            SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
                         }
                     }
                     break;
             }
             num++;
         }
-        this.UpdateLabel();
+        UpdateLabel();
     }
 
     protected void Init()
     {
-        this.maxChars = 100;
-        this.initMain();
+        maxChars = 100;
+        initMain();
     }
 
     protected void initMain()
     {
-        this.maxChars = 100;
-        if (this.mDoInit)
+        maxChars = 100;
+        if (mDoInit)
         {
-            this.mDoInit = false;
-            if (this.label == null)
+            mDoInit = false;
+            if (label == null)
             {
-                this.label = base.GetComponentInChildren<UILabel>();
+                label = GetComponentInChildren<UILabel>();
             }
-            if (this.label != null)
+            if (label != null)
             {
-                if (this.useLabelTextAtStart)
+                if (useLabelTextAtStart)
                 {
-                    this.mText = this.label.text;
+                    mText = label.text;
                 }
-                this.mDefaultText = this.label.text;
-                this.mDefaultColor = this.label.color;
-                this.label.supportEncoding = false;
-                this.label.password = this.isPassword;
-                this.mPivot = this.label.pivot;
-                this.mPosition = this.label.cachedTransform.localPosition.x;
+                mDefaultText = label.text;
+                mDefaultColor = label.color;
+                label.supportEncoding = false;
+                label.password = isPassword;
+                mPivot = label.pivot;
+                mPosition = label.cachedTransform.localPosition.x;
             }
             else
             {
-                base.enabled = false;
+                enabled = false;
             }
         }
     }
 
     private void OnDisable()
     {
-        if (UICamera.IsHighlighted(base.gameObject))
+        if (UICamera.IsHighlighted(gameObject))
         {
-            this.OnSelect(false);
+            OnSelect(false);
         }
     }
 
     private void OnEnable()
     {
-        if (UICamera.IsHighlighted(base.gameObject))
+        if (UICamera.IsHighlighted(gameObject))
         {
-            this.OnSelect(true);
+            OnSelect(true);
         }
     }
 
     private void OnInput(string input)
     {
-        if (this.mDoInit)
+        if (mDoInit)
         {
-            this.initMain();
+            initMain();
         }
-        if ((((this.selected && base.enabled) && NGUITools.GetActive(base.gameObject)) && (Application.platform != RuntimePlatform.Android)) && (Application.platform != RuntimePlatform.IPhonePlayer))
+        if ((((selected && enabled) && NGUITools.GetActive(gameObject)) && (Application.platform != RuntimePlatform.Android)) && (Application.platform != RuntimePlatform.IPhonePlayer))
         {
-            this.Append(input);
+            Append(input);
         }
     }
 
     private void OnSelect(bool isSelected)
     {
-        if (this.mDoInit)
+        if (mDoInit)
         {
-            this.initMain();
+            initMain();
         }
-        if (((this.label != null) && base.enabled) && NGUITools.GetActive(base.gameObject))
+        if (((label != null) && enabled) && NGUITools.GetActive(gameObject))
         {
             if (isSelected)
             {
-                this.mText = (this.useLabelTextAtStart || !(this.label.text == this.mDefaultText)) ? this.label.text : string.Empty;
-                this.label.color = this.activeColor;
-                if (this.isPassword)
+                mText = (useLabelTextAtStart || !(label.text == mDefaultText)) ? label.text : string.Empty;
+                label.color = activeColor;
+                if (isPassword)
                 {
-                    this.label.password = true;
+                    label.password = true;
                 }
                 Input.imeCompositionMode = IMECompositionMode.On;
-                Transform cachedTransform = this.label.cachedTransform;
-                Vector3 pivotOffset = (Vector3) this.label.pivotOffset;
-                pivotOffset.y += this.label.relativeSize.y;
+                var cachedTransform = label.cachedTransform;
+                var pivotOffset = (Vector3) label.pivotOffset;
+                pivotOffset.y += label.relativeSize.y;
                 pivotOffset = cachedTransform.TransformPoint(pivotOffset);
                 Input.compositionCursorPos = UICamera.currentCamera.WorldToScreenPoint(pivotOffset);
-                this.UpdateLabel();
+                UpdateLabel();
             }
             else
             {
-                if (string.IsNullOrEmpty(this.mText))
+                if (string.IsNullOrEmpty(mText))
                 {
-                    this.label.text = this.mDefaultText;
-                    this.label.color = this.mDefaultColor;
-                    if (this.isPassword)
+                    label.text = mDefaultText;
+                    label.color = mDefaultColor;
+                    if (isPassword)
                     {
-                        this.label.password = false;
+                        label.password = false;
                     }
                 }
                 else
                 {
-                    this.label.text = this.mText;
+                    label.text = mText;
                 }
-                this.label.showLastPasswordChar = false;
+                label.showLastPasswordChar = false;
                 Input.imeCompositionMode = IMECompositionMode.Off;
-                this.RestoreLabel();
+                RestoreLabel();
             }
         }
     }
 
     private void RestoreLabel()
     {
-        if (this.label != null)
+        if (label != null)
         {
-            this.label.pivot = this.mPivot;
-            Vector3 localPosition = this.label.cachedTransform.localPosition;
-            localPosition.x = this.mPosition;
-            this.label.cachedTransform.localPosition = localPosition;
+            label.pivot = mPivot;
+            var localPosition = label.cachedTransform.localPosition;
+            localPosition.x = mPosition;
+            label.cachedTransform.localPosition = localPosition;
         }
     }
 
     private void Update()
     {
-        if (this.selected)
+        if (selected)
         {
-            if ((this.selectOnTab != null) && Input.GetKeyDown(KeyCode.Tab))
+            if ((selectOnTab != null) && Input.GetKeyDown(KeyCode.Tab))
             {
-                UICamera.selectedObject = this.selectOnTab;
+                UICamera.selectedObject = selectOnTab;
             }
             if (Input.GetKeyDown(KeyCode.V) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)))
             {
-                this.Append(NGUITools.clipboard);
+                Append(NGUITools.clipboard);
             }
-            if (this.mLastIME != Input.compositionString)
+            if (mLastIME != Input.compositionString)
             {
-                this.mLastIME = Input.compositionString;
-                this.UpdateLabel();
+                mLastIME = Input.compositionString;
+                UpdateLabel();
             }
         }
     }
 
     private void UpdateLabel()
     {
-        if (this.mDoInit)
+        if (mDoInit)
         {
-            this.initMain();
+            initMain();
         }
-        if ((this.maxChars > 0) && (this.mText.Length > this.maxChars))
+        if ((maxChars > 0) && (mText.Length > maxChars))
         {
-            this.mText = this.mText.Substring(0, this.maxChars);
+            mText = mText.Substring(0, maxChars);
         }
-        if (this.label.font != null)
+        if (label.font != null)
         {
             string str;
-            if (this.isPassword && this.selected)
+            if (isPassword && selected)
             {
                 str = string.Empty;
-                int num = 0;
-                int length = this.mText.Length;
+                var num = 0;
+                var length = mText.Length;
                 while (num < length)
                 {
                     str = str + "*";
                     num++;
                 }
-                str = str + Input.compositionString + this.caratChar;
+                str = str + Input.compositionString + caratChar;
             }
             else
             {
-                str = !this.selected ? this.mText : (this.mText + Input.compositionString + this.caratChar);
+                str = !selected ? mText : (mText + Input.compositionString + caratChar);
             }
-            this.label.supportEncoding = false;
-            if (!this.label.shrinkToFit)
+            label.supportEncoding = false;
+            if (!label.shrinkToFit)
             {
-                if (this.label.multiLine)
+                if (label.multiLine)
                 {
-                    str = this.label.font.WrapText(str, ((float) this.label.lineWidth) / this.label.cachedTransform.localScale.x, 0, false, UIFont.SymbolStyle.None);
+                    str = label.font.WrapText(str, label.lineWidth / label.cachedTransform.localScale.x, 0, false, UIFont.SymbolStyle.None);
                 }
                 else
                 {
-                    string str2 = this.label.font.GetEndOfLineThatFits(str, ((float) this.label.lineWidth) / this.label.cachedTransform.localScale.x, false, UIFont.SymbolStyle.None);
+                    var str2 = label.font.GetEndOfLineThatFits(str, label.lineWidth / label.cachedTransform.localScale.x, false, UIFont.SymbolStyle.None);
                     if (str2 != str)
                     {
                         str = str2;
-                        Vector3 localPosition = this.label.cachedTransform.localPosition;
-                        localPosition.x = this.mPosition + this.label.lineWidth;
-                        if (this.mPivot == UIWidget.Pivot.Left)
+                        var localPosition = label.cachedTransform.localPosition;
+                        localPosition.x = mPosition + label.lineWidth;
+                        if (mPivot == UIWidget.Pivot.Left)
                         {
-                            this.label.pivot = UIWidget.Pivot.Right;
+                            label.pivot = UIWidget.Pivot.Right;
                         }
-                        else if (this.mPivot == UIWidget.Pivot.TopLeft)
+                        else if (mPivot == UIWidget.Pivot.TopLeft)
                         {
-                            this.label.pivot = UIWidget.Pivot.TopRight;
+                            label.pivot = UIWidget.Pivot.TopRight;
                         }
-                        else if (this.mPivot == UIWidget.Pivot.BottomLeft)
+                        else if (mPivot == UIWidget.Pivot.BottomLeft)
                         {
-                            this.label.pivot = UIWidget.Pivot.BottomRight;
+                            label.pivot = UIWidget.Pivot.BottomRight;
                         }
-                        this.label.cachedTransform.localPosition = localPosition;
+                        label.cachedTransform.localPosition = localPosition;
                     }
                     else
                     {
-                        this.RestoreLabel();
+                        RestoreLabel();
                     }
                 }
             }
-            this.label.text = str;
-            this.label.showLastPasswordChar = this.selected;
+            label.text = str;
+            label.showLastPasswordChar = selected;
         }
     }
 
@@ -320,15 +320,15 @@ public class UIInput : MonoBehaviour
     {
         get
         {
-            return this.mDefaultText;
+            return mDefaultText;
         }
         set
         {
-            if (this.label.text == this.mDefaultText)
+            if (label.text == mDefaultText)
             {
-                this.label.text = value;
+                label.text = value;
             }
-            this.mDefaultText = value;
+            mDefaultText = value;
         }
     }
 
@@ -336,17 +336,17 @@ public class UIInput : MonoBehaviour
     {
         get
         {
-            return (UICamera.selectedObject == base.gameObject);
+            return (UICamera.selectedObject == gameObject);
         }
         set
         {
-            if (!value && (UICamera.selectedObject == base.gameObject))
+            if (!value && (UICamera.selectedObject == gameObject))
             {
                 UICamera.selectedObject = null;
             }
             else if (value)
             {
-                UICamera.selectedObject = base.gameObject;
+                UICamera.selectedObject = gameObject;
             }
         }
     }
@@ -355,29 +355,29 @@ public class UIInput : MonoBehaviour
     {
         get
         {
-            if (this.mDoInit)
+            if (mDoInit)
             {
-                this.initMain();
+                initMain();
             }
-            return this.mText;
+            return mText;
         }
         set
         {
-            if (this.mDoInit)
+            if (mDoInit)
             {
-                this.initMain();
+                initMain();
             }
-            this.mText = value;
-            if (this.label != null)
+            mText = value;
+            if (label != null)
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    value = this.mDefaultText;
+                    value = mDefaultText;
                 }
-                this.label.supportEncoding = false;
-                this.label.text = !this.selected ? value : (value + this.caratChar);
-                this.label.showLastPasswordChar = this.selected;
-                this.label.color = (!this.selected && !(value != this.mDefaultText)) ? this.mDefaultColor : this.activeColor;
+                label.supportEncoding = false;
+                label.text = !selected ? value : (value + caratChar);
+                label.showLastPasswordChar = selected;
+                label.color = (!selected && !(value != mDefaultText)) ? mDefaultColor : activeColor;
             }
         }
     }

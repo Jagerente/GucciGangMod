@@ -16,20 +16,20 @@ public class TypewriterEffect : MonoBehaviour
 
     private void Update()
     {
-        if (this.mLabel == null)
+        if (mLabel == null)
         {
-            this.mLabel = base.GetComponent<UILabel>();
-            this.mLabel.supportEncoding = false;
-            this.mLabel.symbolStyle = UIFont.SymbolStyle.None;
-            this.mText = this.mLabel.font.WrapText(this.mLabel.text, ((float) this.mLabel.lineWidth) / this.mLabel.cachedTransform.localScale.x, this.mLabel.maxLineCount, false, UIFont.SymbolStyle.None);
+            mLabel = GetComponent<UILabel>();
+            mLabel.supportEncoding = false;
+            mLabel.symbolStyle = UIFont.SymbolStyle.None;
+            mText = mLabel.font.WrapText(mLabel.text, mLabel.lineWidth / mLabel.cachedTransform.localScale.x, mLabel.maxLineCount, false, UIFont.SymbolStyle.None);
         }
-        if (this.mOffset < this.mText.Length)
+        if (mOffset < mText.Length)
         {
-            if (this.mNextChar <= Time.time)
+            if (mNextChar <= Time.time)
             {
-                this.charsPerSecond = Mathf.Max(1, this.charsPerSecond);
-                float num = 1f / ((float) this.charsPerSecond);
-                switch (this.mText[this.mOffset])
+                charsPerSecond = Mathf.Max(1, charsPerSecond);
+                var num = 1f / charsPerSecond;
+                switch (mText[mOffset])
                 {
                     case '.':
                     case '\n':
@@ -38,13 +38,13 @@ public class TypewriterEffect : MonoBehaviour
                         num *= 4f;
                         break;
                 }
-                this.mNextChar = Time.time + num;
-                this.mLabel.text = this.mText.Substring(0, ++this.mOffset);
+                mNextChar = Time.time + num;
+                mLabel.text = mText.Substring(0, ++mOffset);
             }
         }
         else
         {
-            UnityEngine.Object.Destroy(this);
+            Destroy(this);
         }
     }
 }

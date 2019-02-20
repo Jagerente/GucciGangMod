@@ -12,7 +12,7 @@ public class BTN_Connect_To_Server_On_List : MonoBehaviour
 
     private void OnClick()
     {
-        base.transform.parent.parent.GetComponent<PanelMultiJoin>().connectToIndex(this.index, this.roomName);
+        transform.parent.parent.GetComponent<PanelMultiJoin>().connectToIndex(index, roomName);
     }
 }
 

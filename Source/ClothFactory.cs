@@ -19,7 +19,7 @@ public static class ClothFactory
     {
         if (cachedObject != null)
         {
-            ParentFollow component = cachedObject.GetComponent<ParentFollow>();
+            var component = cachedObject.GetComponent<ParentFollow>();
             if (component != null)
             {
                 if (component.isActiveInScene)
@@ -33,7 +33,7 @@ public static class ClothFactory
             }
             else
             {
-                UnityEngine.Object.Destroy(cachedObject);
+                Object.Destroy(cachedObject);
             }
         }
     }
@@ -44,8 +44,8 @@ public static class ClothFactory
         {
             go.AddComponent<SkinnedMeshRenderer>();
         }
-        Transform[] bones = go.GetComponent<SkinnedMeshRenderer>().bones;
-        SkinnedMeshRenderer component = ((GameObject) UnityEngine.Object.Instantiate(Resources.Load(res))).GetComponent<SkinnedMeshRenderer>();
+        var bones = go.GetComponent<SkinnedMeshRenderer>().bones;
+        var component = ((GameObject) Object.Instantiate(Resources.Load(res))).GetComponent<SkinnedMeshRenderer>();
         component.transform.localScale = Vector3.one;
         component.bones = bones;
         component.quality = SkinQuality.Bone4;
@@ -58,9 +58,9 @@ public static class ClothFactory
         GameObject obj4;
         if (clothCache.TryGetValue(name, out list))
         {
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
-                GameObject clothObject = list[i];
+                var clothObject = list[i];
                 if (clothObject == null)
                 {
                     list.RemoveAt(i);
@@ -68,7 +68,7 @@ public static class ClothFactory
                 }
                 else
                 {
-                    ParentFollow component = clothObject.GetComponent<ParentFollow>();
+                    var component = clothObject.GetComponent<ParentFollow>();
                     if (!component.isActiveInScene)
                     {
                         component.isActiveInScene = true;
@@ -100,13 +100,13 @@ public static class ClothFactory
 
     public static string GetDebugInfo()
     {
-        int num = 0;
-        foreach (KeyValuePair<string, List<GameObject>> pair in clothCache)
+        var num = 0;
+        foreach (var pair in clothCache)
         {
             num += clothCache[pair.Key].Count;
         }
-        int num2 = 0;
-        foreach (Cloth cloth in UnityEngine.Object.FindObjectsOfType<Cloth>())
+        var num2 = 0;
+        foreach (var cloth in Object.FindObjectsOfType<Cloth>())
         {
             if (cloth.enabled)
             {
@@ -122,9 +122,9 @@ public static class ClothFactory
         GameObject obj4;
         if (clothCache.TryGetValue(name, out list))
         {
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
-                GameObject clothObject = list[i];
+                var clothObject = list[i];
                 if (clothObject == null)
                 {
                     list.RemoveAt(i);
@@ -132,7 +132,7 @@ public static class ClothFactory
                 }
                 else
                 {
-                    ParentFollow component = clothObject.GetComponent<ParentFollow>();
+                    var component = clothObject.GetComponent<ParentFollow>();
                     if (!component.isActiveInScene)
                     {
                         component.isActiveInScene = true;
@@ -167,8 +167,8 @@ public static class ClothFactory
 
     private static void ReapplyClothBones(GameObject reference, GameObject clothObject)
     {
-        SkinnedMeshRenderer component = reference.GetComponent<SkinnedMeshRenderer>();
-        SkinnedMeshRenderer renderer2 = clothObject.GetComponent<SkinnedMeshRenderer>();
+        var component = reference.GetComponent<SkinnedMeshRenderer>();
+        var renderer2 = clothObject.GetComponent<SkinnedMeshRenderer>();
         renderer2.bones = component.bones;
         renderer2.transform.localScale = Vector3.one;
     }

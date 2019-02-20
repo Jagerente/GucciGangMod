@@ -13,14 +13,14 @@ public struct STransform
     public Quaternion rotation;
     public void Reset()
     {
-        this.position = Vector3.zero;
-        this.rotation = Quaternion.identity;
+        position = Vector3.zero;
+        rotation = Quaternion.identity;
     }
 
     public void LookAt(Vector3 target, Vector3 up)
     {
-        Vector3 forward = target - this.position;
-        this.rotation = Quaternion.LookRotation(forward, up);
+        var forward = target - position;
+        rotation = Quaternion.LookRotation(forward, up);
     }
 }
 

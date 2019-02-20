@@ -30,41 +30,41 @@ public class UISlider : IgnoreTimeScale
 
     private void Awake()
     {
-        this.mTrans = base.transform;
-        this.mCol = base.collider as BoxCollider;
+        mTrans = transform;
+        mCol = collider as BoxCollider;
     }
 
     public void ForceUpdate()
     {
-        this.Set(this.rawValue, true);
+        Set(rawValue, true);
     }
 
     private void Init()
     {
-        this.mInitDone = true;
-        if (this.foreground != null)
+        mInitDone = true;
+        if (foreground != null)
         {
-            this.mFGWidget = this.foreground.GetComponent<UIWidget>();
-            this.mFGFilled = (this.mFGWidget == null) ? null : (this.mFGWidget as UISprite);
-            this.mFGTrans = this.foreground.transform;
-            if (this.mSize == Vector2.zero)
+            mFGWidget = foreground.GetComponent<UIWidget>();
+            mFGFilled = (mFGWidget == null) ? null : (mFGWidget as UISprite);
+            mFGTrans = foreground.transform;
+            if (mSize == Vector2.zero)
             {
-                this.mSize = this.foreground.localScale;
+                mSize = foreground.localScale;
             }
-            if (this.mCenter == Vector2.zero)
+            if (mCenter == Vector2.zero)
             {
-                this.mCenter = (Vector2) (this.foreground.localPosition + (this.foreground.localScale * 0.5f));
+                mCenter = foreground.localPosition + (foreground.localScale * 0.5f);
             }
         }
-        else if (this.mCol != null)
+        else if (mCol != null)
         {
-            if (this.mSize == Vector2.zero)
+            if (mSize == Vector2.zero)
             {
-                this.mSize = this.mCol.size;
+                mSize = mCol.size;
             }
-            if (this.mCenter == Vector2.zero)
+            if (mCenter == Vector2.zero)
             {
-                this.mCenter = this.mCol.center;
+                mCenter = mCol.center;
             }
         }
         else
@@ -75,35 +75,35 @@ public class UISlider : IgnoreTimeScale
 
     private void OnDrag(Vector2 delta)
     {
-        this.UpdateDrag();
+        UpdateDrag();
     }
 
     private void OnDragThumb(GameObject go, Vector2 delta)
     {
-        this.UpdateDrag();
+        UpdateDrag();
     }
 
     private void OnKey(KeyCode key)
     {
-        float num = (this.numberOfSteps <= 1f) ? 0.125f : (1f / ((float) (this.numberOfSteps - 1)));
-        if (this.direction == Direction.Horizontal)
+        var num = (numberOfSteps <= 1f) ? 0.125f : (1f / (numberOfSteps - 1));
+        if (direction == Direction.Horizontal)
         {
             if (key == KeyCode.LeftArrow)
             {
-                this.Set(this.rawValue - num, false);
+                Set(rawValue - num, false);
             }
             else if (key == KeyCode.RightArrow)
             {
-                this.Set(this.rawValue + num, false);
+                Set(rawValue + num, false);
             }
         }
         else if (key == KeyCode.DownArrow)
         {
-            this.Set(this.rawValue - num, false);
+            Set(rawValue - num, false);
         }
         else if (key == KeyCode.UpArrow)
         {
-            this.Set(this.rawValue + num, false);
+            Set(rawValue + num, false);
         }
     }
 
@@ -111,7 +111,7 @@ public class UISlider : IgnoreTimeScale
     {
         if (pressed && (UICamera.currentTouchID != -100))
         {
-            this.UpdateDrag();
+            UpdateDrag();
         }
     }
 
@@ -119,28 +119,28 @@ public class UISlider : IgnoreTimeScale
     {
         if (pressed)
         {
-            this.UpdateDrag();
+            UpdateDrag();
         }
     }
 
     private void Set(float input, bool force)
     {
-        if (!this.mInitDone)
+        if (!mInitDone)
         {
-            this.Init();
+            Init();
         }
-        float num = Mathf.Clamp01(input);
+        var num = Mathf.Clamp01(input);
         if (num < 0.001f)
         {
             num = 0f;
         }
-        float sliderValue = this.sliderValue;
-        this.rawValue = num;
-        float num3 = this.sliderValue;
+        var sliderValue = this.sliderValue;
+        rawValue = num;
+        var num3 = this.sliderValue;
         if (force || (sliderValue != num3))
         {
-            Vector3 mSize = (Vector3) this.mSize;
-            if (this.direction == Direction.Horizontal)
+            var mSize = (Vector3) this.mSize;
+            if (direction == Direction.Horizontal)
             {
                 mSize.x *= num3;
             }
@@ -148,45 +148,45 @@ public class UISlider : IgnoreTimeScale
             {
                 mSize.y *= num3;
             }
-            if ((this.mFGFilled != null) && (this.mFGFilled.type == UISprite.Type.Filled))
+            if ((mFGFilled != null) && (mFGFilled.type == UISprite.Type.Filled))
             {
-                this.mFGFilled.fillAmount = num3;
+                mFGFilled.fillAmount = num3;
             }
-            else if (this.foreground != null)
+            else if (foreground != null)
             {
-                this.mFGTrans.localScale = mSize;
-                if (this.mFGWidget != null)
+                mFGTrans.localScale = mSize;
+                if (mFGWidget != null)
                 {
                     if (num3 > 0.001f)
                     {
-                        this.mFGWidget.enabled = true;
-                        this.mFGWidget.MarkAsChanged();
+                        mFGWidget.enabled = true;
+                        mFGWidget.MarkAsChanged();
                     }
                     else
                     {
-                        this.mFGWidget.enabled = false;
+                        mFGWidget.enabled = false;
                     }
                 }
             }
-            if (this.thumb != null)
+            if (thumb != null)
             {
-                Vector3 localPosition = this.thumb.localPosition;
-                if ((this.mFGFilled != null) && (this.mFGFilled.type == UISprite.Type.Filled))
+                var localPosition = thumb.localPosition;
+                if ((mFGFilled != null) && (mFGFilled.type == UISprite.Type.Filled))
                 {
-                    if (this.mFGFilled.fillDirection == UISprite.FillDirection.Horizontal)
+                    if (mFGFilled.fillDirection == UISprite.FillDirection.Horizontal)
                     {
-                        localPosition.x = !this.mFGFilled.invert ? mSize.x : (this.mSize.x - mSize.x);
+                        localPosition.x = !mFGFilled.invert ? mSize.x : (this.mSize.x - mSize.x);
                     }
-                    else if (this.mFGFilled.fillDirection == UISprite.FillDirection.Vertical)
+                    else if (mFGFilled.fillDirection == UISprite.FillDirection.Vertical)
                     {
-                        localPosition.y = !this.mFGFilled.invert ? mSize.y : (this.mSize.y - mSize.y);
+                        localPosition.y = !mFGFilled.invert ? mSize.y : (this.mSize.y - mSize.y);
                     }
                     else
                     {
                         Debug.LogWarning("Slider thumb is only supported with Horizontal or Vertical fill direction", this);
                     }
                 }
-                else if (this.direction == Direction.Horizontal)
+                else if (direction == Direction.Horizontal)
                 {
                     localPosition.x = mSize.x;
                 }
@@ -194,16 +194,16 @@ public class UISlider : IgnoreTimeScale
                 {
                     localPosition.y = mSize.y;
                 }
-                this.thumb.localPosition = localPosition;
+                thumb.localPosition = localPosition;
             }
             current = this;
-            if (((this.eventReceiver != null) && !string.IsNullOrEmpty(this.functionName)) && Application.isPlaying)
+            if (((eventReceiver != null) && !string.IsNullOrEmpty(functionName)) && Application.isPlaying)
             {
-                this.eventReceiver.SendMessage(this.functionName, num3, SendMessageOptions.DontRequireReceiver);
+                eventReceiver.SendMessage(functionName, num3, SendMessageOptions.DontRequireReceiver);
             }
-            if (this.onValueChange != null)
+            if (onValueChange != null)
             {
-                this.onValueChange(num3);
+                onValueChange(num3);
             }
             current = null;
         }
@@ -211,30 +211,30 @@ public class UISlider : IgnoreTimeScale
 
     private void Start()
     {
-        this.Init();
-        if ((Application.isPlaying && (this.thumb != null)) && (this.thumb.collider != null))
+        Init();
+        if ((Application.isPlaying && (thumb != null)) && (thumb.collider != null))
         {
-            UIEventListener listener = UIEventListener.Get(this.thumb.gameObject);
-            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress, new UIEventListener.BoolDelegate(this.OnPressThumb));
-            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag, new UIEventListener.VectorDelegate(this.OnDragThumb));
+            var listener = UIEventListener.Get(thumb.gameObject);
+            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress, new UIEventListener.BoolDelegate(OnPressThumb));
+            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag, new UIEventListener.VectorDelegate(OnDragThumb));
         }
-        this.Set(this.rawValue, true);
+        Set(rawValue, true);
     }
 
     private void UpdateDrag()
     {
-        if (((this.mCol != null) && (UICamera.currentCamera != null)) && (UICamera.currentTouch != null))
+        if (((mCol != null) && (UICamera.currentCamera != null)) && (UICamera.currentTouch != null))
         {
             float num;
             UICamera.currentTouch.clickNotification = UICamera.ClickNotification.None;
-            Ray ray = UICamera.currentCamera.ScreenPointToRay((Vector3) UICamera.currentTouch.pos);
-            Plane plane = new Plane((Vector3) (this.mTrans.rotation * Vector3.back), this.mTrans.position);
+            var ray = UICamera.currentCamera.ScreenPointToRay(UICamera.currentTouch.pos);
+            var plane = new Plane(mTrans.rotation * Vector3.back, mTrans.position);
             if (plane.Raycast(ray, out num))
             {
-                Vector3 vector = this.mTrans.localPosition + ((Vector3) (this.mCenter - (this.mSize * 0.5f)));
-                Vector3 vector2 = this.mTrans.localPosition - vector;
-                Vector3 vector4 = this.mTrans.InverseTransformPoint(ray.GetPoint(num)) + vector2;
-                this.Set((this.direction != Direction.Horizontal) ? (vector4.y / this.mSize.y) : (vector4.x / this.mSize.x), false);
+                var vector = mTrans.localPosition + ((Vector3) (mCenter - (mSize * 0.5f)));
+                var vector2 = mTrans.localPosition - vector;
+                var vector4 = mTrans.InverseTransformPoint(ray.GetPoint(num)) + vector2;
+                Set((direction != Direction.Horizontal) ? (vector4.y / mSize.y) : (vector4.x / mSize.x), false);
             }
         }
     }
@@ -243,14 +243,14 @@ public class UISlider : IgnoreTimeScale
     {
         get
         {
-            return this.mSize;
+            return mSize;
         }
         set
         {
-            if (this.mSize != value)
+            if (mSize != value)
             {
-                this.mSize = value;
-                this.ForceUpdate();
+                mSize = value;
+                ForceUpdate();
             }
         }
     }
@@ -259,16 +259,16 @@ public class UISlider : IgnoreTimeScale
     {
         get
         {
-            float rawValue = this.rawValue;
-            if (this.numberOfSteps > 1)
+            var rawValue = this.rawValue;
+            if (numberOfSteps > 1)
             {
-                rawValue = Mathf.Round(rawValue * (this.numberOfSteps - 1)) / ((float) (this.numberOfSteps - 1));
+                rawValue = Mathf.Round(rawValue * (numberOfSteps - 1)) / (numberOfSteps - 1);
             }
             return rawValue;
         }
         set
         {
-            this.Set(value, false);
+            Set(value, false);
         }
     }
 

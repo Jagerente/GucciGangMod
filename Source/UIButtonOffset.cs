@@ -18,12 +18,12 @@ public class UIButtonOffset : MonoBehaviour
 
     private void OnDisable()
     {
-        if (this.mStarted && (this.tweenTarget != null))
+        if (mStarted && (tweenTarget != null))
         {
-            TweenPosition component = this.tweenTarget.GetComponent<TweenPosition>();
+            var component = tweenTarget.GetComponent<TweenPosition>();
             if (component != null)
             {
-                component.position = this.mPos;
+                component.position = mPos;
                 component.enabled = false;
             }
         }
@@ -31,47 +31,47 @@ public class UIButtonOffset : MonoBehaviour
 
     private void OnEnable()
     {
-        if (this.mStarted && this.mHighlighted)
+        if (mStarted && mHighlighted)
         {
-            this.OnHover(UICamera.IsHighlighted(base.gameObject));
+            OnHover(UICamera.IsHighlighted(gameObject));
         }
     }
 
     private void OnHover(bool isOver)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Start();
+                Start();
             }
-            TweenPosition.Begin(this.tweenTarget.gameObject, this.duration, !isOver ? this.mPos : (this.mPos + this.hover)).method = UITweener.Method.EaseInOut;
-            this.mHighlighted = isOver;
+            TweenPosition.Begin(tweenTarget.gameObject, duration, !isOver ? mPos : (mPos + hover)).method = UITweener.Method.EaseInOut;
+            mHighlighted = isOver;
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Start();
+                Start();
             }
-            TweenPosition.Begin(this.tweenTarget.gameObject, this.duration, !isPressed ? (!UICamera.IsHighlighted(base.gameObject) ? this.mPos : (this.mPos + this.hover)) : (this.mPos + this.pressed)).method = UITweener.Method.EaseInOut;
+            TweenPosition.Begin(tweenTarget.gameObject, duration, !isPressed ? (!UICamera.IsHighlighted(gameObject) ? mPos : (mPos + hover)) : (mPos + pressed)).method = UITweener.Method.EaseInOut;
         }
     }
 
     private void Start()
     {
-        if (!this.mStarted)
+        if (!mStarted)
         {
-            this.mStarted = true;
-            if (this.tweenTarget == null)
+            mStarted = true;
+            if (tweenTarget == null)
             {
-                this.tweenTarget = base.transform;
+                tweenTarget = transform;
             }
-            this.mPos = this.tweenTarget.localPosition;
+            mPos = tweenTarget.localPosition;
         }
     }
 }

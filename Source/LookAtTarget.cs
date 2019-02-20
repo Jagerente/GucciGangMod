@@ -15,20 +15,20 @@ public class LookAtTarget : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (this.target != null)
+        if (target != null)
         {
-            Vector3 forward = this.target.position - this.mTrans.position;
+            var forward = target.position - mTrans.position;
             if (forward.magnitude > 0.001f)
             {
-                Quaternion b = Quaternion.LookRotation(forward);
-                this.mTrans.rotation = Quaternion.Slerp(this.mTrans.rotation, b, Mathf.Clamp01(this.speed * Time.deltaTime));
+                var b = Quaternion.LookRotation(forward);
+                mTrans.rotation = Quaternion.Slerp(mTrans.rotation, b, Mathf.Clamp01(speed * Time.deltaTime));
             }
         }
     }
 
     private void Start()
     {
-        this.mTrans = base.transform;
+        mTrans = transform;
     }
 }
 

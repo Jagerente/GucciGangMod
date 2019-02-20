@@ -20,30 +20,30 @@ public class Localization : MonoBehaviour
         if (mInstance == null)
         {
             mInstance = this;
-            UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
-            this.currentLanguage = PlayerPrefs.GetString("Language", this.startingLanguage);
-            if ((string.IsNullOrEmpty(this.mLanguage) && (this.languages != null)) && (this.languages.Length > 0))
+            DontDestroyOnLoad(gameObject);
+            currentLanguage = PlayerPrefs.GetString("Language", startingLanguage);
+            if ((string.IsNullOrEmpty(mLanguage) && (languages != null)) && (languages.Length > 0))
             {
-                this.currentLanguage = this.languages[0].name;
+                currentLanguage = languages[0].name;
             }
         }
         else
         {
-            UnityEngine.Object.Destroy(base.gameObject);
+            Destroy(gameObject);
         }
     }
 
     public string Get(string key)
     {
         string str;
-        return (!this.mDictionary.TryGetValue(key, out str) ? key : str);
+        return (!mDictionary.TryGetValue(key, out str) ? key : str);
     }
 
     private void Load(TextAsset asset)
     {
-        this.mLanguage = asset.name;
-        PlayerPrefs.SetString("Language", this.mLanguage);
-        this.mDictionary = new ByteReader(asset).ReadDictionary();
+        mLanguage = asset.name;
+        PlayerPrefs.SetString("Language", mLanguage);
+        mDictionary = new ByteReader(asset).ReadDictionary();
         UIRoot.Broadcast("OnLocalize", this);
     }
 
@@ -72,38 +72,38 @@ public class Localization : MonoBehaviour
     {
         get
         {
-            return this.mLanguage;
+            return mLanguage;
         }
         set
         {
-            if (this.mLanguage != value)
+            if (mLanguage != value)
             {
-                this.startingLanguage = value;
+                startingLanguage = value;
                 if (!string.IsNullOrEmpty(value))
                 {
-                    if (this.languages != null)
+                    if (languages != null)
                     {
-                        int index = 0;
-                        int length = this.languages.Length;
+                        var index = 0;
+                        var length = languages.Length;
                         while (index < length)
                         {
-                            TextAsset asset = this.languages[index];
+                            var asset = languages[index];
                             if ((asset != null) && (asset.name == value))
                             {
-                                this.Load(asset);
+                                Load(asset);
                                 return;
                             }
                             index++;
                         }
                     }
-                    TextAsset asset2 = Resources.Load(value, typeof(TextAsset)) as TextAsset;
+                    var asset2 = Resources.Load(value, typeof(TextAsset)) as TextAsset;
                     if (asset2 != null)
                     {
-                        this.Load(asset2);
+                        Load(asset2);
                         return;
                     }
                 }
-                this.mDictionary.Clear();
+                mDictionary.Clear();
                 PlayerPrefs.DeleteKey("Language");
             }
         }
@@ -115,11 +115,11 @@ public class Localization : MonoBehaviour
         {
             if (mInstance == null)
             {
-                mInstance = UnityEngine.Object.FindObjectOfType(typeof(Localization)) as Localization;
+                mInstance = FindObjectOfType(typeof(Localization)) as Localization;
                 if (mInstance == null)
                 {
-                    GameObject target = new GameObject("_Localization");
-                    UnityEngine.Object.DontDestroyOnLoad(target);
+                    var target = new GameObject("_Localization");
+                    DontDestroyOnLoad(target);
                     mInstance = target.AddComponent<Localization>();
                 }
             }

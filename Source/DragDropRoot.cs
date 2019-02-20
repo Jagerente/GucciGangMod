@@ -12,7 +12,7 @@ public class DragDropRoot : MonoBehaviour
 
     private void Awake()
     {
-        root = base.transform;
+        root = transform;
     }
 }
 

@@ -20,27 +20,27 @@ public class CannonBall : Photon.MonoBehaviour
 
     private void Awake()
     {
-        if (base.photonView != null)
+        if (photonView != null)
         {
-            base.photonView.observed = this;
-            this.correctPos = base.transform.position;
-            this.correctVelocity = Vector3.zero;
-            base.GetComponent<SphereCollider>().enabled = false;
-            if (base.photonView.isMine)
+            photonView.observed = this;
+            correctPos = transform.position;
+            correctVelocity = Vector3.zero;
+            GetComponent<SphereCollider>().enabled = false;
+            if (photonView.isMine)
             {
-                base.StartCoroutine(this.WaitAndDestroy(10f));
-                this.myTitanTriggers = new List<TitanTrigger>();
+                StartCoroutine(WaitAndDestroy(10f));
+                myTitanTriggers = new List<TitanTrigger>();
             }
         }
     }
 
     public void destroyMe()
     {
-        if (!this.disabled)
+        if (!disabled)
         {
-            this.disabled = true;
-            GameObject obj2 = PhotonNetwork.Instantiate("FX/boom4", base.transform.position, base.transform.rotation, 0);
-            foreach (EnemyCheckCollider collider in obj2.GetComponentsInChildren<EnemyCheckCollider>())
+            disabled = true;
+            var obj2 = PhotonNetwork.Instantiate("FX/boom4", transform.position, transform.rotation, 0);
+            foreach (var collider in obj2.GetComponentsInChildren<EnemyCheckCollider>())
             {
                 collider.dmg = 0;
             }
@@ -48,14 +48,14 @@ public class CannonBall : Photon.MonoBehaviour
             {
                 foreach (HERO hero in FengGameManagerMKII.instance.getPlayers())
                 {
-                    if (((hero != null) && (Vector3.Distance(hero.transform.position, base.transform.position) <= 20f)) && !hero.photonView.isMine)
+                    if (((hero != null) && (Vector3.Distance(hero.transform.position, transform.position) <= 20f)) && !hero.photonView.isMine)
                     {
-                        GameObject gameObject = hero.gameObject;
-                        PhotonPlayer owner = gameObject.GetPhotonView().owner;
+                        var gameObject = hero.gameObject;
+                        var owner = gameObject.GetPhotonView().owner;
                         if (((RCSettings.teamMode > 0) && (PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam] != null)) && (owner.customProperties[PhotonPlayerProperty.RCteam] != null))
                         {
-                            int num2 = RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam]);
-                            int num3 = RCextensions.returnIntFromObject(owner.customProperties[PhotonPlayerProperty.RCteam]);
+                            var num2 = RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam]);
+                            var num3 = RCextensions.returnIntFromObject(owner.customProperties[PhotonPlayerProperty.RCteam]);
                             if ((num2 == 0) || (num2 != num3))
                             {
                                 gameObject.GetComponent<HERO>().markDie();
@@ -72,75 +72,75 @@ public class CannonBall : Photon.MonoBehaviour
                     }
                 }
             }
-            if (this.myTitanTriggers != null)
+            if (myTitanTriggers != null)
             {
-                for (int i = 0; i < this.myTitanTriggers.Count; i++)
+                for (var i = 0; i < myTitanTriggers.Count; i++)
                 {
-                    if (this.myTitanTriggers[i] != null)
+                    if (myTitanTriggers[i] != null)
                     {
-                        this.myTitanTriggers[i].isCollide = false;
+                        myTitanTriggers[i].isCollide = false;
                     }
                 }
             }
-            PhotonNetwork.Destroy(base.gameObject);
+            PhotonNetwork.Destroy(this.gameObject);
         }
     }
 
     public void FixedUpdate()
     {
-        if (base.photonView.isMine && !this.disabled)
+        if (photonView.isMine && !disabled)
         {
-            LayerMask mask = ((int) 1) << LayerMask.NameToLayer("PlayerAttackBox");
-            LayerMask mask2 = ((int) 1) << LayerMask.NameToLayer("EnemyBox");
+            LayerMask mask = 1 << LayerMask.NameToLayer("PlayerAttackBox");
+            LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
             LayerMask mask3 = mask | mask2;
-            if (!this.isCollider)
+            if (!isCollider)
             {
-                LayerMask mask4 = ((int) 1) << LayerMask.NameToLayer("Ground");
+                LayerMask mask4 = 1 << LayerMask.NameToLayer("Ground");
                 mask3 |= mask4;
             }
-            Collider[] colliderArray = Physics.OverlapSphere(base.transform.position, 0.6f, mask3.value);
-            bool flag2 = false;
-            for (int i = 0; i < colliderArray.Length; i++)
+            var colliderArray = Physics.OverlapSphere(transform.position, 0.6f, mask3.value);
+            var flag2 = false;
+            for (var i = 0; i < colliderArray.Length; i++)
             {
-                GameObject gameObject = colliderArray[i].gameObject;
+                var gameObject = colliderArray[i].gameObject;
                 if (gameObject.layer == 0x10)
                 {
-                    TitanTrigger component = gameObject.GetComponent<TitanTrigger>();
-                    if (!((component == null) || this.myTitanTriggers.Contains(component)))
+                    var component = gameObject.GetComponent<TitanTrigger>();
+                    if (!((component == null) || myTitanTriggers.Contains(component)))
                     {
                         component.isCollide = true;
-                        this.myTitanTriggers.Add(component);
+                        myTitanTriggers.Add(component);
                     }
                 }
                 else if (gameObject.layer == 10)
                 {
-                    TITAN titan = gameObject.transform.root.gameObject.GetComponent<TITAN>();
+                    var titan = gameObject.transform.root.gameObject.GetComponent<TITAN>();
                     if (titan != null)
                     {
                         if (titan.abnormalType == AbnormalType.TYPE_CRAWLER)
                         {
                             if (gameObject.name == "head")
                             {
-                                titan.photonView.RPC("DieByCannon", titan.photonView.owner, new object[] { this.myHero.photonView.viewID });
-                                titan.dieBlow(base.transform.position, 0.2f);
+                                titan.photonView.RPC("DieByCannon", titan.photonView.owner, new object[] { myHero.photonView.viewID });
+                                titan.dieBlow(transform.position, 0.2f);
                                 i = colliderArray.Length;
                             }
                         }
                         else if (gameObject.name == "head")
                         {
-                            titan.photonView.RPC("DieByCannon", titan.photonView.owner, new object[] { this.myHero.photonView.viewID });
-                            titan.dieHeadBlow(base.transform.position, 0.2f);
+                            titan.photonView.RPC("DieByCannon", titan.photonView.owner, new object[] { myHero.photonView.viewID });
+                            titan.dieHeadBlow(transform.position, 0.2f);
                             i = colliderArray.Length;
                         }
-                        else if (UnityEngine.Random.Range((float) 0f, (float) 1f) < 0.5f)
+                        else if (Random.Range(0f, 1f) < 0.5f)
                         {
-                            titan.hitL(base.transform.position, 0.05f);
+                            titan.hitL(transform.position, 0.05f);
                         }
                         else
                         {
-                            titan.hitR(base.transform.position, 0.05f);
+                            titan.hitR(transform.position, 0.05f);
                         }
-                        this.destroyMe();
+                        destroyMe();
                     }
                 }
                 else if ((gameObject.layer == 9) && (gameObject.transform.root.name.Contains("CannonWall") || gameObject.transform.root.name.Contains("CannonGround")))
@@ -148,19 +148,19 @@ public class CannonBall : Photon.MonoBehaviour
                     flag2 = true;
                 }
             }
-            if (!(this.isCollider || flag2))
+            if (!(isCollider || flag2))
             {
-                this.isCollider = true;
-                base.GetComponent<SphereCollider>().enabled = true;
+                isCollider = true;
+                GetComponent<SphereCollider>().enabled = true;
             }
         }
     }
 
     public void OnCollisionEnter(Collision myCollision)
     {
-        if (base.photonView.isMine)
+        if (photonView.isMine)
         {
-            this.destroyMe();
+            destroyMe();
         }
     }
 
@@ -168,29 +168,29 @@ public class CannonBall : Photon.MonoBehaviour
     {
         if (stream.isWriting)
         {
-            stream.SendNext(base.transform.position);
-            stream.SendNext(base.rigidbody.velocity);
+            stream.SendNext(transform.position);
+            stream.SendNext(rigidbody.velocity);
         }
         else
         {
-            this.correctPos = (Vector3) stream.ReceiveNext();
-            this.correctVelocity = (Vector3) stream.ReceiveNext();
+            correctPos = (Vector3) stream.ReceiveNext();
+            correctVelocity = (Vector3) stream.ReceiveNext();
         }
     }
 
     public void Update()
     {
-        if (!base.photonView.isMine)
+        if (!photonView.isMine)
         {
-            base.transform.position = Vector3.Lerp(base.transform.position, this.correctPos, Time.deltaTime * this.SmoothingDelay);
-            base.rigidbody.velocity = this.correctVelocity;
+            transform.position = Vector3.Lerp(transform.position, correctPos, Time.deltaTime * SmoothingDelay);
+            rigidbody.velocity = correctVelocity;
         }
     }
 
     public IEnumerator WaitAndDestroy(float time)
     {
         yield return new WaitForSeconds(time);
-        this.destroyMe();
+        destroyMe();
     }
 
 }

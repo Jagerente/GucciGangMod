@@ -15,14 +15,14 @@ public class PopuplistCharacterSelection : MonoBehaviour
     private void onCharacterChange()
     {
         HeroStat stat;
-        string selection = base.GetComponent<UIPopupList>().selection;
+        var selection = GetComponent<UIPopupList>().selection;
         switch (selection)
         {
             case "Set 1":
             case "Set 2":
             case "Set 3":
             {
-                HeroCostume costume = CostumeConeveter.LocalDataToHeroCostume(selection.ToUpper());
+                var costume = CostumeConeveter.LocalDataToHeroCostume(selection.ToUpper());
                 if (costume == null)
                 {
                     stat = new HeroStat();
@@ -34,13 +34,13 @@ public class PopuplistCharacterSelection : MonoBehaviour
                 break;
             }
             default:
-                stat = HeroStat.getInfo(base.GetComponent<UIPopupList>().selection);
+                stat = HeroStat.getInfo(GetComponent<UIPopupList>().selection);
                 break;
         }
-        this.SPD.transform.localScale = new Vector3((float) stat.SPD, 20f, 0f);
-        this.GAS.transform.localScale = new Vector3((float) stat.GAS, 20f, 0f);
-        this.BLA.transform.localScale = new Vector3((float) stat.BLA, 20f, 0f);
-        this.ACL.transform.localScale = new Vector3((float) stat.ACL, 20f, 0f);
+        SPD.transform.localScale = new Vector3(stat.SPD, 20f, 0f);
+        GAS.transform.localScale = new Vector3(stat.GAS, 20f, 0f);
+        BLA.transform.localScale = new Vector3(stat.BLA, 20f, 0f);
+        ACL.transform.localScale = new Vector3(stat.ACL, 20f, 0f);
     }
 }
 

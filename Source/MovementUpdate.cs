@@ -17,48 +17,48 @@ public class MovementUpdate : MonoBehaviour
     {
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
-            this.disabled = true;
-            base.enabled = false;
+            disabled = true;
+            enabled = false;
         }
-        else if (base.networkView.isMine)
+        else if (networkView.isMine)
         {
-            object[] args = new object[] { base.transform.position, base.transform.rotation, base.transform.localScale, Vector3.zero };
-            base.networkView.RPC("updateMovement", RPCMode.OthersBuffered, args);
+            var args = new object[] { transform.position, transform.rotation, transform.localScale, Vector3.zero };
+            networkView.RPC("updateMovement", RPCMode.OthersBuffered, args);
         }
         else
         {
-            this.targetPosition = base.transform.position;
+            targetPosition = transform.position;
         }
     }
 
     private void Update()
     {
-        if ((!this.disabled && (Network.peerType != NetworkPeerType.Disconnected)) && (Network.peerType != NetworkPeerType.Connecting))
+        if ((!disabled && (Network.peerType != NetworkPeerType.Disconnected)) && (Network.peerType != NetworkPeerType.Connecting))
         {
-            if (base.networkView.isMine)
+            if (networkView.isMine)
             {
-                if (Vector3.Distance(base.transform.position, this.lastPosition) >= 0.5f)
+                if (Vector3.Distance(transform.position, lastPosition) >= 0.5f)
                 {
-                    this.lastPosition = base.transform.position;
-                    object[] args = new object[] { base.transform.position, base.transform.rotation, base.transform.localScale, base.rigidbody.velocity };
-                    base.networkView.RPC("updateMovement", RPCMode.Others, args);
+                    lastPosition = transform.position;
+                    var args = new object[] { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
+                    networkView.RPC("updateMovement", RPCMode.Others, args);
                 }
-                else if (Vector3.Distance(base.transform.rigidbody.velocity, this.lastVelocity) >= 0.1f)
+                else if (Vector3.Distance(transform.rigidbody.velocity, lastVelocity) >= 0.1f)
                 {
-                    this.lastVelocity = base.transform.rigidbody.velocity;
-                    object[] objArray2 = new object[] { base.transform.position, base.transform.rotation, base.transform.localScale, base.rigidbody.velocity };
-                    base.networkView.RPC("updateMovement", RPCMode.Others, objArray2);
+                    lastVelocity = transform.rigidbody.velocity;
+                    var objArray2 = new object[] { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
+                    networkView.RPC("updateMovement", RPCMode.Others, objArray2);
                 }
-                else if (Quaternion.Angle(base.transform.rotation, this.lastRotation) >= 1f)
+                else if (Quaternion.Angle(transform.rotation, lastRotation) >= 1f)
                 {
-                    this.lastRotation = base.transform.rotation;
-                    object[] objArray3 = new object[] { base.transform.position, base.transform.rotation, base.transform.localScale, base.rigidbody.velocity };
-                    base.networkView.RPC("updateMovement", RPCMode.Others, objArray3);
+                    lastRotation = transform.rotation;
+                    var objArray3 = new object[] { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
+                    networkView.RPC("updateMovement", RPCMode.Others, objArray3);
                 }
             }
             else
             {
-                base.transform.position = Vector3.Slerp(base.transform.position, this.targetPosition, Time.deltaTime * 2f);
+                transform.position = Vector3.Slerp(transform.position, targetPosition, Time.deltaTime * 2f);
             }
         }
     }
@@ -66,10 +66,10 @@ public class MovementUpdate : MonoBehaviour
     [RPC]
     private void updateMovement(Vector3 newPosition, Quaternion newRotation, Vector3 newScale, Vector3 veloctiy)
     {
-        this.targetPosition = newPosition;
-        base.transform.rotation = newRotation;
-        base.transform.localScale = newScale;
-        base.rigidbody.velocity = veloctiy;
+        targetPosition = newPosition;
+        transform.rotation = newRotation;
+        transform.localScale = newScale;
+        rigidbody.velocity = veloctiy;
     }
 }
 

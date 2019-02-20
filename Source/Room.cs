@@ -14,47 +14,47 @@ public class Room : RoomInfo
         {
             options = new RoomOptions();
         }
-        base.visibleField = options.isVisible;
-        base.openField = options.isOpen;
-        base.maxPlayersField = (byte) options.maxPlayers;
-        base.autoCleanUpField = false;
-        base.CacheProperties(options.customRoomProperties);
-        this.propertiesListedInLobby = options.customRoomPropertiesForLobby;
+        visibleField = options.isVisible;
+        openField = options.isOpen;
+        maxPlayersField = (byte) options.maxPlayers;
+        autoCleanUpField = false;
+        CacheProperties(options.customRoomProperties);
+        propertiesListedInLobby = options.customRoomPropertiesForLobby;
     }
 
     public void SetCustomProperties(Hashtable propertiesToSet)
     {
         if (propertiesToSet != null)
         {
-            base.customProperties.MergeStringKeys(propertiesToSet);
-            base.customProperties.StripKeysWithNullValues();
-            Hashtable gameProperties = propertiesToSet.StripToStringKeys();
+            customProperties.MergeStringKeys(propertiesToSet);
+            customProperties.StripKeysWithNullValues();
+            var gameProperties = propertiesToSet.StripToStringKeys();
             if (!PhotonNetwork.offlineMode)
             {
                 PhotonNetwork.networkingPeer.OpSetCustomPropertiesOfRoom(gameProperties, true, 0);
             }
-            object[] parameters = new object[] { propertiesToSet };
+            var parameters = new object[] { propertiesToSet };
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnPhotonCustomRoomPropertiesChanged, parameters);
         }
     }
 
     public void SetPropertiesListedInLobby(string[] propsListedInLobby)
     {
-        Hashtable gameProperties = new Hashtable();
+        var gameProperties = new Hashtable();
         gameProperties[(byte) 250] = propsListedInLobby;
         PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, false, 0);
-        this.propertiesListedInLobby = propsListedInLobby;
+        propertiesListedInLobby = propsListedInLobby;
     }
 
     public override string ToString()
     {
-        object[] args = new object[] { base.nameField, !base.visibleField ? "hidden" : "visible", !base.openField ? "closed" : "open", base.maxPlayersField, this.playerCount };
+        var args = new object[] { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount };
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.", args);
     }
 
     public string ToStringFull()
     {
-        object[] args = new object[] { base.nameField, !base.visibleField ? "hidden" : "visible", !base.openField ? "closed" : "open", base.maxPlayersField, this.playerCount, base.customProperties.ToStringFull() };
+        var args = new object[] { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount, customProperties.ToStringFull() };
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", args);
     }
 
@@ -62,7 +62,7 @@ public class Room : RoomInfo
     {
         get
         {
-            return base.autoCleanUpField;
+            return autoCleanUpField;
         }
     }
 
@@ -70,11 +70,11 @@ public class Room : RoomInfo
     {
         get
         {
-            return base.maxPlayersField;
+            return maxPlayersField;
         }
         set
         {
-            if (!this.Equals(PhotonNetwork.room))
+            if (!Equals(PhotonNetwork.room))
             {
                 Debug.LogWarning("Can't set maxPlayers when not in that room.");
             }
@@ -83,13 +83,13 @@ public class Room : RoomInfo
                 Debug.LogWarning("Can't set Room.maxPlayers to: " + value + ". Using max value: 255.");
                 value = 0xff;
             }
-            if ((value != base.maxPlayersField) && !PhotonNetwork.offlineMode)
+            if ((value != maxPlayersField) && !PhotonNetwork.offlineMode)
             {
-                Hashtable gameProperties = new Hashtable();
+                var gameProperties = new Hashtable();
                 gameProperties.Add((byte) 0xff, (byte) value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
-            base.maxPlayersField = (byte) value;
+            maxPlayersField = (byte) value;
         }
     }
 
@@ -97,11 +97,11 @@ public class Room : RoomInfo
     {
         get
         {
-            return base.nameField;
+            return nameField;
         }
         internal set
         {
-            base.nameField = value;
+            nameField = value;
         }
     }
 
@@ -109,21 +109,21 @@ public class Room : RoomInfo
     {
         get
         {
-            return base.openField;
+            return openField;
         }
         set
         {
-            if (!this.Equals(PhotonNetwork.room))
+            if (!Equals(PhotonNetwork.room))
             {
                 Debug.LogWarning("Can't set open when not in that room.");
             }
-            if ((value != base.openField) && !PhotonNetwork.offlineMode)
+            if ((value != openField) && !PhotonNetwork.offlineMode)
             {
-                Hashtable gameProperties = new Hashtable();
+                var gameProperties = new Hashtable();
                 gameProperties.Add((byte) 0xfd, value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
-            base.openField = value;
+            openField = value;
         }
     }
 
@@ -145,21 +145,21 @@ public class Room : RoomInfo
     {
         get
         {
-            return base.visibleField;
+            return visibleField;
         }
         set
         {
-            if (!this.Equals(PhotonNetwork.room))
+            if (!Equals(PhotonNetwork.room))
             {
                 Debug.LogWarning("Can't set visible when not in that room.");
             }
-            if ((value != base.visibleField) && !PhotonNetwork.offlineMode)
+            if ((value != visibleField) && !PhotonNetwork.offlineMode)
             {
-                Hashtable gameProperties = new Hashtable();
+                var gameProperties = new Hashtable();
                 gameProperties.Add((byte) 0xfe, value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
-            base.visibleField = value;
+            visibleField = value;
         }
     }
 }

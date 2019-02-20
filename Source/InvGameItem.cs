@@ -18,40 +18,40 @@ public class InvGameItem
 
     public InvGameItem(int id)
     {
-        this.quality = Quality.Sturdy;
-        this.itemLevel = 1;
-        this.mBaseItemID = id;
+        quality = Quality.Sturdy;
+        itemLevel = 1;
+        mBaseItemID = id;
     }
 
     public InvGameItem(int id, InvBaseItem bi)
     {
-        this.quality = Quality.Sturdy;
-        this.itemLevel = 1;
-        this.mBaseItemID = id;
-        this.mBaseItem = bi;
+        quality = Quality.Sturdy;
+        itemLevel = 1;
+        mBaseItemID = id;
+        mBaseItem = bi;
     }
 
     public List<InvStat> CalculateStats()
     {
-        List<InvStat> list = new List<InvStat>();
-        if (this.baseItem != null)
+        var list = new List<InvStat>();
+        if (baseItem != null)
         {
-            float statMultiplier = this.statMultiplier;
-            List<InvStat> stats = this.baseItem.stats;
-            int num2 = 0;
-            int count = stats.Count;
+            var statMultiplier = this.statMultiplier;
+            var stats = baseItem.stats;
+            var num2 = 0;
+            var count = stats.Count;
             while (num2 < count)
             {
-                InvStat stat = stats[num2];
-                int num4 = Mathf.RoundToInt(statMultiplier * stat.amount);
+                var stat = stats[num2];
+                var num4 = Mathf.RoundToInt(statMultiplier * stat.amount);
                 if (num4 != 0)
                 {
-                    bool flag = false;
-                    int num5 = 0;
-                    int num6 = list.Count;
+                    var flag = false;
+                    var num5 = 0;
+                    var num6 = list.Count;
                     while (num5 < num6)
                     {
-                        InvStat stat2 = list[num5];
+                        var stat2 = list[num5];
                         if ((stat2.id == stat.id) && (stat2.modifier == stat.modifier))
                         {
                             stat2.amount += num4;
@@ -62,7 +62,7 @@ public class InvGameItem
                     }
                     if (!flag)
                     {
-                        InvStat item = new InvStat {
+                        var item = new InvStat {
                             id = stat.id,
                             amount = num4,
                             modifier = stat.modifier
@@ -81,11 +81,11 @@ public class InvGameItem
     {
         get
         {
-            if (this.mBaseItem == null)
+            if (mBaseItem == null)
             {
-                this.mBaseItem = InvDatabase.FindByID(this.baseItemID);
+                mBaseItem = InvDatabase.FindByID(baseItemID);
             }
-            return this.mBaseItem;
+            return mBaseItem;
         }
     }
 
@@ -93,7 +93,7 @@ public class InvGameItem
     {
         get
         {
-            return this.mBaseItemID;
+            return mBaseItemID;
         }
     }
 
@@ -101,8 +101,8 @@ public class InvGameItem
     {
         get
         {
-            Color white = Color.white;
-            switch (this.quality)
+            var white = Color.white;
+            switch (quality)
             {
                 case Quality.Broken:
                     return new Color(0.4f, 0.2f, 0.2f);
@@ -148,11 +148,11 @@ public class InvGameItem
     {
         get
         {
-            if (this.baseItem == null)
+            if (baseItem == null)
             {
                 return null;
             }
-            return (this.quality.ToString() + " " + this.baseItem.name);
+            return (quality.ToString() + " " + baseItem.name);
         }
     }
 
@@ -160,8 +160,8 @@ public class InvGameItem
     {
         get
         {
-            float num = 0f;
-            switch (this.quality)
+            var num = 0f;
+            switch (quality)
             {
                 case Quality.Broken:
                     num = 0f;
@@ -211,7 +211,7 @@ public class InvGameItem
                     num = 3f;
                     break;
             }
-            float a = ((float) this.itemLevel) / 50f;
+            var a = itemLevel / 50f;
             return (num * Mathf.Lerp(a, a * a, 0.5f));
         }
     }

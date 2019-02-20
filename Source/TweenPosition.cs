@@ -14,7 +14,7 @@ public class TweenPosition : UITweener
 
     public static TweenPosition Begin(GameObject go, float duration, Vector3 pos)
     {
-        TweenPosition position = UITweener.Begin<TweenPosition>(go, duration);
+        var position = UITweener.Begin<TweenPosition>(go, duration);
         position.from = position.position;
         position.to = pos;
         if (duration <= 0f)
@@ -27,18 +27,18 @@ public class TweenPosition : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        this.cachedTransform.localPosition = (Vector3) ((this.from * (1f - factor)) + (this.to * factor));
+        cachedTransform.localPosition = (@from * (1f - factor)) + (to * factor);
     }
 
     public Transform cachedTransform
     {
         get
         {
-            if (this.mTrans == null)
+            if (mTrans == null)
             {
-                this.mTrans = base.transform;
+                mTrans = transform;
             }
-            return this.mTrans;
+            return mTrans;
         }
     }
 
@@ -46,11 +46,11 @@ public class TweenPosition : UITweener
     {
         get
         {
-            return this.cachedTransform.localPosition;
+            return cachedTransform.localPosition;
         }
         set
         {
-            this.cachedTransform.localPosition = value;
+            cachedTransform.localPosition = value;
         }
     }
 }

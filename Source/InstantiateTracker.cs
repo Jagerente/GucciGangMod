@@ -16,9 +16,9 @@ public class InstantiateTracker
         {
             return true;
         }
-        int num = photonPlayer.ID * PhotonNetwork.MAX_VIEW_IDS;
-        int num2 = num + PhotonNetwork.MAX_VIEW_IDS;
-        foreach (int num3 in viewIDS)
+        var num = photonPlayer.ID * PhotonNetwork.MAX_VIEW_IDS;
+        var num2 = num + PhotonNetwork.MAX_VIEW_IDS;
+        foreach (var num3 in viewIDS)
         {
             if ((num3 <= num) || (num3 >= num2))
             {
@@ -42,28 +42,28 @@ public class InstantiateTracker
                     }
                     return false;
                 }
-                return this.Instantiated(photonPlayer, GameResource.bomb);
+                return Instantiated(photonPlayer, GameResource.bomb);
 
             case "hook":
             case "aottg_hero 1":
-                return this.Instantiated(photonPlayer, GameResource.general);
+                return Instantiated(photonPlayer, GameResource.general);
 
             case "hitmeat2":
-                return this.Instantiated(photonPlayer, GameResource.bloodEffect);
+                return Instantiated(photonPlayer, GameResource.bloodEffect);
 
             case "hitmeat":
             case "redcross":
             case "redcross1":
-                return this.Instantiated(photonPlayer, GameResource.bladeHit);
+                return Instantiated(photonPlayer, GameResource.bladeHit);
 
             case "fx/flarebullet1":
             case "fx/flarebullet2":
             case "fx/flarebullet3":
-                return this.Instantiated(photonPlayer, GameResource.flare);
+                return Instantiated(photonPlayer, GameResource.flare);
 
             case "fx/shotgun":
             case "fx/shotgun 1":
-                return this.Instantiated(photonPlayer, GameResource.shotGun);
+                return Instantiated(photonPlayer, GameResource.shotGun);
 
             case "fx/fxtitanspawn":
             case "fx/boom1":
@@ -73,7 +73,7 @@ public class InstantiateTracker
             case "fx/bite":
                 if ((LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || (RCSettings.infectionMode > 0)) || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT))
                 {
-                    return this.Instantiated(photonPlayer, GameResource.effect);
+                    return Instantiated(photonPlayer, GameResource.effect);
                 }
                 if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.instance.restartingTitan))
                 {
@@ -87,10 +87,10 @@ public class InstantiateTracker
             case "fx/fxtitandie1":
             case "fx/boost_smoke":
             case "fx/thunder":
-                return this.Instantiated(photonPlayer, GameResource.effect);
+                return Instantiated(photonPlayer, GameResource.effect);
 
             case "rcasset/cannonballobject":
-                return this.Instantiated(photonPlayer, GameResource.bomb);
+                return Instantiated(photonPlayer, GameResource.bomb);
 
             case "rcasset/cannonwall":
             case "rcasset/cannonground":
@@ -98,7 +98,7 @@ public class InstantiateTracker
                 {
                     FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, false, "spawning cannon item (" + key + ").");
                 }
-                return this.Instantiated(photonPlayer, GameResource.general);
+                return Instantiated(photonPlayer, GameResource.general);
 
             case "rcasset/cannonwallprop":
             case "rcasset/cannongroundprop":
@@ -119,7 +119,7 @@ public class InstantiateTracker
                         }
                         return false;
                     }
-                    return this.Instantiated(photonPlayer, GameResource.general);
+                    return Instantiated(photonPlayer, GameResource.general);
                 }
                 if (PhotonNetwork.isMasterClient)
                 {
@@ -130,7 +130,7 @@ public class InstantiateTracker
             case "fx/justSmoke":
             case "bloodexplore":
             case "bloodsplatter":
-                return this.Instantiated(photonPlayer, GameResource.effect);
+                return Instantiated(photonPlayer, GameResource.effect);
 
             case "hitmeatbig":
                 if (!(RCextensions.returnStringFromObject(photonPlayer.customProperties[PhotonPlayerProperty.character]).ToUpper() != "EREN"))
@@ -143,7 +143,7 @@ public class InstantiateTracker
                         }
                         return false;
                     }
-                    return this.Instantiated(photonPlayer, GameResource.effect);
+                    return Instantiated(photonPlayer, GameResource.effect);
                 }
                 if (PhotonNetwork.isMasterClient)
                 {
@@ -156,7 +156,7 @@ public class InstantiateTracker
             case "fx/boom1_ct_kick":
                 if (!PhotonNetwork.isMasterClient || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT))
                 {
-                    return this.Instantiated(photonPlayer, GameResource.effect);
+                    return Instantiated(photonPlayer, GameResource.effect);
                 }
                 FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning colossal effect (" + key + ").");
                 return false;
@@ -164,7 +164,7 @@ public class InstantiateTracker
             case "rock":
                 if (!PhotonNetwork.isMasterClient || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT))
                 {
-                    return this.Instantiated(photonPlayer, GameResource.general);
+                    return Instantiated(photonPlayer, GameResource.general);
                 }
                 FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
                 return false;
@@ -172,7 +172,7 @@ public class InstantiateTracker
             case "horse":
                 if (LevelInfo.getInfo(FengGameManagerMKII.level).horse || (RCSettings.horseMode != 0))
                 {
-                    return this.Instantiated(photonPlayer, GameResource.general);
+                    return Instantiated(photonPlayer, GameResource.general);
                 }
                 if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.instance.restartingHorse))
                 {
@@ -237,7 +237,7 @@ public class InstantiateTracker
                     {
                         return false;
                     }
-                    return this.Instantiated(photonPlayer, GameResource.general);
+                    return Instantiated(photonPlayer, GameResource.general);
                 }
                 FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
                 return false;
@@ -245,35 +245,35 @@ public class InstantiateTracker
             default:
                 return false;
         }
-        return this.Instantiated(photonPlayer, GameResource.general);
+        return Instantiated(photonPlayer, GameResource.general);
     }
 
     public void Dispose()
     {
-        this.players = null;
-        this.players = new Player[0];
+        players = null;
+        players = new Player[0];
     }
 
     public bool Instantiated(PhotonPlayer owner, GameResource type)
     {
         int num;
-        if (this.TryGetPlayer(owner.ID, out num))
+        if (TryGetPlayer(owner.ID, out num))
         {
-            if (this.players[num].IsThingExcessive(type))
+            if (players[num].IsThingExcessive(type))
             {
-                PhotonPlayer player = owner;
+                var player = owner;
                 if ((player != null) && PhotonNetwork.isMasterClient)
                 {
                     FengGameManagerMKII.instance.kickPlayerRC(player, true, "spamming instantiate (" + type.ToString() + ").");
                 }
-                RCextensions.RemoveAt<Player>(ref this.players, num);
+                RCextensions.RemoveAt<Player>(ref players, num);
                 return false;
             }
         }
         else
         {
-            RCextensions.Add<Player>(ref this.players, new Player(owner.ID));
-            this.players[this.players.Length - 1].IsThingExcessive(type);
+            RCextensions.Add<Player>(ref players, new Player(owner.ID));
+            players[players.Length - 1].IsThingExcessive(type);
         }
         return true;
     }
@@ -281,17 +281,17 @@ public class InstantiateTracker
     public bool PropertiesChanged(PhotonPlayer owner)
     {
         int num;
-        if (this.TryGetPlayer(owner.ID, out num))
+        if (TryGetPlayer(owner.ID, out num))
         {
-            if (this.players[num].IsThingExcessive(GameResource.name))
+            if (players[num].IsThingExcessive(GameResource.name))
             {
                 return false;
             }
         }
         else
         {
-            RCextensions.Add<Player>(ref this.players, new Player(owner.ID));
-            this.players[this.players.Length - 1].IsThingExcessive(GameResource.name);
+            RCextensions.Add<Player>(ref players, new Player(owner.ID));
+            players[players.Length - 1].IsThingExcessive(GameResource.name);
         }
         return true;
     }
@@ -299,17 +299,17 @@ public class InstantiateTracker
     public void resetPropertyTracking(int ID)
     {
         int num;
-        if (this.TryGetPlayer(ID, out num))
+        if (TryGetPlayer(ID, out num))
         {
-            this.players[num].resetNameTracking();
+            players[num].resetNameTracking();
         }
     }
 
     private bool TryGetPlayer(int id, out int result)
     {
-        for (int i = 0; i < this.players.Length; i++)
+        for (var i = 0; i < players.Length; i++)
         {
-            if (this.players[i].id == id)
+            if (players[i].id == id)
             {
                 result = i;
                 return true;
@@ -321,41 +321,41 @@ public class InstantiateTracker
 
     public void TryRemovePlayer(int playerId)
     {
-        for (int i = 0; i < this.players.Length; i++)
+        for (var i = 0; i < players.Length; i++)
         {
-            if (this.players[i].id == playerId)
+            if (players[i].id == playerId)
             {
-                RCextensions.RemoveAt<Player>(ref this.players, i);
+                RCextensions.RemoveAt<Player>(ref players, i);
                 break;
             }
         }
     }
 
-    private class AhssShots : InstantiateTracker.ThingToCheck
+    private class AhssShots : ThingToCheck
     {
         private float lastShot = Time.time;
         private int shots = 1;
 
         public AhssShots()
         {
-            base.type = InstantiateTracker.GameResource.shotGun;
+            type = GameResource.shotGun;
         }
 
         public override bool KickWorthy()
         {
-            if ((Time.time - this.lastShot) < 1f)
+            if ((Time.time - lastShot) < 1f)
             {
-                this.shots++;
-                if (this.shots > 2)
+                shots++;
+                if (shots > 2)
                 {
                     return true;
                 }
             }
             else
             {
-                this.shots = 0;
+                shots = 0;
             }
-            this.lastShot = Time.time;
+            lastShot = Time.time;
             return false;
         }
 
@@ -364,26 +364,26 @@ public class InstantiateTracker
         }
     }
 
-    private class BladeHitEffect : InstantiateTracker.ThingToCheck
+    private class BladeHitEffect : ThingToCheck
     {
         private float accumTime = 0f;
         private float lastHit = Time.time;
 
         public BladeHitEffect()
         {
-            base.type = InstantiateTracker.GameResource.bladeHit;
+            type = GameResource.bladeHit;
         }
 
         public override bool KickWorthy()
         {
-            float num = Time.time - this.lastHit;
-            this.lastHit = Time.time;
+            var num = Time.time - lastHit;
+            lastHit = Time.time;
             if (num <= 0.3f)
             {
-                this.accumTime += num;
-                return (this.accumTime >= 1.25f);
+                accumTime += num;
+                return (accumTime >= 1.25f);
             }
-            this.accumTime = 0f;
+            accumTime = 0f;
             return false;
         }
 
@@ -392,26 +392,26 @@ public class InstantiateTracker
         }
     }
 
-    private class BloodEffect : InstantiateTracker.ThingToCheck
+    private class BloodEffect : ThingToCheck
     {
         private float accumTime = 0f;
         private float lastHit = Time.time;
 
         public BloodEffect()
         {
-            base.type = InstantiateTracker.GameResource.bloodEffect;
+            type = GameResource.bloodEffect;
         }
 
         public override bool KickWorthy()
         {
-            float num = Time.time - this.lastHit;
-            this.lastHit = Time.time;
+            var num = Time.time - lastHit;
+            lastHit = Time.time;
             if (num <= 0.3f)
             {
-                this.accumTime += num;
-                return (this.accumTime >= 2f);
+                accumTime += num;
+                return (accumTime >= 2f);
             }
-            this.accumTime = 0f;
+            accumTime = 0f;
             return false;
         }
 
@@ -420,25 +420,25 @@ public class InstantiateTracker
         }
     }
 
-    private class ExcessiveBombs : InstantiateTracker.ThingToCheck
+    private class ExcessiveBombs : ThingToCheck
     {
         private int count = 1;
         private float lastClear = Time.time;
 
         public ExcessiveBombs()
         {
-            base.type = InstantiateTracker.GameResource.bomb;
+            type = GameResource.bomb;
         }
 
         public override bool KickWorthy()
         {
-            if ((Time.time - this.lastClear) > 5f)
+            if ((Time.time - lastClear) > 5f)
             {
-                this.count = 0;
-                this.lastClear = Time.time;
+                count = 0;
+                lastClear = Time.time;
             }
-            this.count++;
-            return (this.count > 20);
+            count++;
+            return (count > 20);
         }
 
         public override void reset()
@@ -446,25 +446,25 @@ public class InstantiateTracker
         }
     }
 
-    private class ExcessiveEffect : InstantiateTracker.ThingToCheck
+    private class ExcessiveEffect : ThingToCheck
     {
         private int effectCounter = 1;
         private float lastEffectTime = Time.time;
 
         public ExcessiveEffect()
         {
-            base.type = InstantiateTracker.GameResource.effect;
+            type = GameResource.effect;
         }
 
         public override bool KickWorthy()
         {
-            if ((Time.time - this.lastEffectTime) >= 2f)
+            if ((Time.time - lastEffectTime) >= 2f)
             {
-                this.effectCounter = 0;
-                this.lastEffectTime = Time.time;
+                effectCounter = 0;
+                lastEffectTime = Time.time;
             }
-            this.effectCounter++;
-            return (this.effectCounter > 8);
+            effectCounter++;
+            return (effectCounter > 8);
         }
 
         public override void reset()
@@ -472,25 +472,25 @@ public class InstantiateTracker
         }
     }
 
-    private class ExcessiveFlares : InstantiateTracker.ThingToCheck
+    private class ExcessiveFlares : ThingToCheck
     {
         private int flares = 1;
         private float lastFlare = Time.time;
 
         public ExcessiveFlares()
         {
-            base.type = InstantiateTracker.GameResource.flare;
+            type = GameResource.flare;
         }
 
         public override bool KickWorthy()
         {
-            if ((Time.time - this.lastFlare) >= 10f)
+            if ((Time.time - lastFlare) >= 10f)
             {
-                this.flares = 0;
-                this.lastFlare = Time.time;
+                flares = 0;
+                lastFlare = Time.time;
             }
-            this.flares++;
-            return (this.flares > 4);
+            flares++;
+            return (flares > 4);
         }
 
         public override void reset()
@@ -498,32 +498,32 @@ public class InstantiateTracker
         }
     }
 
-    private class ExcessiveNameChange : InstantiateTracker.ThingToCheck
+    private class ExcessiveNameChange : ThingToCheck
     {
         private float lastNameChange = Time.time;
         private int nameChanges = 1;
 
         public ExcessiveNameChange()
         {
-            base.type = InstantiateTracker.GameResource.name;
+            type = GameResource.name;
         }
 
         public override bool KickWorthy()
         {
-            float num = Time.time - this.lastNameChange;
-            this.lastNameChange = Time.time;
+            var num = Time.time - lastNameChange;
+            lastNameChange = Time.time;
             if (num >= 5f)
             {
-                this.nameChanges = 0;
+                nameChanges = 0;
             }
-            this.nameChanges++;
-            return (this.nameChanges > 5);
+            nameChanges++;
+            return (nameChanges > 5);
         }
 
         public override void reset()
         {
-            this.nameChanges = 0;
-            this.lastNameChange = Time.time;
+            nameChanges = 0;
+            lastNameChange = Time.time;
         }
     }
 
@@ -540,25 +540,25 @@ public class InstantiateTracker
         bomb
     }
 
-    private class GenerallyExcessive : InstantiateTracker.ThingToCheck
+    private class GenerallyExcessive : ThingToCheck
     {
         private int count = 1;
         private float lastClear = Time.time;
 
         public GenerallyExcessive()
         {
-            base.type = InstantiateTracker.GameResource.general;
+            type = GameResource.general;
         }
 
         public override bool KickWorthy()
         {
-            if ((Time.time - this.lastClear) > 5f)
+            if ((Time.time - lastClear) > 5f)
             {
-                this.count = 0;
-                this.lastClear = Time.time;
+                count = 0;
+                lastClear = Time.time;
             }
-            this.count++;
-            return (this.count > 0x23);
+            count++;
+            return (count > 0x23);
         }
 
         public override void reset()
@@ -569,50 +569,50 @@ public class InstantiateTracker
     private class Player
     {
         public int id;
-        private InstantiateTracker.ThingToCheck[] thingsToCheck;
+        private ThingToCheck[] thingsToCheck;
 
         public Player(int id)
         {
             this.id = id;
-            this.thingsToCheck = new InstantiateTracker.ThingToCheck[0];
+            thingsToCheck = new ThingToCheck[0];
         }
 
-        private InstantiateTracker.ThingToCheck GameResourceToThing(InstantiateTracker.GameResource gr)
+        private ThingToCheck GameResourceToThing(GameResource gr)
         {
             switch (gr)
             {
-                case InstantiateTracker.GameResource.shotGun:
-                    return new InstantiateTracker.AhssShots();
+                case GameResource.shotGun:
+                    return new AhssShots();
 
-                case InstantiateTracker.GameResource.effect:
-                    return new InstantiateTracker.ExcessiveEffect();
+                case GameResource.effect:
+                    return new ExcessiveEffect();
 
-                case InstantiateTracker.GameResource.flare:
-                    return new InstantiateTracker.ExcessiveFlares();
+                case GameResource.flare:
+                    return new ExcessiveFlares();
 
-                case InstantiateTracker.GameResource.bladeHit:
-                    return new InstantiateTracker.BladeHitEffect();
+                case GameResource.bladeHit:
+                    return new BladeHitEffect();
 
-                case InstantiateTracker.GameResource.bloodEffect:
-                    return new InstantiateTracker.BloodEffect();
+                case GameResource.bloodEffect:
+                    return new BloodEffect();
 
-                case InstantiateTracker.GameResource.general:
-                    return new InstantiateTracker.GenerallyExcessive();
+                case GameResource.general:
+                    return new GenerallyExcessive();
 
-                case InstantiateTracker.GameResource.name:
-                    return new InstantiateTracker.ExcessiveNameChange();
+                case GameResource.name:
+                    return new ExcessiveNameChange();
 
-                case InstantiateTracker.GameResource.bomb:
-                    return new InstantiateTracker.ExcessiveBombs();
+                case GameResource.bomb:
+                    return new ExcessiveBombs();
             }
             return null;
         }
 
-        private int GetThingToCheck(InstantiateTracker.GameResource type)
+        private int GetThingToCheck(GameResource type)
         {
-            for (int i = 0; i < this.thingsToCheck.Length; i++)
+            for (var i = 0; i < thingsToCheck.Length; i++)
             {
-                if (this.thingsToCheck[i].type == type)
+                if (thingsToCheck[i].type == type)
                 {
                     return i;
                 }
@@ -620,30 +620,30 @@ public class InstantiateTracker
             return -1;
         }
 
-        public bool IsThingExcessive(InstantiateTracker.GameResource gr)
+        public bool IsThingExcessive(GameResource gr)
         {
-            int thingToCheck = this.GetThingToCheck(gr);
+            var thingToCheck = GetThingToCheck(gr);
             if (thingToCheck > -1)
             {
-                return this.thingsToCheck[thingToCheck].KickWorthy();
+                return thingsToCheck[thingToCheck].KickWorthy();
             }
-            RCextensions.Add<InstantiateTracker.ThingToCheck>(ref this.thingsToCheck, this.GameResourceToThing(gr));
+            RCextensions.Add<ThingToCheck>(ref thingsToCheck, GameResourceToThing(gr));
             return false;
         }
 
         public void resetNameTracking()
         {
-            int thingToCheck = this.GetThingToCheck(InstantiateTracker.GameResource.name);
+            var thingToCheck = GetThingToCheck(GameResource.name);
             if (thingToCheck > -1)
             {
-                this.thingsToCheck[thingToCheck].reset();
+                thingsToCheck[thingToCheck].reset();
             }
         }
     }
 
     private abstract class ThingToCheck
     {
-        public InstantiateTracker.GameResource type = InstantiateTracker.GameResource.none;
+        public GameResource type = GameResource.none;
 
         public abstract bool KickWorthy();
         public abstract void reset();

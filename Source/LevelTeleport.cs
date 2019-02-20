@@ -14,13 +14,13 @@ public class LevelTeleport : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (this.levelname != string.Empty)
+            if (levelname != string.Empty)
             {
-                Application.LoadLevel(this.levelname);
+                Application.LoadLevel(levelname);
             }
             else
             {
-                other.gameObject.transform.position = this.link.transform.position;
+                other.gameObject.transform.position = link.transform.position;
             }
         }
     }

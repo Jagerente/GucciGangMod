@@ -11,7 +11,7 @@ namespace GGM
         public static GameObject Find(string name)
         {
             GameObject obj2;
-            string str = name.ToLower().Trim();
+            var str = name.ToLower().Trim();
             switch (str)
             {
                 case "maincamera":
@@ -48,14 +48,14 @@ namespace GGM
 
         public static T Find<T>(string name) where T : Component
         {
-            string key = name + typeof(T).FullName;
+            var key = name + typeof(T).FullName;
             if (cacheType.ContainsKey(key))
             {
-                Component component = cacheType[key];
+                var component = cacheType[key];
                 if (component != null)
                 {
                     Component component2;
-                    T local = component as T;
+                    var local = component as T;
                     if (local != null)
                     {
                         return local;
@@ -64,7 +64,7 @@ namespace GGM
                     return (T)component2;
                 }
             }
-            GameObject obj2 = Find(name);
+            var obj2 = Find(name);
             if (obj2 != null)
             {
                 Component component3;

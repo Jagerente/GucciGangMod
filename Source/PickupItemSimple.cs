@@ -14,50 +14,50 @@ public class PickupItemSimple : Photon.MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        PhotonView component = other.GetComponent<PhotonView>();
-        if ((this.PickupOnCollide && (component != null)) && component.isMine)
+        var component = other.GetComponent<PhotonView>();
+        if ((PickupOnCollide && (component != null)) && component.isMine)
         {
-            this.Pickup();
+            Pickup();
         }
     }
 
     public void Pickup()
     {
-        if (!this.SentPickup)
+        if (!SentPickup)
         {
-            this.SentPickup = true;
-            base.photonView.RPC("PunPickupSimple", PhotonTargets.AllViaServer, new object[0]);
+            SentPickup = true;
+            photonView.RPC("PunPickupSimple", PhotonTargets.AllViaServer, new object[0]);
         }
     }
 
     [RPC]
     public void PunPickupSimple(PhotonMessageInfo msgInfo)
     {
-        if ((!this.SentPickup || !msgInfo.sender.isLocal) || base.gameObject.GetActive())
+        if ((!SentPickup || !msgInfo.sender.isLocal) || gameObject.GetActive())
         {
         }
-        this.SentPickup = false;
-        if (!base.gameObject.GetActive())
+        SentPickup = false;
+        if (!gameObject.GetActive())
         {
-            Debug.Log("Ignored PU RPC, cause item is inactive. " + base.gameObject);
+            Debug.Log("Ignored PU RPC, cause item is inactive. " + gameObject);
         }
         else
         {
-            double num = PhotonNetwork.time - msgInfo.timestamp;
-            float time = this.SecondsBeforeRespawn - ((float) num);
+            var num = PhotonNetwork.time - msgInfo.timestamp;
+            var time = SecondsBeforeRespawn - ((float) num);
             if (time > 0f)
             {
-                base.gameObject.SetActive(false);
-                base.Invoke("RespawnAfter", time);
+                gameObject.SetActive(false);
+                Invoke("RespawnAfter", time);
             }
         }
     }
 
     public void RespawnAfter()
     {
-        if (base.gameObject != null)
+        if (gameObject != null)
         {
-            base.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
     }
 }

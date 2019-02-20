@@ -23,23 +23,23 @@ public class PanelMultiStart : MonoBehaviour
 
     private void showTxt()
     {
-        if (this.lang != Language.type)
+        if (lang != Language.type)
         {
-            this.lang = Language.type;
-            this.label_BACK.GetComponent<UILabel>().text = Language.btn_back[Language.type];
-            this.label_LAN.GetComponent<UILabel>().text = Language.btn_LAN[Language.type];
-            this.label_server_US.GetComponent<UILabel>().text = Language.btn_server_US[Language.type];
-            this.label_server_EU.GetComponent<UILabel>().text = Language.btn_server_EU[Language.type];
-            this.label_server_ASIA.GetComponent<UILabel>().text = Language.btn_server_ASIA[Language.type];
-            this.label_server_JAPAN.GetComponent<UILabel>().text = Language.btn_server_JAPAN[Language.type];
-            this.label_QUICK_MATCH.GetComponent<UILabel>().text = Language.btn_QUICK_MATCH[Language.type];
-            this.label_server.GetComponent<UILabel>().text = Language.choose_region_server[Language.type];
+            lang = Language.type;
+            label_BACK.GetComponent<UILabel>().text = Language.btn_back[Language.type];
+            label_LAN.GetComponent<UILabel>().text = Language.btn_LAN[Language.type];
+            label_server_US.GetComponent<UILabel>().text = Language.btn_server_US[Language.type];
+            label_server_EU.GetComponent<UILabel>().text = Language.btn_server_EU[Language.type];
+            label_server_ASIA.GetComponent<UILabel>().text = Language.btn_server_ASIA[Language.type];
+            label_server_JAPAN.GetComponent<UILabel>().text = Language.btn_server_JAPAN[Language.type];
+            label_QUICK_MATCH.GetComponent<UILabel>().text = Language.btn_QUICK_MATCH[Language.type];
+            label_server.GetComponent<UILabel>().text = Language.choose_region_server[Language.type];
         }
     }
 
     private void Update()
     {
-        this.showTxt();
+        showTxt();
     }
 }
 

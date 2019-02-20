@@ -16,30 +16,30 @@ public class BTN_rotate_character : MonoBehaviour
     {
         if (press)
         {
-            this.isRotate = true;
+            isRotate = true;
         }
         else
         {
-            this.isRotate = false;
+            isRotate = false;
         }
     }
 
     private void Update()
     {
-        this.distance -= Input.GetAxis("Mouse ScrollWheel") * 0.05f;
-        this.distance = Mathf.Clamp(this.distance, 0.8f, 3.5f);
-        this.camera.transform.position = this.hero.transform.position;
-        Transform transform = this.camera.transform;
-        transform.position += (Vector3) (Vector3.up * 1.1f);
-        if (this.isRotate)
+        distance -= Input.GetAxis("Mouse ScrollWheel") * 0.05f;
+        distance = Mathf.Clamp(distance, 0.8f, 3.5f);
+        camera.transform.position = hero.transform.position;
+        var transform = camera.transform;
+        transform.position += Vector3.up * 1.1f;
+        if (isRotate)
         {
-            float x = Input.GetAxis("Mouse X") * 2.5f;
-            float y = -Input.GetAxis("Mouse Y") * 2.5f;
-            this.camera.transform.RotateAround(this.camera.transform.position, Vector3.up, x);
-            this.camera.transform.RotateAround(this.camera.transform.position, this.camera.transform.right, y);
+            var x = Input.GetAxis("Mouse X") * 2.5f;
+            var y = -Input.GetAxis("Mouse Y") * 2.5f;
+            camera.transform.RotateAround(camera.transform.position, Vector3.up, x);
+            camera.transform.RotateAround(camera.transform.position, camera.transform.right, y);
         }
-        Transform transform2 = this.camera.transform;
-        transform2.position -= (Vector3) (this.camera.transform.forward * this.distance);
+        var transform2 = camera.transform;
+        transform2.position -= camera.transform.forward * distance;
     }
 }
 

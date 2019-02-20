@@ -19,71 +19,71 @@ public class PlayIdleAnimations : MonoBehaviour
 
     private void Start()
     {
-        this.mAnim = base.GetComponentInChildren<Animation>();
-        if (this.mAnim == null)
+        mAnim = GetComponentInChildren<Animation>();
+        if (mAnim == null)
         {
-            Debug.LogWarning(NGUITools.GetHierarchy(base.gameObject) + " has no Animation component");
-            UnityEngine.Object.Destroy(this);
+            Debug.LogWarning(NGUITools.GetHierarchy(gameObject) + " has no Animation component");
+            Destroy(this);
         }
         else
         {
-            IEnumerator enumerator = this.mAnim.GetEnumerator();
+            var enumerator = mAnim.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
                 {
-                    AnimationState current = (AnimationState) enumerator.Current;
+                    var current = (AnimationState) enumerator.Current;
                     if (current.clip.name == "idle")
                     {
                         current.layer = 0;
-                        this.mIdle = current.clip;
-                        this.mAnim.Play(this.mIdle.name);
+                        mIdle = current.clip;
+                        mAnim.Play(mIdle.name);
                     }
                     else if (current.clip.name.StartsWith("idle"))
                     {
                         current.layer = 1;
-                        this.mBreaks.Add(current.clip);
+                        mBreaks.Add(current.clip);
                     }
                 }
             }
             finally
             {
-                IDisposable disposable = enumerator as IDisposable;
+                var disposable = enumerator as IDisposable;
                 if (disposable != null)
                 	disposable.Dispose();
             }
-            if (this.mBreaks.Count == 0)
+            if (mBreaks.Count == 0)
             {
-                UnityEngine.Object.Destroy(this);
+                Destroy(this);
             }
         }
     }
 
     private void Update()
     {
-        if (this.mNextBreak < Time.time)
+        if (mNextBreak < Time.time)
         {
-            if (this.mBreaks.Count == 1)
+            if (mBreaks.Count == 1)
             {
-                AnimationClip clip = this.mBreaks[0];
-                this.mNextBreak = (Time.time + clip.length) + UnityEngine.Random.Range((float) 5f, (float) 15f);
-                this.mAnim.CrossFade(clip.name);
+                var clip = mBreaks[0];
+                mNextBreak = (Time.time + clip.length) + UnityEngine.Random.Range(5f, 15f);
+                mAnim.CrossFade(clip.name);
             }
             else
             {
-                int num = UnityEngine.Random.Range(0, this.mBreaks.Count - 1);
-                if (this.mLastIndex == num)
+                var num = UnityEngine.Random.Range(0, mBreaks.Count - 1);
+                if (mLastIndex == num)
                 {
                     num++;
-                    if (num >= this.mBreaks.Count)
+                    if (num >= mBreaks.Count)
                     {
                         num = 0;
                     }
                 }
-                this.mLastIndex = num;
-                AnimationClip clip2 = this.mBreaks[num];
-                this.mNextBreak = (Time.time + clip2.length) + UnityEngine.Random.Range((float) 2f, (float) 8f);
-                this.mAnim.CrossFade(clip2.name);
+                mLastIndex = num;
+                var clip2 = mBreaks[num];
+                mNextBreak = (Time.time + clip2.length) + UnityEngine.Random.Range(2f, 8f);
+                mAnim.CrossFade(clip2.name);
             }
         }
     }

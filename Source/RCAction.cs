@@ -15,10 +15,10 @@ public class RCAction
 
     public RCAction(int category, int type, RCEvent next, RCActionHelper[] helpers)
     {
-        this.actionClass = category;
-        this.actionType = type;
-        this.nextEvent = next;
-        this.parameters = helpers;
+        actionClass = category;
+        actionType = type;
+        nextEvent = next;
+        parameters = helpers;
     }
 
     public void callException(string str)
@@ -28,17 +28,17 @@ public class RCAction
 
     public void doAction()
     {
-        switch (this.actionClass)
+        switch (actionClass)
         {
             case 0:
-                this.nextEvent.checkEvent();
+                nextEvent.checkEvent();
                 break;
 
             case 1:
             {
-                string key = this.parameters[0].returnString(null);
-                int num2 = this.parameters[1].returnInt(null);
-                switch (this.actionType)
+                var key = parameters[0].returnString(null);
+                var num2 = parameters[1].returnInt(null);
+                switch (actionType)
                 {
                     case 0:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
@@ -54,7 +54,7 @@ public class RCAction
                     case 1:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
                         {
-                            this.callException("Variable not found: " + key);
+                            callException("Variable not found: " + key);
                         }
                         else
                         {
@@ -65,7 +65,7 @@ public class RCAction
                     case 2:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
                         {
-                            this.callException("Variable not found: " + key);
+                            callException("Variable not found: " + key);
                         }
                         else
                         {
@@ -76,7 +76,7 @@ public class RCAction
                     case 3:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
                         {
-                            this.callException("Variable not found: " + key);
+                            callException("Variable not found: " + key);
                         }
                         else
                         {
@@ -87,7 +87,7 @@ public class RCAction
                     case 4:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
                         {
-                            this.callException("Variable not found: " + key);
+                            callException("Variable not found: " + key);
                         }
                         else
                         {
@@ -98,7 +98,7 @@ public class RCAction
                     case 5:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
                         {
-                            this.callException("Variable not found: " + key);
+                            callException("Variable not found: " + key);
                         }
                         else
                         {
@@ -109,22 +109,22 @@ public class RCAction
                     case 6:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
                         {
-                            this.callException("Variable not found: " + key);
+                            callException("Variable not found: " + key);
                         }
                         else
                         {
-                            FengGameManagerMKII.intVariables[key] = (int) Math.Pow((double) ((int) FengGameManagerMKII.intVariables[key]), (double) num2);
+                            FengGameManagerMKII.intVariables[key] = (int) Math.Pow((int) FengGameManagerMKII.intVariables[key], num2);
                         }
                         return;
 
                     case 12:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
                         {
-                            FengGameManagerMKII.intVariables.Add(key, UnityEngine.Random.Range(num2, this.parameters[2].returnInt(null)));
+                            FengGameManagerMKII.intVariables.Add(key, UnityEngine.Random.Range(num2, parameters[2].returnInt(null)));
                         }
                         else
                         {
-                            FengGameManagerMKII.intVariables[key] = UnityEngine.Random.Range(num2, this.parameters[2].returnInt(null));
+                            FengGameManagerMKII.intVariables[key] = UnityEngine.Random.Range(num2, parameters[2].returnInt(null));
                         }
                         return;
                 }
@@ -132,14 +132,14 @@ public class RCAction
             }
             case 2:
             {
-                string str2 = this.parameters[0].returnString(null);
-                bool flag2 = this.parameters[1].returnBool(null);
-                switch (this.actionType)
+                var str2 = parameters[0].returnString(null);
+                var flag2 = parameters[1].returnBool(null);
+                switch (actionType)
                 {
                     case 11:
                         if (!FengGameManagerMKII.boolVariables.ContainsKey(str2))
                         {
-                            this.callException("Variable not found: " + str2);
+                            callException("Variable not found: " + str2);
                         }
                         else
                         {
@@ -173,15 +173,15 @@ public class RCAction
             }
             case 3:
             {
-                string str3 = this.parameters[0].returnString(null);
-                switch (this.actionType)
+                var str3 = parameters[0].returnString(null);
+                switch (actionType)
                 {
                     case 7:
                     {
-                        string str5 = string.Empty;
-                        for (int i = 1; i < this.parameters.Length; i++)
+                        var str5 = string.Empty;
+                        for (var i = 1; i < parameters.Length; i++)
                         {
-                            str5 = str5 + this.parameters[i].returnString(null);
+                            str5 = str5 + parameters[i].returnString(null);
                         }
                         if (!FengGameManagerMKII.stringVariables.ContainsKey(str3))
                         {
@@ -195,10 +195,10 @@ public class RCAction
                     }
                     case 8:
                     {
-                        string str6 = this.parameters[1].returnString(null);
+                        var str6 = parameters[1].returnString(null);
                         if (!FengGameManagerMKII.stringVariables.ContainsKey(str3))
                         {
-                            this.callException("No Variable");
+                            callException("No Variable");
                         }
                         else
                         {
@@ -208,20 +208,20 @@ public class RCAction
                     }
                     case 9:
                     {
-                        string str7 = this.parameters[1].returnString(null);
+                        var str7 = parameters[1].returnString(null);
                         if (!FengGameManagerMKII.stringVariables.ContainsKey(str3))
                         {
-                            this.callException("No Variable");
+                            callException("No Variable");
                         }
                         else
                         {
-                            FengGameManagerMKII.stringVariables[str3] = ((string) FengGameManagerMKII.stringVariables[str3]).Replace(this.parameters[1].returnString(null), this.parameters[2].returnString(null));
+                            FengGameManagerMKII.stringVariables[str3] = ((string) FengGameManagerMKII.stringVariables[str3]).Replace(parameters[1].returnString(null), parameters[2].returnString(null));
                         }
                         return;
                     }
                     case 0:
                     {
-                        string str4 = this.parameters[1].returnString(null);
+                        var str4 = parameters[1].returnString(null);
                         if (!FengGameManagerMKII.stringVariables.ContainsKey(str3))
                         {
                             FengGameManagerMKII.stringVariables.Add(str3, str4);
@@ -237,9 +237,9 @@ public class RCAction
             }
             case 4:
             {
-                string str9 = this.parameters[0].returnString(null);
-                float num4 = this.parameters[1].returnFloat(null);
-                switch (this.actionType)
+                var str9 = parameters[0].returnString(null);
+                var num4 = parameters[1].returnFloat(null);
+                switch (actionType)
                 {
                     case 0:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
@@ -255,7 +255,7 @@ public class RCAction
                     case 1:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
                         {
-                            this.callException("No Variable");
+                            callException("No Variable");
                         }
                         else
                         {
@@ -266,7 +266,7 @@ public class RCAction
                     case 2:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
                         {
-                            this.callException("No Variable");
+                            callException("No Variable");
                         }
                         else
                         {
@@ -277,7 +277,7 @@ public class RCAction
                     case 3:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
                         {
-                            this.callException("No Variable");
+                            callException("No Variable");
                         }
                         else
                         {
@@ -288,7 +288,7 @@ public class RCAction
                     case 4:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
                         {
-                            this.callException("No Variable");
+                            callException("No Variable");
                         }
                         else
                         {
@@ -299,7 +299,7 @@ public class RCAction
                     case 5:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
                         {
-                            this.callException("No Variable");
+                            callException("No Variable");
                         }
                         else
                         {
@@ -310,22 +310,22 @@ public class RCAction
                     case 6:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
                         {
-                            this.callException("No Variable");
+                            callException("No Variable");
                         }
                         else
                         {
-                            FengGameManagerMKII.floatVariables[str9] = (float) Math.Pow((double) ((int) FengGameManagerMKII.floatVariables[str9]), (double) num4);
+                            FengGameManagerMKII.floatVariables[str9] = (float) Math.Pow((int) FengGameManagerMKII.floatVariables[str9], num4);
                         }
                         return;
 
                     case 12:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
                         {
-                            FengGameManagerMKII.floatVariables.Add(str9, UnityEngine.Random.Range(num4, this.parameters[2].returnFloat(null)));
+                            FengGameManagerMKII.floatVariables.Add(str9, UnityEngine.Random.Range(num4, parameters[2].returnFloat(null)));
                         }
                         else
                         {
-                            FengGameManagerMKII.floatVariables[str9] = UnityEngine.Random.Range(num4, this.parameters[2].returnFloat(null));
+                            FengGameManagerMKII.floatVariables[str9] = UnityEngine.Random.Range(num4, parameters[2].returnFloat(null));
                         }
                         return;
                 }
@@ -333,9 +333,9 @@ public class RCAction
             }
             case 5:
             {
-                string str10 = this.parameters[0].returnString(null);
-                PhotonPlayer player = this.parameters[1].returnPlayer(null);
-                if (this.actionType == 0)
+                var str10 = parameters[0].returnString(null);
+                var player = parameters[1].returnPlayer(null);
+                if (actionType == 0)
                 {
                     if (!FengGameManagerMKII.playerVariables.ContainsKey(str10))
                     {
@@ -351,9 +351,9 @@ public class RCAction
             }
             case 6:
             {
-                string str11 = this.parameters[0].returnString(null);
-                TITAN titan = this.parameters[1].returnTitan(null);
-                if (this.actionType == 0)
+                var str11 = parameters[0].returnString(null);
+                var titan = parameters[1].returnTitan(null);
+                if (actionType == 0)
                 {
                     if (!FengGameManagerMKII.titanVariables.ContainsKey(str11))
                     {
@@ -369,21 +369,21 @@ public class RCAction
             }
             case 7:
             {
-                PhotonPlayer targetPlayer = this.parameters[0].returnPlayer(null);
-                switch (this.actionType)
+                var targetPlayer = parameters[0].returnPlayer(null);
+                switch (actionType)
                 {
                     case 0:
                     {
-                        int iD = targetPlayer.ID;
+                        var iD = targetPlayer.ID;
                         if (FengGameManagerMKII.heroHash.ContainsKey(iD))
                         {
-                            HERO hero = (HERO) FengGameManagerMKII.heroHash[iD];
+                            var hero = (HERO) FengGameManagerMKII.heroHash[iD];
                             hero.markDie();
-                            hero.photonView.RPC("netDie2", PhotonTargets.All, new object[] { -1, this.parameters[1].returnString(null) + " " });
+                            hero.photonView.RPC("netDie2", PhotonTargets.All, new object[] { -1, parameters[1].returnString(null) + " " });
                         }
                         else
                         {
-                            this.callException("Player Not Alive");
+                            callException("Player Not Alive");
                         }
                         return;
                     }
@@ -392,97 +392,97 @@ public class RCAction
                         return;
 
                     case 2:
-                        FengGameManagerMKII.instance.photonView.RPC("spawnPlayerAtRPC", targetPlayer, new object[] { this.parameters[1].returnFloat(null), this.parameters[2].returnFloat(null), this.parameters[3].returnFloat(null) });
+                        FengGameManagerMKII.instance.photonView.RPC("spawnPlayerAtRPC", targetPlayer, new object[] { parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null) });
                         return;
 
                     case 3:
                     {
-                        int num6 = targetPlayer.ID;
+                        var num6 = targetPlayer.ID;
                         if (FengGameManagerMKII.heroHash.ContainsKey(num6))
                         {
-                            HERO hero2 = (HERO) FengGameManagerMKII.heroHash[num6];
-                            hero2.photonView.RPC("moveToRPC", targetPlayer, new object[] { this.parameters[1].returnFloat(null), this.parameters[2].returnFloat(null), this.parameters[3].returnFloat(null) });
+                            var hero2 = (HERO) FengGameManagerMKII.heroHash[num6];
+                            hero2.photonView.RPC("moveToRPC", targetPlayer, new object[] { parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null) });
                         }
                         else
                         {
-                            this.callException("Player Not Alive");
+                            callException("Player Not Alive");
                         }
                         return;
                     }
                     case 4:
                     {
-                        Hashtable propertiesToSet = new Hashtable();
-                        propertiesToSet.Add(PhotonPlayerProperty.kills, this.parameters[1].returnInt(null));
+                        var propertiesToSet = new Hashtable();
+                        propertiesToSet.Add(PhotonPlayerProperty.kills, parameters[1].returnInt(null));
                         targetPlayer.SetCustomProperties(propertiesToSet);
                         return;
                     }
                     case 5:
                     {
-                        Hashtable hashtable2 = new Hashtable();
-                        hashtable2.Add(PhotonPlayerProperty.deaths, this.parameters[1].returnInt(null));
+                        var hashtable2 = new Hashtable();
+                        hashtable2.Add(PhotonPlayerProperty.deaths, parameters[1].returnInt(null));
                         targetPlayer.SetCustomProperties(hashtable2);
                         return;
                     }
                     case 6:
                     {
-                        Hashtable hashtable3 = new Hashtable();
-                        hashtable3.Add(PhotonPlayerProperty.max_dmg, this.parameters[1].returnInt(null));
+                        var hashtable3 = new Hashtable();
+                        hashtable3.Add(PhotonPlayerProperty.max_dmg, parameters[1].returnInt(null));
                         targetPlayer.SetCustomProperties(hashtable3);
                         return;
                     }
                     case 7:
                     {
-                        Hashtable hashtable4 = new Hashtable();
-                        hashtable4.Add(PhotonPlayerProperty.total_dmg, this.parameters[1].returnInt(null));
+                        var hashtable4 = new Hashtable();
+                        hashtable4.Add(PhotonPlayerProperty.total_dmg, parameters[1].returnInt(null));
                         targetPlayer.SetCustomProperties(hashtable4);
                         return;
                     }
                     case 8:
                     {
-                        Hashtable hashtable5 = new Hashtable();
-                        hashtable5.Add(PhotonPlayerProperty.name, this.parameters[1].returnString(null));
+                        var hashtable5 = new Hashtable();
+                        hashtable5.Add(PhotonPlayerProperty.name, parameters[1].returnString(null));
                         targetPlayer.SetCustomProperties(hashtable5);
                         return;
                     }
                     case 9:
                     {
-                        Hashtable hashtable6 = new Hashtable();
-                        hashtable6.Add(PhotonPlayerProperty.guildName, this.parameters[1].returnString(null));
+                        var hashtable6 = new Hashtable();
+                        hashtable6.Add(PhotonPlayerProperty.guildName, parameters[1].returnString(null));
                         targetPlayer.SetCustomProperties(hashtable6);
                         return;
                     }
                     case 10:
                     {
-                        Hashtable hashtable7 = new Hashtable();
-                        hashtable7.Add(PhotonPlayerProperty.RCteam, this.parameters[1].returnInt(null));
+                        var hashtable7 = new Hashtable();
+                        hashtable7.Add(PhotonPlayerProperty.RCteam, parameters[1].returnInt(null));
                         targetPlayer.SetCustomProperties(hashtable7);
                         return;
                     }
                     case 11:
                     {
-                        Hashtable hashtable8 = new Hashtable();
-                        hashtable8.Add(PhotonPlayerProperty.customInt, this.parameters[1].returnInt(null));
+                        var hashtable8 = new Hashtable();
+                        hashtable8.Add(PhotonPlayerProperty.customInt, parameters[1].returnInt(null));
                         targetPlayer.SetCustomProperties(hashtable8);
                         return;
                     }
                     case 12:
                     {
-                        Hashtable hashtable9 = new Hashtable();
-                        hashtable9.Add(PhotonPlayerProperty.customBool, this.parameters[1].returnBool(null));
+                        var hashtable9 = new Hashtable();
+                        hashtable9.Add(PhotonPlayerProperty.customBool, parameters[1].returnBool(null));
                         targetPlayer.SetCustomProperties(hashtable9);
                         return;
                     }
                     case 13:
                     {
-                        Hashtable hashtable10 = new Hashtable();
-                        hashtable10.Add(PhotonPlayerProperty.customString, this.parameters[1].returnString(null));
+                        var hashtable10 = new Hashtable();
+                        hashtable10.Add(PhotonPlayerProperty.customString, parameters[1].returnString(null));
                         targetPlayer.SetCustomProperties(hashtable10);
                         return;
                     }
                     case 14:
                     {
-                        Hashtable hashtable11 = new Hashtable();
-                        hashtable11.Add(PhotonPlayerProperty.RCteam, this.parameters[1].returnFloat(null));
+                        var hashtable11 = new Hashtable();
+                        hashtable11.Add(PhotonPlayerProperty.RCteam, parameters[1].returnFloat(null));
                         targetPlayer.SetCustomProperties(hashtable11);
                         return;
                     }
@@ -490,12 +490,12 @@ public class RCAction
                 break;
             }
             case 8:
-                switch (this.actionType)
+                switch (actionType)
                 {
                     case 0:
                     {
-                        TITAN titan2 = this.parameters[0].returnTitan(null);
-                        object[] parameters = new object[] { this.parameters[1].returnPlayer(null).ID, this.parameters[2].returnInt(null) };
+                        var titan2 = this.parameters[0].returnTitan(null);
+                        var parameters = new object[] { this.parameters[1].returnPlayer(null).ID, this.parameters[2].returnInt(null) };
                         titan2.photonView.RPC("titanGetHit", titan2.photonView.owner, parameters);
                         return;
                     }
@@ -509,8 +509,8 @@ public class RCAction
 
                     case 3:
                     {
-                        TITAN titan3 = this.parameters[0].returnTitan(null);
-                        int num7 = this.parameters[1].returnInt(null);
+                        var titan3 = parameters[0].returnTitan(null);
+                        var num7 = parameters[1].returnInt(null);
                         titan3.currentHealth = num7;
                         if (titan3.maxHealth == 0)
                         {
@@ -521,14 +521,14 @@ public class RCAction
                     }
                     case 4:
                     {
-                        TITAN titan4 = this.parameters[0].returnTitan(null);
+                        var titan4 = parameters[0].returnTitan(null);
                         if (titan4.photonView.isMine)
                         {
-                            titan4.moveTo(this.parameters[1].returnFloat(null), this.parameters[2].returnFloat(null), this.parameters[3].returnFloat(null));
+                            titan4.moveTo(parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null));
                         }
                         else
                         {
-                            titan4.photonView.RPC("moveToRPC", titan4.photonView.owner, new object[] { this.parameters[1].returnFloat(null), this.parameters[2].returnFloat(null), this.parameters[3].returnFloat(null) });
+                            titan4.photonView.RPC("moveToRPC", titan4.photonView.owner, new object[] { parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null) });
                         }
                         return;
                     }
@@ -536,7 +536,7 @@ public class RCAction
                 break;
 
             case 9:
-                switch (this.actionType)
+                switch (actionType)
                 {
                     case 0:
                         FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, new object[] { this.parameters[0].returnString(null), string.Empty });

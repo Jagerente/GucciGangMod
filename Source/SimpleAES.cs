@@ -21,36 +21,36 @@ public class SimpleAES
 
     public SimpleAES()
     {
-        RijndaelManaged managed = new RijndaelManaged();
-        this.encryptor = managed.CreateEncryptor(key, vector);
-        this.decryptor = managed.CreateDecryptor(key, vector);
-        this.encoder = new UTF8Encoding();
+        var managed = new RijndaelManaged();
+        encryptor = managed.CreateEncryptor(key, vector);
+        decryptor = managed.CreateDecryptor(key, vector);
+        encoder = new UTF8Encoding();
     }
 
     public string Decrypt(string encrypted)
     {
-        return this.encoder.GetString(this.Decrypt(Convert.FromBase64String(encrypted)));
+        return encoder.GetString(Decrypt(Convert.FromBase64String(encrypted)));
     }
 
     public byte[] Decrypt(byte[] buffer)
     {
-        return this.Transform(buffer, this.decryptor);
+        return Transform(buffer, decryptor);
     }
 
     public string Encrypt(string unencrypted)
     {
-        return Convert.ToBase64String(this.Encrypt(this.encoder.GetBytes(unencrypted)));
+        return Convert.ToBase64String(Encrypt(encoder.GetBytes(unencrypted)));
     }
 
     public byte[] Encrypt(byte[] buffer)
     {
-        return this.Transform(buffer, this.encryptor);
+        return Transform(buffer, encryptor);
     }
 
     protected byte[] Transform(byte[] buffer, ICryptoTransform transform)
     {
-        MemoryStream stream = new MemoryStream();
-        using (CryptoStream stream2 = new CryptoStream(stream, transform, CryptoStreamMode.Write))
+        var stream = new MemoryStream();
+        using (var stream2 = new CryptoStream(stream, transform, CryptoStreamMode.Write))
         {
             stream2.Write(buffer, 0, buffer.Length);
         }

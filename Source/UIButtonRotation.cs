@@ -18,12 +18,12 @@ public class UIButtonRotation : MonoBehaviour
 
     private void OnDisable()
     {
-        if (this.mStarted && (this.tweenTarget != null))
+        if (mStarted && (tweenTarget != null))
         {
-            TweenRotation component = this.tweenTarget.GetComponent<TweenRotation>();
+            var component = tweenTarget.GetComponent<TweenRotation>();
             if (component != null)
             {
-                component.rotation = this.mRot;
+                component.rotation = mRot;
                 component.enabled = false;
             }
         }
@@ -31,47 +31,47 @@ public class UIButtonRotation : MonoBehaviour
 
     private void OnEnable()
     {
-        if (this.mStarted && this.mHighlighted)
+        if (mStarted && mHighlighted)
         {
-            this.OnHover(UICamera.IsHighlighted(base.gameObject));
+            OnHover(UICamera.IsHighlighted(gameObject));
         }
     }
 
     private void OnHover(bool isOver)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Start();
+                Start();
             }
-            TweenRotation.Begin(this.tweenTarget.gameObject, this.duration, !isOver ? this.mRot : (this.mRot * Quaternion.Euler(this.hover))).method = UITweener.Method.EaseInOut;
-            this.mHighlighted = isOver;
+            TweenRotation.Begin(tweenTarget.gameObject, duration, !isOver ? mRot : (mRot * Quaternion.Euler(hover))).method = UITweener.Method.EaseInOut;
+            mHighlighted = isOver;
         }
     }
 
     private void OnPress(bool isPressed)
     {
-        if (base.enabled)
+        if (enabled)
         {
-            if (!this.mStarted)
+            if (!mStarted)
             {
-                this.Start();
+                Start();
             }
-            TweenRotation.Begin(this.tweenTarget.gameObject, this.duration, !isPressed ? (!UICamera.IsHighlighted(base.gameObject) ? this.mRot : (this.mRot * Quaternion.Euler(this.hover))) : (this.mRot * Quaternion.Euler(this.pressed))).method = UITweener.Method.EaseInOut;
+            TweenRotation.Begin(tweenTarget.gameObject, duration, !isPressed ? (!UICamera.IsHighlighted(gameObject) ? mRot : (mRot * Quaternion.Euler(hover))) : (mRot * Quaternion.Euler(pressed))).method = UITweener.Method.EaseInOut;
         }
     }
 
     private void Start()
     {
-        if (!this.mStarted)
+        if (!mStarted)
         {
-            this.mStarted = true;
-            if (this.tweenTarget == null)
+            mStarted = true;
+            if (tweenTarget == null)
             {
-                this.tweenTarget = base.transform;
+                tweenTarget = transform;
             }
-            this.mRot = this.tweenTarget.localRotation;
+            mRot = tweenTarget.localRotation;
         }
     }
 }

@@ -15,23 +15,23 @@ public class KickState
 
     public void addKicker(string n)
     {
-        if (!this.kickers.Contains(n))
+        if (!kickers.Contains(n))
         {
-            this.kickers = this.kickers + n;
-            this.kickCount++;
+            kickers = kickers + n;
+            kickCount++;
         }
     }
 
     public int getKickCount()
     {
-        return this.kickCount;
+        return kickCount;
     }
 
     public void init(string n)
     {
-        this.name = n;
-        this.kickers = string.Empty;
-        this.kickCount = 0;
+        name = n;
+        kickers = string.Empty;
+        kickCount = 0;
     }
 }
 

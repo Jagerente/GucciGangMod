@@ -19,7 +19,7 @@ namespace GGM
         public static GameObject Player()
         {
             var player = new GameObject();
-            foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Player"))
+            foreach (var gameObject in GameObject.FindGameObjectsWithTag("Player"))
             {
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || PhotonNetwork.offlineMode)
                     player = gameObject;
@@ -51,7 +51,7 @@ namespace GGM
         public static bool OnMap()
         {
             var boolean = false;
-            foreach (string location in _locations)
+            foreach (var location in _locations)
                 if (Application.loadedLevelName.ToLower().Contains(location))
                     boolean = true;
             return boolean;

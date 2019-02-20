@@ -15,32 +15,32 @@ public class ByteReader
 
     public ByteReader(byte[] bytes)
     {
-        this.mBuffer = bytes;
+        mBuffer = bytes;
     }
 
     public ByteReader(TextAsset asset)
     {
-        this.mBuffer = asset.bytes;
+        mBuffer = asset.bytes;
     }
 
     public Dictionary<string, string> ReadDictionary()
     {
-        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-        char[] separator = new char[] { '=' };
-        while (this.canRead)
+        var dictionary = new Dictionary<string, string>();
+        var separator = new char[] { '=' };
+        while (canRead)
         {
-            string str = this.ReadLine();
+            var str = ReadLine();
             if (str == null)
             {
                 return dictionary;
             }
             if (!str.StartsWith("//"))
             {
-                string[] strArray = str.Split(separator, 2, StringSplitOptions.RemoveEmptyEntries);
+                var strArray = str.Split(separator, 2, StringSplitOptions.RemoveEmptyEntries);
                 if (strArray.Length == 2)
                 {
-                    string str2 = strArray[0].Trim();
-                    string str3 = strArray[1].Trim().Replace(@"\n", "\n");
+                    var str2 = strArray[0].Trim();
+                    var str3 = strArray[1].Trim().Replace(@"\n", "\n");
                     dictionary[str2] = str3;
                 }
             }
@@ -51,12 +51,12 @@ public class ByteReader
     public string ReadLine()
     {
         string str;
-        int length = this.mBuffer.Length;
-        while ((this.mOffset < length) && (this.mBuffer[this.mOffset] < 0x20))
+        var length = mBuffer.Length;
+        while ((this.mOffset < length) && (mBuffer[this.mOffset] < 0x20))
         {
             this.mOffset++;
         }
-        int mOffset = this.mOffset;
+        var mOffset = this.mOffset;
         if (mOffset >= length)
         {
             this.mOffset = length;
@@ -64,7 +64,7 @@ public class ByteReader
         }
         while (mOffset < length)
         {
-            switch (this.mBuffer[mOffset++])
+            switch (mBuffer[mOffset++])
             {
                 case 10:
                 case 13:
@@ -73,7 +73,7 @@ public class ByteReader
         }
         mOffset++;
     Label_007E:
-        str = ReadLine(this.mBuffer, this.mOffset, (mOffset - this.mOffset) - 1);
+        str = ReadLine(mBuffer, this.mOffset, (mOffset - this.mOffset) - 1);
         this.mOffset = mOffset;
         return str;
     }
@@ -87,7 +87,7 @@ public class ByteReader
     {
         get
         {
-            return ((this.mBuffer != null) && (this.mOffset < this.mBuffer.Length));
+            return ((mBuffer != null) && (mOffset < mBuffer.Length));
         }
     }
 }

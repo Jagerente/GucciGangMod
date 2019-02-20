@@ -17,28 +17,28 @@ public class BTN_FORGET_PASSWORD : MonoBehaviour
 
     private string DomainMapper(Match match)
     {
-        IdnMapping mapping = new IdnMapping();
-        string unicode = match.Groups[2].Value;
+        var mapping = new IdnMapping();
+        var unicode = match.Groups[2].Value;
         try
         {
             unicode = mapping.GetAscii(unicode);
         }
         catch (ArgumentException)
         {
-            this.invalid = true;
+            invalid = true;
         }
         return (match.Groups[1].Value + unicode);
     }
 
     public bool IsValidEmail(string strIn)
     {
-        this.invalid = false;
+        invalid = false;
         if (string.IsNullOrEmpty(strIn))
         {
             return false;
         }
-        strIn = Regex.Replace(strIn, "(@)(.+)S", new MatchEvaluator(this.DomainMapper));
-        if (this.invalid)
+        strIn = Regex.Replace(strIn, "(@)(.+)S", new MatchEvaluator(DomainMapper));
+        if (invalid)
         {
             return false;
         }
@@ -47,14 +47,14 @@ public class BTN_FORGET_PASSWORD : MonoBehaviour
 
     private void OnClick()
     {
-        if (!this.IsValidEmail(this.email.GetComponent<UIInput>().text))
+        if (!IsValidEmail(email.GetComponent<UIInput>().text))
         {
-            this.output.GetComponent<UILabel>().text = "This e-mail address is not valid.";
+            output.GetComponent<UILabel>().text = "This e-mail address is not valid.";
         }
         else
         {
-            this.logincomponent.GetComponent<LoginFengKAI>().resetPassword(this.email.GetComponent<UIInput>().text);
-            this.output.GetComponent<UILabel>().text = "please wait...";
+            logincomponent.GetComponent<LoginFengKAI>().resetPassword(email.GetComponent<UIInput>().text);
+            output.GetComponent<UILabel>().text = "please wait...";
         }
     }
 }

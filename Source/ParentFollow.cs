@@ -13,26 +13,26 @@ public class ParentFollow : MonoBehaviour
 
     private void Awake()
     {
-        this.bTransform = base.transform;
-        this.isActiveInScene = true;
+        bTransform = transform;
+        isActiveInScene = true;
     }
 
     public void RemoveParent()
     {
-        this.parent = null;
+        parent = null;
     }
 
     public void SetParent(Transform transform)
     {
-        this.parent = transform;
-        this.bTransform.rotation = transform.rotation;
+        parent = transform;
+        bTransform.rotation = transform.rotation;
     }
 
     private void Update()
     {
-        if (this.isActiveInScene && (this.parent != null))
+        if (isActiveInScene && (parent != null))
         {
-            this.bTransform.position = this.parent.position;
+            bTransform.position = parent.position;
         }
     }
 }

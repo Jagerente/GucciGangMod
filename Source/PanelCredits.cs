@@ -13,17 +13,17 @@ public class PanelCredits : MonoBehaviour
 
     private void showTxt()
     {
-        if (this.lang != Language.type)
+        if (lang != Language.type)
         {
-            this.lang = Language.type;
-            this.label_title.GetComponent<UILabel>().text = Language.btn_credits[Language.type];
-            this.label_back.GetComponent<UILabel>().text = Language.btn_back[Language.type];
+            lang = Language.type;
+            label_title.GetComponent<UILabel>().text = Language.btn_credits[Language.type];
+            label_back.GetComponent<UILabel>().text = Language.btn_back[Language.type];
         }
     }
 
     private void Update()
     {
-        this.showTxt();
+        showTxt();
     }
 }
 

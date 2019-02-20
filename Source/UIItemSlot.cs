@@ -26,67 +26,67 @@ public abstract class UIItemSlot : MonoBehaviour
     {
         if (mDraggedItem != null)
         {
-            this.OnDrop(null);
+            OnDrop(null);
         }
-        else if (this.mItem != null)
+        else if (mItem != null)
         {
-            mDraggedItem = this.Replace(null);
+            mDraggedItem = Replace(null);
             if (mDraggedItem != null)
             {
-                NGUITools.PlaySound(this.grabSound);
+                NGUITools.PlaySound(grabSound);
             }
-            this.UpdateCursor();
+            UpdateCursor();
         }
     }
 
     private void OnDrag(Vector2 delta)
     {
-        if ((mDraggedItem == null) && (this.mItem != null))
+        if ((mDraggedItem == null) && (mItem != null))
         {
             UICamera.currentTouch.clickNotification = UICamera.ClickNotification.BasedOnDelta;
-            mDraggedItem = this.Replace(null);
-            NGUITools.PlaySound(this.grabSound);
-            this.UpdateCursor();
+            mDraggedItem = Replace(null);
+            NGUITools.PlaySound(grabSound);
+            UpdateCursor();
         }
     }
 
     private void OnDrop(GameObject go)
     {
-        InvGameItem item = this.Replace(mDraggedItem);
+        var item = Replace(mDraggedItem);
         if (mDraggedItem == item)
         {
-            NGUITools.PlaySound(this.errorSound);
+            NGUITools.PlaySound(errorSound);
         }
         else if (item != null)
         {
-            NGUITools.PlaySound(this.grabSound);
+            NGUITools.PlaySound(grabSound);
         }
         else
         {
-            NGUITools.PlaySound(this.placeSound);
+            NGUITools.PlaySound(placeSound);
         }
         mDraggedItem = item;
-        this.UpdateCursor();
+        UpdateCursor();
     }
 
     private void OnTooltip(bool show)
     {
-        InvGameItem item = !show ? null : this.mItem;
+        var item = !show ? null : mItem;
         if (item != null)
         {
-            InvBaseItem baseItem = item.baseItem;
+            var baseItem = item.baseItem;
             if (baseItem != null)
             {
-                string[] textArray1 = new string[] { "[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n" };
-                string str2 = string.Concat(textArray1);
-                object[] objArray1 = new object[] { str2, "[AFAFAF]Level ", item.itemLevel, " ", baseItem.slot };
-                string tooltipText = string.Concat(objArray1);
-                List<InvStat> list = item.CalculateStats();
-                int num = 0;
-                int count = list.Count;
+                var textArray1 = new string[] { "[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n" };
+                var str2 = string.Concat(textArray1);
+                var objArray1 = new object[] { str2, "[AFAFAF]Level ", item.itemLevel, " ", baseItem.slot };
+                var tooltipText = string.Concat(objArray1);
+                var list = item.CalculateStats();
+                var num = 0;
+                var count = list.Count;
                 while (num < count)
                 {
-                    InvStat stat = list[num];
+                    var stat = list[num];
                     if (stat.amount != 0)
                     {
                         if (stat.amount < 0)
@@ -119,37 +119,37 @@ public abstract class UIItemSlot : MonoBehaviour
     protected abstract InvGameItem Replace(InvGameItem item);
     private void Update()
     {
-        InvGameItem observedItem = this.observedItem;
-        if (this.mItem != observedItem)
+        var observedItem = this.observedItem;
+        if (mItem != observedItem)
         {
-            this.mItem = observedItem;
-            InvBaseItem item2 = (observedItem == null) ? null : observedItem.baseItem;
-            if (this.label != null)
+            mItem = observedItem;
+            var item2 = (observedItem == null) ? null : observedItem.baseItem;
+            if (label != null)
             {
-                string str = (observedItem == null) ? null : observedItem.name;
-                if (string.IsNullOrEmpty(this.mText))
+                var str = (observedItem == null) ? null : observedItem.name;
+                if (string.IsNullOrEmpty(mText))
                 {
-                    this.mText = this.label.text;
+                    mText = label.text;
                 }
-                this.label.text = (str == null) ? this.mText : str;
+                label.text = (str == null) ? mText : str;
             }
-            if (this.icon != null)
+            if (icon != null)
             {
                 if ((item2 == null) || (item2.iconAtlas == null))
                 {
-                    this.icon.enabled = false;
+                    icon.enabled = false;
                 }
                 else
                 {
-                    this.icon.atlas = item2.iconAtlas;
-                    this.icon.spriteName = item2.iconName;
-                    this.icon.enabled = true;
-                    this.icon.MakePixelPerfect();
+                    icon.atlas = item2.iconAtlas;
+                    icon.spriteName = item2.iconName;
+                    icon.enabled = true;
+                    icon.MakePixelPerfect();
                 }
             }
-            if (this.background != null)
+            if (background != null)
             {
-                this.background.color = (observedItem == null) ? Color.white : observedItem.color;
+                background.color = (observedItem == null) ? Color.white : observedItem.color;
             }
         }
     }

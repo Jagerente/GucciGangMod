@@ -11,8 +11,8 @@ public class TestStyledComboBox : MonoBehaviour
 
     private void Start()
     {
-        object[] list = new object[] { "English", "简体中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文" };
-        this.comboBox.AddItems(list);
+        var list = new object[] { "English", "简体中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文", "繁體中文" };
+        comboBox.AddItems(list);
     }
 }
 
