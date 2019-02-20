@@ -7198,7 +7198,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         }
         if (((GGM.Extensions.Forest && PhotonNetwork.isMasterClient) || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) && Settings.Particles == 1)
         {
-            var gg = CachingsGM.Find("aot_supply");
+            var gg = GameObjectsCache.Find("aot_supply");
             var material = gg.GetComponentInChildren<ParticleSystem>().renderer.material;
             for (var i = 0; i < Convert.ToInt32(Settings.ParticlesCount); i++)
             {
@@ -11091,7 +11091,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         Settings.LoadHumanSkins();
         Settings.LoadForestSkins();
         Settings.LoadCitySkins();
-        if (SpectatorMode.instance == null)
+        if (SpectatorMode.Instance == null)
         {
             var gm = new GameObject("SpectatorMode");
             gm.AddComponent<SpectatorMode>();

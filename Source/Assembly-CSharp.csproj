@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="GGM\CachingGM.cs" />
+    <Compile Include="GGM\GameObjectsCache.cs" />
     <Compile Include="GGM\FPSCounter.cs" />
     <Compile Include="GGM\GUIHelpers.cs" />
     <Compile Include="GGM\BetterGUI.cs" />

@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace GGM
 {
-    public static class CachingsGM
+    public static class GameObjectsCache
     {
-        private static Dictionary<string, GameObject> cache = new Dictionary<string, GameObject>();
-        private static Dictionary<string, Component> cacheType = new Dictionary<string, Component>();
+        private static readonly Dictionary<string, GameObject> _cache = new Dictionary<string, GameObject>();
+        private static readonly Dictionary<string, Component> _cacheType = new Dictionary<string, Component>();
 
         public static GameObject Find(string name)
         {
@@ -15,13 +15,13 @@ namespace GGM
             switch (str)
             {
                 case "maincamera":
-                    if (!cache.ContainsKey(name) || (cache[name] == null))
+                    if (!_cache.ContainsKey(name) || (_cache[name] == null))
                     {
                         GameObject obj3;
-                        cache[name] = obj3 = GameObject.Find(name);
+                        _cache[name] = obj3 = GameObject.Find(name);
                         return obj3;
                     }
-                    return cache[name];
+                    return _cache[name];
 
                 case "aottg_hero1":
                 case "aottg_hero1(clone)":
@@ -37,10 +37,10 @@ namespace GGM
                 case "cube001":
                     return GameObject.Find(name);
             }
-            if (((!cache.ContainsKey(name) || ((obj2 = cache[name]) == null)) || ((!obj2.activeInHierarchy && !str.StartsWith("ui")) && (!str.StartsWith("label") && !str.StartsWith("ngui")))) && ((obj2 = GameObject.Find(name)) != null))
+            if (((!_cache.ContainsKey(name) || ((obj2 = _cache[name]) == null)) || ((!obj2.activeInHierarchy && !str.StartsWith("ui")) && (!str.StartsWith("label") && !str.StartsWith("ngui")))) && ((obj2 = GameObject.Find(name)) != null))
             {
                 GameObject obj4;
-                cache[name] = obj4 = obj2;
+                _cache[name] = obj4 = obj2;
                 return obj4;
             }
             return obj2;
@@ -49,9 +49,9 @@ namespace GGM
         public static T Find<T>(string name) where T : Component
         {
             var key = name + typeof(T).FullName;
-            if (cacheType.ContainsKey(key))
+            if (_cacheType.ContainsKey(key))
             {
-                var component = cacheType[key];
+                var component = _cacheType[key];
                 if (component != null)
                 {
                     Component component2;
@@ -60,7 +60,7 @@ namespace GGM
                     {
                         return local;
                     }
-                    cacheType[key] = component2 = component.GetComponent<T>();
+                    _cacheType[key] = component2 = component.GetComponent<T>();
                     return (T)component2;
                 }
             }
@@ -68,14 +68,14 @@ namespace GGM
             if (obj2 != null)
             {
                 Component component3;
-                cacheType[key] = component3 = obj2.GetComponent<T>();
+                _cacheType[key] = component3 = obj2.GetComponent<T>();
                 return (T)component3;
             }
             obj2 = GameObject.Find(name);
             if (obj2 != null)
             {
                 Component component4;
-                cacheType[key] = component4 = obj2.GetComponent<T>();
+                _cacheType[key] = component4 = obj2.GetComponent<T>();
                 return (T)component4;
             }
             return default(T);

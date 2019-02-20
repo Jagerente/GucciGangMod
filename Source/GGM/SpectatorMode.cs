@@ -8,49 +8,48 @@ namespace GGM
 {
     public class SpectatorMode : MonoBehaviour
     {
-        readonly string path = Application.dataPath + "/SaveCameraSetting.cfg";
-        public static SpectatorMode instance;
-        static KeyCode buttonEnable = KeyCode.M;
-        static KeyCode buttonShowGUI = KeyCode.N;
-        static KeyCode buttonUP = KeyCode.W;
-        static KeyCode buttonDOWN = KeyCode.S;
-        static KeyCode buttonRIGHT = KeyCode.D;
-        static KeyCode buttonLEFT = KeyCode.A;
-        public static bool onEnable = false;
-        static bool showGui = true;
-        static bool multi_button = true;
-        Transform baseT;
-        float speed_camera = 0.05f;
-        float speed_button = 0.2f;
-        Dictionary<string, Timered> timered;
+        readonly string _path = Application.dataPath + "/SaveCameraSetting.cfg";
+        public static SpectatorMode Instance;
+        private const KeyCode _buttonEnable = KeyCode.M;
+        private const KeyCode _buttonShowGUI = KeyCode.N;
+        private const KeyCode _buttonUp = KeyCode.W;
+        private const KeyCode _buttonDown = KeyCode.S;
+        private const KeyCode _buttonRight = KeyCode.D;
+        private const KeyCode _buttonLeft = KeyCode.A;
+        public static bool ONEnable;
+        private static bool _showGui = true;
+        private static bool _multiButton = true;
+        private Transform _baseT;
+        private float _speedCamera = 0.05f;
+        private float _speedButton = 0.2f;
+        private Dictionary<string, Timered> _timered;
 
-        float speedCamera
+        private float SpeedCamera => _speedCamera * Time.deltaTime * 62f;
+
+        private void Awake()
         {
-            get { return ((speed_camera * Time.deltaTime) * 62f); }
-        }
-        void Awake()
-        {
-            instance = this;
-            timered = new Dictionary<string, Timered>();
-            timered.Add("up", new Timered());
-            timered.Add("down", new Timered());
-            timered.Add("right", new Timered());
-            timered.Add("left", new Timered());
+            Instance = this;
+            _timered = new Dictionary<string, Timered>();
+            _timered.Add("up", new Timered());
+            _timered.Add("down", new Timered());
+            _timered.Add("right", new Timered());
+            _timered.Add("left", new Timered());
             Save_Load_Settings(false);
         }
-        void Save_Load_Settings(bool flag)
+
+        private void Save_Load_Settings(bool flag)
         {
             if (flag)
             {
-                var str = "smooth:" + multi_button + "\nspeedbutton:" + speed_button + "\nspeedcamera:" + speed_camera;
-                File.WriteAllText(path, str, System.Text.Encoding.UTF8);
+                var str = "smooth:" + _multiButton + "\nspeedbutton:" + _speedButton + "\nspeedcamera:" + _speedCamera;
+                File.WriteAllText(_path, str, System.Text.Encoding.UTF8);
             }
             else
             {
-                var info = new FileInfo(path);
+                var info = new FileInfo(_path);
                 if (info.Exists)
                 {
-                    var lines = File.ReadAllLines(path, System.Text.Encoding.UTF8);
+                    var lines = File.ReadAllLines(_path, System.Text.Encoding.UTF8);
                     foreach (var str in lines)
                     {
                         if (str.Trim() != "" && str.Contains(":"))
@@ -59,15 +58,15 @@ namespace GGM
                             var key = keys[0].Trim(); var value = keys[1].Trim();
                             if (key == "smooth")
                             {
-                                multi_button = (value == "True");
+                                _multiButton = (value == "True");
                             }
                             else if (key == "speedbutton")
                             {
-                                speed_button = Convert.ToSingle(value);
+                                _speedButton = Convert.ToSingle(value);
                             }
                             else if (key == "speedcamera")
                             {
-                                speed_camera = Convert.ToSingle(value);
+                                _speedCamera = Convert.ToSingle(value);
                             }
                         }
                     }
@@ -81,7 +80,7 @@ namespace GGM
                 var gm = GameObject.Find("MainCamera");
                 if (gm != null)
                 {
-                    baseT = gm.transform;
+                    _baseT = gm.transform;
                     if (flag)
                     {
                         Screen.showCursor = true;
@@ -100,99 +99,99 @@ namespace GGM
         }
         void Update()
         {
-            if (onEnable)
+            if (ONEnable)
             {
                 if (Input.mousePosition.x < (Screen.width * 0.4f))
                 {
-                    var num5 = (-((((Screen.width * 0.4f) - Input.mousePosition.x) / Screen.width) * 0.4f) * speedCamera) * 150f;
-                    baseT.Rotate(0f, num5, 0f, Space.World);
+                    var num5 = (-((((Screen.width * 0.4f) - Input.mousePosition.x) / Screen.width) * 0.4f) * SpeedCamera) * 150f;
+                    _baseT.Rotate(0f, num5, 0f, Space.World);
                 }
                 else if (Input.mousePosition.x > (Screen.width * 0.6f))
                 {
-                    var num5 = ((((Input.mousePosition.x - (Screen.width * 0.6f)) / Screen.width) * 0.4f) * speedCamera) * 150f;
-                    baseT.Rotate(0f, num5, 0f, Space.World);
+                    var num5 = ((((Input.mousePosition.x - (Screen.width * 0.6f)) / Screen.width) * 0.4f) * SpeedCamera) * 150f;
+                    _baseT.Rotate(0f, num5, 0f, Space.World);
                 }
                 if (Input.mousePosition.y < (Screen.height * 0.4f))
                 {
-                    var num5 = (((((Screen.height * 0.4f) - Input.mousePosition.y) / Screen.height) * 0.4f) * speedCamera) * 150f;
-                    baseT.Rotate(num5, 0f, 0f, Space.Self);
+                    var num5 = (((((Screen.height * 0.4f) - Input.mousePosition.y) / Screen.height) * 0.4f) * SpeedCamera) * 150f;
+                    _baseT.Rotate(num5, 0f, 0f, Space.Self);
                 }
                 else if (Input.mousePosition.y > (Screen.height * 0.6f))
                 {
-                    var num5 = (-(((Input.mousePosition.y - (Screen.height * 0.6f)) / Screen.height) * 0.4f) * speedCamera) * 150f;
-                    baseT.Rotate(num5, 0f, 0f, Space.Self);
+                    var num5 = (-(((Input.mousePosition.y - (Screen.height * 0.6f)) / Screen.height) * 0.4f) * SpeedCamera) * 150f;
+                    _baseT.Rotate(num5, 0f, 0f, Space.Self);
                 }
 
-                if (Input.GetKey(buttonUP))
+                if (Input.GetKey(_buttonUp))
                 {
-                    baseT.position += (baseT.forward * (speed_button * timered["up"].valle(100))) * Time.deltaTime;
+                    _baseT.position += (_baseT.forward * (_speedButton * _timered["up"].Value(100))) * Time.deltaTime;
                 }
-                else if (Input.GetKey(buttonDOWN))
+                else if (Input.GetKey(_buttonDown))
                 {
-                    baseT.position -= (baseT.forward * (speed_button * timered["down"].valle(100))) * Time.deltaTime;
+                    _baseT.position -= (_baseT.forward * (_speedButton * _timered["down"].Value(100))) * Time.deltaTime;
                 }
-                else if (multi_button)
+                else if (_multiButton)
                 {
-                    if (timered["up"].valueLocal > 0)
+                    if (_timered["up"].ValueLocal > 0)
                     {
-                        baseT.position += (baseT.forward * (speed_button * timered["up"].valueLocal)) * Time.deltaTime;
-                        timered["up"].stop();
+                        _baseT.position += (_baseT.forward * (_speedButton * _timered["up"].ValueLocal)) * Time.deltaTime;
+                        _timered["up"].Stop();
                     }
-                    if (timered["down"].valueLocal > 0)
+                    if (_timered["down"].ValueLocal > 0)
                     {
-                        baseT.position -= (baseT.forward * (speed_button * timered["down"].valueLocal)) * Time.deltaTime;
-                        timered["down"].stop();
+                        _baseT.position -= (_baseT.forward * (_speedButton * _timered["down"].ValueLocal)) * Time.deltaTime;
+                        _timered["down"].Stop();
                     }
 
 
                 }
-                if (Input.GetKey(buttonLEFT))
+                if (Input.GetKey(_buttonLeft))
                 {
-                    baseT.position -= (baseT.right * (speed_button * timered["left"].valle(100))) * Time.deltaTime;
+                    _baseT.position -= (_baseT.right * (_speedButton * _timered["left"].Value(100))) * Time.deltaTime;
                 }
-                else if (Input.GetKey(buttonRIGHT))
+                else if (Input.GetKey(_buttonRight))
                 {
-                    baseT.position += (baseT.right * (speed_button * timered["right"].valle(100))) * Time.deltaTime;
+                    _baseT.position += (_baseT.right * (_speedButton * _timered["right"].Value(100))) * Time.deltaTime;
                 }
-                else if (multi_button)
+                else if (_multiButton)
                 {
-                    if (timered["left"].valueLocal > 0)
+                    if (_timered["left"].ValueLocal > 0)
                     {
-                        baseT.position -= (baseT.right * (speed_button * timered["left"].valueLocal)) * Time.deltaTime;
-                        timered["left"].stop();
+                        _baseT.position -= (_baseT.right * (_speedButton * _timered["left"].ValueLocal)) * Time.deltaTime;
+                        _timered["left"].Stop();
                     }
-                    if (timered["right"].valueLocal > 0)
+                    if (_timered["right"].ValueLocal > 0)
                     {
-                        baseT.position += (baseT.right * (speed_button * timered["right"].valueLocal)) * Time.deltaTime;
-                        timered["right"].stop();
+                        _baseT.position += (_baseT.right * (_speedButton * _timered["right"].ValueLocal)) * Time.deltaTime;
+                        _timered["right"].Stop();
                     }
                 }
             }
         }
         void LateUpdate()
         {
-            if (Input.GetKeyDown(buttonEnable) && Settings.SpecMode) { onEnable = !onEnable; Activate(onEnable); }
-            if (Input.GetKeyDown(buttonShowGUI) && Settings.SpecMode) { showGui = !showGui; }
+            if (Input.GetKeyDown(_buttonEnable) && Settings.SpecMode) { ONEnable = !ONEnable; Activate(ONEnable); }
+            if (Input.GetKeyDown(_buttonShowGUI) && Settings.SpecMode) { _showGui = !_showGui; }
         }
         void OnGUI()
         {
-            if (onEnable && showGui)
+            if (ONEnable && _showGui)
             {
                 var rect = new Rect(Screen.width - 250, Screen.height - 130, 250, 130);
                 var labelwidth = 100f;
                 GUILayout.BeginArea(rect, GUI.skin.box);
-                GUILayout.Label("Show GUI:" + buttonShowGUI.ToString() + " Disable mode:" + buttonEnable.ToString() + "\nMove: Up:" + buttonUP + " Down:" + buttonDOWN + " Left:" + buttonLEFT + " Right:" + buttonRIGHT);
+                GUILayout.Label("Show GUI:" + _buttonShowGUI.ToString() + " Disable mode:" + _buttonEnable.ToString() + "\nMove: Up:" + _buttonUp + " Down:" + _buttonDown + " Left:" + _buttonLeft + " Right:" + _buttonRight);
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Speed camera:", GUILayout.Width(labelwidth));
-                speed_camera = GUILayout.HorizontalSlider(speed_camera, 0.01f, 0.2f);
+                _speedCamera = GUILayout.HorizontalSlider(_speedCamera, 0.01f, 0.2f);
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Speed button:", GUILayout.Width(labelwidth));
-                speed_button = GUILayout.HorizontalSlider(speed_button, 0.01f, 1f);
+                _speedButton = GUILayout.HorizontalSlider(_speedButton, 0.01f, 1f);
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
-                multi_button = GUILayout.Toggle(multi_button, "Smooth button");
+                _multiButton = GUILayout.Toggle(_multiButton, "Smooth button");
                 if (GUILayout.Button("Save"))
                 {
                     Save_Load_Settings(true);
@@ -203,50 +202,51 @@ namespace GGM
         }
         class Timered
         {
-            readonly static float time_static = 0.1f;
-            float dinamic_time = 0f;
-            public float valueLocal = 0f;
-            readonly static float multiplication = 1.2f;
-            float end_value = 0f;
-            void Update()
+            private const float _timeStatic = 0.1f;
+            private float _dynamicTime;
+            public float ValueLocal;
+            static readonly float _multiplication = 1.2f;
+            private float _endValue;
+
+            private void Update()
             {
-                if (end_value > valueLocal)
+                if (_endValue > ValueLocal)
                 {
-                    if (valueLocal < 0)
+                    if (ValueLocal < 0)
                     {
-                        valueLocal = 0;
+                        ValueLocal = 0;
                     }
-                    dinamic_time += Time.deltaTime;
-                    if (dinamic_time > time_static)
+                    _dynamicTime += Time.deltaTime;
+                    if (_dynamicTime > _timeStatic)
                     {
-                        dinamic_time = 0f;
-                        valueLocal = (multiplication + valueLocal) * multiplication;
+                        _dynamicTime = 0f;
+                        ValueLocal = (_multiplication + ValueLocal) * _multiplication;
                     }
                 }
             }
-            public float valle(float set_value)
+            public float Value(float setValue)
             {
-                if (multi_button)
+                if (_multiButton)
                 {
-                    end_value = set_value;
+                    _endValue = setValue;
                     Update();
-                    return valueLocal;
+                    return ValueLocal;
                 }
-                return set_value;
+                return setValue;
             }
-            public void stop()
+            public void Stop()
             {
-                if (valueLocal > 0)
+                if (ValueLocal > 0)
                 {
-                    if (valueLocal < 0)
+                    if (ValueLocal < 0)
                     {
-                        valueLocal = 0;
+                        ValueLocal = 0;
                     }
-                    dinamic_time += Time.deltaTime;
-                    if (dinamic_time > time_static)
+                    _dynamicTime += Time.deltaTime;
+                    if (_dynamicTime > _timeStatic)
                     {
-                        dinamic_time = 0f;
-                        valueLocal = (valueLocal - multiplication) / multiplication;
+                        _dynamicTime = 0f;
+                        ValueLocal = (ValueLocal - _multiplication) / _multiplication;
                     }
                 }
             }

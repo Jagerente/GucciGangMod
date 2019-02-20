@@ -3,7 +3,7 @@ using System.IO;
 
 namespace GGM
 {
-    class Logger
+    internal class Logger
     {
         public static void Log(string path, string message)
         {
