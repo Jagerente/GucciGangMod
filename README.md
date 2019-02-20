@@ -34,7 +34,7 @@ All of the feautures you can find at [WIKI](https://github.com/JustlPain/GucciGa
 **A:** Contact me.
 
 **Q:** How can I contact you?
-**A:** Add me on *Discord* — JustlPain#8735 or send me an email — JustlPains@gmail.com.
+**A:** Add me on *Discord* — kakoytodolboeb.#8735 or send me an email — JustlPains@gmail.com.
 
 # Download
 * [Latest version](https://github.com/JustlPain/GucciGangMod/releases)
