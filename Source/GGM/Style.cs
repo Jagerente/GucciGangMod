@@ -2,216 +2,216 @@
 
 namespace GGM
 {
-    class Style : MonoBehaviour
+    internal class Style : MonoBehaviour
     {
-        static string path = "Gucci/";
-        static bool styleinited = false;
-        static Texture2D Box;
-        static Texture2D Window;
-        static Texture2D ButtonN;
-        static Texture2D ButtonA;
-        static Texture2D ButtonH;
-        static Texture2D ButtonON;
-        static Texture2D ButtonOA;
-        static Texture2D ButtonOH;
-        static Texture2D TextN;
-        static Texture2D TextH;
-        static Texture2D TextF;
-        static Texture2D TextON;
-        static Texture2D ThumbN;
-        static Texture2D ThumbA;
-        static Texture2D ThumbH;
-        static Texture2D ToggleN;
-        static Texture2D ToggleA;
-        static Texture2D ToggleH;
-        static Texture2D ToggleON;
-        static Texture2D ToggleOA;
-        static Texture2D ToggleOH;
-        static Texture2D Slider;
-        static Texture2D VerticalScrollBar;
-        static Texture2D HorizontalScrollBar;
-        static Texture2D ScrollBarThumbN;
-        static Texture2D ScrollBarThumbA;
-        static Texture2D ScrollBarThumbH;
+        private static readonly string _path = "Gucci/";
+        private static bool _styleInited;
+        private static Texture2D _box;
+        private static Texture2D _window;
+        private static Texture2D _buttonN;
+        private static Texture2D _buttonA;
+        private static Texture2D _buttonH;
+        private static Texture2D _buttonON;
+        private static Texture2D _buttonOA;
+        private static Texture2D _buttonOH;
+        private static Texture2D _textN;
+        private static Texture2D _textH;
+        private static Texture2D _textF;
+        private static Texture2D _textON;
+        private static Texture2D _thumbN;
+        private static Texture2D _thumbA;
+        private static Texture2D _thumbH;
+        private static Texture2D _toggleN;
+        private static Texture2D _toggleA;
+        private static Texture2D _toggleH;
+        private static Texture2D _toggleON;
+        private static Texture2D _toggleOA;
+        private static Texture2D _toggleOH;
+        private static Texture2D _slider;
+        private static Texture2D _verticalScrollBar;
+        private static Texture2D _horizontalScrollBar;
+        private static Texture2D _scrollBarThumbN;
+        private static Texture2D _scrollBarThumbA;
+        private static Texture2D _scrollBarThumbH;
         public static Texture2D Logo;
 
-        void Start()
+        private void Start()
         {
-            var LOGO = new WWW("file:///" + Application.dataPath + $"/Styles/{path}GGP_Logo.png");
+            var logo = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}GGP_Logo.png");
             if (Logo == null)
             {
-                Logo = LOGO.texture;
+                Logo = logo.texture;
                 Logo.Apply();
             }
-            var BOX = new WWW("file:///" + Application.dataPath + $"/Styles/{path}Box.png");
-            if (Box == null)
+            var box = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}Box.png");
+            if (_box == null)
             {
-                Box = BOX.texture;
-                Box.Apply();
+                _box = box.texture;
+                _box.Apply();
             }
-            var WINDOW = new WWW("file:///" + Application.dataPath + $"/Styles/{path}Window.png");
-            if (Window == null)
+            var window = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}Window.png");
+            if (_window == null)
             {
-                Window = WINDOW.texture;
-                Window.Apply();
+                _window = window.texture;
+                _window.Apply();
             }
-            var BUTTONN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonN.png");
-            if (ButtonN == null)
+            var buttonn = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ButtonN.png");
+            if (_buttonN == null)
             {
-                ButtonN = BUTTONN.texture;
-                ButtonN.Apply();
+                _buttonN = buttonn.texture;
+                _buttonN.Apply();
             }
-            var BUTTONA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonA.png");
-            if (ButtonA == null)
+            var buttona = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ButtonA.png");
+            if (_buttonA == null)
             {
-                ButtonA = BUTTONA.texture;
-                ButtonA.Apply();
+                _buttonA = buttona.texture;
+                _buttonA.Apply();
             }
-            var BUTTONH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonH.png");
-            if (ButtonH == null)
+            var buttonh = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ButtonH.png");
+            if (_buttonH == null)
             {
-                ButtonH = BUTTONH.texture;
-                ButtonH.Apply();
+                _buttonH = buttonh.texture;
+                _buttonH.Apply();
             }
-            var BUTTONON = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonON.png");
-            if (ButtonON == null)
+            var buttonon = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ButtonON.png");
+            if (_buttonON == null)
             {
-                ButtonON = BUTTONON.texture;
-                ButtonON.Apply();
+                _buttonON = buttonon.texture;
+                _buttonON.Apply();
             }
-            var BUTTONOH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonOH.png");
-            if (ButtonOH == null)
+            var buttonoh = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ButtonOH.png");
+            if (_buttonOH == null)
             {
-                ButtonOH = BUTTONOH.texture;
-                ButtonOH.Apply();
+                _buttonOH = buttonoh.texture;
+                _buttonOH.Apply();
             }
-            var BUTTONOA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ButtonOA.png");
-            if (ButtonOA == null)
+            var buttonoa = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ButtonOA.png");
+            if (_buttonOA == null)
             {
-                ButtonOA = BUTTONOA.texture;
-                ButtonOA.Apply();
+                _buttonOA = buttonoa.texture;
+                _buttonOA.Apply();
             }
-            var TEXTN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}TextN.png");
-            if (TextN == null)
+            var textn = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}TextN.png");
+            if (_textN == null)
             {
-                TextN = TEXTN.texture;
-                TextN.Apply();
+                _textN = textn.texture;
+                _textN.Apply();
             }
-            var TEXTH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}TextH.png");
-            if (TextH == null)
+            var texth = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}TextH.png");
+            if (_textH == null)
             {
-                TextH = TEXTH.texture;
-                TextH.Apply();
+                _textH = texth.texture;
+                _textH.Apply();
             }
-            var TEXTF = new WWW("file:///" + Application.dataPath + $"/Styles/{path}TextF.png");
-            if (TextF == null)
+            var textf = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}TextF.png");
+            if (_textF == null)
             {
-                TextF = TEXTF.texture;
-                TextF.Apply();
+                _textF = textf.texture;
+                _textF.Apply();
             }
-            var TEXTON = new WWW("file:///" + Application.dataPath + $"/Styles/{path}TextON.png");
-            if (TextON == null)
+            var texton = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}TextON.png");
+            if (_textON == null)
             {
-                TextON = TEXTON.texture;
-                TextON.Apply();
+                _textON = texton.texture;
+                _textON.Apply();
             }
-            var THUMBN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ThumbN.png");
-            if (ThumbN == null)
+            var thumbn = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ThumbN.png");
+            if (_thumbN == null)
             {
-                ThumbN = THUMBN.texture;
-                ThumbN.Apply();
+                _thumbN = thumbn.texture;
+                _thumbN.Apply();
             }
-            var THUMBA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ThumbA.png");
-            if (ThumbA == null)
+            var thumba = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ThumbA.png");
+            if (_thumbA == null)
             {
-                ThumbA = THUMBA.texture;
-                ThumbA.Apply();
+                _thumbA = thumba.texture;
+                _thumbA.Apply();
             }
-            var THUMBH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ThumbH.png");
-            if (ThumbH == null)
+            var thumbh = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ThumbH.png");
+            if (_thumbH == null)
             {
-                ThumbH = THUMBH.texture;
-                ThumbH.Apply();
+                _thumbH = thumbh.texture;
+                _thumbH.Apply();
             }
-            var TOGGLEN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleN.png");
-            if (ToggleN == null)
+            var togglen = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ToggleN.png");
+            if (_toggleN == null)
             {
-                ToggleN = TOGGLEN.texture;
-                ToggleN.Apply();
+                _toggleN = togglen.texture;
+                _toggleN.Apply();
             }
-            var TOGGLEA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleA.png");
-            if (ToggleA == null)
+            var togglea = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ToggleA.png");
+            if (_toggleA == null)
             {
-                ToggleA = TOGGLEA.texture;
-                ToggleA.Apply();
+                _toggleA = togglea.texture;
+                _toggleA.Apply();
             }
-            var TOGGLEH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleH.png");
-            if (ToggleH == null)
+            var toggleh = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ToggleH.png");
+            if (_toggleH == null)
             {
-                ToggleH = TOGGLEH.texture;
-                ToggleH.Apply();
+                _toggleH = toggleh.texture;
+                _toggleH.Apply();
             }
-            var TOGGLEON = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleON.png");
-            if (ToggleON == null)
+            var toggleon = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ToggleON.png");
+            if (_toggleON == null)
             {
-                ToggleON = TOGGLEON.texture;
-                ToggleON.Apply();
+                _toggleON = toggleon.texture;
+                _toggleON.Apply();
             }
-            var TOGGLEOA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleOA.png");
-            if (ToggleOA == null)
+            var toggleoa = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ToggleOA.png");
+            if (_toggleOA == null)
             {
-                ToggleOA = TOGGLEOA.texture;
-                ToggleOA.Apply();
+                _toggleOA = toggleoa.texture;
+                _toggleOA.Apply();
             }
-            var TOGGLEOH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ToggleOH.png");
-            if (ToggleOH == null)
+            var toggleoh = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ToggleOH.png");
+            if (_toggleOH == null)
             {
-                ToggleOH = TOGGLEOH.texture;
-                ToggleOH.Apply();
+                _toggleOH = toggleoh.texture;
+                _toggleOH.Apply();
             }
-            var VERTICALSCROLLBAR = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarH.png");
-            if (VerticalScrollBar == null)
+            var verticalscrollbar = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ScrollBarH.png");
+            if (_verticalScrollBar == null)
             {
-                VerticalScrollBar = VERTICALSCROLLBAR.texture;
-                VerticalScrollBar.Apply();
+                _verticalScrollBar = verticalscrollbar.texture;
+                _verticalScrollBar.Apply();
             }
-            var HORIZONTALSCROLLBAR = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarV.png");
-            if (HorizontalScrollBar == null)
+            var horizontalscrollbar = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ScrollBarV.png");
+            if (_horizontalScrollBar == null)
             {
-                HorizontalScrollBar = HORIZONTALSCROLLBAR.texture;
-                HorizontalScrollBar.Apply();
+                _horizontalScrollBar = horizontalscrollbar.texture;
+                _horizontalScrollBar.Apply();
             }
-            var SBTN = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarThumbN.png");
-            if (ScrollBarThumbN == null)
+            var sbtn = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ScrollBarThumbN.png");
+            if (_scrollBarThumbN == null)
             {
-                ScrollBarThumbN = SBTN.texture;
-                ScrollBarThumbN.Apply();
+                _scrollBarThumbN = sbtn.texture;
+                _scrollBarThumbN.Apply();
             }
-            var SBTA = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarThumbA.png");
-            if (ScrollBarThumbA == null)
+            var sbta = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ScrollBarThumbA.png");
+            if (_scrollBarThumbA == null)
             {
-                ScrollBarThumbA = SBTA.texture;
-                ScrollBarThumbA.Apply();
+                _scrollBarThumbA = sbta.texture;
+                _scrollBarThumbA.Apply();
             }
-            var SBTH = new WWW("file:///" + Application.dataPath + $"/Styles/{path}ScrollBarThumbH.png");
-            if (ScrollBarThumbH == null)
+            var sbth = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}ScrollBarThumbH.png");
+            if (_scrollBarThumbH == null)
             {
-                ScrollBarThumbH = SBTH.texture;
-                ScrollBarThumbH.Apply();
+                _scrollBarThumbH = sbth.texture;
+                _scrollBarThumbH.Apply();
             }
-            var SLIDER = new WWW("file:///" + Application.dataPath + $"/Styles/{path}Slider.png");
-            if (Slider == null)
+            var slider = new WWW("file:///" + Application.dataPath + $"/Styles/{_path}Slider.png");
+            if (_slider == null)
             {
-                Slider = SLIDER.texture;
-                Slider.Apply();
+                _slider = slider.texture;
+                _slider.Apply();
             }
         }
 
         public static void Init()
         {
-            if (!styleinited)
+            if (!_styleInited)
             {
-                styleinited = true;
+                _styleInited = true;
                 //GUI.skin.label.normal.textColor = Gucci_GUI.RGBColor_1;
                 GUI.skin.button.normal.textColor = Color.white;
                 GUI.skin.button.active.textColor = Color.white;
@@ -219,46 +219,38 @@ namespace GGM
                 GUI.skin.button.onNormal.textColor = Color.white;
                 GUI.skin.button.onActive.textColor = Color.white;
                 GUI.skin.button.onHover.textColor = Color.white;
-                GUI.skin.toggle.normal.textColor = Color.white;
-                GUI.skin.toggle.active.textColor = Color.white;
-                GUI.skin.toggle.hover.textColor = Color.white;
-                GUI.skin.toggle.onNormal.textColor = Color.white;
-                GUI.skin.toggle.onActive.textColor = Color.white;
-                GUI.skin.toggle.onHover.textColor = Color.white;
-                GUI.skin.box.normal.textColor = Color.white;
+                GUI.skin.button.normal.background = _buttonN;
+                GUI.skin.button.active.background = _buttonA;
+                GUI.skin.button.hover.background = _buttonH;
+                GUI.skin.button.onNormal.background = _buttonON;
+                GUI.skin.button.onActive.background = _buttonOA;
+                GUI.skin.button.onHover.background = _buttonOH;
+                GUI.skin.button.fontStyle = FontStyle.Bold;
 
+                GUI.skin.textField.normal.background = _textN;
+                GUI.skin.textField.hover.background = _textH;
+                GUI.skin.textField.focused.background = _textF;
+                GUI.skin.textField.onNormal.background = _textON;
 
-                GUI.skin.button.normal.background = ButtonN;
-                GUI.skin.button.active.background = ButtonA;
-                GUI.skin.button.hover.background = ButtonH;
-                GUI.skin.button.onNormal.background = ButtonON;
-                GUI.skin.button.onActive.background = ButtonOA;
-                GUI.skin.button.onHover.background = ButtonOH;
-
-                GUI.skin.textField.normal.background = TextN;
-                GUI.skin.textField.hover.background = TextH;
-                GUI.skin.textField.focused.background = TextF;
-                GUI.skin.textField.onNormal.background = TextON;
-
-                GUI.skin.textArea.normal.background = TextN;
-                GUI.skin.textArea.hover.background = TextH;
-                GUI.skin.textArea.focused.background = TextF;
-                GUI.skin.textArea.onNormal.background = TextON;
+                GUI.skin.textArea.normal.background = _textN;
+                GUI.skin.textArea.hover.background = _textH;
+                GUI.skin.textArea.focused.background = _textF;
+                GUI.skin.textArea.onNormal.background = _textON;
                 GUI.skin.textArea.focused.textColor = Color.white;
 
-                GUI.skin.verticalSlider.normal.background = Slider;
-                GUI.skin.verticalSliderThumb.normal.background = ThumbN;
-                GUI.skin.verticalSliderThumb.active.background = ThumbA;
-                GUI.skin.verticalSliderThumb.hover.background = ThumbH;
+                GUI.skin.verticalSlider.normal.background = _slider;
+                GUI.skin.verticalSliderThumb.normal.background = _thumbN;
+                GUI.skin.verticalSliderThumb.active.background = _thumbA;
+                GUI.skin.verticalSliderThumb.hover.background = _thumbH;
 
-                GUI.skin.horizontalSlider.normal.background = Slider;
+                GUI.skin.horizontalSlider.normal.background = _slider;
 
-                GUI.skin.horizontalSliderThumb.normal.background = ThumbN;
-                GUI.skin.horizontalSliderThumb.active.background = ThumbA;
-                GUI.skin.horizontalSliderThumb.hover.background = ThumbH;
+                GUI.skin.horizontalSliderThumb.normal.background = _thumbN;
+                GUI.skin.horizontalSliderThumb.active.background = _thumbA;
+                GUI.skin.horizontalSliderThumb.hover.background = _thumbH;
 
-                GUI.skin.horizontalScrollbar.normal.background = HorizontalScrollBar;
-                GUI.skin.verticalScrollbar.normal.background = VerticalScrollBar;
+                GUI.skin.horizontalScrollbar.normal.background = _horizontalScrollBar;
+                GUI.skin.verticalScrollbar.normal.background = _verticalScrollBar;
 
                 //GUI.skin.verticalScrollbarThumb.normal.background = ScrollBarThumbN;
                 //GUI.skin.verticalScrollbarThumb.active.background = ScrollBarThumbA;
@@ -267,12 +259,12 @@ namespace GGM
                 //GUI.skin.horizontalScrollbarThumb.active.background = ScrollBarThumbA;
                 //GUI.skin.horizontalScrollbarThumb.hover.background = ScrollBarThumbH;
 
-                GUI.skin.verticalScrollbarThumb.normal.background = HorizontalScrollBar;
-                GUI.skin.verticalScrollbarThumb.active.background = HorizontalScrollBar;
-                GUI.skin.verticalScrollbarThumb.hover.background = HorizontalScrollBar;
-                GUI.skin.horizontalScrollbarThumb.normal.background = HorizontalScrollBar;
-                GUI.skin.horizontalScrollbarThumb.active.background = HorizontalScrollBar;
-                GUI.skin.horizontalScrollbarThumb.hover.background = HorizontalScrollBar;
+                GUI.skin.verticalScrollbarThumb.normal.background = _horizontalScrollBar;
+                GUI.skin.verticalScrollbarThumb.active.background = _horizontalScrollBar;
+                GUI.skin.verticalScrollbarThumb.hover.background = _horizontalScrollBar;
+                GUI.skin.horizontalScrollbarThumb.normal.background = _horizontalScrollBar;
+                GUI.skin.horizontalScrollbarThumb.active.background = _horizontalScrollBar;
+                GUI.skin.horizontalScrollbarThumb.hover.background = _horizontalScrollBar;
 
                 //GUI.skin.horizontalScrollbarLeftButton.normal.background = Slider;
                 //GUI.skin.horizontalScrollbarLeftButton.active.background = Slider;
@@ -281,19 +273,26 @@ namespace GGM
                 //GUI.skin.horizontalScrollbarRightButton.active.background = Slider;
                 //GUI.skin.horizontalScrollbarRightButton.hover.background = Slider;
 
-                GUI.skin.toggle.normal.background = ToggleN;
-                GUI.skin.toggle.active.background = ToggleA;
-                GUI.skin.toggle.hover.background = ToggleH;
-                GUI.skin.toggle.onNormal.background = ToggleON;
-                GUI.skin.toggle.onActive.background = ToggleOA;
-                GUI.skin.toggle.onHover.background = ToggleOH;
+                GUI.skin.toggle.normal.textColor = Color.white;
+                GUI.skin.toggle.active.textColor = Color.white;
+                GUI.skin.toggle.hover.textColor = Color.white;
+                GUI.skin.toggle.onNormal.textColor = Color.white;
+                GUI.skin.toggle.onActive.textColor = Color.white;
+                GUI.skin.toggle.onHover.textColor = Color.white;
+                GUI.skin.toggle.normal.background = _toggleN;
+                GUI.skin.toggle.active.background = _toggleA;
+                GUI.skin.toggle.hover.background = _toggleH;
+                GUI.skin.toggle.onNormal.background = _toggleON;
+                GUI.skin.toggle.onActive.background = _toggleOA;
+                GUI.skin.toggle.onHover.background = _toggleOH;
 
-                GUI.skin.box.normal.background = Box;
+                GUI.skin.box.normal.textColor = Color.white;
+                GUI.skin.box.normal.background = _box;
 
-                GUI.skin.window.normal.background = Window;
-                GUI.skin.window.active.background = Window;
-                GUI.skin.window.onNormal.background = Window;
-                GUI.skin.window.onActive.background = Window;
+                GUI.skin.window.normal.background = _window;
+                GUI.skin.window.active.background = _window;
+                GUI.skin.window.onNormal.background = _window;
+                GUI.skin.window.onActive.background = _window;
             }
         }
     }

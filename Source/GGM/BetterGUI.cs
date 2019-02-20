@@ -3,62 +3,46 @@ using UnityEngine;
 
 namespace GGM
 {
-    class BetterGUI
+    internal static class BetterGUI
     {
-        const string HeaderFontSize = "20";
-        const float HeaderWidth = 70f;
-        const float HeaderHeight = 30f;
+        private const int _headerFontSize = 20;
+        private const float _headerWidth = 70f;
+        private const float _headerHeight = 30f;
 
-        const string SubHeaderFontSize = "16";
-        const float SubHeaderWidth = 90f;
-        const float SubHeaderHeight = 25f;
+        private const int _subHeaderFontSize = 16;
+        private const float _subHeaderWidth = 90f;
+        private const float _subHeaderHeight = 25f;
 
-        const string LabelFontSize = "13";
-        const float LabelWidth = 135f;
-        const float LabelHeight = 25f;
+        private const int _labelFontSize = 13;
+        private const float _labelWidth = 135f;
+        private const float _labelHeight = 25f;
 
-        const float GridWidth = 190f;
-        const float GridHeight = 20f;
+        private const float _gridWidth = 190f;
+        private const float _gridHeight = 20f;
 
-        const float TextFieldWidth = 190f;
+        private const float _textFieldWidth = 190f;
 
-        const float SliderWidth = 170f;
-        const float SliderTextWidth = 15f;
+        private const float _sliderWidth = 170f;
+        private const float _sliderTextWidth = 15f;
 
-        const float ButtonWidth = 100f;
-        const float ButtonHeight = 50f;
+        private const float _buttonWidth = 100f;
+        private const float _buttonHeight = 50f;
 
-        public static string FontColor_1 = "FDBCB4";
-        public static Color RGBColor_1 = new Color(0.992f, 0.737f, 0.706f);//#FDBCB4
-        public static string FontColor_2 = "F08080";
-        public static Color RGBColor_2 = new Color(0.941f, 0.502f, 0.502f);//#F08080
+        private static readonly Color _rgbColor1 = new Color(0.992f, 0.737f, 0.706f);//#FDBCB4
+        private static readonly Color _rgbColor2 = new Color(0.941f, 0.502f, 0.502f);//#F08080
 
-        public static Color MainMenuColor = new Color(0.941f, 0.502f, 0.502f);//#F08080
+        private static readonly Color _mainMenuColor = new Color(0.941f, 0.502f, 0.502f);//#F08080
 
-        public static GUIStyle main_menu = 
-            TextStyle(TextAnchor.MiddleRight, FontStyle.Normal, 32, false, MainMenuColor, MainMenuColor, MainMenuColor);
-        public static GUIStyle main_menu_top = 
-            TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, 18, false, Color.white, Color.white, Color.white);
-        static GUIStyle text_labelmiddleleft = 
-            TextStyle(TextAnchor.MiddleLeft, FontStyle.Normal, Convert.ToInt32(LabelFontSize), false, RGBColor_1, RGBColor_1, RGBColor_1);
-        public static GUIStyle text_labelmiddlecenter = 
-            TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, Convert.ToInt32(LabelFontSize), false, RGBColor_1, RGBColor_1, RGBColor_1);
-        static GUIStyle text_labelmiddleright = 
-            TextStyle(TextAnchor.MiddleRight, FontStyle.Normal, Convert.ToInt32(LabelFontSize), false, RGBColor_1, RGBColor_1, RGBColor_1);
-        static GUIStyle text_subheader = 
-            TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, Convert.ToInt32(SubHeaderFontSize), false, RGBColor_1, RGBColor_1, RGBColor_1);
-        static GUIStyle text_header = 
-            TextStyle(TextAnchor.UpperCenter, FontStyle.Bold, Convert.ToInt32(HeaderFontSize), false, RGBColor_1, RGBColor_1, RGBColor_1);
-        static GUIStyle text_status = 
-            TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, Convert.ToInt32(LabelFontSize), false, RGBColor_2, RGBColor_2, RGBColor_2);
-        static GUIStyle text_button_normal = 
-            TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, 24, false, RGBColor_2, RGBColor_2, RGBColor_2);
-        static GUIStyle text_button_bold = 
-            TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, 24, false, RGBColor_2, RGBColor_2, RGBColor_2);
-        static GUIStyle menulog = 
-            TextStyle(TextAnchor.LowerLeft, FontStyle.BoldAndItalic, 15, false, RGBColor_2, RGBColor_2, RGBColor_2);
+        public static readonly GUIStyle TextLabelMiddleLeft = TextStyle(TextAnchor.MiddleLeft, FontStyle.Normal, _labelFontSize, false, _rgbColor1, _rgbColor1, _rgbColor1);
+        public static readonly GUIStyle TextLabelMiddleCenter = TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, _labelFontSize, false, _rgbColor1, _rgbColor1, _rgbColor1);
+        public static readonly GUIStyle TextLabelMiddleRight = TextStyle(TextAnchor.MiddleRight, FontStyle.Normal, _labelFontSize, false, _rgbColor1, _rgbColor1, _rgbColor1);
+        public static readonly GUIStyle TextSubHeader = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, _subHeaderFontSize, false, _rgbColor1, _rgbColor1, _rgbColor1);
+        public static readonly GUIStyle TextHeader = TextStyle(TextAnchor.UpperCenter, FontStyle.Bold, _headerFontSize, false, _rgbColor1, _rgbColor1, _rgbColor1);
+        public static readonly GUIStyle TextStatus = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, _labelFontSize, false, _rgbColor2, _rgbColor2, _rgbColor2);
+        public static readonly GUIStyle TextButtonNormal = TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, 24, false, _rgbColor2, _rgbColor2, _rgbColor2);
+        public static readonly GUIStyle TextButtonBold = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, 24, false, _rgbColor2, _rgbColor2, _rgbColor2);
 
-        static GUIStyle TextStyle(TextAnchor alignment, FontStyle fontStyle, int fontSize, bool wordWrap, Color normalColor, Color hoverColor, Color activeColor)
+        private static GUIStyle TextStyle(TextAnchor alignment, FontStyle fontStyle, int fontSize, bool wordWrap, Color normalColor, Color hoverColor, Color activeColor)
         {
             return new GUIStyle
             {
@@ -81,7 +65,7 @@ namespace GGM
             };
         }
 
-        static GUIStyle TextStyle(TextAnchor alignment, FontStyle fontStyle, int fontSize, bool wordWrap)
+        private static GUIStyle TextStyle(TextAnchor alignment, FontStyle fontStyle, int fontSize, bool wordWrap)
         {
             return new GUIStyle
             {
@@ -94,32 +78,30 @@ namespace GGM
 
         public static string ButtonStyle(string input)
         {
-            return string.Concat("<b><color=#FFFFFF><size=" + LabelFontSize + ">", input, "</size></color></b>");
+            return string.Concat("<b><color=#FFFFFF><size=" + _labelFontSize + ">", input, "</size></color></b>");
         }
         public static string Bold(string input)
         {
             return string.Concat("<b>", input, "</b>");
         }
 
-        //GUI Elements
+        #region GUI Elements
         public static void Header(string text)
         {
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label(text, text_header, GUILayout.Width(HeaderWidth), GUILayout.Height(HeaderHeight));
+            GUILayout.Label(text, TextHeader, GUILayout.Width(_headerWidth), GUILayout.Height(_headerHeight));
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-            return;
         }
 
         public static void SubHeader(string text)
         {
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label(text, text_subheader, GUILayout.Width(SubHeaderWidth), GUILayout.Height(SubHeaderHeight));
+            GUILayout.Label(text, TextSubHeader, GUILayout.Width(_subHeaderWidth), GUILayout.Height(_subHeaderHeight));
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-            return;
         }
 
         /// <param name="align">
@@ -127,53 +109,51 @@ namespace GGM
         /// 1 - Middle Center
         /// 2 - Middle Right
         /// </param>
-        public static void Label(string text, int align = 0, float width = LabelWidth, float height = LabelHeight)
+        public static void Label(string text, int align = 0, float width = _labelWidth, float height = _labelHeight)
         {
             switch (align)
             {
                 case 0:
-                    GUILayout.Label(text, text_labelmiddleleft, GUILayout.Width(width), GUILayout.Height(height));
+                    GUILayout.Label(text, TextLabelMiddleLeft, GUILayout.Width(width), GUILayout.Height(height));
                     return;
                 case 1:
-                    GUILayout.Label(text, text_labelmiddlecenter, GUILayout.Width(width), GUILayout.Height(height));
+                    GUILayout.Label(text, TextLabelMiddleCenter, GUILayout.Width(width), GUILayout.Height(height));
                     return;
                 case 2:
-                    GUILayout.Label(text, text_labelmiddleright, GUILayout.Width(width), GUILayout.Height(height));
+                    GUILayout.Label(text, TextLabelMiddleRight, GUILayout.Width(width), GUILayout.Height(height));
                     return;
             }
         }
 
-        public static bool Button(string text, bool bold, float width = ButtonWidth, float height = ButtonHeight)
+        public static bool Button(string text, bool bold, float width = _buttonWidth, float height = _buttonHeight)
         {
-            return GUILayout.Button(text, bold ? text_button_bold : text_button_normal, GUILayout.Width(width), GUILayout.Height(height));
+            return GUILayout.Button(text, bold ? TextButtonBold : TextButtonNormal, GUILayout.Width(width), GUILayout.Height(height));
         }
 
-        public static void TextField(string text, ref string STR, float width = TextFieldWidth, float lwidth = LabelWidth)
+        public static void TextField(string text, ref string str, float width = _textFieldWidth, float labelWidth = _labelWidth)
         {
             GUILayout.BeginHorizontal();
-            Label(text, 0, lwidth);
-            STR = GUILayout.TextField(STR, GUILayout.Width(width));
+            Label(text, 0, labelWidth);
+            str = GUILayout.TextField(str, GUILayout.Width(width));
             GUILayout.EndHorizontal();
-            return;
         }
 
-        public static void Slider(string text, bool round, float multiplier, ref float value, float left, float right, string textformat = "0", float width = SliderWidth, float twidth = SliderTextWidth)
+        public static void Slider(string text, bool round, float multiplier, ref float value, float left, float right, string textFormat = "0", float width = _sliderWidth, float textWidth = _sliderTextWidth)
         {
             GUILayout.BeginHorizontal();
             Label(text);
             value = GUILayout.HorizontalSlider(value, left, right, GUILayout.Width(width));
-            Label(round ? Mathf.Round(multiplier == 0 ? value : value * multiplier).ToString(textformat) : (multiplier == 0 ? value : value * multiplier).ToString(textformat), 1, twidth);
+            Label(round ? Mathf.Round(multiplier == 0 ? value : value * multiplier).ToString(textFormat) : (multiplier == 0 ? value : value * multiplier).ToString(textFormat), 1, textWidth);
             GUILayout.EndHorizontal();
-            return;
         }
 
-        public static void Grid(string text, ref int INT, string[] STR, bool samecount = true, int count = 0, float width = GridWidth, float height = GridHeight)
+        public static void Grid(string text, ref int INT, string[] str, bool sameCount = true, int count = 0, float width = _gridWidth, float height = _gridHeight)
         {
             GUILayout.BeginHorizontal();
-            Label(text, 0);
-            INT = GUILayout.SelectionGrid(INT, STR, samecount ? STR.Length : count, GUILayout.Width(width), GUILayout.Height(height));
+            Label(text);
+            INT = GUILayout.SelectionGrid(INT, str, sameCount ? str.Length : count, GUILayout.Width(width), GUILayout.Height(height));
             GUILayout.EndHorizontal();
-            return;
         }
+        #endregion
     }
 }

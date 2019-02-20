@@ -5336,18 +5336,13 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                     }
                     else if (((GameObject.Find("ButtonCREDITS") != null) && (GameObject.Find("ButtonCREDITS").transform.parent.gameObject != null)) && NGUITools.GetActive(GameObject.Find("ButtonCREDITS").transform.parent.gameObject))
                     {
-                        var page = new Pages();
-                        page.Main_Menu();
+                        Pages.Main_Menu();
                     }
                 }
             }
             else
             {
-                GUI.backgroundColor = new Color(0f, 0f, 0f, 1f);
-                GUI.Box(new Rect(0, 0, Screen.width, Screen.height), string.Empty);
-                GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), textureBackgroundBlack);
-                GUI.DrawTexture(GUIHelpers.AlignRect(192, 192, GUIHelpers.Alignment.CENTER), Style.Logo);
-                GUI.Label(GUIHelpers.AlignRect(600, 150, GUIHelpers.Alignment.BOTTOMCENTER), "<size=64>GucciGangMod</size>\n" + "<size=32>Loading</size>", BetterGUI.text_labelmiddlecenter);
+                Pages.Loading_Screen();
             }
         }
         else if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.STOP)
