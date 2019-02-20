@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using Photon;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 

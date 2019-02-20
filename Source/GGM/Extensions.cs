@@ -37,7 +37,7 @@ namespace GGM
                     FengGameManagerMKII.instance.kickPlayerRC(info.sender, true, reason);
                 return true;
             }
-            else return false;
+            return false;
         }
 
         public static void DisableObject(string str)
@@ -59,21 +59,17 @@ namespace GGM
 
         public static bool ASODamage()
         {
-            if (
-                (int)FengGameManagerMKII.settings[210] == 1 &&
-                (string)FengGameManagerMKII.settings[211] == "100" &&
-                (string)FengGameManagerMKII.settings[212] == "0" &&
-                (string)FengGameManagerMKII.settings[213] == "0" &&
-                (string)FengGameManagerMKII.settings[214] == "0" &&
-                (string)FengGameManagerMKII.settings[215] == "0" &&
-                (int)FengGameManagerMKII.settings[207] == 1 &&
-                (string)FengGameManagerMKII.settings[208] == "2.5" &&
-                (string)FengGameManagerMKII.settings[209] == "3" &&
-                (int)FengGameManagerMKII.settings[205] == 1 &&
-                (string)FengGameManagerMKII.settings[206] == "1000")
-                return true;
-            else
-                return false;
+            return (int)FengGameManagerMKII.settings[210] == 1 &&
+                   (string)FengGameManagerMKII.settings[211] == "100" &&
+                   (string)FengGameManagerMKII.settings[212] == "0" &&
+                   (string)FengGameManagerMKII.settings[213] == "0" &&
+                   (string)FengGameManagerMKII.settings[214] == "0" &&
+                   (string)FengGameManagerMKII.settings[215] == "0" &&
+                   (int)FengGameManagerMKII.settings[207] == 1 &&
+                   (string)FengGameManagerMKII.settings[208] == "2.5" &&
+                   (string)FengGameManagerMKII.settings[209] == "3" &&
+                   (int)FengGameManagerMKII.settings[205] == 1 &&
+                   (string)FengGameManagerMKII.settings[206] == "1000";
         }
     }
 }

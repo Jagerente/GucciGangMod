@@ -8,17 +8,13 @@ namespace GGM
     {
         public static bool Profile = false;
         public static PhotonPlayer TPRemember;
-        public static bool isPause = false;
+        public static bool IsPause;
         private void Update()
         {
             #region Stop Time
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                if (Time.timeScale == 1E-06f)
-                    Time.timeScale = 1f;
-                else
-                    Time.timeScale = 1E-06f;
-
+                Time.timeScale = Time.timeScale == 1E-06f ? 1f : 1E-06f;
             }
             #endregion
             #region Infinites
@@ -57,7 +53,7 @@ namespace GGM
                 {
                     if (PhotonNetwork.isMasterClient)
                     {
-                        foreach (PhotonPlayer player in PhotonNetwork.playerList)
+                        foreach (var player in PhotonNetwork.playerList)
                         {
                             var allstats = new Hashtable();
                             allstats.Add(PhotonPlayerProperty.kills, 0);
@@ -89,19 +85,19 @@ namespace GGM
                 {
                     if (PhotonNetwork.isMasterClient)
                     {
-                        if (!isPause)
+                        if (!IsPause)
                         {
                             FengGameManagerMKII.instance.photonView.RPC("pauseRPC", PhotonTargets.All, true);
                             InRoomChat.Message_3("MasterClient has paused the game.");
                             InRoomChat.Message("MasterClient has paused the game.");
-                            HotKeys.isPause = true;
+                            IsPause = true;
                         }
                         else
                         {
                             FengGameManagerMKII.instance.photonView.RPC("pauseRPC", PhotonTargets.All, false);
                             InRoomChat.Message_3("MasterClient has unpaused the game.");
                             InRoomChat.Message("MasterClient has unpaused the game.");
-                            HotKeys.isPause = false;
+                            IsPause = false;
                         }
                     }
                     else
@@ -134,21 +130,19 @@ namespace GGM
             #region Teleport
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
-                RaycastHit findpoint;
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out findpoint, 9999999f, Layer.GroundEnemy.value))
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var findPoint, 9999999f, Layer.GroundEnemy.value))
                 {
-                    var point = findpoint.point;
+                    var point = findPoint.point;
                     GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position = new Vector3(point.x, point.y, point.z);
                 }
             }
             if (Input.GetKey(KeyCode.Alpha4))
             {
-                GameObject obj = new GameObject();
-                GameObject obj2 = new GameObject();
-                GameObject[] objArray2 = GameObject.FindGameObjectsWithTag("Player");
-                for (int num1 = 0; num1 < objArray2.Length; num1++)
+                var obj = new GameObject();
+                var obj2 = new GameObject();
+                var objArray2 = GameObject.FindGameObjectsWithTag("Player");
+                foreach (var obj3 in objArray2)
                 {
-                    GameObject obj3 = objArray2[num1];
                     if (obj3.GetPhotonView().owner == TPRemember)
                     {
                         obj = obj3;
@@ -158,9 +152,7 @@ namespace GGM
                         obj2 = obj3;
                     }
                 }
-                //InRoomChat.Message("Teleported to ", TPRemember, ".");
                 obj2.transform.position = obj.transform.position;
-                //FengGameManagerMKII.instance.StartCoroutine(FengGameManagerMKII.instance.LoadSound(FengGameManagerMKII.SoundType.Teleport));
             }
             #endregion
             #region Object Spawn

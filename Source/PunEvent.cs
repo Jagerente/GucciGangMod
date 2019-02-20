@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-
 internal class PunEvent
 {
     public const byte AssignMaster = 0xd0;

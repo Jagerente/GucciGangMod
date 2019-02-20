@@ -3,7 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
 using UnityEngine;
 
 public class HERO_ON_MENU : MonoBehaviour

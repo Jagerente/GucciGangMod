@@ -4,8 +4,6 @@
 //Farewell Cowboy
 
 using ExitGames.Client.Photon;
-using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 internal static class TeamExtensions

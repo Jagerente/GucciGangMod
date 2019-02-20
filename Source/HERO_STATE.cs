@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-
 public enum HERO_STATE
 {
     Idle,

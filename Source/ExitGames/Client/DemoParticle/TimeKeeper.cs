@@ -1,7 +1,6 @@
 ﻿namespace ExitGames.Client.DemoParticle
 {
     using System;
-    using System.Runtime.CompilerServices;
 
     public class TimeKeeper
     {

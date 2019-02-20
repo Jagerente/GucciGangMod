@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-
 public enum STEREO_3D_TYPE
 {
     MONO,

@@ -5,7 +5,6 @@
 
 using ExitGames.Client.Photon;
 using ExitGames.Client.Photon.Lite;
-using System;
 using System.Collections.Generic;
 
 internal class LoadbalancingPeer : PhotonPeer

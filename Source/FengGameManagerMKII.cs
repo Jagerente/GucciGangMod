@@ -252,7 +252,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             content = sender + ": " + content;
         }
         content = "<color=#FFC000>[" + Convert.ToString(info.sender.ID) + "]</color> " + content;
-        this.chatRoom.addLINE(content);
+        this.chatRoom.AddLine(content);
     }
 
     [RPC]
@@ -261,7 +261,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         Logger.LogChat(Settings.ChatPath, content, info);
         content = sender + ": " + content;
         content = "<color=#FFC000>FROM [" + Convert.ToString(info.sender.ID) + "]</color> " + content;
-        this.chatRoom.addLINE(content);
+        this.chatRoom.AddLine(content);
     }
 
     private ExitGames.Client.Photon.Hashtable checkGameGUI()
@@ -768,19 +768,19 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 if (num4 != num5)
                 {
                     int num8 = num3 + 1;
-                    this.chatRoom.addLINE("Script Error: Parentheses not equal! (line " + num8.ToString() + ")");
+                    this.chatRoom.AddLine("Script Error: Parentheses not equal! (line " + num8.ToString() + ")");
                     flag = true;
                 }
                 if ((num6 % 2) != 0)
                 {
-                    this.chatRoom.addLINE("Script Error: Quotations not equal! (line " + ((num3 + 1)).ToString() + ")");
+                    this.chatRoom.AddLine("Script Error: Quotations not equal! (line " + ((num3 + 1)).ToString() + ")");
                     flag = true;
                 }
             }
         }
         if (num != num2)
         {
-            this.chatRoom.addLINE("Script Error: Bracket count not equivalent!");
+            this.chatRoom.AddLine("Script Error: Bracket count not equivalent!");
             flag = true;
         }
         if (!flag)
@@ -995,7 +995,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             }
             catch (UnityException exception)
             {
-                this.chatRoom.addLINE(exception.Message);
+                this.chatRoom.AddLine(exception.Message);
             }
         }
     }
@@ -2616,7 +2616,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     public void debugChat(string str)
     {
-        this.chatRoom.addLINE(str);
+        this.chatRoom.AddLine(str);
     }
 
     public void DestroyAllExistingCloths()
@@ -6946,7 +6946,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         this.needChooseSide = true;
         this.chatContent = new ArrayList();
         this.killInfoGO = new ArrayList();
-        InRoomChat.messages = new List<string>();
+        InRoomChat.Messages = new List<string>();
         if (!PhotonNetwork.isMasterClient)
         {
             base.photonView.RPC("RequireStatus", PhotonTargets.MasterClient, new object[0]);

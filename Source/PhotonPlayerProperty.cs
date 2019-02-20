@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-
 public class PhotonPlayerProperty
 {
     public static string beard_texture_id = "beard_texture_id";

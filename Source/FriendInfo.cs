@@ -3,9 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-using System.Runtime.CompilerServices;
-
 public class FriendInfo
 {
     public override string ToString()

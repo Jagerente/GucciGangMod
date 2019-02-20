@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-
 public class GameProperties
 {
     public const byte CleanupCacheOnLeave = 0xf9;

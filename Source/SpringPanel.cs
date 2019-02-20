@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(UIPanel)), AddComponentMenu("NGUI/Internal/Spring Panel")]

@@ -6,7 +6,6 @@
 using ExitGames.Client.Photon;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public static class PhotonNetwork

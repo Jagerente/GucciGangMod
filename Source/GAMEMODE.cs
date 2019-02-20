@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-
 public enum GAMEMODE
 {
     KILL_TITAN,

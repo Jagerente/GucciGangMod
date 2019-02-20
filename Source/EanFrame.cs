@@ -3,7 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
 using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]

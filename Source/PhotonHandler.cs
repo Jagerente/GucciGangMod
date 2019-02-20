@@ -4,7 +4,6 @@
 //Farewell Cowboy
 
 using ExitGames.Client.Photon;
-using Photon;
 using System;
 using System.Collections;
 using System.Collections.Generic;

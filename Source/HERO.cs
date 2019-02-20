@@ -3,15 +3,10 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using ExitGames.Client.Photon;
 using GGM;
-using Photon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using Xft;
 

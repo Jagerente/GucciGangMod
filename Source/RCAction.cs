@@ -5,7 +5,6 @@
 
 using ExitGames.Client.Photon;
 using System;
-using UnityEngine;
 
 public class RCAction
 {
@@ -24,7 +23,7 @@ public class RCAction
 
     public void callException(string str)
     {
-        FengGameManagerMKII.instance.chatRoom.addLINE(str);
+        FengGameManagerMKII.instance.chatRoom.AddLine(str);
     }
 
     public void doAction()

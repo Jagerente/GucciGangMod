@@ -21,7 +21,7 @@ public class RCActionHelper
 
     public void callException(string str)
     {
-        FengGameManagerMKII.instance.chatRoom.addLINE(str);
+        FengGameManagerMKII.instance.chatRoom.AddLine(str);
     }
 
     public bool returnBool(object sentObject)

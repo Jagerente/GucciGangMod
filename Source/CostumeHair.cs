@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-
 public class CostumeHair
 {
     public string hair = string.Empty;

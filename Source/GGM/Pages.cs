@@ -1,35 +1,34 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace GGM
 {
-    class Pages : MonoBehaviour
+    internal class Pages : MonoBehaviour
     {
         #region Variables
-        static readonly float _leftPos = ((Screen.width) / 2f) - 350f;
-        static readonly float _topPos = ((Screen.height) / 2f) - 250f;
-        static readonly float _width = 730f;
-        static readonly float _height = 550f;
-        static readonly Rect _full = new Rect(_leftPos, _topPos - 25f, _height, _width);
-        static readonly Rect _topCenter = new Rect(_leftPos, _topPos + 35f, 730f, 35f);
-        static readonly Rect _topLeft = new Rect(_leftPos + 20f, _topPos + 75f, 355f, 500 - 95f);
-        static readonly Rect _topRight = new Rect(_leftPos + 380f, _topPos + 75f, 355f, 500 - 95f);
-        static readonly Rect _left = new Rect(_leftPos + 20f, _topPos + 35f, 355f, 500f - 55f);
-        static readonly Rect _right = new Rect(_leftPos + 380f, _topPos + 35f, 355f, 500f - 55f);
 
-        static string _size = "72";
-        static string _color1 = "D6B1DE";
-        static string _color2 = "FFFFFF";
-        static string _singleButton = "";
-        static Rect _single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
-        static string _multiplayerButton = "";
-        static Rect _multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
-        static string _quitButton = "";
-        static Rect _quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
+        private static readonly float _leftPos = ((Screen.width) / 2f) - 350f;
+        private static readonly float _topPos = ((Screen.height) / 2f) - 250f;
+        private const float _width = 730f;
+        private const float _height = 550f;
+        private static readonly Rect _full = new Rect(_leftPos, _topPos - 25f, _height, _width);
+        private static readonly Rect _topCenter = new Rect(_leftPos, _topPos + 35f, 730f, 35f);
+        private static readonly Rect _topLeft = new Rect(_leftPos + 20f, _topPos + 75f, 355f, 500 - 95f);
+        private static readonly Rect _topRight = new Rect(_leftPos + 380f, _topPos + 75f, 355f, 500 - 95f);
+        private static readonly Rect _left = new Rect(_leftPos + 20f, _topPos + 35f, 355f, 500f - 55f);
+        private static readonly Rect _right = new Rect(_leftPos + 380f, _topPos + 35f, 355f, 500f - 55f);
+
+        private const string _size = "72";
+        private const string _color1 = "D6B1DE";
+        private const string _color2 = "FFFFFF";
+        private static string _singleButton = "";
+        private static Rect _single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
+        private static string _multiplayerButton = "";
+        private static Rect _multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
+        private static string _quitButton = "";
+        private static Rect _quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
         #endregion
 
         #region Scrolls
@@ -45,8 +44,8 @@ namespace GGM
 
         #region Grids
         public static int TopNavigationPanelInt = 0;
-        public static string[] TopNavigationPanelStr = new[]
-{
+        public static string[] TopNavigationPanelStr = 
+        {
         BetterGUI.ButtonStyle("Game Settings"),//0
         BetterGUI.ButtonStyle("Server Settings"),//1
         BetterGUI.ButtonStyle("Video & Audio"),//2
@@ -58,20 +57,85 @@ namespace GGM
         BetterGUI.ButtonStyle("Custom Map"),//8
         BetterGUI.ButtonStyle("Custom Logic")//9
         };
-        private static int TopLeftNavigationInt = 0;
-        private static string[] TopLeftNavigationStr = new string[] { BetterGUI.ButtonStyle("<size=18>User</size>"), BetterGUI.ButtonStyle("<size=18>Servers</size>") };
-        static readonly string[] SwitcherStr = { BetterGUI.ButtonStyle("Off"), BetterGUI.ButtonStyle("On") };
-        static readonly string[] Speedometer = new[] { BetterGUI.ButtonStyle("Off"), BetterGUI.ButtonStyle("Speed"), BetterGUI.ButtonStyle("Damage") };
-        static readonly string[] AnisotropicFilteringStr = new[] { BetterGUI.ButtonStyle("Off"), BetterGUI.ButtonStyle("On"), BetterGUI.ButtonStyle("Forced") };
-        static readonly string[] AntiAliasingStr = new[] { BetterGUI.ButtonStyle("Off"), BetterGUI.ButtonStyle("2x"), BetterGUI.ButtonStyle("4x"), BetterGUI.ButtonStyle("8x") };
-        static readonly string[] BlendWeightsStr = new[] { BetterGUI.ButtonStyle("1"), BetterGUI.ButtonStyle("2"), BetterGUI.ButtonStyle("4") };
-        static readonly string[] ShadowCascadesStr = new[] { BetterGUI.ButtonStyle("0"), BetterGUI.ButtonStyle("2"), BetterGUI.ButtonStyle("4") };
-        static readonly string[] ShadowProjectionStr = new[] { BetterGUI.ButtonStyle("Close Fit"), BetterGUI.ButtonStyle("Stable Fit") };
-        static readonly string[] TextureQualityStr = new[] { BetterGUI.ButtonStyle("Low"), BetterGUI.ButtonStyle("Medium"), BetterGUI.ButtonStyle("High") };
-        static readonly string[] LevelSkinPageStr = new[] { BetterGUI.ButtonStyle("Forest"), BetterGUI.ButtonStyle("City") };
-        static readonly string[] CannonCooldownStr = new[] { BetterGUI.ButtonStyle("3.5"), BetterGUI.ButtonStyle("1"), BetterGUI.ButtonStyle("0.1") };
-        static readonly string[] CannonRotateStr = new[] { BetterGUI.ButtonStyle("25"), BetterGUI.ButtonStyle("50"), BetterGUI.ButtonStyle("75"), BetterGUI.ButtonStyle("100") };
-        static readonly string[] CannonSpeedStr = new[] { BetterGUI.ButtonStyle("50"), BetterGUI.ButtonStyle("75"), BetterGUI.ButtonStyle("100"), BetterGUI.ButtonStyle("200"), BetterGUI.ButtonStyle("500") };
+        private static int _topLeftNavigationInt;
+        private static readonly string[] _topLeftNavigationStr =
+        {
+            BetterGUI.ButtonStyle("<size=18>User</size>"),
+            BetterGUI.ButtonStyle("<size=18>Servers</size>")
+        };
+        private static readonly string[] _switcherStr =
+        {
+            BetterGUI.ButtonStyle("Off"),
+            BetterGUI.ButtonStyle("On")
+        };
+        private static readonly string[] _speedometer =
+        {
+            BetterGUI.ButtonStyle("Off"),
+            BetterGUI.ButtonStyle("Speed"),
+            BetterGUI.ButtonStyle("Damage")
+        };
+        private static readonly string[] _anisotropicFilteringStr =
+        {
+            BetterGUI.ButtonStyle("Off"),
+            BetterGUI.ButtonStyle("On"),
+            BetterGUI.ButtonStyle("Forced")
+        };
+        private static readonly string[] _antiAliasingStr =
+        {
+            BetterGUI.ButtonStyle("Off"),
+            BetterGUI.ButtonStyle("2x"),
+            BetterGUI.ButtonStyle("4x"),
+            BetterGUI.ButtonStyle("8x")
+        };
+        private static readonly string[] _blendWeightsStr =
+        {
+            BetterGUI.ButtonStyle("1"),
+            BetterGUI.ButtonStyle("2"),
+            BetterGUI.ButtonStyle("4")
+        };
+        private static readonly string[] _shadowCascadesStr =
+        {
+            BetterGUI.ButtonStyle("0"),
+            BetterGUI.ButtonStyle("2"),
+            BetterGUI.ButtonStyle("4")
+        };
+        private static readonly string[] _shadowProjectionStr =
+        {
+            BetterGUI.ButtonStyle("Close Fit"),
+            BetterGUI.ButtonStyle("Stable Fit")
+        };
+        private static readonly string[] _textureQualityStr =
+        {
+            BetterGUI.ButtonStyle("Low"),
+            BetterGUI.ButtonStyle("Medium"),
+            BetterGUI.ButtonStyle("High")
+        };
+        private static readonly string[] _levelSkinPageStr =
+        {
+            BetterGUI.ButtonStyle("Forest"),
+            BetterGUI.ButtonStyle("City")
+        };
+        private static readonly string[] _cannonCooldownStr =
+        {
+            BetterGUI.ButtonStyle("3.5"),
+            BetterGUI.ButtonStyle("1"),
+            BetterGUI.ButtonStyle("0.1")
+        };
+        private static readonly string[] _cannonRotateStr =
+        {
+            BetterGUI.ButtonStyle("25"),
+            BetterGUI.ButtonStyle("50"),
+            BetterGUI.ButtonStyle("75"),
+            BetterGUI.ButtonStyle("100")
+        };
+        private static readonly string[] _cannonSpeedStr =
+        {
+            BetterGUI.ButtonStyle("50"),
+            BetterGUI.ButtonStyle("75"),
+            BetterGUI.ButtonStyle("100"),
+            BetterGUI.ButtonStyle("200"),
+            BetterGUI.ButtonStyle("500")
+        };
         #endregion
 
         #region Pages
@@ -128,10 +192,10 @@ namespace GGM
             GUILayout.BeginArea(GUIHelpers.AlignRect(400, 400, GUIHelpers.Alignment.TOPLEFT, 10, 10));
             GUILayout.BeginHorizontal();
 
-            TopLeftNavigationInt = GUILayout.SelectionGrid(TopLeftNavigationInt, TopLeftNavigationStr, 2, GUILayout.Width(400), GUILayout.Height(50));;
+            _topLeftNavigationInt = GUILayout.SelectionGrid(_topLeftNavigationInt, _topLeftNavigationStr, 2, GUILayout.Width(400), GUILayout.Height(50));
             GUILayout.EndHorizontal();
 
-            switch (TopLeftNavigationInt)
+            switch (_topLeftNavigationInt)
             {
                 case 0:
                     #region Custom Name
@@ -215,11 +279,11 @@ namespace GGM
                 FengGameManagerMKII.settings[0x40] = 0x65;
                 Application.LoadLevel(2);
             }
-            else if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 45f), "Custom Characters"))//45f, 128,25f
+            else if (GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 45f), "Custom Characters"))//45f, 128,25f
             {
                 Application.LoadLevel("characterCreation");
             }
-            else if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 75f), "Snapshot Reviewer"))//75
+            else if (GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 75f), "Snapshot Reviewer"))//75
             {
                 Application.LoadLevel("SnapShot");
             }
@@ -234,35 +298,35 @@ namespace GGM
             GameSettingsScrollLeft = GUILayout.BeginScrollView(GameSettingsScrollLeft, false, false);
             BetterGUI.SubHeader("Mouse");
             BetterGUI.Slider("Mouse Sensivity", true, 100, ref Settings.MouseSensitivity, 0.1f, 1f);
-            BetterGUI.Grid("Invert Mouse", ref Settings.InvertMouse, SwitcherStr);
+            BetterGUI.Grid("Invert Mouse", ref Settings.InvertMouse, _switcherStr);
             BetterGUI.SubHeader("Camera");
             BetterGUI.Slider("Camera Distance", true, 100, ref Settings.CameraDistance, 0f, 1f);
-            BetterGUI.Grid("Camera Tilt", ref Settings.CameraTilt, SwitcherStr);
-            BetterGUI.Grid("Static FOV", ref Settings.FOV, SwitcherStr);
+            BetterGUI.Grid("Camera Tilt", ref Settings.CameraTilt, _switcherStr);
+            BetterGUI.Grid("Static FOV", ref Settings.FOV, _switcherStr);
             if (Settings.FOV == 1)
             {
                 BetterGUI.Slider("FOV value", true, 0, ref Settings.FOVvalue, 60f, 120f);
             }
             BetterGUI.SubHeader("Snapshots");
-            BetterGUI.Grid("Snapshots", ref Settings.Snapshots, SwitcherStr);
-            BetterGUI.Grid("Show In Game", ref Settings.SnapshotsInGame, SwitcherStr);
+            BetterGUI.Grid("Snapshots", ref Settings.Snapshots, _switcherStr);
+            BetterGUI.Grid("Show In Game", ref Settings.SnapshotsInGame, _switcherStr);
             BetterGUI.TextField("Minimum Damage", ref Settings.SnapshotsMinDamage);
             BetterGUI.SubHeader("GUI");
-            BetterGUI.Grid("UI", ref Settings.UI, SwitcherStr);
-            BetterGUI.Grid("Chat", ref Settings.Chat, SwitcherStr);
-            BetterGUI.Grid("RC Formatting", ref Settings.RCFormatting, SwitcherStr);
+            BetterGUI.Grid("UI", ref Settings.UI, _switcherStr);
+            BetterGUI.Grid("Chat", ref Settings.Chat, _switcherStr);
+            BetterGUI.Grid("RC Formatting", ref Settings.RCFormatting, _switcherStr);
             BetterGUI.TextField("Major Color", ref Settings.ChatMajorColor);
             BetterGUI.TextField("Minor Color", ref Settings.ChatMinorColor);
             BetterGUI.TextField("Size", ref Settings.ChatSize);
-            BetterGUI.Grid("Major Bold", ref Settings.ChatMajorBold, SwitcherStr);
-            BetterGUI.Grid("Minor Bold", ref Settings.ChatMinorBold, SwitcherStr);
-            BetterGUI.Grid("Major Italic", ref Settings.ChatMajorItalic, SwitcherStr);
-            BetterGUI.Grid("Minor Italic", ref Settings.ChatMinorItalic, SwitcherStr);
-            BetterGUI.Grid("Game Feed", ref Settings.GameFeed, SwitcherStr);
-            BetterGUI.Grid("Damage Feed", ref Settings.DamageFeed, SwitcherStr);
+            BetterGUI.Grid("Major Bold", ref Settings.ChatMajorBold, _switcherStr);
+            BetterGUI.Grid("Minor Bold", ref Settings.ChatMinorBold, _switcherStr);
+            BetterGUI.Grid("Major Italic", ref Settings.ChatMajorItalic, _switcherStr);
+            BetterGUI.Grid("Minor Italic", ref Settings.ChatMinorItalic, _switcherStr);
+            BetterGUI.Grid("Game Feed", ref Settings.GameFeed, _switcherStr);
+            BetterGUI.Grid("Damage Feed", ref Settings.DamageFeed, _switcherStr);
             BetterGUI.SubHeader("Other");
-            BetterGUI.Grid("Speedometer", ref Settings.Speedometer, Speedometer);
-            BetterGUI.Grid("Minimap", ref Settings.Minimap, SwitcherStr);
+            BetterGUI.Grid("Speedometer", ref Settings.Speedometer, _speedometer);
+            BetterGUI.Grid("Minimap", ref Settings.Minimap, _switcherStr);
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
             GUILayout.EndArea();
@@ -274,18 +338,18 @@ namespace GGM
             BetterGUI.Header("Character");
             GameSettingsScrollRight = GUILayout.BeginScrollView(GameSettingsScrollRight, false, false);
             BetterGUI.SubHeader("Physics");
-            BetterGUI.Grid("Body Lean", ref Settings.BodyLean, SwitcherStr);
-            BetterGUI.Grid("No Gravity [F4]", ref Settings.NoGravity, SwitcherStr);
-            BetterGUI.Grid("No Clip [V]", ref Settings.NoClip, SwitcherStr);
-            BetterGUI.Grid("Bouncy", ref Settings.Bouncy, SwitcherStr);
+            BetterGUI.Grid("Body Lean", ref Settings.BodyLean, _switcherStr);
+            BetterGUI.Grid("No Gravity [F4]", ref Settings.NoGravity, _switcherStr);
+            BetterGUI.Grid("No Clip [V]", ref Settings.NoClip, _switcherStr);
+            BetterGUI.Grid("Bouncy", ref Settings.Bouncy, _switcherStr);
             BetterGUI.SubHeader("Gas Burst");
-            BetterGUI.Grid("Rebind + Double Tap", ref Settings.DoubleBurstRebind, SwitcherStr);
+            BetterGUI.Grid("Rebind + Double Tap", ref Settings.DoubleBurstRebind, _switcherStr);
             BetterGUI.TextField("Force", ref Settings.DashForce);
             BetterGUI.TextField("Animation Delay", ref Settings.DashDelay);
             BetterGUI.SubHeader("Resources");
-            BetterGUI.Grid("Infinite Blades", ref Settings.InfiniteBlades, SwitcherStr);
-            BetterGUI.Grid("Infinite Bullets", ref Settings.InfiniteBullets, SwitcherStr);
-            BetterGUI.Grid("Infinite Gas", ref Settings.InfiniteGas, SwitcherStr);
+            BetterGUI.Grid("Infinite Blades", ref Settings.InfiniteBlades, _switcherStr);
+            BetterGUI.Grid("Infinite Bullets", ref Settings.InfiniteBullets, _switcherStr);
+            BetterGUI.Grid("Infinite Gas", ref Settings.InfiniteGas, _switcherStr);
             BetterGUI.SubHeader("Cannon");
             BetterGUI.TextField("Speed", ref Settings.CannonSpeed);
             BetterGUI.TextField("Rotation", ref Settings.CannonRotate);
@@ -766,13 +830,12 @@ namespace GGM
             Settings.OverallQuality = GUILayout.HorizontalSlider(Settings.OverallQuality, 0f, 5f, GUILayout.Width(125));
             BetterGUI.Label(QualitySettings.names[QualitySettings.GetQualityLevel()], 1, 60f);
             GUILayout.EndHorizontal();
-            BetterGUI.Grid("Textures", ref Settings.TextureQuality, TextureQualityStr);
-            BetterGUI.Grid("FPS", ref Settings.FPS, SwitcherStr);
+            BetterGUI.Grid("Textures", ref Settings.TextureQuality, _textureQualityStr);
+            BetterGUI.Grid("FPS", ref Settings.FPS, _switcherStr);
             BetterGUI.TextField("FPS Lock", ref Settings.FPSLock);
             BetterGUI.SubHeader("Advanced");
-            var mipmap = 0;
-            mipmap = Settings.MipMapping == 1 ? 1 : 0;
-            BetterGUI.Grid("MIP Mapping", ref Settings.MipMapping, SwitcherStr);
+            var mipmap = Settings.MipMapping == 1 ? 1 : 0;
+            BetterGUI.Grid("MIP Mapping", ref Settings.MipMapping, _switcherStr);
             FengGameManagerMKII.settings[63] = Settings.MipMapping == 0 ? 1 : 0;
             if (Settings.MipMapping != mipmap)
             {
@@ -780,17 +843,17 @@ namespace GGM
                 FengGameManagerMKII.linkHash[1].Clear();
                 FengGameManagerMKII.linkHash[2].Clear();
             }
-            BetterGUI.Grid("Anisotropic Filtering", ref Settings.AnisotropicFiltreing, AnisotropicFilteringStr);
-            BetterGUI.Grid("Anti-Aliasing", ref Settings.AntiAliasing, AntiAliasingStr);
-            BetterGUI.Grid("Blend Weights", ref Settings.BlendWeights, BlendWeightsStr);
+            BetterGUI.Grid("Anisotropic Filtering", ref Settings.AnisotropicFiltering, _anisotropicFilteringStr);
+            BetterGUI.Grid("Anti-Aliasing", ref Settings.AntiAliasing, _antiAliasingStr);
+            BetterGUI.Grid("Blend Weights", ref Settings.BlendWeights, _blendWeightsStr);
             BetterGUI.Slider("LOD Level", true, 0, ref Settings.MaximumLODLevel, 0f, 7f);
             BetterGUI.Slider("LOD Bias", false, 0, ref Settings.LODBias, 0f, 2f, "0.#");
             BetterGUI.Slider("Draw Distance", true, 100, ref Settings.DrawDistance, 15f, 50f);
             BetterGUI.Slider("Shadow Distance", true, 100, ref Settings.ShadowDistance, 0f, 50f);
-            BetterGUI.Grid("Shadow Projection", ref Settings.ShadowProjection, ShadowProjectionStr);
-            BetterGUI.Grid("Shadow Cascades", ref Settings.ShadowCascades, ShadowCascadesStr);
+            BetterGUI.Grid("Shadow Projection", ref Settings.ShadowProjection, _shadowProjectionStr);
+            BetterGUI.Grid("Shadow Cascades", ref Settings.ShadowCascades, _shadowCascadesStr);
             //Ambient
-            BetterGUI.Grid("Ambient", ref Settings.Ambient, SwitcherStr);
+            BetterGUI.Grid("Ambient", ref Settings.Ambient, _switcherStr);
             if (Settings.Ambient == 1)
             {
                 BetterGUI.Slider("Day Color R:", false, 0, ref Settings.AmbientDayColorR, 0f, 1f, "0.###", 160f, 25f);
@@ -806,7 +869,7 @@ namespace GGM
                 BetterGUI.Slider("Night Color B:", false, 0, ref Settings.AmbientNightColorB, 0f, 1f, "0.###", 160f, 25f);
             }
             //Fog
-            BetterGUI.Grid("Fog", ref Settings.Fog, SwitcherStr);
+            BetterGUI.Grid("Fog", ref Settings.Fog, _switcherStr);
             if (Settings.Fog == 1)
             {
                 BetterGUI.Slider("Color R:", false, 0, ref Settings.FogColorR, 0f, 1f, "0.###", 160f, 25f);
@@ -815,8 +878,8 @@ namespace GGM
                 BetterGUI.Slider("Start Distance", true, 0, ref Settings.FogStartDistance, 0f, 1000f, "0", 160f, 25f);
                 BetterGUI.Slider("End Distance", true, 0, ref Settings.FogEndDistance, 0f, 1000f, "0", 160f, 25f);
             }
-            BetterGUI.Grid("Wind", ref Settings.Wind, SwitcherStr);
-            BetterGUI.Grid("Blur", ref Settings.Blur, SwitcherStr);
+            BetterGUI.Grid("Wind", ref Settings.Wind, _switcherStr);
+            BetterGUI.Grid("Blur", ref Settings.Blur, _switcherStr);
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
             GUILayout.EndArea();
@@ -1394,7 +1457,7 @@ namespace GGM
             textured.SetPixel(0, 0, new Color((float)FengGameManagerMKII.settings[246], (float)FengGameManagerMKII.settings[247], (float)FengGameManagerMKII.settings[248], (float)FengGameManagerMKII.settings[249]));
             textured.Apply();
             GUI.DrawTexture(new Rect(_leftPos + 120f, _topPos + 113f, 40f, 15f), textured, ScaleMode.StretchToFill);
-            UnityEngine.Object.Destroy(textured);
+            Destroy(textured);
             GUI.Label(new Rect(_leftPos + 72f, _topPos + 135f, 20f, 22f), "R:", "Label");
             GUI.Label(new Rect(_leftPos + 72f, _topPos + 160f, 20f, 22f), "G:", "Label");
             GUI.Label(new Rect(_leftPos + 72f, _topPos + 185f, 20f, 22f), "B:", "Label");
@@ -1468,11 +1531,11 @@ namespace GGM
             GUILayout.BeginVertical();
             BetterGUI.Header("Settings");
             BetterGUI.SubHeader("General");
-            BetterGUI.Grid("Human Skins", ref Settings.HumanSkins, SwitcherStr);
-            BetterGUI.Grid("Blade Trail:", ref Settings.BladeTrails, SwitcherStr);
-            BetterGUI.Grid("Custom Gas:", ref Settings.CustomGas, SwitcherStr);
+            BetterGUI.Grid("Human Skins", ref Settings.HumanSkins, _switcherStr);
+            BetterGUI.Grid("Blade Trail:", ref Settings.BladeTrails, _switcherStr);
+            BetterGUI.Grid("Custom Gas:", ref Settings.CustomGas, _switcherStr);
             BetterGUI.SubHeader("Advanced");
-            BetterGUI.Grid("HD Trails:", ref Settings.BladeTrailsQuality, SwitcherStr);
+            BetterGUI.Grid("HD Trails:", ref Settings.BladeTrailsQuality, _switcherStr);
             BetterGUI.Slider("Blade Trail Frame Rate:", true, 0, ref Settings.BladeTrailsFrameRate, 60f, 1000f);
             BetterGUI.TextField("Blade Trail Fade Time:", ref Settings.BladeTrailsFadeTime);
             GUILayout.EndVertical();
@@ -1494,131 +1557,20 @@ namespace GGM
             }
             GUILayout.EndVertical();
             GUILayout.EndArea();
-
-            //OLD
-            {
-                //GUI.Label(new Rect(_leftPos + 205f, _topPos + 52f, 120f, 30f), "Human Skin Mode:", "Label");
-                //var flag2 = false;
-                //if (((int)FengGameManagerMKII.settings[0]) == 1)
-                //{
-                //    flag2 = true;
-                //}
-                //var flag5 = GUI.Toggle(new Rect(_leftPos + 325f, _topPos + 52f, 40f, 20f), flag2, "On");
-                //if (flag2 != flag5)
-                //{
-                //    if (flag5)
-                //    {
-                //        FengGameManagerMKII.settings[0] = 1;
-                //    }
-                //    else
-                //    {
-                //        FengGameManagerMKII.settings[0] = 0;
-                //    }
-                //}
-                //float num44 = 44f;
-                //if (((int)FengGameManagerMKII.settings[0x85]) == 0)
-                //{
-                //    if (GUI.Button(new Rect(_leftPos + 375f, _topPos + 51f, 120f, 22f), "Human Set 1"))
-                //    {
-                //        FengGameManagerMKII.settings[0x85] = 1;
-                //    }
-                //    FengGameManagerMKII.settings[3] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[3]);
-                //    FengGameManagerMKII.settings[4] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[4]);
-                //    FengGameManagerMKII.settings[5] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[5]);
-                //    FengGameManagerMKII.settings[6] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[6]);
-                //    FengGameManagerMKII.settings[7] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[7]);
-                //    FengGameManagerMKII.settings[8] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[8]);
-                //    FengGameManagerMKII.settings[14] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[14]);
-                //    FengGameManagerMKII.settings[9] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[9]);
-                //    FengGameManagerMKII.settings[10] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[10]);
-                //    FengGameManagerMKII.settings[11] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[11]);
-                //    FengGameManagerMKII.settings[12] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[12]);
-                //    FengGameManagerMKII.settings[13] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[13]);
-                //    FengGameManagerMKII.settings[0x5e] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x5e]);
-                //}
-                //else if (((int)FengGameManagerMKII.settings[0x85]) == 1)
-                //{
-                //    if (GUI.Button(new Rect(_leftPos + 375f, _topPos + 51f, 120f, 22f), "Human Set 2"))
-                //    {
-                //        FengGameManagerMKII.settings[0x85] = 2;
-                //    }
-                //    FengGameManagerMKII.settings[0x86] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x86]);
-                //    FengGameManagerMKII.settings[0x87] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x87]);
-                //    FengGameManagerMKII.settings[0x88] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x88]);
-                //    FengGameManagerMKII.settings[0x89] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x89]);
-                //    FengGameManagerMKII.settings[0x8a] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8a]);
-                //    FengGameManagerMKII.settings[0x8b] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8b]);
-                //    FengGameManagerMKII.settings[0x91] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[0x91]);
-                //    FengGameManagerMKII.settings[140] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[140]);
-                //    FengGameManagerMKII.settings[0x8d] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8d]);
-                //    FengGameManagerMKII.settings[0x8e] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8e]);
-                //    FengGameManagerMKII.settings[0x8f] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x8f]);
-                //    FengGameManagerMKII.settings[0x90] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x90]);
-                //    FengGameManagerMKII.settings[0x92] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x92]);
-                //}
-                //else if (((int)FengGameManagerMKII.settings[0x85]) == 2)
-                //{
-                //    if (GUI.Button(new Rect(_leftPos + 375f, _topPos + 51f, 120f, 22f), "Human Set 3"))
-                //    {
-                //        FengGameManagerMKII.settings[0x85] = 0;
-                //    }
-                //    FengGameManagerMKII.settings[0x93] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x93]);
-                //    FengGameManagerMKII.settings[0x94] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x94]);
-                //    FengGameManagerMKII.settings[0x95] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x95]);
-                //    FengGameManagerMKII.settings[150] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[150]);
-                //    FengGameManagerMKII.settings[0x97] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x97]);
-                //    FengGameManagerMKII.settings[0x98] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x98]);
-                //    FengGameManagerMKII.settings[0x9e] = GUI.TextField(new Rect(_leftPos + 80f, (_topPos + 114f) + (num44 * 6f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9e]);
-                //    FengGameManagerMKII.settings[0x99] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 0f), 230f, 20f), (string)FengGameManagerMKII.settings[0x99]);
-                //    FengGameManagerMKII.settings[0x9a] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 1f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9a]);
-                //    FengGameManagerMKII.settings[0x9b] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 2f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9b]);
-                //    FengGameManagerMKII.settings[0x9c] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 3f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9c]);
-                //    FengGameManagerMKII.settings[0x9d] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 4f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9d]);
-                //    FengGameManagerMKII.settings[0x9f] = GUI.TextField(new Rect(_leftPos + 390f, (_topPos + 114f) + (num44 * 5f), 230f, 20f), (string)FengGameManagerMKII.settings[0x9f]);
-                //}
-                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 0f), 150f, 20f), "Horse:", "Label");
-                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 1f), 227f, 20f), "Hair (model dependent):", "Label");
-                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 2f), 150f, 20f), "Eyes:", "Label");
-                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 3f), 240f, 20f), "Glass (must have a glass enabled):", "Label");
-                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 4f), 150f, 20f), "Face:", "Label");
-                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 5f), 150f, 20f), "Skin:", "Label");
-                //GUI.Label(new Rect(_leftPos + 80f, (_topPos + 92f) + (num44 * 6f), 240f, 20f), "Hoodie (costume dependent):", "Label");
-                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 0f), 240f, 20f), "Costume (model dependent):", "Label");
-                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 1f), 150f, 20f), "Logo & Cape:", "Label");
-                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 2f), 240f, 20f), "3DMG Center & 3DMG/Blade/Gun(_left):", "Label");
-                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 3f), 227f, 20f), "3DMG/Blade/Gun(_right):", "Label");
-                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 4f), 150f, 20f), "Gas:", "Label");
-                //GUI.Label(new Rect(_leftPos + 390f, (_topPos + 92f) + (num44 * 5f), 150f, 20f), "Weapon Trail:", "Label");
-            }
         }
         public static void Titan_Skins()
         {
             int num45;
             int num46;
             GUI.Label(new Rect(_leftPos + 270f, _topPos + 52f, 120f, 30f), "Titan Skin Mode:", "Label");
-            var flag6 = false;
-            if (Settings.TitanSkins == 1)
-            {
-                flag6 = true;
-            }
-            bool flag11 = GUI.Toggle(new Rect(_leftPos + 390f, _topPos + 52f, 40f, 20f), flag6, "On");
+            var flag6 = Settings.TitanSkins == 1;
+            var flag11 = GUI.Toggle(new Rect(_leftPos + 390f, _topPos + 52f, 40f, 20f), flag6, "On");
             if (flag6 != flag11)
             {
-                if (flag11)
-                {
-                    Settings.TitanSkins = 1;
-                }
-                else
-                {
-                    Settings.TitanSkins = 0;
-                }
+                Settings.TitanSkins = flag11 ? 1 : 0;
             }
             GUI.Label(new Rect(_leftPos + 270f, _topPos + 77f, 120f, 30f), "Randomized Pairs:", "Label");
-            flag6 = false;
-            if (((int)FengGameManagerMKII.settings[32]) == 1)
-            {
-                flag6 = true;
-            }
+            flag6 = (int)FengGameManagerMKII.settings[32] == 1;
             flag11 = GUI.Toggle(new Rect(_leftPos + 390f, _topPos + 77f, 40f, 20f), flag6, "On");
             if (flag6 != flag11)
             {
@@ -1728,8 +1680,8 @@ namespace GGM
         }
         public static void Level_Skins()
         {
-            var levelskinpage = 0;
-            if (levelskinpage == 0)
+            var levelSkinPage = 0;
+            if (levelSkinPage == 0)
             {
                 GUILayout.BeginArea(_left);
                 GUILayout.BeginVertical();
@@ -1737,10 +1689,10 @@ namespace GGM
 
                 BetterGUI.Header("Forest");
                 BetterGUI.SubHeader("Settings");
-                BetterGUI.Grid("Level Skins:", ref Settings.LocationSkins, SwitcherStr);
-                BetterGUI.Grid("Map:", ref levelskinpage, LevelSkinPageStr);
-                BetterGUI.Grid("Randomized Pairs:", ref Settings.ForestRandomizedPairs, SwitcherStr);
-                BetterGUI.Grid("Particles", ref Settings.Particles, SwitcherStr);
+                BetterGUI.Grid("Level Skins:", ref Settings.LocationSkins, _switcherStr);
+                BetterGUI.Grid("Map:", ref levelSkinPage, _levelSkinPageStr);
+                BetterGUI.Grid("Randomized Pairs:", ref Settings.ForestRandomizedPairs, _switcherStr);
+                BetterGUI.Grid("Particles", ref Settings.Particles, _switcherStr);
                 if (Settings.Particles == 1)
                 {
                     BetterGUI.Slider("Count:", true, 0, ref Settings.ParticlesCount, 0f, 15000);
@@ -1809,7 +1761,7 @@ namespace GGM
                 GUILayout.BeginHorizontal();
                 BetterGUI.Label("Ambient");
                 Settings.ForestAmbient[Settings.ForestCurrentSkin] = GUILayout.SelectionGrid(
-                    Settings.ForestAmbient[Settings.ForestCurrentSkin], SwitcherStr, 2,
+                    Settings.ForestAmbient[Settings.ForestCurrentSkin], _switcherStr, 2,
                     GUILayout.Width(190f));
                 GUILayout.EndHorizontal();
                 if (Settings.ForestAmbient[Settings.ForestCurrentSkin] == 1)
@@ -1825,7 +1777,7 @@ namespace GGM
                 GUILayout.BeginHorizontal();
                 BetterGUI.Label("Fog");
                 Settings.ForestFog[Settings.ForestCurrentSkin] = GUILayout.SelectionGrid(
-                    Settings.ForestFog[Settings.ForestCurrentSkin], SwitcherStr, 2, GUILayout.Width(190f));
+                    Settings.ForestFog[Settings.ForestCurrentSkin], _switcherStr, 2, GUILayout.Width(190f));
                 GUILayout.EndHorizontal();
                 if (Settings.ForestFog[Settings.ForestCurrentSkin] == 1)
                 {
@@ -1864,8 +1816,8 @@ namespace GGM
 
                 BetterGUI.Header("City");
                 BetterGUI.SubHeader("Settings");
-                BetterGUI.Grid("Level Skins:", ref Settings.LocationSkins, SwitcherStr);
-                BetterGUI.Grid("Map:", ref levelskinpage, LevelSkinPageStr);
+                BetterGUI.Grid("Level Skins:", ref Settings.LocationSkins, _switcherStr);
+                BetterGUI.Grid("Map:", ref levelSkinPage, _levelSkinPageStr);
                 BetterGUI.SubHeader("Presets");
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
@@ -1915,7 +1867,7 @@ namespace GGM
                 GUILayout.BeginHorizontal();
                 BetterGUI.Label("Ambient");
                 Settings.CityAmbient[Settings.CityCurrentSkin] = GUILayout.SelectionGrid(
-                    Settings.CityAmbient[Settings.CityCurrentSkin], SwitcherStr, 2,
+                    Settings.CityAmbient[Settings.CityCurrentSkin], _switcherStr, 2,
                     GUILayout.Width(190f));
                 GUILayout.EndHorizontal();
                 if (Settings.CityAmbient[Settings.CityCurrentSkin] == 1)
@@ -1929,7 +1881,7 @@ namespace GGM
                 }
                 GUILayout.BeginHorizontal();
                 BetterGUI.Label("Fog");
-                Settings.CityFog[Settings.CityCurrentSkin] = GUILayout.SelectionGrid(Settings.CityFog[Settings.CityCurrentSkin], SwitcherStr, 2, GUILayout.Width(190f));
+                Settings.CityFog[Settings.CityCurrentSkin] = GUILayout.SelectionGrid(Settings.CityFog[Settings.CityCurrentSkin], _switcherStr, 2, GUILayout.Width(190f));
                 GUILayout.EndHorizontal();
                 if (Settings.CityFog[Settings.CityCurrentSkin] == 1)
                 {

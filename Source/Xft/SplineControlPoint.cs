@@ -1,6 +1,5 @@
 ﻿namespace Xft
 {
-    using System;
     using UnityEngine;
 
     public class SplineControlPoint

@@ -3,7 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(UISprite)), AddComponentMenu("NGUI/Examples/UI Cursor")]

@@ -4,7 +4,6 @@
 //Farewell Cowboy
 
 using AnimationOrTween;
-using System;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Button Play Animation")]

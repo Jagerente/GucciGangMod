@@ -3,9 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using AnimationOrTween;
-using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public abstract class UITweener : IgnoreTimeScale

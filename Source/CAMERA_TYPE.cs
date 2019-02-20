@@ -3,8 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System;
-
 public enum CAMERA_TYPE
 {
     ORIGINAL,

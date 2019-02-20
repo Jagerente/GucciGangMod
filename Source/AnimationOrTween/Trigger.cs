@@ -1,7 +1,5 @@
 ﻿namespace AnimationOrTween
 {
-    using System;
-
     public enum Trigger
     {
         OnClick,

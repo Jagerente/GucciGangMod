@@ -62,7 +62,7 @@ namespace GGM
         public static int MipMapping;
         public static float DrawDistance;
         public static float ShadowDistance;
-        public static int AnisotropicFiltreing;
+        public static int AnisotropicFiltering;
         public static int AntiAliasing;
         public static int BlendWeights;
         public static float MaximumLODLevel;
@@ -104,16 +104,16 @@ namespace GGM
         public static float StepVolume;
         #endregion
         #region Bombs
-        public static float Bomb_ColorR;
-        public static float Bomb_ColorG;
-        public static float Bomb_ColorB;
-        public static float Bomb_ColorA;
+        public static float BombColorR;
+        public static float BombColorG;
+        public static float BombColorB;
+        public static float BombColorA;
         public static int RandomBombColor;
-        public static float Bomb_Radius;
-        public static float Bomb_Range;
-        public static float Bomb_Speed;
-        public static float Bomb_Cooldown;
-        public static float Bomb_Points;
+        public static float BombRadius;
+        public static float BombRange;
+        public static float BombSpeed;
+        public static float BombCooldown;
+        public static float BombPoints;
         #endregion
         #region Human Skins
         public static int HumanSkins;
@@ -160,12 +160,12 @@ namespace GGM
         public static float ParticlesColorA;
         public static float ParticlesGravity;
 
-        public static bool fog;
-        public static bool ambient;
-        public static float fog_start;
-        public static float fog_end;
-        public static Color fog_color;
-        public static Color ambient_color;
+        private static bool _fog;
+        private static bool _ambient;
+        private static float _fogStart;
+        private static float _fogEnd;
+        private static Color _fogColor;
+        private static Color _ambientColor;
 
         public static int LocationSkins;
 
@@ -466,7 +466,7 @@ namespace GGM
             PlayerPrefs.SetInt("ChatMajorBold", ChatMajorBold);
             PlayerPrefs.SetInt("ChatMinorBold", ChatMinorBold);
             PlayerPrefs.SetInt("ChatMajorItalic", ChatMajorItalic);
-            PlayerPrefs.SetInt("ChatMinorItalic", ChatMinorItalic); ;
+            PlayerPrefs.SetInt("ChatMinorItalic", ChatMinorItalic);
             PlayerPrefs.SetString("ChatSize", ChatSize);
 
             PlayerPrefs.SetInt("GameFeed", GameFeed);
@@ -489,7 +489,7 @@ namespace GGM
             PlayerPrefs.SetInt("VSync", VSync);
             PlayerPrefs.SetString("FPSLock", FPSLock);
             PlayerPrefs.SetInt("MipMapping", MipMapping);
-            PlayerPrefs.SetInt("AnisotropicFiltering", AnisotropicFiltreing);
+            PlayerPrefs.SetInt("AnisotropicFiltering", AnisotropicFiltering);
             PlayerPrefs.SetInt("AntiAliasing", AntiAliasing);
             PlayerPrefs.SetInt("BlendWeights", BlendWeights);
             PlayerPrefs.SetFloat("MaximumLODLevel", MaximumLODLevel);
@@ -559,15 +559,15 @@ namespace GGM
             PlayerPrefs.SetInt("ForestRandomizedPairs", ForestRandomizedPairs);
             #endregion
             #region Bombs
-            PlayerPrefs.SetFloat("Bomb_ColorR", Bomb_ColorR);
-            PlayerPrefs.SetFloat("Bomb_ColorG", Bomb_ColorG);
-            PlayerPrefs.SetFloat("Bomb_ColorB", Bomb_ColorB);
-            PlayerPrefs.SetFloat("Bomb_ColorA", Bomb_ColorA);
+            PlayerPrefs.SetFloat("Bomb_ColorR", BombColorR);
+            PlayerPrefs.SetFloat("Bomb_ColorG", BombColorG);
+            PlayerPrefs.SetFloat("Bomb_ColorB", BombColorB);
+            PlayerPrefs.SetFloat("Bomb_ColorA", BombColorA);
             PlayerPrefs.SetInt("Bomb_RandomColor", RandomBombColor);
-            PlayerPrefs.SetFloat("Bomb_Radius", Bomb_Radius);
-            PlayerPrefs.SetFloat("Bomb_Range", Bomb_Range);
-            PlayerPrefs.SetFloat("Bomb_Speed", Bomb_Speed);
-            PlayerPrefs.SetFloat("Bomb_Cooldown", Bomb_Cooldown);
+            PlayerPrefs.SetFloat("Bomb_Radius", BombRadius);
+            PlayerPrefs.SetFloat("Bomb_Range", BombRange);
+            PlayerPrefs.SetFloat("Bomb_Speed", BombSpeed);
+            PlayerPrefs.SetFloat("Bomb_Cooldown", BombCooldown);
             #endregion
         }
         public static void LoadConfig()
@@ -592,7 +592,7 @@ namespace GGM
             ChatMajorBold = PlayerPrefs.GetInt("ChatMajorBold", 1);
             ChatMinorBold = PlayerPrefs.GetInt("ChatMinorBold", 1);
             ChatMajorItalic = PlayerPrefs.GetInt("ChatMajorItalic", 0);
-            ChatMinorItalic = PlayerPrefs.GetInt("ChatMinorItalic", 0); ;
+            ChatMinorItalic = PlayerPrefs.GetInt("ChatMinorItalic", 0);
             ChatSize = PlayerPrefs.GetString("ChatSize", "");
 
             GameFeed = PlayerPrefs.GetInt("GameFeed", 0);
@@ -615,7 +615,7 @@ namespace GGM
             VSync = PlayerPrefs.GetInt("VSync", 0);
             FPSLock = PlayerPrefs.GetString("FPSLock", "0");
             MipMapping = PlayerPrefs.GetInt("MipMapping", 0);
-            AnisotropicFiltreing = PlayerPrefs.GetInt("AnisotropicFiltering", 0);
+            AnisotropicFiltering = PlayerPrefs.GetInt("AnisotropicFiltering", 0);
             AntiAliasing = PlayerPrefs.GetInt("AntiAliasing", 0);
             BlendWeights = PlayerPrefs.GetInt("BlendWeights", 2);
             MaximumLODLevel = PlayerPrefs.GetFloat("MaximumLODLevel", 0);
@@ -684,15 +684,15 @@ namespace GGM
             ForestRandomizedPairs = PlayerPrefs.GetInt("ForestRandomizedPairs", 0);
             #endregion
             #region Bombs
-            Bomb_ColorR = PlayerPrefs.GetFloat("Bomb_ColorR", 1f);
-            Bomb_ColorG = PlayerPrefs.GetFloat("Bomb_ColorG", 1f);
-            Bomb_ColorB = PlayerPrefs.GetFloat("Bomb_ColorB", 1f);
-            Bomb_ColorA = PlayerPrefs.GetFloat("Bomb_ColorA", 1f);
+            BombColorR = PlayerPrefs.GetFloat("Bomb_ColorR", 1f);
+            BombColorG = PlayerPrefs.GetFloat("Bomb_ColorG", 1f);
+            BombColorB = PlayerPrefs.GetFloat("Bomb_ColorB", 1f);
+            BombColorA = PlayerPrefs.GetFloat("Bomb_ColorA", 1f);
             RandomBombColor = PlayerPrefs.GetInt("Bomb_RandomColor", 0);
-            Bomb_Radius = PlayerPrefs.GetFloat("Bomb_Radius", 5f);
-            Bomb_Range = PlayerPrefs.GetFloat("Bomb_Range", 5f);
-            Bomb_Speed = PlayerPrefs.GetFloat("Bomb_Speed", 5f);
-            Bomb_Cooldown = PlayerPrefs.GetFloat("Bomb_Cooldown", 5f);
+            BombRadius = PlayerPrefs.GetFloat("Bomb_Radius", 5f);
+            BombRange = PlayerPrefs.GetFloat("Bomb_Range", 5f);
+            BombSpeed = PlayerPrefs.GetFloat("Bomb_Speed", 5f);
+            BombCooldown = PlayerPrefs.GetFloat("Bomb_Cooldown", 5f);
             #endregion
         }
 
@@ -702,34 +702,34 @@ namespace GGM
             
             if (UI == 0)
             {
-                GGM.Extensions.DisableObject("UIflare1");
-                GGM.Extensions.DisableObject("UIflare2");
-                GGM.Extensions.DisableObject("UIflare3");
-                GGM.Extensions.DisableObject("flareg1");
-                GGM.Extensions.DisableObject("UIflare1");
-                GGM.Extensions.DisableObject("flareg2");
-                GGM.Extensions.DisableObject("flareg3");
-                GGM.Extensions.DisableObject("bar");
-                GGM.Extensions.DisableObject("locker");
-                GGM.Extensions.DisableObject("stamina_titan");
-                GGM.Extensions.DisableObject("stamina_titan_bottom");
-                GGM.Extensions.DisableObject("flash");
-                GGM.Extensions.DisableObject("skill_cd_bottom");
-                GGM.Extensions.DisableObject("skill_cd_armin");
-                GGM.Extensions.DisableObject("skill_cd_mikasa");
-                GGM.Extensions.DisableObject("skill_cd_sasha");
-                GGM.Extensions.DisableObject("skill_cd_petra");
-                GGM.Extensions.DisableObject("skill_cd_levi");
-                GGM.Extensions.DisableObject("skill_cd_jean");
-                GGM.Extensions.DisableObject("skill_cd_marco");
-                GGM.Extensions.DisableObject("skill_cd_eren");
-                GGM.Extensions.DisableObject("GasUI");
+                Extensions.DisableObject("UIflare1");
+                Extensions.DisableObject("UIflare2");
+                Extensions.DisableObject("UIflare3");
+                Extensions.DisableObject("flareg1");
+                Extensions.DisableObject("UIflare1");
+                Extensions.DisableObject("flareg2");
+                Extensions.DisableObject("flareg3");
+                Extensions.DisableObject("bar");
+                Extensions.DisableObject("locker");
+                Extensions.DisableObject("stamina_titan");
+                Extensions.DisableObject("stamina_titan_bottom");
+                Extensions.DisableObject("flash");
+                Extensions.DisableObject("skill_cd_bottom");
+                Extensions.DisableObject("skill_cd_armin");
+                Extensions.DisableObject("skill_cd_mikasa");
+                Extensions.DisableObject("skill_cd_sasha");
+                Extensions.DisableObject("skill_cd_petra");
+                Extensions.DisableObject("skill_cd_levi");
+                Extensions.DisableObject("skill_cd_jean");
+                Extensions.DisableObject("skill_cd_marco");
+                Extensions.DisableObject("skill_cd_eren");
+                Extensions.DisableObject("GasUI");
             }
 
             if (player != null && player.GetComponent<HERO>() != null)
             {
                 player.GetComponent<HERO>().gravity = NoGravity == 1 ? 0f : 20f;
-                player.GetComponent<CapsuleCollider>().isTrigger = NoClip == 1 ? true : false;
+                player.GetComponent<CapsuleCollider>().isTrigger = NoClip == 1;
                 if (Bouncy == 1)
                 {
                     player.collider.material.bounciness = 1;
@@ -745,7 +745,7 @@ namespace GGM
             IN_GAME_MAIN_CAMERA.cameraDistance = CameraDistance + 0.3f;
             PlayerPrefs.SetInt("Snapshots", Snapshots);
             PlayerPrefs.SetInt("SnapshotsInGame", SnapshotsInGame);
-            InRoomChat.IsVisible = Chat == 1 ? true : false;
+            InRoomChat.IsVisible = Chat == 1;
             #region Quality 
             QualitySettings.SetQualityLevel(Convert.ToInt32(Mathf.Round(OverallQuality)), true);
             QualitySettings.masterTextureLimit = TextureQuality == 0 ? 2 : TextureQuality == 1 ? 1 : 0;
@@ -753,7 +753,7 @@ namespace GGM
             else if (Convert.ToInt32(FPSLock) == 0) Application.targetFrameRate = -1;
             else Application.targetFrameRate = 50;
             QualitySettings.vSyncCount = VSync;
-            QualitySettings.anisotropicFiltering = AnisotropicFiltreing == 0 ? AnisotropicFiltering.Disable : AnisotropicFiltreing == 1 ? AnisotropicFiltering.Enable : AnisotropicFiltering.ForceEnable;
+            QualitySettings.anisotropicFiltering = AnisotropicFiltering == 0 ? UnityEngine.AnisotropicFiltering.Disable : AnisotropicFiltering == 1 ? UnityEngine.AnisotropicFiltering.Enable : UnityEngine.AnisotropicFiltering.ForceEnable;
             QualitySettings.antiAliasing = AntiAliasing == 0 ? 0 : AntiAliasing == 1 ? 2 : AntiAliasing == 2 ? 4 : 8;
             QualitySettings.blendWeights = BlendWeights == 0 ? UnityEngine.BlendWeights.OneBone : BlendWeights == 1 ? UnityEngine.BlendWeights.TwoBones : UnityEngine.BlendWeights.FourBones;
             QualitySettings.maximumLODLevel = Convert.ToInt32(Mathf.Round(MaximumLODLevel));
@@ -770,9 +770,9 @@ namespace GGM
         {
             if (LocationSkins == 0)
             {
-                if (GGM.Extensions.Forest)
+                if (Extensions.Forest)
                 {
-                    RenderSettings.fog = Fog == 1 ? true : false;
+                    RenderSettings.fog = Fog == 1;
                     RenderSettings.fogStartDistance = FogStartDistance;
                     RenderSettings.fogEndDistance = FogEndDistance;
                     RenderSettings.fogColor = new Color(
@@ -801,10 +801,10 @@ namespace GGM
             }
             else
             {
-                if (GGM.Extensions.Forest && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
+                if (Extensions.Forest && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
                 {
 
-                    RenderSettings.fog = ForestFog[ForestCurrentSkin] == 1 ? true : false;
+                    RenderSettings.fog = ForestFog[ForestCurrentSkin] == 1;
                     RenderSettings.fogStartDistance = ForestFogStartDistance[ForestCurrentSkin];
                     RenderSettings.fogEndDistance = ForestFogEndDistance[ForestCurrentSkin];
                     RenderSettings.fogColor = new Color(
@@ -827,9 +827,9 @@ namespace GGM
                     }
 
                 }
-                else if (GGM.Extensions.City && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
+                else if (Extensions.City && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
                 {
-                    RenderSettings.fog = CityFog[CityCurrentSkin] == 1 ? true : false;
+                    RenderSettings.fog = CityFog[CityCurrentSkin] == 1;
                     RenderSettings.fogStartDistance = CityFogStartDistance[CityCurrentSkin];
                     RenderSettings.fogEndDistance = CityFogEndDistance[CityCurrentSkin];
                     RenderSettings.fogColor = new Color(
@@ -851,7 +851,7 @@ namespace GGM
                             new Color(0.05f, 0.05f, 0.05f);
                     }
                 }
-                else if (!GGM.Extensions.City && !GGM.Extensions.Forest)
+                else if (!Extensions.City && !Extensions.Forest)
                 {
                     RenderSettings.fog = false;
                     RenderSettings.ambientLight =
@@ -859,11 +859,11 @@ namespace GGM
                             IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? new Color(0.729f, 0.643f, 0.458f) :
                             new Color(0.05f, 0.05f, 0.05f);
                 }
-                else if (!PhotonNetwork.isMasterClient && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && (GGM.Extensions.Forest || GGM.Extensions.City))
+                else if (!PhotonNetwork.isMasterClient && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && (Extensions.Forest || Extensions.City))
                 {
-                    if (ambient)
+                    if (_ambient)
                     {
-                        RenderSettings.ambientLight = ambient_color;
+                        RenderSettings.ambientLight = _ambientColor;
                     }
                     else
                     {
@@ -872,16 +872,16 @@ namespace GGM
                                  IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? new Color(0.729f, 0.643f, 0.458f) :
                                  new Color(0.05f, 0.05f, 0.05f);
                     }
-                    if (fog)
+                    if (_fog)
                     {
                         RenderSettings.fog = true;
-                        RenderSettings.fogColor = fog_color;
-                        RenderSettings.fogStartDistance = fog_start;
-                        RenderSettings.fogEndDistance = fog_end;
+                        RenderSettings.fogColor = _fogColor;
+                        RenderSettings.fogStartDistance = _fogStart;
+                        RenderSettings.fogEndDistance = _fogEnd;
                     }
                     else
                     {
-                        RenderSettings.fog = GGM.Extensions.Forest ? true : false;
+                        RenderSettings.fog = Extensions.Forest;
                         RenderSettings.fogStartDistance = (Camera.main.farClipPlane / 7) - Camera.main.farClipPlane;
                         RenderSettings.fogEndDistance = Camera.main.farClipPlane;
                     }

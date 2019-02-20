@@ -3,12 +3,7 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using Photon;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Bomb : Photon.MonoBehaviour
