@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GGM
 {
-    class Settings
+    public static class Settings
     {
         public static string ChatPath = $"{Application.dataPath}/chat.txt";
         public static bool SpecMode = false;
