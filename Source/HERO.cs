@@ -923,7 +923,7 @@ public class HERO : Photon.MonoBehaviour
             transform.GetComponent<AudioSource>().Play();
             if (Settings.Snapshots == 1)
             {
-                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(this.transform.position, 0, null, 0.02f);
+                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().StartSnapShot(this.transform.position, 0, null, 0.02f);
             }
             Destroy(gameObject);
         }

@@ -100,53 +100,59 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         transform.position += Vector3.up * heightMulti;
         var transform2 = this.transform;
         transform2.position -= (Vector3.up * (0.6f - cameraDistance)) * 2f;
-        if (cameraMode == CAMERA_TYPE.WOW)
+        switch (cameraMode)
         {
-            if (Input.GetKey(KeyCode.Mouse1))
+            case CAMERA_TYPE.WOW:
             {
-                var angle = (Input.GetAxis("Mouse X") * 10f) * getSensitivityMulti();
-                var num2 = ((-Input.GetAxis("Mouse Y") * 10f) * getSensitivityMulti()) * getReverse();
-                this.transform.RotateAround(this.transform.position, Vector3.up, angle);
-                this.transform.RotateAround(this.transform.position, this.transform.right, num2);
+                if (Input.GetKey(KeyCode.Mouse1))
+                {
+                    var angle = (Input.GetAxis("Mouse X") * 10f) * getSensitivityMulti();
+                    var num2 = ((-Input.GetAxis("Mouse Y") * 10f) * getSensitivityMulti()) * getReverse();
+                    this.transform.RotateAround(this.transform.position, Vector3.up, angle);
+                    this.transform.RotateAround(this.transform.position, this.transform.right, num2);
+                }
+                var transform3 = this.transform;
+                transform3.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
+                break;
             }
-            var transform3 = this.transform;
-            transform3.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
-        }
-        else if (cameraMode == CAMERA_TYPE.ORIGINAL)
-        {
-            var num3 = 0f;
-            if (Input.mousePosition.x < (Screen.width * 0.4f))
+            case CAMERA_TYPE.ORIGINAL:
             {
-                num3 = (-((((Screen.width * 0.4f) - Input.mousePosition.x) / Screen.width) * 0.4f) * getSensitivityMultiWithDeltaTime()) * 150f;
-                this.transform.RotateAround(this.transform.position, Vector3.up, num3);
+                var num3 = 0f;
+                if (Input.mousePosition.x < (Screen.width * 0.4f))
+                {
+                    num3 = (-((((Screen.width * 0.4f) - Input.mousePosition.x) / Screen.width) * 0.4f) * getSensitivityMultiWithDeltaTime()) * 150f;
+                    this.transform.RotateAround(this.transform.position, Vector3.up, num3);
+                }
+                else if (Input.mousePosition.x > (Screen.width * 0.6f))
+                {
+                    num3 = ((((Input.mousePosition.x - (Screen.width * 0.6f)) / Screen.width) * 0.4f) * getSensitivityMultiWithDeltaTime()) * 150f;
+                    this.transform.RotateAround(this.transform.position, Vector3.up, num3);
+                }
+                var x = ((140f * ((Screen.height * 0.6f) - Input.mousePosition.y)) / Screen.height) * 0.5f;
+                this.transform.rotation = Quaternion.Euler(x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+                var transform4 = this.transform;
+                transform4.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
+                break;
             }
-            else if (Input.mousePosition.x > (Screen.width * 0.6f))
+            case CAMERA_TYPE.TPS:
             {
-                num3 = ((((Input.mousePosition.x - (Screen.width * 0.6f)) / Screen.width) * 0.4f) * getSensitivityMultiWithDeltaTime()) * 150f;
-                this.transform.RotateAround(this.transform.position, Vector3.up, num3);
+                if (!inputManager.menuOn)
+                {
+                    Screen.lockCursor = true;
+                }
+                var num5 = (Input.GetAxis("Mouse X") * 10f) * getSensitivityMulti();
+                var num6 = ((-Input.GetAxis("Mouse Y") * 10f) * getSensitivityMulti()) * getReverse();
+                this.transform.RotateAround(this.transform.position, Vector3.up, num5);
+                var num7 = this.transform.rotation.eulerAngles.x % 360f;
+                var num8 = num7 + num6;
+                if (((num6 <= 0f) || (((num7 >= 260f) || (num8 <= 260f)) && ((num7 >= 80f) || (num8 <= 80f)))) && ((num6 >= 0f) || (((num7 <= 280f) || (num8 >= 280f)) && ((num7 <= 100f) || (num8 >= 100f)))))
+                {
+                    this.transform.RotateAround(this.transform.position, this.transform.right, num6);
+                }
+                var transform5 = this.transform;
+                transform5.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
+                break;
             }
-            var x = ((140f * ((Screen.height * 0.6f) - Input.mousePosition.y)) / Screen.height) * 0.5f;
-            this.transform.rotation = Quaternion.Euler(x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
-            var transform4 = this.transform;
-            transform4.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
-        }
-        else if (cameraMode == CAMERA_TYPE.TPS)
-        {
-            if (!inputManager.menuOn)
-            {
-                Screen.lockCursor = true;
-            }
-            var num5 = (Input.GetAxis("Mouse X") * 10f) * getSensitivityMulti();
-            var num6 = ((-Input.GetAxis("Mouse Y") * 10f) * getSensitivityMulti()) * getReverse();
-            this.transform.RotateAround(this.transform.position, Vector3.up, num5);
-            var num7 = this.transform.rotation.eulerAngles.x % 360f;
-            var num8 = num7 + num6;
-            if (((num6 <= 0f) || (((num7 >= 260f) || (num8 <= 260f)) && ((num7 >= 80f) || (num8 <= 80f)))) && ((num6 >= 0f) || (((num7 <= 280f) || (num8 >= 280f)) && ((num7 <= 100f) || (num8 >= 100f)))))
-            {
-                this.transform.RotateAround(this.transform.position, this.transform.right, num6);
-            }
-            var transform5 = this.transform;
-            transform5.position -= ((this.transform.forward * distance) * distanceMulti) * distanceOffsetMulti;
         }
         if (cameraDistance < 0.65f)
         {
@@ -158,14 +164,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public void CameraMovementLive(HERO hero)
     {
         var magnitude = hero.rigidbody.velocity.magnitude;
-        if (magnitude > 10f)
-        {
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, Mathf.Min(100f, magnitude + 40f), 0.1f);
-        }
-        else
-        {
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 50f, 0.1f);
-        }
+        Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, magnitude > 10f ? Mathf.Min(100f, magnitude + 40f) : 50f, 0.1f);
         var num2 = (hero.CameraMultiplier * (200f - Camera.main.fieldOfView)) / 150f;
         this.transform.position = (head.transform.position + (Vector3.up * heightMulti)) - ((Vector3.up * (0.6f - cameraDistance)) * 2f);
         var transform = this.transform;
@@ -199,23 +198,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         }
     }
 
-    public void createSnapShotRT()
-    {
-        if (snapShotCamera.GetComponent<Camera>().targetTexture != null)
-        {
-            snapShotCamera.GetComponent<Camera>().targetTexture.Release();
-        }
-        if (QualitySettings.GetQualityLevel() > 3)
-        {
-            snapShotCamera.GetComponent<Camera>().targetTexture = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 0x18);
-        }
-        else
-        {
-            snapShotCamera.GetComponent<Camera>().targetTexture = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 0x18);
-        }
-    }
-
-    public void createSnapShotRT2()
+    private void CreateSnapShotRt()
     {
         if (snapshotRT != null)
         {
@@ -401,7 +384,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             gameObject.GetComponent<Camera>().aspect = Screen.width / Screen.height;
         }
-        createSnapShotRT2();
+        CreateSnapShotRt();
     }
 
     public GameObject setMainObject(GameObject obj, bool resetRotation = true, bool lockAngle = false)
@@ -616,7 +599,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
         setDayLight(dayLight);
         locker = GameObject.Find("locker");
-        createSnapShotRT2();
+        CreateSnapShotRt();
     }
 
     public void startShake(float R, float duration, float decay = 0.95f)
@@ -629,18 +612,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         }
     }
 
-    public void startSnapShot(Vector3 p, int dmg, GameObject target = null, float startTime = 0.02f)
-    {
-        snapShotCount = 1;
-        startSnapShotFrameCount = true;
-        snapShotTargetPosition = p;
-        snapShotTarget = target;
-        snapShotStartCountDownTime = startTime;
-        snapShotInterval = 0.05f + Random.Range(0f, 0.03f);
-        snapShotDmg = dmg;
-    }
-
-    public void startSnapShot2(Vector3 p, int dmg, GameObject target, float startTime)
+    public void StartSnapShot(Vector3 p, int dmg, GameObject target, float startTime)
     {
         int num;
         if (int.TryParse(Settings.SnapshotsMinDamage, out num))

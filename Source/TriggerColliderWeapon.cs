@@ -113,7 +113,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             num2 = Mathf.Max(10, num2);
                             if (Settings.Snapshots == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num2, item.transform.root.gameObject, 0.02f);
+                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().StartSnapShot(item.transform.position, num2, item.transform.root.gameObject, 0.02f);
                             }
                             item.transform.root.GetComponent<TITAN>().die();
                             napeMeat(currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity, item.transform.root);
@@ -132,7 +132,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                                 num3 = Mathf.Max(10, num3);
                                 if (Settings.Snapshots == 1)
                                 {
-                                    GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num3, item.transform.root.gameObject, 0.02f);
+                                    GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().StartSnapShot(item.transform.position, num3, item.transform.root.gameObject, 0.02f);
                                     item.transform.root.GetComponent<TITAN>().asClientLookTarget = false;
                                 }
                                 var objArray2 = new object[] { transform.root.gameObject.GetPhotonView().viewID, num3 };
@@ -173,7 +173,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             num6 = Mathf.Max(10, num6);
                             if (Settings.Snapshots == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num6, item.transform.root.gameObject, 0.02f);
+                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().StartSnapShot(item.transform.position, num6, item.transform.root.gameObject, 0.02f);
                             }
                             item.transform.root.GetComponent<TITAN>().titanGetHit(transform.root.gameObject.GetPhotonView().viewID, num6);
                         }
@@ -188,7 +188,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             num7 = Mathf.Max(10, num7);
                             if (Settings.Snapshots == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num7, null, 0.02f);
+                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().StartSnapShot(item.transform.position, num7, null, 0.02f);
                             }
                             item.transform.root.GetComponent<FEMALE_TITAN>().titanGetHit(transform.root.gameObject.GetPhotonView().viewID, num7);
                         }
@@ -203,7 +203,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             num8 = Mathf.Max(10, num8);
                             if (Settings.Snapshots == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startSnapShot2(item.transform.position, num8, null, 0.02f);
+                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().StartSnapShot(item.transform.position, num8, null, 0.02f);
                             }
                             item.transform.root.GetComponent<COLOSSAL_TITAN>().titanGetHit(transform.root.gameObject.GetPhotonView().viewID, num8);
                         }
