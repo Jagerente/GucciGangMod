@@ -53,7 +53,7 @@ public class UIButtonColor : MonoBehaviour
 
     private void OnDisable()
     {
-        if (mStarted && (tweenTarget != null))
+        if (mStarted && tweenTarget != null)
         {
             var component = tweenTarget.GetComponent<TweenColor>();
             if (component != null)
@@ -93,7 +93,7 @@ public class UIButtonColor : MonoBehaviour
             {
                 Start();
             }
-            TweenColor.Begin(tweenTarget, duration, !isPressed ? (!UICamera.IsHighlighted(gameObject) ? mColor : hover) : pressed);
+            TweenColor.Begin(tweenTarget, duration, !isPressed ? !UICamera.IsHighlighted(gameObject) ? mColor : hover : pressed);
         }
     }
 

@@ -15,7 +15,7 @@ public class RockThrow : Photon.MonoBehaviour
     private void explore()
     {
         GameObject obj2;
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
             obj2 = PhotonNetwork.Instantiate("FX/boom6", transform.position, transform.rotation, 0);
             if (transform.root.gameObject.GetComponent<EnemyfxIDcontainer>() != null)
@@ -29,7 +29,7 @@ public class RockThrow : Photon.MonoBehaviour
             obj2 = (GameObject) Instantiate(Resources.Load("FX/boom6"), transform.position, transform.rotation);
         }
         obj2.transform.localScale = transform.localScale;
-        var b = 1f - (Vector3.Distance(GameObject.Find("MainCamera").transform.position, obj2.transform.position) * 0.05f);
+        var b = 1f - Vector3.Distance(GameObject.Find("MainCamera").transform.position, obj2.transform.position) * 0.05f;
         b = Mathf.Min(1f, b);
         GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b, 0.95f);
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
@@ -44,16 +44,16 @@ public class RockThrow : Photon.MonoBehaviour
 
     private void hitPlayer(GameObject hero)
     {
-        if (((hero != null) && !hero.GetComponent<HERO>().HasDied()) && !hero.GetComponent<HERO>().isInvincible())
+        if (hero != null && !hero.GetComponent<HERO>().HasDied() && !hero.GetComponent<HERO>().isInvincible())
         {
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
                 if (!hero.GetComponent<HERO>().isGrabbed)
                 {
-                    hero.GetComponent<HERO>().die((v.normalized * 1000f) + (Vector3.up * 50f), false);
+                    hero.GetComponent<HERO>().die(v.normalized * 1000f + Vector3.up * 50f, false);
                 }
             }
-            else if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && !hero.GetComponent<HERO>().HasDied()) && !hero.GetComponent<HERO>().isGrabbed)
+            else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && !hero.GetComponent<HERO>().HasDied() && !hero.GetComponent<HERO>().isGrabbed)
             {
                 hero.GetComponent<HERO>().markDie();
                 var myOwnerViewID = -1;
@@ -64,7 +64,7 @@ public class RockThrow : Photon.MonoBehaviour
                     titanName = transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().titanName;
                 }
                 Debug.Log("rock hit player " + titanName);
-                var parameters = new object[] { (v.normalized * 1000f) + (Vector3.up * 50f), false, myOwnerViewID, titanName, true };
+                var parameters = new object[] { v.normalized * 1000f + Vector3.up * 50f, false, myOwnerViewID, titanName, true };
                 hero.GetComponent<HERO>().photonView.RPC("netDie", PhotonTargets.All, parameters);
             }
         }
@@ -85,7 +85,7 @@ public class RockThrow : Photon.MonoBehaviour
         launched = true;
         oldP = transform.position;
         v = v1;
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
             var parameters = new object[] { v, oldP };
             photonView.RPC("launchRPC", PhotonTargets.Others, parameters);
@@ -113,21 +113,21 @@ public class RockThrow : Photon.MonoBehaviour
         if (launched)
         {
             this.transform.Rotate(r);
-            v -= (20f * Vector3.up) * Time.deltaTime;
+            v -= 20f * Vector3.up * Time.deltaTime;
             var transform = this.transform;
             transform.position += v * Time.deltaTime;
-            if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER) || PhotonNetwork.isMasterClient)
+            if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || PhotonNetwork.isMasterClient)
             {
                 LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
                 LayerMask mask2 = 1 << LayerMask.NameToLayer("Players");
                 LayerMask mask3 = 1 << LayerMask.NameToLayer("EnemyAABB");
-                LayerMask mask4 = (mask2 | mask) | mask3;
+                LayerMask mask4 = mask2 | mask | mask3;
                 foreach (var hit in Physics.SphereCastAll(this.transform.position, 2.5f * this.transform.lossyScale.x, this.transform.position - oldP, Vector3.Distance(this.transform.position, oldP), mask4))
                 {
                     if (LayerMask.LayerToName(hit.collider.gameObject.layer) == "EnemyAABB")
                     {
                         var gameObject = hit.collider.gameObject.transform.root.gameObject;
-                        if ((gameObject.GetComponent<TITAN>() != null) && !gameObject.GetComponent<TITAN>().hasDie)
+                        if (gameObject.GetComponent<TITAN>() != null && !gameObject.GetComponent<TITAN>().hasDie)
                         {
                             gameObject.GetComponent<TITAN>().hitAnkle();
                             var position = this.transform.position;
@@ -137,11 +137,11 @@ public class RockThrow : Photon.MonoBehaviour
                             }
                             else
                             {
-                                if ((this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>() != null) && (PhotonView.Find(this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID) != null))
+                                if (this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>() != null && PhotonView.Find(this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID) != null)
                                 {
                                     position = PhotonView.Find(this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID).transform.position;
                                 }
-                                gameObject.GetComponent<HERO>().photonView.RPC("hitAnkleRPC", PhotonTargets.All, new object[0]);
+                                gameObject.GetComponent<HERO>().photonView.RPC("hitAnkleRPC", PhotonTargets.All);
                             }
                         }
                         explore();
@@ -156,7 +156,7 @@ public class RockThrow : Photon.MonoBehaviour
                                 hero.GetComponent<TITAN_EREN>().hitByTitan();
                             }
                         }
-                        else if ((hero.GetComponent<HERO>() != null) && !hero.GetComponent<HERO>().isInvincible())
+                        else if (hero.GetComponent<HERO>() != null && !hero.GetComponent<HERO>().isInvincible())
                         {
                             hitPlayer(hero);
                         }

@@ -18,7 +18,7 @@ public class UIButtonRotation : MonoBehaviour
 
     private void OnDisable()
     {
-        if (mStarted && (tweenTarget != null))
+        if (mStarted && tweenTarget != null)
         {
             var component = tweenTarget.GetComponent<TweenRotation>();
             if (component != null)
@@ -45,7 +45,7 @@ public class UIButtonRotation : MonoBehaviour
             {
                 Start();
             }
-            TweenRotation.Begin(tweenTarget.gameObject, duration, !isOver ? mRot : (mRot * Quaternion.Euler(hover))).method = UITweener.Method.EaseInOut;
+            TweenRotation.Begin(tweenTarget.gameObject, duration, !isOver ? mRot : mRot * Quaternion.Euler(hover)).method = UITweener.Method.EaseInOut;
             mHighlighted = isOver;
         }
     }
@@ -58,7 +58,7 @@ public class UIButtonRotation : MonoBehaviour
             {
                 Start();
             }
-            TweenRotation.Begin(tweenTarget.gameObject, duration, !isPressed ? (!UICamera.IsHighlighted(gameObject) ? mRot : (mRot * Quaternion.Euler(hover))) : (mRot * Quaternion.Euler(pressed))).method = UITweener.Method.EaseInOut;
+            TweenRotation.Begin(tweenTarget.gameObject, duration, !isPressed ? !UICamera.IsHighlighted(gameObject) ? mRot : mRot * Quaternion.Euler(hover) : mRot * Quaternion.Euler(pressed)).method = UITweener.Method.EaseInOut;
         }
     }
 

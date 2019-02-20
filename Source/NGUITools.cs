@@ -61,7 +61,7 @@ public static class NGUITools
     public static GameObject AddChild(GameObject parent, GameObject prefab)
     {
         var obj2 = UnityEngine.Object.Instantiate(prefab) as GameObject;
-        if ((obj2 != null) && (parent != null))
+        if (obj2 != null && parent != null)
         {
             var transform = obj2.transform;
             transform.parent = parent.transform;
@@ -75,9 +75,9 @@ public static class NGUITools
 
     public static UISprite AddSprite(GameObject go, UIAtlas atlas, string spriteName)
     {
-        var sprite = (atlas == null) ? null : atlas.GetSprite(spriteName);
+        var sprite = atlas == null ? null : atlas.GetSprite(spriteName);
         var sprite2 = AddWidget<UISprite>(go);
-        sprite2.type = ((sprite != null) && !(sprite.inner == sprite.outer)) ? UISprite.Type.Sliced : UISprite.Type.Simple;
+        sprite2.type = sprite != null && !(sprite.inner == sprite.outer) ? UISprite.Type.Sliced : UISprite.Type.Simple;
         sprite2.atlas = atlas;
         sprite2.spriteName = spriteName;
         return sprite2;
@@ -173,7 +173,7 @@ public static class NGUITools
             a = Mathf.Max(a, componentsInChildren[index].depth);
             index++;
         }
-        return (a + 1);
+        return a + 1;
     }
 
     private static void Deactivate(Transform t)
@@ -218,13 +218,13 @@ public static class NGUITools
 
     public static string EncodeColor(Color c)
     {
-        var num = 0xffffff & (NGUIMath.ColorToInt(c) >> 8);
+        var num = 16777215 & (NGUIMath.ColorToInt(c) >> 8);
         return NGUIMath.DecimalToHex(num);
     }
 
     public static T[] FindActive<T>() where T: Component
     {
-        return (UnityEngine.Object.FindObjectsOfType(typeof(T)) as T[]);
+        return UnityEngine.Object.FindObjectsOfType(typeof(T)) as T[];
     }
 
     public static Camera FindCameraForLayer(int layer)
@@ -254,7 +254,7 @@ public static class NGUITools
         object component = go.GetComponent<T>();
         if (component == null)
         {
-            for (var transform = go.transform.parent; (transform != null) && (component == null); transform = transform.parent)
+            for (var transform = go.transform.parent; transform != null && component == null; transform = transform.parent)
             {
                 component = transform.gameObject.GetComponent<T>();
             }
@@ -264,7 +264,7 @@ public static class NGUITools
 
     public static bool GetActive(GameObject go)
     {
-        return ((go != null) && go.activeInHierarchy);
+        return go != null && go.activeInHierarchy;
     }
 
     public static string GetHierarchy(GameObject obj)
@@ -275,7 +275,7 @@ public static class NGUITools
             obj = obj.transform.parent.gameObject;
             name = obj.name + "/" + name;
         }
-        return ("\"" + name + "\"");
+        return "\"" + name + "\"";
     }
 
     public static string GetName<T>() where T: Component
@@ -308,7 +308,7 @@ public static class NGUITools
 
     public static bool IsChild(Transform parent, Transform child)
     {
-        if ((parent != null) && (child != null))
+        if (parent != null && child != null)
         {
             while (child != null)
             {
@@ -387,7 +387,7 @@ public static class NGUITools
         }
         catch (Exception exception)
         {
-            Debug.LogError((exception == null) ? "null" : exception.Message);
+            Debug.LogError(exception == null ? "null" : exception.Message);
         }
         return www;
     }
@@ -404,20 +404,20 @@ public static class NGUITools
     public static int ParseSymbol(string text, int index, List<Color> colors, bool premultiply)
     {
         var length = text.Length;
-        if ((index + 2) < length)
+        if (index + 2 < length)
         {
             if (text[index + 1] == '-')
             {
                 if (text[index + 2] == ']')
                 {
-                    if ((colors != null) && (colors.Count > 1))
+                    if (colors != null && colors.Count > 1)
                     {
                         colors.RemoveAt(colors.Count - 1);
                     }
                     return 3;
                 }
             }
-            else if (((index + 7) < length) && (text[index + 7] == ']'))
+            else if (index + 7 < length && text[index + 7] == ']')
             {
                 if (colors != null)
                 {
@@ -428,7 +428,7 @@ public static class NGUITools
                     }
                     var color2 = colors[colors.Count - 1];
                     c.a = color2.a;
-                    if (premultiply && (c.a != 1f))
+                    if (premultiply && c.a != 1f)
                     {
                         c = Color.Lerp(mInvisible, c, c.a);
                     }
@@ -453,7 +453,7 @@ public static class NGUITools
     public static AudioSource PlaySound(AudioClip clip, float volume, float pitch)
     {
         volume *= soundVolume;
-        if ((clip != null) && (volume > 0.01f))
+        if (clip != null && volume > 0.01f)
         {
             if (mListener == null)
             {
@@ -471,7 +471,7 @@ public static class NGUITools
                     }
                 }
             }
-            if (((mListener != null) && mListener.enabled) && GetActive(mListener.gameObject))
+            if (mListener != null && mListener.enabled && GetActive(mListener.gameObject))
             {
                 var source = mListener.audio;
                 if (source == null)
@@ -603,7 +603,7 @@ public static class NGUITools
     {
         get
         {
-            return ((Application.platform != RuntimePlatform.WindowsWebPlayer) && (Application.platform != RuntimePlatform.OSXWebPlayer));
+            return Application.platform != RuntimePlatform.WindowsWebPlayer && Application.platform != RuntimePlatform.OSXWebPlayer;
         }
     }
 

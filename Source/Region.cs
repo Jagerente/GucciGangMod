@@ -17,7 +17,7 @@ public class Region
         var none = CloudRegionCode.none;
         if (Enum.IsDefined(typeof(CloudRegionCode), codeAsString))
         {
-            none = (CloudRegionCode) ((int) Enum.Parse(typeof(CloudRegionCode), codeAsString));
+            none = (CloudRegionCode) (int) Enum.Parse(typeof(CloudRegionCode), codeAsString);
         }
         return none;
     }

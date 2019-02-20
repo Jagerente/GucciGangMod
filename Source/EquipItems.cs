@@ -12,7 +12,7 @@ public class EquipItems : MonoBehaviour
 
     private void Start()
     {
-        if ((itemIDs != null) && (itemIDs.Length > 0))
+        if (itemIDs != null && itemIDs.Length > 0)
         {
             var component = GetComponent<InvEquipment>();
             if (component == null)

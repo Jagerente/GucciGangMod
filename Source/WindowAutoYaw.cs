@@ -18,7 +18,7 @@ public class WindowAutoYaw : MonoBehaviour
         if (uiCamera != null)
         {
             var vector = uiCamera.WorldToViewportPoint(mTrans.position);
-            mTrans.localRotation = Quaternion.Euler(0f, ((vector.x * 2f) - 1f) * yawAmount, 0f);
+            mTrans.localRotation = Quaternion.Euler(0f, (vector.x * 2f - 1f) * yawAmount, 0f);
         }
     }
 

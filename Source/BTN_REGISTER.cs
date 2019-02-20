@@ -30,7 +30,7 @@ public class BTN_REGISTER : MonoBehaviour
         {
             invalid = true;
         }
-        return (match.Groups[1].Value + unicode);
+        return match.Groups[1].Value + unicode;
     }
 
     public bool IsValidEmail(string strIn)

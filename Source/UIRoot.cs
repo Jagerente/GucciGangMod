@@ -12,7 +12,7 @@ public class UIRoot : MonoBehaviour
     [HideInInspector]
     public bool automatic;
     public int manualHeight = 720;
-    public int maximumHeight = 0x600;
+    public int maximumHeight = 1536;
     public int minimumHeight = 320;
     private static List<UIRoot> mRoots = new List<UIRoot>();
     private Transform mTrans;
@@ -71,15 +71,15 @@ public class UIRoot : MonoBehaviour
         height = Mathf.Max(2, height);
         if (scalingStyle == Scaling.FixedSize)
         {
-            return (manualHeight / ((float) height));
+            return manualHeight / (float) height;
         }
         if (height < minimumHeight)
         {
-            return (minimumHeight / ((float) height));
+            return minimumHeight / (float) height;
         }
         if (height > maximumHeight)
         {
-            return (maximumHeight / ((float) height));
+            return maximumHeight / (float) height;
         }
         return 1f;
     }
@@ -87,7 +87,7 @@ public class UIRoot : MonoBehaviour
     public static float GetPixelSizeAdjustment(GameObject go)
     {
         var root = NGUITools.FindInParents<UIRoot>(go);
-        return ((root == null) ? 1f : root.pixelSizeAdjustment);
+        return root == null ? 1f : root.pixelSizeAdjustment;
     }
 
     private void OnDestroy()
@@ -119,7 +119,7 @@ public class UIRoot : MonoBehaviour
             {
                 var x = 2f / activeHeight;
                 var localScale = mTrans.localScale;
-                if (((Mathf.Abs(localScale.x - x) > float.Epsilon) || (Mathf.Abs(localScale.y - x) > float.Epsilon)) || (Mathf.Abs(localScale.z - x) > float.Epsilon))
+                if (Mathf.Abs(localScale.x - x) > float.Epsilon || Mathf.Abs(localScale.y - x) > float.Epsilon || Mathf.Abs(localScale.z - x) > float.Epsilon)
                 {
                     mTrans.localScale = new Vector3(x, x, x);
                 }

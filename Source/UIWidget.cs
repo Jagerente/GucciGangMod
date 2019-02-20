@@ -49,7 +49,7 @@ public abstract class UIWidget : MonoBehaviour
 
     public void CheckLayer()
     {
-        if ((mPanel != null) && (mPanel.gameObject.layer != gameObject.layer))
+        if (mPanel != null && mPanel.gameObject.layer != gameObject.layer)
         {
             Debug.LogWarning("You can't place widgets on a layer different than the UIPanel that manages them.\nIf you want to move widgets to a different layer, parent them to a new panel instead.", this);
             gameObject.layer = mPanel.gameObject.layer;
@@ -77,7 +77,7 @@ public abstract class UIWidget : MonoBehaviour
 
     public void CreatePanel()
     {
-        if (((mPanel == null) && enabled) && (NGUITools.GetActive(gameObject) && (material != null)))
+        if (mPanel == null && enabled && NGUITools.GetActive(gameObject) && material != null)
         {
             mPanel = UIPanel.Find(cachedTransform);
             if (mPanel != null)
@@ -99,7 +99,7 @@ public abstract class UIWidget : MonoBehaviour
         localScale.z = 1f;
         var localPosition = cachedTransform.localPosition;
         localPosition.z = Mathf.RoundToInt(localPosition.z);
-        if (((num % 2) == 1) && (((pivot == Pivot.Top) || (pivot == Pivot.Center)) || (pivot == Pivot.Bottom)))
+        if (num % 2 == 1 && (pivot == Pivot.Top || pivot == Pivot.Center || pivot == Pivot.Bottom))
         {
             localPosition.x = Mathf.Floor(localPosition.x) + 0.5f;
         }
@@ -107,7 +107,7 @@ public abstract class UIWidget : MonoBehaviour
         {
             localPosition.x = Mathf.Round(localPosition.x);
         }
-        if (((num2 % 2) == 1) && (((pivot == Pivot.Left) || (pivot == Pivot.Center)) || (pivot == Pivot.Right)))
+        if (num2 % 2 == 1 && (pivot == Pivot.Left || pivot == Pivot.Center || pivot == Pivot.Right))
         {
             localPosition.y = Mathf.Ceil(localPosition.y) - 0.5f;
         }
@@ -122,7 +122,7 @@ public abstract class UIWidget : MonoBehaviour
     public virtual void MarkAsChanged()
     {
         mChanged = true;
-        if ((((mPanel != null) && enabled) && (NGUITools.GetActive(gameObject) && !Application.isPlaying)) && (material != null))
+        if (mPanel != null && enabled && NGUITools.GetActive(gameObject) && !Application.isPlaying && material != null)
         {
             mPanel.AddWidget(this);
             CheckLayer();
@@ -232,7 +232,7 @@ public abstract class UIWidget : MonoBehaviour
 
     public bool UpdateGeometry(UIPanel p, bool forceVisible)
     {
-        if ((material != null) && (p != null))
+        if (material != null && p != null)
         {
             mPanel = p;
             var flag = false;
@@ -247,30 +247,30 @@ public abstract class UIWidget : MonoBehaviour
                     var relativeSize = this.relativeSize;
                     var pivotOffset = this.pivotOffset;
                     var relativePadding = this.relativePadding;
-                    var x = (pivotOffset.x * relativeSize.x) - relativePadding.x;
-                    var y = (pivotOffset.y * relativeSize.y) + relativePadding.y;
-                    var num4 = ((x + relativeSize.x) + relativePadding.x) + relativePadding.z;
-                    var num5 = ((y - relativeSize.y) - relativePadding.y) - relativePadding.w;
+                    var x = pivotOffset.x * relativeSize.x - relativePadding.x;
+                    var y = pivotOffset.y * relativeSize.y + relativePadding.y;
+                    var num4 = x + relativeSize.x + relativePadding.x + relativePadding.z;
+                    var num5 = y - relativeSize.y - relativePadding.y - relativePadding.w;
                     mLocalToPanel = p.worldToLocal * cachedTransform.localToWorldMatrix;
                     flag = true;
                     var v = new Vector3(x, y, 0f);
                     var vector5 = new Vector3(num4, num5, 0f);
                     v = mLocalToPanel.MultiplyPoint3x4(v);
                     vector5 = mLocalToPanel.MultiplyPoint3x4(vector5);
-                    if ((Vector3.SqrMagnitude(mOldV0 - v) > 1E-06f) || (Vector3.SqrMagnitude(mOldV1 - vector5) > 1E-06f))
+                    if (Vector3.SqrMagnitude(mOldV0 - v) > 1E-06f || Vector3.SqrMagnitude(mOldV1 - vector5) > 1E-06f)
                     {
                         mChanged = true;
                         mOldV0 = v;
                         mOldV1 = vector5;
                     }
                 }
-                if (flag2 || (mForceVisible != forceVisible))
+                if (flag2 || mForceVisible != forceVisible)
                 {
                     mForceVisible = forceVisible;
                     flag3 = forceVisible || mPanel.IsVisible(this);
                 }
             }
-            else if (flag2 && (mForceVisible != forceVisible))
+            else if (flag2 && mForceVisible != forceVisible)
             {
                 mForceVisible = forceVisible;
                 flag3 = mPanel.IsVisible(this);
@@ -280,7 +280,7 @@ public abstract class UIWidget : MonoBehaviour
                 mVisibleByPanel = flag3;
                 mChanged = true;
             }
-            if (mVisibleByPanel && (mLastAlpha != finalAlpha))
+            if (mVisibleByPanel && mLastAlpha != finalAlpha)
             {
                 mChanged = true;
             }
@@ -411,7 +411,7 @@ public abstract class UIWidget : MonoBehaviour
             {
                 CreatePanel();
             }
-            return ((mPanel == null) ? mColor.a : (mColor.a * mPanel.alpha));
+            return mPanel == null ? mColor.a : mColor.a * mPanel.alpha;
         }
     }
 
@@ -419,7 +419,7 @@ public abstract class UIWidget : MonoBehaviour
     {
         get
         {
-            return (mVisibleByPanel && (finalAlpha > 0.001f));
+            return mVisibleByPanel && finalAlpha > 0.001f;
         }
     }
 
@@ -461,7 +461,7 @@ public abstract class UIWidget : MonoBehaviour
         set
         {
             var material = this.material;
-            if ((material == null) || (material.mainTexture != value))
+            if (material == null || material.mainTexture != value)
             {
                 if (mPanel != null)
                 {
@@ -492,7 +492,7 @@ public abstract class UIWidget : MonoBehaviour
         {
             if (mMat != value)
             {
-                if ((mMat != null) && (mPanel != null))
+                if (mMat != null && mPanel != null)
                 {
                     mPanel.RemoveWidget(this);
                 }
@@ -564,7 +564,7 @@ public abstract class UIWidget : MonoBehaviour
                 case Pivot.Top:
                 case Pivot.Center:
                 case Pivot.Bottom:
-                    zero.x = ((relativePadding.x - relativePadding.z) - 1f) * 0.5f;
+                    zero.x = (relativePadding.x - relativePadding.z - 1f) * 0.5f;
                     break;
 
                 case Pivot.TopRight:
@@ -582,7 +582,7 @@ public abstract class UIWidget : MonoBehaviour
                 case Pivot.Left:
                 case Pivot.Center:
                 case Pivot.Right:
-                    zero.y = ((relativePadding.w - relativePadding.y) + 1f) * 0.5f;
+                    zero.y = (relativePadding.w - relativePadding.y + 1f) * 0.5f;
                     return zero;
 
                 case Pivot.BottomLeft:

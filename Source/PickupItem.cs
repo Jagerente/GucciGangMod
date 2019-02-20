@@ -21,7 +21,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
     {
         if (PickupIsMine)
         {
-            photonView.RPC("PunRespawn", PhotonTargets.AllViaServer, new object[0]);
+            photonView.RPC("PunRespawn", PhotonTargets.AllViaServer);
         }
     }
 
@@ -36,7 +36,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.isWriting && (SecondsBeforeRespawn <= 0f))
+        if (stream.isWriting && SecondsBeforeRespawn <= 0f)
         {
             stream.SendNext(gameObject.transform.position);
         }
@@ -50,7 +50,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
     public void OnTriggerEnter(Collider other)
     {
         var component = other.GetComponent<PhotonView>();
-        if ((PickupOnTrigger && (component != null)) && component.isMine)
+        if (PickupOnTrigger && component != null && component.isMine)
         {
             Pickup();
         }
@@ -73,7 +73,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
         if (!SentPickup)
         {
             SentPickup = true;
-            photonView.RPC("PunPickup", PhotonTargets.AllViaServer, new object[0]);
+            photonView.RPC("PunPickup", PhotonTargets.AllViaServer);
         }
     }
 
@@ -86,7 +86,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
         }
         if (!gameObject.GetActive())
         {
-            Debug.Log(string.Concat(new object[] { "Ignored PU RPC, cause item is inactive. ", gameObject, " SecondsBeforeRespawn: ", SecondsBeforeRespawn, " TimeOfRespawn: ", TimeOfRespawn, " respawn in future: ", TimeOfRespawn > PhotonNetwork.time }));
+            Debug.Log(string.Concat("Ignored PU RPC, cause item is inactive. ", gameObject, " SecondsBeforeRespawn: ", SecondsBeforeRespawn, " TimeOfRespawn: ", TimeOfRespawn, " respawn in future: ", TimeOfRespawn > PhotonNetwork.time));
         }
         else
         {

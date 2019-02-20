@@ -17,7 +17,7 @@ public class UIButtonMessage : MonoBehaviour
 
     private void OnClick()
     {
-        if (enabled && (trigger == Trigger.OnClick))
+        if (enabled && trigger == Trigger.OnClick)
         {
             Send();
         }
@@ -25,7 +25,7 @@ public class UIButtonMessage : MonoBehaviour
 
     private void OnDoubleClick()
     {
-        if (enabled && (trigger == Trigger.OnDoubleClick))
+        if (enabled && trigger == Trigger.OnDoubleClick)
         {
             Send();
         }
@@ -43,7 +43,7 @@ public class UIButtonMessage : MonoBehaviour
     {
         if (enabled)
         {
-            if ((isOver && (trigger == Trigger.OnMouseOver)) || (!isOver && (trigger == Trigger.OnMouseOut)))
+            if (isOver && trigger == Trigger.OnMouseOver || !isOver && trigger == Trigger.OnMouseOut)
             {
                 Send();
             }
@@ -53,7 +53,7 @@ public class UIButtonMessage : MonoBehaviour
 
     private void OnPress(bool isPressed)
     {
-        if (enabled && ((isPressed && (trigger == Trigger.OnPress)) || (!isPressed && (trigger == Trigger.OnRelease))))
+        if (enabled && (isPressed && trigger == Trigger.OnPress || !isPressed && trigger == Trigger.OnRelease))
         {
             Send();
         }

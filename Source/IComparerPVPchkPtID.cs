@@ -12,7 +12,7 @@ public class IComparerPVPchkPtID : IComparer
     {
         float id = ((PVPcheckPoint) x).id;
         float num2 = ((PVPcheckPoint) y).id;
-        if ((id == num2) || (Math.Abs(id - num2) < float.Epsilon))
+        if (id == num2 || Math.Abs(id - num2) < float.Epsilon)
         {
             return 0;
         }

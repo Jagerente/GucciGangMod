@@ -49,7 +49,7 @@ public class UIInput : MonoBehaviour
 
                 case '\r':
                 case '\n':
-                    if (((UICamera.current.submitKey0 == KeyCode.Return) || (UICamera.current.submitKey1 == KeyCode.Return)) && (!label.multiLine || (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))))
+                    if ((UICamera.current.submitKey0 == KeyCode.Return || UICamera.current.submitKey1 == KeyCode.Return) && (!label.multiLine || !Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl)))
                     {
                         current = this;
                         if (onSubmit != null)
@@ -71,7 +71,7 @@ public class UIInput : MonoBehaviour
                     }
                     if (nextChar != '\0')
                     {
-                        if ((nextChar == '\n') || (nextChar == '\r'))
+                        if (nextChar == '\n' || nextChar == '\r')
                         {
                             if (label.multiLine)
                             {
@@ -164,7 +164,7 @@ public class UIInput : MonoBehaviour
         {
             initMain();
         }
-        if ((((selected && enabled) && NGUITools.GetActive(gameObject)) && (Application.platform != RuntimePlatform.Android)) && (Application.platform != RuntimePlatform.IPhonePlayer))
+        if (selected && enabled && NGUITools.GetActive(gameObject) && Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer)
         {
             Append(input);
         }
@@ -176,11 +176,11 @@ public class UIInput : MonoBehaviour
         {
             initMain();
         }
-        if (((label != null) && enabled) && NGUITools.GetActive(gameObject))
+        if (label != null && enabled && NGUITools.GetActive(gameObject))
         {
             if (isSelected)
             {
-                mText = (useLabelTextAtStart || !(label.text == mDefaultText)) ? label.text : string.Empty;
+                mText = useLabelTextAtStart || !(label.text == mDefaultText) ? label.text : string.Empty;
                 label.color = activeColor;
                 if (isPassword)
                 {
@@ -231,7 +231,7 @@ public class UIInput : MonoBehaviour
     {
         if (selected)
         {
-            if ((selectOnTab != null) && Input.GetKeyDown(KeyCode.Tab))
+            if (selectOnTab != null && Input.GetKeyDown(KeyCode.Tab))
             {
                 UICamera.selectedObject = selectOnTab;
             }
@@ -253,7 +253,7 @@ public class UIInput : MonoBehaviour
         {
             initMain();
         }
-        if ((maxChars > 0) && (mText.Length > maxChars))
+        if (maxChars > 0 && mText.Length > maxChars)
         {
             mText = mText.Substring(0, maxChars);
         }
@@ -274,7 +274,7 @@ public class UIInput : MonoBehaviour
             }
             else
             {
-                str = !selected ? mText : (mText + Input.compositionString + caratChar);
+                str = !selected ? mText : mText + Input.compositionString + caratChar;
             }
             label.supportEncoding = false;
             if (!label.shrinkToFit)
@@ -336,11 +336,11 @@ public class UIInput : MonoBehaviour
     {
         get
         {
-            return (UICamera.selectedObject == gameObject);
+            return UICamera.selectedObject == gameObject;
         }
         set
         {
-            if (!value && (UICamera.selectedObject == gameObject))
+            if (!value && UICamera.selectedObject == gameObject)
             {
                 UICamera.selectedObject = null;
             }
@@ -375,9 +375,9 @@ public class UIInput : MonoBehaviour
                     value = mDefaultText;
                 }
                 label.supportEncoding = false;
-                label.text = !selected ? value : (value + caratChar);
+                label.text = !selected ? value : value + caratChar;
                 label.showLastPasswordChar = selected;
-                label.color = (!selected && !(value != mDefaultText)) ? mDefaultColor : activeColor;
+                label.color = !selected && !(value != mDefaultText) ? mDefaultColor : activeColor;
             }
         }
     }

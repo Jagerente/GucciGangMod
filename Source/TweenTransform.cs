@@ -47,14 +47,14 @@ public class TweenTransform : UITweener
             }
             if (from != null)
             {
-                mTrans.position = (@from.position * (1f - factor)) + (to.position * factor);
-                mTrans.localScale = (@from.localScale * (1f - factor)) + (to.localScale * factor);
+                mTrans.position = @from.position * (1f - factor) + to.position * factor;
+                mTrans.localScale = @from.localScale * (1f - factor) + to.localScale * factor;
                 mTrans.rotation = Quaternion.Slerp(from.rotation, to.rotation, factor);
             }
             else
             {
-                mTrans.position = (mPos * (1f - factor)) + (to.position * factor);
-                mTrans.localScale = (mScale * (1f - factor)) + (to.localScale * factor);
+                mTrans.position = mPos * (1f - factor) + to.position * factor;
+                mTrans.localScale = mScale * (1f - factor) + to.localScale * factor;
                 mTrans.rotation = Quaternion.Slerp(mRot, to.rotation, factor);
             }
             if (parentWhenFinished && isFinished)

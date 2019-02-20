@@ -34,7 +34,7 @@ public class UIDragCamera : IgnoreTimeScale
 
     private void OnDrag(Vector2 delta)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (draggableCamera != null))
+        if (enabled && NGUITools.GetActive(gameObject) && draggableCamera != null)
         {
             draggableCamera.Drag(delta);
         }
@@ -42,7 +42,7 @@ public class UIDragCamera : IgnoreTimeScale
 
     private void OnPress(bool isPressed)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (draggableCamera != null))
+        if (enabled && NGUITools.GetActive(gameObject) && draggableCamera != null)
         {
             draggableCamera.Press(isPressed);
         }
@@ -50,7 +50,7 @@ public class UIDragCamera : IgnoreTimeScale
 
     private void OnScroll(float delta)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (draggableCamera != null))
+        if (enabled && NGUITools.GetActive(gameObject) && draggableCamera != null)
         {
             draggableCamera.Scroll(delta);
         }

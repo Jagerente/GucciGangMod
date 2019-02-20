@@ -14,7 +14,7 @@ public class BodyPushBox : MonoBehaviour
         if (other.gameObject.tag == "bodyCollider")
         {
             var component = other.gameObject.GetComponent<BodyPushBox>();
-            if ((component != null) && (component.parent != null))
+            if (component != null && component.parent != null)
             {
                 float num3;
                 var vector = component.parent.transform.position - parent.transform.position;
@@ -23,7 +23,7 @@ public class BodyPushBox : MonoBehaviour
                 vector.y = 0f;
                 if (vector.magnitude > 0f)
                 {
-                    num3 = (radius + num2) - vector.magnitude;
+                    num3 = radius + num2 - vector.magnitude;
                     vector.Normalize();
                 }
                 else

@@ -51,7 +51,7 @@ public class NGUIDebug : MonoBehaviour
         var count = mLines.Count;
         while (num < count)
         {
-            GUILayout.Label(mLines[num], new GUILayoutOption[0]);
+            GUILayout.Label(mLines[num]);
             num++;
         }
     }

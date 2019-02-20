@@ -17,93 +17,93 @@ public class UIInputValidator : MonoBehaviour
 
     private char Validate(string text, char ch)
     {
-        if ((logic == Validation.None) || !enabled)
+        if (logic == Validation.None || !enabled)
         {
             return ch;
         }
         if (logic == Validation.Integer)
         {
-            if ((ch >= '0') && (ch <= '9'))
+            if (ch >= '0' && ch <= '9')
             {
                 return ch;
             }
-            if ((ch == '-') && (text.Length == 0))
+            if (ch == '-' && text.Length == 0)
             {
                 return ch;
             }
         }
         else if (logic == Validation.Float)
         {
-            if ((ch >= '0') && (ch <= '9'))
+            if (ch >= '0' && ch <= '9')
             {
                 return ch;
             }
-            if ((ch == '-') && (text.Length == 0))
+            if (ch == '-' && text.Length == 0)
             {
                 return ch;
             }
-            if ((ch == '.') && !text.Contains("."))
+            if (ch == '.' && !text.Contains("."))
             {
                 return ch;
             }
         }
         else if (logic == Validation.Alphanumeric)
         {
-            if ((ch >= 'A') && (ch <= 'Z'))
+            if (ch >= 'A' && ch <= 'Z')
             {
                 return ch;
             }
-            if ((ch >= 'a') && (ch <= 'z'))
+            if (ch >= 'a' && ch <= 'z')
             {
                 return ch;
             }
-            if ((ch >= '0') && (ch <= '9'))
+            if (ch >= '0' && ch <= '9')
             {
                 return ch;
             }
         }
         else if (logic == Validation.Username)
         {
-            if ((ch >= 'A') && (ch <= 'Z'))
+            if (ch >= 'A' && ch <= 'Z')
             {
-                return (char) ((ch - 'A') + 0x61);
+                return (char) (ch - 'A' + 97);
             }
-            if ((ch >= 'a') && (ch <= 'z'))
+            if (ch >= 'a' && ch <= 'z')
             {
                 return ch;
             }
-            if ((ch >= '0') && (ch <= '9'))
+            if (ch >= '0' && ch <= '9')
             {
                 return ch;
             }
         }
         else if (logic == Validation.Name)
         {
-            var ch2 = (text.Length <= 0) ? ' ' : text[text.Length - 1];
-            if ((ch >= 'a') && (ch <= 'z'))
+            var ch2 = text.Length <= 0 ? ' ' : text[text.Length - 1];
+            if (ch >= 'a' && ch <= 'z')
             {
                 if (ch2 == ' ')
                 {
-                    return (char) ((ch - 'a') + 0x41);
+                    return (char) (ch - 'a' + 65);
                 }
                 return ch;
             }
-            if ((ch >= 'A') && (ch <= 'Z'))
+            if (ch >= 'A' && ch <= 'Z')
             {
-                if ((ch2 != ' ') && (ch2 != '\''))
+                if (ch2 != ' ' && ch2 != '\'')
                 {
-                    return (char) ((ch - 'A') + 0x61);
+                    return (char) (ch - 'A' + 97);
                 }
                 return ch;
             }
             if (ch == '\'')
             {
-                if (((ch2 != ' ') && (ch2 != '\'')) && !text.Contains("'"))
+                if (ch2 != ' ' && ch2 != '\'' && !text.Contains("'"))
                 {
                     return ch;
                 }
             }
-            else if (((ch == ' ') && (ch2 != ' ')) && (ch2 != '\''))
+            else if (ch == ' ' && ch2 != ' ' && ch2 != '\'')
             {
                 return ch;
             }

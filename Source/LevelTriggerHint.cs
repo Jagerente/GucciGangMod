@@ -31,7 +31,7 @@ public class LevelTriggerHint : MonoBehaviour
             {
                 case HintType.MOVE:
                 {
-                    var textArray2 = new string[] { "Hello soldier!\nWelcome to Attack On Titan Tribute Game!\n Press [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.up], GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.left], GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.down], GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.right], "[-] to Move." };
+                    var textArray2 = new[] { "Hello soldier!\nWelcome to Attack On Titan Tribute Game!\n Press [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.up], GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.left], GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.down], GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.right], "[-] to Move." };
                     content = string.Concat(textArray2);
                     break;
                 }
@@ -41,7 +41,7 @@ public class LevelTriggerHint : MonoBehaviour
 
                 case HintType.CAMA:
                 {
-                    var textArray3 = new string[] { "Press [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.camera], "[-] to change camera mode\nPress [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.hideCursor], "[-] to hide or show the cursor." };
+                    var textArray3 = new[] { "Press [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.camera], "[-] to change camera mode\nPress [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.hideCursor], "[-] to hide or show the cursor." };
                     content = string.Concat(textArray3);
                     break;
                 }
@@ -55,13 +55,13 @@ public class LevelTriggerHint : MonoBehaviour
 
                 case HintType.HOOK:
                 {
-                    var textArray4 = new string[] { "Press and Hold[F7D358] ", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.leftRope], "[-] or [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.rightRope], "[-] to launch your grapple.\nNow Try hooking to the [>3<] box. " };
+                    var textArray4 = new[] { "Press and Hold[F7D358] ", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.leftRope], "[-] or [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.rightRope], "[-] to launch your grapple.\nNow Try hooking to the [>3<] box. " };
                     content = string.Concat(textArray4);
                     break;
                 }
                 case HintType.HOOK2:
                 {
-                    var textArray5 = new string[] { "Press and Hold[F7D358] ", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.bothRope], "[-] to launch both of your grapples at the same Time.\n\nNow aim between the two black blocks. \nYou will see the mark '<' and '>' appearing on the blocks. \nThen press ", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.bothRope], " to hook the blocks." };
+                    var textArray5 = new[] { "Press and Hold[F7D358] ", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.bothRope], "[-] to launch both of your grapples at the same Time.\n\nNow aim between the two black blocks. \nYou will see the mark '<' and '>' appearing on the blocks. \nThen press ", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.bothRope], " to hook the blocks." };
                     content = string.Concat(textArray5);
                     break;
                 }
@@ -75,7 +75,7 @@ public class LevelTriggerHint : MonoBehaviour
 
                 case HintType.ATTACK:
                 {
-                    var textArray1 = new string[] { "Press [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.attack0], "[-] to Attack. \nPress [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.attack1], "[-] to use special attack.\n***You can only kill a titan by slashing his [FA5858]NAPE[-].***\n\n" };
+                    var textArray1 = new[] { "Press [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.attack0], "[-] to Attack. \nPress [F7D358]", GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.attack1], "[-] to use special attack.\n***You can only kill a titan by slashing his [FA5858]NAPE[-].***\n\n" };
                     content = string.Concat(textArray1);
                     break;
                 }

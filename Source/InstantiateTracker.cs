@@ -20,7 +20,7 @@ public class InstantiateTracker
         var num2 = num + PhotonNetwork.MAX_VIEW_IDS;
         foreach (var num3 in viewIDS)
         {
-            if ((num3 <= num) || (num3 >= num2))
+            if (num3 <= num || num3 >= num2)
             {
                 if (PhotonNetwork.isMasterClient)
                 {
@@ -71,7 +71,7 @@ public class InstantiateTracker
             case "fx/boom5":
             case "fx/rockthrow":
             case "fx/bite":
-                if ((LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || (RCSettings.infectionMode > 0)) || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT))
+                if (LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || RCSettings.infectionMode > 0 || IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT)
                 {
                     return Instantiated(photonPlayer, GameResource.effect);
                 }
@@ -154,7 +154,7 @@ public class InstantiateTracker
             case "fx/colossal_steam_dmg":
             case "fx/colossal_steam":
             case "fx/boom1_ct_kick":
-                if (!PhotonNetwork.isMasterClient || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT))
+                if (!PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT)
                 {
                     return Instantiated(photonPlayer, GameResource.effect);
                 }
@@ -162,7 +162,7 @@ public class InstantiateTracker
                 return false;
 
             case "rock":
-                if (!PhotonNetwork.isMasterClient || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT))
+                if (!PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT)
                 {
                     return Instantiated(photonPlayer, GameResource.general);
                 }
@@ -170,7 +170,7 @@ public class InstantiateTracker
                 return false;
 
             case "horse":
-                if (LevelInfo.getInfo(FengGameManagerMKII.level).horse || (RCSettings.horseMode != 0))
+                if (LevelInfo.getInfo(FengGameManagerMKII.level).horse || RCSettings.horseMode != 0)
                 {
                     return Instantiated(photonPlayer, GameResource.general);
                 }
@@ -184,7 +184,7 @@ public class InstantiateTracker
                 int num4;
                 if (!PhotonNetwork.isMasterClient)
                 {
-                    if (FengGameManagerMKII.masterRC && (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT))
+                    if (FengGameManagerMKII.masterRC && IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT)
                     {
                         num4 = 0;
                         foreach (TITAN titan in FengGameManagerMKII.instance.getTitans())
@@ -201,7 +201,7 @@ public class InstantiateTracker
                     }
                     break;
                 }
-                if (((LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || (RCSettings.infectionMode > 0)) || (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT)) || FengGameManagerMKII.instance.restartingTitan)
+                if (LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || RCSettings.infectionMode > 0 || IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT || FengGameManagerMKII.instance.restartingTitan)
                 {
                     if (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT)
                     {
@@ -262,7 +262,7 @@ public class InstantiateTracker
             if (players[num].IsThingExcessive(type))
             {
                 var player = owner;
-                if ((player != null) && PhotonNetwork.isMasterClient)
+                if (player != null && PhotonNetwork.isMasterClient)
                 {
                     FengGameManagerMKII.instance.kickPlayerRC(player, true, "spamming instantiate (" + type.ToString() + ").");
                 }
@@ -343,7 +343,7 @@ public class InstantiateTracker
 
         public override bool KickWorthy()
         {
-            if ((Time.time - lastShot) < 1f)
+            if (Time.time - lastShot < 1f)
             {
                 shots++;
                 if (shots > 2)
@@ -381,7 +381,7 @@ public class InstantiateTracker
             if (num <= 0.3f)
             {
                 accumTime += num;
-                return (accumTime >= 1.25f);
+                return accumTime >= 1.25f;
             }
             accumTime = 0f;
             return false;
@@ -409,7 +409,7 @@ public class InstantiateTracker
             if (num <= 0.3f)
             {
                 accumTime += num;
-                return (accumTime >= 2f);
+                return accumTime >= 2f;
             }
             accumTime = 0f;
             return false;
@@ -432,13 +432,13 @@ public class InstantiateTracker
 
         public override bool KickWorthy()
         {
-            if ((Time.time - lastClear) > 5f)
+            if (Time.time - lastClear > 5f)
             {
                 count = 0;
                 lastClear = Time.time;
             }
             count++;
-            return (count > 20);
+            return count > 20;
         }
 
         public override void reset()
@@ -458,13 +458,13 @@ public class InstantiateTracker
 
         public override bool KickWorthy()
         {
-            if ((Time.time - lastEffectTime) >= 2f)
+            if (Time.time - lastEffectTime >= 2f)
             {
                 effectCounter = 0;
                 lastEffectTime = Time.time;
             }
             effectCounter++;
-            return (effectCounter > 8);
+            return effectCounter > 8;
         }
 
         public override void reset()
@@ -484,13 +484,13 @@ public class InstantiateTracker
 
         public override bool KickWorthy()
         {
-            if ((Time.time - lastFlare) >= 10f)
+            if (Time.time - lastFlare >= 10f)
             {
                 flares = 0;
                 lastFlare = Time.time;
             }
             flares++;
-            return (flares > 4);
+            return flares > 4;
         }
 
         public override void reset()
@@ -517,7 +517,7 @@ public class InstantiateTracker
                 nameChanges = 0;
             }
             nameChanges++;
-            return (nameChanges > 5);
+            return nameChanges > 5;
         }
 
         public override void reset()
@@ -552,13 +552,13 @@ public class InstantiateTracker
 
         public override bool KickWorthy()
         {
-            if ((Time.time - lastClear) > 5f)
+            if (Time.time - lastClear > 5f)
             {
                 count = 0;
                 lastClear = Time.time;
             }
             count++;
-            return (count > 0x23);
+            return count > 35;
         }
 
         public override void reset()

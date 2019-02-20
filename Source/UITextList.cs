@@ -16,7 +16,7 @@ public class UITextList : MonoBehaviour
     protected List<Paragraph> mParagraphs = new List<Paragraph>();
     protected float mScroll;
     protected bool mSelected;
-    protected char[] mSeparator = new char[] { '\n' };
+    protected char[] mSeparator = new[] { '\n' };
     protected int mTotalLines;
     public Style style;
     public bool supportScrollWheel = true;
@@ -41,7 +41,7 @@ public class UITextList : MonoBehaviour
         }
         item.text = text;
         mParagraphs.Add(item);
-        if ((textLabel != null) && (textLabel.font != null))
+        if (textLabel != null && textLabel.font != null)
         {
             item.lines = textLabel.font.WrapText(item.text, maxWidth / textLabel.transform.localScale.y, textLabel.maxLineCount, textLabel.supportEncoding, textLabel.symbolStyle).Split(mSeparator);
             mTotalLines = 0;
@@ -93,7 +93,7 @@ public class UITextList : MonoBehaviour
     {
         if (mSelected && supportScrollWheel)
         {
-            val *= (style != Style.Chat) ? -10f : 10f;
+            val *= style != Style.Chat ? -10f : 10f;
             mScroll = Mathf.Max(0f, mScroll + val);
             UpdateVisibleText();
         }
@@ -106,19 +106,19 @@ public class UITextList : MonoBehaviour
 
     protected void UpdateVisibleText()
     {
-        if ((textLabel != null) && (textLabel.font != null))
+        if (textLabel != null && textLabel.font != null)
         {
             var num = 0;
-            var num2 = (maxHeight <= 0f) ? 0x186a0 : Mathf.FloorToInt(maxHeight / textLabel.cachedTransform.localScale.y);
+            var num2 = maxHeight <= 0f ? 100000 : Mathf.FloorToInt(maxHeight / textLabel.cachedTransform.localScale.y);
             var num3 = Mathf.RoundToInt(mScroll);
-            if ((num2 + num3) > mTotalLines)
+            if (num2 + num3 > mTotalLines)
             {
                 num3 = Mathf.Max(0, mTotalLines - num2);
                 mScroll = num3;
             }
             if (style == Style.Chat)
             {
-                num3 = Mathf.Max(0, (mTotalLines - num2) - num3);
+                num3 = Mathf.Max(0, mTotalLines - num2 - num3);
             }
             var builder = new StringBuilder();
             var num4 = 0;

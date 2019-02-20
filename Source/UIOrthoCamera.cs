@@ -22,7 +22,7 @@ public class UIOrthoCamera : MonoBehaviour
     {
         var num = mCam.rect.yMin * Screen.height;
         var num2 = mCam.rect.yMax * Screen.height;
-        var b = ((num2 - num) * 0.5f) * mTrans.lossyScale.y;
+        var b = (num2 - num) * 0.5f * mTrans.lossyScale.y;
         if (!Mathf.Approximately(mCam.orthographicSize, b))
         {
             mCam.orthographicSize = b;

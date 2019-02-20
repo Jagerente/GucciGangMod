@@ -77,8 +77,8 @@ public class UILabel : UIWidget
             localScale.y = localScale.x;
             localScale.z = 1f;
             var localPosition = cachedTransform.localPosition;
-            localPosition.x = Mathf.CeilToInt((localPosition.x / pixelSize) * 4f) >> 2;
-            localPosition.y = Mathf.CeilToInt((localPosition.y / pixelSize) * 4f) >> 2;
+            localPosition.x = Mathf.CeilToInt(localPosition.x / pixelSize * 4f) >> 2;
+            localPosition.y = Mathf.CeilToInt(localPosition.y / pixelSize * 4f) >> 2;
             localPosition.z = Mathf.RoundToInt(localPosition.z);
             localPosition.x *= pixelSize;
             localPosition.y *= pixelSize;
@@ -166,7 +166,7 @@ public class UILabel : UIWidget
             mMaxLineCount = 1;
             mMultiline = true;
         }
-        mPremultiply = ((font != null) && (font.material != null)) && font.material.shader.name.Contains("Premultiplied");
+        mPremultiply = font != null && font.material != null && font.material.shader.name.Contains("Premultiplied");
     }
 
     private void ProcessText()
@@ -218,7 +218,7 @@ public class UILabel : UIWidget
         {
             mProcessedText = mFont.WrapText(mText, mMaxLineWidth / b, !mShrinkToFit ? mMaxLineCount : 0, mEncoding, mSymbols);
         }
-        else if (!mShrinkToFit && (mMaxLineCount > 0))
+        else if (!mShrinkToFit && mMaxLineCount > 0)
         {
             mProcessedText = mFont.WrapText(mText, 100000f, mMaxLineCount, mEncoding, mSymbols);
         }
@@ -229,7 +229,7 @@ public class UILabel : UIWidget
         mSize = string.IsNullOrEmpty(mProcessedText) ? Vector2.one : mFont.CalculatePrintedSize(mProcessedText, mEncoding, mSymbols);
         if (mShrinkToFit)
         {
-            if ((mMaxLineCount > 0) && ((mSize.y * b) > num2))
+            if (mMaxLineCount > 0 && mSize.y * b > num2)
             {
                 b = Mathf.Round(b - 1f);
                 if (b > 1f)
@@ -240,13 +240,13 @@ public class UILabel : UIWidget
             if (mMaxLineWidth > 0)
             {
                 var num7 = mMaxLineWidth / b;
-                var a = ((mSize.x * b) <= num7) ? b : ((num7 / mSize.x) * b);
+                var a = mSize.x * b <= num7 ? b : num7 / mSize.x * b;
                 b = Mathf.Min(a, b);
             }
             b = Mathf.Round(b);
             cachedTransform.localScale = new Vector3(b, b, 1f);
         }
-        mSize.x = Mathf.Max(mSize.x, (b <= 0f) ? 1f : (lineWidth / b));
+        mSize.x = Mathf.Max(mSize.x, b <= 0f ? 1f : lineWidth / b);
     Label_037C:
         mSize.y = Mathf.Max(mSize.y, 1f);
     }
@@ -313,7 +313,7 @@ public class UILabel : UIWidget
             if (mFont != value)
             {
                 mFont = value;
-                material = (mFont == null) ? null : mFont.material;
+                material = mFont == null ? null : mFont.material;
                 mChanged = true;
                 hasChanged = true;
                 MarkAsChanged();
@@ -325,7 +325,7 @@ public class UILabel : UIWidget
     {
         get
         {
-            return ((((mShouldBeProcessed || (mLastText != text)) || ((mLastWidth != mMaxLineWidth) || (mLastEncoding != mEncoding))) || (((mLastCount != mMaxLineCount) || (mLastPass != mPassword)) || (mLastShow != mShowLastChar))) || (mLastEffect != mEffectStyle));
+            return mShouldBeProcessed || mLastText != text || mLastWidth != mMaxLineWidth || mLastEncoding != mEncoding || mLastCount != mMaxLineCount || mLastPass != mPassword || mLastShow != mShowLastChar || mLastEffect != mEffectStyle;
         }
         set
         {
@@ -375,7 +375,7 @@ public class UILabel : UIWidget
             var material = base.material;
             if (material == null)
             {
-                material = (mFont == null) ? null : mFont.material;
+                material = mFont == null ? null : mFont.material;
                 this.material = material;
             }
             return material;
@@ -406,11 +406,11 @@ public class UILabel : UIWidget
     {
         get
         {
-            return (mMaxLineCount != 1);
+            return mMaxLineCount != 1;
         }
         set
         {
-            if ((mMaxLineCount != 1) != value)
+            if (mMaxLineCount != 1 != value)
             {
                 mMaxLineCount = !value ? 1 : 0;
                 hasChanged = true;

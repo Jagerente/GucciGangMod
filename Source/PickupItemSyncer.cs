@@ -24,13 +24,13 @@ public class PickupItemSyncer : Photon.MonoBehaviour
             else
             {
                 var next = PhotonNetwork.masterClient.GetNext();
-                if ((next == null) || next.Equals(PhotonNetwork.player))
+                if (next == null || next.Equals(PhotonNetwork.player))
                 {
                     next = PhotonNetwork.player.GetNext();
                 }
-                if ((next != null) && !next.Equals(PhotonNetwork.player))
+                if (next != null && !next.Equals(PhotonNetwork.player))
                 {
-                    photonView.RPC("RequestForPickupTimes", next, new object[0]);
+                    photonView.RPC("RequestForPickupTimes", next);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ public class PickupItemSyncer : Photon.MonoBehaviour
 
     public void OnJoinedRoom()
     {
-        Debug.Log(string.Concat(new object[] { "Joined Room. isMasterClient: ", PhotonNetwork.isMasterClient, " id: ", PhotonNetwork.player.ID }));
+        Debug.Log(string.Concat("Joined Room. isMasterClient: ", PhotonNetwork.isMasterClient, " id: ", PhotonNetwork.player.ID));
         IsWaitingForPickupInit = !PhotonNetwork.isMasterClient;
         if (PhotonNetwork.playerList.Length >= 2)
         {
@@ -63,7 +63,7 @@ public class PickupItemSyncer : Photon.MonoBehaviour
     public void PickupItemInit(double timeBase, float[] inactivePickupsAndTimes)
     {
         IsWaitingForPickupInit = false;
-        for (var i = 0; i < (inactivePickupsAndTimes.Length / 2); i++)
+        for (var i = 0; i < inactivePickupsAndTimes.Length / 2; i++)
         {
             var index = i * 2;
             var viewID = (int) inactivePickupsAndTimes[index];
@@ -77,7 +77,7 @@ public class PickupItemSyncer : Photon.MonoBehaviour
             else
             {
                 var num5 = num4 + timeBase;
-                Debug.Log(string.Concat(new object[] { view.viewID, " respawn: ", num5, " timeUntilRespawnBasedOnTimeBase:", num4, " SecondsBeforeRespawn: ", component.SecondsBeforeRespawn }));
+                Debug.Log(string.Concat(view.viewID, " respawn: ", num5, " timeUntilRespawnBasedOnTimeBase:", num4, " SecondsBeforeRespawn: ", component.SecondsBeforeRespawn));
                 var num6 = num5 - PhotonNetwork.time;
                 if (num4 <= 0f)
                 {
@@ -127,13 +127,13 @@ public class PickupItemSyncer : Photon.MonoBehaviour
                     var num4 = item.TimeOfRespawn - PhotonNetwork.time;
                     if (item.TimeOfRespawn > num2)
                     {
-                        Debug.Log(string.Concat(new object[] { item.ViewID, " respawn: ", item.TimeOfRespawn, " timeUntilRespawn: ", num4, " (now: ", PhotonNetwork.time, ")" }));
+                        Debug.Log(string.Concat(item.ViewID, " respawn: ", item.TimeOfRespawn, " timeUntilRespawn: ", num4, " (now: ", PhotonNetwork.time, ")"));
                         list.Add(item.ViewID);
                         list.Add((float) num4);
                     }
                 }
             }
-            Debug.Log(string.Concat(new object[] { "Sent count: ", list.Count, " now: ", time }));
+            Debug.Log(string.Concat("Sent count: ", list.Count, " now: ", time));
             var parameters = new object[] { PhotonNetwork.time, list.ToArray() };
             photonView.RPC("PickupItemInit", targtePlayer, parameters);
         }

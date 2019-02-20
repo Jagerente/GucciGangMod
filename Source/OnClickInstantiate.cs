@@ -8,7 +8,7 @@ using UnityEngine;
 public class OnClickInstantiate : MonoBehaviour
 {
     public int InstantiateType;
-    private string[] InstantiateTypeNames = new string[] { "Mine", "Scene" };
+    private string[] InstantiateTypeNames = new[] { "Mine", "Scene" };
     public GameObject Prefab;
     public bool showGui;
 
@@ -34,7 +34,7 @@ public class OnClickInstantiate : MonoBehaviour
         if (showGui)
         {
             GUILayout.BeginArea(new Rect(Screen.width - 180, 0f, 180f, 50f));
-            InstantiateType = GUILayout.Toolbar(InstantiateType, InstantiateTypeNames, new GUILayoutOption[0]);
+            InstantiateType = GUILayout.Toolbar(InstantiateType, InstantiateTypeNames);
             GUILayout.EndArea();
         }
     }

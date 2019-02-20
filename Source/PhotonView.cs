@@ -38,7 +38,7 @@ public class PhotonView : Photon.MonoBehaviour
     {
         if (!failedToFindOnSerialize)
         {
-            if ((OnSerializeMethodInfo == null) && !NetworkingPeer.GetMethod(observed as MonoBehaviour, PhotonNetworkingMessage.OnPhotonSerializeView.ToString(), out OnSerializeMethodInfo))
+            if (OnSerializeMethodInfo == null && !NetworkingPeer.GetMethod(observed as MonoBehaviour, PhotonNetworkingMessage.OnPhotonSerializeView.ToString(), out OnSerializeMethodInfo))
             {
                 Debug.LogError("The observed monobehaviour (" + observed.name + ") of this PhotonView does not implement OnPhotonSerializeView()!");
                 failedToFindOnSerialize = true;
@@ -81,7 +81,7 @@ public class PhotonView : Photon.MonoBehaviour
         {
             if (instantiationId > 0)
             {
-                Debug.LogError(string.Concat(new object[] { "OnDestroy() seems to be called without PhotonNetwork.Destroy()?! GameObject: ", gameObject, " Application.isLoadingLevel: ", Application.isLoadingLevel }));
+                Debug.LogError(string.Concat("OnDestroy() seems to be called without PhotonNetwork.Destroy()?! GameObject: ", gameObject, " Application.isLoadingLevel: ", Application.isLoadingLevel));
             }
             else if (viewID <= 0)
             {
@@ -111,7 +111,7 @@ public class PhotonView : Photon.MonoBehaviour
 
     public void RPC(string methodName, PhotonTargets target, params object[] parameters)
     {
-        if (PhotonNetwork.networkingPeer.hasSwitchedMC && (target == PhotonTargets.MasterClient))
+        if (PhotonNetwork.networkingPeer.hasSwitchedMC && target == PhotonTargets.MasterClient)
         {
             PhotonNetwork.RPC(this, methodName, PhotonNetwork.masterClient, parameters);
         }
@@ -123,7 +123,7 @@ public class PhotonView : Photon.MonoBehaviour
 
     public override string ToString()
     {
-        var args = new object[] { viewID, (gameObject == null) ? "GO==null" : gameObject.name, !isSceneView ? string.Empty : "(scene)", prefix };
+        var args = new object[] { viewID, gameObject == null ? "GO==null" : gameObject.name, !isSceneView ? string.Empty : "(scene)", prefix };
         return string.Format("View ({3}){0} on {1} {2}", args);
     }
 
@@ -147,7 +147,7 @@ public class PhotonView : Photon.MonoBehaviour
     {
         get
         {
-            return ((ownerId == PhotonNetwork.player.ID) || (isSceneView && PhotonNetwork.isMasterClient));
+            return ownerId == PhotonNetwork.player.ID || isSceneView && PhotonNetwork.isMasterClient;
         }
     }
 
@@ -155,7 +155,7 @@ public class PhotonView : Photon.MonoBehaviour
     {
         get
         {
-            return (ownerId == 0);
+            return ownerId == 0;
         }
     }
 
@@ -179,7 +179,7 @@ public class PhotonView : Photon.MonoBehaviour
     {
         get
         {
-            if ((prefixBackup == -1) && (PhotonNetwork.networkingPeer != null))
+            if (prefixBackup == -1 && PhotonNetwork.networkingPeer != null)
             {
                 prefixBackup = PhotonNetwork.networkingPeer.currentLevelPrefix;
             }
@@ -195,11 +195,11 @@ public class PhotonView : Photon.MonoBehaviour
     {
         get
         {
-            return ((ownerId * PhotonNetwork.MAX_VIEW_IDS) + subId);
+            return ownerId * PhotonNetwork.MAX_VIEW_IDS + subId;
         }
         set
         {
-            var flag = didAwake && (subId == 0);
+            var flag = didAwake && subId == 0;
             ownerId = value / PhotonNetwork.MAX_VIEW_IDS;
             subId = value % PhotonNetwork.MAX_VIEW_IDS;
             if (flag)

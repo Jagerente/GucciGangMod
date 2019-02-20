@@ -34,19 +34,19 @@ public class UVAnimation
             frames = new Vector2[animation.TotalCount];
             UVDimensions = new Vector2[animation.TotalCount];
             int tileCount = animation.TileCount;
-            var num2 = ((animation.TotalCount + tileCount) - 1) / tileCount;
+            var num2 = (animation.TotalCount + tileCount - 1) / tileCount;
             var num3 = 0;
             var width = mainTex.width;
             var height = mainTex.height;
             for (var i = 0; i < num2; i++)
             {
-                for (var j = 0; (j < tileCount) && (num3 < animation.TotalCount); j++)
+                for (var j = 0; j < tileCount && num3 < animation.TotalCount; j++)
                 {
                     var zero = Vector2.zero;
-                    zero.x = animation.Frames[num3].Width / ((float) width);
-                    zero.y = animation.Frames[num3].Height / ((float) height);
-                    frames[num3].x = animation.Frames[num3].X / ((float) width);
-                    frames[num3].y = 1f - (animation.Frames[num3].Y / ((float) height));
+                    zero.x = animation.Frames[num3].Width / (float) width;
+                    zero.y = animation.Frames[num3].Height / (float) height;
+                    frames[num3].x = animation.Frames[num3].X / (float) width;
+                    frames[num3].y = 1f - animation.Frames[num3].Y / (float) height;
                     UVDimensions[num3] = zero;
                     UVDimensions[num3].y = -UVDimensions[num3].y;
                     num3++;
@@ -63,10 +63,10 @@ public class UVAnimation
         frames[0] = start;
         for (var i = 0; i < rows; i++)
         {
-            for (var j = 0; (j < cols) && (index < totalCells); j++)
+            for (var j = 0; j < cols && index < totalCells; j++)
             {
-                frames[index].x = start.x + (cellSize.x * j);
-                frames[index].y = start.y - (cellSize.y * i);
+                frames[index].x = start.x + cellSize.x * j;
+                frames[index].y = start.y - cellSize.y * i;
                 UVDimensions[index] = cellSize;
                 UVDimensions[index].y = -UVDimensions[index].y;
                 index++;
@@ -77,9 +77,9 @@ public class UVAnimation
 
     public bool GetNextFrame(ref Vector2 uv, ref Vector2 dm)
     {
-        if (((curFrame + stepDir) >= frames.Length) || ((curFrame + stepDir) < 0))
+        if (curFrame + stepDir >= frames.Length || curFrame + stepDir < 0)
         {
-            if ((stepDir > 0) && loopReverse)
+            if (stepDir > 0 && loopReverse)
             {
                 stepDir = -1;
                 curFrame += stepDir;
@@ -88,7 +88,7 @@ public class UVAnimation
             }
             else
             {
-                if (((numLoops + 1) > loopCycles) && (loopCycles != -1))
+                if (numLoops + 1 > loopCycles && loopCycles != -1)
                 {
                     return false;
                 }

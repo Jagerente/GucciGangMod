@@ -15,7 +15,7 @@ namespace GGM
             switch (str)
             {
                 case "maincamera":
-                    if (!_cache.ContainsKey(name) || (_cache[name] == null))
+                    if (!_cache.ContainsKey(name) || _cache[name] == null)
                     {
                         GameObject obj3;
                         _cache[name] = obj3 = GameObject.Find(name);
@@ -37,7 +37,7 @@ namespace GGM
                 case "cube001":
                     return GameObject.Find(name);
             }
-            if (((!_cache.ContainsKey(name) || ((obj2 = _cache[name]) == null)) || ((!obj2.activeInHierarchy && !str.StartsWith("ui")) && (!str.StartsWith("label") && !str.StartsWith("ngui")))) && ((obj2 = GameObject.Find(name)) != null))
+            if ((!_cache.ContainsKey(name) || (obj2 = _cache[name]) == null || !obj2.activeInHierarchy && !str.StartsWith("ui") && !str.StartsWith("label") && !str.StartsWith("ngui")) && (obj2 = GameObject.Find(name)) != null)
             {
                 GameObject obj4;
                 _cache[name] = obj4 = obj2;

@@ -31,11 +31,11 @@ public class ChatInput : MonoBehaviour
     private void Start()
     {
         mInput = GetComponent<UIInput>();
-        if (fillWithDummyData && (textList != null))
+        if (fillWithDummyData && textList != null)
         {
             for (var i = 0; i < 30; i++)
             {
-                textList.Add(string.Concat(new object[] { ((i % 2) != 0) ? "[AAAAAA]" : "[FFFFFF]", "This is an example paragraph for the text list, testing line ", i, "[-]" }));
+                textList.Add(string.Concat(i % 2 != 0 ? "[AAAAAA]" : "[FFFFFF]", "This is an example paragraph for the text list, testing line ", i, "[-]"));
             }
         }
     }

@@ -31,7 +31,7 @@ public class Horse : Photon.MonoBehaviour
         if (myHero != null)
         {
             State = "follow";
-            setPoint = (myHero.transform.position + (Vector3.right * Random.Range(-6, 6))) + (Vector3.forward * Random.Range(-6, 6));
+            setPoint = myHero.transform.position + Vector3.right * Random.Range(-6, 6) + Vector3.forward * Random.Range(-6, 6);
             setPoint.y = getHeight(setPoint + Vector3.up * 5f);
             awayTimer = 0f;
         }
@@ -58,7 +58,7 @@ public class Horse : Photon.MonoBehaviour
 
     private void LateUpdate()
     {
-        if ((myHero == null) && photonView.isMine)
+        if (myHero == null && photonView.isMine)
         {
             PhotonNetwork.Destroy(gameObject);
         }
@@ -74,13 +74,13 @@ public class Horse : Photon.MonoBehaviour
             myHero.rigidbody.velocity = rigidbody.velocity;
             if (controller.targetDirection != -874f)
             {
-                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, controller.targetDirection, 0f), (100f * Time.deltaTime) / (rigidbody.velocity.magnitude + 20f));
+                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, controller.targetDirection, 0f), 100f * Time.deltaTime / (rigidbody.velocity.magnitude + 20f));
                 if (controller.isWALKDown)
                 {
-                    rigidbody.AddForce((transform.forward * speed) * 0.6f, ForceMode.Acceleration);
-                    if (rigidbody.velocity.magnitude >= (speed * 0.6f))
+                    rigidbody.AddForce(transform.forward * speed * 0.6f, ForceMode.Acceleration);
+                    if (rigidbody.velocity.magnitude >= speed * 0.6f)
                     {
-                        rigidbody.AddForce((-speed * 0.6f) * rigidbody.velocity.normalized, ForceMode.Acceleration);
+                        rigidbody.AddForce(-speed * 0.6f * rigidbody.velocity.normalized, ForceMode.Acceleration);
                     }
                 }
                 else
@@ -180,13 +180,13 @@ public class Horse : Photon.MonoBehaviour
                 }
             }
             var num = -Mathf.DeltaAngle(FengMath.getHorizontalAngle(transform.position, setPoint), gameObject.transform.rotation.eulerAngles.y - 90f);
-            gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, gameObject.transform.rotation.eulerAngles.y + num, 0f), (200f * Time.deltaTime) / (rigidbody.velocity.magnitude + 20f));
+            gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, gameObject.transform.rotation.eulerAngles.y + num, 0f), 200f * Time.deltaTime / (rigidbody.velocity.magnitude + 20f));
             if (Vector3.Distance(setPoint, transform.position) < 20f)
             {
-                rigidbody.AddForce((transform.forward * speed) * 0.7f, ForceMode.Acceleration);
+                rigidbody.AddForce(transform.forward * speed * 0.7f, ForceMode.Acceleration);
                 if (rigidbody.velocity.magnitude >= speed)
                 {
-                    rigidbody.AddForce((-speed * 0.7f) * rigidbody.velocity.normalized, ForceMode.Acceleration);
+                    rigidbody.AddForce(-speed * 0.7f * rigidbody.velocity.normalized, ForceMode.Acceleration);
                 }
             }
             else
@@ -228,7 +228,7 @@ public class Horse : Photon.MonoBehaviour
         else if (State == "idle")
         {
             toIdleAnimation();
-            if ((myHero != null) && (Vector3.Distance(myHero.transform.position, transform.position) > 20f))
+            if (myHero != null && Vector3.Distance(myHero.transform.position, transform.position) > 20f)
             {
                 followed();
             }
@@ -329,25 +329,25 @@ public class Horse : Photon.MonoBehaviour
         }
         else
         {
-            if (animation.IsPlaying("horse_idle1") && (animation["horse_idle1"].normalizedTime >= 1f))
+            if (animation.IsPlaying("horse_idle1") && animation["horse_idle1"].normalizedTime >= 1f)
             {
                 crossFade("horse_idle0", 0.1f);
             }
-            if (animation.IsPlaying("horse_idle2") && (animation["horse_idle2"].normalizedTime >= 1f))
+            if (animation.IsPlaying("horse_idle2") && animation["horse_idle2"].normalizedTime >= 1f)
             {
                 crossFade("horse_idle0", 0.1f);
             }
-            if (animation.IsPlaying("horse_idle3") && (animation["horse_idle3"].normalizedTime >= 1f))
+            if (animation.IsPlaying("horse_idle3") && animation["horse_idle3"].normalizedTime >= 1f)
             {
                 crossFade("horse_idle0", 0.1f);
             }
-            if ((!animation.IsPlaying("horse_idle0") && !animation.IsPlaying("horse_idle1")) && (!animation.IsPlaying("horse_idle2") && !animation.IsPlaying("horse_idle3")))
+            if (!animation.IsPlaying("horse_idle0") && !animation.IsPlaying("horse_idle1") && !animation.IsPlaying("horse_idle2") && !animation.IsPlaying("horse_idle3"))
             {
                 crossFade("horse_idle0", 0.1f);
             }
             if (animation.IsPlaying("horse_idle0"))
             {
-                var num = Random.Range(0, 0x2710);
+                var num = Random.Range(0, 10000);
                 if (num < 10)
                 {
                     crossFade("horse_idle1", 0.1f);

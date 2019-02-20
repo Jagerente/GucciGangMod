@@ -20,7 +20,7 @@ public class LagPosition : MonoBehaviour
         var parent = mTrans.parent;
         if (parent != null)
         {
-            var vector = parent.position + (parent.rotation * mRelative);
+            var vector = parent.position + parent.rotation * mRelative;
             mAbsolute.x = Mathf.Lerp(mAbsolute.x, vector.x, Mathf.Clamp01(delta * speed.x));
             mAbsolute.y = Mathf.Lerp(mAbsolute.y, vector.y, Mathf.Clamp01(delta * speed.y));
             mAbsolute.z = Mathf.Lerp(mAbsolute.z, vector.z, Mathf.Clamp01(delta * speed.z));

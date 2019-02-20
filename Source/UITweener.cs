@@ -26,7 +26,7 @@ public abstract class UITweener : IgnoreTimeScale
 
     protected UITweener()
     {
-        var keys = new Keyframe[] { new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f) };
+        var keys = new[] { new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f) };
         animationCurve = new AnimationCurve(keys);
         ignoreTimeScale = true;
         duration = 1f;
@@ -45,7 +45,7 @@ public abstract class UITweener : IgnoreTimeScale
         component.mFactor = 0f;
         component.mAmountPerDelta = Mathf.Abs(component.mAmountPerDelta);
         component.style = Style.Once;
-        var keys = new Keyframe[] { new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f) };
+        var keys = new[] { new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f) };
         component.animationCurve = new AnimationCurve(keys);
         component.eventReceiver = null;
         component.callWhenFinished = null;
@@ -58,20 +58,20 @@ public abstract class UITweener : IgnoreTimeScale
     {
         if (val < 0.363636f)
         {
-            val = (7.5685f * val) * val;
+            val = 7.5685f * val * val;
             return val;
         }
         if (val < 0.727272f)
         {
-            val = ((7.5625f * (val -= 0.545454f)) * val) + 0.75f;
+            val = 7.5625f * (val -= 0.545454f) * val + 0.75f;
             return val;
         }
         if (val < 0.90909f)
         {
-            val = ((7.5625f * (val -= 0.818181f)) * val) + 0.9375f;
+            val = 7.5625f * (val -= 0.818181f) * val + 0.9375f;
             return val;
         }
-        val = ((7.5625f * (val -= 0.9545454f)) * val) + 0.984375f;
+        val = 7.5625f * (val -= 0.9545454f) * val + 0.984375f;
         return val;
     }
 
@@ -94,7 +94,7 @@ public abstract class UITweener : IgnoreTimeScale
     public void Reset()
     {
         mStarted = false;
-        mFactor = (mAmountPerDelta >= 0f) ? 0f : 1f;
+        mFactor = mAmountPerDelta >= 0f ? 0f : 1f;
         Sample(mFactor, false);
     }
 
@@ -115,7 +115,7 @@ public abstract class UITweener : IgnoreTimeScale
             if (steeperCurves)
             {
                 f = 1f - f;
-                f = 1f - (f * f);
+                f = 1f - f * f;
             }
         }
         else if (method == Method.EaseInOut)
@@ -123,11 +123,11 @@ public abstract class UITweener : IgnoreTimeScale
             f -= Mathf.Sin(f * 6.283185f) / 6.283185f;
             if (steeperCurves)
             {
-                f = (f * 2f) - 1f;
+                f = f * 2f - 1f;
                 var num2 = Mathf.Sign(f);
                 f = 1f - Mathf.Abs(f);
-                f = 1f - (f * f);
-                f = ((num2 * f) * 0.5f) + 0.5f;
+                f = 1f - f * f;
+                f = num2 * f * 0.5f + 0.5f;
             }
         }
         else if (method == Method.BounceIn)
@@ -138,7 +138,7 @@ public abstract class UITweener : IgnoreTimeScale
         {
             f = 1f - BounceLogic(1f - f);
         }
-        OnUpdate((animationCurve == null) ? f : animationCurve.Evaluate(f), isFinished);
+        OnUpdate(animationCurve == null ? f : animationCurve.Evaluate(f), isFinished);
     }
 
     private void Start()
@@ -192,7 +192,7 @@ public abstract class UITweener : IgnoreTimeScale
                     mAmountPerDelta = -mAmountPerDelta;
                 }
             }
-            if ((style == Style.Once) && ((mFactor > 1f) || (mFactor < 0f)))
+            if (style == Style.Once && (mFactor > 1f || mFactor < 0f))
             {
                 mFactor = Mathf.Clamp01(mFactor);
                 Sample(mFactor, true);
@@ -200,11 +200,11 @@ public abstract class UITweener : IgnoreTimeScale
                 {
                     onFinished(this);
                 }
-                if ((eventReceiver != null) && !string.IsNullOrEmpty(callWhenFinished))
+                if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                 {
                     eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
                 }
-                if (((mFactor == 1f) && (mAmountPerDelta > 0f)) || ((mFactor == 0f) && (mAmountPerDelta < 0f)))
+                if (mFactor == 1f && mAmountPerDelta > 0f || mFactor == 0f && mAmountPerDelta < 0f)
                 {
                     enabled = false;
                 }
@@ -223,7 +223,7 @@ public abstract class UITweener : IgnoreTimeScale
             if (mDuration != duration)
             {
                 mDuration = duration;
-                mAmountPerDelta = Mathf.Abs((duration <= 0f) ? 1000f : (1f / duration));
+                mAmountPerDelta = Mathf.Abs(duration <= 0f ? 1000f : 1f / duration);
             }
             return mAmountPerDelta;
         }
@@ -233,7 +233,7 @@ public abstract class UITweener : IgnoreTimeScale
     {
         get
         {
-            return ((mAmountPerDelta >= 0f) ? AnimationOrTween.Direction.Forward : AnimationOrTween.Direction.Reverse);
+            return mAmountPerDelta >= 0f ? AnimationOrTween.Direction.Forward : AnimationOrTween.Direction.Reverse;
         }
     }
 

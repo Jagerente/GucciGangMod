@@ -8,7 +8,7 @@ using UnityEngine;
 [AddComponentMenu("NGUI/Examples/Slider Colors"), RequireComponent(typeof(UISlider)), ExecuteInEditMode]
 public class UISliderColors : MonoBehaviour
 {
-    public Color[] colors = new Color[] { Color.red, Color.yellow, Color.green };
+    public Color[] colors = new[] { Color.red, Color.yellow, Color.green };
     private UISlider mSlider;
     public UISprite sprite;
 
@@ -20,14 +20,14 @@ public class UISliderColors : MonoBehaviour
 
     private void Update()
     {
-        if ((sprite != null) && (colors.Length != 0))
+        if (sprite != null && colors.Length != 0)
         {
             var f = mSlider.sliderValue * (colors.Length - 1);
             var index = Mathf.FloorToInt(f);
             var color = colors[0];
             if (index >= 0)
             {
-                if ((index + 1) < colors.Length)
+                if (index + 1 < colors.Length)
                 {
                     var t = f - index;
                     color = Color.Lerp(colors[index], colors[index + 1], t);

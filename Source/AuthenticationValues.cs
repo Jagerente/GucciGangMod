@@ -28,7 +28,7 @@ public class AuthenticationValues
 
     public override string ToString()
     {
-        return (AuthParameters + " s: " + Secret);
+        return AuthParameters + " s: " + Secret;
     }
 
     public object AuthPostData { get; private set; }

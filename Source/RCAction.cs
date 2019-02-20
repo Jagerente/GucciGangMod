@@ -58,7 +58,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.intVariables[key] = ((int) FengGameManagerMKII.intVariables[key]) + num2;
+                            FengGameManagerMKII.intVariables[key] = (int) FengGameManagerMKII.intVariables[key] + num2;
                         }
                         return;
 
@@ -69,7 +69,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.intVariables[key] = ((int) FengGameManagerMKII.intVariables[key]) - num2;
+                            FengGameManagerMKII.intVariables[key] = (int) FengGameManagerMKII.intVariables[key] - num2;
                         }
                         return;
 
@@ -80,7 +80,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.intVariables[key] = ((int) FengGameManagerMKII.intVariables[key]) * num2;
+                            FengGameManagerMKII.intVariables[key] = (int) FengGameManagerMKII.intVariables[key] * num2;
                         }
                         return;
 
@@ -91,7 +91,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.intVariables[key] = ((int) FengGameManagerMKII.intVariables[key]) / num2;
+                            FengGameManagerMKII.intVariables[key] = (int) FengGameManagerMKII.intVariables[key] / num2;
                         }
                         return;
 
@@ -102,7 +102,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.intVariables[key] = ((int) FengGameManagerMKII.intVariables[key]) % num2;
+                            FengGameManagerMKII.intVariables[key] = (int) FengGameManagerMKII.intVariables[key] % num2;
                         }
                         return;
 
@@ -143,7 +143,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.boolVariables[str2] = !((bool) FengGameManagerMKII.boolVariables[str2]);
+                            FengGameManagerMKII.boolVariables[str2] = !(bool) FengGameManagerMKII.boolVariables[str2];
                         }
                         return;
 
@@ -202,7 +202,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.stringVariables[str3] = ((string) FengGameManagerMKII.stringVariables[str3]) + str6;
+                            FengGameManagerMKII.stringVariables[str3] = (string) FengGameManagerMKII.stringVariables[str3] + str6;
                         }
                         return;
                     }
@@ -259,7 +259,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.floatVariables[str9] = ((float) FengGameManagerMKII.floatVariables[str9]) + num4;
+                            FengGameManagerMKII.floatVariables[str9] = (float) FengGameManagerMKII.floatVariables[str9] + num4;
                         }
                         return;
 
@@ -270,7 +270,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.floatVariables[str9] = ((float) FengGameManagerMKII.floatVariables[str9]) - num4;
+                            FengGameManagerMKII.floatVariables[str9] = (float) FengGameManagerMKII.floatVariables[str9] - num4;
                         }
                         return;
 
@@ -281,7 +281,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.floatVariables[str9] = ((float) FengGameManagerMKII.floatVariables[str9]) * num4;
+                            FengGameManagerMKII.floatVariables[str9] = (float) FengGameManagerMKII.floatVariables[str9] * num4;
                         }
                         return;
 
@@ -292,7 +292,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.floatVariables[str9] = ((float) FengGameManagerMKII.floatVariables[str9]) / num4;
+                            FengGameManagerMKII.floatVariables[str9] = (float) FengGameManagerMKII.floatVariables[str9] / num4;
                         }
                         return;
 
@@ -303,7 +303,7 @@ public class RCAction
                         }
                         else
                         {
-                            FengGameManagerMKII.floatVariables[str9] = ((float) FengGameManagerMKII.floatVariables[str9]) % num4;
+                            FengGameManagerMKII.floatVariables[str9] = (float) FengGameManagerMKII.floatVariables[str9] % num4;
                         }
                         return;
 
@@ -379,7 +379,7 @@ public class RCAction
                         {
                             var hero = (HERO) FengGameManagerMKII.heroHash[iD];
                             hero.markDie();
-                            hero.photonView.RPC("netDie2", PhotonTargets.All, new object[] { -1, parameters[1].returnString(null) + " " });
+                            hero.photonView.RPC("netDie2", PhotonTargets.All, -1, parameters[1].returnString(null) + " ");
                         }
                         else
                         {
@@ -388,11 +388,11 @@ public class RCAction
                         return;
                     }
                     case 1:
-                        FengGameManagerMKII.instance.photonView.RPC("respawnHeroInNewRound", targetPlayer, new object[0]);
+                        FengGameManagerMKII.instance.photonView.RPC("respawnHeroInNewRound", targetPlayer);
                         return;
 
                     case 2:
-                        FengGameManagerMKII.instance.photonView.RPC("spawnPlayerAtRPC", targetPlayer, new object[] { parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null) });
+                        FengGameManagerMKII.instance.photonView.RPC("spawnPlayerAtRPC", targetPlayer, parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null));
                         return;
 
                     case 3:
@@ -401,7 +401,7 @@ public class RCAction
                         if (FengGameManagerMKII.heroHash.ContainsKey(num6))
                         {
                             var hero2 = (HERO) FengGameManagerMKII.heroHash[num6];
-                            hero2.photonView.RPC("moveToRPC", targetPlayer, new object[] { parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null) });
+                            hero2.photonView.RPC("moveToRPC", targetPlayer, parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null));
                         }
                         else
                         {
@@ -516,7 +516,7 @@ public class RCAction
                         {
                             titan3.maxHealth = titan3.currentHealth;
                         }
-                        titan3.photonView.RPC("labelRPC", PhotonTargets.AllBuffered, new object[] { titan3.currentHealth, titan3.maxHealth });
+                        titan3.photonView.RPC("labelRPC", PhotonTargets.AllBuffered, titan3.currentHealth, titan3.maxHealth);
                         return;
                     }
                     case 4:
@@ -528,7 +528,7 @@ public class RCAction
                         }
                         else
                         {
-                            titan4.photonView.RPC("moveToRPC", titan4.photonView.owner, new object[] { parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null) });
+                            titan4.photonView.RPC("moveToRPC", titan4.photonView.owner, parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null));
                         }
                         return;
                     }
@@ -539,7 +539,7 @@ public class RCAction
                 switch (actionType)
                 {
                     case 0:
-                        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, new object[] { this.parameters[0].returnString(null), string.Empty });
+                        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, this.parameters[0].returnString(null), string.Empty);
                         return;
 
                     case 1:

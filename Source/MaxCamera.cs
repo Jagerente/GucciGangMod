@@ -47,7 +47,7 @@ public class MaxCamera : MonoBehaviour
         if (target == null)
         {
             var obj2 = new GameObject("Cam Target") {
-                transform = { position = transform.position + (transform.forward * distance) }
+                transform = { position = transform.position + transform.forward * distance }
             };
             target = obj2.transform;
         }
@@ -64,24 +64,24 @@ public class MaxCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        if ((Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt)) && Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.LeftControl))
         {
-            desiredDistance -= (((Input.GetAxis("Mouse Y") * Time.deltaTime) * zoomRate) * 0.125f) * Mathf.Abs(desiredDistance);
+            desiredDistance -= Input.GetAxis("Mouse Y") * Time.deltaTime * zoomRate * 0.125f * Mathf.Abs(desiredDistance);
         }
         else if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftAlt))
         {
-            xDeg += (Input.GetAxis("Mouse X") * xSpeed) * 0.02f;
-            yDeg -= (Input.GetAxis("Mouse Y") * ySpeed) * 0.02f;
+            xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+            yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
             yDeg = ClampAngle(yDeg, yMinLimit, yMaxLimit);
             desiredRotation = Quaternion.Euler(yDeg, xDeg, 0f);
             currentRotation = transform.rotation;
             rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime * zoomDampening);
             transform.rotation = rotation;
         }
-        desiredDistance -= ((Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime) * zoomRate) * Mathf.Abs(desiredDistance);
+        desiredDistance -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * zoomRate * Mathf.Abs(desiredDistance);
         desiredDistance = Mathf.Clamp(desiredDistance, minDistance, maxDistance);
         currentDistance = Mathf.Lerp(currentDistance, desiredDistance, Time.deltaTime * zoomDampening);
-        position = target.position - ((rotation * Vector3.forward) * currentDistance + targetOffset);
+        position = target.position - (rotation * Vector3.forward * currentDistance + targetOffset);
         transform.position = position;
     }
 

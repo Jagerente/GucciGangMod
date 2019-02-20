@@ -54,7 +54,7 @@ public class UIGeometry
 
     public void WriteToBuffers(BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color32> c, BetterList<Vector3> n, BetterList<Vector4> t)
     {
-        if ((mRtpVerts != null) && (mRtpVerts.size > 0))
+        if (mRtpVerts != null && mRtpVerts.size > 0)
         {
             if (n == null)
             {
@@ -83,7 +83,7 @@ public class UIGeometry
     {
         get
         {
-            return (((mRtpVerts != null) && (mRtpVerts.size > 0)) && (mRtpVerts.size == verts.size));
+            return mRtpVerts != null && mRtpVerts.size > 0 && mRtpVerts.size == verts.size;
         }
     }
 
@@ -91,7 +91,7 @@ public class UIGeometry
     {
         get
         {
-            return (verts.size > 0);
+            return verts.size > 0;
         }
     }
 }

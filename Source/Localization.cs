@@ -22,7 +22,7 @@ public class Localization : MonoBehaviour
             mInstance = this;
             DontDestroyOnLoad(gameObject);
             currentLanguage = PlayerPrefs.GetString("Language", startingLanguage);
-            if ((string.IsNullOrEmpty(mLanguage) && (languages != null)) && (languages.Length > 0))
+            if (string.IsNullOrEmpty(mLanguage) && languages != null && languages.Length > 0)
             {
                 currentLanguage = languages[0].name;
             }
@@ -36,7 +36,7 @@ public class Localization : MonoBehaviour
     public string Get(string key)
     {
         string str;
-        return (!mDictionary.TryGetValue(key, out str) ? key : str);
+        return !mDictionary.TryGetValue(key, out str) ? key : str;
     }
 
     private void Load(TextAsset asset)
@@ -49,7 +49,7 @@ public class Localization : MonoBehaviour
 
     public static string Localize(string key)
     {
-        return ((instance == null) ? key : instance.Get(key));
+        return instance == null ? key : instance.Get(key);
     }
 
     private void OnDestroy()
@@ -88,7 +88,7 @@ public class Localization : MonoBehaviour
                         while (index < length)
                         {
                             var asset = languages[index];
-                            if ((asset != null) && (asset.name == value))
+                            if (asset != null && asset.name == value)
                             {
                                 Load(asset);
                                 return;
@@ -131,7 +131,7 @@ public class Localization : MonoBehaviour
     {
         get
         {
-            return (mInstance != null);
+            return mInstance != null;
         }
     }
 }

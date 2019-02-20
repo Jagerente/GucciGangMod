@@ -71,7 +71,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     public static GameObject minusDistanceEnemy;
     public float myDistance;
     public GameObject myHero;
-    public int NapeArmor = 0x3e8;
+    public int NapeArmor = 1000;
     private bool needFreshCorePosition;
     private string nextAttackAnimation;
     private Vector3 oldCorePosition;
@@ -115,7 +115,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             int num;
             if (fswitchSmap2 == null)
             {
-                var dictionary = new Dictionary<string, int>(0x11);
+                var dictionary = new Dictionary<string, int>(17);
                 dictionary.Add("combo_1", 0);
                 dictionary.Add("combo_2", 1);
                 dictionary.Add("combo_3", 2);
@@ -132,7 +132,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 dictionary.Add("sweep_front_left", 13);
                 dictionary.Add("sweep_front_right", 14);
                 dictionary.Add("sweep_head_b_l", 15);
-                dictionary.Add("sweep_head_b_r", 0x10);
+                dictionary.Add("sweep_head_b_r", 16);
                 fswitchSmap2 = dictionary;
             }
             if (fswitchSmap2.TryGetValue(key, out num))
@@ -280,7 +280,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         checkHitCapsuleR = 4f;
                         break;
 
-                    case 0x10:
+                    case 16:
                         isAttackMoveByCore = true;
                         attackCheckTimeA = 0.4f;
                         attackCheckTimeB = 0.51f;
@@ -303,7 +303,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         var vector = target.transform.position - transform.position;
         current = -Mathf.Atan2(vector.z, vector.x) * 57.29578f;
         f = -Mathf.DeltaAngle(current, gameObject.transform.rotation.eulerAngles.y - 90f);
-        if ((eren != null) && (myDistance < 35f))
+        if (eren != null && myDistance < 35f)
         {
             attack("combo_1");
             return true;
@@ -335,31 +335,31 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             var num4 = target.transform.position.y - transform.position.y;
             if (Mathf.Abs(f) < 90f)
             {
-                if (((num4 > 0f) && (num4 < 12f)) && (myDistance < 22f))
+                if (num4 > 0f && num4 < 12f && myDistance < 22f)
                 {
                     list.Add("attack_sweep");
                 }
-                if ((num4 >= 55f) && (num4 < 90f))
+                if (num4 >= 55f && num4 < 90f)
                 {
                     list.Add("attack_jumpCombo_1");
                 }
             }
-            if (((Mathf.Abs(f) < 90f) && (num4 > 12f)) && (num4 < 40f))
+            if (Mathf.Abs(f) < 90f && num4 > 12f && num4 < 40f)
             {
                 list.Add("attack_combo_1");
             }
             if (Mathf.Abs(f) < 30f)
             {
-                if (((num4 > 0f) && (num4 < 12f)) && ((myDistance > 20f) && (myDistance < 30f)))
+                if (num4 > 0f && num4 < 12f && myDistance > 20f && myDistance < 30f)
                 {
                     list.Add("attack_front");
                 }
-                if (((myDistance < 12f) && (num4 > 33f)) && (num4 < 51f))
+                if (myDistance < 12f && num4 > 33f && num4 < 51f)
                 {
                     list.Add("grab_up");
                 }
             }
-            if (((Mathf.Abs(f) > 100f) && (myDistance < 11f)) && ((num4 >= 15f) && (num4 < 32f)))
+            if (Mathf.Abs(f) > 100f && myDistance < 11f && num4 >= 15f && num4 < 32f)
             {
                 list.Add("attack_sweep_back");
             }
@@ -371,22 +371,22 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     {
                         if (myDistance < 20f)
                         {
-                            if ((num4 >= 12f) && (num4 < 21f))
+                            if (num4 >= 12f && num4 < 21f)
                             {
                                 list.Add("grab_bottom_right");
                             }
-                            else if ((num4 >= 21f) && (num4 < 32f))
+                            else if (num4 >= 21f && num4 < 32f)
                             {
                                 list.Add("grab_mid_right");
                             }
-                            else if ((num4 >= 32f) && (num4 < 47f))
+                            else if (num4 >= 32f && num4 < 47f)
                             {
                                 list.Add("grab_up_right");
                             }
                         }
                         break;
                     }
-                    if ((num4 >= 21f) && (num4 < 32f))
+                    if (num4 >= 21f && num4 < 32f)
                     {
                         list.Add("attack_sweep_front_right");
                     }
@@ -397,22 +397,22 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     {
                         if (myDistance < 20f)
                         {
-                            if ((num4 >= 12f) && (num4 < 21f))
+                            if (num4 >= 12f && num4 < 21f)
                             {
                                 list.Add("grab_bottom_left");
                             }
-                            else if ((num4 >= 21f) && (num4 < 32f))
+                            else if (num4 >= 21f && num4 < 32f)
                             {
                                 list.Add("grab_mid_left");
                             }
-                            else if ((num4 >= 32f) && (num4 < 47f))
+                            else if (num4 >= 32f && num4 < 47f)
                             {
                                 list.Add("grab_up_left");
                             }
                         }
                         break;
                     }
-                    if ((num4 >= 21f) && (num4 < 32f))
+                    if (num4 >= 21f && num4 < 32f)
                     {
                         list.Add("attack_sweep_front_left");
                     }
@@ -424,7 +424,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         list.Add("turn180");
                         break;
                     }
-                    if ((num4 >= 33f) && (num4 < 51f))
+                    if (num4 >= 33f && num4 < 51f)
                     {
                         list.Add("attack_sweep_head_b_l");
                     }
@@ -436,7 +436,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         list.Add("turn180");
                         break;
                     }
-                    if ((num4 >= 33f) && (num4 < 51f))
+                    if (num4 >= 33f && num4 < 51f)
                     {
                         list.Add("attack_sweep_head_b_r");
                     }
@@ -459,7 +459,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         {
             if (fswitchSmap1 == null)
             {
-                var dictionary = new Dictionary<string, int>(0x11);
+                var dictionary = new Dictionary<string, int>(17);
                 dictionary.Add("grab_bottom_left", 0);
                 dictionary.Add("grab_bottom_right", 1);
                 dictionary.Add("grab_mid_left", 2);
@@ -476,7 +476,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 dictionary.Add("attack_sweep_front_right", 13);
                 dictionary.Add("attack_sweep_head_b_l", 14);
                 dictionary.Add("attack_sweep_head_b_r", 15);
-                dictionary.Add("turn180", 0x10);
+                dictionary.Add("turn180", 16);
                 fswitchSmap1 = dictionary;
             }
             if (fswitchSmap1.TryGetValue(key, out num5))
@@ -547,7 +547,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         attack("sweep_head_b_r");
                         return true;
 
-                    case 0x10:
+                    case 16:
                         turn180();
                         return true;
                 }
@@ -595,7 +595,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     }
                     return gameObject;
                 }
-                if ((gameObject.GetComponent<HERO>() != null) && !gameObject.GetComponent<HERO>().isInvincible())
+                if (gameObject.GetComponent<HERO>() != null && !gameObject.GetComponent<HERO>().isInvincible())
                 {
                     return gameObject;
                 }
@@ -609,10 +609,10 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         var num = rad * 4f;
         foreach (var obj2 in GameObject.FindGameObjectsWithTag("Player"))
         {
-            if ((obj2.GetComponent<TITAN_EREN>() == null) && !obj2.GetComponent<HERO>().isInvincible())
+            if (obj2.GetComponent<TITAN_EREN>() == null && !obj2.GetComponent<HERO>().isInvincible())
             {
                 var num3 = obj2.GetComponent<CapsuleCollider>().height * 0.5f;
-                if (Vector3.Distance(obj2.transform.position + Vector3.up * num3, head.transform.position + (Vector3.up * 1.5f) * 4f) < (num + num3))
+                if (Vector3.Distance(obj2.transform.position + Vector3.up * num3, head.transform.position + Vector3.up * 1.5f * 4f) < num + num3)
                 {
                     return obj2;
                 }
@@ -624,7 +624,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     private void crossFade(string aniName, float time)
     {
         animation.CrossFade(aniName, time);
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
             var parameters = new object[] { aniName, time };
             photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
@@ -636,13 +636,13 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         if (!grabTarget.GetComponent<HERO>().isGrabbed)
         {
             grabToRight();
-            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+            if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
             {
                 var parameters = new object[] { photonView.viewID, false };
                 grabTarget.GetPhotonView().RPC("netGrabbed", PhotonTargets.All, parameters);
                 var objArray2 = new object[] { "grabbed" };
                 grabTarget.GetPhotonView().RPC("netPlayAnimation", PhotonTargets.All, objArray2);
-                photonView.RPC("grabToRight", PhotonTargets.Others, new object[0]);
+                photonView.RPC("grabToRight", PhotonTargets.Others);
             }
             else
             {
@@ -657,13 +657,13 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         if (!grabTarget.GetComponent<HERO>().isGrabbed)
         {
             grabToLeft();
-            if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+            if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
             {
                 var parameters = new object[] { photonView.viewID, true };
                 grabTarget.GetPhotonView().RPC("netGrabbed", PhotonTargets.All, parameters);
                 var objArray2 = new object[] { "grabbed" };
                 grabTarget.GetPhotonView().RPC("netPlayAnimation", PhotonTargets.All, objArray2);
-                photonView.RPC("grabToLeft", PhotonTargets.Others, new object[0]);
+                photonView.RPC("grabToLeft", PhotonTargets.Others);
             }
             else
             {
@@ -718,7 +718,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private void FixedUpdate()
     {
-        if ((!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine))
+        if ((!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine))
         {
             if (bottomObject.GetComponent<CheckHitGround>().isGrounded)
             {
@@ -734,10 +734,10 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 oldCorePosition = transform.position - transform.Find("Amarture/Core").position;
                 needFreshCorePosition = false;
             }
-            if (((state == "attack") && isAttackMoveByCore) || (((state == "hit") || (state == "turn180")) || (state == "anklehurt")))
+            if (state == "attack" && isAttackMoveByCore || state == "hit" || state == "turn180" || state == "anklehurt")
             {
-                var vector = (transform.position - transform.Find("Amarture/Core").position) - oldCorePosition;
-                rigidbody.velocity = (vector / Time.deltaTime) + (Vector3.up * rigidbody.velocity.y);
+                var vector = transform.position - transform.Find("Amarture/Core").position - oldCorePosition;
+                rigidbody.velocity = vector / Time.deltaTime + Vector3.up * rigidbody.velocity.y;
                 oldCorePosition = transform.position - transform.Find("Amarture/Core").position;
             }
             else if (state == "chase")
@@ -782,7 +782,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         var position = transform.position;
         foreach (var obj3 in objArray)
         {
-            if (((obj3.GetComponent<HERO>() == null) || !obj3.GetComponent<HERO>().HasDied()) && ((obj3.GetComponent<TITAN_EREN>() == null) || !obj3.GetComponent<TITAN_EREN>().hasDied))
+            if ((obj3.GetComponent<HERO>() == null || !obj3.GetComponent<HERO>().HasDied()) && (obj3.GetComponent<TITAN_EREN>() == null || !obj3.GetComponent<TITAN_EREN>().hasDied))
             {
                 var vector2 = obj3.transform.position - position;
                 var sqrMagnitude = vector2.sqrMagnitude;
@@ -922,11 +922,11 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         grabTF.transform.position = transform.GetComponent<SphereCollider>().transform.position;
         grabTF.transform.rotation = transform.GetComponent<SphereCollider>().transform.rotation;
         var transform1 = grabTF.transform;
-        transform1.localPosition -= (Vector3.right * transform.GetComponent<SphereCollider>().radius) * 0.3f;
+        transform1.localPosition -= Vector3.right * transform.GetComponent<SphereCollider>().radius * 0.3f;
         var transform2 = grabTF.transform;
-        transform2.localPosition -= (Vector3.up * transform.GetComponent<SphereCollider>().radius) * 0.51f;
+        transform2.localPosition -= Vector3.up * transform.GetComponent<SphereCollider>().radius * 0.51f;
         var transform3 = grabTF.transform;
-        transform3.localPosition -= (Vector3.forward * transform.GetComponent<SphereCollider>().radius) * 0.3f;
+        transform3.localPosition -= Vector3.forward * transform.GetComponent<SphereCollider>().radius * 0.3f;
         grabTF.transform.localRotation = Quaternion.Euler(grabTF.transform.localRotation.eulerAngles.x, grabTF.transform.localRotation.eulerAngles.y + 180f, grabTF.transform.localRotation.eulerAngles.z + 180f);
     }
 
@@ -938,11 +938,11 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         grabTF.transform.position = transform.GetComponent<SphereCollider>().transform.position;
         grabTF.transform.rotation = transform.GetComponent<SphereCollider>().transform.rotation;
         var transform1 = grabTF.transform;
-        transform1.localPosition -= (Vector3.right * transform.GetComponent<SphereCollider>().radius) * 0.3f;
+        transform1.localPosition -= Vector3.right * transform.GetComponent<SphereCollider>().radius * 0.3f;
         var transform2 = grabTF.transform;
-        transform2.localPosition += (Vector3.up * transform.GetComponent<SphereCollider>().radius) * 0.51f;
+        transform2.localPosition += Vector3.up * transform.GetComponent<SphereCollider>().radius * 0.51f;
         var transform3 = grabTF.transform;
-        transform3.localPosition -= (Vector3.forward * transform.GetComponent<SphereCollider>().radius) * 0.3f;
+        transform3.localPosition -= Vector3.forward * transform.GetComponent<SphereCollider>().radius * 0.3f;
         grabTF.transform.localRotation = Quaternion.Euler(grabTF.transform.localRotation.eulerAngles.x, grabTF.transform.localRotation.eulerAngles.y + 180f, grabTF.transform.localRotation.eulerAngles.z);
     }
 
@@ -957,7 +957,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void hitAnkleL(int dmg)
     {
-        if (!hasDie && (state != "anklehurt"))
+        if (!hasDie && state != "anklehurt")
         {
             AnkleLHP -= dmg;
             if (AnkleLHP <= 0)
@@ -970,14 +970,14 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     [RPC]
     public void hitAnkleLRPC(int viewID, int dmg)
     {
-        if (!hasDie && (state != "anklehurt"))
+        if (!hasDie && state != "anklehurt")
         {
             var view = PhotonView.Find(viewID);
             if (view != null)
             {
                 if (grabbedTarget != null)
                 {
-                    grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
+                    grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All);
                 }
                 var vector = view.gameObject.transform.position - transform.Find("Amarture/Core/Controller_Body").transform.position;
                 if (vector.magnitude < 20f)
@@ -997,7 +997,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void hitAnkleR(int dmg)
     {
-        if (!hasDie && (state != "anklehurt"))
+        if (!hasDie && state != "anklehurt")
         {
             AnkleRHP -= dmg;
             if (AnkleRHP <= 0)
@@ -1010,14 +1010,14 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     [RPC]
     public void hitAnkleRRPC(int viewID, int dmg)
     {
-        if (!hasDie && (state != "anklehurt"))
+        if (!hasDie && state != "anklehurt")
         {
             var view = PhotonView.Find(viewID);
             if (view != null)
             {
                 if (grabbedTarget != null)
                 {
-                    grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
+                    grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All);
                 }
                 var vector = view.gameObject.transform.position - transform.Find("Amarture/Core/Controller_Body").transform.position;
                 if (vector.magnitude < 20f)
@@ -1050,7 +1050,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         {
             if (grabbedTarget != null)
             {
-                grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
+                grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All);
             }
             var transform = this.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
             var view = PhotonView.Find(viewID);
@@ -1080,7 +1080,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     private void justEatHero(GameObject target, Transform hand)
     {
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
             if (!target.GetComponent<HERO>().HasDied())
             {
@@ -1109,13 +1109,13 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             {
                 if (!hitHero.GetComponent<HERO>().HasDied())
                 {
-                    hitHero.GetComponent<HERO>().die(((hitHero.transform.position - position) * 15f) * 4f, false);
+                    hitHero.GetComponent<HERO>().die((hitHero.transform.position - position) * 15f * 4f, false);
                 }
             }
-            else if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient) && !hitHero.GetComponent<HERO>().HasDied())
+            else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient && !hitHero.GetComponent<HERO>().HasDied())
             {
                 hitHero.GetComponent<HERO>().markDie();
-                var parameters = new object[] { ((hitHero.transform.position - position) * 15f) * 4f, false, -1, "Female Titan", true };
+                var parameters = new object[] { (hitHero.transform.position - position) * 15f * 4f, false, -1, "Female Titan", true };
                 hitHero.GetComponent<HERO>().photonView.RPC("netDie", PhotonTargets.All, parameters);
             }
         }
@@ -1140,7 +1140,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 healthLabel.transform.parent = transform;
                 healthLabel.transform.localPosition = new Vector3(0f, 52f, 0f);
                 var a = 4f;
-                if ((size > 0f) && (size < 1f))
+                if (size > 0f && size < 1f)
                 {
                     a = 4f / size;
                     a = Mathf.Min(a, 15f);
@@ -1148,12 +1148,12 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 healthLabel.transform.localScale = new Vector3(a, a, a);
             }
             var str = "[7FFF00]";
-            var num2 = health / ((float) maxHealth);
-            if ((num2 < 0.75f) && (num2 >= 0.5f))
+            var num2 = health / (float) maxHealth;
+            if (num2 < 0.75f && num2 >= 0.5f)
             {
                 str = "[f2b50f]";
             }
-            else if ((num2 < 0.5f) && (num2 >= 0.25f))
+            else if (num2 < 0.5f && num2 >= 0.25f)
             {
                 str = "[ff8100]";
             }
@@ -1167,18 +1167,18 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void lateUpdate()
     {
-        if (!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE))
+        if (!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
             if (animation.IsPlaying("run"))
             {
-                if ((((animation["run"].normalizedTime % 1f) > 0.1f) && ((animation["run"].normalizedTime % 1f) < 0.6f)) && (stepSoundPhase == 2))
+                if (animation["run"].normalizedTime % 1f > 0.1f && animation["run"].normalizedTime % 1f < 0.6f && stepSoundPhase == 2)
                 {
                     stepSoundPhase = 1;
                     var transform = this.transform.Find("snd_titan_foot");
                     transform.GetComponent<AudioSource>().Stop();
                     transform.GetComponent<AudioSource>().Play();
                 }
-                if (((animation["run"].normalizedTime % 1f) > 0.6f) && (stepSoundPhase == 1))
+                if (animation["run"].normalizedTime % 1f > 0.6f && stepSoundPhase == 1)
                 {
                     stepSoundPhase = 2;
                     var transform2 = transform.Find("snd_titan_foot");
@@ -1195,7 +1195,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         if (Settings.TitanSkins == 1)
         {
-            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, new object[] { (string) FengGameManagerMKII.settings[0x42] });
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[66]);
         }
     }
 
@@ -1217,7 +1217,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             {
                 var link = new WWW(url);
                 yield return link;
-                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 0xf4240);
+                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 1000000);
                 link.Dispose();
                 if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))
                 {
@@ -1245,7 +1245,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     [RPC]
     public void loadskinRPC(string url)
     {
-        if ((Settings.TitanSkins == 1) && ((url.EndsWith(".jpg") || url.EndsWith(".png")) || url.EndsWith(".jpeg")))
+        if (Settings.TitanSkins == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
         {
             StartCoroutine(loadskinE(url));
         }
@@ -1291,7 +1291,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     private void playAnimation(string aniName)
     {
         animation.Play(aniName);
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
             var parameters = new object[] { aniName };
             photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
@@ -1302,7 +1302,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     {
         animation.Play(aniName);
         animation[aniName].normalizedTime = normalizedTime;
-        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
             var parameters = new object[] { aniName, normalizedTime };
             photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
@@ -1352,9 +1352,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 var sizeLower = RCSettings.sizeLower;
                 var sizeUpper = RCSettings.sizeUpper;
                 size = UnityEngine.Random.Range(sizeLower, sizeUpper);
-                photonView.RPC("setSize", PhotonTargets.AllBuffered, new object[] { size });
+                photonView.RPC("setSize", PhotonTargets.AllBuffered, size);
             }
-            lagMax = 150f + (size * 3f);
+            lagMax = 150f + size * 3f;
             healthTime = 0f;
             maxHealth = NapeArmor;
             if (RCSettings.healthMode > 0)
@@ -1363,7 +1363,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             }
             if (NapeArmor > 0)
             {
-                photonView.RPC("labelRPC", PhotonTargets.AllBuffered, new object[] { NapeArmor, maxHealth });
+                photonView.RPC("labelRPC", PhotonTargets.AllBuffered, NapeArmor, maxHealth);
             }
             loadskin();
         }
@@ -1398,7 +1398,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             	disposable.Dispose();
         }
         animation["turn180"].speed = 0.5f;
-        NapeArmor = 0x3e8;
+        NapeArmor = 1000;
         AnkleLHP = 50;
         AnkleRHP = 50;
         AnkleLHPMAX = 50;
@@ -1410,13 +1410,13 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         }
         if (IN_GAME_MAIN_CAMERA.difficulty == 0)
         {
-            NapeArmor = !flag ? 0x3e8 : 0x3e8;
+            NapeArmor = !flag ? 1000 : 1000;
             AnkleLHP = AnkleLHPMAX = !flag ? 50 : 50;
             AnkleRHP = AnkleRHPMAX = !flag ? 50 : 50;
         }
         else if (IN_GAME_MAIN_CAMERA.difficulty == 1)
         {
-            NapeArmor = !flag ? 0xbb8 : 0x9c4;
+            NapeArmor = !flag ? 3000 : 2500;
             AnkleLHP = AnkleLHPMAX = !flag ? 200 : 100;
             AnkleRHP = AnkleRHPMAX = !flag ? 200 : 100;
             var enumerator2 = animation.GetEnumerator();
@@ -1438,9 +1438,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         }
         else if (IN_GAME_MAIN_CAMERA.difficulty == 2)
         {
-            NapeArmor = !flag ? 0x1770 : 0xfa0;
-            AnkleLHP = AnkleLHPMAX = !flag ? 0x3e8 : 200;
-            AnkleRHP = AnkleRHPMAX = !flag ? 0x3e8 : 200;
+            NapeArmor = !flag ? 6000 : 4000;
+            AnkleLHP = AnkleLHPMAX = !flag ? 1000 : 200;
+            AnkleRHP = AnkleRHPMAX = !flag ? 1000 : 200;
             var enumerator3 = animation.GetEnumerator();
             try
             {
@@ -1475,7 +1475,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         if (view != null)
         {
             var vector = view.gameObject.transform.position - transform.transform.position;
-            if ((vector.magnitude < lagMax) && (healthTime <= 0f))
+            if (vector.magnitude < lagMax && healthTime <= 0f)
             {
                 if (speed >= RCSettings.damageMode)
                 {
@@ -1483,17 +1483,17 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 }
                 if (maxHealth > 0f)
                 {
-                    photonView.RPC("labelRPC", PhotonTargets.AllBuffered, new object[] { NapeArmor, maxHealth });
+                    photonView.RPC("labelRPC", PhotonTargets.AllBuffered, NapeArmor, maxHealth);
                 }
                 if (NapeArmor <= 0)
                 {
                     NapeArmor = 0;
                     if (!hasDie)
                     {
-                        photonView.RPC("netDie", PhotonTargets.OthersBuffered, new object[0]);
+                        photonView.RPC("netDie", PhotonTargets.OthersBuffered);
                         if (grabbedTarget != null)
                         {
-                            grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All, new object[0]);
+                            grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All);
                         }
                         netDie();
                         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().titanGetKill(view.owner, speed, name);
@@ -1539,7 +1539,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void update()
     {
-        if ((!IN_GAME_MAIN_CAMERA.isPausing || (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)) && ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine))
+        if ((!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine))
         {
             if (hasDie)
             {
@@ -1555,7 +1555,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         }
                     }
                 }
-                if ((dieTime > 2f) && !hasDieSteam)
+                if (dieTime > 2f && !hasDieSteam)
                 {
                     hasDieSteam = true;
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
@@ -1569,7 +1569,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         PhotonNetwork.Instantiate("FX/FXtitanDie1", transform.Find("Amarture/Core/Controller_Body/hip").position, Quaternion.Euler(-90f, 0f, 0f), 0).transform.localScale = transform.localScale;
                     }
                 }
-                if (dieTime > ((IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.PVP_CAPTURE) ? 20f : 5f))
+                if (dieTime > (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.PVP_CAPTURE ? 20f : 5f))
                 {
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                     {
@@ -1633,7 +1633,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 }
                 else
                 {
-                    myDistance = Mathf.Sqrt(((myHero.transform.position.x - transform.position.x) * (myHero.transform.position.x - transform.position.x)) + ((myHero.transform.position.z - transform.position.z) * (myHero.transform.position.z - transform.position.z)));
+                    myDistance = Mathf.Sqrt((myHero.transform.position.x - transform.position.x) * (myHero.transform.position.x - transform.position.x) + (myHero.transform.position.z - transform.position.z) * (myHero.transform.position.z - transform.position.z));
                 }
                 if (state == "idle")
                 {
@@ -1661,7 +1661,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                                     turn180();
                                 }
                             }
-                            else if ((Mathf.Abs(f) > 45f) && (UnityEngine.Random.Range(0, 100) < 30))
+                            else if (Mathf.Abs(f) > 45f && UnityEngine.Random.Range(0, 100) < 30)
                             {
                                 turn(f);
                             }
@@ -1670,12 +1670,12 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 }
                 else if (state == "attack")
                 {
-                    if ((!attacked && (attackCheckTime != 0f)) && (animation["attack_" + attackAnimation].normalizedTime >= attackCheckTime))
+                    if (!attacked && attackCheckTime != 0f && animation["attack_" + attackAnimation].normalizedTime >= attackCheckTime)
                     {
                         GameObject obj7;
                         attacked = true;
                         fxPosition = transform.Find("ap_" + attackAnimation).position;
-                        if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+                        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
                         {
                             obj7 = PhotonNetwork.Instantiate("FX/" + fxName, fxPosition, fxRotation, 0);
                         }
@@ -1684,11 +1684,11 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                             obj7 = (GameObject) Instantiate(Resources.Load("FX/" + fxName), fxPosition, fxRotation);
                         }
                         obj7.transform.localScale = transform.localScale;
-                        var b = 1f - (Vector3.Distance(currentCamera.transform.position, obj7.transform.position) * 0.05f);
+                        var b = 1f - Vector3.Distance(currentCamera.transform.position, obj7.transform.position) * 0.05f;
                         b = Mathf.Min(1f, b);
                         currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b, 0.95f);
                     }
-                    if ((attackCheckTimeA != 0f) && (((animation["attack_" + attackAnimation].normalizedTime >= attackCheckTimeA) && (animation["attack_" + attackAnimation].normalizedTime <= attackCheckTimeB)) || (!attackChkOnce && (animation["attack_" + attackAnimation].normalizedTime >= attackCheckTimeA))))
+                    if (attackCheckTimeA != 0f && (animation["attack_" + attackAnimation].normalizedTime >= attackCheckTimeA && animation["attack_" + attackAnimation].normalizedTime <= attackCheckTimeB || !attackChkOnce && animation["attack_" + attackAnimation].normalizedTime >= attackCheckTimeA))
                     {
                         if (!attackChkOnce)
                         {
@@ -1706,19 +1706,19 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                             {
                                 if (attackAnimation == "combo_1")
                                 {
-                                    if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+                                    if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
                                     {
                                         gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().hitByFTByServer(1);
                                     }
                                 }
                                 else if (attackAnimation == "combo_2")
                                 {
-                                    if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+                                    if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
                                     {
                                         gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().hitByFTByServer(2);
                                     }
                                 }
-                                else if (((attackAnimation == "combo_3") && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)) && PhotonNetwork.isMasterClient)
+                                else if (attackAnimation == "combo_3" && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
                                 {
                                     gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().hitByFTByServer(3);
                                 }
@@ -1734,7 +1734,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         }
                         checkHitCapsuleEndOld = checkHitCapsuleEnd.position;
                     }
-                    if (((attackAnimation == "jumpCombo_1") && (animation["attack_" + attackAnimation].normalizedTime >= 0.65f)) && (!startJump && (myHero != null)))
+                    if (attackAnimation == "jumpCombo_1" && animation["attack_" + attackAnimation].normalizedTime >= 0.65f && !startJump && myHero != null)
                     {
                         startJump = true;
                         var y = myHero.rigidbody.velocity.y;
@@ -1744,10 +1744,10 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         var num10 = (num7 - gravity) * 0.5f;
                         var num11 = y;
                         var num12 = myHero.transform.position.y - num9;
-                        var num13 = Mathf.Abs((Mathf.Sqrt((num11 * num11) - ((4f * num10) * num12)) - num11) / (2f * num10));
-                        var vector14 = (myHero.transform.position + (myHero.rigidbody.velocity * num13)) + ((((Vector3.up * 0.5f) * num7) * num13) * num13);
+                        var num13 = Mathf.Abs((Mathf.Sqrt(num11 * num11 - 4f * num10 * num12) - num11) / (2f * num10));
+                        var vector14 = myHero.transform.position + myHero.rigidbody.velocity * num13 + Vector3.up * 0.5f * num7 * num13 * num13;
                         var num14 = vector14.y;
-                        if ((num12 < 0f) || ((num14 - num9) < 0f))
+                        if (num12 < 0f || num14 - num9 < 0f)
                         {
                             idle(0f);
                             num13 = 0.5f;
@@ -1755,8 +1755,8 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                             num14 = vector14.y;
                         }
                         var num15 = num14 - num9;
-                        var num16 = Mathf.Sqrt((2f * num15) / this.gravity);
-                        var num17 = (this.gravity * num16) + 20f;
+                        var num16 = Mathf.Sqrt(2f * num15 / this.gravity);
+                        var num17 = this.gravity * num16 + 20f;
                         num17 = Mathf.Clamp(num17, 20f, 90f);
                         var vector15 = (vector14 - transform.position) / num13;
                         abnorma_jump_bite_horizon_v = new Vector3(vector15.x, 0f, vector15.z);
@@ -1774,7 +1774,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     }
                     if (attackAnimation == "jumpCombo_3")
                     {
-                        if ((animation["attack_" + attackAnimation].normalizedTime >= 1f) && IsGrounded())
+                        if (animation["attack_" + attackAnimation].normalizedTime >= 1f && IsGrounded())
                         {
                             attack("jumpCombo_4");
                         }
@@ -1798,7 +1798,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 }
                 else if (state == "grab")
                 {
-                    if (((animation["attack_grab_" + attackAnimation].normalizedTime >= attackCheckTimeA) && (animation["attack_grab_" + attackAnimation].normalizedTime <= attackCheckTimeB)) && (grabbedTarget == null))
+                    if (animation["attack_grab_" + attackAnimation].normalizedTime >= attackCheckTimeA && animation["attack_grab_" + attackAnimation].normalizedTime <= attackCheckTimeB && grabbedTarget == null)
                     {
                         var grabTarget = checkIfHitHand(currentGrabHand);
                         if (grabTarget != null)
@@ -1815,7 +1815,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                             }
                         }
                     }
-                    if ((animation["attack_grab_" + attackAnimation].normalizedTime > attackCheckTime) && (grabbedTarget != null))
+                    if (animation["attack_grab_" + attackAnimation].normalizedTime > attackCheckTime && grabbedTarget != null)
                     {
                         justEatHero(grabbedTarget, currentGrabHand);
                         grabbedTarget = null;
@@ -1827,7 +1827,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 }
                 else if (state == "turn")
                 {
-                    gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, desDeg, 0f), (Time.deltaTime * Mathf.Abs(turnDeg)) * 0.1f);
+                    gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, desDeg, 0f), Time.deltaTime * Mathf.Abs(turnDeg) * 0.1f);
                     if (animation[turnAnimation].normalizedTime >= 1f)
                     {
                         idle(0f);
@@ -1835,7 +1835,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 }
                 else if (state == "chase")
                 {
-                    if (((((eren == null) || (myDistance >= 35f)) || !attackTarget(myHero)) && (((getNearestHeroDistance() >= 50f) || (UnityEngine.Random.Range(0, 100) >= 20)) || !attackTarget(getNearestHero()))) && (myDistance < (attackDistance - 15f)))
+                    if ((eren == null || myDistance >= 35f || !attackTarget(myHero)) && (getNearestHeroDistance() >= 50f || UnityEngine.Random.Range(0, 100) >= 20 || !attackTarget(getNearestHero())) && myDistance < attackDistance - 15f)
                     {
                         idle(UnityEngine.Random.Range(0.05f, 0.2f));
                     }
@@ -1871,7 +1871,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void updateLabel()
     {
-        if ((healthLabel != null) && healthLabel.GetComponent<UILabel>().isVisible)
+        if (healthLabel != null && healthLabel.GetComponent<UILabel>().isVisible)
         {
             healthLabel.transform.LookAt(2f * healthLabel.transform.position - Camera.main.transform.position);
         }

@@ -60,7 +60,7 @@ public class UITexture : UIWidget
     {
         get
         {
-            return (mDynamicMat != null);
+            return mDynamicMat != null;
         }
     }
 
@@ -76,11 +76,11 @@ public class UITexture : UIWidget
     {
         get
         {
-            return ((mTexture == null) ? base.mainTexture : mTexture);
+            return mTexture == null ? base.mainTexture : mTexture;
         }
         set
         {
-            if ((mPanel != null) && (mMat != null))
+            if (mPanel != null && mMat != null)
             {
                 mPanel.RemoveWidget(this);
             }
@@ -105,7 +105,7 @@ public class UITexture : UIWidget
     {
         get
         {
-            if (!mCreatingMat && (mMat == null))
+            if (!mCreatingMat && mMat == null)
             {
                 mCreatingMat = true;
                 if (mainTexture != null)
@@ -126,7 +126,7 @@ public class UITexture : UIWidget
         }
         set
         {
-            if ((mDynamicMat != value) && (mDynamicMat != null))
+            if (mDynamicMat != value && mDynamicMat != null)
             {
                 NGUITools.Destroy(mDynamicMat);
                 mDynamicMat = null;
@@ -143,9 +143,9 @@ public class UITexture : UIWidget
             if (mPMA == -1)
             {
                 var material = this.material;
-                mPMA = (((material == null) || (material.shader == null)) || !material.shader.name.Contains("Premultiplied")) ? 0 : 1;
+                mPMA = material == null || material.shader == null || !material.shader.name.Contains("Premultiplied") ? 0 : 1;
             }
-            return (mPMA == 1);
+            return mPMA == 1;
         }
     }
 

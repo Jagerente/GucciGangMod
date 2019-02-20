@@ -26,7 +26,7 @@ public class UIButtonTween : MonoBehaviour
 
     private void OnActivate(bool isActive)
     {
-        if (enabled && (((trigger == Trigger.OnActivate) || ((trigger == Trigger.OnActivateTrue) && isActive)) || ((trigger == Trigger.OnActivateFalse) && !isActive)))
+        if (enabled && (trigger == Trigger.OnActivate || trigger == Trigger.OnActivateTrue && isActive || trigger == Trigger.OnActivateFalse && !isActive))
         {
             Play(isActive);
         }
@@ -34,7 +34,7 @@ public class UIButtonTween : MonoBehaviour
 
     private void OnClick()
     {
-        if (enabled && (trigger == Trigger.OnClick))
+        if (enabled && trigger == Trigger.OnClick)
         {
             Play(true);
         }
@@ -42,7 +42,7 @@ public class UIButtonTween : MonoBehaviour
 
     private void OnDoubleClick()
     {
-        if (enabled && (trigger == Trigger.OnDoubleClick))
+        if (enabled && trigger == Trigger.OnDoubleClick)
         {
             Play(true);
         }
@@ -60,7 +60,7 @@ public class UIButtonTween : MonoBehaviour
     {
         if (enabled)
         {
-            if (((trigger == Trigger.OnHover) || ((trigger == Trigger.OnHoverTrue) && isOver)) || ((trigger == Trigger.OnHoverFalse) && !isOver))
+            if (trigger == Trigger.OnHover || trigger == Trigger.OnHoverTrue && isOver || trigger == Trigger.OnHoverFalse && !isOver)
             {
                 Play(isOver);
             }
@@ -70,7 +70,7 @@ public class UIButtonTween : MonoBehaviour
 
     private void OnPress(bool isPressed)
     {
-        if (enabled && (((trigger == Trigger.OnPress) || ((trigger == Trigger.OnPressTrue) && isPressed)) || ((trigger == Trigger.OnPressFalse) && !isPressed)))
+        if (enabled && (trigger == Trigger.OnPress || trigger == Trigger.OnPressTrue && isPressed || trigger == Trigger.OnPressFalse && !isPressed))
         {
             Play(isPressed);
         }
@@ -78,7 +78,7 @@ public class UIButtonTween : MonoBehaviour
 
     private void OnSelect(bool isSelected)
     {
-        if (enabled && (((trigger == Trigger.OnSelect) || ((trigger == Trigger.OnSelectTrue) && isSelected)) || ((trigger == Trigger.OnSelectFalse) && !isSelected)))
+        if (enabled && (trigger == Trigger.OnSelect || trigger == Trigger.OnSelectTrue && isSelected || trigger == Trigger.OnSelectFalse && !isSelected))
         {
             Play(true);
         }
@@ -86,7 +86,7 @@ public class UIButtonTween : MonoBehaviour
 
     public void Play(bool forward)
     {
-        var go = (tweenTarget != null) ? tweenTarget : gameObject;
+        var go = tweenTarget != null ? tweenTarget : gameObject;
         if (!NGUITools.GetActive(go))
         {
             if (ifDisabledOnPlay != EnableCondition.EnableThenPlay)
@@ -135,7 +135,7 @@ public class UIButtonTween : MonoBehaviour
                         tweener.Reset();
                     }
                     tweener.onFinished = onFinished;
-                    if ((eventReceiver != null) && !string.IsNullOrEmpty(callWhenFinished))
+                    if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                     {
                         tweener.eventReceiver = eventReceiver;
                         tweener.callWhenFinished = callWhenFinished;
@@ -157,7 +157,7 @@ public class UIButtonTween : MonoBehaviour
 
     private void Update()
     {
-        if ((disableWhenFinished != DisableCondition.DoNotDisable) && (mTweens != null))
+        if (disableWhenFinished != DisableCondition.DoNotDisable && mTweens != null)
         {
             var flag = true;
             var flag2 = true;
@@ -173,7 +173,7 @@ public class UIButtonTween : MonoBehaviour
                         flag = false;
                         break;
                     }
-                    if (tweener.direction != ((Direction) ((int) disableWhenFinished)))
+                    if (tweener.direction != (Direction) (int) disableWhenFinished)
                     {
                         flag2 = false;
                     }

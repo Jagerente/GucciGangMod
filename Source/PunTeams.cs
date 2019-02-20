@@ -4,7 +4,6 @@
 //Farewell Cowboy
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,7 +31,7 @@ public class PunTeams : MonoBehaviour
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
-                PlayersPerTeam[(Team) ((byte) current)] = new List<PhotonPlayer>();
+                PlayersPerTeam[(Team) (byte) current] = new List<PhotonPlayer>();
             }
         }
         finally
@@ -51,7 +50,7 @@ public class PunTeams : MonoBehaviour
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
-                PlayersPerTeam[(Team) ((byte) current)].Clear();
+                PlayersPerTeam[(Team) (byte) current].Clear();
             }
         }
         finally

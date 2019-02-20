@@ -36,7 +36,7 @@ public class AttractionForceAffector : Affector
         }
         else
         {
-            vector = (Node.ClientTrans.position + Position) - Node.GetLocalPosition();
+            vector = Node.ClientTrans.position + Position - Node.GetLocalPosition();
         }
         var elapsedTime = Node.GetElapsedTime();
         if (UseCurve)
@@ -48,7 +48,7 @@ public class AttractionForceAffector : Affector
             magnitude = Magnitude;
         }
         var num3 = magnitude;
-        Node.Velocity += (vector.normalized * num3) * Time.deltaTime;
+        Node.Velocity += vector.normalized * num3 * Time.deltaTime;
     }
 }
 

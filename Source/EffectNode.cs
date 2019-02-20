@@ -85,7 +85,7 @@ public class EffectNode
         {
             Ribbon.SetUVCoord(LowerLeftUV, UVDimensions);
             Ribbon.SetColor(oriColor);
-            Ribbon.SetHeadPosition((ClientTrans.position + Position) + OriDirection.normalized * Owner.TailDistance);
+            Ribbon.SetHeadPosition(ClientTrans.position + Position + OriDirection.normalized * Owner.TailDistance);
             Ribbon.ResetElementsPos();
         }
         if (Type == 1)
@@ -179,7 +179,7 @@ public class EffectNode
         Position += Velocity * Time.deltaTime;
         if (Mathf.Abs(Acceleration) > 0.0001)
         {
-            Velocity += (Velocity.normalized * Acceleration) * Time.deltaTime;
+            Velocity += Velocity.normalized * Acceleration * Time.deltaTime;
         }
         if (SyncClient)
         {
@@ -198,7 +198,7 @@ public class EffectNode
             UpdateRibbonTrail();
         }
         LastWorldPos = CurWorldPos;
-        if ((ElapsedTime > LifeTime) && (LifeTime > 0f))
+        if (ElapsedTime > LifeTime && LifeTime > 0f)
         {
             Reset();
             Remove();

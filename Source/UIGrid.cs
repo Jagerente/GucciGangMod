@@ -36,7 +36,7 @@ public class UIGrid : MonoBehaviour
                 for (var i = 0; i < transform.childCount; i++)
                 {
                     var child = transform.GetChild(i);
-                    if ((child != null) && (!hideInactive || NGUITools.GetActive(child.gameObject)))
+                    if (child != null && (!hideInactive || NGUITools.GetActive(child.gameObject)))
                     {
                         list.Add(child);
                     }
@@ -50,8 +50,8 @@ public class UIGrid : MonoBehaviour
                     if (NGUITools.GetActive(transform3.gameObject) || !hideInactive)
                     {
                         var z = transform3.localPosition.z;
-                        transform3.localPosition = (arrangement != Arrangement.Horizontal) ? new Vector3(cellWidth * num2, -cellHeight * num, z) : new Vector3(cellWidth * num, -cellHeight * num2, z);
-                        if ((++num >= maxPerLine) && (maxPerLine > 0))
+                        transform3.localPosition = arrangement != Arrangement.Horizontal ? new Vector3(cellWidth * num2, -cellHeight * num, z) : new Vector3(cellWidth * num, -cellHeight * num2, z);
+                        if (++num >= maxPerLine && maxPerLine > 0)
                         {
                             num = 0;
                             num2++;
@@ -68,8 +68,8 @@ public class UIGrid : MonoBehaviour
                     if (NGUITools.GetActive(transform4.gameObject) || !hideInactive)
                     {
                         var num8 = transform4.localPosition.z;
-                        transform4.localPosition = (arrangement != Arrangement.Horizontal) ? new Vector3(cellWidth * num2, -cellHeight * num, num8) : new Vector3(cellWidth * num, -cellHeight * num2, num8);
-                        if ((++num >= maxPerLine) && (maxPerLine > 0))
+                        transform4.localPosition = arrangement != Arrangement.Horizontal ? new Vector3(cellWidth * num2, -cellHeight * num, num8) : new Vector3(cellWidth * num, -cellHeight * num2, num8);
+                        if (++num >= maxPerLine && maxPerLine > 0)
                         {
                             num = 0;
                             num2++;

@@ -30,7 +30,7 @@ public class TypedLobby
     {
         get
         {
-            return ((Type == LobbyType.Default) && string.IsNullOrEmpty(Name));
+            return Type == LobbyType.Default && string.IsNullOrEmpty(Name);
         }
     }
 }

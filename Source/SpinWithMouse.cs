@@ -17,11 +17,11 @@ public class SpinWithMouse : MonoBehaviour
         UICamera.currentTouch.clickNotification = UICamera.ClickNotification.None;
         if (target != null)
         {
-            target.localRotation = Quaternion.Euler(0f, (-0.5f * delta.x) * speed, 0f) * target.localRotation;
+            target.localRotation = Quaternion.Euler(0f, -0.5f * delta.x * speed, 0f) * target.localRotation;
         }
         else
         {
-            mTrans.localRotation = Quaternion.Euler(0f, (-0.5f * delta.x) * speed, 0f) * mTrans.localRotation;
+            mTrans.localRotation = Quaternion.Euler(0f, -0.5f * delta.x * speed, 0f) * mTrans.localRotation;
         }
     }
 

@@ -18,7 +18,7 @@ public class UILocalize : MonoBehaviour
         var component = GetComponent<UIWidget>();
         var label = component as UILabel;
         var sprite = component as UISprite;
-        if ((string.IsNullOrEmpty(mLanguage) && string.IsNullOrEmpty(key)) && (label != null))
+        if (string.IsNullOrEmpty(mLanguage) && string.IsNullOrEmpty(key) && label != null)
         {
             key = label.text;
         }
@@ -26,7 +26,7 @@ public class UILocalize : MonoBehaviour
         if (label != null)
         {
             var input = NGUITools.FindInParents<UIInput>(label.gameObject);
-            if ((input != null) && (input.label == label))
+            if (input != null && input.label == label)
             {
                 input.defaultText = str;
             }
@@ -45,7 +45,7 @@ public class UILocalize : MonoBehaviour
 
     private void OnEnable()
     {
-        if (mStarted && (Localization.instance != null))
+        if (mStarted && Localization.instance != null)
         {
             Localize();
         }

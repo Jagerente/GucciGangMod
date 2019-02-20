@@ -50,7 +50,7 @@ public class UIPanel : MonoBehaviour
 
     public void AddWidget(UIWidget w)
     {
-        if ((w != null) && !mWidgets.Contains(w))
+        if (w != null && !mWidgets.Contains(w))
         {
             mWidgets.Add(w);
             if (!mChanged.Contains(w.material))
@@ -129,7 +129,7 @@ public class UIPanel : MonoBehaviour
             }
             else
             {
-                if ((widget.material == mat) && widget.isVisible)
+                if (widget.material == mat && widget.isVisible)
                 {
                     if (widget.panel == this)
                     {
@@ -154,7 +154,7 @@ public class UIPanel : MonoBehaviour
         if (mVerts.size > 0)
         {
             var drawCall = GetDrawCall(mat, true);
-            drawCall.depthPass = depthPass && (mClipping == UIDrawCall.Clipping.None);
+            drawCall.depthPass = depthPass && mClipping == UIDrawCall.Clipping.None;
             drawCall.Set(mVerts, !generateNormals ? null : mNorms, !generateNormals ? null : mTans, mUvs, mCols);
         }
         else
@@ -182,16 +182,16 @@ public class UIPanel : MonoBehaviour
     {
         var transform = trans;
         UIPanel component = null;
-        while ((component == null) && (trans != null))
+        while (component == null && trans != null)
         {
             component = trans.GetComponent<UIPanel>();
-            if ((component != null) || (trans.parent == null))
+            if (component != null || trans.parent == null)
             {
                 break;
             }
             trans = trans.parent;
         }
-        if ((createIfMissing && (component == null)) && (trans != transform))
+        if (createIfMissing && component == null && trans != transform)
         {
             component = trans.gameObject.AddComponent<UIPanel>();
             SetChildLayer(component.cachedTransform, component.cachedGameObject.layer);
@@ -231,7 +231,7 @@ public class UIPanel : MonoBehaviour
         {
             return false;
         }
-        if ((!w.enabled || !NGUITools.GetActive(w.cachedGameObject)) || (w.alpha < 0.001f))
+        if (!w.enabled || !NGUITools.GetActive(w.cachedGameObject) || w.alpha < 0.001f)
         {
             return false;
         }
@@ -328,7 +328,7 @@ public class UIPanel : MonoBehaviour
         {
             mLayer = mGo.layer;
             var camera = UICamera.FindCameraForLayer(mLayer);
-            mCam = (camera == null) ? NGUITools.FindCameraForLayer(mLayer) : camera.cachedCamera;
+            mCam = camera == null ? NGUITools.FindCameraForLayer(mLayer) : camera.cachedCamera;
             SetChildLayer(cachedTransform, mLayer);
             var num = 0;
             var num2 = drawCalls.size;
@@ -338,7 +338,7 @@ public class UIPanel : MonoBehaviour
                 num++;
             }
         }
-        var forceVisible = !cullWhileDragging ? ((clipping == UIDrawCall.Clipping.None) || (mCullTime > mUpdateTime)) : false;
+        var forceVisible = !cullWhileDragging ? clipping == UIDrawCall.Clipping.None || mCullTime > mUpdateTime : false;
         var num3 = 0;
         var size = mWidgets.size;
         while (num3 < size)
@@ -350,7 +350,7 @@ public class UIPanel : MonoBehaviour
             }
             num3++;
         }
-        if ((mChanged.size != 0) && (onChange != null))
+        if (mChanged.size != 0 && onChange != null)
         {
             onChange();
         }
@@ -433,7 +433,7 @@ public class UIPanel : MonoBehaviour
 
     public void RemoveWidget(UIWidget w)
     {
-        if (((w != null) && (w != null)) && (mWidgets.Remove(w) && (w.material != null)))
+        if (w != null && w != null && mWidgets.Remove(w) && w.material != null)
         {
             mChanged.Add(w.material);
         }
@@ -441,7 +441,7 @@ public class UIPanel : MonoBehaviour
 
     public void SetAlphaRecursive(float val, bool rebuildList)
     {
-        if (rebuildList || (mChildPanels == null))
+        if (rebuildList || mChildPanels == null)
         {
             mChildPanels = GetComponentsInChildren<UIPanel>(true);
         }
@@ -474,7 +474,7 @@ public class UIPanel : MonoBehaviour
     {
         mLayer = mGo.layer;
         var camera = UICamera.FindCameraForLayer(mLayer);
-        mCam = (camera == null) ? NGUITools.FindCameraForLayer(mLayer) : camera.cachedCamera;
+        mCam = camera == null ? NGUITools.FindCameraForLayer(mLayer) : camera.cachedCamera;
     }
 
     public void UpdateDrawcalls()
@@ -510,7 +510,7 @@ public class UIPanel : MonoBehaviour
             call.clipping = mClipping;
             call.clipRange = zero;
             call.clipSoftness = mClipSoftness;
-            call.depthPass = depthPass && (mClipping == UIDrawCall.Clipping.None);
+            call.depthPass = depthPass && mClipping == UIDrawCall.Clipping.None;
             var transform = call.transform;
             transform.position = cachedTransform.position;
             transform.rotation = cachedTransform.rotation;
@@ -521,7 +521,7 @@ public class UIPanel : MonoBehaviour
 
     private void UpdateTransformMatrix()
     {
-        if ((mUpdateTime == 0f) || (mMatrixTime != mUpdateTime))
+        if (mUpdateTime == 0f || mMatrixTime != mUpdateTime)
         {
             mMatrixTime = mUpdateTime;
             worldToLocal = cachedTransform.worldToLocalMatrix;
@@ -530,11 +530,11 @@ public class UIPanel : MonoBehaviour
                 var vector = new Vector2(mClipRange.z, mClipRange.w);
                 if (vector.x == 0f)
                 {
-                    vector.x = (mCam != null) ? mCam.pixelWidth : Screen.width;
+                    vector.x = mCam != null ? mCam.pixelWidth : Screen.width;
                 }
                 if (vector.y == 0f)
                 {
-                    vector.y = (mCam != null) ? mCam.pixelHeight : Screen.height;
+                    vector.y = mCam != null ? mCam.pixelHeight : Screen.height;
                 }
                 vector = vector * 0.5f;
                 mMin.x = mClipRange.x - vector.x;
@@ -621,7 +621,7 @@ public class UIPanel : MonoBehaviour
         {
             if (mClipRange != value)
             {
-                mCullTime = (mCullTime != 0f) ? (Time.realtimeSinceStartup + 0.15f) : 0.001f;
+                mCullTime = mCullTime != 0f ? Time.realtimeSinceStartup + 0.15f : 0.001f;
                 mClipRange = value;
                 mMatrixTime = 0f;
                 UpdateDrawcalls();
@@ -657,7 +657,7 @@ public class UIPanel : MonoBehaviour
             {
                 mDebugInfo = value;
                 var drawCalls = this.drawCalls;
-                var flags = (mDebugInfo != DebugInfo.Geometry) ? (HideFlags.NotEditable | HideFlags.DontSave | HideFlags.HideInHierarchy) : (HideFlags.NotEditable | HideFlags.DontSave);
+                var flags = mDebugInfo != DebugInfo.Geometry ? HideFlags.NotEditable | HideFlags.DontSave | HideFlags.HideInHierarchy : HideFlags.NotEditable | HideFlags.DontSave;
                 var num = 0;
                 var size = drawCalls.size;
                 while (num < size)

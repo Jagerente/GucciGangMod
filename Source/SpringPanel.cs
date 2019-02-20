@@ -68,7 +68,7 @@ public class SpringPanel : IgnoreTimeScale
         {
             mDrag.UpdateScrollbars(false);
         }
-        if (flag && (onFinished != null))
+        if (flag && onFinished != null)
         {
             onFinished();
         }

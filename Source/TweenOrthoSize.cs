@@ -27,7 +27,7 @@ public class TweenOrthoSize : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        cachedCamera.orthographicSize = (from * (1f - factor)) + (to * factor);
+        cachedCamera.orthographicSize = @from * (1f - factor) + to * factor;
     }
 
     public Camera cachedCamera

@@ -12,24 +12,24 @@ public static class Extensions
 {
     public static bool AlmostEquals(this float target, float second, float floatDiff)
     {
-        return (Mathf.Abs(target - second) < floatDiff);
+        return Mathf.Abs(target - second) < floatDiff;
     }
 
     public static bool AlmostEquals(this Quaternion target, Quaternion second, float maxAngle)
     {
-        return (Quaternion.Angle(target, second) < maxAngle);
+        return Quaternion.Angle(target, second) < maxAngle;
     }
 
     public static bool AlmostEquals(this Vector2 target, Vector2 second, float sqrMagnitudePrecision)
     {
         var vector = target - second;
-        return (vector.sqrMagnitude < sqrMagnitudePrecision);
+        return vector.sqrMagnitude < sqrMagnitudePrecision;
     }
 
     public static bool AlmostEquals(this Vector3 target, Vector3 second, float sqrMagnitudePrecision)
     {
         var vector = target - second;
-        return (vector.sqrMagnitude < sqrMagnitudePrecision);
+        return vector.sqrMagnitude < sqrMagnitudePrecision;
     }
 
     public static bool Contains(this int[] target, int nr)
@@ -59,7 +59,7 @@ public static class Extensions
 
     public static void Merge(this IDictionary target, IDictionary addHash)
     {
-        if ((addHash != null) && !target.Equals(addHash))
+        if (addHash != null && !target.Equals(addHash))
         {
             var enumerator = addHash.Keys.GetEnumerator();
             try
@@ -81,7 +81,7 @@ public static class Extensions
 
     public static void MergeStringKeys(this IDictionary target, IDictionary addHash)
     {
-        if ((addHash != null) && !target.Equals(addHash))
+        if (addHash != null && !target.Equals(addHash))
         {
             var enumerator = addHash.Keys.GetEnumerator();
             try

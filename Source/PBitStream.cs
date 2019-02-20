@@ -31,13 +31,13 @@ public class PBitStream
     public void Add(bool val)
     {
         var num = totalBits / 8;
-        if ((num > (streamBytes.Count - 1)) || (totalBits == 0))
+        if (num > streamBytes.Count - 1 || totalBits == 0)
         {
             streamBytes.Add(0);
         }
         if (val)
         {
-            var currentByteBit = 7 - (totalBits % 8);
+            var currentByteBit = 7 - totalBits % 8;
 			streamBytes[num] |= (byte)(1 << currentByteBit);
         }
         totalBits++;
@@ -49,14 +49,14 @@ public class PBitStream
         {
             return 0;
         }
-        return (((bitCount - 1) / 8) + 1);
+        return (bitCount - 1) / 8 + 1;
     }
 
     public bool Get(int bitIndex)
     {
         var num = bitIndex / 8;
-        var num2 = 7 - (bitIndex % 8);
-        return ((streamBytes[num] & ((byte) (1 << num2))) > 0);
+        var num2 = 7 - bitIndex % 8;
+        return (streamBytes[num] & (byte) (1 << num2)) > 0;
     }
 
     public bool GetNext()
@@ -73,7 +73,7 @@ public class PBitStream
     public void Set(int bitIndex, bool value)
     {
         var byteIndex = bitIndex / 8;
-		var bitInByIndex = 7 - (bitIndex % 8);
+		var bitInByIndex = 7 - bitIndex % 8;
 		streamBytes[byteIndex] |= (byte)(1 << bitInByIndex);
     }
 

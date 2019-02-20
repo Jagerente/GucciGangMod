@@ -45,7 +45,7 @@ public class UISlider : IgnoreTimeScale
         if (foreground != null)
         {
             mFGWidget = foreground.GetComponent<UIWidget>();
-            mFGFilled = (mFGWidget == null) ? null : (mFGWidget as UISprite);
+            mFGFilled = mFGWidget == null ? null : mFGWidget as UISprite;
             mFGTrans = foreground.transform;
             if (mSize == Vector2.zero)
             {
@@ -53,7 +53,7 @@ public class UISlider : IgnoreTimeScale
             }
             if (mCenter == Vector2.zero)
             {
-                mCenter = foreground.localPosition + (foreground.localScale * 0.5f);
+                mCenter = foreground.localPosition + foreground.localScale * 0.5f;
             }
         }
         else if (mCol != null)
@@ -85,7 +85,7 @@ public class UISlider : IgnoreTimeScale
 
     private void OnKey(KeyCode key)
     {
-        var num = (numberOfSteps <= 1f) ? 0.125f : (1f / (numberOfSteps - 1));
+        var num = numberOfSteps <= 1f ? 0.125f : 1f / (numberOfSteps - 1);
         if (direction == Direction.Horizontal)
         {
             if (key == KeyCode.LeftArrow)
@@ -109,7 +109,7 @@ public class UISlider : IgnoreTimeScale
 
     private void OnPress(bool pressed)
     {
-        if (pressed && (UICamera.currentTouchID != -100))
+        if (pressed && UICamera.currentTouchID != -100)
         {
             UpdateDrag();
         }
@@ -137,7 +137,7 @@ public class UISlider : IgnoreTimeScale
         var sliderValue = this.sliderValue;
         rawValue = num;
         var num3 = this.sliderValue;
-        if (force || (sliderValue != num3))
+        if (force || sliderValue != num3)
         {
             var mSize = (Vector3) this.mSize;
             if (direction == Direction.Horizontal)
@@ -148,7 +148,7 @@ public class UISlider : IgnoreTimeScale
             {
                 mSize.y *= num3;
             }
-            if ((mFGFilled != null) && (mFGFilled.type == UISprite.Type.Filled))
+            if (mFGFilled != null && mFGFilled.type == UISprite.Type.Filled)
             {
                 mFGFilled.fillAmount = num3;
             }
@@ -171,15 +171,15 @@ public class UISlider : IgnoreTimeScale
             if (thumb != null)
             {
                 var localPosition = thumb.localPosition;
-                if ((mFGFilled != null) && (mFGFilled.type == UISprite.Type.Filled))
+                if (mFGFilled != null && mFGFilled.type == UISprite.Type.Filled)
                 {
                     if (mFGFilled.fillDirection == UISprite.FillDirection.Horizontal)
                     {
-                        localPosition.x = !mFGFilled.invert ? mSize.x : (this.mSize.x - mSize.x);
+                        localPosition.x = !mFGFilled.invert ? mSize.x : this.mSize.x - mSize.x;
                     }
                     else if (mFGFilled.fillDirection == UISprite.FillDirection.Vertical)
                     {
-                        localPosition.y = !mFGFilled.invert ? mSize.y : (this.mSize.y - mSize.y);
+                        localPosition.y = !mFGFilled.invert ? mSize.y : this.mSize.y - mSize.y;
                     }
                     else
                     {
@@ -197,7 +197,7 @@ public class UISlider : IgnoreTimeScale
                 thumb.localPosition = localPosition;
             }
             current = this;
-            if (((eventReceiver != null) && !string.IsNullOrEmpty(functionName)) && Application.isPlaying)
+            if (eventReceiver != null && !string.IsNullOrEmpty(functionName) && Application.isPlaying)
             {
                 eventReceiver.SendMessage(functionName, num3, SendMessageOptions.DontRequireReceiver);
             }
@@ -212,7 +212,7 @@ public class UISlider : IgnoreTimeScale
     private void Start()
     {
         Init();
-        if ((Application.isPlaying && (thumb != null)) && (thumb.collider != null))
+        if (Application.isPlaying && thumb != null && thumb.collider != null)
         {
             var listener = UIEventListener.Get(thumb.gameObject);
             listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress, new UIEventListener.BoolDelegate(OnPressThumb));
@@ -223,7 +223,7 @@ public class UISlider : IgnoreTimeScale
 
     private void UpdateDrag()
     {
-        if (((mCol != null) && (UICamera.currentCamera != null)) && (UICamera.currentTouch != null))
+        if (mCol != null && UICamera.currentCamera != null && UICamera.currentTouch != null)
         {
             float num;
             UICamera.currentTouch.clickNotification = UICamera.ClickNotification.None;
@@ -231,10 +231,10 @@ public class UISlider : IgnoreTimeScale
             var plane = new Plane(mTrans.rotation * Vector3.back, mTrans.position);
             if (plane.Raycast(ray, out num))
             {
-                var vector = mTrans.localPosition + ((Vector3) (mCenter - (mSize * 0.5f)));
+                var vector = mTrans.localPosition + (Vector3) (mCenter - mSize * 0.5f);
                 var vector2 = mTrans.localPosition - vector;
                 var vector4 = mTrans.InverseTransformPoint(ray.GetPoint(num)) + vector2;
-                Set((direction != Direction.Horizontal) ? (vector4.y / mSize.y) : (vector4.x / mSize.x), false);
+                Set(direction != Direction.Horizontal ? vector4.y / mSize.y : vector4.x / mSize.x, false);
             }
         }
     }

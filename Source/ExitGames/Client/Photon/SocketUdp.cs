@@ -1,7 +1,6 @@
 ﻿namespace ExitGames.Client.Photon
 {
     using System;
-    using System.Net;
     using System.Net.Sockets;
     using System.Security;
     using System.Threading;
@@ -117,11 +116,11 @@
                 }
                 catch (Exception exception)
                 {
-                    if ((State != PhotonSocketState.Disconnecting) && (State != PhotonSocketState.Disconnected))
+                    if (State != PhotonSocketState.Disconnecting && State != PhotonSocketState.Disconnected)
                     {
                         if (ReportDebugOfLevel(DebugLevel.ERROR))
                         {
-                            EnqueueDebugReturn(DebugLevel.ERROR, string.Concat(new object[] { "Receive issue. State: ", State, " Exception: ", exception }));
+                            EnqueueDebugReturn(DebugLevel.ERROR, string.Concat("Receive issue. State: ", State, " Exception: ", exception));
                         }
                         HandleException(StatusCode.ExceptionOnReceive);
                     }

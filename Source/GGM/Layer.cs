@@ -4,27 +4,27 @@ namespace GGM
 {
     public static class Layer
     {
-        public static readonly LayerMask AABB = 0x800;
+        public static readonly LayerMask AABB = 2048;
         public static readonly LayerMask AABBHit = AABB | EnemyHitBox;
         public const int AABBN = 11;
-        public static readonly LayerMask Attack = 0x10000;
+        public static readonly LayerMask Attack = 65536;
         public static readonly LayerMask AttackAABB = Attack | AABB;
         public static readonly LayerMask AttackAABBHit = Attack | AABB | EnemyHitBox;
         public static readonly LayerMask AttackHit = Attack | EnemyHitBox;
-        public const int AttackN = 0x10;
+        public const int AttackN = 16;
         public static readonly LayerMask Default = 1;
         public const int DefaultN = 0;
-        public static readonly LayerMask Enemy = 0x400;
+        public static readonly LayerMask Enemy = 1024;
         public static readonly LayerMask EnemyAABB = Enemy | AABB;
         public static readonly LayerMask EnemyAABBHit = Enemy | AABB | EnemyHitBox;
         public static readonly LayerMask EnemyAttack = Enemy | Attack;
         public static readonly LayerMask EnemyAttackAABB = Enemy | Attack | AABB;
-        public static readonly LayerMask EnemyAttackBox = 0x40000;
-        public const int EnemyAttackBoxN = 0x12;
+        public static readonly LayerMask EnemyAttackBox = 262144;
+        public const int EnemyAttackBoxN = 18;
         public static readonly LayerMask EnemyAttackHit = Enemy | Attack | EnemyHitBox;
         public static readonly LayerMask EnemyHit = Enemy | EnemyHitBox;
-        public static readonly LayerMask EnemyHitBox = 0x80000;
-        public const int EnemyHitBoxN = 0x13;
+        public static readonly LayerMask EnemyHitBox = 524288;
+        public const int EnemyHitBoxN = 19;
         public const int EnemyN = 10;
         public static readonly LayerMask EnemyNetworkObject = Enemy | NetworkObject;
         public static readonly LayerMask EnemyNetworkObjectAttack = Enemy | NetworkObject | Attack;
@@ -42,9 +42,9 @@ namespace GGM
         public static readonly LayerMask EnemyPlayersNetworkObjectAttackAABB = Enemy | Players | NetworkObject | Attack | AABB;
         public static readonly LayerMask EnemyPlayersNetworkObjectAttackAABBHit = Enemy | Players | NetworkObject | Attack | AABB | EnemyHitBox;
         public static readonly LayerMask EnemyPlayersNetworkObjectAttackHit = Enemy | Players | NetworkObject | Attack | EnemyHitBox;
-        public static readonly LayerMask FX = 0x1000;
+        public static readonly LayerMask FX = 4096;
         public const int FXN = 12;
-        public static readonly LayerMask Ground = 0x200;
+        public static readonly LayerMask Ground = 512;
         public static readonly LayerMask GroundAABB = Ground | AABB;
         public static readonly LayerMask GroundAABBHit = Ground | AABB | EnemyHitBox;
         public static readonly LayerMask GroundAttack = Ground | Attack;
@@ -91,9 +91,9 @@ namespace GGM
         public static readonly LayerMask GroundPlayersNetworkObjectHit = Ground | Players | NetworkObject | EnemyHitBox;
         public static readonly LayerMask Ignore_Raycast = 4;
         public const int Ignore_RaycastN = 2;
-        public static readonly LayerMask InnerContact = 0x4000;
+        public static readonly LayerMask InnerContact = 16384;
         public const int InnerContactN = 14;
-        public static readonly LayerMask NetworkObject = 0x2000;
+        public static readonly LayerMask NetworkObject = 8192;
         public static readonly LayerMask NetworkObjectAABB = NetworkObject | AABB;
         public static readonly LayerMask NetworkObjectAABBHit = NetworkObject | AABB | EnemyHitBox;
         public static readonly LayerMask NetworkObjectAttack = NetworkObject | Attack;
@@ -102,11 +102,11 @@ namespace GGM
         public static readonly LayerMask NetworkObjectAttackHit = NetworkObject | Attack | EnemyHitBox;
         public static readonly LayerMask NetworkObjectHit = NetworkObject | EnemyHitBox;
         public const int NetworkObjectN = 13;
-        public static readonly LayerMask noPhysics = 0x8000;
+        public static readonly LayerMask noPhysics = 32768;
         public const int noPhysicsN = 15;
-        public static readonly LayerMask PlayerHitBox = 0x20000;
-        public const int PlayerHitBoxN = 0x11;
-        public static readonly LayerMask Players = 0x100;
+        public static readonly LayerMask PlayerHitBox = 131072;
+        public const int PlayerHitBoxN = 17;
+        public static readonly LayerMask Players = 256;
         public static readonly LayerMask PlayersAABB = Players | AABB;
         public static readonly LayerMask PlayersAABBHit = Players | AABB | EnemyHitBox;
         public static readonly LayerMask PlayersAttack = Players | Attack;
@@ -125,9 +125,9 @@ namespace GGM
         public static readonly LayerMask PlayersNetworkObjectHit = Players | NetworkObject | EnemyHitBox;
         public static readonly LayerMask TransparentFX = 2;
         public const int TransparentFXN = 1;
-        public static readonly LayerMask UI = 0x20;
+        public static readonly LayerMask UI = 32;
         public const int UIN = 5;
-        public static readonly LayerMask Water = 0x10;
+        public static readonly LayerMask Water = 16;
         public const int WaterN = 4;
     }
 }

@@ -32,7 +32,7 @@ public class PhotonMessageInfo
     {
         get
         {
-            return (timeInt / 1000.0);
+            return timeInt / 1000.0;
         }
     }
 }

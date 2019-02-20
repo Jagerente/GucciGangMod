@@ -13,14 +13,14 @@ public class UIStorageSlot : UIItemSlot
 
     protected override InvGameItem Replace(InvGameItem item)
     {
-        return ((storage == null) ? item : storage.Replace(slot, item));
+        return storage == null ? item : storage.Replace(slot, item);
     }
 
     protected override InvGameItem observedItem
     {
         get
         {
-            return ((storage == null) ? null : storage.GetItem(slot));
+            return storage == null ? null : storage.GetItem(slot);
         }
     }
 }

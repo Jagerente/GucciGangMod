@@ -167,7 +167,7 @@ public class EffectLayer : MonoBehaviour
 
     public RibbonTrail GetRibbonTrail()
     {
-        if ((!((ActiveENodes == null) | (ActiveENodes.Length != 1)) && (MaxENodes == 1)) && (RenderType == 1))
+        if (!((ActiveENodes == null) | (ActiveENodes.Length != 1)) && MaxENodes == 1 && RenderType == 1)
         {
             return ActiveENodes[0].Ribbon;
         }
@@ -238,7 +238,7 @@ public class EffectLayer : MonoBehaviour
                 list.Add(affector);
             }
         }
-        if (RotAffectorEnable && (RotateType != RSTYPE.NONE))
+        if (RotAffectorEnable && RotateType != RSTYPE.NONE)
         {
             Affector affector2;
             if (RotateType == RSTYPE.CURVE)
@@ -251,7 +251,7 @@ public class EffectLayer : MonoBehaviour
             }
             list.Add(affector2);
         }
-        if (ScaleAffectorEnable && (ScaleType != RSTYPE.NONE))
+        if (ScaleAffectorEnable && ScaleType != RSTYPE.NONE)
         {
             Affector affector3;
             if (ScaleType == RSTYPE.CURVE)
@@ -264,17 +264,17 @@ public class EffectLayer : MonoBehaviour
             }
             list.Add(affector3);
         }
-        if (ColorAffectorEnable && (ColorAffectType != 0))
+        if (ColorAffectorEnable && ColorAffectType != 0)
         {
             ColorAffector affector4;
             if (ColorAffectType == 2)
             {
-                var colorArr = new Color[] { Color1, Color2, Color3, Color4 };
+                var colorArr = new[] { Color1, Color2, Color3, Color4 };
                 affector4 = new ColorAffector(colorArr, ColorGradualTimeLength, ColorGradualType, node);
             }
             else
             {
-                var colorArray2 = new Color[] { Color1, Color2 };
+                var colorArray2 = new[] { Color1, Color2 };
                 affector4 = new ColorAffector(colorArray2, ColorGradualTimeLength, ColorGradualType, node);
             }
             list.Add(affector4);

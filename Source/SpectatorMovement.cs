@@ -54,27 +54,27 @@ public class SpectatorMovement : MonoBehaviour
             var transform = this.transform;
             if (num2 > 0f)
             {
-                transform.position += (this.transform.forward * speed) * Time.deltaTime;
+                transform.position += this.transform.forward * speed * Time.deltaTime;
             }
             else if (num2 < 0f)
             {
-                transform.position -= (this.transform.forward * speed) * Time.deltaTime;
+                transform.position -= this.transform.forward * speed * Time.deltaTime;
             }
             if (num3 > 0f)
             {
-                transform.position += (this.transform.right * speed) * Time.deltaTime;
+                transform.position += this.transform.right * speed * Time.deltaTime;
             }
             else if (num3 < 0f)
             {
-                transform.position -= (this.transform.right * speed) * Time.deltaTime;
+                transform.position -= this.transform.right * speed * Time.deltaTime;
             }
             if (inputManager.isInput[InputCode.leftRope])
             {
-                transform.position -= (this.transform.up * speed) * Time.deltaTime;
+                transform.position -= this.transform.up * speed * Time.deltaTime;
             }
             else if (inputManager.isInput[InputCode.rightRope])
             {
-                transform.position += (this.transform.up * speed) * Time.deltaTime;
+                transform.position += this.transform.up * speed * Time.deltaTime;
             }
         }
     }

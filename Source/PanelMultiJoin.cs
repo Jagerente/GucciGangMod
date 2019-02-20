@@ -22,8 +22,8 @@ public class PanelMultiJoin : MonoBehaviour
         {
             items[num].SetActive(false);
         }
-        num = (10 * (currentPage - 1)) + index;
-        var separator = new char[] { "`"[0] };
+        num = 10 * (currentPage - 1) + index;
+        var separator = new[] { "`"[0] };
         var strArray = roomName.Split(separator);
         if (strArray[5] != string.Empty)
         {
@@ -40,7 +40,7 @@ public class PanelMultiJoin : MonoBehaviour
 
     private string getServerDataString(RoomInfo room)
     {
-        var separator = new char[] { "`"[0] };
+        var separator = new[] { "`"[0] };
         var strArray = room.name.Split(separator);
         var objArray1 = new object[] { !(strArray[5] == string.Empty) ? "[PWD]" : string.Empty, strArray[0], "/", strArray[1], "/", strArray[2], "/", strArray[4], " ", room.playerCount, "/", room.maxPlayers };
         return string.Concat(objArray1);
@@ -106,7 +106,7 @@ public class PanelMultiJoin : MonoBehaviour
         {
             if (PhotonNetwork.GetRoomList().Length > 0)
             {
-                totalPage = ((PhotonNetwork.GetRoomList().Length - 1) / 10) + 1;
+                totalPage = (PhotonNetwork.GetRoomList().Length - 1) / 10 + 1;
             }
             else
             {
@@ -118,7 +118,7 @@ public class PanelMultiJoin : MonoBehaviour
             updateFilterRooms();
             if (filterRoom.Count > 0)
             {
-                totalPage = ((filterRoom.Count - 1) / 10) + 1;
+                totalPage = (filterRoom.Count - 1) / 10 + 1;
             }
             else
             {
@@ -145,7 +145,7 @@ public class PanelMultiJoin : MonoBehaviour
             {
                 for (index = 0; index < 10; index++)
                 {
-                    var num2 = (10 * (currentPage - 1)) + index;
+                    var num2 = 10 * (currentPage - 1) + index;
                     if (num2 < PhotonNetwork.GetRoomList().Length)
                     {
                         items[index].SetActive(true);
@@ -162,7 +162,7 @@ public class PanelMultiJoin : MonoBehaviour
             {
                 for (index = 0; index < 10; index++)
                 {
-                    var num3 = (10 * (currentPage - 1)) + index;
+                    var num3 = 10 * (currentPage - 1) + index;
                     if (num3 < filterRoom.Count)
                     {
                         var room = (RoomInfo) filterRoom[num3];

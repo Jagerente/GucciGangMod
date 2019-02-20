@@ -26,18 +26,18 @@ public class PingMonoEditor : PhotonPing
 
     public override bool Done()
     {
-        if (!GotResult && (sock != null))
+        if (!GotResult && sock != null)
         {
             if (sock.Available <= 0)
             {
                 return false;
             }
             var num = sock.Receive(PingBytes, SocketFlags.None);
-            if ((PingBytes[PingBytes.Length - 1] != PingId) || (num != PingLength))
+            if (PingBytes[PingBytes.Length - 1] != PingId || num != PingLength)
             {
                 Debug.Log("ReplyMatch is false! ");
             }
-            Successful = (num == PingBytes.Length) && (PingBytes[PingBytes.Length - 1] == PingId);
+            Successful = num == PingBytes.Length && PingBytes[PingBytes.Length - 1] == PingId;
             GotResult = true;
         }
         return true;
@@ -48,8 +48,8 @@ public class PingMonoEditor : PhotonPing
         Init();
         try
         {
-            sock.ReceiveTimeout = 0x1388;
-            sock.Connect(ip, 0x13bf);
+            sock.ReceiveTimeout = 5000;
+            sock.Connect(ip, 5055);
             PingBytes[PingBytes.Length - 1] = PingId;
             sock.Send(PingBytes);
             PingBytes[PingBytes.Length - 1] = (byte) (PingId - 1);

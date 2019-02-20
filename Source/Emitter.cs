@@ -35,12 +35,12 @@ public class Emitter
     protected int EmitByRate()
     {
         var num = Random.Range(0, 100);
-        if ((num >= 0) && (num > Layer.ChanceToEmit))
+        if (num >= 0 && num > Layer.ChanceToEmit)
         {
             return 0;
         }
         EmitDelayTime += Time.deltaTime;
-        if ((EmitDelayTime < Layer.EmitDelay) && !IsFirstEmit)
+        if (EmitDelayTime < Layer.EmitDelay && !IsFirstEmit)
         {
             return 0;
         }
@@ -63,7 +63,7 @@ public class Emitter
         {
             return 0;
         }
-        var num2 = ((int) (EmitterElapsedTime * Layer.EmitRate)) - (Layer.ActiveENodes.Length - Layer.AvailableNodeCount);
+        var num2 = (int) (EmitterElapsedTime * Layer.EmitRate) - (Layer.ActiveENodes.Length - Layer.AvailableNodeCount);
         var availableNodeCount = 0;
         if (num2 > Layer.AvailableNodeCount)
         {
@@ -87,9 +87,9 @@ public class Emitter
         {
             if (!Layer.SyncClient)
             {
-                return (node.Position - (Layer.ClientTransform.position + Layer.EmitPoint));
+                return node.Position - (Layer.ClientTransform.position + Layer.EmitPoint);
             }
-            return (node.Position - Layer.EmitPoint);
+            return node.Position - Layer.EmitPoint;
         }
         if (Layer.EmitType == 3)
         {
@@ -109,7 +109,7 @@ public class Emitter
         {
             var quaternion2 = Quaternion.Euler(0f, 0f, Layer.AngleAroundAxis);
             var quaternion3 = Quaternion.Euler(0f, Random.Range(0, 360), 0f);
-            return ((Quaternion.FromToRotation(Vector3.up, Layer.OriVelocityAxis) * quaternion3) * quaternion2) * Vector3.up;
+            return Quaternion.FromToRotation(Vector3.up, Layer.OriVelocityAxis) * quaternion3 * quaternion2 * Vector3.up;
         }
         return Layer.OriVelocityAxis;
     }
@@ -137,9 +137,9 @@ public class Emitter
         if (Layer.EmitType == 1)
         {
             var emitPoint = Layer.EmitPoint;
-            var num = Random.Range(emitPoint.x - (Layer.BoxSize.x / 2f), emitPoint.x + (Layer.BoxSize.x / 2f));
-            var num2 = Random.Range(emitPoint.y - (Layer.BoxSize.y / 2f), emitPoint.y + (Layer.BoxSize.y / 2f));
-            var num3 = Random.Range(emitPoint.z - (Layer.BoxSize.z / 2f), emitPoint.z + (Layer.BoxSize.z / 2f));
+            var num = Random.Range(emitPoint.x - Layer.BoxSize.x / 2f, emitPoint.x + Layer.BoxSize.x / 2f);
+            var num2 = Random.Range(emitPoint.y - Layer.BoxSize.y / 2f, emitPoint.y + Layer.BoxSize.y / 2f);
+            var num3 = Random.Range(emitPoint.z - Layer.BoxSize.z / 2f, emitPoint.z + Layer.BoxSize.z / 2f);
             zero.x = num;
             zero.y = num2;
             zero.z = num3;
@@ -168,10 +168,10 @@ public class Emitter
         }
         else if (Layer.EmitType == 4)
         {
-            var vector4 = Layer.EmitPoint + (Layer.ClientTransform.localRotation * Vector3.forward) * Layer.LineLengthLeft;
-            var vector5 = Layer.EmitPoint + (Layer.ClientTransform.localRotation * Vector3.forward) * Layer.LineLengthRight;
+            var vector4 = Layer.EmitPoint + Layer.ClientTransform.localRotation * Vector3.forward * Layer.LineLengthLeft;
+            var vector5 = Layer.EmitPoint + Layer.ClientTransform.localRotation * Vector3.forward * Layer.LineLengthRight;
             var vector6 = vector5 - vector4;
-            var num4 = (node.Index + 1) / ((float) Layer.MaxENodes);
+            var num4 = (node.Index + 1) / (float) Layer.MaxENodes;
             var num5 = vector6.magnitude * num4;
             zero = vector4 + vector6.normalized * num5;
             if (!Layer.SyncClient)
@@ -181,13 +181,13 @@ public class Emitter
         }
         else if (Layer.EmitType == 3)
         {
-            var num6 = (node.Index + 1) / ((float) Layer.MaxENodes);
+            var num6 = (node.Index + 1) / (float) Layer.MaxENodes;
             var y = 360f * num6;
             var vector7 = Quaternion.Euler(0f, y, 0f) * (Vector3.right * Layer.Radius);
             zero = Quaternion.FromToRotation(Vector3.up, Layer.CircleDir) * vector7;
             if (!Layer.SyncClient)
             {
-                zero = (Layer.ClientTransform.position + zero) + Layer.EmitPoint;
+                zero = Layer.ClientTransform.position + zero + Layer.EmitPoint;
             }
             else
             {

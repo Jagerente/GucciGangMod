@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
 public class StyledComboBox : StyledItem
@@ -89,7 +88,7 @@ public class StyledComboBox : StyledItem
                 DestroyObject(root.menuItem.transform.GetChild(i).gameObject);
             }
         }
-        if ((itemMenuPrefab != null) && (root.menuItem != null))
+        if (itemMenuPrefab != null && root.menuItem != null)
         {
             var item = Instantiate(itemMenuPrefab) as StyledItem;
             item.Populate(data);
@@ -155,7 +154,7 @@ public class StyledComboBox : StyledItem
         }
         set
         {
-            if ((value >= 0) && (value <= items.Count))
+            if (value >= 0 && value <= items.Count)
             {
                 selectedIndex = value;
                 CreateMenuButton(items[selectedIndex].GetText().text);
@@ -167,7 +166,7 @@ public class StyledComboBox : StyledItem
     {
         get
         {
-            if ((selectedIndex >= 0) && (selectedIndex <= items.Count))
+            if (selectedIndex >= 0 && selectedIndex <= items.Count)
             {
                 return items[selectedIndex];
             }

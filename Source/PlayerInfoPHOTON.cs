@@ -29,7 +29,7 @@ public class PlayerInfoPHOTON
 
     public void initAsGuest()
     {
-        name = "GUEST" + UnityEngine.Random.Range(0, 0x186a0);
+        name = "GUEST" + UnityEngine.Random.Range(0, 100000);
         kills = 0;
         die = 0;
         maxDamage = 0;

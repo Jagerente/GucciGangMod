@@ -251,7 +251,7 @@ public class Sprite
         if (Type == STYPE.BILLBOARD)
         {
             var transform = MainCamera.transform;
-            MyTransform.LookAt(MyTransform.position + (transform.rotation * Vector3.up), transform.rotation * Vector3.back);
+            MyTransform.LookAt(MyTransform.position + transform.rotation * Vector3.up, transform.rotation * Vector3.back);
         }
         WorldMat.SetTRS(MyTransform.position, MyTransform.rotation, Vector3.one);
         var matrixx = WorldMat * LocalMat;
@@ -313,7 +313,7 @@ public class Sprite
     public void Update(bool force)
     {
         ElapsedTime += Time.deltaTime;
-        if ((ElapsedTime > Fps) || force)
+        if (ElapsedTime > Fps || force)
         {
             Transform();
             if (UVChanged)

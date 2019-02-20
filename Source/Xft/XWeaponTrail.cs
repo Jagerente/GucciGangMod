@@ -127,7 +127,7 @@
 
         private void OnDrawGizmos()
         {
-            if ((PointEnd != null) && (PointStart != null))
+            if (PointEnd != null && PointStart != null)
             {
                 var vector = PointStart.position - PointEnd.position;
                 var magnitude = vector.magnitude;
@@ -225,11 +225,11 @@
         private void UpdateIndices()
         {
             var pool = mVertexSegment.Pool;
-            for (var i = 0; i < (Granularity - 1); i++)
+            for (var i = 0; i < Granularity - 1; i++)
             {
-                var num2 = mVertexSegment.VertStart + (i * 3);
-                var num3 = mVertexSegment.VertStart + ((i + 1) * 3);
-                var index = mVertexSegment.IndexStart + (i * 12);
+                var num2 = mVertexSegment.VertStart + i * 3;
+                var num3 = mVertexSegment.VertStart + (i + 1) * 3;
+                var index = mVertexSegment.IndexStart + i * 12;
                 pool.Indices[index] = num3;
                 pool.Indices[index + 1] = num3 + 1;
                 pool.Indices[index + 2] = num2;
@@ -251,14 +251,14 @@
             var pool = mVertexSegment.Pool;
             for (var i = 0; i < Granularity; i++)
             {
-                var index = mVertexSegment.VertStart + (i * 3);
-                var num3 = i / ((float) Granularity);
+                var index = mVertexSegment.VertStart + i * 3;
+                var num3 = i / (float) Granularity;
                 var tl = num3 * mFadeT;
                 var zero = Vector2.zero;
                 var vector2 = mSpline.InterpolateByLen(tl);
                 var vector3 = mSpline.InterpolateNormalByLen(tl);
-                var vector4 = vector2 + (vector3.normalized * mTrailWidth) * 0.5f;
-                var vector5 = vector2 - (vector3.normalized * mTrailWidth) * 0.5f;
+                var vector4 = vector2 + vector3.normalized * mTrailWidth * 0.5f;
+                var vector5 = vector2 - vector3.normalized * mTrailWidth * 0.5f;
                 pool.Vertices[index] = vector4;
                 pool.Colors[index] = MyColor;
                 zero.x = 0f;
@@ -300,7 +300,7 @@
         {
             get
             {
-                return (1f / fps);
+                return 1f / fps;
             }
         }
 

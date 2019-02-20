@@ -13,14 +13,14 @@ public class UIEquipmentSlot : UIItemSlot
 
     protected override InvGameItem Replace(InvGameItem item)
     {
-        return ((equipment == null) ? item : equipment.Replace(slot, item));
+        return equipment == null ? item : equipment.Replace(slot, item);
     }
 
     protected override InvGameItem observedItem
     {
         get
         {
-            return ((equipment == null) ? null : equipment.GetItem(slot));
+            return equipment == null ? null : equipment.GetItem(slot);
         }
     }
 }

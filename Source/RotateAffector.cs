@@ -32,7 +32,7 @@ public class RotateAffector : Affector
         }
         else if (Type == RSTYPE.SIMPLE)
         {
-            var num2 = Node.RotateAngle + (Delta * Time.deltaTime);
+            var num2 = Node.RotateAngle + Delta * Time.deltaTime;
             Node.RotateAngle = num2;
         }
     }

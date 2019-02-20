@@ -23,17 +23,17 @@ public class RCRegion
 
     public float GetRandomX()
     {
-        return (location.x + Random.Range(-dimX / 2f, dimX / 2f));
+        return location.x + Random.Range(-dimX / 2f, dimX / 2f);
     }
 
     public float GetRandomY()
     {
-        return (location.y + Random.Range(-dimY / 2f, dimY / 2f));
+        return location.y + Random.Range(-dimY / 2f, dimY / 2f);
     }
 
     public float GetRandomZ()
     {
-        return (location.z + Random.Range(-dimZ / 2f, dimZ / 2f));
+        return location.z + Random.Range(-dimZ / 2f, dimZ / 2f);
     }
 }
 

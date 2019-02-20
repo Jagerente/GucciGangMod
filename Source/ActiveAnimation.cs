@@ -5,7 +5,6 @@
 
 using AnimationOrTween;
 using System;
-using System.Collections;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Internal/Active Animation"), RequireComponent(typeof(Animation))]
@@ -27,7 +26,7 @@ public class ActiveAnimation : IgnoreTimeScale
             mAnim.enabled = false;
             if (playDirection == Direction.Toggle)
             {
-                playDirection = (mLastDirection == Direction.Forward) ? Direction.Reverse : Direction.Forward;
+                playDirection = mLastDirection == Direction.Forward ? Direction.Reverse : Direction.Forward;
             }
             if (string.IsNullOrEmpty(clipName))
             {
@@ -46,15 +45,15 @@ public class ActiveAnimation : IgnoreTimeScale
                 while (enumerator.MoveNext())
                 {
                     var current = (AnimationState) enumerator.Current;
-                    if (string.IsNullOrEmpty(clipName) || (current.name == clipName))
+                    if (string.IsNullOrEmpty(clipName) || current.name == clipName)
                     {
                         var num = Mathf.Abs(current.speed);
-                        current.speed = num * ((float) playDirection);
-                        if ((playDirection == Direction.Reverse) && (current.time == 0f))
+                        current.speed = num * (float) playDirection;
+                        if (playDirection == Direction.Reverse && current.time == 0f)
                         {
                             current.time = current.length;
                         }
-                        else if ((playDirection == Direction.Forward) && (current.time == current.length))
+                        else if (playDirection == Direction.Forward && current.time == current.length)
                         {
                             current.time = 0f;
                         }
@@ -201,11 +200,11 @@ public class ActiveAnimation : IgnoreTimeScale
                         {
                             onFinished(this);
                         }
-                        if ((eventReceiver != null) && !string.IsNullOrEmpty(callWhenFinished))
+                        if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                         {
                             eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
                         }
-                        if ((mDisableDirection != Direction.Toggle) && (mLastDirection == mDisableDirection))
+                        if (mDisableDirection != Direction.Toggle && mLastDirection == mDisableDirection)
                         {
                             NGUITools.SetActive(gameObject, false);
                         }

@@ -18,7 +18,7 @@ public class RockScript : MonoBehaviour
     {
         transform.position = new Vector3(0f, 0f, 676f);
         vh = desPt - transform.position;
-        vv = new Vector3(0f, (g * vh.magnitude) / (2f * speed), 0f);
+        vv = new Vector3(0f, g * vh.magnitude / (2f * speed), 0f);
         vh.Normalize();
         vh = vh * speed;
     }
@@ -27,15 +27,15 @@ public class RockScript : MonoBehaviour
     {
         if (!disable)
         {
-            vv += (-Vector3.up * g) * Time.deltaTime;
+            vv += -Vector3.up * g * Time.deltaTime;
             var transform = this.transform;
             transform.position += vv * Time.deltaTime;
             var transform2 = this.transform;
             transform2.position += vh * Time.deltaTime;
-            if ((Vector3.Distance(desPt, this.transform.position) < 20f) || (this.transform.position.y < 0f))
+            if (Vector3.Distance(desPt, this.transform.position) < 20f || this.transform.position.y < 0f)
             {
                 this.transform.position = desPt;
-                if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && PhotonNetwork.isMasterClient)
+                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
                 {
                     if (FengGameManagerMKII.LAN)
                     {

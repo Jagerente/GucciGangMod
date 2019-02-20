@@ -60,7 +60,7 @@ public class SpringPosition : IgnoreTimeScale
                 {
                     onFinished(this);
                 }
-                if ((eventReceiver != null) && !string.IsNullOrEmpty(callWhenFinished))
+                if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                 {
                     eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
                 }
@@ -83,7 +83,7 @@ public class SpringPosition : IgnoreTimeScale
                 {
                     onFinished(this);
                 }
-                if ((eventReceiver != null) && !string.IsNullOrEmpty(callWhenFinished))
+                if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                 {
                     eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
                 }

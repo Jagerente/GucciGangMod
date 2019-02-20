@@ -52,7 +52,7 @@ public class InvGameItem
                     while (num5 < num6)
                     {
                         var stat2 = list[num5];
-                        if ((stat2.id == stat.id) && (stat2.modifier == stat.modifier))
+                        if (stat2.id == stat.id && stat2.modifier == stat.modifier)
                         {
                             stat2.amount += num4;
                             flag = true;
@@ -120,25 +120,25 @@ public class InvGameItem
                     return new Color(1f, 1f, 1f);
 
                 case Quality.Polished:
-                    return NGUIMath.HexToColor(0xe0ffbeff);
+                    return NGUIMath.HexToColor(3774856959);
 
                 case Quality.Improved:
-                    return NGUIMath.HexToColor(0x93d749ff);
+                    return NGUIMath.HexToColor(2480359935);
 
                 case Quality.Crafted:
-                    return NGUIMath.HexToColor(0x4eff00ff);
+                    return NGUIMath.HexToColor(1325334783);
 
                 case Quality.Superior:
-                    return NGUIMath.HexToColor(0xbaffff);
+                    return NGUIMath.HexToColor(12255231);
 
                 case Quality.Enchanted:
-                    return NGUIMath.HexToColor(0x7376fdff);
+                    return NGUIMath.HexToColor(1937178111);
 
                 case Quality.Epic:
-                    return NGUIMath.HexToColor(0x9600ffff);
+                    return NGUIMath.HexToColor(2516647935);
 
                 case Quality.Legendary:
-                    return NGUIMath.HexToColor(0xff9000ff);
+                    return NGUIMath.HexToColor(4287627519);
             }
             return white;
         }
@@ -152,7 +152,7 @@ public class InvGameItem
             {
                 return null;
             }
-            return (quality.ToString() + " " + baseItem.name);
+            return quality.ToString() + " " + baseItem.name;
         }
     }
 
@@ -212,7 +212,7 @@ public class InvGameItem
                     break;
             }
             var a = itemLevel / 50f;
-            return (num * Mathf.Lerp(a, a * a, 0.5f));
+            return num * Mathf.Lerp(a, a * a, 0.5f);
         }
     }
 

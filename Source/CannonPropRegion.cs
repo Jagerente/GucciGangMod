@@ -26,10 +26,10 @@ public class CannonPropRegion : Photon.MonoBehaviour
     public void OnTriggerEnter(Collider collider)
     {
         var gameObject = collider.transform.root.gameObject;
-        if ((gameObject.layer == 8) && gameObject.GetPhotonView().isMine)
+        if (gameObject.layer == 8 && gameObject.GetPhotonView().isMine)
         {
             var component = gameObject.GetComponent<HERO>();
-            if ((component != null) && !component.isCannon)
+            if (component != null && !component.isCannon)
             {
                 if (component.myCannonRegion != null)
                 {
@@ -44,10 +44,10 @@ public class CannonPropRegion : Photon.MonoBehaviour
     public void OnTriggerExit(Collider collider)
     {
         var gameObject = collider.transform.root.gameObject;
-        if ((gameObject.layer == 8) && gameObject.GetPhotonView().isMine)
+        if (gameObject.layer == 8 && gameObject.GetPhotonView().isMine)
         {
             var component = gameObject.GetComponent<HERO>();
-            if (((component != null) && (storedHero != null)) && (component == storedHero))
+            if (component != null && storedHero != null && component == storedHero)
             {
                 component.myCannonRegion = null;
                 component.ClearPopup();
@@ -59,15 +59,15 @@ public class CannonPropRegion : Photon.MonoBehaviour
     [RPC]
     public void RequestControlRPC(int viewID, PhotonMessageInfo info)
     {
-        if ((photonView.isMine && PhotonNetwork.isMasterClient) && !disabled)
+        if (photonView.isMine && PhotonNetwork.isMasterClient && !disabled)
         {
             var component = PhotonView.Find(viewID).gameObject.GetComponent<HERO>();
-            if (((component != null) && (component.photonView.owner == info.sender)) && !FengGameManagerMKII.instance.allowedToCannon.ContainsKey(info.sender.ID))
+            if (component != null && component.photonView.owner == info.sender && !FengGameManagerMKII.instance.allowedToCannon.ContainsKey(info.sender.ID))
             {
                 disabled = true;
                 StartCoroutine(WaitAndEnable());
                 FengGameManagerMKII.instance.allowedToCannon.Add(info.sender.ID, new CannonValues(photonView.viewID, settings));
-                component.photonView.RPC("SpawnCannonRPC", info.sender, new object[] { settings });
+                component.photonView.RPC("SpawnCannonRPC", info.sender, settings);
             }
         }
     }
@@ -77,7 +77,7 @@ public class CannonPropRegion : Photon.MonoBehaviour
     {
         if (info.sender.isMasterClient)
         {
-            var strArray = settings.Split(new char[] { ',' });
+            var strArray = settings.Split(',');
             if (strArray.Length > 15)
             {
                 var a = 1f;
@@ -95,7 +95,7 @@ public class CannonPropRegion : Photon.MonoBehaviour
                         foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
                             renderer.material = (Material) FengGameManagerMKII.RCassets.Load("transparent");
-                            if ((Convert.ToSingle(strArray[10]) != 1f) || (Convert.ToSingle(strArray[11]) != 1f))
+                            if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                             {
                                 renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
                             }
@@ -106,7 +106,7 @@ public class CannonPropRegion : Photon.MonoBehaviour
                         foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
                             renderer.material = (Material) FengGameManagerMKII.RCassets.Load(strArray[2]);
-                            if ((Convert.ToSingle(strArray[10]) != 1f) || (Convert.ToSingle(strArray[11]) != 1f))
+                            if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                             {
                                 renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
                             }
@@ -138,7 +138,7 @@ public class CannonPropRegion : Photon.MonoBehaviour
 
     public void Start()
     {
-        if (((int) FengGameManagerMKII.settings[0x40]) >= 100)
+        if ((int) FengGameManagerMKII.settings[64] >= 100)
         {
             GetComponent<Collider>().enabled = false;
         }

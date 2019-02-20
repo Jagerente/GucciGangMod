@@ -12,7 +12,7 @@ public class UIButtonKeyBinding : MonoBehaviour
 
     private void Update()
     {
-        if (!UICamera.inputHasFocus && (keyCode != KeyCode.None))
+        if (!UICamera.inputHasFocus && keyCode != KeyCode.None)
         {
             if (Input.GetKeyDown(keyCode))
             {

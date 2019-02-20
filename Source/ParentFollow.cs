@@ -30,7 +30,7 @@ public class ParentFollow : MonoBehaviour
 
     private void Update()
     {
-        if (isActiveInScene && (parent != null))
+        if (isActiveInScene && parent != null)
         {
             bTransform.position = parent.position;
         }

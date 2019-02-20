@@ -29,7 +29,7 @@ public static class RCextensions
         while (text.Contains("[") && !flag2)
         {
             var index = text.IndexOf("[");
-            if (text.Length >= (index + 7))
+            if (text.Length >= index + 7)
             {
                 var str = text.Substring(index + 1, 6);
                 text = text.Remove(index, 7).Insert(index, "<color=#" + str);
@@ -75,19 +75,19 @@ public static class RCextensions
         var width = texture.width;
         var height = texture.height;
         var num3 = 0;
-        if ((width < 4) || ((width & (width - 1)) != 0))
+        if (width < 4 || (width & (width - 1)) != 0)
         {
             num3 = 4;
-            width = Math.Min(width, 0x3ff);
+            width = Math.Min(width, 1023);
             while (num3 < width)
             {
                 num3 *= 2;
             }
         }
-        else if ((height < 4) || ((height & (height - 1)) != 0))
+        else if (height < 4 || (height & (height - 1)) != 0)
         {
             num3 = 4;
-            height = Math.Min(height, 0x3ff);
+            height = Math.Min(height, 1023);
             while (num3 < height)
             {
                 num3 *= 2;
@@ -162,12 +162,12 @@ public static class RCextensions
 
     public static bool returnBoolFromObject(object obj)
     {
-        return (((obj != null) && (obj is bool)) && ((bool) obj));
+        return obj != null && obj is bool && (bool) obj;
     }
 
     public static float returnFloatFromObject(object obj)
     {
-        if ((obj != null) && (obj is float))
+        if (obj != null && obj is float)
         {
             return (float) obj;
         }
@@ -176,7 +176,7 @@ public static class RCextensions
 
     public static int returnIntFromObject(object obj)
     {
-        if ((obj != null) && (obj is int))
+        if (obj != null && obj is int)
         {
             return (int) obj;
         }

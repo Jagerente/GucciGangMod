@@ -17,7 +17,7 @@ public class KillInfoComponent : MonoBehaviour
     public GameObject leftTitan;
     private float lifeTime = 8f;
     private float maxScale = 1.5f;
-    private int offset = 0x18;
+    private int offset = 24;
     public GameObject rightTitan;
     public GameObject slabelNameLeft;
     public GameObject slabelNameRight;
@@ -113,7 +113,7 @@ public class KillInfoComponent : MonoBehaviour
         {
             labelScore.GetComponent<UILabel>().text = dmg.ToString();
             slabelScore.GetComponent<UILabel>().text = dmg.ToString();
-            if (dmg > 0x3e8)
+            if (dmg > 1000)
             {
                 labelScore.GetComponent<UILabel>().color = Color.red;
                 slabelScore.GetComponent<UILabel>().color = Color.red;
@@ -126,7 +126,7 @@ public class KillInfoComponent : MonoBehaviour
     {
         start = true;
         transform.localScale = new Vector3(0.85f, 0.85f, 0.85f);
-        transform.localPosition = new Vector3(0f, -100f + (Screen.height * 0.5f), 0f);
+        transform.localPosition = new Vector3(0f, -100f + Screen.height * 0.5f, 0f);
     }
 
     private void Update()
@@ -145,15 +145,15 @@ public class KillInfoComponent : MonoBehaviour
             if (timeElapsed > lifeTime)
             {
                 transform.position += new Vector3(0f, Time.deltaTime * 0.15f, 0f);
-                alpha = ((1f - (Time.deltaTime * 45f)) + lifeTime) - timeElapsed;
+                alpha = 1f - Time.deltaTime * 45f + lifeTime - timeElapsed;
                 setAlpha(alpha);
             }
             else
             {
-                float num = ((int) (100f - (Screen.height * 0.5f))) + (col * offset);
+                float num = (int) (100f - Screen.height * 0.5f) + col * offset;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0f, -num, 0f), Time.deltaTime * 10f);
             }
-            if (timeElapsed > (lifeTime + 0.5f))
+            if (timeElapsed > lifeTime + 0.5f)
             {
                 Destroy(gameObject);
             }

@@ -13,8 +13,8 @@ internal class Test_CSharp : MonoBehaviour
 
     private void OnGUI()
     {
-        m_Position = GUILayout.BeginScrollView(m_Position, new GUILayoutOption[0]);
-        GUILayout.Label(m_InGameLog, new GUILayoutOption[0]);
+        m_Position = GUILayout.BeginScrollView(m_Position);
+        GUILayout.Label(m_InGameLog);
         GUILayout.EndScrollView();
     }
 

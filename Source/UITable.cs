@@ -67,8 +67,8 @@ public class UITable : MonoBehaviour
     {
         var num = 0f;
         var num2 = 0f;
-        var num3 = (columns <= 0) ? 1 : ((children.Count / columns) + 1);
-        var num4 = (columns <= 0) ? children.Count : columns;
+        var num3 = columns <= 0 ? 1 : children.Count / columns + 1;
+        var num4 = columns <= 0 ? children.Count : columns;
         var boundsArray = new Bounds[num3, num4];
         var boundsArray2 = new Bounds[num4];
         var boundsArray3 = new Bounds[num3];
@@ -86,7 +86,7 @@ public class UITable : MonoBehaviour
             boundsArray[num6, index] = bounds;
             boundsArray2[index].Encapsulate(bounds);
             boundsArray3[num6].Encapsulate(bounds);
-            if ((++index >= columns) && (columns > 0))
+            if (++index >= columns && columns > 0)
             {
                 index = 0;
                 num6++;
@@ -104,26 +104,26 @@ public class UITable : MonoBehaviour
             var bounds3 = boundsArray2[index];
             var bounds4 = boundsArray3[num6];
             var localPosition = transform2.localPosition;
-            localPosition.x = (num + bounds2.extents.x) - bounds2.center.x;
-            localPosition.x += (bounds2.min.x - bounds3.min.x) + padding.x;
+            localPosition.x = num + bounds2.extents.x - bounds2.center.x;
+            localPosition.x += bounds2.min.x - bounds3.min.x + padding.x;
             if (direction == Direction.Down)
             {
-                localPosition.y = (-num2 - bounds2.extents.y) - bounds2.center.y;
-                localPosition.y += ((((bounds2.max.y - bounds2.min.y) - bounds4.max.y) + bounds4.min.y) * 0.5f) - padding.y;
+                localPosition.y = -num2 - bounds2.extents.y - bounds2.center.y;
+                localPosition.y += (bounds2.max.y - bounds2.min.y - bounds4.max.y + bounds4.min.y) * 0.5f - padding.y;
             }
             else
             {
-                localPosition.y = (num2 + bounds2.extents.y) - bounds2.center.y;
-                localPosition.y += ((((bounds2.max.y - bounds2.min.y) - bounds4.max.y) + bounds4.min.y) * 0.5f) - padding.y;
+                localPosition.y = num2 + bounds2.extents.y - bounds2.center.y;
+                localPosition.y += (bounds2.max.y - bounds2.min.y - bounds4.max.y + bounds4.min.y) * 0.5f - padding.y;
             }
-            num += (bounds3.max.x - bounds3.min.x) + (padding.x * 2f);
+            num += bounds3.max.x - bounds3.min.x + padding.x * 2f;
             transform2.localPosition = localPosition;
-            if ((++index >= columns) && (columns > 0))
+            if (++index >= columns && columns > 0)
             {
                 index = 0;
                 num6++;
                 num = 0f;
-                num2 += bounds4.size.y + (padding.y * 2f);
+                num2 += bounds4.size.y + padding.y * 2f;
             }
             num9++;
         }
@@ -156,7 +156,7 @@ public class UITable : MonoBehaviour
                 for (var i = 0; i < transform.childCount; i++)
                 {
                     var child = transform.GetChild(i);
-                    if (((child != null) && (child.gameObject != null)) && (!hideInactive || NGUITools.GetActive(child.gameObject)))
+                    if (child != null && child.gameObject != null && (!hideInactive || NGUITools.GetActive(child.gameObject)))
                     {
                         mChildren.Add(child);
                     }

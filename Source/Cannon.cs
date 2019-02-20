@@ -47,7 +47,7 @@ public class Cannon : Photon.MonoBehaviour
                 if (FengGameManagerMKII.instance.allowedToCannon.ContainsKey(owner.ID))
                 {
                     settings = FengGameManagerMKII.instance.allowedToCannon[owner.ID].settings;
-                    photonView.RPC("SetSize", PhotonTargets.All, new object[] { settings });
+                    photonView.RPC("SetSize", PhotonTargets.All, settings);
                     var viewID = FengGameManagerMKII.instance.allowedToCannon[owner.ID].viewID;
                     FengGameManagerMKII.instance.allowedToCannon.Remove(owner.ID);
                     var component = PhotonView.Find(viewID).gameObject.GetComponent<CannonPropRegion>();
@@ -86,14 +86,14 @@ public class Cannon : Photon.MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient && !FengGameManagerMKII.instance.isRestarting)
         {
-            var strArray = settings.Split(new char[] { ',' });
+            var strArray = settings.Split(',');
             if (strArray[0] == "photon")
             {
                 if (strArray.Length > 15)
                 {
-                    var go = PhotonNetwork.Instantiate("RCAsset/" + strArray[1] + "Prop", new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]), Convert.ToSingle(strArray[14])), new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]), Convert.ToSingle(strArray[0x11]), Convert.ToSingle(strArray[0x12])), 0);
+                    var go = PhotonNetwork.Instantiate("RCAsset/" + strArray[1] + "Prop", new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]), Convert.ToSingle(strArray[14])), new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[16]), Convert.ToSingle(strArray[17]), Convert.ToSingle(strArray[18])), 0);
                     go.GetComponent<CannonPropRegion>().settings = settings;
-                    go.GetPhotonView().RPC("SetSize", PhotonTargets.AllBuffered, new object[] { settings });
+                    go.GetPhotonView().RPC("SetSize", PhotonTargets.AllBuffered, settings);
                 }
                 else
                 {
@@ -124,7 +124,7 @@ public class Cannon : Photon.MonoBehaviour
     {
         if (info.sender.isMasterClient)
         {
-            var strArray = settings.Split(new char[] { ',' });
+            var strArray = settings.Split(',');
             if (strArray.Length > 15)
             {
                 var a = 1f;
@@ -142,7 +142,7 @@ public class Cannon : Photon.MonoBehaviour
                         foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
                             renderer.material = (Material) FengGameManagerMKII.RCassets.Load("transparent");
-                            if ((Convert.ToSingle(strArray[10]) != 1f) || (Convert.ToSingle(strArray[11]) != 1f))
+                            if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                             {
                                 renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
                             }
@@ -155,7 +155,7 @@ public class Cannon : Photon.MonoBehaviour
                             if (!renderer.name.Contains("Line Renderer"))
                             {
                                 renderer.material = (Material) FengGameManagerMKII.RCassets.Load(strArray[2]);
-                                if ((Convert.ToSingle(strArray[10]) != 1f) || (Convert.ToSingle(strArray[11]) != 1f))
+                                if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                                 {
                                     renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
                                 }
@@ -205,7 +205,7 @@ public class Cannon : Photon.MonoBehaviour
             for (var i = 0; i < 100; i++)
             {
                 myCannonLine.SetPosition(i, position);
-                position += (vector3 * num) + (((0.5f * vector) * num) * num);
+                position += vector3 * num + 0.5f * vector * num * num;
                 vector3 += vector * num;
             }
             var num3 = 30f;
@@ -223,7 +223,7 @@ public class Cannon : Photon.MonoBehaviour
                         barrel.Rotate(new Vector3(0f, 0f, Time.deltaTime * num3));
                     }
                 }
-                else if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonBack) && (currentRot >= -18f))
+                else if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonBack) && currentRot >= -18f)
                 {
                     currentRot += Time.deltaTime * -num3;
                     barrel.Rotate(new Vector3(0f, 0f, Time.deltaTime * -num3));
@@ -247,7 +247,7 @@ public class Cannon : Photon.MonoBehaviour
                         barrel.Rotate(new Vector3(Time.deltaTime * -num3, 0f, 0f));
                     }
                 }
-                else if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonBack) && (currentRot <= 40f))
+                else if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonBack) && currentRot <= 40f)
                 {
                     currentRot += Time.deltaTime * num3;
                     barrel.Rotate(new Vector3(Time.deltaTime * num3, 0f, 0f));
@@ -273,7 +273,7 @@ public class Cannon : Photon.MonoBehaviour
                     myHero.myCannonRegion = null;
                     Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(myHero.gameObject, true, false);
                     myHero.baseRigidBody.velocity = Vector3.zero;
-                    myHero.photonView.RPC("ReturnFromCannon", PhotonTargets.Others, new object[0]);
+                    myHero.photonView.RPC("ReturnFromCannon", PhotonTargets.Others);
                     myHero.skillCDLast = myHero.skillCDLastCannon;
                     myHero.skillCDDuration = myHero.skillCDLast;
                 }

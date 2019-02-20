@@ -66,7 +66,7 @@ public class BTN_save_snapshot : MonoBehaviour
                 case 1:
                     r0 = Screen.height / 600f;
                     texture1 = new Texture2D((int) (r0 * fthis.targetTexture.transform.localScale.x), (int) (r0 * fthis.targetTexture.transform.localScale.y), TextureFormat.RGB24, false);
-                    texture1.ReadPixels(new Rect((Screen.width * 0.5f) - (texture1.width * 0.5f), ((Screen.height * 0.5f) - (texture1.height * 0.5f)) - (r0 * 0f), texture1.width, texture1.height), 0, 0);
+                    texture1.ReadPixels(new Rect(Screen.width * 0.5f - texture1.width * 0.5f, Screen.height * 0.5f - texture1.height * 0.5f - r0 * 0f, texture1.width, texture1.height), 0, 0);
                     texture1.Apply();
                     Scurrent = 0;
                     SPC = 2;
@@ -83,7 +83,7 @@ public class BTN_save_snapshot : MonoBehaviour
                         transform.position -= Vector3.up * 10000f;
                         Ss_63++;
                     }
-                    var textArray1 = new string[] { "aottg_ss-", DateTime.Today.Month.ToString(), "_", DateTime.Today.Day.ToString(), "_", DateTime.Today.Year.ToString(), "-", DateTime.Now.Hour.ToString(), "_", DateTime.Now.Minute.ToString(), "_", DateTime.Now.Second.ToString(), ".png" };
+                    var textArray1 = new[] { "aottg_ss-", DateTime.Today.Month.ToString(), "_", DateTime.Today.Day.ToString(), "_", DateTime.Today.Year.ToString(), "-", DateTime.Now.Hour.ToString(), "_", DateTime.Now.Minute.ToString(), "_", DateTime.Now.Second.ToString(), ".png" };
                     img_name5 = string.Concat(textArray1);
                     var args = new object[] { img_name5, texture1.width, texture1.height, Convert.ToBase64String(texture1.EncodeToPNG()) };
                     Application.ExternalCall("SaveImg", args);

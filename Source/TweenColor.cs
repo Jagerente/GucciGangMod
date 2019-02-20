@@ -75,7 +75,7 @@ public class TweenColor : UITweener
             if (mLight != null)
             {
                 mLight.color = value;
-                mLight.enabled = ((value.r + value.g) + value.b) > 0.01f;
+                mLight.enabled = value.r + value.g + value.b > 0.01f;
             }
         }
     }

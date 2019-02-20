@@ -18,7 +18,7 @@ public class UIButtonScale : MonoBehaviour
 
     private void OnDisable()
     {
-        if (mStarted && (tweenTarget != null))
+        if (mStarted && tweenTarget != null)
         {
             var component = tweenTarget.GetComponent<TweenScale>();
             if (component != null)
@@ -58,7 +58,7 @@ public class UIButtonScale : MonoBehaviour
             {
                 Start();
             }
-            TweenScale.Begin(tweenTarget.gameObject, duration, !isPressed ? (!UICamera.IsHighlighted(gameObject) ? mScale : Vector3.Scale(mScale, hover)) : Vector3.Scale(mScale, pressed)).method = UITweener.Method.EaseInOut;
+            TweenScale.Begin(tweenTarget.gameObject, duration, !isPressed ? !UICamera.IsHighlighted(gameObject) ? mScale : Vector3.Scale(mScale, hover) : Vector3.Scale(mScale, pressed)).method = UITweener.Method.EaseInOut;
         }
     }
 

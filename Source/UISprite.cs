@@ -36,7 +36,7 @@ public class UISprite : UIWidget
         {
             return false;
         }
-        if (invert || (fill <= 0.999f))
+        if (invert || fill <= 0.999f)
         {
             var f = Mathf.Clamp01(fill);
             if (!invert)
@@ -99,7 +99,7 @@ public class UISprite : UIWidget
         var yMin = mOuterUV.yMin;
         var xMax = mOuterUV.xMax;
         var yMax = mOuterUV.yMax;
-        if ((mFillDirection == FillDirection.Horizontal) || (mFillDirection == FillDirection.Vertical))
+        if (mFillDirection == FillDirection.Horizontal || mFillDirection == FillDirection.Vertical)
         {
             var num9 = (xMax - xMin) * mFillAmount;
             var num10 = (yMax - yMin) * mFillAmount;
@@ -195,8 +195,8 @@ public class UISprite : UIWidget
                     v[2].y = Mathf.Lerp(num12, num13, v[2].y);
                     vectorArray4[1].y = Mathf.Lerp(num12, num13, vectorArray4[1].y);
                     vectorArray4[2].y = Mathf.Lerp(num12, num13, vectorArray4[2].y);
-                    var fill = (mFillAmount * 2f) - j;
-                    var flag = (j % 2) == 1;
+                    var fill = mFillAmount * 2f - j;
+                    var flag = j % 2 == 1;
                     if (AdjustRadial(v, vectorArray4, fill, !flag))
                     {
                         if (mInvert)
@@ -235,7 +235,7 @@ public class UISprite : UIWidget
             }
             if (fillDirection == FillDirection.Radial360)
             {
-                var numArray = new float[] { 0.5f, 1f, 0f, 0.5f, 0.5f, 1f, 0.5f, 1f, 0f, 0.5f, 0.5f, 1f, 0f, 0.5f, 0f, 0.5f };
+                var numArray = new[] { 0.5f, 1f, 0f, 0.5f, 0.5f, 1f, 0.5f, 1f, 0f, 0.5f, 0.5f, 1f, 0f, 0.5f, 0f, 0.5f };
                 var vectorArray5 = new Vector2[4];
                 var vectorArray6 = new Vector2[4];
                 for (var n = 0; n < 4; n++)
@@ -263,7 +263,7 @@ public class UISprite : UIWidget
                     }
                     for (var num22 = 0; num22 < 4; num22++)
                     {
-                        var index = !mInvert ? (n * 4) : ((3 - n) * 4);
+                        var index = !mInvert ? n * 4 : (3 - n) * 4;
                         var a = numArray[index];
                         var b = numArray[index + 1];
                         var num26 = numArray[index + 2];
@@ -273,8 +273,8 @@ public class UISprite : UIWidget
                         vectorArray6[num22].x = Mathf.Lerp(a, b, vectorArray6[num22].x);
                         vectorArray6[num22].y = Mathf.Lerp(num26, num27, vectorArray6[num22].y);
                     }
-                    var num28 = (mFillAmount * 4f) - n;
-                    var flag2 = (n % 2) == 1;
+                    var num28 = mFillAmount * 4f - n;
+                    var flag2 = n % 2 == 1;
                     if (AdjustRadial(vectorArray5, vectorArray6, num28, !flag2))
                     {
                         if (mInvert)
@@ -326,7 +326,7 @@ public class UISprite : UIWidget
         {
             mSprite = null;
         }
-        if ((mSprite == null) && (mAtlas != null))
+        if (mSprite == null && mAtlas != null)
         {
             if (!string.IsNullOrEmpty(mSpriteName))
             {
@@ -337,7 +337,7 @@ public class UISprite : UIWidget
                 }
                 SetAtlasSprite(sp);
             }
-            if ((mSprite == null) && (mAtlas.spriteList.Count > 0))
+            if (mSprite == null && mAtlas.spriteList.Count > 0)
             {
                 var sprite2 = mAtlas.spriteList[0];
                 if (sprite2 == null)
@@ -409,17 +409,17 @@ public class UISprite : UIWidget
                         vector5.z = 1f;
                         cachedTransform.localScale = vector5;
                     }
-                    var num2 = Mathf.RoundToInt(Mathf.Abs(vector5.x) * ((1f + mSprite.paddingLeft) + mSprite.paddingRight));
-                    var num3 = Mathf.RoundToInt(Mathf.Abs(vector5.y) * ((1f + mSprite.paddingTop) + mSprite.paddingBottom));
+                    var num2 = Mathf.RoundToInt(Mathf.Abs(vector5.x) * (1f + mSprite.paddingLeft + mSprite.paddingRight));
+                    var num3 = Mathf.RoundToInt(Mathf.Abs(vector5.y) * (1f + mSprite.paddingTop + mSprite.paddingBottom));
                     var vector6 = cachedTransform.localPosition;
                     vector6.x = Mathf.CeilToInt(vector6.x * 4f) >> 2;
                     vector6.y = Mathf.CeilToInt(vector6.y * 4f) >> 2;
                     vector6.z = Mathf.RoundToInt(vector6.z);
-                    if (((num2 % 2) == 1) && (((pivot == Pivot.Top) || (pivot == Pivot.Center)) || (pivot == Pivot.Bottom)))
+                    if (num2 % 2 == 1 && (pivot == Pivot.Top || pivot == Pivot.Center || pivot == Pivot.Bottom))
                     {
                         vector6.x += 0.5f;
                     }
-                    if (((num3 % 2) == 1) && (((pivot == Pivot.Left) || (pivot == Pivot.Center)) || (pivot == Pivot.Right)))
+                    if (num3 % 2 == 1 && (pivot == Pivot.Left || pivot == Pivot.Center || pivot == Pivot.Right))
                     {
                         vector6.y += 0.5f;
                     }
@@ -487,7 +487,7 @@ public class UISprite : UIWidget
         }
         else
         {
-            mSpriteName = (mSprite == null) ? string.Empty : mSprite.name;
+            mSpriteName = mSprite == null ? string.Empty : mSprite.name;
             mSprite = sp;
         }
     }
@@ -596,7 +596,7 @@ public class UISprite : UIWidget
                 var index = i + 1;
                 for (var k = 0; k < 3; k++)
                 {
-                    if ((mFillCenter || (i != 1)) || (k != 1))
+                    if (mFillCenter || i != 1 || k != 1)
                     {
                         var num10 = k + 1;
                         verts.Add(new Vector3(vectorArray[index].x, vectorArray[k].y, 0f));
@@ -631,7 +631,7 @@ public class UISprite : UIWidget
             var pixelSize = atlas.pixelSize;
             var num2 = Mathf.Abs(mInner.width / localScale.x) * pixelSize;
             var num3 = Mathf.Abs(mInner.height / localScale.y) * pixelSize;
-            if ((num2 < 0.01f) || (num3 < 0.01f))
+            if (num2 < 0.01f || num3 < 0.01f)
             {
                 Debug.LogWarning("The tiled sprite (" + NGUITools.GetHierarchy(gameObject) + ") is too small.\nConsider using a bigger one.");
                 num2 = 0.01f;
@@ -650,7 +650,7 @@ public class UISprite : UIWidget
                 var num6 = i + num3;
                 if (num6 > 1f)
                 {
-                    vector4.y = vector2.y + (((vector3.y - vector2.y) * (1f - i)) / (num6 - i));
+                    vector4.y = vector2.y + (vector3.y - vector2.y) * (1f - i) / (num6 - i);
                     num6 = 1f;
                 }
                 while (x < 1f)
@@ -658,7 +658,7 @@ public class UISprite : UIWidget
                     var num7 = x + num2;
                     if (num7 > 1f)
                     {
-                        vector4.x = vector2.x + (((vector3.x - vector2.x) * (1f - x)) / (num7 - x));
+                        vector4.x = vector2.x + (vector3.x - vector2.x) * (1f - x) / (num7 - x);
                         num7 = 1f;
                     }
                     verts.Add(new Vector3(num7, -i, 0f));
@@ -697,7 +697,7 @@ public class UISprite : UIWidget
 
     public virtual void UpdateUVs(bool force)
     {
-        if (((type == Type.Sliced) || (type == Type.Tiled)) && (cachedTransform.localScale != mScale))
+        if ((type == Type.Sliced || type == Type.Tiled) && cachedTransform.localScale != mScale)
         {
             mScale = cachedTransform.localScale;
             mChanged = true;
@@ -733,8 +733,8 @@ public class UISprite : UIWidget
                 mAtlas = value;
                 mSpriteSet = false;
                 mSprite = null;
-                material = (mAtlas == null) ? null : mAtlas.spriteMaterial;
-                if ((string.IsNullOrEmpty(this.mSpriteName) && (mAtlas != null)) && (mAtlas.spriteList.Count > 0))
+                material = mAtlas == null ? null : mAtlas.spriteMaterial;
+                if (string.IsNullOrEmpty(this.mSpriteName) && mAtlas != null && mAtlas.spriteList.Count > 0)
                 {
                     SetAtlasSprite(mAtlas.spriteList[0]);
                     mSpriteName = mSprite.name;
@@ -767,7 +767,7 @@ public class UISprite : UIWidget
             var outer = atlasSprite.outer;
             var inner = atlasSprite.inner;
             var mainTexture = this.mainTexture;
-            if ((atlas.coordinates == UIAtlas.Coordinates.TexCoords) && (mainTexture != null))
+            if (atlas.coordinates == UIAtlas.Coordinates.TexCoords && mainTexture != null)
             {
                 outer = NGUIMath.ConvertToPixels(outer, mainTexture.width, mainTexture.height, true);
                 inner = NGUIMath.ConvertToPixels(inner, mainTexture.width, mainTexture.height, true);
@@ -854,7 +854,7 @@ public class UISprite : UIWidget
     {
         get
         {
-            return (GetAtlasSprite() != null);
+            return GetAtlasSprite() != null;
         }
     }
 
@@ -865,7 +865,7 @@ public class UISprite : UIWidget
             var material = base.material;
             if (material == null)
             {
-                material = (mAtlas == null) ? null : mAtlas.spriteMaterial;
+                material = mAtlas == null ? null : mAtlas.spriteMaterial;
                 mSprite = null;
                 this.material = material;
                 if (material != null)
@@ -890,7 +890,7 @@ public class UISprite : UIWidget
     {
         get
         {
-            return (type == Type.Sliced);
+            return type == Type.Sliced;
         }
     }
 
@@ -898,7 +898,7 @@ public class UISprite : UIWidget
     {
         get
         {
-            if (isValid && (type == Type.Simple))
+            if (isValid && type == Type.Simple)
             {
                 return new Vector4(mSprite.paddingLeft, mSprite.paddingTop, mSprite.paddingRight, mSprite.paddingBottom);
             }

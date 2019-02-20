@@ -3,7 +3,6 @@
 //DEN is OP as fuck.
 //Farewell Cowboy
 
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class UIItemSlot : MonoBehaviour
@@ -41,7 +40,7 @@ public abstract class UIItemSlot : MonoBehaviour
 
     private void OnDrag(Vector2 delta)
     {
-        if ((mDraggedItem == null) && (mItem != null))
+        if (mDraggedItem == null && mItem != null)
         {
             UICamera.currentTouch.clickNotification = UICamera.ClickNotification.BasedOnDelta;
             mDraggedItem = Replace(null);
@@ -77,7 +76,7 @@ public abstract class UIItemSlot : MonoBehaviour
             var baseItem = item.baseItem;
             if (baseItem != null)
             {
-                var textArray1 = new string[] { "[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n" };
+                var textArray1 = new[] { "[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n" };
                 var str2 = string.Concat(textArray1);
                 var objArray1 = new object[] { str2, "[AFAFAF]Level ", item.itemLevel, " ", baseItem.slot };
                 var tooltipText = string.Concat(objArray1);
@@ -101,7 +100,7 @@ public abstract class UIItemSlot : MonoBehaviour
                         {
                             tooltipText = tooltipText + "%";
                         }
-                        tooltipText = (tooltipText + " " + stat.id) + "[-]";
+                        tooltipText = tooltipText + " " + stat.id + "[-]";
                     }
                     num++;
                 }
@@ -123,19 +122,19 @@ public abstract class UIItemSlot : MonoBehaviour
         if (mItem != observedItem)
         {
             mItem = observedItem;
-            var item2 = (observedItem == null) ? null : observedItem.baseItem;
+            var item2 = observedItem == null ? null : observedItem.baseItem;
             if (label != null)
             {
-                var str = (observedItem == null) ? null : observedItem.name;
+                var str = observedItem == null ? null : observedItem.name;
                 if (string.IsNullOrEmpty(mText))
                 {
                     mText = label.text;
                 }
-                label.text = (str == null) ? mText : str;
+                label.text = str == null ? mText : str;
             }
             if (icon != null)
             {
-                if ((item2 == null) || (item2.iconAtlas == null))
+                if (item2 == null || item2.iconAtlas == null)
                 {
                     icon.enabled = false;
                 }
@@ -149,14 +148,14 @@ public abstract class UIItemSlot : MonoBehaviour
             }
             if (background != null)
             {
-                background.color = (observedItem == null) ? Color.white : observedItem.color;
+                background.color = observedItem == null ? Color.white : observedItem.color;
             }
         }
     }
 
     private void UpdateCursor()
     {
-        if ((mDraggedItem != null) && (mDraggedItem.baseItem != null))
+        if (mDraggedItem != null && mDraggedItem.baseItem != null)
         {
             UICursor.Set(mDraggedItem.baseItem.iconAtlas, mDraggedItem.baseItem.iconName);
         }

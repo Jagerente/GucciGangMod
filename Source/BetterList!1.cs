@@ -17,7 +17,7 @@ public class BetterList<T>
 
     public void Add(T item)
     {
-        if ((buffer == null) || (size == buffer.Length))
+        if (buffer == null || size == buffer.Length)
         {
             AllocateMore();
         }
@@ -26,8 +26,8 @@ public class BetterList<T>
 
     private void AllocateMore()
     {
-        var array = (buffer == null) ? new T[0x20] : new T[Mathf.Max(buffer.Length << 1, 0x20)];
-        if ((buffer != null) && (size > 0))
+        var array = buffer == null ? new T[32] : new T[Mathf.Max(buffer.Length << 1, 32)];
+        if (buffer != null && size > 0)
         {
             buffer.CopyTo(array, 0);
         }
@@ -62,7 +62,7 @@ public class BetterList<T>
 
     public void Insert(int index, T item)
     {
-        if ((buffer == null) || (size == buffer.Length))
+        if (buffer == null || size == buffer.Length)
         {
             AllocateMore();
         }
@@ -83,7 +83,7 @@ public class BetterList<T>
 
     public T Pop()
     {
-        if ((buffer != null) && (size != 0))
+        if (buffer != null && size != 0)
         {
             var local = buffer[--size];
             buffer[size] = default(T);
@@ -122,7 +122,7 @@ public class BetterList<T>
 
     public void RemoveAt(int index)
     {
-        if ((buffer != null) && (index < size))
+        if (buffer != null && index < size)
         {
             size--;
             buffer[index] = default(T);

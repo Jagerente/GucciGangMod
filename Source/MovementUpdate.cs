@@ -33,7 +33,7 @@ public class MovementUpdate : MonoBehaviour
 
     private void Update()
     {
-        if ((!disabled && (Network.peerType != NetworkPeerType.Disconnected)) && (Network.peerType != NetworkPeerType.Connecting))
+        if (!disabled && Network.peerType != NetworkPeerType.Disconnected && Network.peerType != NetworkPeerType.Connecting)
         {
             if (networkView.isMine)
             {

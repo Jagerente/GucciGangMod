@@ -18,27 +18,27 @@ public class InvStat
         var num2 = (int) b.id;
         if (a.id == Identifier.Armor)
         {
-            id -= 0x2710;
+            id -= 10000;
         }
         else if (a.id == Identifier.Damage)
         {
-            id -= 0x1388;
+            id -= 5000;
         }
         if (b.id == Identifier.Armor)
         {
-            num2 -= 0x2710;
+            num2 -= 10000;
         }
         else if (b.id == Identifier.Damage)
         {
-            num2 -= 0x1388;
+            num2 -= 5000;
         }
         if (a.amount < 0)
         {
-            id += 0x3e8;
+            id += 1000;
         }
         if (b.amount < 0)
         {
-            num2 += 0x3e8;
+            num2 += 1000;
         }
         if (a.modifier == Modifier.Percent)
         {
@@ -65,27 +65,27 @@ public class InvStat
         var num2 = (int) b.id;
         if (a.id == Identifier.Damage)
         {
-            id -= 0x2710;
+            id -= 10000;
         }
         else if (a.id == Identifier.Armor)
         {
-            id -= 0x1388;
+            id -= 5000;
         }
         if (b.id == Identifier.Damage)
         {
-            num2 -= 0x2710;
+            num2 -= 10000;
         }
         else if (b.id == Identifier.Armor)
         {
-            num2 -= 0x1388;
+            num2 -= 5000;
         }
         if (a.amount < 0)
         {
-            id += 0x3e8;
+            id += 1000;
         }
         if (b.amount < 0)
         {
-            num2 += 0x3e8;
+            num2 += 1000;
         }
         if (a.modifier == Modifier.Percent)
         {

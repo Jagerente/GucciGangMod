@@ -4,7 +4,6 @@
 //Farewell Cowboy
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,7 +72,7 @@ public class Xffect : MonoBehaviour
                 {
                     var current = (Transform) enumerator.Current;
                     var component = (EffectLayer) current.GetComponent(typeof(EffectLayer));
-                    if ((component != null) && (component.Material != null))
+                    if (component != null && component.Material != null)
                     {
                         MeshFilter filter;
                         MeshRenderer renderer;
@@ -123,7 +122,7 @@ public class Xffect : MonoBehaviour
         {
             pair.Value.LateUpdate();
         }
-        if ((ElapsedTime > LifeTime) && (LifeTime >= 0f))
+        if (ElapsedTime > LifeTime && LifeTime >= 0f)
         {
             foreach (var layer in EflList)
             {

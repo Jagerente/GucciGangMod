@@ -17,7 +17,7 @@ public class UIButtonKeys : MonoBehaviour
 
     private void OnClick()
     {
-        if (enabled && (selectOnClick != null))
+        if (enabled && selectOnClick != null)
         {
             UICamera.selectedObject = selectOnClick.gameObject;
         }
@@ -100,7 +100,7 @@ public class UIButtonKeys : MonoBehaviour
 
     private void Start()
     {
-        if (startsSelected && ((UICamera.selectedObject == null) || !NGUITools.GetActive(UICamera.selectedObject)))
+        if (startsSelected && (UICamera.selectedObject == null || !NGUITools.GetActive(UICamera.selectedObject)))
         {
             UICamera.selectedObject = gameObject;
         }

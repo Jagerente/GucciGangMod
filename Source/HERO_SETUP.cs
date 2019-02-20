@@ -308,7 +308,7 @@ public class HERO_SETUP : MonoBehaviour
             part_hair.renderer.material = CharacterMaterials.materials[myCostume.hairInfo.texture];
             part_hair.renderer.material.color = myCostume.hair_color;
         }
-        if ((myCostume.hair_1_mesh.Length > 0) && !isDeadBody)
+        if (myCostume.hair_1_mesh.Length > 0 && !isDeadBody)
         {
             var name = "Character/" + myCostume.hair_1_mesh;
             var material = CharacterMaterials.materials[myCostume.hairInfo.texture];
@@ -509,7 +509,7 @@ public class HERO_SETUP : MonoBehaviour
             part_chest_2.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest").transform;
             part_chest_2.renderer.material = CharacterMaterials.materials[myCostume.part_chest_1_object_texture];
         }
-        if ((myCostume.part_chest_skinned_cloth_mesh.Length > 0) && !isDeadBody)
+        if (myCostume.part_chest_skinned_cloth_mesh.Length > 0 && !isDeadBody)
         {
             part_chest_3 = ClothFactory.GetCape(reference, "Character/" + myCostume.part_chest_skinned_cloth_mesh, CharacterMaterials.materials[myCostume.part_chest_skinned_cloth_texture]);
         }
@@ -645,7 +645,7 @@ public class HERO_SETUP : MonoBehaviour
         {
             go.renderer.material = CharacterMaterials.materials[myCostume.face_texture];
             var num = 0.125f;
-            var x = num * ((int) (id / 8f));
+            var x = num * (int) (id / 8f);
             var y = -num * (id % 8);
             go.renderer.material.mainTextureOffset = new Vector2(x, y);
         }

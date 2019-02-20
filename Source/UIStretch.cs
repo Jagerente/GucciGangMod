@@ -37,7 +37,7 @@ public class UIStretch : MonoBehaviour
 
     private void Update()
     {
-        if (((mAnim == null) || !mAnim.isPlaying) && (style != Style.None))
+        if ((mAnim == null || !mAnim.isPlaying) && style != Style.None)
         {
             var pixelSizeAdjustment = 1f;
             if (panelContainer != null)
@@ -52,8 +52,8 @@ public class UIStretch : MonoBehaviour
                 else
                 {
                     var clipRange = panelContainer.clipRange;
-                    mRect.x = clipRange.x - (clipRange.z * 0.5f);
-                    mRect.y = clipRange.y - (clipRange.w * 0.5f);
+                    mRect.x = clipRange.x - clipRange.z * 0.5f;
+                    mRect.y = clipRange.y - clipRange.w * 0.5f;
                     mRect.width = clipRange.z;
                     mRect.height = clipRange.w;
                 }
@@ -87,7 +87,7 @@ public class UIStretch : MonoBehaviour
             }
             var width = mRect.width;
             var height = mRect.height;
-            if ((pixelSizeAdjustment != 1f) && (height > 1f))
+            if (pixelSizeAdjustment != 1f && height > 1f)
             {
                 var num4 = mRoot.activeHeight / height;
                 width *= num4;
@@ -135,11 +135,11 @@ public class UIStretch : MonoBehaviour
             }
             else
             {
-                if ((style == Style.Both) || (style == Style.Horizontal))
+                if (style == Style.Both || style == Style.Horizontal)
                 {
                     localScale.x = relativeSize.x * width;
                 }
-                if ((style == Style.Both) || (style == Style.Vertical))
+                if (style == Style.Both || style == Style.Vertical)
                 {
                     localScale.y = relativeSize.y * height;
                 }

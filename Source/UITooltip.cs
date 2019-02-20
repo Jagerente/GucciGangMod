@@ -47,7 +47,7 @@ public class UITooltip : MonoBehaviour
 
     private void SetText(string tooltipText)
     {
-        if ((text != null) && !string.IsNullOrEmpty(tooltipText))
+        if (text != null && !string.IsNullOrEmpty(tooltipText))
         {
             mTarget = 1f;
             if (text != null)
@@ -64,8 +64,8 @@ public class UITooltip : MonoBehaviour
                 mSize = text.relativeSize;
                 mSize.x *= localScale.x;
                 mSize.y *= localScale.y;
-                mSize.x += (background.border.x + background.border.z) + ((localPosition.x - background.border.x) * 2f);
-                mSize.y += (background.border.y + background.border.w) + ((-localPosition.y - background.border.y) * 2f);
+                mSize.x += background.border.x + background.border.z + (localPosition.x - background.border.x) * 2f;
+                mSize.y += background.border.y + background.border.w + (-localPosition.y - background.border.y) * 2f;
                 mSize.z = 1f;
                 transform.localScale = mSize;
             }
@@ -74,8 +74,8 @@ public class UITooltip : MonoBehaviour
                 mPos.x = Mathf.Clamp01(mPos.x / Screen.width);
                 mPos.y = Mathf.Clamp01(mPos.y / Screen.height);
                 var num = uiCamera.orthographicSize / mTrans.parent.lossyScale.y;
-                var num2 = (Screen.height * 0.5f) / num;
-                var vector10 = new Vector2((num2 * mSize.x) / Screen.width, (num2 * mSize.y) / Screen.height);
+                var num2 = Screen.height * 0.5f / num;
+                var vector10 = new Vector2(num2 * mSize.x / Screen.width, num2 * mSize.y / Screen.height);
                 mPos.x = Mathf.Min(mPos.x, 1f - vector10.x);
                 mPos.y = Mathf.Max(mPos.y, vector10.y);
                 mTrans.position = uiCamera.ViewportToWorldPoint(mPos);
@@ -86,11 +86,11 @@ public class UITooltip : MonoBehaviour
             }
             else
             {
-                if ((mPos.x + mSize.x) > Screen.width)
+                if (mPos.x + mSize.x > Screen.width)
                 {
                     mPos.x = Screen.width - mSize.x;
                 }
-                if ((mPos.y - mSize.y) < 0f)
+                if (mPos.y - mSize.y < 0f)
                 {
                     mPos.y = mSize.y;
                 }
@@ -139,7 +139,7 @@ public class UITooltip : MonoBehaviour
             {
                 var vector = mSize * 0.25f;
                 vector.y = -vector.y;
-                var vector2 = Vector3.one * (1.5f - (mCurrent * 0.5f));
+                var vector2 = Vector3.one * (1.5f - mCurrent * 0.5f);
                 var vector3 = Vector3.Lerp(mPos - vector, mPos, mCurrent);
                 mTrans.localPosition = vector3;
                 mTrans.localScale = vector2;

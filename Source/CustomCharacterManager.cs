@@ -60,7 +60,7 @@ public class CustomCharacterManager : MonoBehaviour
             num += setup.myCostume.stat.SPD;
             num += setup.myCostume.stat.GAS;
             num += setup.myCostume.stat.BLA;
-            return (num + setup.myCostume.stat.ACL);
+            return num + setup.myCostume.stat.ACL;
         }
         return 400;
     }
@@ -239,7 +239,7 @@ public class CustomCharacterManager : MonoBehaviour
         labelCostume.GetComponent<UILabel>().text = "costume_" + costumeId.ToString();
         labelCape.GetComponent<UILabel>().text = "cape_" + capeId.ToString();
         labelDivision.GetComponent<UILabel>().text = divisionOption[divisionId].ToString();
-        labelPOINT.GetComponent<UILabel>().text = "Points: " + ((400 - calTotalPoints())).ToString();
+        labelPOINT.GetComponent<UILabel>().text = "Points: " + (400 - calTotalPoints()).ToString();
         labelSPD.GetComponent<UILabel>().text = "SPD " + setup.myCostume.stat.SPD.ToString();
         labelGAS.GetComponent<UILabel>().text = "GAS " + setup.myCostume.stat.GAS.ToString();
         labelBLA.GetComponent<UILabel>().text = "BLA " + setup.myCostume.stat.BLA.ToString();
@@ -295,7 +295,7 @@ public class CustomCharacterManager : MonoBehaviour
 
     public void OnHairBChange(float value)
     {
-        if (((setup != null) && (setup.myCostume != null)) && (setup.part_hair != null))
+        if (setup != null && setup.myCostume != null && setup.part_hair != null)
         {
             setup.myCostume.hair_color = new Color(setup.part_hair.renderer.material.color.r, setup.part_hair.renderer.material.color.g, value);
             setHairColor();
@@ -304,7 +304,7 @@ public class CustomCharacterManager : MonoBehaviour
 
     public void OnHairGChange(float value)
     {
-        if ((setup.myCostume != null) && (setup.part_hair != null))
+        if (setup.myCostume != null && setup.part_hair != null)
         {
             setup.myCostume.hair_color = new Color(setup.part_hair.renderer.material.color.r, value, setup.part_hair.renderer.material.color.b);
             setHairColor();
@@ -313,7 +313,7 @@ public class CustomCharacterManager : MonoBehaviour
 
     public void OnHairRChange(float value)
     {
-        if ((setup.myCostume != null) && (setup.part_hair != null))
+        if (setup.myCostume != null && setup.part_hair != null)
         {
             setup.myCostume.hair_color = new Color(value, setup.part_hair.renderer.material.color.g, setup.part_hair.renderer.material.color.b);
             setHairColor();
@@ -395,10 +395,10 @@ public class CustomCharacterManager : MonoBehaviour
                 setup.myCostume.stat.ACL += pt;
                 break;
         }
-        setup.myCostume.stat.SPD = Mathf.Clamp(setup.myCostume.stat.SPD, 0x4b, 0x7d);
-        setup.myCostume.stat.GAS = Mathf.Clamp(setup.myCostume.stat.GAS, 0x4b, 0x7d);
-        setup.myCostume.stat.BLA = Mathf.Clamp(setup.myCostume.stat.BLA, 0x4b, 0x7d);
-        setup.myCostume.stat.ACL = Mathf.Clamp(setup.myCostume.stat.ACL, 0x4b, 0x7d);
+        setup.myCostume.stat.SPD = Mathf.Clamp(setup.myCostume.stat.SPD, 75, 125);
+        setup.myCostume.stat.GAS = Mathf.Clamp(setup.myCostume.stat.GAS, 75, 125);
+        setup.myCostume.stat.BLA = Mathf.Clamp(setup.myCostume.stat.BLA, 75, 125);
+        setup.myCostume.stat.ACL = Mathf.Clamp(setup.myCostume.stat.ACL, 75, 125);
         freshLabel();
     }
 
@@ -416,20 +416,20 @@ public class CustomCharacterManager : MonoBehaviour
         var sexArray1 = new SEX[2];
         sexArray1[1] = SEX.FEMALE;
         sexOption = sexArray1;
-        eyeOption = new int[0x1c];
-        for (num = 0; num < 0x1c; num++)
+        eyeOption = new int[28];
+        for (num = 0; num < 28; num++)
         {
             eyeOption[num] = num;
         }
         faceOption = new int[14];
         for (num = 0; num < 14; num++)
         {
-            faceOption[num] = num + 0x20;
+            faceOption[num] = num + 32;
         }
         glassOption = new int[10];
         for (num = 0; num < 10; num++)
         {
-            glassOption[num] = num + 0x30;
+            glassOption[num] = num + 48;
         }
         hairOption = new int[11];
         for (num = 0; num < 11; num++)
@@ -451,7 +451,7 @@ public class CustomCharacterManager : MonoBehaviour
         divisionArray1[2] = DIVISION.TheMilitaryPolice;
         divisionArray1[3] = DIVISION.TheSurveryCorps;
         divisionOption = divisionArray1;
-        skillOption = new string[] { "mikasa", "levi", "sasha", "jean", "marco", "armin", "petra" };
+        skillOption = new[] { "mikasa", "levi", "sasha", "jean", "marco", "armin", "petra" };
         CostumeDataToMyID();
         freshLabel();
     }
@@ -463,7 +463,7 @@ public class CustomCharacterManager : MonoBehaviour
         {
             id = start;
         }
-        id = Mathf.Clamp(id, start, (start + Count) - 1);
+        id = Mathf.Clamp(id, start, start + Count - 1);
         return id;
     }
 
@@ -544,7 +544,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     if (sexId == 0)
                     {
-                        costumeId = !next ? toPrev(costumeId, 0x18, 10) : toNext(costumeId, 0x18, 10);
+                        costumeId = !next ? toPrev(costumeId, 24, 10) : toNext(costumeId, 24, 10);
                     }
                     else
                     {
@@ -553,7 +553,7 @@ public class CustomCharacterManager : MonoBehaviour
                 }
                 else
                 {
-                    costumeId = 0x19;
+                    costumeId = 25;
                 }
                 copyBodyCostume(costumeOption[costumeId], setup.myCostume);
                 setup.myCostume.setMesh2();
@@ -673,11 +673,11 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     if (setup.myCostume.sex == SEX.FEMALE)
                     {
-                        costumeId = 0x1a;
+                        costumeId = 26;
                     }
                     else if (setup.myCostume.sex == SEX.MALE)
                     {
-                        costumeId = 0x19;
+                        costumeId = 25;
                     }
                 }
                 else if (sexId != 0)
@@ -686,7 +686,7 @@ public class CustomCharacterManager : MonoBehaviour
                 }
                 else
                 {
-                    costumeId = !next ? toPrev(costumeId, 0x18, 10) : toNext(costumeId, 0x18, 10);
+                    costumeId = !next ? toPrev(costumeId, 24, 10) : toNext(costumeId, 24, 10);
                 }
                 copyBodyCostume(costumeOption[costumeId], setup.myCostume);
                 setup.myCostume.setMesh2();
@@ -728,7 +728,7 @@ public class CustomCharacterManager : MonoBehaviour
         {
             id = Count - 1;
         }
-        id = Mathf.Clamp(id, start, (start + Count) - 1);
+        id = Mathf.Clamp(id, start, start + Count - 1);
         return id;
     }
 }

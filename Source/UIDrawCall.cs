@@ -37,7 +37,7 @@ public class UIDrawCall : MonoBehaviour
                 mMesh0.MarkDynamic();
                 rebuildIndices = true;
             }
-            else if (rebuildIndices || (mMesh0.vertexCount != vertexCount))
+            else if (rebuildIndices || mMesh0.vertexCount != vertexCount)
             {
                 rebuildIndices = true;
                 mMesh0.Clear();
@@ -52,7 +52,7 @@ public class UIDrawCall : MonoBehaviour
             mMesh1.MarkDynamic();
             rebuildIndices = true;
         }
-        else if (rebuildIndices || (mMesh1.vertexCount != vertexCount))
+        else if (rebuildIndices || mMesh1.vertexCount != vertexCount)
         {
             rebuildIndices = true;
             mMesh1.Clear();
@@ -95,7 +95,7 @@ public class UIDrawCall : MonoBehaviour
     public void Set(BetterList<Vector3> verts, BetterList<Vector3> norms, BetterList<Vector4> tans, BetterList<Vector2> uvs, BetterList<Color32> cols)
     {
         var size = verts.size;
-        if (((size > 0) && (size == uvs.size)) && ((size == cols.size) && ((size % 4) == 0)))
+        if (size > 0 && size == uvs.size && size == cols.size && size % 4 == 0)
         {
             if (mFilter == null)
             {
@@ -114,14 +114,14 @@ public class UIDrawCall : MonoBehaviour
                 mRen = gameObject.AddComponent<MeshRenderer>();
                 UpdateMaterials();
             }
-            else if ((mClippedMat != null) && (mClippedMat.mainTexture != mSharedMat.mainTexture))
+            else if (mClippedMat != null && mClippedMat.mainTexture != mSharedMat.mainTexture)
             {
                 UpdateMaterials();
             }
-            if (verts.size < 0xfde8)
+            if (verts.size < 65000)
             {
                 var num2 = (size >> 1) * 3;
-                var rebuildIndices = (mIndices == null) || (mIndices.Length != num2);
+                var rebuildIndices = mIndices == null || mIndices.Length != num2;
                 if (rebuildIndices)
                 {
                     mIndices = new int[num2];
@@ -182,7 +182,7 @@ public class UIDrawCall : MonoBehaviour
             if (mClipping != Clipping.None)
             {
                 var str = mSharedMat.shader.name.Replace(" (AlphaClip)", string.Empty).Replace(" (SoftClip)", string.Empty);
-                if ((mClipping == Clipping.HardClip) || (mClipping == Clipping.AlphaClip))
+                if (mClipping == Clipping.HardClip || mClipping == Clipping.AlphaClip)
                 {
                     shader = Shader.Find(str + " (AlphaClip)");
                 }
@@ -231,17 +231,17 @@ public class UIDrawCall : MonoBehaviour
             NGUITools.Destroy(mDepthMat);
             mDepthMat = null;
         }
-        var material = (mClippedMat == null) ? mSharedMat : mClippedMat;
+        var material = mClippedMat == null ? mSharedMat : mClippedMat;
         if (mDepthMat != null)
         {
-            if (((mRen.sharedMaterials == null) || (mRen.sharedMaterials.Length != 2)) || (mRen.sharedMaterials[1] != material))
+            if (mRen.sharedMaterials == null || mRen.sharedMaterials.Length != 2 || mRen.sharedMaterials[1] != material)
             {
-                mRen.sharedMaterials = new Material[] { mDepthMat, material };
+                mRen.sharedMaterials = new[] { mDepthMat, material };
             }
         }
         else if (mRen.sharedMaterial != material)
         {
-            mRen.sharedMaterials = new Material[] { material };
+            mRen.sharedMaterials = new[] { material };
         }
     }
 
@@ -317,7 +317,7 @@ public class UIDrawCall : MonoBehaviour
     {
         get
         {
-            return (mClippedMat != null);
+            return mClippedMat != null;
         }
     }
 
@@ -338,7 +338,7 @@ public class UIDrawCall : MonoBehaviour
         get
         {
             var mesh = !mEven ? mMesh1 : mMesh0;
-            return ((mesh == null) ? 0 : (mesh.vertexCount >> 1));
+            return mesh == null ? 0 : mesh.vertexCount >> 1;
         }
     }
 

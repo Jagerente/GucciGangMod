@@ -15,7 +15,7 @@ public class PickupItemSimple : Photon.MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         var component = other.GetComponent<PhotonView>();
-        if ((PickupOnCollide && (component != null)) && component.isMine)
+        if (PickupOnCollide && component != null && component.isMine)
         {
             Pickup();
         }
@@ -26,14 +26,14 @@ public class PickupItemSimple : Photon.MonoBehaviour
         if (!SentPickup)
         {
             SentPickup = true;
-            photonView.RPC("PunPickupSimple", PhotonTargets.AllViaServer, new object[0]);
+            photonView.RPC("PunPickupSimple", PhotonTargets.AllViaServer);
         }
     }
 
     [RPC]
     public void PunPickupSimple(PhotonMessageInfo msgInfo)
     {
-        if ((!SentPickup || !msgInfo.sender.isLocal) || gameObject.GetActive())
+        if (!SentPickup || !msgInfo.sender.isLocal || gameObject.GetActive())
         {
         }
         SentPickup = false;
@@ -44,7 +44,7 @@ public class PickupItemSimple : Photon.MonoBehaviour
         else
         {
             var num = PhotonNetwork.time - msgInfo.timestamp;
-            var time = SecondsBeforeRespawn - ((float) num);
+            var time = SecondsBeforeRespawn - (float) num;
             if (time > 0f)
             {
                 gameObject.SetActive(false);

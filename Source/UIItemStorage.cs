@@ -15,12 +15,12 @@ public class UIItemStorage : MonoBehaviour
     public int maxRows = 4;
     private List<InvGameItem> mItems = new List<InvGameItem>();
     public int padding = 10;
-    public int spacing = 0x80;
+    public int spacing = 128;
     public GameObject template;
 
     public InvGameItem GetItem(int slot)
     {
-        return ((slot >= items.Count) ? null : mItems[slot]);
+        return slot >= items.Count ? null : mItems[slot];
     }
 
     public InvGameItem Replace(int slot, InvGameItem item)
@@ -45,14 +45,14 @@ public class UIItemStorage : MonoBehaviour
                 for (var j = 0; j < maxColumns; j++)
                 {
                     var obj2 = NGUITools.AddChild(gameObject, template);
-                    obj2.transform.localPosition = new Vector3(padding + ((j + 0.5f) * spacing), -padding - ((i + 0.5f) * spacing), 0f);
+                    obj2.transform.localPosition = new Vector3(padding + (j + 0.5f) * spacing, -padding - (i + 0.5f) * spacing, 0f);
                     var component = obj2.GetComponent<UIStorageSlot>();
                     if (component != null)
                     {
                         component.storage = this;
                         component.slot = num;
                     }
-                    bounds.Encapsulate(new Vector3((padding * 2f) + ((j + 1) * spacing), (-padding * 2f) - ((i + 1) * spacing), 0f));
+                    bounds.Encapsulate(new Vector3(padding * 2f + (j + 1) * spacing, -padding * 2f - (i + 1) * spacing, 0f));
                     if (++num >= maxItemCount)
                     {
                         if (background != null)

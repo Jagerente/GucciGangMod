@@ -11,7 +11,7 @@ public class BTN_START_SINGLE_GAMEPLAY : MonoBehaviour
     {
         var selection = GameObject.Find("PopupListMap").GetComponent<UIPopupList>().selection;
         var str2 = GameObject.Find("PopupListCharacter").GetComponent<UIPopupList>().selection;
-        var num = !GameObject.Find("CheckboxHard").GetComponent<UICheckbox>().isChecked ? (!GameObject.Find("CheckboxAbnormal").GetComponent<UICheckbox>().isChecked ? 0 : 2) : 1;
+        var num = !GameObject.Find("CheckboxHard").GetComponent<UICheckbox>().isChecked ? !GameObject.Find("CheckboxAbnormal").GetComponent<UICheckbox>().isChecked ? 0 : 2 : 1;
         IN_GAME_MAIN_CAMERA.difficulty = num;
         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.SINGLE;
         IN_GAME_MAIN_CAMERA.singleCharacter = str2.ToUpper();

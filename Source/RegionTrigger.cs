@@ -46,7 +46,7 @@ public class RegionTrigger : MonoBehaviour
                 }
             }
         }
-        else if ((gameObject.layer == 11) && (titanEventEnter != null))
+        else if (gameObject.layer == 11 && titanEventEnter != null)
         {
             var titan = gameObject.transform.root.gameObject.GetComponent<TITAN>();
             if (titan != null)
@@ -88,7 +88,7 @@ public class RegionTrigger : MonoBehaviour
                 }
             }
         }
-        else if ((gameObject.layer == 11) && (titanEventExit != null))
+        else if (gameObject.layer == 11 && titanEventExit != null)
         {
             var titan = gameObject.GetComponent<TITAN>();
             if (titan != null)

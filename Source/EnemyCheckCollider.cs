@@ -26,14 +26,14 @@ public class EnemyCheckCollider : Photon.MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER) || transform.root.gameObject.GetPhotonView().isMine) && active_me)
+        if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || transform.root.gameObject.GetPhotonView().isMine) && active_me)
         {
             if (other.gameObject.tag == "playerHitbox")
             {
-                var b = 1f - (Vector3.Distance(other.gameObject.transform.position, transform.position) * 0.05f);
+                var b = 1f - Vector3.Distance(other.gameObject.transform.position, transform.position) * 0.05f;
                 b = Mathf.Min(1f, b);
                 var component = other.gameObject.GetComponent<HitBox>();
-                if ((component != null) && (component.transform.root != null))
+                if (component != null && component.transform.root != null)
                 {
                     if (dmg == 0)
                     {
@@ -54,11 +54,11 @@ public class EnemyCheckCollider : Photon.MonoBehaviour
                         }
                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                         {
-                            component.transform.root.GetComponent<HERO>().blowAway((vector.normalized * num3) + (Vector3.up * 1f));
+                            component.transform.root.GetComponent<HERO>().blowAway(vector.normalized * num3 + Vector3.up * 1f);
                         }
                         else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                         {
-                            var parameters = new object[] { (vector.normalized * num3) + (Vector3.up * 1f) };
+                            var parameters = new object[] { vector.normalized * num3 + Vector3.up * 1f };
                             component.transform.root.GetComponent<HERO>().photonView.RPC("blowAway", PhotonTargets.All, parameters);
                         }
                     }
@@ -69,10 +69,10 @@ public class EnemyCheckCollider : Photon.MonoBehaviour
                             if (!component.transform.root.GetComponent<HERO>().isGrabbed)
                             {
                                 var vector4 = component.transform.root.transform.position - transform.position;
-                                component.transform.root.GetComponent<HERO>().die(((vector4.normalized * b) * 1000f) + (Vector3.up * 50f), isThisBite);
+                                component.transform.root.GetComponent<HERO>().die(vector4.normalized * b * 1000f + Vector3.up * 50f, isThisBite);
                             }
                         }
-                        else if (((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && !component.transform.root.GetComponent<HERO>().HasDied()) && !component.transform.root.GetComponent<HERO>().isGrabbed)
+                        else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && !component.transform.root.GetComponent<HERO>().HasDied() && !component.transform.root.GetComponent<HERO>().isGrabbed)
                         {
                             component.transform.root.GetComponent<HERO>().markDie();
                             var myOwnerViewID = -1;
@@ -84,7 +84,7 @@ public class EnemyCheckCollider : Photon.MonoBehaviour
                             }
                             var objArray2 = new object[5];
                             var vector5 = component.transform.root.position - transform.position;
-                            objArray2[0] = ((vector5.normalized * b) * 1000f) + (Vector3.up * 50f);
+                            objArray2[0] = vector5.normalized * b * 1000f + Vector3.up * 50f;
                             objArray2[1] = isThisBite;
                             objArray2[2] = myOwnerViewID;
                             objArray2[3] = titanName;
@@ -94,7 +94,7 @@ public class EnemyCheckCollider : Photon.MonoBehaviour
                     }
                 }
             }
-            else if (((other.gameObject.tag == "erenHitbox") && (dmg > 0)) && !other.gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().isHit)
+            else if (other.gameObject.tag == "erenHitbox" && dmg > 0 && !other.gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().isHit)
             {
                 other.gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().hitByTitan();
             }

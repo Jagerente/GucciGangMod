@@ -27,7 +27,7 @@ public class TweenVolume : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        volume = (from * (1f - factor)) + (to * factor);
+        volume = @from * (1f - factor) + to * factor;
         mSource.enabled = mSource.volume > 0.01f;
     }
 

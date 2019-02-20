@@ -16,7 +16,7 @@ public class UIViewport : MonoBehaviour
 
     private void LateUpdate()
     {
-        if ((topLeft != null) && (bottomRight != null))
+        if (topLeft != null && bottomRight != null)
         {
             var vector = sourceCamera.WorldToScreenPoint(topLeft.position);
             var vector2 = sourceCamera.WorldToScreenPoint(bottomRight.position);

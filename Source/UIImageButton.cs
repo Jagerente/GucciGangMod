@@ -29,7 +29,7 @@ public class UIImageButton : MonoBehaviour
 
     private void OnHover(bool isOver)
     {
-        if (isEnabled && (target != null))
+        if (isEnabled && target != null)
         {
             target.spriteName = !isOver ? normalSprite : hoverSprite;
             target.MakePixelPerfect();
@@ -70,12 +70,12 @@ public class UIImageButton : MonoBehaviour
         get
         {
             var collider = this.collider;
-            return ((collider != null) && collider.enabled);
+            return collider != null && collider.enabled;
         }
         set
         {
             var collider = this.collider;
-            if ((collider != null) && (collider.enabled != value))
+            if (collider != null && collider.enabled != value)
             {
                 collider.enabled = value;
                 UpdateImage();

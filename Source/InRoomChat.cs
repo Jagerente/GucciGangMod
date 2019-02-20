@@ -199,7 +199,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 }
             case "time":
                 {
-                    var time = (FengGameManagerMKII.instance.time - ((int)FengGameManagerMKII.instance.timeTotalServer) - Convert.ToInt32(command[1])) * (-1);
+                    var time = (FengGameManagerMKII.instance.time - (int)FengGameManagerMKII.instance.timeTotalServer - Convert.ToInt32(command[1])) * -1;
                     FengGameManagerMKII.instance.addTime(time);
                     Message("Time set to ", command[1]);
                     return;
@@ -298,7 +298,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 {
                     if (PhotonNetwork.isMasterClient)
                     {
-                        FengGameManagerMKII.instance.photonView.RPC("pauseRPC", PhotonTargets.All, new object[] { true });
+                        FengGameManagerMKII.instance.photonView.RPC("pauseRPC", PhotonTargets.All, true);
                         Message("MasterClient has paused the game.");
                         Message_3("MasterClient has paused the game.");
                     }
@@ -312,7 +312,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 {
                     if (PhotonNetwork.isMasterClient)
                     {
-                        FengGameManagerMKII.instance.photonView.RPC("pauseRPC", PhotonTargets.All, new object[] { false });
+                        FengGameManagerMKII.instance.photonView.RPC("pauseRPC", PhotonTargets.All, false);
                         Message("MasterClient has unpaused the game.");
                         Message_3("MasterClient has unpaused the game.");
                     }
@@ -443,11 +443,11 @@ public class InRoomChat : Photon.MonoBehaviour
 
                                 Message_3("Your result is " +
                                           (800 * k + td) * (10 - Math.Sqrt(d)) + 100 * md /
-                                          (Math.Pow(10, 4))
+                                          Math.Pow(10, 4)
                                 );
                                 Message("Your result is " +
                                           (800 * k + td) * (10 - Math.Sqrt(d)) + 100 * md /
-                                          (Math.Pow(10, 4))
+                                          Math.Pow(10, 4)
                                 );
 
                                 return;
@@ -634,7 +634,7 @@ public class InRoomChat : Photon.MonoBehaviour
                 }
             case "specmode":
                 {
-                    if (((int)FengGameManagerMKII.settings[245]) == 0)
+                    if ((int)FengGameManagerMKII.settings[245] == 0)
                     {
                         FengGameManagerMKII.settings[245] = 1;
                         FengGameManagerMKII.instance.EnterSpecMode(true);
@@ -833,25 +833,25 @@ public class InRoomChat : Photon.MonoBehaviour
     public void OnGUI()
     {
         int num4;
-        if (!IsVisible || (PhotonNetwork.connectionStateDetailed != PeerStates.Joined))
+        if (!IsVisible || PhotonNetwork.connectionStateDetailed != PeerStates.Joined)
         {
             return;
         }
         if (Event.current.type == EventType.KeyDown)
         {
-            if ((((Event.current.keyCode == KeyCode.Tab) || (Event.current.character == '\t')) && !IN_GAME_MAIN_CAMERA.isPausing) && (FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab))
+            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') && !IN_GAME_MAIN_CAMERA.isPausing && FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab)
             {
                 Event.current.Use();
                 goto Label_219C;
             }
         }
-        else if ((Event.current.type == EventType.KeyUp) && (((Event.current.keyCode != KeyCode.None) && (Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat])) && (GUI.GetNameOfFocusedControl() != "ChatInput")))
+        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None && Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] && GUI.GetNameOfFocusedControl() != "ChatInput")
         {
             _inputLine = string.Empty;
             GUI.FocusControl("ChatInput");
             goto Label_219C;
         }
-        if ((Event.current.type == EventType.KeyDown) && ((Event.current.keyCode == KeyCode.KeypadEnter) || (Event.current.keyCode == KeyCode.Return)))
+        if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return))
         {
             if (!string.IsNullOrEmpty(_inputLine))
             {
@@ -939,7 +939,7 @@ public class InRoomChat : Photon.MonoBehaviour
     public void SetPosition()
     {
         GuiRect = new Rect(0f, Screen.height - 500, 300f, 470f);
-        GuiRect2 = new Rect(30f, (Screen.height - 300) + 0x113, 300f, 25f);
+        GuiRect2 = new Rect(30f, Screen.height - 300 + 275, 300f, 25f);
     }
 
     public void Start()

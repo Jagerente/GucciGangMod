@@ -30,7 +30,7 @@ public class UIDragPanelContents : MonoBehaviour
 
     private void OnDrag(Vector2 delta)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (draggablePanel != null))
+        if (enabled && NGUITools.GetActive(gameObject) && draggablePanel != null)
         {
             draggablePanel.Drag();
         }
@@ -38,7 +38,7 @@ public class UIDragPanelContents : MonoBehaviour
 
     private void OnPress(bool pressed)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (draggablePanel != null))
+        if (enabled && NGUITools.GetActive(gameObject) && draggablePanel != null)
         {
             draggablePanel.Press(pressed);
         }
@@ -46,7 +46,7 @@ public class UIDragPanelContents : MonoBehaviour
 
     private void OnScroll(float delta)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (draggablePanel != null))
+        if (enabled && NGUITools.GetActive(gameObject) && draggablePanel != null)
         {
             draggablePanel.Scroll(delta);
         }

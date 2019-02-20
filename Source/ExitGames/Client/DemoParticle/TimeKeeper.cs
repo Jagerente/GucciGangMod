@@ -27,7 +27,7 @@
         {
             get
             {
-                return (IsEnabled && (shouldExecute || ((Environment.TickCount - lastExecutionTime) > Interval)));
+                return IsEnabled && (shouldExecute || Environment.TickCount - lastExecutionTime > Interval);
             }
             set
             {

@@ -18,7 +18,7 @@ public class UIButtonOffset : MonoBehaviour
 
     private void OnDisable()
     {
-        if (mStarted && (tweenTarget != null))
+        if (mStarted && tweenTarget != null)
         {
             var component = tweenTarget.GetComponent<TweenPosition>();
             if (component != null)
@@ -45,7 +45,7 @@ public class UIButtonOffset : MonoBehaviour
             {
                 Start();
             }
-            TweenPosition.Begin(tweenTarget.gameObject, duration, !isOver ? mPos : (mPos + hover)).method = UITweener.Method.EaseInOut;
+            TweenPosition.Begin(tweenTarget.gameObject, duration, !isOver ? mPos : mPos + hover).method = UITweener.Method.EaseInOut;
             mHighlighted = isOver;
         }
     }
@@ -58,7 +58,7 @@ public class UIButtonOffset : MonoBehaviour
             {
                 Start();
             }
-            TweenPosition.Begin(tweenTarget.gameObject, duration, !isPressed ? (!UICamera.IsHighlighted(gameObject) ? mPos : (mPos + hover)) : (mPos + pressed)).method = UITweener.Method.EaseInOut;
+            TweenPosition.Begin(tweenTarget.gameObject, duration, !isPressed ? !UICamera.IsHighlighted(gameObject) ? mPos : mPos + hover : mPos + pressed).method = UITweener.Method.EaseInOut;
         }
     }
 

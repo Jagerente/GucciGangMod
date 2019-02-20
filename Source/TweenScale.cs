@@ -29,7 +29,7 @@ public class TweenScale : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        cachedTransform.localScale = (@from * (1f - factor)) + (to * factor);
+        cachedTransform.localScale = @from * (1f - factor) + to * factor;
         if (updateTable)
         {
             if (mTable == null)

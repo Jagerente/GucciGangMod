@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class RibbonTrail
 {
-    public const int CHAIN_EMPTY = 0x1869f;
+    public const int CHAIN_EMPTY = 99999;
     protected Color Color = Color.white;
     protected float ElapsedTime;
     public int ElemCount;
@@ -36,7 +36,7 @@ public class RibbonTrail
         MaxElements = maxelemnt;
         Vertexsegment = segment;
         ElementArray = new Element[MaxElements];
-        Head = Tail = 0x1869f;
+        Head = Tail = 99999;
         SetTrailLen(len);
         UnitWidth = width;
         HeadPosition = pos;
@@ -51,7 +51,7 @@ public class RibbonTrail
 
     public void AddElememt(Element dtls)
     {
-        if (Head == 0x1869f)
+        if (Head == 99999)
         {
             Tail = MaxElements - 1;
             Head = Tail;
@@ -95,7 +95,7 @@ public class RibbonTrail
 
     public void ResetElementsPos()
     {
-        if ((Head != 0x1869f) && (Head != Tail))
+        if (Head != 99999 && Head != Tail)
         {
             var head = Head;
             while (true)
@@ -204,7 +204,7 @@ public class RibbonTrail
                     element.Position = headPosition;
                     flag = true;
                 }
-                if (((Tail + 1) % MaxElements) == Head)
+                if ((Tail + 1) % MaxElements == Head)
                 {
                     int num3;
                     var element4 = ElementArray[Tail];
@@ -238,7 +238,7 @@ public class RibbonTrail
         if (IndexDirty)
         {
             var pool = Vertexsegment.Pool;
-            if ((Head != 0x1869f) && (Head != Tail))
+            if (Head != 99999 && Head != Tail)
             {
                 var head = Head;
                 var num2 = 0;
@@ -249,13 +249,13 @@ public class RibbonTrail
                     {
                         num3 = 0;
                     }
-                    if ((num3 * 2) >= 0x10000)
+                    if (num3 * 2 >= 65536)
                     {
                         Debug.LogError("Too many elements!");
                     }
-                    var num4 = Vertexsegment.VertStart + (num3 * 2);
-                    var num5 = Vertexsegment.VertStart + (head * 2);
-                    var index = Vertexsegment.IndexStart + (num2 * 6);
+                    var num4 = Vertexsegment.VertStart + num3 * 2;
+                    var num5 = Vertexsegment.VertStart + head * 2;
+                    var index = Vertexsegment.IndexStart + num2 * 6;
                     pool.Indices[index] = num5;
                     pool.Indices[index + 1] = num5 + 1;
                     pool.Indices[index + 2] = num4;
@@ -281,7 +281,7 @@ public class RibbonTrail
         var num = 0f;
         var num2 = 0f;
         var num3 = ElemLength * (MaxElements - 2);
-        if ((Head == 0x1869f) || (Head == Tail))
+        if (Head == 99999 || Head == Tail)
         {
             return;
         }
@@ -293,11 +293,11 @@ public class RibbonTrail
             index = 0;
         }
         var element = ElementArray[index];
-        if ((index * 2) >= 0x10000)
+        if (index * 2 >= 65536)
         {
             Debug.LogError("Too many elements!");
         }
-        var num6 = Vertexsegment.VertStart + (index * 2);
+        var num6 = Vertexsegment.VertStart + index * 2;
         var num7 = index + 1;
         if (num7 == MaxElements)
         {
@@ -324,11 +324,11 @@ public class RibbonTrail
         var pool = Vertexsegment.Pool;
         if (StretchType == 0)
         {
-            num = (num2 / num3) * Mathf.Abs(UVDimensions.y);
+            num = num2 / num3 * Mathf.Abs(UVDimensions.y);
         }
         else
         {
-            num = (num2 / num3) * Mathf.Abs(UVDimensions.x);
+            num = num2 / num3 * Mathf.Abs(UVDimensions.x);
         }
         var zero = Vector2.zero;
         pool.Vertices[num6] = vector4;

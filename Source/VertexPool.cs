@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class VertexPool
 {
-    public const int BlockSize = 0x24;
+    public const int BlockSize = 36;
     public float BoundsScheduleTime = 1f;
     public bool ColorChanged;
     public Color[] Colors;
@@ -81,17 +81,17 @@ public class VertexPool
     {
         var count = 0;
         var num2 = 0;
-        if ((VertexUsed + vcount) >= VertexTotal)
+        if (VertexUsed + vcount >= VertexTotal)
         {
-            count = ((vcount / 0x24) + 1) * 0x24;
+            count = (vcount / 36 + 1) * 36;
         }
-        if ((IndexUsed + icount) >= IndexTotal)
+        if (IndexUsed + icount >= IndexTotal)
         {
-            num2 = ((icount / 0x24) + 1) * 0x24;
+            num2 = (icount / 36 + 1) * 36;
         }
         VertexUsed += vcount;
         IndexUsed += icount;
-        if ((count != 0) || (num2 != 0))
+        if (count != 0 || num2 != 0)
         {
             EnlargeArrays(count, num2);
             VertexTotal += count;
@@ -130,7 +130,7 @@ public class VertexPool
             Mesh.triangles = Indices;
         }
         ElapsedTime += Time.deltaTime;
-        if ((ElapsedTime > BoundsScheduleTime) || FirstUpdate)
+        if (ElapsedTime > BoundsScheduleTime || FirstUpdate)
         {
             RecalculateBounds();
             ElapsedTime = 0f;

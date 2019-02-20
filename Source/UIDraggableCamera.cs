@@ -36,7 +36,7 @@ public class UIDraggableCamera : IgnoreTimeScale
 
     private Vector3 CalculateConstrainOffset()
     {
-        if ((rootForBounds == null) || (rootForBounds.childCount == 0))
+        if (rootForBounds == null || rootForBounds.childCount == 0)
         {
             return Vector3.zero;
         }
@@ -51,7 +51,7 @@ public class UIDraggableCamera : IgnoreTimeScale
 
     public bool ConstrainToBounds(bool immediate)
     {
-        if ((mTrans != null) && (rootForBounds != null))
+        if (mTrans != null && rootForBounds != null)
         {
             var vector = CalculateConstrainOffset();
             if (vector.magnitude > 0f)
@@ -88,7 +88,7 @@ public class UIDraggableCamera : IgnoreTimeScale
             var vector = Vector2.Scale(delta, -scale);
             mTrans.localPosition += (Vector3)vector;
             mMomentum = Vector2.Lerp(mMomentum, mMomentum + vector * (0.01f * momentumAmount), 0.67f);
-            if ((dragEffect != UIDragObject.DragEffect.MomentumAndSpring) && ConstrainToBounds(true))
+            if (dragEffect != UIDragObject.DragEffect.MomentumAndSpring && ConstrainToBounds(true))
             {
                 mMomentum = Vector2.zero;
                 mScroll = 0f;

@@ -155,31 +155,31 @@ namespace GGM
         // Checks for Key Down / Up event of a certain key
         public static bool GetKeyDown(this Event aEvent, KeyCode aKey)
         {
-            return (aEvent.type == EventType.KeyDown && aEvent.keyCode == aKey);
+            return aEvent.type == EventType.KeyDown && aEvent.keyCode == aKey;
         }
         public static bool GetKeyUp(this Event aEvent, KeyCode aKey)
         {
-            return (aEvent.type == EventType.KeyUp && aEvent.keyCode == aKey);
+            return aEvent.type == EventType.KeyUp && aEvent.keyCode == aKey;
         }
 
         // Checks for mouse Down / Up event of a certain mouse button
         public static bool GetMouseDown(this Event aEvent, int aButton)
         {
-            return (aEvent.type == EventType.MouseDown && aEvent.button == aButton);
+            return aEvent.type == EventType.MouseDown && aEvent.button == aButton;
         }
         public static bool GetMouseUp(this Event aEvent, int aButton)
         {
-            return (aEvent.type == EventType.MouseUp && aEvent.button == aButton);
+            return aEvent.type == EventType.MouseUp && aEvent.button == aButton;
         }
 
         // Checks for mouse Down / Up event of a certain mouse button inside the given Rect
         public static bool GetMouseDown(this Event aEvent, int aButton, Rect aRect)
         {
-            return (aEvent.type == EventType.MouseDown && aEvent.button == aButton && aRect.Contains(aEvent.mousePosition));
+            return aEvent.type == EventType.MouseDown && aEvent.button == aButton && aRect.Contains(aEvent.mousePosition);
         }
         public static bool GetMouseUp(this Event aEvent, int aButton, Rect aRect)
         {
-            return (aEvent.type == EventType.MouseUp && aEvent.button == aButton && aRect.Contains(aEvent.mousePosition));
+            return aEvent.type == EventType.MouseUp && aEvent.button == aButton && aRect.Contains(aEvent.mousePosition);
         }
     }
 }

@@ -53,7 +53,7 @@
         {
             get
             {
-                return (NextControlPoint != null);
+                return NextControlPoint != null;
             }
         }
 

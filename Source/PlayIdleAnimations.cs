@@ -4,7 +4,6 @@
 //Farewell Cowboy
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -66,7 +65,7 @@ public class PlayIdleAnimations : MonoBehaviour
             if (mBreaks.Count == 1)
             {
                 var clip = mBreaks[0];
-                mNextBreak = (Time.time + clip.length) + UnityEngine.Random.Range(5f, 15f);
+                mNextBreak = Time.time + clip.length + UnityEngine.Random.Range(5f, 15f);
                 mAnim.CrossFade(clip.name);
             }
             else
@@ -82,7 +81,7 @@ public class PlayIdleAnimations : MonoBehaviour
                 }
                 mLastIndex = num;
                 var clip2 = mBreaks[num];
-                mNextBreak = (Time.time + clip2.length) + UnityEngine.Random.Range(2f, 8f);
+                mNextBreak = Time.time + clip2.length + UnityEngine.Random.Range(2f, 8f);
                 mAnim.CrossFade(clip2.name);
             }
         }

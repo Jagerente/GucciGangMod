@@ -28,7 +28,7 @@ public class UISpriteAnimation : MonoBehaviour
             mSprite = GetComponent<UISprite>();
         }
         mSpriteNames.Clear();
-        if ((mSprite != null) && (mSprite.atlas != null))
+        if (mSprite != null && mSprite.atlas != null)
         {
             var spriteList = mSprite.atlas.spriteList;
             var num = 0;
@@ -50,7 +50,7 @@ public class UISpriteAnimation : MonoBehaviour
     {
         mActive = true;
         mIndex = 0;
-        if ((mSprite != null) && (mSpriteNames.Count > 0))
+        if (mSprite != null && mSpriteNames.Count > 0)
         {
             mSprite.spriteName = mSpriteNames[mIndex];
             mSprite.MakePixelPerfect();
@@ -64,13 +64,13 @@ public class UISpriteAnimation : MonoBehaviour
 
     private void Update()
     {
-        if ((mActive && (mSpriteNames.Count > 1)) && (Application.isPlaying && (mFPS > 0f)))
+        if (mActive && mSpriteNames.Count > 1 && Application.isPlaying && mFPS > 0f)
         {
             mDelta += Time.deltaTime;
             var num = 1f / mFPS;
             if (num < mDelta)
             {
-                mDelta = (num <= 0f) ? 0f : (mDelta - num);
+                mDelta = num <= 0f ? 0f : mDelta - num;
                 if (++mIndex >= mSpriteNames.Count)
                 {
                     mIndex = 0;

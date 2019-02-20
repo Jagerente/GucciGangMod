@@ -50,10 +50,10 @@ public class ColorAffector : Affector
                     {
                         var array = new Color[ColorArr.Length];
                         ColorArr.CopyTo(array, 0);
-                        for (var i = 0; i < (array.Length / 2); i++)
+                        for (var i = 0; i < array.Length / 2; i++)
                         {
-                            ColorArr[(array.Length - i) - 1] = array[i];
-                            ColorArr[i] = array[(array.Length - i) - 1];
+                            ColorArr[array.Length - i - 1] = array[i];
+                            ColorArr[i] = array[array.Length - i - 1];
                         }
                         ElapsedTime = 0f;
                     }
@@ -62,13 +62,13 @@ public class ColorAffector : Affector
             else
             {
                 var index = (int) ((ColorArr.Length - 1) * (ElapsedTime / GradualLen));
-                if (index == (ColorArr.Length - 1))
+                if (index == ColorArr.Length - 1)
                 {
                     index--;
                 }
                 var num3 = index + 1;
                 var num4 = GradualLen / (ColorArr.Length - 1);
-                var t = (ElapsedTime - (num4 * index)) / num4;
+                var t = (ElapsedTime - num4 * index) / num4;
                 Node.Color = Color.Lerp(ColorArr[index], ColorArr[num3], t);
             }
         }

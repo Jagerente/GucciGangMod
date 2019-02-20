@@ -12,7 +12,7 @@ public class OnAwakeUsePhotonView : Photon.MonoBehaviour
     {
         if (photonView.isMine)
         {
-            photonView.RPC("OnAwakeRPC", PhotonTargets.All, new object[0]);
+            photonView.RPC("OnAwakeRPC", PhotonTargets.All);
         }
     }
 
@@ -25,7 +25,7 @@ public class OnAwakeUsePhotonView : Photon.MonoBehaviour
     [RPC]
     public void OnAwakeRPC(byte myParameter)
     {
-        Debug.Log(string.Concat(new object[] { "RPC: 'OnAwakeRPC' Parameter: ", myParameter, " PhotonView: ", photonView }));
+        Debug.Log(string.Concat("RPC: 'OnAwakeRPC' Parameter: ", myParameter, " PhotonView: ", photonView));
     }
 
     private void Start()

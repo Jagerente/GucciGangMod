@@ -25,7 +25,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
 
     private void OnActivate(bool isActive)
     {
-        if (enabled && (((trigger == Trigger.OnActivate) || ((trigger == Trigger.OnActivateTrue) && isActive)) || ((trigger == Trigger.OnActivateFalse) && !isActive)))
+        if (enabled && (trigger == Trigger.OnActivate || trigger == Trigger.OnActivateTrue && isActive || trigger == Trigger.OnActivateFalse && !isActive))
         {
             Play(isActive);
         }
@@ -33,7 +33,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
 
     private void OnClick()
     {
-        if (enabled && (trigger == Trigger.OnClick))
+        if (enabled && trigger == Trigger.OnClick)
         {
             Play(true);
         }
@@ -41,7 +41,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
 
     private void OnDoubleClick()
     {
-        if (enabled && (trigger == Trigger.OnDoubleClick))
+        if (enabled && trigger == Trigger.OnDoubleClick)
         {
             Play(true);
         }
@@ -59,7 +59,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
     {
         if (enabled)
         {
-            if (((trigger == Trigger.OnHover) || ((trigger == Trigger.OnHoverTrue) && isOver)) || ((trigger == Trigger.OnHoverFalse) && !isOver))
+            if (trigger == Trigger.OnHover || trigger == Trigger.OnHoverTrue && isOver || trigger == Trigger.OnHoverFalse && !isOver)
             {
                 Play(isOver);
             }
@@ -69,7 +69,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
 
     private void OnPress(bool isPressed)
     {
-        if (enabled && (((trigger == Trigger.OnPress) || ((trigger == Trigger.OnPressTrue) && isPressed)) || ((trigger == Trigger.OnPressFalse) && !isPressed)))
+        if (enabled && (trigger == Trigger.OnPress || trigger == Trigger.OnPressTrue && isPressed || trigger == Trigger.OnPressFalse && !isPressed))
         {
             Play(isPressed);
         }
@@ -77,7 +77,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
 
     private void OnSelect(bool isSelected)
     {
-        if (enabled && (((trigger == Trigger.OnSelect) || ((trigger == Trigger.OnSelectTrue) && isSelected)) || ((trigger == Trigger.OnSelectFalse) && !isSelected)))
+        if (enabled && (trigger == Trigger.OnSelect || trigger == Trigger.OnSelectTrue && isSelected || trigger == Trigger.OnSelectFalse && !isSelected))
         {
             Play(true);
         }
@@ -91,12 +91,12 @@ public class UIButtonPlayAnimation : MonoBehaviour
         }
         if (target != null)
         {
-            if (clearSelection && (UICamera.selectedObject == gameObject))
+            if (clearSelection && UICamera.selectedObject == gameObject)
             {
                 UICamera.selectedObject = null;
             }
             var num = -(int)this.playDirection;
-            var playDirection = !forward ? ((Direction) num) : this.playDirection;
+            var playDirection = !forward ? (Direction) num : this.playDirection;
             var animation = ActiveAnimation.Play(target, clipName, playDirection, ifDisabledOnPlay, disableWhenFinished);
             if (animation != null)
             {
@@ -105,7 +105,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
                     animation.Reset();
                 }
                 animation.onFinished = onFinished;
-                if ((eventReceiver != null) && !string.IsNullOrEmpty(callWhenFinished))
+                if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                 {
                     animation.eventReceiver = eventReceiver;
                     animation.callWhenFinished = callWhenFinished;

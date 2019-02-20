@@ -22,7 +22,7 @@ public class DragDropItem : MonoBehaviour
     private void Drop()
     {
         var collider = UICamera.lastHit.collider;
-        var container = (collider == null) ? null : collider.gameObject.GetComponent<DragDropContainer>();
+        var container = collider == null ? null : collider.gameObject.GetComponent<DragDropContainer>();
         if (container != null)
         {
             mTrans.parent = container.transform;
@@ -40,7 +40,7 @@ public class DragDropItem : MonoBehaviour
 
     private void OnDrag(Vector2 delta)
     {
-        if (enabled && (UICamera.currentTouchID > -2))
+        if (enabled && UICamera.currentTouchID > -2)
         {
             if (!mIsDragging)
             {

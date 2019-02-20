@@ -26,7 +26,7 @@ public class ByteReader
     public Dictionary<string, string> ReadDictionary()
     {
         var dictionary = new Dictionary<string, string>();
-        var separator = new char[] { '=' };
+        var separator = new[] { '=' };
         while (canRead)
         {
             var str = ReadLine();
@@ -52,7 +52,7 @@ public class ByteReader
     {
         string str;
         var length = mBuffer.Length;
-        while ((this.mOffset < length) && (mBuffer[this.mOffset] < 0x20))
+        while (this.mOffset < length && mBuffer[this.mOffset] < 32)
         {
             this.mOffset++;
         }
@@ -73,7 +73,7 @@ public class ByteReader
         }
         mOffset++;
     Label_007E:
-        str = ReadLine(mBuffer, this.mOffset, (mOffset - this.mOffset) - 1);
+        str = ReadLine(mBuffer, this.mOffset, mOffset - this.mOffset - 1);
         this.mOffset = mOffset;
         return str;
     }
@@ -87,7 +87,7 @@ public class ByteReader
     {
         get
         {
-            return ((mBuffer != null) && (mOffset < mBuffer.Length));
+            return mBuffer != null && mOffset < mBuffer.Length;
         }
     }
 }

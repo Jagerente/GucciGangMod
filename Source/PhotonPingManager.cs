@@ -60,11 +60,11 @@ public class PhotonPingManager
         get
         {
             Region region = null;
-            var ping = 0x7fffffff;
+            var ping = 2147483647;
             foreach (var region2 in PhotonNetwork.networkingPeer.AvailableRegions)
             {
                 UnityEngine.Debug.Log("BestRegion checks region: " + region2);
-                if ((region2.Ping != 0) && (region2.Ping < ping))
+                if (region2.Ping != 0 && region2.Ping < ping)
                 {
                     ping = region2.Ping;
                     region = region2;
@@ -78,7 +78,7 @@ public class PhotonPingManager
     {
         get
         {
-            return (PingsRunning == 0);
+            return PingsRunning == 0;
         }
     }
 
@@ -177,7 +177,7 @@ public class PhotonPingManager
                     goto Label_02B2;
                 }
                 rtt9 = (int) sw7.ElapsedMilliseconds;
-                if ((!IgnoreInitialAttempt || (i5 != 0)) && (ping0.Successful && !overtime6))
+                if ((!IgnoreInitialAttempt || i5 != 0) && ping0.Successful && !overtime6)
                 {
                     rttSum1 += rtt9;
                     replyCount2++;

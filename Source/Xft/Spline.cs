@@ -31,21 +31,21 @@
             var num7 = -0.5;
             var num8 = -0.5;
             var num9 = 0.5;
-            var num10 = (((num * T0.x) + (num2 * P0.x)) + (num3 * P1.x)) + (num4 * T1.x);
-            var num11 = ((T0.x + (num5 * P0.x)) + (num6 * P1.x)) + (num7 * T1.x);
-            var num12 = (num8 * T0.x) + (num9 * P1.x);
+            var num10 = num * T0.x + num2 * P0.x + num3 * P1.x + num4 * T1.x;
+            var num11 = T0.x + num5 * P0.x + num6 * P1.x + num7 * T1.x;
+            var num12 = num8 * T0.x + num9 * P1.x;
             double x = P0.x;
-            var num14 = (((num * T0.y) + (num2 * P0.y)) + (num3 * P1.y)) + (num4 * T1.y);
-            var num15 = ((T0.y + (num5 * P0.y)) + (num6 * P1.y)) + (num7 * T1.y);
-            var num16 = (num8 * T0.y) + (num9 * P1.y);
+            var num14 = num * T0.y + num2 * P0.y + num3 * P1.y + num4 * T1.y;
+            var num15 = T0.y + num5 * P0.y + num6 * P1.y + num7 * T1.y;
+            var num16 = num8 * T0.y + num9 * P1.y;
             double y = P0.y;
-            var num18 = (((num * T0.z) + (num2 * P0.z)) + (num3 * P1.z)) + (num4 * T1.z);
-            var num19 = ((T0.z + (num5 * P0.z)) + (num6 * P1.z)) + (num7 * T1.z);
-            var num20 = (num8 * T0.z) + (num9 * P1.z);
+            var num18 = num * T0.z + num2 * P0.z + num3 * P1.z + num4 * T1.z;
+            var num19 = T0.z + num5 * P0.z + num6 * P1.z + num7 * T1.z;
+            var num20 = num8 * T0.z + num9 * P1.z;
             double z = P0.z;
-            var num22 = (float) ((((((num10 * f) + num11) * f) + num12) * f) + x);
-            var num23 = (float) ((((((num14 * f) + num15) * f) + num16) * f) + y);
-            return new Vector3(num22, num23, (float) ((((((num18 * f) + num19) * f) + num20) * f) + z));
+            var num22 = (float) (((num10 * f + num11) * f + num12) * f + x);
+            var num23 = (float) (((num14 * f + num15) * f + num16) * f + y);
+            return new Vector3(num22, num23, (float) (((num18 * f + num19) * f + num20) * f + z));
         }
 
         public void Clear()
@@ -202,7 +202,7 @@
         {
             get
             {
-                if ((index > -1) && (index < mSegments.Count))
+                if (index > -1 && index < mSegments.Count)
                 {
                     return mSegments[index];
                 }

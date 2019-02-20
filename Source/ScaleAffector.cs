@@ -43,13 +43,13 @@ public class ScaleAffector : Affector
         }
         else if (Type == RSTYPE.SIMPLE)
         {
-            var num2 = Node.Scale.x + (DeltaX * Time.deltaTime);
-            var num3 = Node.Scale.y + (DeltaY * Time.deltaTime);
-            if ((num2 * Node.Scale.x) > 0f)
+            var num2 = Node.Scale.x + DeltaX * Time.deltaTime;
+            var num3 = Node.Scale.y + DeltaY * Time.deltaTime;
+            if (num2 * Node.Scale.x > 0f)
             {
                 Node.Scale.x = num2;
             }
-            if ((num3 * Node.Scale.y) > 0f)
+            if (num3 * Node.Scale.y > 0f)
             {
                 Node.Scale.y = num3;
             }

@@ -56,7 +56,7 @@ public class UIDraggablePanel : IgnoreTimeScale
 
     public void Drag()
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && mShouldMove)
+        if (enabled && NGUITools.GetActive(gameObject) && mShouldMove)
         {
             if (mDragID == -10)
             {
@@ -75,7 +75,7 @@ public class UIDraggablePanel : IgnoreTimeScale
                 var point = ray.GetPoint(enter);
                 var direction = point - mLastPos;
                 mLastPos = point;
-                if ((direction.x != 0f) || (direction.y != 0f))
+                if (direction.x != 0f || direction.y != 0f)
                 {
                     direction = mTrans.InverseTransformDirection(direction);
                     direction.Scale(scale);
@@ -95,7 +95,7 @@ public class UIDraggablePanel : IgnoreTimeScale
                 {
                     MoveAbsolute(direction);
                 }
-                if ((restrictWithinPanel && (mPanel.clipping != UIDrawCall.Clipping.None)) && (dragEffect != DragEffect.MomentumAndSpring))
+                if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None && dragEffect != DragEffect.MomentumAndSpring)
                 {
                     RestrictWithinBounds(true);
                 }
@@ -118,14 +118,14 @@ public class UIDraggablePanel : IgnoreTimeScale
             {
                 var shouldMoveVertically = false;
                 var shouldMoveHorizontally = false;
-                if (((showScrollBars != ShowCondition.WhenDragging) || (mDragID != -10)) || (mMomentum.magnitude > 0.01f))
+                if (showScrollBars != ShowCondition.WhenDragging || mDragID != -10 || mMomentum.magnitude > 0.01f)
                 {
                     shouldMoveVertically = this.shouldMoveVertically;
                     shouldMoveHorizontally = this.shouldMoveHorizontally;
                 }
                 if (verticalScrollBar != null)
                 {
-                    var num2 = verticalScrollBar.alpha + (!shouldMoveVertically ? (-deltaTime * 3f) : (deltaTime * 6f));
+                    var num2 = verticalScrollBar.alpha + (!shouldMoveVertically ? -deltaTime * 3f : deltaTime * 6f);
                     num2 = Mathf.Clamp01(num2);
                     if (verticalScrollBar.alpha != num2)
                     {
@@ -134,7 +134,7 @@ public class UIDraggablePanel : IgnoreTimeScale
                 }
                 if (horizontalScrollBar != null)
                 {
-                    var num3 = horizontalScrollBar.alpha + (!shouldMoveHorizontally ? (-deltaTime * 3f) : (deltaTime * 6f));
+                    var num3 = horizontalScrollBar.alpha + (!shouldMoveHorizontally ? -deltaTime * 3f : deltaTime * 6f);
                     num3 = Mathf.Clamp01(num3);
                     if (horizontalScrollBar.alpha != num3)
                     {
@@ -150,11 +150,11 @@ public class UIDraggablePanel : IgnoreTimeScale
                     mScroll = NGUIMath.SpringLerp(mScroll, 0f, 20f, deltaTime);
                     var absolute = NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
                     MoveAbsolute(absolute);
-                    if (restrictWithinPanel && (mPanel.clipping != UIDrawCall.Clipping.None))
+                    if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None)
                     {
                         RestrictWithinBounds(false);
                     }
-                    if ((mMomentum.magnitude < 0.0001f) && (onDragFinished != null))
+                    if (mMomentum.magnitude < 0.0001f && onDragFinished != null)
                     {
                         onDragFinished();
                     }
@@ -200,8 +200,8 @@ public class UIDraggablePanel : IgnoreTimeScale
     {
         if (!mIgnoreCallbacks)
         {
-            var x = (horizontalScrollBar == null) ? 0f : horizontalScrollBar.scrollValue;
-            var y = (verticalScrollBar == null) ? 0f : verticalScrollBar.scrollValue;
+            var x = horizontalScrollBar == null ? 0f : horizontalScrollBar.scrollValue;
+            var y = verticalScrollBar == null ? 0f : verticalScrollBar.scrollValue;
             SetDragAmount(x, y, false);
         }
     }
@@ -215,8 +215,8 @@ public class UIDraggablePanel : IgnoreTimeScale
     {
         if (!mIgnoreCallbacks)
         {
-            var x = (horizontalScrollBar == null) ? 0f : horizontalScrollBar.scrollValue;
-            var y = (verticalScrollBar == null) ? 0f : verticalScrollBar.scrollValue;
+            var x = horizontalScrollBar == null ? 0f : horizontalScrollBar.scrollValue;
+            var y = verticalScrollBar == null ? 0f : verticalScrollBar.scrollValue;
             SetDragAmount(x, y, false);
         }
     }
@@ -230,7 +230,7 @@ public class UIDraggablePanel : IgnoreTimeScale
         }
         if (enabled && NGUITools.GetActive(gameObject))
         {
-            if (!pressed && (mDragID == UICamera.currentTouchID))
+            if (!pressed && mDragID == UICamera.currentTouchID)
             {
                 mDragID = -10;
             }
@@ -249,7 +249,7 @@ public class UIDraggablePanel : IgnoreTimeScale
                 }
                 else
                 {
-                    if ((restrictWithinPanel && (mPanel.clipping != UIDrawCall.Clipping.None)) && (dragEffect == DragEffect.MomentumAndSpring))
+                    if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None && dragEffect == DragEffect.MomentumAndSpring)
                     {
                         RestrictWithinBounds(false);
                     }
@@ -276,7 +276,7 @@ public class UIDraggablePanel : IgnoreTimeScale
         {
             return false;
         }
-        if (!instant && (dragEffect == DragEffect.MomentumAndSpring))
+        if (!instant && dragEffect == DragEffect.MomentumAndSpring)
         {
             SpringPanel.Begin(mPanel.gameObject, mTrans.localPosition + relative, 13f);
         }
@@ -291,7 +291,7 @@ public class UIDraggablePanel : IgnoreTimeScale
 
     public void Scroll(float delta)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (scrollWheelFactor != 0f))
+        if (enabled && NGUITools.GetActive(gameObject) && scrollWheelFactor != 0f)
         {
             DisableSpring();
             mShouldMove = shouldMove;
@@ -307,7 +307,7 @@ public class UIDraggablePanel : IgnoreTimeScale
     {
         DisableSpring();
         var bounds = this.bounds;
-        if ((bounds.min.x != bounds.max.x) && (bounds.min.y != bounds.max.y))
+        if (bounds.min.x != bounds.max.x && bounds.min.y != bounds.max.y)
         {
             var clipRange = mPanel.clipRange;
             var num = clipRange.z * 0.5f;
@@ -354,12 +354,12 @@ public class UIDraggablePanel : IgnoreTimeScale
         if (horizontalScrollBar != null)
         {
             horizontalScrollBar.onChange = (UIScrollBar.OnScrollBarChange) Delegate.Combine(horizontalScrollBar.onChange, new UIScrollBar.OnScrollBarChange(OnHorizontalBar));
-            horizontalScrollBar.alpha = ((showScrollBars != ShowCondition.Always) && !shouldMoveHorizontally) ? 0f : 1f;
+            horizontalScrollBar.alpha = showScrollBars != ShowCondition.Always && !shouldMoveHorizontally ? 0f : 1f;
         }
         if (verticalScrollBar != null)
         {
             verticalScrollBar.onChange = (UIScrollBar.OnScrollBarChange) Delegate.Combine(verticalScrollBar.onChange, new UIScrollBar.OnScrollBarChange(OnVerticalBar));
-            verticalScrollBar.alpha = ((showScrollBars != ShowCondition.Always) && !shouldMoveVertically) ? 0f : 1f;
+            verticalScrollBar.alpha = showScrollBars != ShowCondition.Always && !shouldMoveVertically ? 0f : 1f;
         }
     }
 
@@ -367,7 +367,7 @@ public class UIDraggablePanel : IgnoreTimeScale
     {
         if (mPanel != null)
         {
-            if ((horizontalScrollBar != null) || (verticalScrollBar != null))
+            if (horizontalScrollBar != null || verticalScrollBar != null)
             {
                 if (recalculateBounds)
                 {
@@ -383,34 +383,34 @@ public class UIDraggablePanel : IgnoreTimeScale
                     min -= clipSoftness;
                     max += clipSoftness;
                 }
-                if ((horizontalScrollBar != null) && (max.x > min.x))
+                if (horizontalScrollBar != null && max.x > min.x)
                 {
                     var clipRange = mPanel.clipRange;
                     var num = clipRange.z * 0.5f;
-                    var num2 = (clipRange.x - num) - bounds.min.x;
-                    var num3 = (bounds.max.x - num) - clipRange.x;
+                    var num2 = clipRange.x - num - bounds.min.x;
+                    var num3 = bounds.max.x - num - clipRange.x;
                     var num4 = max.x - min.x;
                     num2 = Mathf.Clamp01(num2 / num4);
                     num3 = Mathf.Clamp01(num3 / num4);
                     var num5 = num2 + num3;
                     mIgnoreCallbacks = true;
                     horizontalScrollBar.barSize = 1f - num5;
-                    horizontalScrollBar.scrollValue = (num5 <= 0.001f) ? 0f : (num2 / num5);
+                    horizontalScrollBar.scrollValue = num5 <= 0.001f ? 0f : num2 / num5;
                     mIgnoreCallbacks = false;
                 }
-                if ((verticalScrollBar != null) && (max.y > min.y))
+                if (verticalScrollBar != null && max.y > min.y)
                 {
                     var vector7 = mPanel.clipRange;
                     var num6 = vector7.w * 0.5f;
-                    var num7 = (vector7.y - num6) - min.y;
-                    var num8 = (max.y - num6) - vector7.y;
+                    var num7 = vector7.y - num6 - min.y;
+                    var num8 = max.y - num6 - vector7.y;
                     var num9 = max.y - min.y;
                     num7 = Mathf.Clamp01(num7 / num9);
                     num8 = Mathf.Clamp01(num8 / num9);
                     var num10 = num7 + num8;
                     mIgnoreCallbacks = true;
                     verticalScrollBar.barSize = 1f - num10;
-                    verticalScrollBar.scrollValue = (num10 <= 0.001f) ? 0f : (1f - (num7 / num10));
+                    verticalScrollBar.scrollValue = num10 <= 0.001f ? 0f : 1f - num7 / num10;
                     mIgnoreCallbacks = false;
                 }
             }
@@ -469,26 +469,26 @@ public class UIDraggablePanel : IgnoreTimeScale
             }
             var clipRange = mPanel.clipRange;
             var bounds = this.bounds;
-            var num = (clipRange.z != 0f) ? (clipRange.z * 0.5f) : Screen.width;
-            var num2 = (clipRange.w != 0f) ? (clipRange.w * 0.5f) : Screen.height;
+            var num = clipRange.z != 0f ? clipRange.z * 0.5f : Screen.width;
+            var num2 = clipRange.w != 0f ? clipRange.w * 0.5f : Screen.height;
             if (!Mathf.Approximately(scale.x, 0f))
             {
-                if (bounds.min.x < (clipRange.x - num))
+                if (bounds.min.x < clipRange.x - num)
                 {
                     return true;
                 }
-                if (bounds.max.x > (clipRange.x + num))
+                if (bounds.max.x > clipRange.x + num)
                 {
                     return true;
                 }
             }
             if (!Mathf.Approximately(scale.y, 0f))
             {
-                if (bounds.min.y < (clipRange.y - num2))
+                if (bounds.min.y < clipRange.y - num2)
                 {
                     return true;
                 }
-                if (bounds.max.y > (clipRange.y + num2))
+                if (bounds.max.y > clipRange.y + num2)
                 {
                     return true;
                 }
@@ -506,7 +506,7 @@ public class UIDraggablePanel : IgnoreTimeScale
             {
                 x += mPanel.clipSoftness.x * 2f;
             }
-            return (x > mPanel.clipRange.z);
+            return x > mPanel.clipRange.z;
         }
     }
 
@@ -519,7 +519,7 @@ public class UIDraggablePanel : IgnoreTimeScale
             {
                 y += mPanel.clipSoftness.y * 2f;
             }
-            return (y > mPanel.clipRange.w);
+            return y > mPanel.clipRange.w;
         }
     }
 

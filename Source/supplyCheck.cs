@@ -35,7 +35,7 @@ public class supplyCheck : MonoBehaviour
                             obj2.GetComponent<HERO>().getSupply();
                         }
                     }
-                    else if (obj2.GetPhotonView().isMine && (Vector3.Distance(obj2.transform.position, transform.position) < 1.5f))
+                    else if (obj2.GetPhotonView().isMine && Vector3.Distance(obj2.transform.position, transform.position) < 1.5f)
                     {
                         obj2.GetComponent<HERO>().getSupply();
                     }

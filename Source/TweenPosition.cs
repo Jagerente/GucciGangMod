@@ -27,7 +27,7 @@ public class TweenPosition : UITweener
 
     protected override void OnUpdate(float factor, bool isFinished)
     {
-        cachedTransform.localPosition = (@from * (1f - factor)) + (to * factor);
+        cachedTransform.localPosition = @from * (1f - factor) + to * factor;
     }
 
     public Transform cachedTransform

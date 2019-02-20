@@ -90,13 +90,13 @@ public class UIMainReferences : MonoBehaviour
                 "mikasa_asset," +//24
                 "character_cap_," +//25
                 "character_gun"//26
-                ).Split(new char[] { ',' });
+                ).Split(',');
             StartCoroutine(request());
             FengGameManagerMKII.loginstate = 0;
         }
         if (FengGameManagerMKII.shallRejoin[0] is bool && (bool)FengGameManagerMKII.shallRejoin[0])
         {
-            PhotonNetwork.ConnectToMaster((string)FengGameManagerMKII.shallRejoin[1], 0x13bf, FengGameManagerMKII.applicationId, version);
+            PhotonNetwork.ConnectToMaster((string)FengGameManagerMKII.shallRejoin[1], 5055, FengGameManagerMKII.applicationId, version);
         }
     }
 

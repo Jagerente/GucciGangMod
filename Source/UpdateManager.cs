@@ -123,7 +123,7 @@ public class UpdateManager : MonoBehaviour
             while (size > 0)
             {
                 var entry = mDest.buffer[--size];
-                if (!isPlaying || (entry.time < mTime))
+                if (!isPlaying || entry.time < mTime)
                 {
                     if (entry.obj != null)
                     {
@@ -133,7 +133,7 @@ public class UpdateManager : MonoBehaviour
                     mDest.RemoveAt(size);
                 }
             }
-            if (((mOnUpdate.Count == 0) && (mOnLate.Count == 0)) && ((mOnCoro.Count == 0) && (mDest.size == 0)))
+            if (mOnUpdate.Count == 0 && mOnLate.Count == 0 && mOnCoro.Count == 0 && mDest.size == 0)
             {
                 NGUITools.Destroy(gameObject);
                 return false;
@@ -147,7 +147,7 @@ public class UpdateManager : MonoBehaviour
         if (mInst == null)
         {
             mInst = FindObjectOfType(typeof(UpdateManager)) as UpdateManager;
-            if ((mInst == null) && Application.isPlaying)
+            if (mInst == null && Application.isPlaying)
             {
                 var target = new GameObject("_UpdateManager");
                 DontDestroyOnLoad(target);

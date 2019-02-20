@@ -16,7 +16,7 @@ public class PlanetMouseOrbit : MonoBehaviour
     public int yMaxLimit = 80;
     public int yMinLimit = -20;
     public float ySpeed = 120f;
-    public int zoomRate = 0x19;
+    public int zoomRate = 25;
 
     public static float ClampAngle(float angle, float min, float max)
     {
@@ -46,9 +46,9 @@ public class PlanetMouseOrbit : MonoBehaviour
     {
         if (target != null)
         {
-            x += (Input.GetAxis("Mouse X") * xSpeed) * 0.02f;
-            y -= (Input.GetAxis("Mouse Y") * ySpeed) * 0.02f;
-            distance += (-(Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime) * zoomRate) * Mathf.Abs(distance);
+            x += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+            distance += -(Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime) * zoomRate * Mathf.Abs(distance);
             y = ClampAngle(y, yMinLimit, yMaxLimit);
             var quaternion = Quaternion.Euler(y, x, 0f);
             var vector = quaternion * new Vector3(0f, 0f, -distance) + target.position;

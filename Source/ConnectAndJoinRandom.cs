@@ -14,7 +14,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
     {
         if (PhotonNetwork.networkingPeer.AvailableRegions != null)
         {
-            Debug.LogWarning(string.Concat(new object[] { "List of available regions counts ", PhotonNetwork.networkingPeer.AvailableRegions.Count, ". First: ", PhotonNetwork.networkingPeer.AvailableRegions[0], " \t Current Region: ", PhotonNetwork.networkingPeer.CloudRegion }));
+            Debug.LogWarning(string.Concat("List of available regions counts ", PhotonNetwork.networkingPeer.AvailableRegions.Count, ". First: ", PhotonNetwork.networkingPeer.AvailableRegions[0], " \t Current Region: ", PhotonNetwork.networkingPeer.CloudRegion));
         }
         Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
         PhotonNetwork.JoinRandomRoom();
@@ -51,7 +51,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 
     public virtual void Update()
     {
-        if ((ConnectInUpdate && AutoConnect) && !PhotonNetwork.connected)
+        if (ConnectInUpdate && AutoConnect && !PhotonNetwork.connected)
         {
             Debug.Log("Update() was called by Unity. Scene is loaded. Let's connect to the Photon Master Server. Calling: PhotonNetwork.ConnectUsingSettings();");
             ConnectInUpdate = false;

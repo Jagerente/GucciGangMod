@@ -23,7 +23,7 @@ public class FlareMovement : MonoBehaviour
     private void Start()
     {
         hero = GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object;
-        if (!nohint && (hero != null))
+        if (!nohint && hero != null)
         {
             hint = (GameObject) Instantiate(Resources.Load("UI/" + color + "FlareHint"));
             if (color == "Black")
@@ -66,11 +66,11 @@ public class FlareMovement : MonoBehaviour
         }
         if (timer < 4f)
         {
-            rigidbody.AddForce(((transform.forward + (transform.up * 5f)) * Time.deltaTime) * 5f, ForceMode.VelocityChange);
+            rigidbody.AddForce((transform.forward + transform.up * 5f) * Time.deltaTime * 5f, ForceMode.VelocityChange);
         }
         else
         {
-            rigidbody.AddForce((-transform.up * Time.deltaTime) * 7f, ForceMode.Acceleration);
+            rigidbody.AddForce(-transform.up * Time.deltaTime * 7f, ForceMode.Acceleration);
         }
     }
 }

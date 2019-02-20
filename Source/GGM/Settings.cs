@@ -761,7 +761,7 @@ namespace GGM
             Camera.main.farClipPlane = DrawDistance * 100;
             QualitySettings.shadowDistance = ShadowDistance * 100;
             QualitySettings.shadowProjection = ShadowProjection == 0 ? UnityEngine.ShadowProjection.CloseFit : UnityEngine.ShadowProjection.StableFit;
-            QualitySettings.shadowCascades = ShadowCascades == 0 ? 0 : ((ShadowCascades == 1) ? 2 : 4);
+            QualitySettings.shadowCascades = ShadowCascades == 0 ? 0 : ShadowCascades == 1 ? 2 : 4;
             Camera.main.GetComponent<TiltShift>().enabled = Blur != 0;
             #endregion
 
@@ -882,7 +882,7 @@ namespace GGM
                     else
                     {
                         RenderSettings.fog = Extensions.Forest;
-                        RenderSettings.fogStartDistance = (Camera.main.farClipPlane / 7) - Camera.main.farClipPlane;
+                        RenderSettings.fogStartDistance = Camera.main.farClipPlane / 7 - Camera.main.farClipPlane;
                         RenderSettings.fogEndDistance = Camera.main.farClipPlane;
                     }
                 }

@@ -54,11 +54,11 @@ namespace GGM
                     {
                         if (str.Trim() != "" && str.Contains(":"))
                         {
-                            var keys = str.Split(new char[] { ':' });
+                            var keys = str.Split(':');
                             var key = keys[0].Trim(); var value = keys[1].Trim();
                             if (key == "smooth")
                             {
-                                _multiButton = (value == "True");
+                                _multiButton = value == "True";
                             }
                             else if (key == "speedbutton")
                             {
@@ -101,45 +101,45 @@ namespace GGM
         {
             if (ONEnable)
             {
-                if (Input.mousePosition.x < (Screen.width * 0.4f))
+                if (Input.mousePosition.x < Screen.width * 0.4f)
                 {
-                    var num5 = (-((((Screen.width * 0.4f) - Input.mousePosition.x) / Screen.width) * 0.4f) * SpeedCamera) * 150f;
+                    var num5 = -((Screen.width * 0.4f - Input.mousePosition.x) / Screen.width * 0.4f) * SpeedCamera * 150f;
                     _baseT.Rotate(0f, num5, 0f, Space.World);
                 }
-                else if (Input.mousePosition.x > (Screen.width * 0.6f))
+                else if (Input.mousePosition.x > Screen.width * 0.6f)
                 {
-                    var num5 = ((((Input.mousePosition.x - (Screen.width * 0.6f)) / Screen.width) * 0.4f) * SpeedCamera) * 150f;
+                    var num5 = (Input.mousePosition.x - Screen.width * 0.6f) / Screen.width * 0.4f * SpeedCamera * 150f;
                     _baseT.Rotate(0f, num5, 0f, Space.World);
                 }
-                if (Input.mousePosition.y < (Screen.height * 0.4f))
+                if (Input.mousePosition.y < Screen.height * 0.4f)
                 {
-                    var num5 = (((((Screen.height * 0.4f) - Input.mousePosition.y) / Screen.height) * 0.4f) * SpeedCamera) * 150f;
+                    var num5 = (Screen.height * 0.4f - Input.mousePosition.y) / Screen.height * 0.4f * SpeedCamera * 150f;
                     _baseT.Rotate(num5, 0f, 0f, Space.Self);
                 }
-                else if (Input.mousePosition.y > (Screen.height * 0.6f))
+                else if (Input.mousePosition.y > Screen.height * 0.6f)
                 {
-                    var num5 = (-(((Input.mousePosition.y - (Screen.height * 0.6f)) / Screen.height) * 0.4f) * SpeedCamera) * 150f;
+                    var num5 = -((Input.mousePosition.y - Screen.height * 0.6f) / Screen.height * 0.4f) * SpeedCamera * 150f;
                     _baseT.Rotate(num5, 0f, 0f, Space.Self);
                 }
 
                 if (Input.GetKey(_buttonUp))
                 {
-                    _baseT.position += (_baseT.forward * (_speedButton * _timered["up"].Value(100))) * Time.deltaTime;
+                    _baseT.position += _baseT.forward * (_speedButton * _timered["up"].Value(100)) * Time.deltaTime;
                 }
                 else if (Input.GetKey(_buttonDown))
                 {
-                    _baseT.position -= (_baseT.forward * (_speedButton * _timered["down"].Value(100))) * Time.deltaTime;
+                    _baseT.position -= _baseT.forward * (_speedButton * _timered["down"].Value(100)) * Time.deltaTime;
                 }
                 else if (_multiButton)
                 {
                     if (_timered["up"].ValueLocal > 0)
                     {
-                        _baseT.position += (_baseT.forward * (_speedButton * _timered["up"].ValueLocal)) * Time.deltaTime;
+                        _baseT.position += _baseT.forward * (_speedButton * _timered["up"].ValueLocal) * Time.deltaTime;
                         _timered["up"].Stop();
                     }
                     if (_timered["down"].ValueLocal > 0)
                     {
-                        _baseT.position -= (_baseT.forward * (_speedButton * _timered["down"].ValueLocal)) * Time.deltaTime;
+                        _baseT.position -= _baseT.forward * (_speedButton * _timered["down"].ValueLocal) * Time.deltaTime;
                         _timered["down"].Stop();
                     }
 
@@ -147,22 +147,22 @@ namespace GGM
                 }
                 if (Input.GetKey(_buttonLeft))
                 {
-                    _baseT.position -= (_baseT.right * (_speedButton * _timered["left"].Value(100))) * Time.deltaTime;
+                    _baseT.position -= _baseT.right * (_speedButton * _timered["left"].Value(100)) * Time.deltaTime;
                 }
                 else if (Input.GetKey(_buttonRight))
                 {
-                    _baseT.position += (_baseT.right * (_speedButton * _timered["right"].Value(100))) * Time.deltaTime;
+                    _baseT.position += _baseT.right * (_speedButton * _timered["right"].Value(100)) * Time.deltaTime;
                 }
                 else if (_multiButton)
                 {
                     if (_timered["left"].ValueLocal > 0)
                     {
-                        _baseT.position -= (_baseT.right * (_speedButton * _timered["left"].ValueLocal)) * Time.deltaTime;
+                        _baseT.position -= _baseT.right * (_speedButton * _timered["left"].ValueLocal) * Time.deltaTime;
                         _timered["left"].Stop();
                     }
                     if (_timered["right"].ValueLocal > 0)
                     {
-                        _baseT.position += (_baseT.right * (_speedButton * _timered["right"].ValueLocal)) * Time.deltaTime;
+                        _baseT.position += _baseT.right * (_speedButton * _timered["right"].ValueLocal) * Time.deltaTime;
                         _timered["right"].Stop();
                     }
                 }

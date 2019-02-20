@@ -24,7 +24,7 @@ public class UIDragObject : IgnoreTimeScale
 
     private void FindPanel()
     {
-        mPanel = (target == null) ? null : UIPanel.Find(target.transform, false);
+        mPanel = target == null ? null : UIPanel.Find(target.transform, false);
         if (mPanel == null)
         {
             restrictWithinPanel = false;
@@ -58,7 +58,7 @@ public class UIDragObject : IgnoreTimeScale
                     if (mPanel != null)
                     {
                         target.position += NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
-                        if (restrictWithinPanel && (mPanel.clipping != UIDrawCall.Clipping.None))
+                        if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None)
                         {
                             mBounds = NGUIMath.CalculateRelativeWidgetBounds(mPanel.cachedTransform, target);
                             if (!mPanel.ConstrainTargetToBounds(target, ref mBounds, dragEffect == DragEffect.None))
@@ -84,7 +84,7 @@ public class UIDragObject : IgnoreTimeScale
 
     private void OnDrag(Vector2 delta)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (target != null))
+        if (enabled && NGUITools.GetActive(gameObject) && target != null)
         {
             UICamera.currentTouch.clickNotification = UICamera.ClickNotification.BasedOnDelta;
             var ray = UICamera.currentCamera.ScreenPointToRay(UICamera.currentTouch.pos);
@@ -94,7 +94,7 @@ public class UIDragObject : IgnoreTimeScale
                 var point = ray.GetPoint(enter);
                 var direction = point - mLastPos;
                 mLastPos = point;
-                if ((direction.x != 0f) || (direction.y != 0f))
+                if (direction.x != 0f || direction.y != 0f)
                 {
                     direction = target.InverseTransformDirection(direction);
                     direction.Scale(scale);
@@ -109,7 +109,7 @@ public class UIDragObject : IgnoreTimeScale
                     var localPosition = target.localPosition;
                     target.position += direction;
                     mBounds.center += target.localPosition - localPosition;
-                    if (((dragEffect != DragEffect.MomentumAndSpring) && (mPanel.clipping != UIDrawCall.Clipping.None)) && mPanel.ConstrainTargetToBounds(target, ref mBounds, true))
+                    if (dragEffect != DragEffect.MomentumAndSpring && mPanel.clipping != UIDrawCall.Clipping.None && mPanel.ConstrainTargetToBounds(target, ref mBounds, true))
                     {
                         mMomentum = Vector3.zero;
                         mScroll = 0f;
@@ -125,12 +125,12 @@ public class UIDragObject : IgnoreTimeScale
 
     private void OnPress(bool pressed)
     {
-        if ((enabled && NGUITools.GetActive(gameObject)) && (target != null))
+        if (enabled && NGUITools.GetActive(gameObject) && target != null)
         {
             mPressed = pressed;
             if (pressed)
             {
-                if (restrictWithinPanel && (mPanel == null))
+                if (restrictWithinPanel && mPanel == null)
                 {
                     FindPanel();
                 }
@@ -147,9 +147,9 @@ public class UIDragObject : IgnoreTimeScale
                 }
                 mLastPos = UICamera.lastHit.point;
                 var transform = UICamera.currentCamera.transform;
-                mPlane = new Plane(((mPanel == null) ? transform.rotation : mPanel.cachedTransform.rotation) * Vector3.back, mLastPos);
+                mPlane = new Plane((mPanel == null ? transform.rotation : mPanel.cachedTransform.rotation) * Vector3.back, mLastPos);
             }
-            else if ((restrictWithinPanel && (mPanel.clipping != UIDrawCall.Clipping.None)) && (dragEffect == DragEffect.MomentumAndSpring))
+            else if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None && dragEffect == DragEffect.MomentumAndSpring)
             {
                 mPanel.ConstrainTargetToBounds(target, ref mBounds, false);
             }

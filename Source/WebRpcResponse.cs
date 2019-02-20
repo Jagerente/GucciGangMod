@@ -11,13 +11,13 @@ public class WebRpcResponse
     public WebRpcResponse(OperationResponse response)
     {
         object obj2;
-        response.Parameters.TryGetValue(0xd1, out obj2);
+        response.Parameters.TryGetValue(209, out obj2);
         Name = obj2 as string;
-        response.Parameters.TryGetValue(0xcf, out obj2);
-        ReturnCode = (obj2 == null) ? -1 : ((byte) obj2);
-        response.Parameters.TryGetValue(0xd0, out obj2);
+        response.Parameters.TryGetValue(207, out obj2);
+        ReturnCode = obj2 == null ? -1 : (byte) obj2;
+        response.Parameters.TryGetValue(208, out obj2);
         Parameters = obj2 as Dictionary<string, object>;
-        response.Parameters.TryGetValue(0xce, out obj2);
+        response.Parameters.TryGetValue(206, out obj2);
         DebugMessage = obj2 as string;
     }
 

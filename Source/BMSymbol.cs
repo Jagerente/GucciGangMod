@@ -38,7 +38,7 @@ public class BMSymbol
             {
                 return false;
             }
-            mSprite = (atlas == null) ? null : atlas.GetSprite(spriteName);
+            mSprite = atlas == null ? null : atlas.GetSprite(spriteName);
             if (mSprite != null)
             {
                 var texture = atlas.texture;
@@ -62,12 +62,12 @@ public class BMSymbol
                     mOffsetY = Mathf.RoundToInt(mSprite.paddingTop * outer.width);
                     mWidth = Mathf.RoundToInt(outer.width);
                     mHeight = Mathf.RoundToInt(outer.height);
-                    mAdvance = Mathf.RoundToInt(outer.width + ((mSprite.paddingRight + mSprite.paddingLeft) * outer.width));
+                    mAdvance = Mathf.RoundToInt(outer.width + (mSprite.paddingRight + mSprite.paddingLeft) * outer.width);
                     mIsValid = true;
                 }
             }
         }
-        return (mSprite != null);
+        return mSprite != null;
     }
 
     public int advance

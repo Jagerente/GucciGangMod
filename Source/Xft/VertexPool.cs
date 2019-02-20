@@ -5,7 +5,7 @@
 
     public class VertexPool
     {
-        public const int BlockSize = 0x6c;
+        public const int BlockSize = 108;
         public float BoundsScheduleTime = 1f;
         public bool ColorChanged;
         public Color[] Colors;
@@ -78,17 +78,17 @@
         {
             var count = 0;
             var num2 = 0;
-            if ((VertexUsed + vcount) >= VertexTotal)
+            if (VertexUsed + vcount >= VertexTotal)
             {
-                count = ((vcount / 0x6c) + 1) * 0x6c;
+                count = (vcount / 108 + 1) * 108;
             }
-            if ((IndexUsed + icount) >= IndexTotal)
+            if (IndexUsed + icount >= IndexTotal)
             {
-                num2 = ((icount / 0x6c) + 1) * 0x6c;
+                num2 = (icount / 108 + 1) * 108;
             }
             VertexUsed += vcount;
             IndexUsed += icount;
-            if ((count != 0) || (num2 != 0))
+            if (count != 0 || num2 != 0)
             {
                 EnlargeArrays(count, num2);
                 VertexTotal += count;
@@ -142,7 +142,7 @@
                 Mesh.triangles = Indices;
             }
             ElapsedTime += Time.deltaTime;
-            if ((ElapsedTime > BoundsScheduleTime) || FirstUpdate)
+            if (ElapsedTime > BoundsScheduleTime || FirstUpdate)
             {
                 RecalculateBounds();
                 ElapsedTime = 0f;
@@ -183,7 +183,7 @@
 
             public void ClearIndices()
             {
-                for (var i = IndexStart; i < (IndexStart + IndexCount); i++)
+                for (var i = IndexStart; i < IndexStart + IndexCount; i++)
                 {
                     Pool.Indices[i] = 0;
                 }

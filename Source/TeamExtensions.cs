@@ -13,7 +13,7 @@ internal static class TeamExtensions
         object obj2;
         if (player.customProperties.TryGetValue("team", out obj2))
         {
-            return (PunTeams.Team) ((byte) obj2);
+            return (PunTeams.Team) (byte) obj2;
         }
         return PunTeams.Team.none;
     }

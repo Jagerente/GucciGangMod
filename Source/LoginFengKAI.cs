@@ -435,7 +435,7 @@ public class LoginFengKAI : MonoBehaviour
                         }
                         else
                         {
-                            var separator = new char[] { '|' };
+                            var separator = new[] { '|' };
                             result2 = w1.text.Split(separator);
                             playerGUILDName = result2[0];
                             fthis.output2.GetComponent<UILabel>().text = result2[1];

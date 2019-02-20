@@ -88,8 +88,8 @@ public class SnapShotSaves
             inited = true;
             index = 0;
             maxIndex = 0;
-            img = new Texture2D[0x63];
-            dmg = new int[0x63];
+            img = new Texture2D[99];
+            dmg = new int[99];
         }
     }
 }

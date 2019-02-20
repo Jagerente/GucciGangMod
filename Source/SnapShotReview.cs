@@ -24,7 +24,7 @@ public class SnapShotReview : MonoBehaviour
         }
         else
         {
-            page.text = ((SnapShotSaves.getCurrentIndex() + 1)).ToString() + "/" + SnapShotSaves.getLength().ToString();
+            page.text = (SnapShotSaves.getCurrentIndex() + 1).ToString() + "/" + SnapShotSaves.getLength().ToString();
         }
         if (SnapShotSaves.getCurrentDMG() > 0)
         {
@@ -41,18 +41,18 @@ public class SnapShotReview : MonoBehaviour
         if (SnapShotSaves.getLength() != 0)
         {
             var num = 1.6f;
-            var num2 = texture.GetComponent<UITexture>().mainTexture.width / ((float) texture.GetComponent<UITexture>().mainTexture.height);
+            var num2 = texture.GetComponent<UITexture>().mainTexture.width / (float) texture.GetComponent<UITexture>().mainTexture.height;
             if (num2 > num)
             {
                 texture.transform.localScale = new Vector3(textureW, textureW / num2, 0f);
-                labelDMG.transform.localPosition = new Vector3((int) ((textureW * 0.5f) - 20f), (int) ((0f + ((textureW * 0.5f) / num2)) - 20f), -20f);
-                labelInfo.transform.localPosition = new Vector3((int) ((textureW * 0.5f) - 20f), (int) ((0f - ((textureW * 0.5f) / num2)) + 20f), -20f);
+                labelDMG.transform.localPosition = new Vector3((int) (textureW * 0.5f - 20f), (int) (0f + textureW * 0.5f / num2 - 20f), -20f);
+                labelInfo.transform.localPosition = new Vector3((int) (textureW * 0.5f - 20f), (int) (0f - textureW * 0.5f / num2 + 20f), -20f);
             }
             else
             {
                 texture.transform.localScale = new Vector3(textureH * num2, textureH, 0f);
-                labelDMG.transform.localPosition = new Vector3((int) (((textureH * num2) * 0.5f) - 20f), (int) ((0f + (textureH * 0.5f)) - 20f), -20f);
-                labelInfo.transform.localPosition = new Vector3((int) (((textureH * num2) * 0.5f) - 20f), (int) ((0f - (textureH * 0.5f)) + 20f), -20f);
+                labelDMG.transform.localPosition = new Vector3((int) (textureH * num2 * 0.5f - 20f), (int) (0f + textureH * 0.5f - 20f), -20f);
+                labelInfo.transform.localPosition = new Vector3((int) (textureH * num2 * 0.5f - 20f), (int) (0f - textureH * 0.5f + 20f), -20f);
             }
         }
     }

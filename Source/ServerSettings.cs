@@ -20,7 +20,7 @@ public class ServerSettings : ScriptableObject
     public ConnectionProtocol Protocol;
     public List<string> RpcList = new List<string>();
     public string ServerAddress = string.Empty;
-    public int ServerPort = 0x13bf;
+    public int ServerPort = 5055;
 
     public override string ToString()
     {
@@ -50,7 +50,7 @@ public class ServerSettings : ScriptableObject
     public void UseMyServer(string serverAddress, int serverPort, string application)
     {
         HostType = HostingOption.SelfHosted;
-        AppID = (application == null) ? "master" : application;
+        AppID = application == null ? "master" : application;
         ServerAddress = serverAddress;
         ServerPort = serverPort;
     }

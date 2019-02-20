@@ -43,7 +43,7 @@ public class CameraFacingBillboard : MonoBehaviour
 
     private void Update()
     {
-        var worldPosition = transform.position + (referenceCamera.transform.rotation * (!reverseFace ? Vector3.back : Vector3.forward));
+        var worldPosition = transform.position + referenceCamera.transform.rotation * (!reverseFace ? Vector3.back : Vector3.forward);
         var worldUp = referenceCamera.transform.rotation * GetAxis(axis);
         transform.LookAt(worldPosition, worldUp);
     }

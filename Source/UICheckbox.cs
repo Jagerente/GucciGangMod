@@ -62,7 +62,7 @@ public class UICheckbox : MonoBehaviour
         }
         else if (mChecked != state)
         {
-            if ((radioButtonRoot != null) && state)
+            if (radioButtonRoot != null && state)
             {
                 var componentsInChildren = radioButtonRoot.GetComponentsInChildren<UICheckbox>(true);
                 var index = 0;
@@ -70,7 +70,7 @@ public class UICheckbox : MonoBehaviour
                 while (index < length)
                 {
                     var checkbox = componentsInChildren[index];
-                    if ((checkbox != this) && (checkbox.radioButtonRoot == radioButtonRoot))
+                    if (checkbox != this && checkbox.radioButtonRoot == radioButtonRoot)
                     {
                         checkbox.Set(false);
                     }
@@ -94,7 +94,7 @@ public class UICheckbox : MonoBehaviour
             {
                 onStateChange(mChecked);
             }
-            if ((eventReceiver != null) && !string.IsNullOrEmpty(functionName))
+            if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
             {
                 eventReceiver.SendMessage(functionName, mChecked, SendMessageOptions.DontRequireReceiver);
             }
@@ -125,7 +125,7 @@ public class UICheckbox : MonoBehaviour
         }
         set
         {
-            if (((radioButtonRoot == null) || value) || (optionCanBeNone || !mStarted))
+            if (radioButtonRoot == null || value || optionCanBeNone || !mStarted)
             {
                 Set(value);
             }

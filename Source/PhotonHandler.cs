@@ -26,14 +26,14 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
 
     protected void Awake()
     {
-        if (((SP != null) && (SP != this)) && (SP.gameObject != null))
+        if (SP != null && SP != this && SP.gameObject != null)
         {
             DestroyImmediate(SP.gameObject);
         }
         SP = this;
         DontDestroyOnLoad(gameObject);
-        updateInterval = 0x3e8 / PhotonNetwork.sendRate;
-        updateIntervalOnSerialize = 0x3e8 / PhotonNetwork.sendRateOnSerialize;
+        updateInterval = 1000 / PhotonNetwork.sendRate;
+        updateIntervalOnSerialize = 1000 / PhotonNetwork.sendRateOnSerialize;
         StartFallbackSendAckThread();
     }
 
@@ -47,11 +47,11 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         {
             UnityEngine.Debug.LogWarning(message);
         }
-        else if ((level == DebugLevel.INFO) && (PhotonNetwork.logLevel >= PhotonLogLevel.Informational))
+        else if (level == DebugLevel.INFO && PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
         {
             UnityEngine.Debug.Log(message);
         }
-        else if ((level == DebugLevel.ALL) && (PhotonNetwork.logLevel == PhotonLogLevel.Full))
+        else if (level == DebugLevel.ALL && PhotonNetwork.logLevel == PhotonLogLevel.Full)
         {
             UnityEngine.Debug.Log(message);
         }
@@ -59,7 +59,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
 
     public static bool FallbackSendAckThread()
     {
-        if (sendThreadShouldRun && (PhotonNetwork.networkingPeer != null))
+        if (sendThreadShouldRun && PhotonNetwork.networkingPeer != null)
         {
             PhotonNetwork.networkingPeer.SendAcksOnly();
         }
@@ -132,13 +132,13 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         {
             UnityEngine.Debug.LogError("NetworkPeer broke!");
         }
-        else if ((((PhotonNetwork.connectionStateDetailed != PeerStates.PeerCreated) && (PhotonNetwork.connectionStateDetailed != PeerStates.Disconnected)) && !PhotonNetwork.offlineMode) && PhotonNetwork.isMessageQueueRunning)
+        else if (PhotonNetwork.connectionStateDetailed != PeerStates.PeerCreated && PhotonNetwork.connectionStateDetailed != PeerStates.Disconnected && !PhotonNetwork.offlineMode && PhotonNetwork.isMessageQueueRunning)
         {
             for (var flag = true; PhotonNetwork.isMessageQueueRunning && flag; flag = PhotonNetwork.networkingPeer.DispatchIncomingCommands())
             {
             }
             var num = (int) (Time.realtimeSinceStartup * 1000f);
-            if (PhotonNetwork.isMessageQueueRunning && (num > nextSendTickCountOnSerialize))
+            if (PhotonNetwork.isMessageQueueRunning && num > nextSendTickCountOnSerialize)
             {
                 PhotonNetwork.networkingPeer.RunViewUpdate();
                 nextSendTickCountOnSerialize = num + updateIntervalOnSerialize;
@@ -218,17 +218,17 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
             }
             if (PhotonNetwork.networkingPeer.AvailableRegions == null)
             {
-                if ((PhotonNetwork.connectionStateDetailed != PeerStates.ConnectingToNameServer) && (PhotonNetwork.connectionStateDetailed != PeerStates.ConnectedToNameServer))
+                if (PhotonNetwork.connectionStateDetailed != PeerStates.ConnectingToNameServer && PhotonNetwork.connectionStateDetailed != PeerStates.ConnectedToNameServer)
                 {
                     UnityEngine.Debug.LogError("Call ConnectToNameServer to ping available regions.");
                     goto Label_0266;
                 }
-                UnityEngine.Debug.Log(string.Concat(new object[] { "Waiting for AvailableRegions. State: ", PhotonNetwork.connectionStateDetailed, " Server: ", PhotonNetwork.Server, " PhotonNetwork.networkingPeer.AvailableRegions ", PhotonNetwork.networkingPeer.AvailableRegions != null }));
+                UnityEngine.Debug.Log(string.Concat("Waiting for AvailableRegions. State: ", PhotonNetwork.connectionStateDetailed, " Server: ", PhotonNetwork.Server, " PhotonNetwork.networkingPeer.AvailableRegions ", PhotonNetwork.networkingPeer.AvailableRegions != null));
                 Scurrent = new WaitForSeconds(0.25f);
                 SPC = 1;
                 //goto Label_0268;
             }
-            if ((PhotonNetwork.networkingPeer.AvailableRegions == null) || (PhotonNetwork.networkingPeer.AvailableRegions.Count == 0))
+            if (PhotonNetwork.networkingPeer.AvailableRegions == null || PhotonNetwork.networkingPeer.AvailableRegions.Count == 0)
             {
                 UnityEngine.Debug.LogError("No regions available. Are you sure your appid is valid and setup?");
                 goto Label_0266;
@@ -257,7 +257,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
             best3 = pingManager0.BestRegion;
             BestRegionCodeCurrently = best3.Code;
             BestRegionCodeInPreferences = best3.Code;
-            UnityEngine.Debug.Log(string.Concat(new object[] { "Found best region: ", best3.Code, " ping: ", best3.Ping, ". Calling ConnectToRegionMaster() is: ", connectToBest }));
+            UnityEngine.Debug.Log(string.Concat("Found best region: ", best3.Code, " ping: ", best3.Ping, ". Calling ConnectToRegionMaster() is: ", connectToBest));
             if (connectToBest)
             {
                 PhotonNetwork.networkingPeer.ConnectToRegionMaster(best3.Code);

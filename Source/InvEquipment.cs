@@ -29,8 +29,8 @@ public class InvEquipment : MonoBehaviour
     {
         if (slot != InvBaseItem.Slot.None)
         {
-            var index = ((int) slot) - 1;
-            if ((mItems != null) && (index < mItems.Length))
+            var index = (int) slot - 1;
+            if (mItems != null && index < mItems.Length)
             {
                 return mItems[index];
             }
@@ -47,7 +47,7 @@ public class InvEquipment : MonoBehaviour
             while (index < length)
             {
                 var baseItem = mItems[index].baseItem;
-                if ((baseItem != null) && (baseItem.slot == slot))
+                if (baseItem != null && baseItem.slot == slot)
                 {
                     return true;
                 }
@@ -77,10 +77,10 @@ public class InvEquipment : MonoBehaviour
 
     public InvGameItem Replace(InvBaseItem.Slot slot, InvGameItem item)
     {
-        var item2 = (item == null) ? null : item.baseItem;
+        var item2 = item == null ? null : item.baseItem;
         if (slot != InvBaseItem.Slot.None)
         {
-            if ((item2 != null) && (item2.slot != slot))
+            if (item2 != null && item2.slot != slot)
             {
                 return item;
             }
@@ -89,8 +89,8 @@ public class InvEquipment : MonoBehaviour
                 var num = 8;
                 mItems = new InvGameItem[num];
             }
-            var item3 = mItems[((int) slot) - 1];
-            mItems[((int) slot) - 1] = item;
+            var item3 = mItems[(int) slot - 1];
+            mItems[(int) slot - 1] = item;
             if (mAttachments == null)
             {
                 mAttachments = GetComponentsInChildren<InvAttachmentPoint>();
@@ -102,8 +102,8 @@ public class InvEquipment : MonoBehaviour
                 var point = mAttachments[index];
                 if (point.slot == slot)
                 {
-                    var obj2 = point.Attach((item2 == null) ? null : item2.attachment);
-                    if ((item2 != null) && (obj2 != null))
+                    var obj2 = point.Attach(item2 == null ? null : item2.attachment);
+                    if (item2 != null && obj2 != null)
                     {
                         var renderer = obj2.renderer;
                         if (renderer != null)

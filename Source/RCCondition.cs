@@ -23,10 +23,10 @@ public class RCCondition
         switch (operand)
         {
             case 2:
-                return (baseBool == compareBool);
+                return baseBool == compareBool;
 
             case 5:
-                return (baseBool != compareBool);
+                return baseBool != compareBool;
         }
         return false;
     }
@@ -159,10 +159,10 @@ public class RCCondition
         switch (operand)
         {
             case 2:
-                return (basePlayer == comparePlayer);
+                return basePlayer == comparePlayer;
 
             case 5:
-                return (basePlayer != comparePlayer);
+                return basePlayer != comparePlayer;
         }
         return false;
     }
@@ -235,10 +235,10 @@ public class RCCondition
         switch (operand)
         {
             case 2:
-                return (baseTitan == compareTitan);
+                return baseTitan == compareTitan;
 
             case 5:
-                return (baseTitan != compareTitan);
+                return baseTitan != compareTitan;
         }
         return false;
     }
