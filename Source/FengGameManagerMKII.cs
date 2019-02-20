@@ -209,7 +209,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         this.isUnloading = false;
         this.isRecompiling = false;
         Time.timeScale = 1f;
-        Camera.main.farClipPlane = 1500f;
         this.pauseWaitTime = 0f;
         this.spectateSprites = new List<GameObject>();
         this.isRestarting = false;
@@ -2014,10 +2013,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             if (this.pauseWaitTime <= 3f)
             {
                 this.pauseWaitTime -= Time.deltaTime * 1000000f;
-                if (this.pauseWaitTime <= 1f)
-                {
-                    Camera.main.farClipPlane = 1500f;
-                }
                 if (this.pauseWaitTime <= 0f)
                 {
                     this.pauseWaitTime = 0f;
