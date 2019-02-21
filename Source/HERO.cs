@@ -4748,7 +4748,7 @@ public class HERO : Photon.MonoBehaviour
         isMounted = false;
     }
 
-    public void update()
+    public void Update()
     {
         if (!IN_GAME_MAIN_CAMERA.isPausing)
         {
