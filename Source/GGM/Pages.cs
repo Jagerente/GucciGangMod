@@ -151,6 +151,7 @@ namespace GGM
         }
         public static void Main_Menu()
         {
+            GUI.Label(GUIHelpers.AlignRect(160,40, GUIHelpers.Alignment.BOTTOMRIGHT), $"<b><color=#FDBCB4><size=48>{Settings.Version}</size></color></b>", BetterGUI.TextLabelMiddleRight);
             #region Single
             if (GUI.Button(_single, _singleButton, "label"))
             {
@@ -159,11 +160,11 @@ namespace GGM
             }
             if (_single.Contains(GUIHelpers.mousePos))
             {
-                _singleButton = "<color=#" + _color1 + "><size=" + _size + "><b><i>S I N G L E</i></b></size></color>";
+                _singleButton = $"<color=#{_color1}><size={_size}><b><i>S I N G L E</i></b></size></color>";
             }
             else
             {
-                _singleButton = "<color=#" + _color2 + "><size=" + _size + "><b><i>S I N G L E</i></b></size></color>";
+                _singleButton = $"<color=#{_color2}><size={_size}><b><i>S I N G L E</i></b></size></color>";
             }
             #endregion
 
@@ -175,11 +176,11 @@ namespace GGM
             }
             if (_multiplayer.Contains(GUIHelpers.mousePos))
             {
-                _multiplayerButton = "<color=#" + _color1 + "><size=" + _size + "><b><i>M U L T I P L A Y E R</i></b></size></color>";
+                _multiplayerButton = $"<color=#{_color1}><size={_size}><b><i>M U L T I P L A Y E R</i></b></size></color>";
             }
             else
             {
-                _multiplayerButton = "<color=#" + _color2 + "><size=" + _size + "><b><i>M U L T I P L A Y E R</i></b></size></color>";
+                _multiplayerButton = $"<color=#{_color2}><size={_size}><b><i>M U L T I P L A Y E R</i></b></size></color>";
             }
             #endregion
 
@@ -190,11 +191,11 @@ namespace GGM
             }
             if (_quit.Contains(GUIHelpers.mousePos))
             {
-                _quitButton = "<color=#" + _color1 + "><size=" + _size + "><b><i>Q U I T</i></b></size></color>";
+                _quitButton = $"<color=#{_color1}><size={_size}><b><i>Q U I T</i></b></size></color>";
             }
             else
             {
-                _quitButton = "<color=#" + _color2 + "><size=" + _size + "><b><i>Q U I T</i></b></size></color>";
+                _quitButton = $"<color=#{_color2}><size={_size}><b><i>Q U I T</i></b></size></color>";
             }
             #endregion
 
