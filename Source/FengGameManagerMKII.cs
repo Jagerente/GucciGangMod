@@ -126,9 +126,9 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     public Vector2 scroll2;
     public GameObject selectedObj;
     public static object[] settings;
-    private int single_kills;
+    public static int single_kills;
     private int single_maxDamage;
-    private int single_totalDamage;
+    public static int single_totalDamage;
     public static Material skyMaterial;
     public List<GameObject> spectateSprites;
     private bool startRacing;
@@ -5054,6 +5054,11 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
     }
 
+    public void OnApplicationQuit()
+    {
+        RichPresence.IsRunning = false;
+    }
+
     public void OnConnectedToMaster()
     {
         print("OnConnectedToMaster");
@@ -6904,6 +6909,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         {
             ServerRequestAuthentication(PrivateServerAuthPass);
         }
+        //GGM.RichPresence.UpdateStatus();
     }
 
     public void OnLeftLobby()
@@ -6931,6 +6937,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             Destroy(GameObject.Find("MultiplayerManager"));
             Application.LoadLevel("menu");
         }
+        //GGM.RichPresence.UpdateStatus();
     }
 
     private void OnLevelWasLoaded(int level)
@@ -7390,6 +7397,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             }
         }
         RecompilePlayerList(0.1f);
+        //GGM.RichPresence.UpdateStatus();
     }
 
     public void OnPhotonPlayerDisconnected(PhotonPlayer player)
@@ -7419,6 +7427,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             PreservedPlayerKDR.Add(key, numArray2);
         }
         RecompilePlayerList(0.1f);
+        //GGM.RichPresence.UpdateStatus();
     }
 
     public void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
@@ -7481,6 +7490,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     public void OnReceivedRoomListUpdate()
     {
+        //GGM.RichPresence.UpdateStatus();
     }
 
     public void OnUpdate()
@@ -10963,20 +10973,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
         if (gameStart)
         {
-            var enumerator = heroes.GetEnumerator();
-            try
-            {
-                while (enumerator.MoveNext())
-                {
-                    ((HERO) enumerator.Current)?.update();
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
-            }
             var enumerator2 = hooks.GetEnumerator();
             try
             {
@@ -11059,7 +11055,8 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         if (GGM.Extensions.OnMap())
         {
             Settings.InitSettings();
-            Settings.InitLocationSkins();
+            if (GGM.Extensions.Forest || GGM.Extensions.City)
+                Settings.InitLocationSkins();
         }
     }
 

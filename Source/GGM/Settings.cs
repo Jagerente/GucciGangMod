@@ -6,6 +6,7 @@ namespace GGM
 {
     public static class Settings
     {
+        public static string Version = "v4.2.22";
         public static string ChatPath = $"{Application.dataPath}/chat.txt";
         public static bool SpecMode = false;
         public static bool Suicide = false;

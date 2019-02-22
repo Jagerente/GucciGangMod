@@ -1,91 +1,86 @@
-﻿using System;
-using DiscordRPC;
+﻿using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace GGM
 {
-    class RichPresence
+    public class RichPresence : MonoBehaviour
     {
-        public static bool DetailsUpdate = false;
-        public static bool StateUpdate = false;
-        public static bool Quit = false;
-
         public static string Details = string.Empty;
         public static string State = string.Empty;
 
-        static bool IsRunning = false;
-        /// <summary>
-        /// The pipe Discord is located on. If set to -1, the client will scan for the first available pipe.
-        /// </summary>
-        private static int DiscordPipe = -1;
-        /// <summary>
-        /// ID of the client
-        /// </summary>
-        private static string ClientID = "546067288093097994";
-        /// <summary>
-        /// The current presence to send to discord.
-        /// </summary>
-        private static DiscordRPC.RichPresence presence = new DiscordRPC.RichPresence()
+        public static bool IsRunning = false;
+
+        static float _time = 0f;
+
+        private static string _clientID = "546067288093097994";
+        public static DiscordRpc.RichPresence _presence;
+        public static DiscordRpc.EventHandlers _handlers;
+
+        public static void Start()
         {
-            Details = "GucciGangMod",
-            State = "In Game",
-            Assets = new Assets()
+            if (!IsRunning)
             {
-                LargeImageKey = "image_large",
-                LargeImageText = "github.com/JustlPain/GucciGangMod",
-                SmallImageKey = "image_large",
-                SmallImageText = "v4"
+                IsRunning = true;
+                _presence = new DiscordRpc.RichPresence
+                {
+                    details = "GucciGangMod",
+                    largeImageKey = "image_large",
+                    largeImageText = "github.com/JustlPain/GucciGangMod",
+                    smallImageKey = "image_large",
+                    smallImageText = Settings.Version
+                };
+                _handlers = default(DiscordRpc.EventHandlers);
+                DiscordRpc.Initialize(_clientID, ref _handlers, true, null);
+                DiscordRpc.UpdatePresence(_presence);
+                UpdateStatus();
             }
-        };
-        /// <summary>
-        /// The discord client
-        /// </summary>
-        private static DiscordRpcClient client;
+        }
 
-        public static void Connection()
+        public void Update()
         {
-            //Creates a new Discord RPC Client.
-            using (client = new DiscordRpcClient(ClientID, false, DiscordPipe))
+            _time += Time.deltaTime;
+            if (_time > 1f)
             {
-                if (!IsRunning)
+                DiscordRpc.UpdatePresence(_presence);
+                _time = 0f;
+            }
+        }
+
+        public static void UpdateStatus()
+        {
+            if (!PhotonNetwork.inRoom)
+            {
+                if (PhotonNetwork.insideLobby)
                 {
-                    presence.Timestamps = new Timestamps()
-                    {
-                        Start = DateTime.UtcNow,
-                        End = DateTime.UtcNow + TimeSpan.FromSeconds(15)
-                    };
-
-                    //Set some new presence to tell Discord we are in a game.
-                    client.SetPresence(presence);
-
-                    //Initialize the connection.
-                    client.Initialize();
-                    IsRunning = true;
-
-                    while (client != null && IsRunning)
-                    {
-                        //We will invoke the client events. 
-                        // In a game situation, you would do this in the Update.
-                        if (client != null)
-                            client.Invoke();
-
-                        //Try to read any keys if available
-                    }
+                    _presence.details = "Lobby";
+                    _presence.state = Regex.Replace(PhotonNetwork.ServerAddress, "app\\-|\\.exitgamescloud\\.com|\\:\\d+", "").ToUpper();
+                    _presence.partySize = 0;
+                    _presence.partyMax = 0;
                 }
-                if (DetailsUpdate)
+                else if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.STOP)
                 {
-                    client.UpdateDetails(Details);
-                    DetailsUpdate = false;
+                    _presence.details = "Singleplayer";
+                    _presence.state = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
+                    _presence.partySize = FengGameManagerMKII.single_kills;
+                    _presence.partyMax = FengGameManagerMKII.single_totalDamage;
                 }
-                if (StateUpdate)
+                else
                 {
-                    client.UpdateState(State);
-                    StateUpdate = false;
-                }
-                if (Quit)
-                {
-                    client.Dispose();
+                    _presence.details = "GucciGangMod";
+                    _presence.state = "Main Menu";
+                    _presence.partySize = 0;
+                    _presence.partyMax = 0;
                 }
             }
+            else
+            {
+                var text = PhotonNetwork.room.name.Split(new char[]{'`'})[0].Trim();
+                _presence.details = (text.Length > 20) ? (text.Remove(17) + "...") : text;
+                _presence.state = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
+                _presence.partySize = PhotonNetwork.room.playerCount;
+                _presence.partyMax = PhotonNetwork.room.maxPlayers;
+            }
+            DiscordRpc.UpdatePresence(_presence);
         }
     }
 }

@@ -24,6 +24,7 @@ public class BTN_PAUSE_MENU_QUIT : MonoBehaviour
         GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
         Destroy(GameObject.Find("MultiplayerManager"));
         Application.LoadLevel("menu");
+        //GGM.RichPresence.UpdateStatus();
     }
 }
 

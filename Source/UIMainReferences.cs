@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using GGM;
 
@@ -93,6 +94,7 @@ public class UIMainReferences : MonoBehaviour
                 ).Split(',');
             StartCoroutine(request());
             FengGameManagerMKII.loginstate = 0;
+            //gameObject.AddComponent<RichPresence>();
         }
         if (FengGameManagerMKII.shallRejoin[0] is bool && (bool)FengGameManagerMKII.shallRejoin[0])
         {
