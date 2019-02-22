@@ -18,7 +18,7 @@
 
 
 # Overview
-**GucciGangMod** is an **AoTTG** modification based on **RCFinal** source by **[DEN](#download)**.
+**GucciGangMod** is an **AoTTG** modification based on **RCFinal**.
 
 # Feautures
 All of the feautures you can find at [WIKI](https://github.com/JustlPain/GucciGangMod/wiki) page.
@@ -38,7 +38,7 @@ All of the feautures you can find at [WIKI](https://github.com/JustlPain/GucciGa
 
 # Download
 * [Latest version](https://github.com/JustlPain/GucciGangMod/releases)
-* [DEN's source](https://mega.nz/#!R5oxzQAA!xl2WvFQZJPAHs8rkYJMBmE74V_FNf1SiYN91KXQDq3M)
+* [RCFinal source by DEN](https://mega.nz/#!R5oxzQAA!xl2WvFQZJPAHs8rkYJMBmE74V_FNf1SiYN91KXQDq3M)
 
 # Special thanks
 ### For helping with code:
