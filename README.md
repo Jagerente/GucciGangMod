@@ -9,8 +9,6 @@
 <p align="center">
   <a href="#overview">Overview</a>
   •
-  <a href="#faq">FAQ</a>
-  •
   <a href="#download">Download</a>
   •
   <a href="https://github.com/JustlPain/GucciGangMod/wiki/Information">Feautures</a>
@@ -22,19 +20,6 @@
 
 # Feautures
 All of the feautures you can find at [WIKI](https://github.com/JustlPain/GucciGangMod/wiki) page.
-
-# FAQ
-**Q:** I found a bug, what should I do?
-**A:** Send me a [bug report](https://github.com/JustlPain/GucciGangMod/issues/new/choose).
-
-**Q:** I have a feature idea, how can I tell you about it?
-**A:** Send me a [feature request](https://github.com/JustlPain/GucciGangMod/issues/new/choose).
-
-**Q:** I want to help you with this project, what should do?
-**A:** Contact me.
-
-**Q:** How can I contact you?
-**A:** Add me on *Discord* — kakoytodolboeb.#8735 or send me an email — JustlPains@gmail.com.
 
 # Download
 * [Latest version](https://github.com/JustlPain/GucciGangMod/releases)
