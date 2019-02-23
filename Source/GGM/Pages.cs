@@ -8,6 +8,7 @@ namespace GGM
     internal class Pages : MonoBehaviour
     {
         #region Variables
+        private static int _levelSkinPage = 0;
 
         private static readonly float _leftPos = Screen.width / 2f - 350f;
         private static readonly float _topPos = Screen.height / 2f - 250f;
@@ -1719,8 +1720,7 @@ namespace GGM
         }
         public static void Level_Skins()
         {
-            var levelSkinPage = 0;
-            if (levelSkinPage == 0)
+            if (_levelSkinPage == 0)
             {
                 GUILayout.BeginArea(_left);
                 GUILayout.BeginVertical();
@@ -1729,7 +1729,7 @@ namespace GGM
                 BetterGUI.Header("Forest");
                 BetterGUI.SubHeader("Settings");
                 BetterGUI.Grid("Level Skins:", ref Settings.LocationSkins, _switcherStr);
-                BetterGUI.Grid("Map:", ref levelSkinPage, _levelSkinPageStr);
+                BetterGUI.Grid("Map:", ref _levelSkinPage, _levelSkinPageStr);
                 BetterGUI.Grid("Randomized Pairs:", ref Settings.ForestRandomizedPairs, _switcherStr);
                 BetterGUI.Grid("Particles", ref Settings.Particles, _switcherStr);
                 if (Settings.Particles == 1)
@@ -1856,7 +1856,7 @@ namespace GGM
                 BetterGUI.Header("City");
                 BetterGUI.SubHeader("Settings");
                 BetterGUI.Grid("Level Skins:", ref Settings.LocationSkins, _switcherStr);
-                BetterGUI.Grid("Map:", ref levelSkinPage, _levelSkinPageStr);
+                BetterGUI.Grid("Map:", ref _levelSkinPage, _levelSkinPageStr);
                 BetterGUI.SubHeader("Presets");
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
