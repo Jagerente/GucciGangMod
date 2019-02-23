@@ -1,15 +1,18 @@
 ﻿using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace GGM
 {
     public static class Extensions
     {
         #region Variables
-        private static string[] _locations = { "akina", "cave", "city", "colossal", "forest", "house", "outside", "tutorial"};
+        public static string[] Locations = { "akina", "annie", "cave", "city", "colossal", "forest", "house", "outside", "tutorial"};
+        public static string Location;
         public static bool Forest = false;
         public static bool City = false;
+
         #endregion
 
         public static string stripHTML(this string input)
@@ -111,7 +114,7 @@ namespace GGM
         public static bool OnMap()
         {
             var boolean = false;
-            foreach (var location in _locations)
+            foreach (var location in Locations)
                 if (Application.loadedLevelName.ToLower().Contains(location))
                     boolean = true;
             return boolean;
@@ -165,11 +168,6 @@ namespace GGM
         public static string GetLobbyName()
         {
             return Regex.Replace(PhotonNetwork.ServerAddress, "app\\-|\\.exitgamescloud\\.com|\\:\\d+", "").ToUpper();
-        }
-
-        public static string GetMapName()
-        {
-            return Application.loadedLevelName;
         }
 
         public static string GetRoomName()

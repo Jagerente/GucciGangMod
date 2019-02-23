@@ -59,6 +59,7 @@
     </Reference>
     <Reference Include="System" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="GGM\DiscordAPI.cs" />
     <Compile Include="GGM\GameObjectsCache.cs" />
     <Compile Include="GGM\FPSCounter.cs" />
     <Compile Include="GGM\GUIHelpers.cs" />

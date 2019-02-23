@@ -26,7 +26,6 @@ public class BTN_START_SINGLE_GAMEPLAY : MonoBehaviour
         }
         FengGameManagerMKII.level = selection;
         Application.LoadLevel(LevelInfo.getInfo(selection).mapName);
-        //GGM.RichPresence.UpdateStatus();
     }
 }
 

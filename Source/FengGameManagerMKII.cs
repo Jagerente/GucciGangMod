@@ -127,7 +127,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     public GameObject selectedObj;
     public static object[] settings;
     public static int single_kills;
-    private int single_maxDamage;
+    public static int single_maxDamage;
     public static int single_totalDamage;
     public static Material skyMaterial;
     public List<GameObject> spectateSprites;
@@ -5054,6 +5054,10 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
     }
 
+    void OnApplicationQuit()
+    {
+        DiscordAPI.Shutdown();
+    }
     public void OnConnectedToMaster()
     {
         print("OnConnectedToMaster");
@@ -6904,7 +6908,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         {
             ServerRequestAuthentication(PrivateServerAuthPass);
         }
-        //GGM.RichPresence.UpdateStatus();
+        GGM.RichPresence.UpdateStatus();
     }
 
     public void OnLeftLobby()
@@ -6932,7 +6936,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             Destroy(GameObject.Find("MultiplayerManager"));
             Application.LoadLevel("menu");
         }
-        //GGM.RichPresence.UpdateStatus();
+        GGM.RichPresence.UpdateStatus();
     }
 
     private void OnLevelWasLoaded(int level)
@@ -7157,6 +7161,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 part.gravityModifier = Settings.ParticlesGravity;
             }
         }
+        GGM.RichPresence.UpdateStatus();
     }
 
     public void OnMasterClientSwitched(PhotonPlayer newMasterClient)
@@ -7392,7 +7397,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             }
         }
         RecompilePlayerList(0.1f);
-        //GGM.RichPresence.UpdateStatus();
+        GGM.RichPresence.UpdateStatus();
     }
 
     public void OnPhotonPlayerDisconnected(PhotonPlayer player)
@@ -7422,7 +7427,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             PreservedPlayerKDR.Add(key, numArray2);
         }
         RecompilePlayerList(0.1f);
-        //GGM.RichPresence.UpdateStatus();
+        GGM.RichPresence.UpdateStatus();
     }
 
     public void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
@@ -7485,7 +7490,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     public void OnReceivedRoomListUpdate()
     {
-        //GGM.RichPresence.UpdateStatus();
+        GGM.RichPresence.UpdateStatus();
     }
 
     public void OnUpdate()
@@ -8352,6 +8357,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         single_kills++;
         single_maxDamage = Mathf.Max(dmg, single_maxDamage);
         single_totalDamage += dmg;
+        RichPresence.UpdateStatus();
     }
 
     public void playerKillInfoUpdate(PhotonPlayer player, int dmg)
@@ -10894,7 +10900,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             gm.AddComponent<SpectatorMode>();
             DontDestroyOnLoad(gm);
         }
-
     }
 
     [RPC]

@@ -1,53 +1,41 @@
-﻿using System.Text.RegularExpressions;
-using DiscordRPC;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GGM
 {
-    public class RichPresence : MonoBehaviour
+    class RichPresence : MonoBehaviour
     {
-        private static DiscordRpcClient _client;
         private const string _clientID = "548511470443560960";
-        private static DiscordRPC.RichPresence _presence;
 
-        public static void Start()
+        private static DiscordAPI.RichPresence _presence;
+
+        void Awake()
         {
-            _client = new DiscordRpcClient(_clientID, null, false, -1);
+            var handlers = new DiscordAPI.EventHandlers();
+            handlers.readyCallback += () => { };
+            handlers.disconnectedCallback += (a, b) => { };
+            handlers.errorCallback += (a, b) => { Debug.Log(b); };
+            handlers.joinCallback += (a) => { };
+            handlers.requestCallback += (ref DiscordAPI.JoinRequest a) => { };
+            handlers.spectateCallback += (a) => { };
 
-            _presence = new DiscordRPC.RichPresence()
+            DiscordAPI.Initialize(_clientID, ref handlers, true, null);
+            _presence = new DiscordAPI.RichPresence
             {
-                Details = "Main Menu",
-                State = "Idle",
-                Assets = new Assets()
-                {
-                    LargeImageKey = "image_large",
-                    LargeImageText = "github.com/JustlPain/GucciGangMod",
-                },
-                Party = new Party()
-                {
-                    Size = 0,
-                    Max = 0
-                },
+                details = "Main Menu",
+                state = "Version v4.2.23",
+                largeImageKey = "logo_large",
+                largeImageText = "Art by https://vk.com/bishoptyan",
+                smallImageKey = "logo_small",
+                smallImageText = "github.com/JustlPain/GucciGangMod",
+                partySize = 0,
+                partyMax = 0
             };
-
-            _client.Initialize();
-
-            _client.SetPresence(_presence);
+            DiscordAPI.UpdatePresence(_presence);
         }
 
-        public void Update()
+        public static void Update()
         {
-            if (_client != null)
-                _client.Invoke();
-            else
-                Debug.Log("CLIENT IS NULL\nTI OPYAT POSOSAL");
-
-            UpdateStatus();
-        }
-
-        void OnDisable()
-        {
-            _client.Dispose();
+            DiscordAPI.RunCallbacks();
         }
 
         public static void UpdateStatus()
@@ -56,34 +44,56 @@ namespace GGM
             {
                 if (PhotonNetwork.insideLobby)
                 {
-                    _presence.Details = "Lobby";
-                    _presence.State = Extensions.GetLobbyName();
-                    _presence.Party.Size = 0;
-                    _presence.Party.Max = 0;                    
+                    _presence.details = "Lobby";
+                    _presence.state = Extensions.GetLobbyName();
+                    _presence.partySize = 0;
+                    _presence.partyMax = 0;
                 }
                 else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                 {
-                    _presence.Details = "Singleplayer";
-                    _presence.State = $"{FengGameManagerMKII.level.ToUpper()}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
-                    _presence.Party.Size = FengGameManagerMKII.single_kills;
-                    _presence.Party.Max = FengGameManagerMKII.single_totalDamage;
+                    _presence.details = "Singleplayer";
+                    _presence.largeImageKey = GetImage();
+                    _presence.largeImageText = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
+                    _presence.state = $"{FengGameManagerMKII.single_kills}/{FengGameManagerMKII.single_maxDamage}/{FengGameManagerMKII.single_totalDamage}";
+                    _presence.partySize = 0;
+                    _presence.partyMax = 0;
                 }
                 else
                 {
-                    _presence.Details = "Main Menu";
-                    _presence.State = "Idle";
-                    _presence.Party.Size = 0;
-                    _presence.Party.Max = 0;
+                    _presence.details = "Main Menu";
+                    _presence.state = "Version v4.2.23";
+                    _presence.largeImageKey = "logo_large";
+                    _presence.largeImageText = "Art by https://vk.com/bishoptyan";
+                    _presence.partySize = 0;
+                    _presence.partyMax = 0;
                 }
             }
             else
             {
-                _presence.Details = "Multiplayer";
-                _presence.State = (Extensions.GetRoomName().Length > 14) ? (Extensions.GetRoomName().Remove(12) + "...") : Extensions.GetRoomName();
-                _presence.Party.Size = PhotonNetwork.room.playerCount;
-                _presence.Party.Max = PhotonNetwork.room.maxPlayers;
+                _presence.details = $"[{Extensions.GetLobbyName()}] Multiplayer";
+                _presence.state = (Extensions.GetRoomName().Length > 14) ? (Extensions.GetRoomName().Remove(12) + "...") : Extensions.GetRoomName();
+                _presence.largeImageKey = GetImage();
+                _presence.largeImageText = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
+                _presence.partySize = PhotonNetwork.room.playerCount;
+                _presence.partyMax = PhotonNetwork.room.maxPlayers;
             }
-            _client.SetPresence(_presence);
+            DiscordAPI.UpdatePresence(_presence);
+        }
+
+        private static string GetImage()
+        {
+            var location = "logo_large";
+            for (int i = 0; i < Extensions.Locations.Length; i++)
+            {
+                if (FengGameManagerMKII.level.ToLower().Contains(Extensions.Locations[i]))
+                    location = Extensions.Locations[i];
+                i++;
+            }
+            if (location == "forest" || location == "city")
+            {
+                return $"{location}_{Extensions.GetDayLight().ToLower()}";
+            }
+            return location;
         }
     }
 }
