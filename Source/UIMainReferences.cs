@@ -39,14 +39,14 @@ public class UIMainReferences : MonoBehaviour
             yield return null;
         }
         var version = 1;
-        using (var iteratorVariable2 = WWW.LoadFromCacheOrDownload(url, version))
+        using (var link = WWW.LoadFromCacheOrDownload(url, version))
         {
-            yield return iteratorVariable2;
-            if (iteratorVariable2.error != null)
+            yield return link;
+            if (link.error != null)
             {
-                throw new Exception("WWW download had an error:" + iteratorVariable2.error);
+                throw new Exception("WWW download had an error:" + link.error);
             }
-            FengGameManagerMKII.RCassets = iteratorVariable2.assetBundle;
+            FengGameManagerMKII.RCassets = link.assetBundle;
             FengGameManagerMKII.isAssetLoaded = true;
         }
     }
@@ -93,7 +93,18 @@ public class UIMainReferences : MonoBehaviour
                 "character_gun"//26
                 ).Split(',');
             StartCoroutine(request());
+            GameObject MyGameObj = new GameObject();
+            string URL = "File://" + Application.dataPath + "/visualAssets.unity3d";
+            WWW visuals = WWW.LoadFromCacheOrDownload(URL, 72);
+            AssetBundle visualBundle = visuals.assetBundle;
+            //(Material)visualBundle.Load("outline");
+            Settings.BlendForBLoom = (Shader)visualBundle.Load("BlendForBloom");
+            Settings.BlurAndFlares = (Shader)visualBundle.Load("BlurAndFlares");
+            Settings.BrightPassFilter = (Shader)visualBundle.Load("BrightPassFilter2");
+            Settings.LensFlareShader = (Shader)visualBundle.Load("LensFlareCreate");
+            UnityEngine.Object.DontDestroyOnLoad(MyGameObj);
             FengGameManagerMKII.loginstate = 0;
+
         }
         if (FengGameManagerMKII.shallRejoin[0] is bool && (bool)FengGameManagerMKII.shallRejoin[0])
         {

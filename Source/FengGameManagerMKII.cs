@@ -6908,7 +6908,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         {
             ServerRequestAuthentication(PrivateServerAuthPass);
         }
-        GGM.RichPresence.UpdateStatus();
     }
 
     public void OnLeftLobby()
@@ -7139,6 +7138,25 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                     EnterSpecMode(true);
                 }
             }
+            Bloom bloom = obj3.AddComponent<Bloom>();
+
+
+            bloom.screenBlendShader = Settings.BlendForBLoom;
+            bloom.blurAndFlaresShader = Settings.BlurAndFlares;
+            bloom.brightPassFilterShader = Settings.BrightPassFilter;
+            bloom.lensFlareShader = Settings.LensFlareShader;
+            bloom.tweakMode = Bloom.TweakMode.Complex;
+            bloom.screenBlendMode = Bloom.BloomScreenBlendMode.Add;
+            bloom.quality = Settings.BloomQuality == 0 ? Bloom.BloomQuality.Cheap : Bloom.BloomQuality.High;
+            bloom.hdr = Settings.BloomHDR == 0 ? Bloom.HDRBloomMode.Off : Settings.BloomHDR == 1 ? Bloom.HDRBloomMode.On : Bloom.HDRBloomMode.Auto;
+            bloom.bloomIntensity = Settings.BloomIntensity;
+            bloom.bloomThreshhold = Settings.BloomThreshold;
+            bloom.bloomThreshholdColor = new Color(Settings.BloomThresholdColorR, Settings.BloomThresholdColorG, Settings.BloomThresholdColorB);
+            bloom.bloomBlurIterations = Convert.ToInt32(Settings.BloomBlurIterations);
+            bloom.sepBlurSpread = Settings.BloomBlurSpread;
+            bloom.lensflareMode = Settings.LensFlareMode == 0 ? Bloom.LensFlareStyle.Ghosting : Settings.LensFlareMode == 1 ? Bloom.LensFlareStyle.Anamorphic : Bloom.LensFlareStyle.Combined;
+            bloom.lensflareIntensity = Settings.LensFlareIntensity;
+
         }
         if ((GGM.Extensions.Forest && PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) && Settings.Particles == 1)
         {

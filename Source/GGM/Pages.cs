@@ -137,6 +137,23 @@ namespace GGM
             "200",
             "500"
         };
+        private static readonly string[] _bloomQuality =
+        {
+            "Cheap",
+            "High"
+        };
+        private static readonly string[] _lensFlareMode =
+        {
+            "Ghosting",
+            "Anamorphic",
+            "Combined"
+        };
+        private static readonly string[] _bloomHDRStr =
+        {
+            "Off",
+            "On",
+            "Auto"
+        };
         #endregion
 
         #region Pages
@@ -889,6 +906,19 @@ namespace GGM
             }
             BetterGUI.Grid("Wind", ref Settings.Wind, _switcherStr);
             BetterGUI.Grid("Blur", ref Settings.Blur, _switcherStr);
+
+            BetterGUI.Grid("Bloom Quality", ref Settings.BloomQuality, _bloomQuality);
+            BetterGUI.Slider("Bloom Intensity", false, 0, ref Settings.BloomIntensity, 0f, 2f, "0.###");
+            BetterGUI.Slider("Bloom Threshhold", false, 0, ref Settings.BloomThreshold, 0f, 1f, "0.###");
+            BetterGUI.Slider("Inversed R:", false, 0, ref Settings.BloomThresholdColorR, 0f, 1f, "0.###", 160f, 25f);
+            BetterGUI.Slider("Inversed G:", false, 0, ref Settings.BloomThresholdColorG, 0f, 1f, "0.###", 160f, 25f);
+            BetterGUI.Slider("Inversed B:", false, 0, ref Settings.BloomThresholdColorB, 0f, 1f, "0.###", 160f, 25f);
+            BetterGUI.Slider("Bloom Blur Iterations", false, 0, ref Settings.BloomBlurIterations, 0f, 5f, "0.###");
+            BetterGUI.Slider("Bloom Blur Spread", false, 0, ref Settings.BloomBlurSpread, 0f, 10f, "0.###");
+            BetterGUI.Grid("Lens Flare Mode", ref Settings.LensFlareMode, _lensFlareMode);
+            BetterGUI.Slider("Lens Flare Intensity", false, 0, ref Settings.LensFlareIntensity, 0f, 1f, "0.###");
+            BetterGUI.Grid("Bloom HDR", ref Settings.BloomHDR, _bloomHDRStr);
+
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
             GUILayout.EndArea();

@@ -6,6 +6,8 @@ namespace GGM
     {
         private const string _clientID = "548511470443560960";
 
+        private static string _largeImageKey;
+
         private static DiscordAPI.RichPresence _presence;
 
         void Awake()
@@ -23,7 +25,7 @@ namespace GGM
             {
                 details = "Main Menu",
                 state = "Version v4.2.23",
-                largeImageKey = "logo_large",
+                largeImageKey = GetImage(),
                 largeImageText = "Art by https://vk.com/bishoptyan",
                 smallImageKey = "logo_small",
                 smallImageText = "github.com/JustlPain/GucciGangMod",
@@ -62,7 +64,7 @@ namespace GGM
                 {
                     _presence.details = "Main Menu";
                     _presence.state = "Version v4.2.23";
-                    _presence.largeImageKey = "logo_large";
+                    _presence.largeImageKey = GetImage();
                     _presence.largeImageText = "Art by https://vk.com/bishoptyan";
                     _presence.partySize = 0;
                     _presence.partyMax = 0;
@@ -70,7 +72,7 @@ namespace GGM
             }
             else
             {
-                _presence.details = $"[{Extensions.GetLobbyName()}] Multiplayer";
+                _presence.details = "Multiplayer";
                 _presence.state = (Extensions.GetRoomName().Length > 14) ? (Extensions.GetRoomName().Remove(12) + "...") : Extensions.GetRoomName();
                 _presence.largeImageKey = GetImage();
                 _presence.largeImageText = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
@@ -82,18 +84,21 @@ namespace GGM
 
         private static string GetImage()
         {
-            var location = "logo_large";
+            _largeImageKey = "logo_large";
             for (int i = 0; i < Extensions.Locations.Length; i++)
             {
                 if (FengGameManagerMKII.level.ToLower().Contains(Extensions.Locations[i]))
-                    location = Extensions.Locations[i];
-                i++;
+                {
+                    _largeImageKey = Extensions.Locations[i];
+                    break;
+                }
             }
-            if (location == "forest" || location == "city")
+            if ((FengGameManagerMKII.level.ToLower().Contains("forest") || FengGameManagerMKII.level.ToLower().Contains("city")) && _largeImageKey != "logo_large")
             {
-                return $"{location}_{Extensions.GetDayLight().ToLower()}";
+                return $"{_largeImageKey}_{Extensions.GetDayLight().ToLower()}";
             }
-            return location;
+            else
+            return _largeImageKey;
         }
     }
 }

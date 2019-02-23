@@ -243,6 +243,25 @@ namespace GGM
         public static List<float> CityFogStartDistance;
         public static List<float> CityFogEndDistance;
         #endregion
+        #region Visuals
+        public static Bloom Bloom;
+        public static Shader BlendForBLoom;
+        public static Shader BlurAndFlares;
+        public static Shader BrightPassFilter;
+        public static Shader LensFlareShader;
+
+        public static int BloomQuality;
+        public static float BloomIntensity;
+        public static float BloomThreshold;
+        public static float BloomThresholdColorR;
+        public static float BloomThresholdColorG;
+        public static float BloomThresholdColorB;
+        public static float BloomBlurIterations;
+        public static float BloomBlurSpread;
+        public static int LensFlareMode;
+        public static float LensFlareIntensity;
+        public static int BloomHDR;
+        #endregion
 
         public static void LoadHumanSkins()
         {
@@ -517,6 +536,19 @@ namespace GGM
             PlayerPrefs.SetFloat("FogColorR", FogColorR);
             PlayerPrefs.SetFloat("FogColorG", FogColorG);
             PlayerPrefs.SetFloat("FogColorB", FogColorB);
+
+            PlayerPrefs.SetInt("BloomQuality", BloomQuality);
+            PlayerPrefs.SetFloat("BloomIntensity", BloomIntensity);
+            PlayerPrefs.SetFloat("BloomThreshold", BloomThreshold);
+            PlayerPrefs.SetFloat("BloomThresholdColorR", BloomThresholdColorR);
+            PlayerPrefs.SetFloat("BloomThresholdColorG", BloomThresholdColorG);
+            PlayerPrefs.SetFloat("BloomThresholdColorB", BloomThresholdColorB);
+            PlayerPrefs.SetFloat("BloomBlurIterations", BloomBlurIterations);
+            PlayerPrefs.SetFloat("BloomBlurSpread", BloomBlurSpread);
+            PlayerPrefs.SetInt("LensFlareMode", LensFlareMode);
+            PlayerPrefs.SetFloat("LensFlareIntensity", LensFlareIntensity);
+            PlayerPrefs.SetInt("BloomHDR", BloomHDR);
+
             #endregion
             #region Audio Settings
             PlayerPrefs.SetFloat("GlobalVolume", GlobalVolume);
@@ -643,6 +675,18 @@ namespace GGM
             FogColorR = PlayerPrefs.GetFloat("FogColorR", 0.066f);
             FogColorG = PlayerPrefs.GetFloat("FogColorG", 0.066f);
             FogColorB = PlayerPrefs.GetFloat("FogColorB", 0.066f);
+
+            BloomQuality = PlayerPrefs.GetInt("BloomQuality", 1);
+            BloomIntensity = PlayerPrefs.GetFloat("BloomIntensity", BloomIntensity);
+            BloomThreshold = PlayerPrefs.GetFloat("BloomThreshold", 0f);
+            BloomThresholdColorR = PlayerPrefs.GetFloat("BloomThresholdColorR", 0f);
+            BloomThresholdColorG = PlayerPrefs.GetFloat("BloomThresholdColorG", 0f);
+            BloomThresholdColorB = PlayerPrefs.GetFloat("BloomThresholdColorB", 0f);
+            BloomBlurIterations = PlayerPrefs.GetFloat("BloomBlurIterations", 3);
+            BloomBlurSpread = PlayerPrefs.GetFloat("BloomBlurSpread", 2.5f);
+            LensFlareMode = PlayerPrefs.GetInt("LensFlareMode", 2);
+            LensFlareIntensity = PlayerPrefs.GetFloat("LensFlareIntensity", 0f);
+            BloomHDR = PlayerPrefs.GetInt("BloomHDR", 2);
             #endregion
             #region Audio Settings
             GlobalVolume = PlayerPrefs.GetFloat("GlobalVolume", 1f);
@@ -766,6 +810,9 @@ namespace GGM
             Camera.main.GetComponent<TiltShift>().enabled = Blur != 0;
             #endregion
 
+            #region Visuals
+
+            #endregion
         }
         public static void InitLocationSkins()
         {
