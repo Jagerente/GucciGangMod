@@ -25,7 +25,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\GGP_DATA\Managed\</OutputPath>
+    <OutputPath>..\..\GGM_DATA\Managed\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,8 +45,7 @@
     <Reference Include="Boo.Lang">
       <HintPath>..\Aottg\aottg_Data\Managed\Boo.Lang.dll</HintPath>
     </Reference>
-    <Reference Include="DiscordRPC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DiscordRPC">
       <HintPath>bin\Release\DiscordRPC.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -60,7 +59,6 @@
     </Reference>
     <Reference Include="System" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="GGM\DiscordRpc.cs" />
     <Compile Include="GGM\GameObjectsCache.cs" />
     <Compile Include="GGM\FPSCounter.cs" />
     <Compile Include="GGM\GUIHelpers.cs" />

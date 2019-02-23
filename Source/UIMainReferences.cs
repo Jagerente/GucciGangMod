@@ -94,12 +94,12 @@ public class UIMainReferences : MonoBehaviour
                 ).Split(',');
             StartCoroutine(request());
             FengGameManagerMKII.loginstate = 0;
-            //gameObject.AddComponent<RichPresence>();
         }
         if (FengGameManagerMKII.shallRejoin[0] is bool && (bool)FengGameManagerMKII.shallRejoin[0])
         {
             PhotonNetwork.ConnectToMaster((string)FengGameManagerMKII.shallRejoin[1], 5055, FengGameManagerMKII.applicationId, version);
         }
+        gameObject.AddComponent<RichPresence>();
     }
 
 }

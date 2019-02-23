@@ -1,49 +1,53 @@
 ﻿using System.Text.RegularExpressions;
+using DiscordRPC;
 using UnityEngine;
 
 namespace GGM
 {
     public class RichPresence : MonoBehaviour
     {
-        public static string Details = string.Empty;
-        public static string State = string.Empty;
-
-        public static bool IsRunning = false;
-
-        static float _time = 0f;
-
-        private static string _clientID = "546067288093097994";
-        public static DiscordRpc.RichPresence _presence;
-        public static DiscordRpc.EventHandlers _handlers;
+        private static DiscordRpcClient _client;
+        private const string _clientID = "548511470443560960";
+        private static DiscordRPC.RichPresence _presence;
 
         public static void Start()
         {
-            if (!IsRunning)
+            _client = new DiscordRpcClient(_clientID, null, false, -1);
+
+            _presence = new DiscordRPC.RichPresence()
             {
-                IsRunning = true;
-                _presence = new DiscordRpc.RichPresence
+                Details = "Main Menu",
+                State = "Idle",
+                Assets = new Assets()
                 {
-                    details = "GucciGangMod",
-                    largeImageKey = "image_large",
-                    largeImageText = "github.com/JustlPain/GucciGangMod",
-                    smallImageKey = "image_large",
-                    smallImageText = Settings.Version
-                };
-                _handlers = default(DiscordRpc.EventHandlers);
-                DiscordRpc.Initialize(_clientID, ref _handlers, true, null);
-                DiscordRpc.UpdatePresence(_presence);
-                UpdateStatus();
-            }
+                    LargeImageKey = "image_large",
+                    LargeImageText = "github.com/JustlPain/GucciGangMod",
+                },
+                Party = new Party()
+                {
+                    Size = 0,
+                    Max = 0
+                },
+            };
+
+            _client.Initialize();
+
+            _client.SetPresence(_presence);
         }
 
         public void Update()
         {
-            _time += Time.deltaTime;
-            if (_time > 1f)
-            {
-                DiscordRpc.UpdatePresence(_presence);
-                _time = 0f;
-            }
+            if (_client != null)
+                _client.Invoke();
+            else
+                Debug.Log("CLIENT IS NULL\nTI OPYAT POSOSAL");
+
+            UpdateStatus();
+        }
+
+        void OnDisable()
+        {
+            _client.Dispose();
         }
 
         public static void UpdateStatus()
@@ -52,35 +56,34 @@ namespace GGM
             {
                 if (PhotonNetwork.insideLobby)
                 {
-                    _presence.details = "Lobby";
-                    _presence.state = Regex.Replace(PhotonNetwork.ServerAddress, "app\\-|\\.exitgamescloud\\.com|\\:\\d+", "").ToUpper();
-                    _presence.partySize = 0;
-                    _presence.partyMax = 0;
+                    _presence.Details = "Lobby";
+                    _presence.State = Extensions.GetLobbyName();
+                    _presence.Party.Size = 0;
+                    _presence.Party.Max = 0;                    
                 }
-                else if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.STOP)
+                else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                 {
-                    _presence.details = "Singleplayer";
-                    _presence.state = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
-                    _presence.partySize = FengGameManagerMKII.single_kills;
-                    _presence.partyMax = FengGameManagerMKII.single_totalDamage;
+                    _presence.Details = "Singleplayer";
+                    _presence.State = $"{FengGameManagerMKII.level.ToUpper()}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
+                    _presence.Party.Size = FengGameManagerMKII.single_kills;
+                    _presence.Party.Max = FengGameManagerMKII.single_totalDamage;
                 }
                 else
                 {
-                    _presence.details = "GucciGangMod";
-                    _presence.state = "Main Menu";
-                    _presence.partySize = 0;
-                    _presence.partyMax = 0;
+                    _presence.Details = "Main Menu";
+                    _presence.State = "Idle";
+                    _presence.Party.Size = 0;
+                    _presence.Party.Max = 0;
                 }
             }
             else
             {
-                var text = PhotonNetwork.room.name.Split(new char[]{'`'})[0].Trim();
-                _presence.details = (text.Length > 20) ? (text.Remove(17) + "...") : text;
-                _presence.state = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
-                _presence.partySize = PhotonNetwork.room.playerCount;
-                _presence.partyMax = PhotonNetwork.room.maxPlayers;
+                _presence.Details = "Multiplayer";
+                _presence.State = (Extensions.GetRoomName().Length > 14) ? (Extensions.GetRoomName().Remove(12) + "...") : Extensions.GetRoomName();
+                _presence.Party.Size = PhotonNetwork.room.playerCount;
+                _presence.Party.Max = PhotonNetwork.room.maxPlayers;
             }
-            DiscordRpc.UpdatePresence(_presence);
+            _client.SetPresence(_presence);
         }
     }
 }

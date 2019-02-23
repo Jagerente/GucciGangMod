@@ -17,7 +17,7 @@ namespace GGM
 
         public static void LogChat(string path, string message, PhotonMessageInfo info)
         {
-            Log(path, Extensions.StripHTML($"[{DateTime.Now.ToShortTimeString()}] {info.sender.Name}: {message}{Environment.NewLine}"));
+            Log(path, ($"[{DateTime.Now.ToShortTimeString()}] {info.sender.Name}: {message}{Environment.NewLine}").stripHTML());
         }
     }
 }

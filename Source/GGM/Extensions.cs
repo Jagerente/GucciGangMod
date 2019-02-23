@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GGM
@@ -11,9 +12,68 @@ namespace GGM
         public static bool City = false;
         #endregion
 
-        public static string StripHTML(string input)
+        public static string stripHTML(this string input)
         {
             return Regex.Replace(input, "<.*?>", string.Empty);
+        }
+        public static string stripHEX(this string text)
+        {
+            List<char> list = new char[]
+            {
+                'A',
+                'B',
+                'C',
+                'D',
+                'E',
+                'F',
+                '0',
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9'
+            }.ToList<char>();
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == '[')
+                {
+                    int num = i;
+                    int num2 = 1;
+                    bool flag = false;
+                    while (num + num2 < text.Length)
+                    {
+                        num2++;
+                        if (num2 > 8)
+                        {
+                            break;
+                        }
+                        int num3 = num + num2 - 1;
+                        if (text[num3] == ']')
+                        {
+                            if (num2 >= 3 && (num2 != 3 || text[num3 - 1] == '-'))
+                            {
+                                flag = true;
+                                break;
+                            }
+                            break;
+                        }
+                        else if (!list.Contains(char.ToUpper(text[num3])) && (num3 + 1 >= text.Length || text[num3 + 1] != ']'))
+                        {
+                            break;
+                        }
+                    }
+                    if (flag)
+                    {
+                        text = text.Remove(num, num2);
+                        i = 0;
+                    }
+                }
+            }
+            return string.Concat(text);
         }
 
         public static GameObject Player()
@@ -100,6 +160,21 @@ namespace GGM
                     return difficulty = "Abnormal";
             }
             return difficulty;
+        }
+
+        public static string GetLobbyName()
+        {
+            return Regex.Replace(PhotonNetwork.ServerAddress, "app\\-|\\.exitgamescloud\\.com|\\:\\d+", "").ToUpper();
+        }
+
+        public static string GetMapName()
+        {
+            return Application.loadedLevelName;
+        }
+
+        public static string GetRoomName()
+        {
+            return PhotonNetwork.room.name.Split(new char[] { '`' })[0].Trim().stripHEX();
         }
     }
 }

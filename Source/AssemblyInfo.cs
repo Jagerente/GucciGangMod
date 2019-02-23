@@ -1,3 +1,4 @@
+using System.Resources;
 //Fixed With [DOGE]DEN aottg Sources fixer
 //Doge Guardians FTW
 //DEN is OP as fuck.
@@ -7,4 +8,5 @@
 
 
 [assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
+[assembly: NeutralResourcesLanguage("")]
 

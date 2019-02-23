@@ -5054,11 +5054,6 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
     }
 
-    public void OnApplicationQuit()
-    {
-        RichPresence.IsRunning = false;
-    }
-
     public void OnConnectedToMaster()
     {
         print("OnConnectedToMaster");
