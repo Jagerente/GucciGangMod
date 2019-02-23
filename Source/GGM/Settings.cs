@@ -769,6 +769,12 @@ namespace GGM
                 Extensions.DisableObject("skill_cd_marco");
                 Extensions.DisableObject("skill_cd_eren");
                 Extensions.DisableObject("GasUI");
+                Extensions.DisableObject("LabelInfoCenter");
+                Extensions.DisableObject("LabelInfoTopCenter");
+                Extensions.DisableObject("LabelInfoTopLeft");
+                Extensions.DisableObject("LabelInfoTopRight");
+                Extensions.DisableObject("LabelInfoBottomRight");
+                Extensions.DisableObject("LabelNetworkStatus");
             }
 
             if (player != null && player.GetComponent<HERO>() != null)

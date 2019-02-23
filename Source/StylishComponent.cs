@@ -234,7 +234,7 @@ public class StylishComponent : MonoBehaviour
 
     private void Update()
     {
-        if (!IN_GAME_MAIN_CAMERA.isPausing)
+        if (!IN_GAME_MAIN_CAMERA.isPausing && GGM.Settings.UI != 0)
         {
             if (stylePoints > 0f)
             {
@@ -258,6 +258,7 @@ public class StylishComponent : MonoBehaviour
             }
             shakeUpdate();
         }
+        if (GGM.Settings.UI == 0) transform.localPosition = Vector3.Lerp(transform.localPosition, exitPosition, Time.deltaTime * 3f);
     }
 }
 
