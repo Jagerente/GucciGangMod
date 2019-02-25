@@ -716,9 +716,6 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             }
             if (inputManager.isInputDown[InputCode.pause])
             {
-                Pages.Opening = true;
-                Pages.Done = false;
-
                 if (isPausing)
                 {
                     if (main_object != null)
@@ -732,10 +729,9 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 isPausing = !isPausing;
                 if (isPausing)
                 {
-                    if (gametype == GAMETYPE.SINGLE)
-                    {
-                        Time.timeScale = 0f;
-                    }
+                    Pages.Opening = true;
+                    Pages.Done = false;
+                    Pages.position = new Rect(Screen.width / 2f, Screen.height / 2f, 0f, 0f);
                     GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = true;
                     Screen.showCursor = true;
                     Screen.lockCursor = false;

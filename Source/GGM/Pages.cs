@@ -167,7 +167,7 @@ namespace GGM
             position.y -= offY;
             position.x -= offY * 1.33f;
             position.height += 2f * (offY);
-            position.width += 2f * (offY) * 1.4f;
+            position.width += 2f * (offY) * 1.33f;
             GUI.DrawTexture(position, GGM.Style._box, ScaleMode.StretchToFill);
             if (position.width >= 730f)
             {
@@ -175,6 +175,10 @@ namespace GGM
                 position.height = 550f;
                 position.x = Screen.width / 2f - 350f;
                 position.y = Screen.height / 2f - 250f - 25f;
+                if(IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
+                {
+                    Time.timeScale = 0f;
+                }
                 Done = true;
             }
         }
@@ -184,7 +188,7 @@ namespace GGM
             position.y += offY;
             position.x += offY * 1.33f;
             position.height -= 2f * (offY);
-            position.width -= 2f * (offY) * 1.4f;
+            position.width -= 2f * (offY) * 1.33f;
             GUI.DrawTexture(position, GGM.Style._box, ScaleMode.StretchToFill);
             if (position.width <= 0f)
             {
@@ -193,6 +197,8 @@ namespace GGM
                 position.x = Screen.width / 2f;
                 position.y = Screen.height / 2f;
                 Done = true;
+                IN_GAME_MAIN_CAMERA.isPausing = false;
+                GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
             }
         }
         public static void Draw()
@@ -428,7 +434,7 @@ namespace GGM
                 {
                     Screen.showCursor = true;
                     Screen.lockCursor = true;
-                    GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                    //GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                     Camera.main.GetComponent<SpectatorMovement>().disable = false;
                     Camera.main.GetComponent<MouseLook>().disable = false;
                 }
@@ -445,8 +451,8 @@ namespace GGM
                         Screen.showCursor = false;
                         Screen.lockCursor = false;
                     }
-                    GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
-                    GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
+                    //GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                    //GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
                 }
             }
             else if (GUI.Button(new Rect(posLeft + 645f, posRight + 465f + i, 40f, 25f), "Quit"))
