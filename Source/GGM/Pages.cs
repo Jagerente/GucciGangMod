@@ -199,6 +199,7 @@ namespace GGM
                 Done = true;
                 IN_GAME_MAIN_CAMERA.isPausing = false;
                 GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                Screen.showCursor = false;
             }
         }
         public static void Draw()
@@ -440,15 +441,14 @@ namespace GGM
                 }
                 else
                 {
-                    IN_GAME_MAIN_CAMERA.isPausing = false;
+                    //IN_GAME_MAIN_CAMERA.isPausing = false;
+                    Screen.showCursor = true;
                     if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
                     {
-                        Screen.showCursor = false;
                         Screen.lockCursor = true;
                     }
                     else
                     {
-                        Screen.showCursor = false;
                         Screen.lockCursor = false;
                     }
                     //GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
