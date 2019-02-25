@@ -716,6 +716,9 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             }
             if (inputManager.isInputDown[InputCode.pause])
             {
+                Pages.Opening = true;
+                Pages.Done = false;
+
                 if (isPausing)
                 {
                     if (main_object != null)

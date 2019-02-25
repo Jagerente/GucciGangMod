@@ -64,7 +64,7 @@ namespace GGM
                 {
                     _presence.details = "Main Menu";
                     _presence.state = "Version v4.2.23";
-                    _presence.largeImageKey = GetImage();
+                    _presence.largeImageKey = "logo_large";
                     _presence.largeImageText = "Art by https://vk.com/bishoptyan";
                     _presence.partySize = 0;
                     _presence.partyMax = 0;

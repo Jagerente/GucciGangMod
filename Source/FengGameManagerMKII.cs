@@ -37,7 +37,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
     private ArrayList fT;
     private float gameEndCD;
     private float gameEndTotalCDtime = 9f;
-    public bool gameStart;
+    public static bool GameStart;
     private bool gameTimesUp;
     public static ExitGames.Client.Photon.Hashtable globalVariables;
     public List<GameObject> groundList;
@@ -1441,7 +1441,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             {
                 string str11;
                 IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-                gameStart = false;
+                GameStart = false;
                 Screen.lockCursor = false;
                 Screen.showCursor = true;
                 var str6 = string.Empty;
@@ -1525,6 +1525,10 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                     Camera.main.GetComponent<SpectatorMovement>().disable = true;
                     Camera.main.GetComponent<MouseLook>().disable = true;
                     inputManager.menuOn = true;
+                    //ANIMATION
+                    Pages.Opening = true;
+                    Pages.Done = false;
+                    Pages.position = new Rect(Screen.width / 2f, Screen.height / 2f, 0f, 0f);
                 }
             }
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
@@ -1904,7 +1908,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 {
                     string str11;
                     IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-                    gameStart = false;
+                    GameStart = false;
                     Screen.lockCursor = false;
                     Screen.showCursor = true;
                     var str6 = string.Empty;
@@ -3678,7 +3682,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
     private void LateUpdate()
     {
-        if (gameStart)
+        if (GameStart)
         {
             var enumerator = heroes.GetEnumerator();
             try
@@ -3736,7 +3740,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         }
     }
 
-    private void loadconfig()
+    public static void LoadConfig()
     {
         int num;
         var objArray = new object[270];
@@ -4044,12 +4048,12 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
 
         linkHash = new[] { new ExitGames.Client.Photon.Hashtable(), new ExitGames.Client.Photon.Hashtable(), new ExitGames.Client.Photon.Hashtable(), new ExitGames.Client.Photon.Hashtable(), new ExitGames.Client.Photon.Hashtable() };
         settings = objArray;
-        scroll = Vector2.zero;
-        scroll2 = Vector2.zero;
-        distanceSlider = PlayerPrefs.GetFloat("cameraDistance", 1f);
-        mouseSlider = PlayerPrefs.GetFloat("MouseSensitivity", 0.5f);
-        qualitySlider = PlayerPrefs.GetFloat("GameQuality", 0f);
-        transparencySlider = 1f;
+        instance.scroll = Vector2.zero;
+        instance.scroll2 = Vector2.zero;
+        instance.distanceSlider = PlayerPrefs.GetFloat("cameraDistance", 1f);
+        instance.mouseSlider = PlayerPrefs.GetFloat("MouseSensitivity", 0.5f);
+        instance.qualitySlider = PlayerPrefs.GetFloat("GameQuality", 0f);
+        instance.transparencySlider = 1f;
     }
 
     private void loadskin()
@@ -5078,7 +5082,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
         Screen.lockCursor = false;
         Screen.showCursor = true;
         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-        gameStart = false;
+        GameStart = false;
         NGUITools.SetActive(ui.GetComponent<UIReferArray>().panels[0], false);
         NGUITools.SetActive(ui.GetComponent<UIReferArray>().panels[1], false);
         NGUITools.SetActive(ui.GetComponent<UIReferArray>().panels[2], false);
@@ -5552,7 +5556,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
                         inputManager.menuOn = false;
                         Destroy(GameObject.Find("MultiplayerManager"));
-                        Application.LoadLevel("menu");
+                        Application.LoadLevel("menu");                        
                     }
                     else if (GUI.Button(new Rect(15f, 70f, 115f, 30f), "Copy to Clipboard"))
                     {
@@ -6500,253 +6504,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 Screen.lockCursor = false;
                 if ((int)settings[64] != 6)
                 {
-                    const float i = 25f;
-                    var posLeft = Screen.width / 2f - 350f;
-                    var posRight = Screen.height / 2f - 250f;
-
-                    GUI.Box(new Rect(posLeft, posRight - i, 730f, 550f), string.Empty);
-
-                    Pages.TopNavigationPanelInt = GUI.SelectionGrid(new Rect(posLeft + 5f, posRight - 20f, 720f, 50f), Pages.TopNavigationPanelInt, Pages.TopNavigationPanelStr, 5);
-                    var page = Pages.TopNavigationPanelInt;
-                    switch (page)
-                    {
-                        case 0:
-                            Pages.Game_Settings();
-                            break;
-                        case 1:
-                            Pages.Server_Settings();
-                            break;
-                        case 2:
-                            Pages.Video_and_Audio();
-                            break;
-                        case 3:
-                            Pages.Rebinds();
-                            break;
-                        case 4:
-                            Pages.Bombs();
-                            break;
-                        case 5:
-                            Pages.Human_Skins();
-                            break;
-                        case 6:
-                            Pages.Titan_Skins();
-                            break;
-                        case 7:
-                            Pages.Level_Skins();
-                            break;
-                        case 8:
-                            Pages.Custom_Map();
-                            break;
-                        case 9:
-                            Pages.Custom_Logic();
-                            break;
-                    }
-                    #region Bottom Buttons
-                    if (GUI.Button(new Rect(posLeft + 408f, posRight + 465f + i, 42f, 25f), "Save"))
-                    {
-                        PlayerPrefs.SetInt("titantype1", (int)settings[16]);
-                        PlayerPrefs.SetInt("titantype2", (int)settings[17]);
-                        PlayerPrefs.SetInt("titantype3", (int)settings[18]);
-                        PlayerPrefs.SetInt("titantype4", (int)settings[19]);
-                        PlayerPrefs.SetInt("titantype5", (int)settings[20]);
-                        PlayerPrefs.SetString("titanhair1", (string)settings[21]);
-                        PlayerPrefs.SetString("titanhair2", (string)settings[22]);
-                        PlayerPrefs.SetString("titanhair3", (string)settings[23]);
-                        PlayerPrefs.SetString("titanhair4", (string)settings[24]);
-                        PlayerPrefs.SetString("titanhair5", (string)settings[25]);
-                        PlayerPrefs.SetString("titaneye1", (string)settings[26]);
-                        PlayerPrefs.SetString("titaneye2", (string)settings[27]);
-                        PlayerPrefs.SetString("titaneye3", (string)settings[28]);
-                        PlayerPrefs.SetString("titaneye4", (string)settings[29]);
-                        PlayerPrefs.SetString("titaneye5", (string)settings[30]);
-                        PlayerPrefs.SetInt("titanR", (int)settings[32]);
-                        PlayerPrefs.SetString("eren", (string)settings[65]);
-                        PlayerPrefs.SetString("annie", (string)settings[66]);
-                        PlayerPrefs.SetString("colossal", (string)settings[67]);
-                        PlayerPrefs.SetString("cnumber", (string)settings[82]);
-                        PlayerPrefs.SetString("cmax", (string)settings[85]);
-                        PlayerPrefs.SetString("titanbody1", (string)settings[86]);
-                        PlayerPrefs.SetString("titanbody2", (string)settings[87]);
-                        PlayerPrefs.SetString("titanbody3", (string)settings[88]);
-                        PlayerPrefs.SetString("titanbody4", (string)settings[89]);
-                        PlayerPrefs.SetString("titanbody5", (string)settings[90]);
-                        PlayerPrefs.SetInt("customlevel", (int)settings[91]);
-                        PlayerPrefs.SetInt("reel", (int)settings[97]);
-                        PlayerPrefs.SetString("reelin", (string)settings[98]);
-                        PlayerPrefs.SetString("reelout", (string)settings[99]);
-                        PlayerPrefs.SetString("tforward", (string)settings[101]);
-                        PlayerPrefs.SetString("tback", (string)settings[102]);
-                        PlayerPrefs.SetString("tleft", (string)settings[103]);
-                        PlayerPrefs.SetString("tright", (string)settings[104]);
-                        PlayerPrefs.SetString("twalk", (string)settings[105]);
-                        PlayerPrefs.SetString("tjump", (string)settings[106]);
-                        PlayerPrefs.SetString("tpunch", (string)settings[107]);
-                        PlayerPrefs.SetString("tslam", (string)settings[108]);
-                        PlayerPrefs.SetString("tgrabfront", (string)settings[109]);
-                        PlayerPrefs.SetString("tgrabback", (string)settings[110]);
-                        PlayerPrefs.SetString("tgrabnape", (string)settings[111]);
-                        PlayerPrefs.SetString("tantiae", (string)settings[112]);
-                        PlayerPrefs.SetString("tbite", (string)settings[113]);
-                        PlayerPrefs.SetString("tcover", (string)settings[114]);
-                        PlayerPrefs.SetString("tsit", (string)settings[115]);
-                        PlayerPrefs.SetInt("reel2", (int)settings[116]);
-                        PlayerPrefs.SetString("customGround", (string)settings[162]);
-                        PlayerPrefs.SetString("forestskyfront", (string)settings[163]);
-                        PlayerPrefs.SetString("forestskyback", (string)settings[164]);
-                        PlayerPrefs.SetString("forestskyleft", (string)settings[165]);
-                        PlayerPrefs.SetString("forestskyright", (string)settings[166]);
-                        PlayerPrefs.SetString("forestskyup", (string)settings[167]);
-                        PlayerPrefs.SetString("forestskydown", (string)settings[168]);
-                        PlayerPrefs.SetString("cityskyfront", (string)settings[169]);
-                        PlayerPrefs.SetString("cityskyback", (string)settings[170]);
-                        PlayerPrefs.SetString("cityskyleft", (string)settings[171]);
-                        PlayerPrefs.SetString("cityskyright", (string)settings[172]);
-                        PlayerPrefs.SetString("cityskyup", (string)settings[173]);
-                        PlayerPrefs.SetString("cityskydown", (string)settings[174]);
-                        PlayerPrefs.SetString("customskyfront", (string)settings[175]);
-                        PlayerPrefs.SetString("customskyback", (string)settings[176]);
-                        PlayerPrefs.SetString("customskyleft", (string)settings[177]);
-                        PlayerPrefs.SetString("customskyright", (string)settings[178]);
-                        PlayerPrefs.SetString("customskyup", (string)settings[179]);
-                        PlayerPrefs.SetString("customskydown", (string)settings[180]);
-                        PlayerPrefs.SetInt("dashenable", (int)settings[181]);
-                        PlayerPrefs.SetString("dashkey", (string)settings[182]);
-                        PlayerPrefs.SetInt("bombMode", (int)settings[192]);
-                        PlayerPrefs.SetInt("teamMode", (int)settings[193]);
-                        PlayerPrefs.SetInt("rockThrow", (int)settings[194]);
-                        PlayerPrefs.SetInt("explodeModeOn", (int)settings[195]);
-                        PlayerPrefs.SetString("explodeModeNum", (string)settings[196]);
-                        PlayerPrefs.SetInt("healthMode", (int)settings[197]);
-                        PlayerPrefs.SetString("healthLower", (string)settings[198]);
-                        PlayerPrefs.SetString("healthUpper", (string)settings[199]);
-                        PlayerPrefs.SetInt("infectionModeOn", (int)settings[200]);
-                        PlayerPrefs.SetString("infectionModeNum", (string)settings[201]);
-                        PlayerPrefs.SetInt("banEren", (int)settings[202]);
-                        PlayerPrefs.SetInt("moreTitanOn", (int)settings[203]);
-                        PlayerPrefs.SetString("moreTitanNum", (string)settings[204]);
-                        PlayerPrefs.SetInt("damageModeOn", (int)settings[205]);
-                        PlayerPrefs.SetString("damageModeNum", (string)settings[206]);
-                        PlayerPrefs.SetInt("sizeMode", (int)settings[207]);
-                        PlayerPrefs.SetString("sizeLower", (string)settings[208]);
-                        PlayerPrefs.SetString("sizeUpper", (string)settings[209]);
-                        PlayerPrefs.SetInt("spawnModeOn", (int)settings[210]);
-                        PlayerPrefs.SetString("nRate", (string)settings[211]);
-                        PlayerPrefs.SetString("aRate", (string)settings[212]);
-                        PlayerPrefs.SetString("jRate", (string)settings[213]);
-                        PlayerPrefs.SetString("cRate", (string)settings[214]);
-                        PlayerPrefs.SetString("pRate", (string)settings[215]);
-                        PlayerPrefs.SetInt("horseMode", (int)settings[216]);
-                        PlayerPrefs.SetInt("waveModeOn", (int)settings[217]);
-                        PlayerPrefs.SetString("waveModeNum", (string)settings[218]);
-                        PlayerPrefs.SetInt("friendlyMode", (int)settings[219]);
-                        PlayerPrefs.SetInt("pvpMode", (int)settings[220]);
-                        PlayerPrefs.SetInt("maxWaveOn", (int)settings[221]);
-                        PlayerPrefs.SetString("maxWaveNum", (string)settings[222]);
-                        PlayerPrefs.SetInt("endlessModeOn", (int)settings[223]);
-                        PlayerPrefs.SetString("endlessModeNum", (string)settings[224]);
-                        PlayerPrefs.SetString("motd", (string)settings[225]);
-                        PlayerPrefs.SetInt("pointModeOn", (int)settings[226]);
-                        PlayerPrefs.SetString("pointModeNum", (string)settings[227]);
-                        PlayerPrefs.SetInt("ahssReload", (int)settings[228]);
-                        PlayerPrefs.SetInt("punkWaves", (int)settings[229]);
-                        PlayerPrefs.SetString("mapMaximize", (string)settings[232]);
-                        PlayerPrefs.SetString("mapToggle", (string)settings[233]);
-                        PlayerPrefs.SetString("mapReset", (string)settings[234]);
-                        PlayerPrefs.SetInt("globalDisableMinimap", (int)settings[235]);
-                        PlayerPrefs.SetString("chatRebind", (string)settings[236]);
-                        PlayerPrefs.SetString("hforward", (string)settings[237]);
-                        PlayerPrefs.SetString("hback", (string)settings[238]);
-                        PlayerPrefs.SetString("hleft", (string)settings[239]);
-                        PlayerPrefs.SetString("hright", (string)settings[240]);
-                        PlayerPrefs.SetString("hwalk", (string)settings[241]);
-                        PlayerPrefs.SetString("hjump", (string)settings[242]);
-                        PlayerPrefs.SetString("hmount", (string)settings[243]);
-                        PlayerPrefs.SetFloat("bombR", (float)settings[246]);
-                        PlayerPrefs.SetFloat("bombG", (float)settings[247]);
-                        PlayerPrefs.SetFloat("bombB", (float)settings[248]);
-                        PlayerPrefs.SetFloat("bombA", (float)settings[249]);
-                        PlayerPrefs.SetInt("bombRadius", (int)settings[250]);
-                        PlayerPrefs.SetInt("bombRange", (int)settings[251]);
-                        PlayerPrefs.SetInt("bombSpeed", (int)settings[252]);
-                        PlayerPrefs.SetInt("bombCD", (int)settings[253]);
-                        PlayerPrefs.SetString("cannonUp", (string)settings[254]);
-                        PlayerPrefs.SetString("cannonDown", (string)settings[255]);
-                        PlayerPrefs.SetString("cannonLeft", (string)settings[256]);
-                        PlayerPrefs.SetString("cannonRight", (string)settings[257]);
-                        PlayerPrefs.SetString("cannonFire", (string)settings[258]);
-                        PlayerPrefs.SetString("cannonMount", (string)settings[259]);
-                        PlayerPrefs.SetString("cannonSlow", (string)settings[260]);
-                        PlayerPrefs.SetInt("deadlyCannon", (int)settings[261]);
-                        PlayerPrefs.SetString("liveCam", (string)settings[262]);
-                        settings[64] = 4;
-                        Settings.Save();
-                        Settings.SaveHumanSkins();
-                        Settings.SaveForestSkins();
-                        Settings.SaveCitySkins();
-                    }
-                    else if (GUI.Button(new Rect(posLeft + 455f, posRight + 465f + i, 40f, 25f), "Load"))
-                    {
-                        loadconfig();
-                        Settings.LoadConfig();
-                        Settings.LoadHumanSkins();
-                        Settings.LoadForestSkins();
-                        Settings.LoadCitySkins();
-                    }
-                    else if (GUI.Button(new Rect(posLeft + 500f, posRight + 465f + i, 60f, 25f), "Default"))
-                    {
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
-                    }
-                    else if (GUI.Button(new Rect(posLeft + 565f, posRight + 465f + i, 75f, 25f), "Continue"))
-                    {
-                        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
-                        {
-                            Time.timeScale = 1f;
-                        }
-                        if (!Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().enabled)
-                        {
-                            Screen.showCursor = true;
-                            Screen.lockCursor = true;
-                            GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
-                            Camera.main.GetComponent<SpectatorMovement>().disable = false;
-                            Camera.main.GetComponent<MouseLook>().disable = false;
-                        }
-                        else
-                        {
-                            IN_GAME_MAIN_CAMERA.isPausing = false;
-                            if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
-                            {
-                                Screen.showCursor = false;
-                                Screen.lockCursor = true;
-                            }
-                            else
-                            {
-                                Screen.showCursor = false;
-                                Screen.lockCursor = false;
-                            }
-                            GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
-                            GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
-                        }
-                    }
-                    else if (GUI.Button(new Rect(posLeft + 645f, posRight + 465f + i, 40f, 25f), "Quit"))
-                    {
-                        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
-                        {
-                            Time.timeScale = 1f;
-                        }
-                        else
-                        {
-                            PhotonNetwork.Disconnect();
-                        }
-                        Screen.lockCursor = false;
-                        Screen.showCursor = true;
-                        IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-                        gameStart = false;
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
-                        DestroyAllExistingCloths();
-                        Destroy(GameObject.Find("MultiplayerManager"));
-                        Application.LoadLevel("menu");
-                    }
-                    #endregion
+                    Pages.Draw();
                 }
             }
             else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
@@ -6788,7 +6546,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                         Screen.lockCursor = false;
                         Screen.showCursor = true;
                         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameStart = false;
+                        GameStart = false;
                         GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                         DestroyAllExistingCloths();
                         Destroy(GameObject.Find("MultiplayerManager"));
@@ -6925,9 +6683,9 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 PhotonNetwork.Disconnect();
             }
             resetSettings(true);
-            loadconfig();
+            LoadConfig();
             IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-            gameStart = false;
+            GameStart = false;
             Screen.lockCursor = false;
             Screen.showCursor = true;
             inputManager.menuOn = false;
@@ -6954,7 +6712,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
                 }
             }
             isWinning = false;
-            gameStart = true;
+            GameStart = true;
             ShowHUDInfoCenter(string.Empty);
             var obj3 = (GameObject) Instantiate(Resources.Load("MainCamera_mono"), GameObject.Find("cameraDefaultPosition").transform.position, GameObject.Find("cameraDefaultPosition").transform.rotation);
             Destroy(GameObject.Find("cameraDefaultPosition"));
@@ -9974,7 +9732,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             Screen.lockCursor = false;
             Screen.showCursor = true;
             IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-            gameStart = false;
+            GameStart = false;
         }
     }
 
@@ -10885,7 +10643,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             textureBackgroundBlue.SetPixel(0, 0, new Color(0.08f, 0.3f, 0.4f, 1f));
             textureBackgroundBlue.Apply();
         }
-        loadconfig();
+        LoadConfig();
         var list2 = new List<string> { "AOTTG_HERO", "Colossal", "Icosphere", "Cube", "colossal", "CITY", "city", "rock", "PanelLogin", "LOGIN", "BG_TITLE", "LANGUAGE", "PopupListLang" };
         foreach (GameObject obj2 in FindObjectsOfType(typeof(GameObject)))
         {
@@ -10989,7 +10747,7 @@ public class FengGameManagerMKII : Photon.MonoBehaviour
             GameObject.Find("LabelNetworkStatus").GetComponent<UILabel>().text = $"FPS:{FPSCounter.FPS}";
         }
 
-        if (gameStart)
+        if (GameStart)
         {
             var enumerator2 = hooks.GetEnumerator();
             try

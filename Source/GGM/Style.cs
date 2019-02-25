@@ -6,7 +6,7 @@ namespace GGM
     {
         private static readonly string _path = "Gucci/";
         private static bool _styleInited;
-        private static Texture2D _box;
+        public static Texture2D _box;
         private static Texture2D _window;
         private static Texture2D _buttonN;
         private static Texture2D _buttonA;

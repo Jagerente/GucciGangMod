@@ -157,8 +157,319 @@ namespace GGM
         };
         #endregion
 
-        #region Pages
+        #region Animation
+        public static Rect position = new Rect(Screen.width / 2f, Screen.height / 2f, 0, 0);
+        public static bool Done;
+        public static bool Opening;
+        private static void AnimateOpen()
+        {
+            float offY = Time.deltaTime * 500;
+            position.y -= offY;
+            position.x -= offY * 1.33f;
+            position.height += 2f * (offY);
+            position.width += 2f * (offY) * 1.4f;
+            GUI.DrawTexture(position, GGM.Style._box, ScaleMode.StretchToFill);
+            if (position.width >= 730f)
+            {
+                position.width = 730f;
+                position.height = 550f;
+                position.x = Screen.width / 2f - 350f;
+                position.y = Screen.height / 2f - 250f - 25f;
+                Done = true;
+            }
+        }
+        private static void AnimateClose()
+        {
+            float offY = Time.deltaTime * 1000;
+            position.y += offY;
+            position.x += offY * 1.33f;
+            position.height -= 2f * (offY);
+            position.width -= 2f * (offY) * 1.4f;
+            GUI.DrawTexture(position, GGM.Style._box, ScaleMode.StretchToFill);
+            if (position.width <= 0f)
+            {
+                position.width = 0;
+                position.height = 0;
+                position.x = Screen.width / 2f;
+                position.y = Screen.height / 2f;
+                Done = true;
+            }
+        }
+        public static void Draw()
+        {
+            if (!Done)
+            {
+                if (Opening)
+                {
+                    AnimateOpen();
+                }
+                else
+                {
+                    AnimateClose();
+                }
+                return;
+            }
+            else
+            {
+                Pause();
+            }
+        }
+        #endregion
 
+        #region Pages
+        public static void Pause()
+        {
+            const float i = 25f;
+            var posLeft = Screen.width / 2f - 350f;
+            var posRight = Screen.height / 2f - 250f;
+
+            GUI.Box(new Rect(posLeft, posRight - i, 730f, 550f), string.Empty);
+
+            Pages.TopNavigationPanelInt = GUI.SelectionGrid(new Rect(posLeft + 5f, posRight - 20f, 720f, 50f), Pages.TopNavigationPanelInt, Pages.TopNavigationPanelStr, 5);
+            var page = Pages.TopNavigationPanelInt;
+            switch (page)
+            {
+                case 0:
+                    Pages.Game_Settings();
+                    break;
+                case 1:
+                    Pages.Server_Settings();
+                    break;
+                case 2:
+                    Pages.Video_and_Audio();
+                    break;
+                case 3:
+                    Pages.Rebinds();
+                    break;
+                case 4:
+                    Pages.Bombs();
+                    break;
+                case 5:
+                    Pages.Human_Skins();
+                    break;
+                case 6:
+                    Pages.Titan_Skins();
+                    break;
+                case 7:
+                    Pages.Level_Skins();
+                    break;
+                case 8:
+                    Pages.Custom_Map();
+                    break;
+                case 9:
+                    Pages.Custom_Logic();
+                    break;
+            }
+            #region Bottom Buttons
+            if (GUI.Button(new Rect(posLeft + 408f, posRight + 465f + i, 42f, 25f), "Save"))
+            {
+                PlayerPrefs.SetInt("titantype1", (int)FengGameManagerMKII.settings[16]);
+                PlayerPrefs.SetInt("titantype2", (int)FengGameManagerMKII.settings[17]);
+                PlayerPrefs.SetInt("titantype3", (int)FengGameManagerMKII.settings[18]);
+                PlayerPrefs.SetInt("titantype4", (int)FengGameManagerMKII.settings[19]);
+                PlayerPrefs.SetInt("titantype5", (int)FengGameManagerMKII.settings[20]);
+                PlayerPrefs.SetString("titanhair1", (string)FengGameManagerMKII.settings[21]);
+                PlayerPrefs.SetString("titanhair2", (string)FengGameManagerMKII.settings[22]);
+                PlayerPrefs.SetString("titanhair3", (string)FengGameManagerMKII.settings[23]);
+                PlayerPrefs.SetString("titanhair4", (string)FengGameManagerMKII.settings[24]);
+                PlayerPrefs.SetString("titanhair5", (string)FengGameManagerMKII.settings[25]);
+                PlayerPrefs.SetString("titaneye1", (string)FengGameManagerMKII.settings[26]);
+                PlayerPrefs.SetString("titaneye2", (string)FengGameManagerMKII.settings[27]);
+                PlayerPrefs.SetString("titaneye3", (string)FengGameManagerMKII.settings[28]);
+                PlayerPrefs.SetString("titaneye4", (string)FengGameManagerMKII.settings[29]);
+                PlayerPrefs.SetString("titaneye5", (string)FengGameManagerMKII.settings[30]);
+                PlayerPrefs.SetInt("titanR", (int)FengGameManagerMKII.settings[32]);
+                PlayerPrefs.SetString("eren", (string)FengGameManagerMKII.settings[65]);
+                PlayerPrefs.SetString("annie", (string)FengGameManagerMKII.settings[66]);
+                PlayerPrefs.SetString("colossal", (string)FengGameManagerMKII.settings[67]);
+                PlayerPrefs.SetString("cnumber", (string)FengGameManagerMKII.settings[82]);
+                PlayerPrefs.SetString("cmax", (string)FengGameManagerMKII.settings[85]);
+                PlayerPrefs.SetString("titanbody1", (string)FengGameManagerMKII.settings[86]);
+                PlayerPrefs.SetString("titanbody2", (string)FengGameManagerMKII.settings[87]);
+                PlayerPrefs.SetString("titanbody3", (string)FengGameManagerMKII.settings[88]);
+                PlayerPrefs.SetString("titanbody4", (string)FengGameManagerMKII.settings[89]);
+                PlayerPrefs.SetString("titanbody5", (string)FengGameManagerMKII.settings[90]);
+                PlayerPrefs.SetInt("customlevel", (int)FengGameManagerMKII.settings[91]);
+                PlayerPrefs.SetInt("reel", (int)FengGameManagerMKII.settings[97]);
+                PlayerPrefs.SetString("reelin", (string)FengGameManagerMKII.settings[98]);
+                PlayerPrefs.SetString("reelout", (string)FengGameManagerMKII.settings[99]);
+                PlayerPrefs.SetString("tforward", (string)FengGameManagerMKII.settings[101]);
+                PlayerPrefs.SetString("tback", (string)FengGameManagerMKII.settings[102]);
+                PlayerPrefs.SetString("tleft", (string)FengGameManagerMKII.settings[103]);
+                PlayerPrefs.SetString("tright", (string)FengGameManagerMKII.settings[104]);
+                PlayerPrefs.SetString("twalk", (string)FengGameManagerMKII.settings[105]);
+                PlayerPrefs.SetString("tjump", (string)FengGameManagerMKII.settings[106]);
+                PlayerPrefs.SetString("tpunch", (string)FengGameManagerMKII.settings[107]);
+                PlayerPrefs.SetString("tslam", (string)FengGameManagerMKII.settings[108]);
+                PlayerPrefs.SetString("tgrabfront", (string)FengGameManagerMKII.settings[109]);
+                PlayerPrefs.SetString("tgrabback", (string)FengGameManagerMKII.settings[110]);
+                PlayerPrefs.SetString("tgrabnape", (string)FengGameManagerMKII.settings[111]);
+                PlayerPrefs.SetString("tantiae", (string)FengGameManagerMKII.settings[112]);
+                PlayerPrefs.SetString("tbite", (string)FengGameManagerMKII.settings[113]);
+                PlayerPrefs.SetString("tcover", (string)FengGameManagerMKII.settings[114]);
+                PlayerPrefs.SetString("tsit", (string)FengGameManagerMKII.settings[115]);
+                PlayerPrefs.SetInt("reel2", (int)FengGameManagerMKII.settings[116]);
+                PlayerPrefs.SetString("customGround", (string)FengGameManagerMKII.settings[162]);
+                PlayerPrefs.SetString("forestskyfront", (string)FengGameManagerMKII.settings[163]);
+                PlayerPrefs.SetString("forestskyback", (string)FengGameManagerMKII.settings[164]);
+                PlayerPrefs.SetString("forestskyleft", (string)FengGameManagerMKII.settings[165]);
+                PlayerPrefs.SetString("forestskyright", (string)FengGameManagerMKII.settings[166]);
+                PlayerPrefs.SetString("forestskyup", (string)FengGameManagerMKII.settings[167]);
+                PlayerPrefs.SetString("forestskydown", (string)FengGameManagerMKII.settings[168]);
+                PlayerPrefs.SetString("cityskyfront", (string)FengGameManagerMKII.settings[169]);
+                PlayerPrefs.SetString("cityskyback", (string)FengGameManagerMKII.settings[170]);
+                PlayerPrefs.SetString("cityskyleft", (string)FengGameManagerMKII.settings[171]);
+                PlayerPrefs.SetString("cityskyright", (string)FengGameManagerMKII.settings[172]);
+                PlayerPrefs.SetString("cityskyup", (string)FengGameManagerMKII.settings[173]);
+                PlayerPrefs.SetString("cityskydown", (string)FengGameManagerMKII.settings[174]);
+                PlayerPrefs.SetString("customskyfront", (string)FengGameManagerMKII.settings[175]);
+                PlayerPrefs.SetString("customskyback", (string)FengGameManagerMKII.settings[176]);
+                PlayerPrefs.SetString("customskyleft", (string)FengGameManagerMKII.settings[177]);
+                PlayerPrefs.SetString("customskyright", (string)FengGameManagerMKII.settings[178]);
+                PlayerPrefs.SetString("customskyup", (string)FengGameManagerMKII.settings[179]);
+                PlayerPrefs.SetString("customskydown", (string)FengGameManagerMKII.settings[180]);
+                PlayerPrefs.SetInt("dashenable", (int)FengGameManagerMKII.settings[181]);
+                PlayerPrefs.SetString("dashkey", (string)FengGameManagerMKII.settings[182]);
+                PlayerPrefs.SetInt("bombMode", (int)FengGameManagerMKII.settings[192]);
+                PlayerPrefs.SetInt("teamMode", (int)FengGameManagerMKII.settings[193]);
+                PlayerPrefs.SetInt("rockThrow", (int)FengGameManagerMKII.settings[194]);
+                PlayerPrefs.SetInt("explodeModeOn", (int)FengGameManagerMKII.settings[195]);
+                PlayerPrefs.SetString("explodeModeNum", (string)FengGameManagerMKII.settings[196]);
+                PlayerPrefs.SetInt("healthMode", (int)FengGameManagerMKII.settings[197]);
+                PlayerPrefs.SetString("healthLower", (string)FengGameManagerMKII.settings[198]);
+                PlayerPrefs.SetString("healthUpper", (string)FengGameManagerMKII.settings[199]);
+                PlayerPrefs.SetInt("infectionModeOn", (int)FengGameManagerMKII.settings[200]);
+                PlayerPrefs.SetString("infectionModeNum", (string)FengGameManagerMKII.settings[201]);
+                PlayerPrefs.SetInt("banEren", (int)FengGameManagerMKII.settings[202]);
+                PlayerPrefs.SetInt("moreTitanOn", (int)FengGameManagerMKII.settings[203]);
+                PlayerPrefs.SetString("moreTitanNum", (string)FengGameManagerMKII.settings[204]);
+                PlayerPrefs.SetInt("damageModeOn", (int)FengGameManagerMKII.settings[205]);
+                PlayerPrefs.SetString("damageModeNum", (string)FengGameManagerMKII.settings[206]);
+                PlayerPrefs.SetInt("sizeMode", (int)FengGameManagerMKII.settings[207]);
+                PlayerPrefs.SetString("sizeLower", (string)FengGameManagerMKII.settings[208]);
+                PlayerPrefs.SetString("sizeUpper", (string)FengGameManagerMKII.settings[209]);
+                PlayerPrefs.SetInt("spawnModeOn", (int)FengGameManagerMKII.settings[210]);
+                PlayerPrefs.SetString("nRate", (string)FengGameManagerMKII.settings[211]);
+                PlayerPrefs.SetString("aRate", (string)FengGameManagerMKII.settings[212]);
+                PlayerPrefs.SetString("jRate", (string)FengGameManagerMKII.settings[213]);
+                PlayerPrefs.SetString("cRate", (string)FengGameManagerMKII.settings[214]);
+                PlayerPrefs.SetString("pRate", (string)FengGameManagerMKII.settings[215]);
+                PlayerPrefs.SetInt("horseMode", (int)FengGameManagerMKII.settings[216]);
+                PlayerPrefs.SetInt("waveModeOn", (int)FengGameManagerMKII.settings[217]);
+                PlayerPrefs.SetString("waveModeNum", (string)FengGameManagerMKII.settings[218]);
+                PlayerPrefs.SetInt("friendlyMode", (int)FengGameManagerMKII.settings[219]);
+                PlayerPrefs.SetInt("pvpMode", (int)FengGameManagerMKII.settings[220]);
+                PlayerPrefs.SetInt("maxWaveOn", (int)FengGameManagerMKII.settings[221]);
+                PlayerPrefs.SetString("maxWaveNum", (string)FengGameManagerMKII.settings[222]);
+                PlayerPrefs.SetInt("endlessModeOn", (int)FengGameManagerMKII.settings[223]);
+                PlayerPrefs.SetString("endlessModeNum", (string)FengGameManagerMKII.settings[224]);
+                PlayerPrefs.SetString("motd", (string)FengGameManagerMKII.settings[225]);
+                PlayerPrefs.SetInt("pointModeOn", (int)FengGameManagerMKII.settings[226]);
+                PlayerPrefs.SetString("pointModeNum", (string)FengGameManagerMKII.settings[227]);
+                PlayerPrefs.SetInt("ahssReload", (int)FengGameManagerMKII.settings[228]);
+                PlayerPrefs.SetInt("punkWaves", (int)FengGameManagerMKII.settings[229]);
+                PlayerPrefs.SetString("mapMaximize", (string)FengGameManagerMKII.settings[232]);
+                PlayerPrefs.SetString("mapToggle", (string)FengGameManagerMKII.settings[233]);
+                PlayerPrefs.SetString("mapReset", (string)FengGameManagerMKII.settings[234]);
+                PlayerPrefs.SetInt("globalDisableMinimap", (int)FengGameManagerMKII.settings[235]);
+                PlayerPrefs.SetString("chatRebind", (string)FengGameManagerMKII.settings[236]);
+                PlayerPrefs.SetString("hforward", (string)FengGameManagerMKII.settings[237]);
+                PlayerPrefs.SetString("hback", (string)FengGameManagerMKII.settings[238]);
+                PlayerPrefs.SetString("hleft", (string)FengGameManagerMKII.settings[239]);
+                PlayerPrefs.SetString("hright", (string)FengGameManagerMKII.settings[240]);
+                PlayerPrefs.SetString("hwalk", (string)FengGameManagerMKII.settings[241]);
+                PlayerPrefs.SetString("hjump", (string)FengGameManagerMKII.settings[242]);
+                PlayerPrefs.SetString("hmount", (string)FengGameManagerMKII.settings[243]);
+                PlayerPrefs.SetFloat("bombR", (float)FengGameManagerMKII.settings[246]);
+                PlayerPrefs.SetFloat("bombG", (float)FengGameManagerMKII.settings[247]);
+                PlayerPrefs.SetFloat("bombB", (float)FengGameManagerMKII.settings[248]);
+                PlayerPrefs.SetFloat("bombA", (float)FengGameManagerMKII.settings[249]);
+                PlayerPrefs.SetInt("bombRadius", (int)FengGameManagerMKII.settings[250]);
+                PlayerPrefs.SetInt("bombRange", (int)FengGameManagerMKII.settings[251]);
+                PlayerPrefs.SetInt("bombSpeed", (int)FengGameManagerMKII.settings[252]);
+                PlayerPrefs.SetInt("bombCD", (int)FengGameManagerMKII.settings[253]);
+                PlayerPrefs.SetString("cannonUp", (string)FengGameManagerMKII.settings[254]);
+                PlayerPrefs.SetString("cannonDown", (string)FengGameManagerMKII.settings[255]);
+                PlayerPrefs.SetString("cannonLeft", (string)FengGameManagerMKII.settings[256]);
+                PlayerPrefs.SetString("cannonRight", (string)FengGameManagerMKII.settings[257]);
+                PlayerPrefs.SetString("cannonFire", (string)FengGameManagerMKII.settings[258]);
+                PlayerPrefs.SetString("cannonMount", (string)FengGameManagerMKII.settings[259]);
+                PlayerPrefs.SetString("cannonSlow", (string)FengGameManagerMKII.settings[260]);
+                PlayerPrefs.SetInt("deadlyCannon", (int)FengGameManagerMKII.settings[261]);
+                PlayerPrefs.SetString("liveCam", (string)FengGameManagerMKII.settings[262]);
+                FengGameManagerMKII.settings[64] = 4;
+                Settings.Save();
+                Settings.SaveHumanSkins();
+                Settings.SaveForestSkins();
+                Settings.SaveCitySkins();
+            }
+            else if (GUI.Button(new Rect(posLeft + 455f, posRight + 465f + i, 40f, 25f), "Load"))
+            {
+                FengGameManagerMKII.LoadConfig();
+                Settings.LoadConfig();
+                Settings.LoadHumanSkins();
+                Settings.LoadForestSkins();
+                Settings.LoadCitySkins();
+            }
+            else if (GUI.Button(new Rect(posLeft + 500f, posRight + 465f + i, 60f, 25f), "Default"))
+            {
+                GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
+            }
+            else if (GUI.Button(new Rect(posLeft + 565f, posRight + 465f + i, 75f, 25f), "Continue"))
+            {
+                Opening = false;
+                Done = false;
+
+                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
+                {
+                    Time.timeScale = 1f;
+                }
+                if (!Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().enabled)
+                {
+                    Screen.showCursor = true;
+                    Screen.lockCursor = true;
+                    GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                    Camera.main.GetComponent<SpectatorMovement>().disable = false;
+                    Camera.main.GetComponent<MouseLook>().disable = false;
+                }
+                else
+                {
+                    IN_GAME_MAIN_CAMERA.isPausing = false;
+                    if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
+                    {
+                        Screen.showCursor = false;
+                        Screen.lockCursor = true;
+                    }
+                    else
+                    {
+                        Screen.showCursor = false;
+                        Screen.lockCursor = false;
+                    }
+                    GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                    GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
+                }
+            }
+            else if (GUI.Button(new Rect(posLeft + 645f, posRight + 465f + i, 40f, 25f), "Quit"))
+            {
+                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
+                {
+                    Time.timeScale = 1f;
+                }
+                else
+                {
+                    PhotonNetwork.Disconnect();
+                }
+                Screen.lockCursor = false;
+                Screen.showCursor = true;
+                IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
+                FengGameManagerMKII.GameStart = false;
+                GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                FengGameManagerMKII.instance.DestroyAllExistingCloths();
+                Destroy(GameObject.Find("MultiplayerManager"));
+                Application.LoadLevel("menu");
+            }
+            #endregion
+        }
         public static void Loading_Screen()
         {
             GUI.backgroundColor = new Color(0f, 0f, 0f, 1f);
