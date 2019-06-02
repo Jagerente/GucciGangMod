@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -37,12 +32,12 @@ public class BTN_FORGET_PASSWORD : MonoBehaviour
         {
             return false;
         }
-        strIn = Regex.Replace(strIn, "(@)(.+)S", new MatchEvaluator(DomainMapper));
+        strIn = Regex.Replace(strIn, "(@)(.+)", DomainMapper);
         if (invalid)
         {
             return false;
         }
-        return Regex.IsMatch(strIn, "^(?(\")(\"[^\"]+?\"@)|(([0-9a-z]((\\.(?!\\.))|[-!#\\S%&'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[0-9a-z])@))(?(\\[)(\\[(\\d{1,3}\\.){3}\\d{1,3}\\])|(([0-9a-z][-\\w]*[0-9a-z]*\\.)+[a-z0-9]{2,17}))S", RegexOptions.IgnoreCase);
+        return Regex.IsMatch(strIn, "^(?(\")(\"[^\"]+?\"@)|(([0-9a-z]((\\.(?!\\.))|[-!#\\%&'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[0-9a-z])@))(?(\\[)(\\[(\\d{1,3}\\.){3}\\d{1,3}\\])|(([0-9a-z][-\\w]*[0-9a-z]*\\.)+[a-z0-9]{2,17}))", RegexOptions.IgnoreCase);
     }
 
     private void OnClick()

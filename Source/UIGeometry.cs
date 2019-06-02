@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIGeometry
 {
@@ -28,7 +23,7 @@ public class UIGeometry
         {
             mRtpVerts.Clear();
             var num = 0;
-            var size = verts.size;
+            int size = verts.size;
             while (num < size)
             {
                 mRtpVerts.Add(widgetToPanel.MultiplyPoint3x4(verts[num]));

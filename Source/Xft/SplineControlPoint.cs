@@ -1,7 +1,7 @@
-﻿namespace Xft
-{
-    using UnityEngine;
+﻿using UnityEngine;
 
+namespace Xft
+{
     public class SplineControlPoint
     {
         public int ControlPointIndex = -1;
@@ -18,6 +18,7 @@
             {
                 return nextControlPoint.NextNormal;
             }
+
             return Normal;
         }
 
@@ -28,6 +29,7 @@
             {
                 return nextControlPoint.NextPosition;
             }
+
             return NextPosition;
         }
 
@@ -51,59 +53,37 @@
 
         public bool IsValid
         {
-            get
-            {
-                return NextControlPoint != null;
-            }
+            get { return NextControlPoint != null; }
         }
 
         public SplineControlPoint NextControlPoint
         {
-            get
-            {
-                return mSpline.NextControlPoint(this);
-            }
+            get { return mSpline.NextControlPoint(this); }
         }
 
         public Vector3 NextNormal
         {
-            get
-            {
-                return mSpline.NextNormal(this);
-            }
+            get { return mSpline.NextNormal(this); }
         }
 
         public Vector3 NextPosition
         {
-            get
-            {
-                return mSpline.NextPosition(this);
-            }
+            get { return mSpline.NextPosition(this); }
         }
 
         public SplineControlPoint PreviousControlPoint
         {
-            get
-            {
-                return mSpline.PreviousControlPoint(this);
-            }
+            get { return mSpline.PreviousControlPoint(this); }
         }
 
         public Vector3 PreviousNormal
         {
-            get
-            {
-                return mSpline.PreviousNormal(this);
-            }
+            get { return mSpline.PreviousNormal(this); }
         }
 
         public Vector3 PreviousPosition
         {
-            get
-            {
-                return mSpline.PreviousPosition(this);
-            }
+            get { return mSpline.PreviousPosition(this); }
         }
     }
 }
-

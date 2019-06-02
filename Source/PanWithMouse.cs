@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Pan With Mouse")]
 public class PanWithMouse : IgnoreTimeScale
@@ -30,10 +25,10 @@ public class PanWithMouse : IgnoreTimeScale
         {
             range = 0.1f;
         }
+
         var x = Mathf.Clamp((mousePosition.x - num2) / num2 / range, -1f, 1f);
         var y = Mathf.Clamp((mousePosition.y - num3) / num3 / range, -1f, 1f);
         mRot = Vector2.Lerp(mRot, new Vector2(x, y), num * 5f);
         mTrans.localRotation = mStart * Quaternion.Euler(-mRot.y * degrees.y, mRot.x * degrees.x, 0f);
     }
 }
-

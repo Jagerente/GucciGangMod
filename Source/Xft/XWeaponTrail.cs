@@ -1,16 +1,13 @@
-﻿namespace Xft
-{
-    using System;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using GGM;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
+namespace Xft
+{
     public class XWeaponTrail : MonoBehaviour
     {
-        public static float fps;
-        float deltaTime;
+        public float Fps = 60f;
         public int Granularity = 60;
-        public int MaxFrame = 60;
+        public int MaxFrame = 14;
         protected float mElapsedTime;
         protected float mFadeElapsedime;
         protected float mFadeT = 1f;
@@ -32,7 +29,7 @@
 
         public void Activate()
         {
-            MaxFrame = Convert.ToInt32(Settings.BladeTrailsFrameRate);
+            MaxFrame = 14;
             Init();
             if (mMeshObj == null)
             {
@@ -45,6 +42,7 @@
                 {
                     mMeshObj.SetActive(true);
                 }
+
                 mFadeT = 1f;
                 mIsFading = false;
                 mFadeTime = 1f;
@@ -57,6 +55,7 @@
                     mSpline.ControlPoints[i].Position = mSnapshotList[i].Pos;
                     mSpline.ControlPoints[i].Normal = mSnapshotList[i].PointEnd - mSnapshotList[i].PointStart;
                 }
+
                 RefreshSpline();
                 UpdateVertex();
             }
@@ -162,6 +161,7 @@
                 mSpline.ControlPoints[i].Position = mSnapshotList[i].Pos;
                 mSpline.ControlPoints[i].Normal = mSnapshotList[i].PointEnd - mSnapshotList[i].PointStart;
             }
+
             mSpline.RefreshSpline();
         }
 
@@ -198,8 +198,6 @@
                     }
                 }
             }
-            deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-            fps = 1.0f / deltaTime;
         }
 
         private void UpdateFade()
@@ -243,6 +241,7 @@
                 pool.Indices[index + 10] = num2 + 2;
                 pool.Indices[index + 11] = num2 + 1;
             }
+
             pool.IndiceChanged = true;
         }
 
@@ -275,6 +274,7 @@
                 zero.y = num3;
                 pool.UVs[index + 2] = zero;
             }
+
             mVertexSegment.Pool.UVChanged = true;
             mVertexSegment.Pool.VertChanged = true;
             mVertexSegment.Pool.ColorChanged = true;
@@ -282,26 +282,17 @@
 
         public Vector3 CurHeadPos
         {
-            get
-            {
-                return (PointStart.position + PointEnd.position) / 2f;
-            }
+            get { return (PointStart.position + PointEnd.position) / 2f; }
         }
 
         public float TrailWidth
         {
-            get
-            {
-                return mTrailWidth;
-            }
+            get { return mTrailWidth; }
         }
 
         public float UpdateInterval
         {
-            get
-            {
-                return 1f / fps;
-            }
+            get { return 1f / Fps; }
         }
 
         public class Element
@@ -321,10 +312,7 @@
 
             public Vector3 Pos
             {
-                get
-                {
-                    return (PointStart + PointEnd) / 2f;
-                }
+                get { return (PointStart + PointEnd) / 2f; }
             }
         }
     }

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode, AddComponentMenu("NGUI/Interaction/Popup List")]
@@ -29,8 +24,7 @@ public class UIPopupList : MonoBehaviour
     private UILabel mHighlightedLabel;
     private List<UILabel> mLabelList = new List<UILabel>();
     private UIPanel mPanel;
-    [HideInInspector, SerializeField]
-    private string mSelectedItem;
+    [HideInInspector, SerializeField] private string mSelectedItem;
     public OnSelectionChange onSelectionChange;
     public Vector2 padding = new Vector3(4f, 4f);
     public Position position;
@@ -54,7 +48,9 @@ public class UIPopupList : MonoBehaviour
     private void AnimatePosition(UIWidget widget, bool placeAbove, float bottom)
     {
         var localPosition = widget.cachedTransform.localPosition;
-        var vector2 = !placeAbove ? new Vector3(localPosition.x, 0f, localPosition.z) : new Vector3(localPosition.x, bottom, localPosition.z);
+        var vector2 = !placeAbove
+            ? new Vector3(localPosition.x, 0f, localPosition.z)
+            : new Vector3(localPosition.x, bottom, localPosition.z);
         widget.cachedTransform.localPosition = vector2;
         TweenPosition.Begin(widget.gameObject, 0.15f, localPosition).method = UITweener.Method.EaseOut;
     }
@@ -70,7 +66,8 @@ public class UIPopupList : MonoBehaviour
         if (placeAbove)
         {
             var localPosition = cachedTransform.localPosition;
-            cachedTransform.localPosition = new Vector3(localPosition.x, localPosition.y - localScale.y + y, localPosition.z);
+            cachedTransform.localPosition =
+                new Vector3(localPosition.x, localPosition.y - localScale.y + y, localPosition.z);
             TweenPosition.Begin(gameObject, 0.15f, localPosition).method = UITweener.Method.EaseOut;
         }
     }
@@ -112,8 +109,9 @@ public class UIPopupList : MonoBehaviour
             {
                 mPanel = UIPanel.Find(this.transform, true);
             }
+
             var child = this.transform;
-            var bounds = NGUIMath.CalculateRelativeWidgetBounds(child.parent, child);
+            Bounds bounds = NGUIMath.CalculateRelativeWidgetBounds(child.parent, child);
             mChild = new GameObject("Drop-down List");
             mChild.layer = gameObject.layer;
             var transform = mChild.transform;
@@ -144,7 +142,7 @@ public class UIPopupList : MonoBehaviour
                 while (num5 < count)
                 {
                     var key = items[num5];
-                    var item = NGUITools.AddWidget<UILabel>(mChild);
+                    UILabel item = NGUITools.AddWidget<UILabel>(mChild);
                     item.pivot = UIWidget.Pivot.TopLeft;
                     item.font = font;
                     item.text = !isLocalized || Localization.instance == null ? key : Localization.instance.Get(key);
@@ -156,21 +154,24 @@ public class UIPopupList : MonoBehaviour
                         var localScale = item.cachedTransform.localScale;
                         item.cachedTransform.localScale = localScale * textScale;
                     }
+
                     list.Add(item);
                     y -= num2;
                     y -= padding.y;
                     a = Mathf.Max(a, item.relativeSize.x * num2);
                     var listener = UIEventListener.Get(item.gameObject);
-                    listener.onHover = new UIEventListener.BoolDelegate(OnItemHover);
-                    listener.onPress = new UIEventListener.BoolDelegate(OnItemPress);
+                    listener.onHover = OnItemHover;
+                    listener.onPress = OnItemPress;
                     listener.parameter = key;
                     if (mSelectedItem == key)
                     {
                         Highlight(item, true);
                     }
+
                     mLabelList.Add(item);
                     num5++;
                 }
+
                 a = Mathf.Max(a, bounds.size.x - (border.x + padding.x) * 2f);
                 var vector5 = new Vector3(a * 0.5f / num2, -0.5f, 0f);
                 var vector6 = new Vector3(a / num2, (num2 + padding.y) / num2, 1f);
@@ -179,16 +180,19 @@ public class UIPopupList : MonoBehaviour
                 while (num7 < num8)
                 {
                     var label2 = list[num7];
-                    var collider = NGUITools.AddWidgetCollider(label2.gameObject);
+                    BoxCollider collider = NGUITools.AddWidgetCollider(label2.gameObject);
                     vector5.z = collider.center.z;
                     collider.center = vector5;
                     collider.size = vector6;
                     num7++;
                 }
+
                 a += (border.x + padding.x) * 2f;
                 y -= border.y;
                 mBackground.cachedTransform.localScale = new Vector3(a, -y + border.y, 1f);
-                mHighlight.cachedTransform.localScale = new Vector3(a - (border.x + padding.x) * 2f + (atlasSprite.inner.xMin - atlasSprite.outer.xMin) * 2f, num2 + num * 2f, 1f);
+                mHighlight.cachedTransform.localScale = new Vector3(
+                    a - (border.x + padding.x) * 2f + (atlasSprite.inner.xMin - atlasSprite.outer.xMin) * 2f,
+                    num2 + num * 2f, 1f);
                 var placeAbove = position == Position.Above;
                 if (position == Position.Auto)
                 {
@@ -198,6 +202,7 @@ public class UIPopupList : MonoBehaviour
                         placeAbove = camera.cachedCamera.WorldToViewportPoint(child.position).y < 0.5f;
                     }
                 }
+
                 if (isAnimated)
                 {
                     var bottom = y + num2;
@@ -209,9 +214,11 @@ public class UIPopupList : MonoBehaviour
                         Animate(list[num10], placeAbove, bottom);
                         num10++;
                     }
+
                     AnimateColor(mBackground);
                     AnimateScale(mBackground, placeAbove, bottom);
                 }
+
                 if (placeAbove)
                 {
                     transform.localPosition = new Vector3(bounds.min.x, bounds.max.y - y - border.y, bounds.min.z);
@@ -294,6 +301,7 @@ public class UIPopupList : MonoBehaviour
                     TweenColor.Begin(widget.gameObject, 0.15f, color).method = UITweener.Method.EaseOut;
                     index++;
                 }
+
                 var colliderArray = mChild.GetComponentsInChildren<Collider>();
                 var num3 = 0;
                 var num4 = colliderArray.Length;
@@ -302,12 +310,14 @@ public class UIPopupList : MonoBehaviour
                     colliderArray[num3].enabled = false;
                     num3++;
                 }
+
                 Destroy(mChild, 0.15f);
             }
             else
             {
                 Destroy(mChild);
             }
+
             mBackground = null;
             mHighlight = null;
             mChild = null;
@@ -329,6 +339,7 @@ public class UIPopupList : MonoBehaviour
             {
                 NGUITools.PlaySound(sound.audioClip, sound.volume, 1f);
             }
+
             index++;
         }
     }
@@ -372,18 +383,12 @@ public class UIPopupList : MonoBehaviour
 
     public bool isOpen
     {
-        get
-        {
-            return mChild != null;
-        }
+        get { return mChild != null; }
     }
 
     public string selection
     {
-        get
-        {
-            return mSelectedItem;
-        }
+        get { return mSelectedItem; }
         set
         {
             if (mSelectedItem != value)
@@ -393,15 +398,14 @@ public class UIPopupList : MonoBehaviour
                 {
                     textLabel.text = !isLocalized ? value : Localization.Localize(value);
                 }
+
                 current = this;
-                if (onSelectionChange != null)
-                {
-                    onSelectionChange(mSelectedItem);
-                }
+                onSelectionChange?.Invoke(mSelectedItem);
                 if (eventReceiver != null && !string.IsNullOrEmpty(functionName) && Application.isPlaying)
                 {
                     eventReceiver.SendMessage(functionName, mSelectedItem, SendMessageOptions.DontRequireReceiver);
                 }
+
                 current = null;
                 if (textLabel == null)
                 {
@@ -420,4 +424,3 @@ public class UIPopupList : MonoBehaviour
         Below
     }
 }
-

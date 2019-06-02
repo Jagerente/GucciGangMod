@@ -1,10 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Grid"), ExecuteInEditMode]
@@ -41,7 +35,8 @@ public class UIGrid : MonoBehaviour
                         list.Add(child);
                     }
                 }
-                list.Sort(new Comparison<Transform>(SortByName));
+
+                list.Sort(SortByName);
                 var num4 = 0;
                 var count = list.Count;
                 while (num4 < count)
@@ -50,13 +45,16 @@ public class UIGrid : MonoBehaviour
                     if (NGUITools.GetActive(transform3.gameObject) || !hideInactive)
                     {
                         var z = transform3.localPosition.z;
-                        transform3.localPosition = arrangement != Arrangement.Horizontal ? new Vector3(cellWidth * num2, -cellHeight * num, z) : new Vector3(cellWidth * num, -cellHeight * num2, z);
+                        transform3.localPosition = arrangement != Arrangement.Horizontal
+                            ? new Vector3(cellWidth * num2, -cellHeight * num, z)
+                            : new Vector3(cellWidth * num, -cellHeight * num2, z);
                         if (++num >= maxPerLine && maxPerLine > 0)
                         {
                             num = 0;
                             num2++;
                         }
                     }
+
                     num4++;
                 }
             }
@@ -68,7 +66,9 @@ public class UIGrid : MonoBehaviour
                     if (NGUITools.GetActive(transform4.gameObject) || !hideInactive)
                     {
                         var num8 = transform4.localPosition.z;
-                        transform4.localPosition = arrangement != Arrangement.Horizontal ? new Vector3(cellWidth * num2, -cellHeight * num, num8) : new Vector3(cellWidth * num, -cellHeight * num2, num8);
+                        transform4.localPosition = arrangement != Arrangement.Horizontal
+                            ? new Vector3(cellWidth * num2, -cellHeight * num, num8)
+                            : new Vector3(cellWidth * num, -cellHeight * num2, num8);
                         if (++num >= maxPerLine && maxPerLine > 0)
                         {
                             num = 0;
@@ -77,7 +77,8 @@ public class UIGrid : MonoBehaviour
                     }
                 }
             }
-            var panel = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
+
+            UIDraggablePanel panel = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
             if (panel != null)
             {
                 panel.UpdateScrollbars(true);
@@ -111,4 +112,3 @@ public class UIGrid : MonoBehaviour
         Vertical
     }
 }
-

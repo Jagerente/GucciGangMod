@@ -1,23 +1,18 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using GGM;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
+using Random = UnityEngine.Random;
 
-public class FEMALE_TITAN : Photon.MonoBehaviour
+public class FEMALE_TITAN : MonoBehaviour
 {
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap1;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap2;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap3;
+    
+    private static Dictionary<string, int> f__switchmap1;
+    
+    private static Dictionary<string, int> f__switchmap2;
+    
+    private static Dictionary<string, int> f__switchmap3;
     private Vector3 abnorma_jump_bite_horizon_v;
     public int AnkleLHP = 200;
     private int AnkleLHPMAX = 200;
@@ -43,12 +38,6 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     private float desDeg;
     private float dieTime;
     private GameObject eren;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchsmap1;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchsmap2;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchsmap3;
     private string fxName;
     private Vector3 fxPosition;
     private Quaternion fxRotation;
@@ -61,7 +50,6 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     public bool hasspawn;
     public GameObject healthLabel;
     public float healthTime;
-    private string hitAnimation;
     private bool isAttackMoveByCore;
     private bool isGrabHandLeft;
     public float lagMax;
@@ -71,7 +59,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     public static GameObject minusDistanceEnemy;
     public float myDistance;
     public GameObject myHero;
-    public int NapeArmor = 1000;
+    public int NapeArmor = 0x3e8;
     private bool needFreshCorePosition;
     private string nextAttackAnimation;
     private Vector3 oldCorePosition;
@@ -113,9 +101,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         if (key != null)
         {
             int num;
-            if (fswitchSmap2 == null)
+            if (f__switchmap2 == null)
             {
-                var dictionary = new Dictionary<string, int>(17);
+                var dictionary = new Dictionary<string, int>(0x11);
                 dictionary.Add("combo_1", 0);
                 dictionary.Add("combo_2", 1);
                 dictionary.Add("combo_3", 2);
@@ -132,10 +120,10 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 dictionary.Add("sweep_front_left", 13);
                 dictionary.Add("sweep_front_right", 14);
                 dictionary.Add("sweep_head_b_l", 15);
-                dictionary.Add("sweep_head_b_r", 16);
-                fswitchSmap2 = dictionary;
+                dictionary.Add("sweep_head_b_r", 0x10);
+                f__switchmap2 = dictionary;
             }
-            if (fswitchSmap2.TryGetValue(key, out num))
+            if (f__switchmap2.TryGetValue(key, out num))
             {
                 switch (num)
                 {
@@ -280,7 +268,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         checkHitCapsuleR = 4f;
                         break;
 
-                    case 16:
+                    case 0x10:
                         isAttackMoveByCore = true;
                         attackCheckTimeA = 0.4f;
                         attackCheckTimeB = 0.51f;
@@ -445,21 +433,21 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         }
         if (list.Count > 0)
         {
-            str = (string) list[UnityEngine.Random.Range(0, list.Count)];
+            str = (string) list[Random.Range(0, list.Count)];
         }
-        else if (UnityEngine.Random.Range(0, 100) < 10)
+        else if (Random.Range(0, 100) < 10)
         {
             var objArray = GameObject.FindGameObjectsWithTag("Player");
-            myHero = objArray[UnityEngine.Random.Range(0, objArray.Length)];
-            attention = UnityEngine.Random.Range(5f, 10f);
+            myHero = objArray[Random.Range(0, objArray.Length)];
+            attention = Random.Range(5f, 10f);
             return true;
         }
         var key = str;
         if (key != null)
         {
-            if (fswitchSmap1 == null)
+            if (f__switchmap1 == null)
             {
-                var dictionary = new Dictionary<string, int>(17);
+                var dictionary = new Dictionary<string, int>(0x11);
                 dictionary.Add("grab_bottom_left", 0);
                 dictionary.Add("grab_bottom_right", 1);
                 dictionary.Add("grab_mid_left", 2);
@@ -476,10 +464,10 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 dictionary.Add("attack_sweep_front_right", 13);
                 dictionary.Add("attack_sweep_head_b_l", 14);
                 dictionary.Add("attack_sweep_head_b_r", 15);
-                dictionary.Add("turn180", 16);
-                fswitchSmap1 = dictionary;
+                dictionary.Add("turn180", 0x10);
+                f__switchmap1 = dictionary;
             }
-            if (fswitchSmap1.TryGetValue(key, out num5))
+            if (f__switchmap1.TryGetValue(key, out num5))
             {
                 switch (num5)
                 {
@@ -547,7 +535,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         attack("sweep_head_b_r");
                         return true;
 
-                    case 16:
+                    case 0x10:
                         turn180();
                         return true;
                 }
@@ -626,7 +614,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         animation.CrossFade(aniName, time);
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
-            var parameters = new object[] { aniName, time };
+            object[] parameters = { aniName, time };
             photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
         }
     }
@@ -638,9 +626,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             grabToRight();
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
             {
-                var parameters = new object[] { photonView.viewID, false };
+                object[] parameters = { photonView.viewID, false };
                 grabTarget.GetPhotonView().RPC("netGrabbed", PhotonTargets.All, parameters);
-                var objArray2 = new object[] { "grabbed" };
+                object[] objArray2 = { "grabbed" };
                 grabTarget.GetPhotonView().RPC("netPlayAnimation", PhotonTargets.All, objArray2);
                 photonView.RPC("grabToRight", PhotonTargets.Others);
             }
@@ -659,9 +647,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             grabToLeft();
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
             {
-                var parameters = new object[] { photonView.viewID, true };
+                object[] parameters = { photonView.viewID, true };
                 grabTarget.GetPhotonView().RPC("netGrabbed", PhotonTargets.All, parameters);
-                var objArray2 = new object[] { "grabbed" };
+                object[] objArray2 = { "grabbed" };
                 grabTarget.GetPhotonView().RPC("netPlayAnimation", PhotonTargets.All, objArray2);
                 photonView.RPC("grabToLeft", PhotonTargets.Others);
             }
@@ -713,7 +701,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     private void findNearestHero()
     {
         myHero = getNearestHero();
-        attention = UnityEngine.Random.Range(5f, 10f);
+        attention = Random.Range(5f, 10f);
     }
 
     private void FixedUpdate()
@@ -834,7 +822,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         if (key != null)
         {
             int num;
-            if (fswitchSmap3 == null)
+            if (f__switchmap3 == null)
             {
                 var dictionary = new Dictionary<string, int>(7);
                 dictionary.Add("bottom_left", 0);
@@ -844,9 +832,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 dictionary.Add("up", 4);
                 dictionary.Add("up_left", 5);
                 dictionary.Add("up_right", 6);
-                fswitchSmap3 = dictionary;
+                f__switchmap3 = dictionary;
             }
-            if (fswitchSmap3.TryGetValue(key, out num))
+            if (f__switchmap3.TryGetValue(key, out num))
             {
                 switch (num)
                 {
@@ -988,7 +976,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         getDown();
                     }
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
-                    var parameters = new object[] { dmg };
+                    object[] parameters = { dmg };
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
             }
@@ -1028,7 +1016,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         getDown();
                     }
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
-                    var parameters = new object[] { dmg };
+                    object[] parameters = { dmg };
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
             }
@@ -1065,7 +1053,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         }
     }
 
-    private void idle(float sbtime = 0f)
+    private void idle( float sbtime = 0f)
     {
         this.sbtime = sbtime;
         this.sbtime = Mathf.Max(0.5f, this.sbtime);
@@ -1085,7 +1073,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             if (!target.GetComponent<HERO>().HasDied())
             {
                 target.GetComponent<HERO>().markDie();
-                var parameters = new object[] { -1, "Female Titan" };
+                object[] parameters = { -1, "Female Titan" };
                 target.GetComponent<HERO>().photonView.RPC("netDie2", PhotonTargets.All, parameters);
             }
         }
@@ -1115,7 +1103,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient && !hitHero.GetComponent<HERO>().HasDied())
             {
                 hitHero.GetComponent<HERO>().markDie();
-                var parameters = new object[] { (hitHero.transform.position - position) * 15f * 4f, false, -1, "Female Titan", true };
+                object[] parameters = { (hitHero.transform.position - position) * 15f * 4f, false, -1, "Female Titan", true };
                 hitHero.GetComponent<HERO>().photonView.RPC("netDie", PhotonTargets.All, parameters);
             }
         }
@@ -1164,7 +1152,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             healthLabel.GetComponent<UILabel>().text = str + Convert.ToString(health);
         }
     }
-
+   
     public void lateUpdate()
     {
         if (!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
@@ -1193,9 +1181,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
 
     public void loadskin()
     {
-        if (Settings.TitanSkins == 1)
+        if ((int) FengGameManagerMKII.settings[1] == 1)
         {
-            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[66]);
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[0x42]);
         }
     }
 
@@ -1207,7 +1195,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         }
         var mipmap = true;
         var iteratorVariable1 = false;
-        if (Settings.MipMapping == 1)
+        if ((int) FengGameManagerMKII.settings[0x3f] == 1)
         {
             mipmap = false;
         }
@@ -1217,7 +1205,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             {
                 var link = new WWW(url);
                 yield return link;
-                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 1000000);
+                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 0xf4240);
                 link.Dispose();
                 if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))
                 {
@@ -1245,7 +1233,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
     [RPC]
     public void loadskinRPC(string url)
     {
-        if (Settings.TitanSkins == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
+        if ((int) FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
         {
             StartCoroutine(loadskinE(url));
         }
@@ -1293,7 +1281,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         animation.Play(aniName);
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
-            var parameters = new object[] { aniName };
+            object[] parameters = { aniName };
             photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
         }
     }
@@ -1304,7 +1292,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         animation[aniName].normalizedTime = normalizedTime;
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
-            var parameters = new object[] { aniName, normalizedTime };
+            object[] parameters = { aniName, normalizedTime };
             photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
         }
     }
@@ -1314,7 +1302,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         playsoundRPC(sndname);
         if (Network.peerType == NetworkPeerType.Server)
         {
-            var parameters = new object[] { sndname };
+            object[] parameters = { sndname };
             photonView.RPC("playsoundRPC", PhotonTargets.Others, parameters);
         }
     }
@@ -1343,7 +1331,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         size = 4f;
         if (Minimap.instance != null)
         {
-            Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.black, false, true, Minimap.IconStyle.CIRCLE);
+            Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.black, false, true);
         }
         if (photonView.isMine)
         {
@@ -1351,7 +1339,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             {
                 var sizeLower = RCSettings.sizeLower;
                 var sizeUpper = RCSettings.sizeUpper;
-                size = UnityEngine.Random.Range(sizeLower, sizeUpper);
+                size = Random.Range(sizeLower, sizeUpper);
                 photonView.RPC("setSize", PhotonTargets.AllBuffered, size);
             }
             lagMax = 150f + size * 3f;
@@ -1359,7 +1347,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             maxHealth = NapeArmor;
             if (RCSettings.healthMode > 0)
             {
-                maxHealth = NapeArmor = UnityEngine.Random.Range(RCSettings.healthLower, RCSettings.healthUpper);
+                maxHealth = NapeArmor = Random.Range(RCSettings.healthLower, RCSettings.healthUpper);
             }
             if (NapeArmor > 0)
             {
@@ -1369,7 +1357,6 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         }
         hasspawn = true;
     }
-
     private void startMain()
     {
         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addFT(this);
@@ -1382,20 +1369,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
         {
             findNearestHero();
         }
-        var enumerator = animation.GetEnumerator();
-        try
+        foreach (AnimationState animationState in animation)
         {
-            while (enumerator.MoveNext())
-            {
-                var current = (AnimationState) enumerator.Current;
-                current.speed = 0.7f;
-            }
-        }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
+            animationState.speed = 0.7f;
         }
         animation["turn180"].speed = 0.5f;
         NapeArmor = 1000;
@@ -1419,20 +1395,9 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             NapeArmor = !flag ? 3000 : 2500;
             AnkleLHP = AnkleLHPMAX = !flag ? 200 : 100;
             AnkleRHP = AnkleRHPMAX = !flag ? 200 : 100;
-            var enumerator2 = animation.GetEnumerator();
-            try
+            foreach (AnimationState animationState2 in animation)
             {
-                while (enumerator2.MoveNext())
-                {
-                    var state2 = (AnimationState) enumerator2.Current;
-                    state2.speed = 0.7f;
-                }
-            }
-            finally
-            {
-                var disposable2 = enumerator2 as IDisposable;
-                if (disposable2 != null)
-                	disposable2.Dispose();
+                animationState2.speed = 0.7f;
             }
             animation["turn180"].speed = 0.7f;
         }
@@ -1441,31 +1406,21 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
             NapeArmor = !flag ? 6000 : 4000;
             AnkleLHP = AnkleLHPMAX = !flag ? 1000 : 200;
             AnkleRHP = AnkleRHPMAX = !flag ? 1000 : 200;
-            var enumerator3 = animation.GetEnumerator();
-            try
+            foreach (AnimationState animationState3 in animation)
             {
-                while (enumerator3.MoveNext())
-                {
-                    var state3 = (AnimationState) enumerator3.Current;
-                    state3.speed = 1f;
-                }
-            }
-            finally
-            {
-                var disposable3 = enumerator3 as IDisposable;
-                if (disposable3 != null)
-                	disposable3.Dispose();
+                animationState3.speed = 1f;
             }
             animation["turn180"].speed = 0.9f;
         }
         if (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.PVP_CAPTURE)
         {
-            NapeArmor = (int) (NapeArmor * 0.8f);
+            NapeArmor = (int)(NapeArmor * 0.8f);
         }
         animation["legHurt"].speed = 1f;
         animation["legHurt_loop"].speed = 1f;
         animation["legHurt_getup"].speed = 1f;
     }
+
 
     [RPC]
     public void titanGetHit(int viewID, int speed)
@@ -1502,7 +1457,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                 else
                 {
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's neck", speed);
-                    var parameters = new object[] { speed };
+                    object[] parameters = { speed };
                     GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
                 healthTime = 0.2f;
@@ -1594,8 +1549,8 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     {
                         attention = 0f;
                         var objArray = GameObject.FindGameObjectsWithTag("Player");
-                        myHero = objArray[UnityEngine.Random.Range(0, objArray.Length)];
-                        attention = UnityEngine.Random.Range(5f, 10f);
+                        myHero = objArray[Random.Range(0, objArray.Length)];
+                        attention = Random.Range(5f, 10f);
                     }
                 }
                 if (whoHasTauntMe != null)
@@ -1650,18 +1605,18 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                             {
                                 chase();
                             }
-                            else if (UnityEngine.Random.Range(0, 100) < 1)
+                            else if (Random.Range(0, 100) < 1)
                             {
                                 turn180();
                             }
                             else if (Mathf.Abs(f) > 100f)
                             {
-                                if (UnityEngine.Random.Range(0, 100) < 10)
+                                if (Random.Range(0, 100) < 10)
                                 {
                                     turn180();
                                 }
                             }
-                            else if (Mathf.Abs(f) > 45f && UnityEngine.Random.Range(0, 100) < 30)
+                            else if (Mathf.Abs(f) > 45f && Random.Range(0, 100) < 30)
                             {
                                 turn(f);
                             }
@@ -1686,14 +1641,14 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         obj7.transform.localScale = transform.localScale;
                         var b = 1f - Vector3.Distance(currentCamera.transform.position, obj7.transform.position) * 0.05f;
                         b = Mathf.Min(1f, b);
-                        currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b, 0.95f);
+                        currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b);
                     }
                     if (attackCheckTimeA != 0f && (animation["attack_" + attackAnimation].normalizedTime >= attackCheckTimeA && animation["attack_" + attackAnimation].normalizedTime <= attackCheckTimeB || !attackChkOnce && animation["attack_" + attackAnimation].normalizedTime >= attackCheckTimeA))
                     {
                         if (!attackChkOnce)
                         {
                             attackChkOnce = true;
-                            playSound("snd_eren_swing" + UnityEngine.Random.Range(1, 3));
+                            playSound("snd_eren_swing" + Random.Range(1, 3));
                         }
                         foreach (var hit in checkHitCapsule(checkHitCapsuleStart.position, checkHitCapsuleEnd.position, checkHitCapsuleR))
                         {
@@ -1749,7 +1704,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         var num14 = vector14.y;
                         if (num12 < 0f || num14 - num9 < 0f)
                         {
-                            idle(0f);
+                            idle();
                             num13 = 0.5f;
                             vector14 = transform.position + (num9 + 5f) * Vector3.up;
                             num14 = vector14.y;
@@ -1792,7 +1747,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                         else
                         {
                             findNearestHero();
-                            idle(0f);
+                            idle();
                         }
                     }
                 }
@@ -1822,7 +1777,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     }
                     if (animation["attack_grab_" + attackAnimation].normalizedTime >= 1f)
                     {
-                        idle(0f);
+                        idle();
                     }
                 }
                 else if (state == "turn")
@@ -1830,14 +1785,14 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, desDeg, 0f), Time.deltaTime * Mathf.Abs(turnDeg) * 0.1f);
                     if (animation[turnAnimation].normalizedTime >= 1f)
                     {
-                        idle(0f);
+                        idle();
                     }
                 }
                 else if (state == "chase")
                 {
-                    if ((eren == null || myDistance >= 35f || !attackTarget(myHero)) && (getNearestHeroDistance() >= 50f || UnityEngine.Random.Range(0, 100) >= 20 || !attackTarget(getNearestHero())) && myDistance < attackDistance - 15f)
+                    if ((eren == null || myDistance >= 35f || !attackTarget(myHero)) && (getNearestHeroDistance() >= 50f || Random.Range(0, 100) >= 20 || !attackTarget(getNearestHero())) && myDistance < attackDistance - 15f)
                     {
-                        idle(UnityEngine.Random.Range(0.05f, 0.2f));
+                        idle(Random.Range(0.05f, 0.2f));
                     }
                 }
                 else if (state == "turn180")
@@ -1845,7 +1800,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     if (animation[turnAnimation].normalizedTime >= 1f)
                     {
                         gameObject.transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles.x, gameObject.transform.rotation.eulerAngles.y + 180f, gameObject.transform.rotation.eulerAngles.z);
-                        idle(0f);
+                        idle();
                         playAnimation("idle");
                     }
                 }
@@ -1861,7 +1816,7 @@ public class FEMALE_TITAN : Photon.MonoBehaviour
                     }
                     if (animation["legHurt_getup"].normalizedTime >= 1f)
                     {
-                        idle(0f);
+                        idle();
                         playAnimation("idle");
                     }
                 }

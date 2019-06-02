@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using AnimationOrTween;
+﻿using AnimationOrTween;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Button Play Animation")]

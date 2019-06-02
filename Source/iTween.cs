@@ -1,50 +1,44 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class iTween : MonoBehaviour
 {
     public string _name;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap10;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap11;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap12;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap13;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap14;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap8;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap9;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmapA;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmapB;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmapC;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmapD;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmapE;
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmapF;
+    
+    private static Dictionary<string, int> f__switchmap10;
+    
+    private static Dictionary<string, int> f__switchmap11;
+    
+    private static Dictionary<string, int> f__switchmap12;
+    
+    private static Dictionary<string, int> f__switchmap13;
+    
+    private static Dictionary<string, int> f__switchmap14;
+    
+    private static Dictionary<string, int> f__switchmap8;
+    
+    private static Dictionary<string, int> f__switchmap9;
+    
+    private static Dictionary<string, int> f__switchmapA;
+    
+    private static Dictionary<string, int> f__switchmapB;
+    
+    private static Dictionary<string, int> f__switchmapC;
+    
+    private static Dictionary<string, int> f__switchmapD;
+    
+    private static Dictionary<string, int> f__switchmapE;
+    
+    private static Dictionary<string, int> f__switchmapF;
     private ApplyTween apply;
     private AudioSource audioSource;
     private static GameObject cameraFade;
     private Color[,] colors;
     public float delay;
-    private float delayStarted;
+    public float delayStarted;
     private EasingFunction ease;
     public EaseType easeType;
     private float[] floats;
@@ -52,7 +46,6 @@ public class iTween : MonoBehaviour
     private bool isLocal;
     public bool isPaused;
     public bool isRunning;
-    private bool kinematic;
     private float lastRealTime;
     private bool loop;
     public LoopType loopType;
@@ -494,9 +487,9 @@ public class iTween : MonoBehaviour
             thisTransform.position = vector3s[0];
         }
         var num = 1f - percentage;
-        vector3s[2].x = UnityEngine.Random.Range(-vector3s[1].x * num, vector3s[1].x * num);
-        vector3s[2].y = UnityEngine.Random.Range(-vector3s[1].y * num, vector3s[1].y * num);
-        vector3s[2].z = UnityEngine.Random.Range(-vector3s[1].z * num, vector3s[1].z * num);
+        vector3s[2].x = Random.Range(-vector3s[1].x * num, vector3s[1].x * num);
+        vector3s[2].y = Random.Range(-vector3s[1].y * num, vector3s[1].y * num);
+        vector3s[2].z = Random.Range(-vector3s[1].z * num, vector3s[1].z * num);
         if (isLocal)
         {
             thisTransform.localPosition += vector3s[2];
@@ -526,9 +519,9 @@ public class iTween : MonoBehaviour
         }
         thisTransform.eulerAngles = vector3s[0];
         var num = 1f - percentage;
-        vector3s[2].x = UnityEngine.Random.Range(-vector3s[1].x * num, vector3s[1].x * num);
-        vector3s[2].y = UnityEngine.Random.Range(-vector3s[1].y * num, vector3s[1].y * num);
-        vector3s[2].z = UnityEngine.Random.Range(-vector3s[1].z * num, vector3s[1].z * num);
+        vector3s[2].x = Random.Range(-vector3s[1].x * num, vector3s[1].x * num);
+        vector3s[2].y = Random.Range(-vector3s[1].y * num, vector3s[1].y * num);
+        vector3s[2].z = Random.Range(-vector3s[1].z * num, vector3s[1].z * num);
         thisTransform.Rotate(vector3s[2], space);
         postUpdate = thisTransform.eulerAngles;
         if (physics)
@@ -546,9 +539,9 @@ public class iTween : MonoBehaviour
         }
         thisTransform.localScale = vector3s[0];
         var num = 1f - percentage;
-        vector3s[2].x = UnityEngine.Random.Range(-vector3s[1].x * num, vector3s[1].x * num);
-        vector3s[2].y = UnityEngine.Random.Range(-vector3s[1].y * num, vector3s[1].y * num);
-        vector3s[2].z = UnityEngine.Random.Range(-vector3s[1].z * num, vector3s[1].z * num);
+        vector3s[2].x = Random.Range(-vector3s[1].x * num, vector3s[1].x * num);
+        vector3s[2].y = Random.Range(-vector3s[1].y * num, vector3s[1].y * num);
+        vector3s[2].z = Random.Range(-vector3s[1].z * num, vector3s[1].z * num);
         thisTransform.localScale += vector3s[2];
     }
 
@@ -581,25 +574,25 @@ public class iTween : MonoBehaviour
 
     public static void AudioFrom(GameObject target, Hashtable args)
     {
-        AudioSource source;
+        AudioSource audio;
         Vector2 vector;
         Vector2 vector2;
         args = CleanArgs(args);
         if (args.Contains("audiosource"))
         {
-            source = (AudioSource) args["audiosource"];
+            audio = (AudioSource) args["audiosource"];
         }
         else if (target.GetComponent<AudioSource>() != null)
         {
-            source = target.audio;
+            audio = target.audio;
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: AudioFrom requires an AudioSource.");
+            Debug.LogError("iTween Error: AudioFrom requires an AudioSource.");
             return;
         }
-        vector.x = vector2.x = source.volume;
-        vector.y = vector2.y = source.pitch;
+        vector.x = vector2.x = audio.volume;
+        vector.y = vector2.y = audio.pitch;
         if (args.Contains("volume"))
         {
             vector2.x = (float) args["volume"];
@@ -608,8 +601,8 @@ public class iTween : MonoBehaviour
         {
             vector2.y = (float) args["pitch"];
         }
-        source.volume = vector2.x;
-        source.pitch = vector2.y;
+        audio.volume = vector2.x;
+        audio.pitch = vector2.y;
         args["volume"] = vector.x;
         args["pitch"] = vector.y;
         if (!args.Contains("easetype"))
@@ -623,7 +616,7 @@ public class iTween : MonoBehaviour
 
     public static void AudioFrom(GameObject target, float volume, float pitch, float time)
     {
-        var args = new object[] { "volume", volume, "pitch", pitch, "time", time };
+        object[] args = { "volume", volume, "pitch", pitch, "time", time };
         AudioFrom(target, Hash(args));
     }
 
@@ -641,14 +634,14 @@ public class iTween : MonoBehaviour
 
     public static void AudioTo(GameObject target, float volume, float pitch, float time)
     {
-        var args = new object[] { "volume", volume, "pitch", pitch, "time", time };
+        object[] args = { "volume", volume, "pitch", pitch, "time", time };
         AudioTo(target, Hash(args));
     }
 
     public static void AudioUpdate(GameObject target, Hashtable args)
     {
         float updateTime;
-        AudioSource source;
+        AudioSource audio;
         CleanArgs(args);
         var vectorArray = new Vector2[4];
         if (args.Contains("time"))
@@ -662,18 +655,18 @@ public class iTween : MonoBehaviour
         }
         if (args.Contains("audiosource"))
         {
-            source = (AudioSource) args["audiosource"];
+            audio = (AudioSource) args["audiosource"];
         }
         else if (target.GetComponent<AudioSource>() != null)
         {
-            source = target.audio;
+            audio = target.audio;
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: AudioUpdate requires an AudioSource.");
+            Debug.LogError("iTween Error: AudioUpdate requires an AudioSource.");
             return;
         }
-        vectorArray[0] = vectorArray[1] = new Vector2(source.volume, source.pitch);
+        vectorArray[0] = vectorArray[1] = new Vector2(audio.volume, audio.pitch);
         if (args.Contains("volume"))
         {
             vectorArray[1].x = (float) args["volume"];
@@ -684,13 +677,13 @@ public class iTween : MonoBehaviour
         }
         vectorArray[3].x = Mathf.SmoothDampAngle(vectorArray[0].x, vectorArray[1].x, ref vectorArray[2].x, updateTime);
         vectorArray[3].y = Mathf.SmoothDampAngle(vectorArray[0].y, vectorArray[1].y, ref vectorArray[2].y, updateTime);
-        source.volume = vectorArray[3].x;
-        source.pitch = vectorArray[3].y;
+        audio.volume = vectorArray[3].x;
+        audio.pitch = vectorArray[3].y;
     }
 
     public static void AudioUpdate(GameObject target, float volume, float pitch, float time)
     {
-        var args = new object[] { "volume", volume, "pitch", pitch, "time", time };
+        object[] args = { "volume", volume, "pitch", pitch, "time", time };
         AudioUpdate(target, Hash(args));
     }
 
@@ -720,7 +713,7 @@ public class iTween : MonoBehaviour
             }
             else
             {
-                UnityEngine.Debug.LogError("iTween Error: Callback method references must be passed as a String!");
+                Debug.LogError("iTween Error: Callback method references must be passed as a String!");
                 Destroy(this);
             }
         }
@@ -792,7 +785,7 @@ public class iTween : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
+            Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
         }
     }
 
@@ -800,12 +793,12 @@ public class iTween : MonoBehaviour
     {
         if (cameraFade != null)
         {
-            var args = new object[] { "amount", amount, "time", time };
+            object[] args = { "amount", amount, "time", time };
             CameraFadeFrom(Hash(args));
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
+            Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
         }
     }
 
@@ -825,7 +818,7 @@ public class iTween : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
+            Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
         }
     }
 
@@ -833,12 +826,12 @@ public class iTween : MonoBehaviour
     {
         if (cameraFade != null)
         {
-            var args = new object[] { "amount", amount, "time", time };
+            object[] args = { "amount", amount, "time", time };
             CameraFadeTo(Hash(args));
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
+            Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
         }
     }
 
@@ -859,66 +852,33 @@ public class iTween : MonoBehaviour
     {
         var hashtable = new Hashtable(args.Count);
         var hashtable2 = new Hashtable(args.Count);
-        var enumerator = args.GetEnumerator();
-        try
+        foreach (DictionaryEntry dictionaryEntry in args)
         {
-            while (enumerator.MoveNext())
+            hashtable.Add(dictionaryEntry.Key, dictionaryEntry.Value);
+        }
+        foreach (DictionaryEntry dictionaryEntry2 in hashtable)
+        {
+            if (dictionaryEntry2.Value.GetType() == typeof(int))
             {
-                var current = (DictionaryEntry) enumerator.Current;
-                hashtable.Add(current.Key, current.Value);
+                var num = (int)dictionaryEntry2.Value;
+                float num2 = num;
+                args[dictionaryEntry2.Key] = num2;
+            }
+            if (dictionaryEntry2.Value.GetType() == typeof(double))
+            {
+                var num3 = (double)dictionaryEntry2.Value;
+                var num4 = (float)num3;
+                args[dictionaryEntry2.Key] = num4;
             }
         }
-        finally
+        foreach (DictionaryEntry dictionaryEntry3 in args)
         {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
-        }
-        var enumerator2 = hashtable.GetEnumerator();
-        try
-        {
-            while (enumerator2.MoveNext())
-            {
-                var entry2 = (DictionaryEntry) enumerator2.Current;
-                if (entry2.Value.GetType() == typeof(int))
-                {
-                    var num = (int) entry2.Value;
-                    float num2 = num;
-                    args[entry2.Key] = num2;
-                }
-                if (entry2.Value.GetType() == typeof(double))
-                {
-                    var num3 = (double) entry2.Value;
-                    var num4 = (float) num3;
-                    args[entry2.Key] = num4;
-                }
-            }
-        }
-        finally
-        {
-            var disposable2 = enumerator2 as IDisposable;
-            if (disposable2 != null)
-            	disposable2.Dispose();
-        }
-        var enumerator3 = args.GetEnumerator();
-        try
-        {
-            while (enumerator3.MoveNext())
-            {
-                var entry3 = (DictionaryEntry) enumerator3.Current;
-                var key = entry3.Key.ToString().ToLower();
-                hashtable2.Add(key, entry3.Value);
-            }
-        }
-        finally
-        {
-            var disposable3 = enumerator3 as IDisposable;
-            if (disposable3 != null)
-            	disposable3.Dispose();
+            hashtable2.Add(dictionaryEntry3.Key.ToString().ToLower(), dictionaryEntry3.Value);
         }
         args = hashtable2;
         return args;
     }
+
 
     private float clerp(float start, float end, float value)
     {
@@ -941,95 +901,84 @@ public class iTween : MonoBehaviour
 
     public static void ColorFrom(GameObject target, Hashtable args)
     {
-        var color = new Color();
-        var color2 = new Color();
+        Color color = default;
+        Color color2 = default;
         args = CleanArgs(args);
-        if (!args.Contains("includechildren") || (bool) args["includechildren"])
+        if (!args.Contains("includechildren") || (bool)args["includechildren"])
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    var hashtable = (Hashtable) args.Clone();
-                    hashtable["ischild"] = true;
-                    ColorFrom(current.gameObject, hashtable);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                var hashtable = (Hashtable)args.Clone();
+                hashtable["ischild"] = true;
+                ColorFrom(transform.gameObject, hashtable);
             }
         }
         if (!args.Contains("easetype"))
         {
             args.Add("easetype", EaseType.linear);
         }
-        if (target.GetComponent<GUITexture>() != null)
+        if (target.GetComponent<GUITexture>())
         {
-            color2 = color = target.guiTexture.color;
+            color = color2 = target.guiTexture.color;
         }
-        else if (target.GetComponent<GUIText>() != null)
+        else if (target.GetComponent<GUIText>())
         {
-            color2 = color = target.guiText.material.color;
+            color = color2 = target.guiText.material.color;
         }
-        else if (target.renderer != null)
+        else if (target.renderer)
         {
-            color2 = color = target.renderer.material.color;
+            color = color2 = target.renderer.material.color;
         }
-        else if (target.light != null)
+        else if (target.light)
         {
-            color2 = color = target.light.color;
+            color = color2 = target.light.color;
         }
         if (args.Contains("color"))
         {
-            color = (Color) args["color"];
+            color = (Color)args["color"];
         }
         else
         {
             if (args.Contains("r"))
             {
-                color.r = (float) args["r"];
+                color.r = (float)args["r"];
             }
             if (args.Contains("g"))
             {
-                color.g = (float) args["g"];
+                color.g = (float)args["g"];
             }
             if (args.Contains("b"))
             {
-                color.b = (float) args["b"];
+                color.b = (float)args["b"];
             }
             if (args.Contains("a"))
             {
-                color.a = (float) args["a"];
+                color.a = (float)args["a"];
             }
         }
         if (args.Contains("amount"))
         {
-            color.a = (float) args["amount"];
+            color.a = (float)args["amount"];
             args.Remove("amount");
         }
         else if (args.Contains("alpha"))
         {
-            color.a = (float) args["alpha"];
+            color.a = (float)args["alpha"];
             args.Remove("alpha");
         }
-        if (target.GetComponent<GUITexture>() != null)
+        if (target.GetComponent<GUITexture>())
         {
             target.guiTexture.color = color;
         }
-        else if (target.GetComponent<GUIText>() != null)
+        else if (target.GetComponent<GUIText>())
         {
             target.guiText.material.color = color;
         }
-        else if (target.renderer != null)
+        else if (target.renderer)
         {
             target.renderer.material.color = color;
         }
-        else if (target.light != null)
+        else if (target.light)
         {
             target.light.color = color;
         }
@@ -1039,33 +988,23 @@ public class iTween : MonoBehaviour
         Launch(target, args);
     }
 
+
     public static void ColorFrom(GameObject target, Color color, float time)
     {
-        var args = new object[] { "color", color, "time", time };
+        object[] args = { "color", color, "time", time };
         ColorFrom(target, Hash(args));
     }
 
     public static void ColorTo(GameObject target, Hashtable args)
     {
         args = CleanArgs(args);
-        if (!args.Contains("includechildren") || (bool) args["includechildren"])
+        if (!args.Contains("includechildren") || (bool)args["includechildren"])
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    var hashtable = (Hashtable) args.Clone();
-                    hashtable["ischild"] = true;
-                    ColorTo(current.gameObject, hashtable);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                var hashtable = (Hashtable)args.Clone();
+                hashtable["ischild"] = true;
+                ColorTo(transform.gameObject, hashtable);
             }
         }
         if (!args.Contains("easetype"))
@@ -1077,158 +1016,144 @@ public class iTween : MonoBehaviour
         Launch(target, args);
     }
 
+
     public static void ColorTo(GameObject target, Color color, float time)
     {
-        var args = new object[] { "color", color, "time", time };
+        object[] args = { "color", color, "time", time };
         ColorTo(target, Hash(args));
     }
 
+  
     public static void ColorUpdate(GameObject target, Hashtable args)
     {
-        float updateTime;
         CleanArgs(args);
-        var colorArray = new Color[4];
-        if (!args.Contains("includechildren") || (bool) args["includechildren"])
+        var array = new Color[4];
+        if (!args.Contains("includechildren") || (bool)args["includechildren"])
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    ColorUpdate(current.gameObject, args);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                ColorUpdate(transform.gameObject, args);
             }
         }
+        float num;
         if (args.Contains("time"))
         {
-            updateTime = (float) args["time"];
-            updateTime *= Defaults.updateTimePercentage;
+            num = (float)args["time"];
+            num *= Defaults.updateTimePercentage;
         }
         else
         {
-            updateTime = Defaults.updateTime;
+            num = Defaults.updateTime;
         }
-        if (target.GetComponent<GUITexture>() != null)
+        if (target.GetComponent<GUITexture>())
         {
-            colorArray[0] = colorArray[1] = target.guiTexture.color;
+            array[0] = array[1] = target.guiTexture.color;
         }
-        else if (target.GetComponent<GUIText>() != null)
+        else if (target.GetComponent<GUIText>())
         {
-            colorArray[0] = colorArray[1] = target.guiText.material.color;
+            array[0] = array[1] = target.guiText.material.color;
         }
-        else if (target.renderer != null)
+        else if (target.renderer)
         {
-            colorArray[0] = colorArray[1] = target.renderer.material.color;
+            array[0] = array[1] = target.renderer.material.color;
         }
-        else if (target.light != null)
+        else if (target.light)
         {
-            colorArray[0] = colorArray[1] = target.light.color;
+            array[0] = array[1] = target.light.color;
         }
         if (args.Contains("color"))
         {
-            colorArray[1] = (Color) args["color"];
+            array[1] = (Color)args["color"];
         }
         else
         {
             if (args.Contains("r"))
             {
-                colorArray[1].r = (float) args["r"];
+                array[1].r = (float)args["r"];
             }
             if (args.Contains("g"))
             {
-                colorArray[1].g = (float) args["g"];
+                array[1].g = (float)args["g"];
             }
             if (args.Contains("b"))
             {
-                colorArray[1].b = (float) args["b"];
+                array[1].b = (float)args["b"];
             }
             if (args.Contains("a"))
             {
-                colorArray[1].a = (float) args["a"];
+                array[1].a = (float)args["a"];
             }
         }
-        colorArray[3].r = Mathf.SmoothDamp(colorArray[0].r, colorArray[1].r, ref colorArray[2].r, updateTime);
-        colorArray[3].g = Mathf.SmoothDamp(colorArray[0].g, colorArray[1].g, ref colorArray[2].g, updateTime);
-        colorArray[3].b = Mathf.SmoothDamp(colorArray[0].b, colorArray[1].b, ref colorArray[2].b, updateTime);
-        colorArray[3].a = Mathf.SmoothDamp(colorArray[0].a, colorArray[1].a, ref colorArray[2].a, updateTime);
-        if (target.GetComponent<GUITexture>() != null)
+        array[3].r = Mathf.SmoothDamp(array[0].r, array[1].r, ref array[2].r, num);
+        array[3].g = Mathf.SmoothDamp(array[0].g, array[1].g, ref array[2].g, num);
+        array[3].b = Mathf.SmoothDamp(array[0].b, array[1].b, ref array[2].b, num);
+        array[3].a = Mathf.SmoothDamp(array[0].a, array[1].a, ref array[2].a, num);
+        if (target.GetComponent<GUITexture>())
         {
-            target.guiTexture.color = colorArray[3];
+            target.guiTexture.color = array[3];
         }
-        else if (target.GetComponent<GUIText>() != null)
+        else if (target.GetComponent<GUIText>())
         {
-            target.guiText.material.color = colorArray[3];
+            target.guiText.material.color = array[3];
         }
-        else if (target.renderer != null)
+        else if (target.renderer)
         {
-            target.renderer.material.color = colorArray[3];
+            target.renderer.material.color = array[3];
         }
-        else if (target.light != null)
+        else if (target.light)
         {
-            target.light.color = colorArray[3];
+            target.light.color = array[3];
         }
     }
+
 
     public static void ColorUpdate(GameObject target, Color color, float time)
     {
-        var args = new object[] { "color", color, "time", time };
+        object[] args = { "color", color, "time", time };
         ColorUpdate(target, Hash(args));
     }
 
+    // iTween
     private void ConflictCheck()
     {
-        foreach (var tween in GetComponents<iTween>())
+        Component[] components = GetComponents<iTween>();
+        var array = components;
+        for (var i = 0; i < array.Length; i++)
         {
-            if (tween.type == "value")
+            var iTween = (iTween)array[i];
+            if (iTween.type == "value")
             {
                 return;
             }
-            if (tween.isRunning && tween.type == type)
+            if (iTween.isRunning && iTween.type == type)
             {
-                if (tween.method != method)
+                if (iTween.method != method)
                 {
                     return;
                 }
-                if (tween.tweenArguments.Count != tweenArguments.Count)
+                if (iTween.tweenArguments.Count != tweenArguments.Count)
                 {
-                    tween.Dispose();
+                    iTween.Dispose();
                     return;
                 }
-                var enumerator = tweenArguments.GetEnumerator();
-                try
+                foreach (DictionaryEntry dictionaryEntry in tweenArguments)
                 {
-                    while (enumerator.MoveNext())
+                    if (!iTween.tweenArguments.Contains(dictionaryEntry.Key))
                     {
-                        var current = (DictionaryEntry) enumerator.Current;
-                        if (!tween.tweenArguments.Contains(current.Key))
-                        {
-                            tween.Dispose();
-                            break;
-                        }
-                        if (!tween.tweenArguments[current.Key].Equals(tweenArguments[current.Key]) && (string) current.Key != "id")
-                        {
-                            tween.Dispose();
-                            break;
-                        }
+                        iTween.Dispose();
+                        return;
                     }
-                }
-                finally
-                {
-                    var disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                    	disposable.Dispose();
+                    if (!iTween.tweenArguments[dictionaryEntry.Key].Equals(tweenArguments[dictionaryEntry.Key]) && (string)dictionaryEntry.Key != "id")
+                    {
+                        iTween.Dispose();
+                        return;
+                    }
                 }
                 Dispose();
             }
         }
     }
+
 
     public static int Count()
     {
@@ -1422,7 +1347,7 @@ public class iTween : MonoBehaviour
             }
             else if (method == "handles")
             {
-                UnityEngine.Debug.LogError("iTween Error: Drawing a line with Handles is temporarily disabled because of compatability issues with Unity 2.6!");
+                Debug.LogError("iTween Error: Drawing a line with Handles is temporarily disabled because of compatability issues with Unity 2.6!");
             }
         }
     }
@@ -1569,7 +1494,7 @@ public class iTween : MonoBehaviour
             }
             else if (method == "handles")
             {
-                UnityEngine.Debug.LogError("iTween Error: Drawing a path with Handles is temporarily disabled because of compatability issues with Unity 2.6!");
+                Debug.LogError("iTween Error: Drawing a path with Handles is temporarily disabled because of compatability issues with Unity 2.6!");
             }
             to = from;
         }
@@ -1908,7 +1833,7 @@ public class iTween : MonoBehaviour
 
     public static void FadeFrom(GameObject target, float alpha, float time)
     {
-        var args = new object[] { "alpha", alpha, "time", time };
+        object[] args = { "alpha", alpha, "time", time };
         FadeFrom(target, Hash(args));
     }
 
@@ -1919,7 +1844,7 @@ public class iTween : MonoBehaviour
 
     public static void FadeTo(GameObject target, float alpha, float time)
     {
-        var args = new object[] { "alpha", alpha, "time", time };
+        object[] args = { "alpha", alpha, "time", time };
         FadeTo(target, Hash(args));
     }
 
@@ -1931,7 +1856,7 @@ public class iTween : MonoBehaviour
 
     public static void FadeUpdate(GameObject target, float alpha, float time)
     {
-        var args = new object[] { "alpha", alpha, "time", time };
+        object[] args = { "alpha", alpha, "time", time };
         FadeUpdate(target, Hash(args));
     }
 
@@ -1981,7 +1906,7 @@ public class iTween : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: AudioTo requires an AudioSource.");
+            Debug.LogError("iTween Error: AudioTo requires an AudioSource.");
             Dispose();
         }
         vector2s[0] = vector2s[1] = new Vector2(audioSource.volume, audioSource.pitch);
@@ -2122,7 +2047,7 @@ public class iTween : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: LookTo needs a 'looktarget' property!");
+            Debug.LogError("iTween Error: LookTo needs a 'looktarget' property!");
             Dispose();
         }
         vector3s[1] = thisTransform.eulerAngles;
@@ -2133,15 +2058,15 @@ public class iTween : MonoBehaviour
             if (key != null)
             {
                 int num;
-                if (fswitchSmap13 == null)
+                if (f__switchmap13 == null)
                 {
                     var dictionary = new Dictionary<string, int>(3);
                     dictionary.Add("x", 0);
                     dictionary.Add("y", 1);
                     dictionary.Add("z", 2);
-                    fswitchSmap13 = dictionary;
+                    f__switchmap13 = dictionary;
                 }
-                if (fswitchSmap13.TryGetValue(key, out num))
+                if (f__switchmap13.TryGetValue(key, out num))
                 {
                     switch (num)
                     {
@@ -2221,7 +2146,7 @@ public class iTween : MonoBehaviour
             var sourceArray = (Vector3[]) tweenArguments["path"];
             if (sourceArray.Length == 1)
             {
-                UnityEngine.Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
+                Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
                 Dispose();
             }
             vectorArray2 = new Vector3[sourceArray.Length];
@@ -2232,7 +2157,7 @@ public class iTween : MonoBehaviour
             var transformArray = (Transform[]) tweenArguments["path"];
             if (transformArray.Length == 1)
             {
-                UnityEngine.Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
+                Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
                 Dispose();
             }
             vectorArray2 = new Vector3[transformArray.Length];
@@ -2743,7 +2668,7 @@ public class iTween : MonoBehaviour
         {
             Dictionary<string, int> dictionary;
             int num;
-            if (fswitchSmap12 == null)
+            if (f__switchmap12 == null)
             {
                 dictionary = new Dictionary<string, int>(10);
                 dictionary.Add("value", 0);
@@ -2756,9 +2681,9 @@ public class iTween : MonoBehaviour
                 dictionary.Add("punch", 7);
                 dictionary.Add("look", 8);
                 dictionary.Add("stab", 9);
-                fswitchSmap12 = dictionary;
+                f__switchmap12 = dictionary;
             }
-            if (fswitchSmap12.TryGetValue(type, out num))
+            if (f__switchmap12.TryGetValue(type, out num))
             {
                 string method;
                 int num2;
@@ -2768,7 +2693,7 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmap9 == null)
+                            if (f__switchmap9 == null)
                             {
                                 dictionary = new Dictionary<string, int>(5);
                                 dictionary.Add("float", 0);
@@ -2776,35 +2701,35 @@ public class iTween : MonoBehaviour
                                 dictionary.Add("vector3", 2);
                                 dictionary.Add("color", 3);
                                 dictionary.Add("rect", 4);
-                                fswitchSmap9 = dictionary;
+                                f__switchmap9 = dictionary;
                             }
-                            if (fswitchSmap9.TryGetValue(method, out num2))
+                            if (f__switchmap9.TryGetValue(method, out num2))
                             {
                                 switch (num2)
                                 {
                                     case 0:
                                         GenerateFloatTargets();
-                                        apply = new ApplyTween(ApplyFloatTargets);
+                                        apply = ApplyFloatTargets;
                                         return;
 
                                     case 1:
                                         GenerateVector2Targets();
-                                        apply = new ApplyTween(ApplyVector2Targets);
+                                        apply = ApplyVector2Targets;
                                         return;
 
                                     case 2:
                                         GenerateVector3Targets();
-                                        apply = new ApplyTween(ApplyVector3Targets);
+                                        apply = ApplyVector3Targets;
                                         return;
 
                                     case 3:
                                         GenerateColorTargets();
-                                        apply = new ApplyTween(ApplyColorTargets);
+                                        apply = ApplyColorTargets;
                                         return;
 
                                     case 4:
                                         GenerateRectTargets();
-                                        apply = new ApplyTween(ApplyRectTargets);
+                                        apply = ApplyRectTargets;
                                         return;
                                 }
                             }
@@ -2815,16 +2740,16 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmapA == null)
+                            if (f__switchmapA == null)
                             {
                                 dictionary = new Dictionary<string, int>(1);
                                 dictionary.Add("to", 0);
-                                fswitchSmapA = dictionary;
+                                f__switchmapA = dictionary;
                             }
-                            if (fswitchSmapA.TryGetValue(method, out num2) && num2 == 0)
+                            if (f__switchmapA.TryGetValue(method, out num2) && num2 == 0)
                             {
                                 GenerateColorToTargets();
-                                apply = new ApplyTween(ApplyColorToTargets);
+                                apply = ApplyColorToTargets;
                             }
                         }
                         break;
@@ -2833,16 +2758,16 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmapB == null)
+                            if (f__switchmapB == null)
                             {
                                 dictionary = new Dictionary<string, int>(1);
                                 dictionary.Add("to", 0);
-                                fswitchSmapB = dictionary;
+                                f__switchmapB = dictionary;
                             }
-                            if (fswitchSmapB.TryGetValue(method, out num2) && num2 == 0)
+                            if (f__switchmapB.TryGetValue(method, out num2) && num2 == 0)
                             {
                                 GenerateAudioToTargets();
-                                apply = new ApplyTween(ApplyAudioToTargets);
+                                apply = ApplyAudioToTargets;
                             }
                         }
                         break;
@@ -2851,34 +2776,33 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmapC == null)
+                            if (f__switchmapC == null)
                             {
                                 dictionary = new Dictionary<string, int>(3);
                                 dictionary.Add("to", 0);
                                 dictionary.Add("by", 1);
                                 dictionary.Add("add", 1);
-                                fswitchSmapC = dictionary;
+                                f__switchmapC = dictionary;
                             }
-                            if (fswitchSmapC.TryGetValue(method, out num2))
+                            if (f__switchmapC.TryGetValue(method, out num2))
                             {
                                 if (num2 == 0)
                                 {
                                     if (tweenArguments.Contains("path"))
                                     {
                                         GenerateMoveToPathTargets();
-                                        apply = new ApplyTween(ApplyMoveToPathTargets);
+                                        apply = ApplyMoveToPathTargets;
                                     }
                                     else
                                     {
                                         GenerateMoveToTargets();
-                                        apply = new ApplyTween(ApplyMoveToTargets);
+                                        apply = ApplyMoveToTargets;
                                     }
                                 }
                                 else if (num2 == 1)
                                 {
                                     GenerateMoveByTargets();
-                                    apply = new ApplyTween(ApplyMoveByTargets);
-                                    break;
+                                    apply = ApplyMoveByTargets;
                                 }
                             }
                         }
@@ -2888,31 +2812,31 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmapD == null)
+                            if (f__switchmapD == null)
                             {
                                 dictionary = new Dictionary<string, int>(3);
                                 dictionary.Add("to", 0);
                                 dictionary.Add("by", 1);
                                 dictionary.Add("add", 2);
-                                fswitchSmapD = dictionary;
+                                f__switchmapD = dictionary;
                             }
-                            if (fswitchSmapD.TryGetValue(method, out num2))
+                            if (f__switchmapD.TryGetValue(method, out num2))
                             {
                                 switch (num2)
                                 {
                                     case 0:
                                         GenerateScaleToTargets();
-                                        apply = new ApplyTween(ApplyScaleToTargets);
+                                        apply = ApplyScaleToTargets;
                                         return;
 
                                     case 1:
                                         GenerateScaleByTargets();
-                                        apply = new ApplyTween(ApplyScaleToTargets);
+                                        apply = ApplyScaleToTargets;
                                         return;
 
                                     case 2:
                                         GenerateScaleAddTargets();
-                                        apply = new ApplyTween(ApplyScaleToTargets);
+                                        apply = ApplyScaleToTargets;
                                         return;
                                 }
                             }
@@ -2923,31 +2847,31 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmapE == null)
+                            if (f__switchmapE == null)
                             {
                                 dictionary = new Dictionary<string, int>(3);
                                 dictionary.Add("to", 0);
                                 dictionary.Add("add", 1);
                                 dictionary.Add("by", 2);
-                                fswitchSmapE = dictionary;
+                                f__switchmapE = dictionary;
                             }
-                            if (fswitchSmapE.TryGetValue(method, out num2))
+                            if (f__switchmapE.TryGetValue(method, out num2))
                             {
                                 switch (num2)
                                 {
                                     case 0:
                                         GenerateRotateToTargets();
-                                        apply = new ApplyTween(ApplyRotateToTargets);
+                                        apply = ApplyRotateToTargets;
                                         return;
 
                                     case 1:
                                         GenerateRotateAddTargets();
-                                        apply = new ApplyTween(ApplyRotateAddTargets);
+                                        apply = ApplyRotateAddTargets;
                                         return;
 
                                     case 2:
                                         GenerateRotateByTargets();
-                                        apply = new ApplyTween(ApplyRotateAddTargets);
+                                        apply = ApplyRotateAddTargets;
                                         return;
                                 }
                             }
@@ -2958,31 +2882,31 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmapF == null)
+                            if (f__switchmapF == null)
                             {
                                 dictionary = new Dictionary<string, int>(3);
                                 dictionary.Add("position", 0);
                                 dictionary.Add("scale", 1);
                                 dictionary.Add("rotation", 2);
-                                fswitchSmapF = dictionary;
+                                f__switchmapF = dictionary;
                             }
-                            if (fswitchSmapF.TryGetValue(method, out num2))
+                            if (f__switchmapF.TryGetValue(method, out num2))
                             {
                                 switch (num2)
                                 {
                                     case 0:
                                         GenerateShakePositionTargets();
-                                        apply = new ApplyTween(ApplyShakePositionTargets);
+                                        apply = ApplyShakePositionTargets;
                                         return;
 
                                     case 1:
                                         GenerateShakeScaleTargets();
-                                        apply = new ApplyTween(ApplyShakeScaleTargets);
+                                        apply = ApplyShakeScaleTargets;
                                         return;
 
                                     case 2:
                                         GenerateShakeRotationTargets();
-                                        apply = new ApplyTween(ApplyShakeRotationTargets);
+                                        apply = ApplyShakeRotationTargets;
                                         return;
                                 }
                             }
@@ -2993,31 +2917,31 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmap10 == null)
+                            if (f__switchmap10 == null)
                             {
                                 dictionary = new Dictionary<string, int>(3);
                                 dictionary.Add("position", 0);
                                 dictionary.Add("rotation", 1);
                                 dictionary.Add("scale", 2);
-                                fswitchSmap10 = dictionary;
+                                f__switchmap10 = dictionary;
                             }
-                            if (fswitchSmap10.TryGetValue(method, out num2))
+                            if (f__switchmap10.TryGetValue(method, out num2))
                             {
                                 switch (num2)
                                 {
                                     case 0:
                                         GeneratePunchPositionTargets();
-                                        apply = new ApplyTween(ApplyPunchPositionTargets);
+                                        apply = ApplyPunchPositionTargets;
                                         return;
 
                                     case 1:
                                         GeneratePunchRotationTargets();
-                                        apply = new ApplyTween(ApplyPunchRotationTargets);
+                                        apply = ApplyPunchRotationTargets;
                                         return;
 
                                     case 2:
                                         GeneratePunchScaleTargets();
-                                        apply = new ApplyTween(ApplyPunchScaleTargets);
+                                        apply = ApplyPunchScaleTargets;
                                         return;
                                 }
                             }
@@ -3028,23 +2952,23 @@ public class iTween : MonoBehaviour
                         method = this.method;
                         if (method != null)
                         {
-                            if (fswitchSmap11 == null)
+                            if (f__switchmap11 == null)
                             {
                                 dictionary = new Dictionary<string, int>(1);
                                 dictionary.Add("to", 0);
-                                fswitchSmap11 = dictionary;
+                                f__switchmap11 = dictionary;
                             }
-                            if (fswitchSmap11.TryGetValue(method, out num2) && num2 == 0)
+                            if (f__switchmap11.TryGetValue(method, out num2) && num2 == 0)
                             {
                                 GenerateLookToTargets();
-                                apply = new ApplyTween(ApplyLookToTargets);
+                                apply = ApplyLookToTargets;
                             }
                         }
                         break;
 
                     case 9:
                         GenerateStabTargets();
-                        apply = new ApplyTween(ApplyStabTargets);
+                        apply = ApplyStabTargets;
                         break;
                 }
             }
@@ -3082,131 +3006,131 @@ public class iTween : MonoBehaviour
         switch (easeType)
         {
             case EaseType.easeInQuad:
-                ease = new EasingFunction(easeInQuad);
+                ease = easeInQuad;
                 break;
 
             case EaseType.easeOutQuad:
-                ease = new EasingFunction(easeOutQuad);
+                ease = easeOutQuad;
                 break;
 
             case EaseType.easeInOutQuad:
-                ease = new EasingFunction(easeInOutQuad);
+                ease = easeInOutQuad;
                 break;
 
             case EaseType.easeInCubic:
-                ease = new EasingFunction(easeInCubic);
+                ease = easeInCubic;
                 break;
 
             case EaseType.easeOutCubic:
-                ease = new EasingFunction(easeOutCubic);
+                ease = easeOutCubic;
                 break;
 
             case EaseType.easeInOutCubic:
-                ease = new EasingFunction(easeInOutCubic);
+                ease = easeInOutCubic;
                 break;
 
             case EaseType.easeInQuart:
-                ease = new EasingFunction(easeInQuart);
+                ease = easeInQuart;
                 break;
 
             case EaseType.easeOutQuart:
-                ease = new EasingFunction(easeOutQuart);
+                ease = easeOutQuart;
                 break;
 
             case EaseType.easeInOutQuart:
-                ease = new EasingFunction(easeInOutQuart);
+                ease = easeInOutQuart;
                 break;
 
             case EaseType.easeInQuint:
-                ease = new EasingFunction(easeInQuint);
+                ease = easeInQuint;
                 break;
 
             case EaseType.easeOutQuint:
-                ease = new EasingFunction(easeOutQuint);
+                ease = easeOutQuint;
                 break;
 
             case EaseType.easeInOutQuint:
-                ease = new EasingFunction(easeInOutQuint);
+                ease = easeInOutQuint;
                 break;
 
             case EaseType.easeInSine:
-                ease = new EasingFunction(easeInSine);
+                ease = easeInSine;
                 break;
 
             case EaseType.easeOutSine:
-                ease = new EasingFunction(easeOutSine);
+                ease = easeOutSine;
                 break;
 
             case EaseType.easeInOutSine:
-                ease = new EasingFunction(easeInOutSine);
+                ease = easeInOutSine;
                 break;
 
             case EaseType.easeInExpo:
-                ease = new EasingFunction(easeInExpo);
+                ease = easeInExpo;
                 break;
 
             case EaseType.easeOutExpo:
-                ease = new EasingFunction(easeOutExpo);
+                ease = easeOutExpo;
                 break;
 
             case EaseType.easeInOutExpo:
-                ease = new EasingFunction(easeInOutExpo);
+                ease = easeInOutExpo;
                 break;
 
             case EaseType.easeInCirc:
-                ease = new EasingFunction(easeInCirc);
+                ease = easeInCirc;
                 break;
 
             case EaseType.easeOutCirc:
-                ease = new EasingFunction(easeOutCirc);
+                ease = easeOutCirc;
                 break;
 
             case EaseType.easeInOutCirc:
-                ease = new EasingFunction(easeInOutCirc);
+                ease = easeInOutCirc;
                 break;
 
             case EaseType.linear:
-                ease = new EasingFunction(linear);
+                ease = linear;
                 break;
 
             case EaseType.spring:
-                ease = new EasingFunction(spring);
+                ease = spring;
                 break;
 
             case EaseType.easeInBounce:
-                ease = new EasingFunction(easeInBounce);
+                ease = easeInBounce;
                 break;
 
             case EaseType.easeOutBounce:
-                ease = new EasingFunction(easeOutBounce);
+                ease = easeOutBounce;
                 break;
 
             case EaseType.easeInOutBounce:
-                ease = new EasingFunction(easeInOutBounce);
+                ease = easeInOutBounce;
                 break;
 
             case EaseType.easeInBack:
-                ease = new EasingFunction(easeInBack);
+                ease = easeInBack;
                 break;
 
             case EaseType.easeOutBack:
-                ease = new EasingFunction(easeOutBack);
+                ease = easeOutBack;
                 break;
 
             case EaseType.easeInOutBack:
-                ease = new EasingFunction(easeInOutBack);
+                ease = easeInOutBack;
                 break;
 
             case EaseType.easeInElastic:
-                ease = new EasingFunction(easeInElastic);
+                ease = easeInElastic;
                 break;
 
             case EaseType.easeOutElastic:
-                ease = new EasingFunction(easeOutElastic);
+                ease = easeOutElastic;
                 break;
 
             case EaseType.easeInOutElastic:
-                ease = new EasingFunction(easeInOutElastic);
+                ease = easeInOutElastic;
                 break;
         }
     }
@@ -3216,7 +3140,7 @@ public class iTween : MonoBehaviour
         var hashtable = new Hashtable(args.Length / 2);
         if (args.Length % 2 != 0)
         {
-            UnityEngine.Debug.LogError("Tween Error: Hash requires an even number of arguments!");
+            Debug.LogError("Tween Error: Hash requires an even number of arguments!");
             return null;
         }
         for (var i = 0; i < args.Length - 1; i += 2)
@@ -3291,15 +3215,15 @@ public class iTween : MonoBehaviour
             if (key != null)
             {
                 int num;
-                if (fswitchSmap8 == null)
+                if (f__switchmap8 == null)
                 {
                     var dictionary = new Dictionary<string, int>(3);
                     dictionary.Add("x", 0);
                     dictionary.Add("y", 1);
                     dictionary.Add("z", 2);
-                    fswitchSmap8 = dictionary;
+                    f__switchmap8 = dictionary;
                 }
-                if (fswitchSmap8.TryGetValue(key, out num))
+                if (f__switchmap8.TryGetValue(key, out num))
                 {
                     switch (num)
                     {
@@ -3330,7 +3254,7 @@ public class iTween : MonoBehaviour
 
     public static void LookFrom(GameObject target, Vector3 looktarget, float time)
     {
-        var args = new object[] { "looktarget", looktarget, "time", time };
+        object[] args = { "looktarget", looktarget, "time", time };
         LookFrom(target, Hash(args));
     }
 
@@ -3350,7 +3274,7 @@ public class iTween : MonoBehaviour
 
     public static void LookTo(GameObject target, Vector3 looktarget, float time)
     {
-        var args = new object[] { "looktarget", looktarget, "time", time };
+        object[] args = { "looktarget", looktarget, "time", time };
         LookTo(target, Hash(args));
     }
 
@@ -3389,7 +3313,7 @@ public class iTween : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogError("iTween Error: LookUpdate needs a 'looktarget' property!");
+            Debug.LogError("iTween Error: LookUpdate needs a 'looktarget' property!");
             return;
         }
         vectorArray[1] = target.transform.eulerAngles;
@@ -3405,15 +3329,15 @@ public class iTween : MonoBehaviour
             if (key != null)
             {
                 int num2;
-                if (fswitchSmap14 == null)
+                if (f__switchmap14 == null)
                 {
                     var dictionary = new Dictionary<string, int>(3);
                     dictionary.Add("x", 0);
                     dictionary.Add("y", 1);
                     dictionary.Add("z", 2);
-                    fswitchSmap14 = dictionary;
+                    f__switchmap14 = dictionary;
                 }
-                if (fswitchSmap14.TryGetValue(key, out num2))
+                if (f__switchmap14.TryGetValue(key, out num2))
                 {
                     switch (num2)
                     {
@@ -3440,7 +3364,7 @@ public class iTween : MonoBehaviour
 
     public static void LookUpdate(GameObject target, Vector3 looktarget, float time)
     {
-        var args = new object[] { "looktarget", looktarget, "time", time };
+        object[] args = { "looktarget", looktarget, "time", time };
         LookUpdate(target, Hash(args));
     }
 
@@ -3454,7 +3378,7 @@ public class iTween : MonoBehaviour
 
     public static void MoveAdd(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         MoveAdd(target, Hash(args));
     }
 
@@ -3468,7 +3392,7 @@ public class iTween : MonoBehaviour
 
     public static void MoveBy(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         MoveBy(target, Hash(args));
     }
 
@@ -3587,7 +3511,7 @@ public class iTween : MonoBehaviour
 
     public static void MoveFrom(GameObject target, Vector3 position, float time)
     {
-        var args = new object[] { "position", position, "time", time };
+        object[] args = { "position", position, "time", time };
         MoveFrom(target, Hash(args));
     }
 
@@ -3608,7 +3532,7 @@ public class iTween : MonoBehaviour
 
     public static void MoveTo(GameObject target, Vector3 position, float time)
     {
-        var args = new object[] { "position", position, "time", time };
+        object[] args = { "position", position, "time", time };
         MoveTo(target, Hash(args));
     }
 
@@ -3700,7 +3624,7 @@ public class iTween : MonoBehaviour
 
     public static void MoveUpdate(GameObject target, Vector3 position, float time)
     {
-        var args = new object[] { "position", position, "time", time };
+        object[] args = { "position", position, "time", time };
         MoveUpdate(target, Hash(args));
     }
 
@@ -3822,28 +3746,19 @@ public class iTween : MonoBehaviour
         }
     }
 
+    // iTween
     public static void Pause(GameObject target, bool includechildren)
     {
         Pause(target);
         if (includechildren)
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    Pause(current.gameObject, true);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                Pause(transform.gameObject, true);
             }
         }
     }
+
 
     public static void Pause(GameObject target, string type)
     {
@@ -3862,40 +3777,36 @@ public class iTween : MonoBehaviour
         }
     }
 
+    // iTween
     public static void Pause(GameObject target, string type, bool includechildren)
     {
-        foreach (var tween in target.GetComponents<iTween>())
+        Component[] components = target.GetComponents<iTween>();
+        var array = components;
+        for (var i = 0; i < array.Length; i++)
         {
-            if ((tween.type + tween.method).Substring(0, type.Length).ToLower() == type.ToLower())
+            var iTween = (iTween)array[i];
+            var text = iTween.type + iTween.method;
+            text = text.Substring(0, type.Length);
+            if (text.ToLower() == type.ToLower())
             {
-                if (tween.delay > 0f)
+                if (iTween.delay > 0f)
                 {
-                    tween.delay -= Time.time - tween.delayStarted;
-                    tween.StopCoroutine("TweenDelay");
+                    iTween.delay -= Time.time - iTween.delayStarted;
+                    iTween.StopCoroutine("TweenDelay");
                 }
-                tween.isPaused = true;
-                tween.enabled = false;
+                iTween.isPaused = true;
+                iTween.enabled = false;
             }
         }
         if (includechildren)
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    Pause(current.gameObject, type, true);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                Pause(transform.gameObject, type, true);
             }
         }
     }
+
 
     public static Vector3 PointOnPath(Transform[] path, float percent)
     {
@@ -3939,7 +3850,7 @@ public class iTween : MonoBehaviour
 
     public static void PunchPosition(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         PunchPosition(target, Hash(args));
     }
 
@@ -3954,7 +3865,7 @@ public class iTween : MonoBehaviour
 
     public static void PunchRotation(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         PunchRotation(target, Hash(args));
     }
 
@@ -3969,7 +3880,7 @@ public class iTween : MonoBehaviour
 
     public static void PunchScale(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         PunchScale(target, Hash(args));
     }
 
@@ -4046,23 +3957,13 @@ public class iTween : MonoBehaviour
         Resume(target);
         if (includechildren)
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    Resume(current.gameObject, true);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                Resume(transform.gameObject, true);
             }
         }
     }
+
 
     public static void Resume(GameObject target, string type)
     {
@@ -4077,29 +3978,23 @@ public class iTween : MonoBehaviour
 
     public static void Resume(GameObject target, string type, bool includechildren)
     {
-        foreach (var tween in target.GetComponents<iTween>())
+        Component[] components = target.GetComponents<iTween>();
+        var array = components;
+        for (var i = 0; i < array.Length; i++)
         {
-            if ((tween.type + tween.method).Substring(0, type.Length).ToLower() == type.ToLower())
+            var iTween = (iTween)array[i];
+            var text = iTween.type + iTween.method;
+            text = text.Substring(0, type.Length);
+            if (text.ToLower() == type.ToLower())
             {
-                tween.enabled = true;
+                iTween.enabled = true;
             }
         }
         if (includechildren)
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    Resume(current.gameObject, type, true);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                Resume(transform.gameObject, type, true);
             }
         }
     }
@@ -4157,7 +4052,7 @@ public class iTween : MonoBehaviour
                 }
                 catch
                 {
-                    UnityEngine.Debug.LogWarning("iTween: Unsupported namedcolorvalue supplied! Default will be used.");
+                    Debug.LogWarning("iTween: Unsupported namedcolorvalue supplied! Default will be used.");
                     namedcolorvalue = NamedValueColor._Color;
                 }
             }
@@ -4180,7 +4075,7 @@ public class iTween : MonoBehaviour
                 }
                 catch
                 {
-                    UnityEngine.Debug.LogWarning("iTween: Unsupported loopType supplied! Default will be used.");
+                    Debug.LogWarning("iTween: Unsupported loopType supplied! Default will be used.");
                     loopType = LoopType.none;
                 }
             }
@@ -4203,7 +4098,7 @@ public class iTween : MonoBehaviour
                 }
                 catch
                 {
-                    UnityEngine.Debug.LogWarning("iTween: Unsupported easeType supplied! Default will be used.");
+                    Debug.LogWarning("iTween: Unsupported easeType supplied! Default will be used.");
                     easeType = Defaults.easeType;
                 }
             }
@@ -4226,7 +4121,7 @@ public class iTween : MonoBehaviour
                 }
                 catch
                 {
-                    UnityEngine.Debug.LogWarning("iTween: Unsupported space supplied! Default will be used.");
+                    Debug.LogWarning("iTween: Unsupported space supplied! Default will be used.");
                     space = Defaults.space;
                 }
             }
@@ -4264,7 +4159,7 @@ public class iTween : MonoBehaviour
 
     public static void RotateAdd(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         RotateAdd(target, Hash(args));
     }
 
@@ -4278,7 +4173,7 @@ public class iTween : MonoBehaviour
 
     public static void RotateBy(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         RotateBy(target, Hash(args));
     }
 
@@ -4347,7 +4242,7 @@ public class iTween : MonoBehaviour
 
     public static void RotateFrom(GameObject target, Vector3 rotation, float time)
     {
-        var args = new object[] { "rotation", rotation, "time", time };
+        object[] args = { "rotation", rotation, "time", time };
         RotateFrom(target, Hash(args));
     }
 
@@ -4368,7 +4263,7 @@ public class iTween : MonoBehaviour
 
     public static void RotateTo(GameObject target, Vector3 rotation, float time)
     {
-        var args = new object[] { "rotation", rotation, "time", time };
+        object[] args = { "rotation", rotation, "time", time };
         RotateTo(target, Hash(args));
     }
 
@@ -4437,7 +4332,7 @@ public class iTween : MonoBehaviour
 
     public static void RotateUpdate(GameObject target, Vector3 rotation, float time)
     {
-        var args = new object[] { "rotation", rotation, "time", time };
+        object[] args = { "rotation", rotation, "time", time };
         RotateUpdate(target, Hash(args));
     }
 
@@ -4451,7 +4346,7 @@ public class iTween : MonoBehaviour
 
     public static void ScaleAdd(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         ScaleAdd(target, Hash(args));
     }
 
@@ -4465,7 +4360,7 @@ public class iTween : MonoBehaviour
 
     public static void ScaleBy(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         ScaleBy(target, Hash(args));
     }
 
@@ -4510,7 +4405,7 @@ public class iTween : MonoBehaviour
 
     public static void ScaleFrom(GameObject target, Vector3 scale, float time)
     {
-        var args = new object[] { "scale", scale, "time", time };
+        object[] args = { "scale", scale, "time", time };
         ScaleFrom(target, Hash(args));
     }
 
@@ -4531,7 +4426,7 @@ public class iTween : MonoBehaviour
 
     public static void ScaleTo(GameObject target, Vector3 scale, float time)
     {
-        var args = new object[] { "scale", scale, "time", time };
+        object[] args = { "scale", scale, "time", time };
         ScaleTo(target, Hash(args));
     }
 
@@ -4585,7 +4480,7 @@ public class iTween : MonoBehaviour
 
     public static void ScaleUpdate(GameObject target, Vector3 scale, float time)
     {
-        var args = new object[] { "scale", scale, "time", time };
+        object[] args = { "scale", scale, "time", time };
         ScaleUpdate(target, Hash(args));
     }
 
@@ -4599,7 +4494,7 @@ public class iTween : MonoBehaviour
 
     public static void ShakePosition(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         ShakePosition(target, Hash(args));
     }
 
@@ -4613,7 +4508,7 @@ public class iTween : MonoBehaviour
 
     public static void ShakeRotation(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         ShakeRotation(target, Hash(args));
     }
 
@@ -4627,7 +4522,7 @@ public class iTween : MonoBehaviour
 
     public static void ShakeScale(GameObject target, Vector3 amount, float time)
     {
-        var args = new object[] { "amount", amount, "time", time };
+        object[] args = { "amount", amount, "time", time };
         ShakeScale(target, Hash(args));
     }
 
@@ -4647,14 +4542,14 @@ public class iTween : MonoBehaviour
 
     public static void Stab(GameObject target, AudioClip audioclip, float delay)
     {
-        var args = new object[] { "audioclip", audioclip, "delay", delay };
+        object[] args = { "audioclip", audioclip, "delay", delay };
         Stab(target, Hash(args));
     }
 
-    [DebuggerHidden]
+    
     private IEnumerator Start()
     {
-        return new StartcIteratorE { fthis = this };
+        return new Startc__IteratorE { f__this = this };
     }
 
     public static void Stop()
@@ -4696,23 +4591,13 @@ public class iTween : MonoBehaviour
         Stop(target);
         if (includechildren)
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    Stop(current.gameObject, true);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                Stop(transform.gameObject, true);
             }
         }
     }
+
 
     public static void Stop(GameObject target, string type)
     {
@@ -4727,32 +4612,27 @@ public class iTween : MonoBehaviour
 
     public static void Stop(GameObject target, string type, bool includechildren)
     {
-        foreach (var tween in target.GetComponents<iTween>())
+        Component[] components = target.GetComponents<iTween>();
+        var array = components;
+        for (var i = 0; i < array.Length; i++)
         {
-            if ((tween.type + tween.method).Substring(0, type.Length).ToLower() == type.ToLower())
+            var iTween = (iTween)array[i];
+            var text = iTween.type + iTween.method;
+            text = text.Substring(0, type.Length);
+            if (text.ToLower() == type.ToLower())
             {
-                tween.Dispose();
+                iTween.Dispose();
             }
         }
         if (includechildren)
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    Stop(current.gameObject, type, true);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                Stop(transform.gameObject, type, true);
             }
         }
     }
+
 
     public static void StopByName(string name)
     {
@@ -4782,32 +4662,25 @@ public class iTween : MonoBehaviour
 
     public static void StopByName(GameObject target, string name, bool includechildren)
     {
-        foreach (var tween in target.GetComponents<iTween>())
+        Component[] components = target.GetComponents<iTween>();
+        var array = components;
+        for (var i = 0; i < array.Length; i++)
         {
-            if (tween._name == name)
+            var iTween = (iTween)array[i];
+            if (iTween._name == name)
             {
-                tween.Dispose();
+                iTween.Dispose();
             }
         }
         if (includechildren)
         {
-            var enumerator = target.transform.GetEnumerator();
-            try
+            foreach (Transform transform in target.transform)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = (Transform) enumerator.Current;
-                    StopByName(current.gameObject, name, true);
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                StopByName(transform.gameObject, name, true);
             }
         }
     }
+
 
     private void TweenComplete()
     {
@@ -4836,10 +4709,10 @@ public class iTween : MonoBehaviour
         CallBack("oncomplete");
     }
 
-    [DebuggerHidden]
+    
     private IEnumerator TweenDelay()
     {
-        return new TweenDelaycIteratorC { fthis = this };
+        return new TweenDelayc__IteratorC { f__this = this };
     }
 
     private void TweenLoop()
@@ -4862,10 +4735,10 @@ public class iTween : MonoBehaviour
         }
     }
 
-    [DebuggerHidden]
+    
     private IEnumerator TweenRestart()
     {
-        return new TweenRestartcIteratorD { fthis = this };
+        return new TweenRestartc__IteratorD { f__this = this };
     }
 
     private void TweenStart()
@@ -4946,7 +4819,7 @@ public class iTween : MonoBehaviour
         args = CleanArgs(args);
         if (!args.Contains("onupdate") || !args.Contains("from") || !args.Contains("to"))
         {
-            UnityEngine.Debug.LogError("iTween Error: ValueTo() requires an 'onupdate' callback function and a 'from' and 'to' property.  The supplied 'onupdate' callback must accept a single argument that is the same type as the supplied 'from' and 'to' properties!");
+            Debug.LogError("iTween Error: ValueTo() requires an 'onupdate' callback function and a 'from' and 'to' property.  The supplied 'onupdate' callback must accept a single argument that is the same type as the supplied 'from' and 'to' properties!");
         }
         else
         {
@@ -4973,7 +4846,7 @@ public class iTween : MonoBehaviour
             }
             else
             {
-                UnityEngine.Debug.LogError("iTween Error: ValueTo() only works with interpolating Vector3s, Vector2s, floats, ints, Rects and Colors!");
+                Debug.LogError("iTween Error: ValueTo() only works with interpolating Vector3s, Vector2s, floats, ints, Rects and Colors!");
                 return;
             }
             if (!args.Contains("easetype"))
@@ -4998,32 +4871,30 @@ public class iTween : MonoBehaviour
         return currentValue;
     }
 
-    [CompilerGenerated]
-    private sealed class StartcIteratorE : IEnumerator, IDisposable, IEnumerator<object>
+    private sealed class Startc__IteratorE : IEnumerator, IDisposable, IEnumerator<object>
     {
-        internal object Scurrent;
-        internal int SPC;
-        internal iTween fthis;
+        internal object current;
+        internal int PC;
+        internal iTween f__this;
 
-        [DebuggerHidden]
         public void Dispose()
         {
-            SPC = -1;
+            PC = -1;
         }
 
         public bool MoveNext()
         {
-            var num = (uint) SPC;
-            SPC = -1;
+            var num = (uint) PC;
+            PC = -1;
             switch (num)
             {
                 case 0:
-                    if (fthis.delay <= 0f)
+                    if (f__this.delay <= 0f)
                     {
                         break;
                     }
-                    Scurrent = fthis.StartCoroutine("TweenDelay");
-                    SPC = 1;
+                    current = f__this.StartCoroutine("TweenDelay");
+                    PC = 1;
                     return true;
 
                 case 1:
@@ -5032,13 +4903,13 @@ public class iTween : MonoBehaviour
                 default:
                     goto Label_006A;
             }
-            fthis.TweenStart();
-            SPC = -1;
+            f__this.TweenStart();
+            PC = -1;
         Label_006A:
             return false;
         }
 
-        [DebuggerHidden]
+      
         public void Reset()
         {
             throw new NotSupportedException();
@@ -5046,61 +4917,61 @@ public class iTween : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
 
         object IEnumerator.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
     }
 
-    [CompilerGenerated]
-    private sealed class TweenDelaycIteratorC : IEnumerator, IDisposable, IEnumerator<object>
+  
+    private sealed class TweenDelayc__IteratorC : IEnumerator, IDisposable, IEnumerator<object>
     {
-        internal object Scurrent;
-        internal int SPC;
-        internal iTween fthis;
+        internal object current;
+        internal int PC;
+        internal iTween f__this;
 
-        [DebuggerHidden]
+        
         public void Dispose()
         {
-            SPC = -1;
+            PC = -1;
         }
 
         public bool MoveNext()
         {
-            var num = (uint) SPC;
-            SPC = -1;
+            var num = (uint) PC;
+            PC = -1;
             switch (num)
             {
                 case 0:
-                    fthis.delayStarted = Time.time;
-                    Scurrent = new WaitForSeconds(fthis.delay);
-                    SPC = 1;
+                    f__this.delayStarted = Time.time;
+                    current = new WaitForSeconds(f__this.delay);
+                    PC = 1;
                     return true;
 
                 case 1:
-                    if (fthis.wasPaused)
+                    if (f__this.wasPaused)
                     {
-                        fthis.wasPaused = false;
-                        fthis.TweenStart();
+                        f__this.wasPaused = false;
+                        f__this.TweenStart();
                     }
-                    SPC = -1;
+                    PC = -1;
                     break;
             }
             return false;
         }
 
-        [DebuggerHidden]
+        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -5108,50 +4979,50 @@ public class iTween : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
 
         object IEnumerator.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
     }
 
-    [CompilerGenerated]
-    private sealed class TweenRestartcIteratorD : IEnumerator, IDisposable, IEnumerator<object>
+    
+    private sealed class TweenRestartc__IteratorD : IEnumerator, IDisposable, IEnumerator<object>
     {
-        internal object Scurrent;
-        internal int SPC;
-        internal iTween fthis;
+        internal object current;
+        internal int PC;
+        internal iTween f__this;
 
-        [DebuggerHidden]
+        
         public void Dispose()
         {
-            SPC = -1;
+            PC = -1;
         }
 
         public bool MoveNext()
         {
-            var num = (uint) SPC;
-            SPC = -1;
+            var num = (uint) PC;
+            PC = -1;
             switch (num)
             {
                 case 0:
-                    if (fthis.delay <= 0f)
+                    if (f__this.delay <= 0f)
                     {
                         break;
                     }
-                    fthis.delayStarted = Time.time;
-                    Scurrent = new WaitForSeconds(fthis.delay);
-                    SPC = 1;
+                    f__this.delayStarted = Time.time;
+                    current = new WaitForSeconds(f__this.delay);
+                    PC = 1;
                     return true;
 
                 case 1:
@@ -5160,14 +5031,14 @@ public class iTween : MonoBehaviour
                 default:
                     goto Label_0086;
             }
-            fthis.loop = true;
-            fthis.TweenStart();
-            SPC = -1;
+            f__this.loop = true;
+            f__this.TweenStart();
+            PC = -1;
         Label_0086:
             return false;
         }
 
-        [DebuggerHidden]
+        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -5175,19 +5046,19 @@ public class iTween : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
 
         object IEnumerator.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
     }
@@ -5219,7 +5090,7 @@ public class iTween : MonoBehaviour
 
     public static class Defaults
     {
-        public static int cameraFadeDepth = 999999;
+        public static int cameraFadeDepth = 0xf423f;
         public static Color color = Color.white;
         public static float delay = 0f;
         public static EaseType easeType = EaseType.easeOutExpo;

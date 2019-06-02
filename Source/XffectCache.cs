@@ -1,10 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +14,7 @@ public class XffectCache : MonoBehaviour
             Debug.Log("object:" + name + "doesn't exist!");
             return null;
         }
+
         var transform2 = Instantiate(original, Vector3.zero, Quaternion.identity) as Transform;
         ObjectDic[name].Add(transform2);
         transform2.gameObject.SetActive(false);
@@ -28,64 +23,48 @@ public class XffectCache : MonoBehaviour
         {
             component.Initialize();
         }
+
         return transform2;
     }
 
     private void Awake()
     {
-        var enumerator = transform.GetEnumerator();
-        try
+        foreach (Transform transform in this.transform)
         {
-            while (enumerator.MoveNext())
+            ObjectDic[transform.name] = new ArrayList();
+            ObjectDic[transform.name].Add(transform);
+            var component = transform.GetComponent<Xffect>();
+            if (component != null)
             {
-                var current = (Transform) enumerator.Current;
-                ObjectDic[current.name] = new ArrayList();
-                ObjectDic[current.name].Add(current);
-                var component = current.GetComponent<Xffect>();
-                if (component != null)
-                {
-                    component.Initialize();
-                }
-                current.gameObject.SetActive(false);
+                component.Initialize();
             }
-        }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
+
+            transform.gameObject.SetActive(false);
         }
     }
 
+
     public Transform GetObject(string name)
     {
-        var list = ObjectDic[name];
-        if (list == null)
+        var arrayList = ObjectDic[name];
+        if (arrayList == null)
         {
             Debug.LogError(name + ": cache doesnt exist!");
             return null;
         }
-        var enumerator = list.GetEnumerator();
-        try
+
+        foreach (Transform transform in arrayList)
         {
-            while (enumerator.MoveNext())
+            if (!transform.gameObject.activeInHierarchy)
             {
-                var current = (Transform) enumerator.Current;
-                if (!current.gameObject.active)
-                {
-                    current.gameObject.SetActive(true);
-                    return current;
-                }
+                transform.gameObject.SetActive(true);
+                return transform;
             }
         }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
-        }
+
         return AddObject(name);
     }
+
 
     public ArrayList GetObjectCache(string name)
     {
@@ -95,6 +74,7 @@ public class XffectCache : MonoBehaviour
             Debug.LogError(name + ": cache doesnt exist!");
             return null;
         }
+
         return list;
     }
 
@@ -102,4 +82,3 @@ public class XffectCache : MonoBehaviour
     {
     }
 }
-

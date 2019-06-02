@@ -1,22 +1,12 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using Xft;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Xft;
 
 public class HERO_SETUP : MonoBehaviour
 {
-    private string aniname;
-    private float anitime;
     private List<BoneWeight> boneWeightsList = new List<BoneWeight>();
-    private bool change;
     public GameObject chest_info;
     private byte[] config = new byte[4];
-    private int currentOne;
-    private SkinnedMeshRenderer[][] elements;
     public bool isDeadBody;
     private List<Material> materialList;
     private GameObject mount_3dmg;
@@ -58,7 +48,6 @@ public class HERO_SETUP : MonoBehaviour
     public GameObject part_leg;
     public GameObject part_upper_body;
     public GameObject reference;
-    private float timer;
 
     private void Awake()
     {
@@ -311,7 +300,7 @@ public class HERO_SETUP : MonoBehaviour
         if (myCostume.hair_1_mesh.Length > 0 && !isDeadBody)
         {
             var name = "Character/" + myCostume.hair_1_mesh;
-            var material = CharacterMaterials.materials[myCostume.hairInfo.texture];
+            Material material = CharacterMaterials.materials[myCostume.hairInfo.texture];
             part_hair_1 = ClothFactory.GetHair(reference, name, material, myCostume.hair_color);
         }
     }

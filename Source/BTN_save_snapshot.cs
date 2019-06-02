@@ -1,13 +1,6 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BTN_save_snapshot : MonoBehaviour
@@ -27,68 +20,68 @@ public class BTN_save_snapshot : MonoBehaviour
         info.GetComponent<UILabel>().text = "trying..";
     }
 
-    [DebuggerHidden]
+    
     private IEnumerator ScreenshotEncode()
     {
-        return new ScreenshotEncodecIterator0 { fthis = this };
+        return new ScreenshotEncodec__Iterator0 { f__this = this };
     }
 
-    [CompilerGenerated]
-    private sealed class ScreenshotEncodecIterator0 : IEnumerator, IDisposable, IEnumerator<object>
+    
+    private sealed class ScreenshotEncodec__Iterator0 : IEnumerator, IDisposable, IEnumerator<object>
     {
-        internal object Scurrent;
-        internal int SPC;
-        internal GameObject[] Ss_52;
-        internal int Ss_63;
-        internal BTN_save_snapshot fthis;
-        internal GameObject go4;
-        internal string img_name5;
-        internal float r0;
-        internal Texture2D texture1;
+        internal object current;
+        internal int PC;
+        internal GameObject[] s_5__2;
+        internal int s_6__3;
+        internal BTN_save_snapshot f__this;
+        internal GameObject go__4;
+        internal string img_name__5;
+        internal float r__0;
+        internal Texture2D texture__1;
 
-        [DebuggerHidden]
+        
         public void Dispose()
         {
-            SPC = -1;
+            PC = -1;
         }
 
         public bool MoveNext()
         {
-            var num = (uint) SPC;
-            SPC = -1;
+            var num = (uint) PC;
+            PC = -1;
             switch (num)
             {
                 case 0:
-                    Scurrent = new WaitForEndOfFrame();
-                    SPC = 1;
+                    current = new WaitForEndOfFrame();
+                    PC = 1;
                     goto Label_0308;
 
                 case 1:
-                    r0 = Screen.height / 600f;
-                    texture1 = new Texture2D((int) (r0 * fthis.targetTexture.transform.localScale.x), (int) (r0 * fthis.targetTexture.transform.localScale.y), TextureFormat.RGB24, false);
-                    texture1.ReadPixels(new Rect(Screen.width * 0.5f - texture1.width * 0.5f, Screen.height * 0.5f - texture1.height * 0.5f - r0 * 0f, texture1.width, texture1.height), 0, 0);
-                    texture1.Apply();
-                    Scurrent = 0;
-                    SPC = 2;
+                    r__0 = Screen.height / 600f;
+                    texture__1 = new Texture2D((int) (r__0 * f__this.targetTexture.transform.localScale.x), (int) (r__0 * f__this.targetTexture.transform.localScale.y), TextureFormat.RGB24, false);
+                    texture__1.ReadPixels(new Rect(Screen.width * 0.5f - texture__1.width * 0.5f, Screen.height * 0.5f - texture__1.height * 0.5f - r__0 * 0f, texture__1.width, texture__1.height), 0, 0);
+                    texture__1.Apply();
+                    current = 0;
+                    PC = 2;
                     goto Label_0308;
 
                 case 2:
                 {
-                    Ss_52 = fthis.thingsNeedToHide;
-                    Ss_63 = 0;
-                    while (Ss_63 < Ss_52.Length)
+                    s_5__2 = f__this.thingsNeedToHide;
+                    s_6__3 = 0;
+                    while (s_6__3 < s_5__2.Length)
                     {
-                        go4 = Ss_52[Ss_63];
-                        var transform = go4.transform;
+                        go__4 = s_5__2[s_6__3];
+                        var transform = go__4.transform;
                         transform.position -= Vector3.up * 10000f;
-                        Ss_63++;
+                        s_6__3++;
                     }
-                    var textArray1 = new[] { "aottg_ss-", DateTime.Today.Month.ToString(), "_", DateTime.Today.Day.ToString(), "_", DateTime.Today.Year.ToString(), "-", DateTime.Now.Hour.ToString(), "_", DateTime.Now.Minute.ToString(), "_", DateTime.Now.Second.ToString(), ".png" };
-                    img_name5 = string.Concat(textArray1);
-                    var args = new object[] { img_name5, texture1.width, texture1.height, Convert.ToBase64String(texture1.EncodeToPNG()) };
+                    string[] textArray1 = { "aottg_ss-", DateTime.Today.Month.ToString(), "_", DateTime.Today.Day.ToString(), "_", DateTime.Today.Year.ToString(), "-", DateTime.Now.Hour.ToString(), "_", DateTime.Now.Minute.ToString(), "_", DateTime.Now.Second.ToString(), ".png" };
+                    img_name__5 = string.Concat(textArray1);
+                    object[] args = { img_name__5, texture__1.width, texture__1.height, Convert.ToBase64String(texture__1.EncodeToPNG()) };
                     Application.ExternalCall("SaveImg", args);
-                    DestroyObject(texture1);
-                    SPC = -1;
+                    DestroyObject(texture__1);
+                    PC = -1;
                     break;
                 }
             }
@@ -97,7 +90,7 @@ public class BTN_save_snapshot : MonoBehaviour
             return true;
         }
 
-        [DebuggerHidden]
+        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -105,19 +98,19 @@ public class BTN_save_snapshot : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
 
         object IEnumerator.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
     }

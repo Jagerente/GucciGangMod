@@ -1,45 +1,26 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
-using System.Runtime.CompilerServices;
+﻿using System;
 using UnityEngine;
 
 public abstract class UIWidget : MonoBehaviour
 {
-    [CompilerGenerated]
-    private static Comparison<UIWidget> famScache14;
+    private static Comparison<UIWidget> f__amcache14;
     protected bool mChanged = true;
-    [SerializeField, HideInInspector]
-    private Color mColor = Color.white;
-    [SerializeField, HideInInspector]
-    private int mDepth;
-    private Vector3 mDiffPos;
-    private Quaternion mDiffRot;
-    private Vector3 mDiffScale;
+    [SerializeField, HideInInspector] private Color mColor = Color.white;
+    [SerializeField, HideInInspector] private int mDepth;
     private bool mForceVisible;
     private UIGeometry mGeom = new UIGeometry();
     protected GameObject mGo;
     private float mLastAlpha;
     private Matrix4x4 mLocalToPanel;
-    [HideInInspector, SerializeField]
-    protected Material mMat;
+    [HideInInspector, SerializeField] protected Material mMat;
     private Vector3 mOldV0;
     private Vector3 mOldV1;
     protected UIPanel mPanel;
-    [HideInInspector, SerializeField]
-    private Pivot mPivot = Pivot.Center;
+    [HideInInspector, SerializeField] private Pivot mPivot = Pivot.Center;
     protected bool mPlayMode = true;
-    [SerializeField, HideInInspector]
-    protected Texture mTex;
+    [SerializeField, HideInInspector] protected Texture mTex;
     protected Transform mTrans;
     private bool mVisibleByPanel = true;
-
-    protected UIWidget()
-    {
-    }
 
     protected virtual void Awake()
     {
@@ -51,7 +32,9 @@ public abstract class UIWidget : MonoBehaviour
     {
         if (mPanel != null && mPanel.gameObject.layer != gameObject.layer)
         {
-            Debug.LogWarning("You can't place widgets on a layer different than the UIPanel that manages them.\nIf you want to move widgets to a different layer, parent them to a new panel instead.", this);
+            Debug.LogWarning(
+                "You can't place widgets on a layer different than the UIPanel that manages them.\nIf you want to move widgets to a different layer, parent them to a new panel instead.",
+                this);
             gameObject.layer = mPanel.gameObject.layer;
         }
     }
@@ -68,10 +51,12 @@ public abstract class UIWidget : MonoBehaviour
         {
             return 1;
         }
+
         if (left.mDepth < right.mDepth)
         {
             return -1;
         }
+
         return 0;
     }
 
@@ -107,6 +92,7 @@ public abstract class UIWidget : MonoBehaviour
         {
             localPosition.x = Mathf.Round(localPosition.x);
         }
+
         if (num2 % 2 == 1 && (pivot == Pivot.Left || pivot == Pivot.Center || pivot == Pivot.Right))
         {
             localPosition.y = Mathf.Ceil(localPosition.y) - 0.5f;
@@ -115,6 +101,7 @@ public abstract class UIWidget : MonoBehaviour
         {
             localPosition.y = Mathf.Round(localPosition.y);
         }
+
         cachedTransform.localPosition = localPosition;
         cachedTransform.localScale = localScale;
     }
@@ -153,6 +140,7 @@ public abstract class UIWidget : MonoBehaviour
         {
             mPanel.RemoveWidget(this);
         }
+
         mPanel = null;
     }
 
@@ -164,6 +152,7 @@ public abstract class UIWidget : MonoBehaviour
             mMat = null;
             mTex = null;
         }
+
         mPanel = null;
     }
 
@@ -187,6 +176,7 @@ public abstract class UIWidget : MonoBehaviour
                 {
                     material = null;
                 }
+
                 mPanel = null;
                 CreatePanel();
             }
@@ -207,12 +197,15 @@ public abstract class UIWidget : MonoBehaviour
                     list.Add(widget);
                 }
             }
-            if (famScache14 == null)
+
+            if (f__amcache14 == null)
             {
-                famScache14 = (w1, w2) => w2.mDepth.CompareTo(w1.mDepth);
+                f__amcache14 = (w1, w2) => w2.mDepth.CompareTo(w1.mDepth);
             }
-            list.Sort(famScache14);
+
+            list.Sort(f__amcache14);
         }
+
         return list;
     }
 
@@ -264,6 +257,7 @@ public abstract class UIWidget : MonoBehaviour
                         mOldV1 = vector5;
                     }
                 }
+
                 if (flag2 || mForceVisible != forceVisible)
                 {
                     mForceVisible = forceVisible;
@@ -275,15 +269,18 @@ public abstract class UIWidget : MonoBehaviour
                 mForceVisible = forceVisible;
                 flag3 = mPanel.IsVisible(this);
             }
+
             if (mVisibleByPanel != flag3)
             {
                 mVisibleByPanel = flag3;
                 mChanged = true;
             }
+
             if (mVisibleByPanel && mLastAlpha != finalAlpha)
             {
                 mChanged = true;
             }
+
             mLastAlpha = finalAlpha;
             if (mChanged)
             {
@@ -294,7 +291,7 @@ public abstract class UIWidget : MonoBehaviour
                     OnFill(mGeom.verts, mGeom.uvs, mGeom.cols);
                     if (mGeom.hasVertices)
                     {
-                        var vector6 = (Vector3) pivotOffset;
+                        Vector3 vector6 = pivotOffset;
                         var vector7 = relativeSize;
                         vector6.x *= vector7.x;
                         vector6.y *= vector7.y;
@@ -302,11 +299,14 @@ public abstract class UIWidget : MonoBehaviour
                         {
                             mLocalToPanel = p.worldToLocal * cachedTransform.localToWorldMatrix;
                         }
+
                         mGeom.ApplyOffset(vector6);
                         mGeom.ApplyTransform(mLocalToPanel, p.generateNormals);
                     }
+
                     return true;
                 }
+
                 if (mGeom.hasVertices)
                 {
                     mGeom.Clear();
@@ -314,20 +314,19 @@ public abstract class UIWidget : MonoBehaviour
                 }
             }
         }
+
         return false;
     }
 
-    public void WriteToBuffers(BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color32> c, BetterList<Vector3> n, BetterList<Vector4> t)
+    public void WriteToBuffers(BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color32> c,
+        BetterList<Vector3> n, BetterList<Vector4> t)
     {
         mGeom.WriteToBuffers(v, u, c, n, t);
     }
 
     public float alpha
     {
-        get
-        {
-            return mColor.a;
-        }
+        get { return mColor.a; }
         set
         {
             var mColor = this.mColor;
@@ -338,10 +337,7 @@ public abstract class UIWidget : MonoBehaviour
 
     public virtual Vector4 border
     {
-        get
-        {
-            return Vector4.zero;
-        }
+        get { return Vector4.zero; }
     }
 
     public GameObject cachedGameObject
@@ -352,6 +348,7 @@ public abstract class UIWidget : MonoBehaviour
             {
                 mGo = gameObject;
             }
+
             return mGo;
         }
     }
@@ -364,16 +361,14 @@ public abstract class UIWidget : MonoBehaviour
             {
                 mTrans = transform;
             }
+
             return mTrans;
         }
     }
 
     public Color color
     {
-        get
-        {
-            return mColor;
-        }
+        get { return mColor; }
         set
         {
             if (!mColor.Equals(value))
@@ -386,10 +381,7 @@ public abstract class UIWidget : MonoBehaviour
 
     public int depth
     {
-        get
-        {
-            return mDepth;
-        }
+        get { return mDepth; }
         set
         {
             if (mDepth != value)
@@ -411,24 +403,19 @@ public abstract class UIWidget : MonoBehaviour
             {
                 CreatePanel();
             }
+
             return mPanel == null ? mColor.a : mColor.a * mPanel.alpha;
         }
     }
 
     public bool isVisible
     {
-        get
-        {
-            return mVisibleByPanel && finalAlpha > 0.001f;
-        }
+        get { return mVisibleByPanel && finalAlpha > 0.001f; }
     }
 
     public virtual bool keepMaterial
     {
-        get
-        {
-            return false;
-        }
+        get { return false; }
     }
 
     public virtual Texture mainTexture
@@ -448,6 +435,7 @@ public abstract class UIWidget : MonoBehaviour
                     {
                         mPanel.RemoveWidget(this);
                     }
+
                     mPanel = null;
                     mMat.mainTexture = mTex;
                     if (enabled)
@@ -456,6 +444,7 @@ public abstract class UIWidget : MonoBehaviour
                     }
                 }
             }
+
             return mTex;
         }
         set
@@ -467,6 +456,7 @@ public abstract class UIWidget : MonoBehaviour
                 {
                     mPanel.RemoveWidget(this);
                 }
+
                 mPanel = null;
                 mTex = value;
                 material = this.material;
@@ -484,10 +474,7 @@ public abstract class UIWidget : MonoBehaviour
 
     public virtual Material material
     {
-        get
-        {
-            return mMat;
-        }
+        get { return mMat; }
         set
         {
             if (mMat != value)
@@ -496,6 +483,7 @@ public abstract class UIWidget : MonoBehaviour
                 {
                     mPanel.RemoveWidget(this);
                 }
+
                 mPanel = null;
                 mMat = value;
                 mTex = null;
@@ -515,28 +503,23 @@ public abstract class UIWidget : MonoBehaviour
             {
                 CreatePanel();
             }
+
             return mPanel;
         }
-        set
-        {
-            mPanel = value;
-        }
+        set { mPanel = value; }
     }
 
     public Pivot pivot
     {
-        get
-        {
-            return mPivot;
-        }
+        get { return mPivot; }
         set
         {
             if (mPivot != value)
             {
-                var vector = NGUIMath.CalculateWidgetCorners(this)[0];
+                Vector3 vector = NGUIMath.CalculateWidgetCorners(this)[0];
                 mPivot = value;
                 mChanged = true;
-                var vector2 = NGUIMath.CalculateWidgetCorners(this)[0];
+                Vector3 vector2 = NGUIMath.CalculateWidgetCorners(this)[0];
                 var cachedTransform = this.cachedTransform;
                 var position = cachedTransform.position;
                 var z = cachedTransform.localPosition.z;
@@ -577,6 +560,7 @@ public abstract class UIWidget : MonoBehaviour
                     zero.x = relativePadding.x;
                     break;
             }
+
             switch (pivot)
             {
                 case Pivot.Left:
@@ -591,6 +575,7 @@ public abstract class UIWidget : MonoBehaviour
                     zero.y = 1f + relativePadding.w;
                     return zero;
             }
+
             zero.y = -relativePadding.y;
             return zero;
         }
@@ -598,26 +583,17 @@ public abstract class UIWidget : MonoBehaviour
 
     public virtual bool pixelPerfectAfterResize
     {
-        get
-        {
-            return false;
-        }
+        get { return false; }
     }
 
     public virtual Vector4 relativePadding
     {
-        get
-        {
-            return Vector4.zero;
-        }
+        get { return Vector4.zero; }
     }
 
     public virtual Vector2 relativeSize
     {
-        get
-        {
-            return Vector2.one;
-        }
+        get { return Vector2.one; }
     }
 
     public enum Pivot
@@ -633,4 +609,3 @@ public abstract class UIWidget : MonoBehaviour
         BottomRight
     }
 }
-

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StylishComponent : MonoBehaviour
 {
@@ -34,11 +29,11 @@ public class StylishComponent : MonoBehaviour
 
     public StylishComponent()
     {
-        var textArray1 = new[,] { { "D", "eja Vu" }, { "C", "asual" }, { "B", "oppin!" }, { "A", "mazing!" }, { "S", "ensational!" }, { "S", "pectacular!!" }, { "S", "tylish!!!" }, { "X", "TREEME!!!" } };
+        string[,] textArray1 = { { "D", "eja Vu" }, { "C", "asual" }, { "B", "oppin!" }, { "A", "mazing!" }, { "S", "ensational!" }, { "S", "pectacular!!" }, { "S", "tylish!!!" }, { "X", "TREEME!!!" } };
         styleRankText = textArray1;
         chainRankMultiplier = new[] { 1f, 1.1f, 1.2f, 1.3f, 1.5f, 1.7f, 2f, 2.3f, 2.5f };
-        styleRankPoints = new[] { 350, 950, 2450, 4550, 7000, 15000, 100000 };
-        styleRankDepletions = new[] { 1, 2, 5, 10, 15, 20, 25, 25 };
+        styleRankPoints = new[] { 350, 950, 0x992, 0x11c6, 0x1b58, 0x3a98, 0x186a0 };
+        styleRankDepletions = new[] { 1, 2, 5, 10, 15, 20, 0x19, 0x19 };
     }
 
     private int GetRankPercentage()
@@ -221,20 +216,20 @@ public class StylishComponent : MonoBehaviour
         startShake(5, 0.3f);
         setPosition();
         labelTotal.GetComponent<UILabel>().text = ((int) stylePoints).ToString();
-        labelHits.GetComponent<UILabel>().text = styleHits.ToString() + (styleHits <= 1 ? "Hit" : "Hits");
+        labelHits.GetComponent<UILabel>().text = styleHits + (styleHits <= 1 ? "Hit" : "Hits");
         if (chainKillRank == 0)
         {
             labelChain.GetComponent<UILabel>().text = string.Empty;
         }
         else
         {
-            labelChain.GetComponent<UILabel>().text = "x" + chainRankMultiplier[chainKillRank].ToString() + "!";
+            labelChain.GetComponent<UILabel>().text = "x" + chainRankMultiplier[chainKillRank] + "!";
         }
     }
 
     private void Update()
     {
-        if (!IN_GAME_MAIN_CAMERA.isPausing && GGM.Settings.UI != 0)
+        if (!IN_GAME_MAIN_CAMERA.isPausing)
         {
             if (stylePoints > 0f)
             {
@@ -258,7 +253,6 @@ public class StylishComponent : MonoBehaviour
             }
             shakeUpdate();
         }
-        if (GGM.Settings.UI == 0) transform.localPosition = Vector3.Lerp(transform.localPosition, exitPosition, Time.deltaTime * 3f);
     }
 }
 

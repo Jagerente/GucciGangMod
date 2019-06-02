@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Internal/Ignore TimeScale Behaviour")]
 public class IgnoreTimeScale : MonoBehaviour
@@ -34,6 +29,7 @@ public class IgnoreTimeScale : MonoBehaviour
             {
                 mTimeDelta = 1f;
             }
+
             mTimeStart = mRt;
         }
         else
@@ -42,23 +38,17 @@ public class IgnoreTimeScale : MonoBehaviour
             mTimeStart = mRt;
             mTimeDelta = 0f;
         }
+
         return mTimeDelta;
     }
 
     public float realTime
     {
-        get
-        {
-            return mRt;
-        }
+        get { return mRt; }
     }
 
     public float realTimeDelta
     {
-        get
-        {
-            return mTimeDelta;
-        }
+        get { return mTimeDelta; }
     }
 }
-

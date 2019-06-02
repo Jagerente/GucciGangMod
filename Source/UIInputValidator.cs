@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(UIInput)), AddComponentMenu("NGUI/Interaction/Input Validator")]
 public class UIInputValidator : MonoBehaviour
@@ -12,7 +7,7 @@ public class UIInputValidator : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<UIInput>().validator = new UIInput.Validator(Validate);
+        GetComponent<UIInput>().validator = Validate;
     }
 
     private char Validate(string text, char ch)
@@ -21,12 +16,14 @@ public class UIInputValidator : MonoBehaviour
         {
             return ch;
         }
+
         if (logic == Validation.Integer)
         {
             if (ch >= '0' && ch <= '9')
             {
                 return ch;
             }
+
             if (ch == '-' && text.Length == 0)
             {
                 return ch;
@@ -38,10 +35,12 @@ public class UIInputValidator : MonoBehaviour
             {
                 return ch;
             }
+
             if (ch == '-' && text.Length == 0)
             {
                 return ch;
             }
+
             if (ch == '.' && !text.Contains("."))
             {
                 return ch;
@@ -53,10 +52,12 @@ public class UIInputValidator : MonoBehaviour
             {
                 return ch;
             }
+
             if (ch >= 'a' && ch <= 'z')
             {
                 return ch;
             }
+
             if (ch >= '0' && ch <= '9')
             {
                 return ch;
@@ -66,12 +67,14 @@ public class UIInputValidator : MonoBehaviour
         {
             if (ch >= 'A' && ch <= 'Z')
             {
-                return (char) (ch - 'A' + 97);
+                return (char) (ch - 'A' + 0x61);
             }
+
             if (ch >= 'a' && ch <= 'z')
             {
                 return ch;
             }
+
             if (ch >= '0' && ch <= '9')
             {
                 return ch;
@@ -84,18 +87,22 @@ public class UIInputValidator : MonoBehaviour
             {
                 if (ch2 == ' ')
                 {
-                    return (char) (ch - 'a' + 65);
+                    return (char) (ch - 'a' + 0x41);
                 }
+
                 return ch;
             }
+
             if (ch >= 'A' && ch <= 'Z')
             {
                 if (ch2 != ' ' && ch2 != '\'')
                 {
-                    return (char) (ch - 'A' + 97);
+                    return (char) (ch - 'A' + 0x61);
                 }
+
                 return ch;
             }
+
             if (ch == '\'')
             {
                 if (ch2 != ' ' && ch2 != '\'' && !text.Contains("'"))
@@ -108,6 +115,7 @@ public class UIInputValidator : MonoBehaviour
                 return ch;
             }
         }
+
         return '\0';
     }
 
@@ -121,4 +129,3 @@ public class UIInputValidator : MonoBehaviour
         Name
     }
 }
-

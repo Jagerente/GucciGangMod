@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PanelMultiStart : MonoBehaviour
 {
@@ -32,7 +27,7 @@ public class PanelMultiStart : MonoBehaviour
             label_server_EU.GetComponent<UILabel>().text = Language.btn_server_EU[Language.type];
             label_server_ASIA.GetComponent<UILabel>().text = Language.btn_server_ASIA[Language.type];
             label_server_JAPAN.GetComponent<UILabel>().text = Language.btn_server_JAPAN[Language.type];
-            label_QUICK_MATCH.GetComponent<UILabel>().text = Language.btn_QUICK_MATCH[Language.type];
+            label_QUICK_MATCH.GetComponent<UILabel>().text = "Offline mode";
             label_server.GetComponent<UILabel>().text = Language.choose_region_server[Language.type];
         }
     }

@@ -1,11 +1,6 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
 [Serializable]
@@ -20,11 +15,11 @@ public class ServerSettings : ScriptableObject
     public ConnectionProtocol Protocol;
     public List<string> RpcList = new List<string>();
     public string ServerAddress = string.Empty;
-    public int ServerPort = 5055;
+    public int ServerPort = 0x13bf;
 
     public override string ToString()
     {
-        var objArray1 = new object[] { "ServerSettings: ", HostType, " ", ServerAddress };
+        object[] objArray1 = { "ServerSettings: ", HostType, " ", ServerAddress };
         return string.Concat(objArray1);
     }
 

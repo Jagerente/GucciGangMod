@@ -1,9 +1,3 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public static class RCStatic
+﻿public static class RCStatic
 {
 }
-

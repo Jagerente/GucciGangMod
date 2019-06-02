@@ -1,12 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-public class Bomb : Photon.MonoBehaviour
+public class Bomb : MonoBehaviour
 {
     private Vector3 correctPlayerPos = Vector3.zero;
     private Quaternion correctPlayerRot = Quaternion.identity;

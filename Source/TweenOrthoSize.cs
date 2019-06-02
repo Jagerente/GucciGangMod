@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Orthographic Size"), RequireComponent(typeof(Camera))]
 public class TweenOrthoSize : UITweener
@@ -14,7 +9,7 @@ public class TweenOrthoSize : UITweener
 
     public static TweenOrthoSize Begin(GameObject go, float duration, float to)
     {
-        var size = UITweener.Begin<TweenOrthoSize>(go, duration);
+        var size = Begin<TweenOrthoSize>(go, duration);
         size.from = size.orthoSize;
         size.to = to;
         if (duration <= 0f)

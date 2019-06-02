@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Rotation")]
 public class TweenRotation : UITweener
@@ -14,7 +9,7 @@ public class TweenRotation : UITweener
 
     public static TweenRotation Begin(GameObject go, float duration, Quaternion rot)
     {
-        var rotation = UITweener.Begin<TweenRotation>(go, duration);
+        var rotation = Begin<TweenRotation>(go, duration);
         rotation.from = rotation.rotation.eulerAngles;
         rotation.to = rot.eulerAngles;
         if (duration <= 0f)

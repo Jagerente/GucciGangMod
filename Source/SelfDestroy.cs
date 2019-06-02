@@ -1,11 +1,7 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-using UnityEngine;
-
-public class SelfDestroy : Photon.MonoBehaviour
+public class SelfDestroy : MonoBehaviour
 {
     public float CountDown = 5f;
 
@@ -43,4 +39,3 @@ public class SelfDestroy : Photon.MonoBehaviour
         }
     }
 }
-

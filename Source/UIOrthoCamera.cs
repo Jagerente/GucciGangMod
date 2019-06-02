@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Orthographic Camera"), ExecuteInEditMode, RequireComponent(typeof(Camera))]
 public class UIOrthoCamera : MonoBehaviour
@@ -29,4 +24,3 @@ public class UIOrthoCamera : MonoBehaviour
         }
     }
 }
-

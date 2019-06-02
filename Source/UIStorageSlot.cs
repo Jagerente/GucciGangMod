@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/UI Storage Slot")]
 public class UIStorageSlot : UIItemSlot
@@ -18,10 +13,6 @@ public class UIStorageSlot : UIItemSlot
 
     protected override InvGameItem observedItem
     {
-        get
-        {
-            return storage == null ? null : storage.GetItem(slot);
-        }
+        get { return storage == null ? null : storage.GetItem(slot); }
     }
 }
-

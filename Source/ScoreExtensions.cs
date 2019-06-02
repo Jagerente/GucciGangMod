@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 
 internal static class ScoreExtensions
 {
@@ -22,6 +17,7 @@ internal static class ScoreExtensions
         {
             return (int) obj2;
         }
+
         return 0;
     }
 
@@ -32,4 +28,3 @@ internal static class ScoreExtensions
         player.SetCustomProperties(propertiesToSet);
     }
 }
-

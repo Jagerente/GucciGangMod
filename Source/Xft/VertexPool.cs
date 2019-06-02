@@ -1,11 +1,11 @@
-﻿namespace Xft
-{
-    using System.Collections.Generic;
-    using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
+namespace Xft
+{
     public class VertexPool
     {
-        public const int BlockSize = 108;
+        public const int BlockSize = 0x6c;
         public float BoundsScheduleTime = 1f;
         public bool ColorChanged;
         public Color[] Colors;
@@ -80,12 +80,14 @@
             var num2 = 0;
             if (VertexUsed + vcount >= VertexTotal)
             {
-                count = (vcount / 108 + 1) * 108;
+                count = (vcount / 0x6c + 1) * 0x6c;
             }
+
             if (IndexUsed + icount >= IndexTotal)
             {
-                num2 = (icount / 108 + 1) * 108;
+                num2 = (icount / 0x6c + 1) * 0x6c;
             }
+
             VertexUsed += vcount;
             IndexUsed += icount;
             if (count != 0 || num2 != 0)
@@ -94,6 +96,7 @@
                 VertexTotal += count;
                 IndexTotal += num2;
             }
+
             return new VertexSegment(VertexUsed - vcount, vcount, IndexUsed - icount, icount, this);
         }
 
@@ -124,33 +127,40 @@
             {
                 Mesh.Clear();
             }
+
             Mesh.vertices = Vertices;
             if (UVChanged)
             {
                 Mesh.uv = UVs;
             }
+
             if (UV2Changed)
             {
                 Mesh.uv2 = UVs2;
             }
+
             if (ColorChanged)
             {
                 Mesh.colors = Colors;
             }
+
             if (IndiceChanged)
             {
                 Mesh.triangles = Indices;
             }
+
             ElapsedTime += Time.deltaTime;
             if (ElapsedTime > BoundsScheduleTime || FirstUpdate)
             {
                 RecalculateBounds();
                 ElapsedTime = 0f;
             }
+
             if (ElapsedTime > BoundsScheduleTime)
             {
                 FirstUpdate = false;
             }
+
             VertCountChanged = false;
             IndiceChanged = false;
             ColorChanged = false;
@@ -187,9 +197,9 @@
                 {
                     Pool.Indices[i] = 0;
                 }
+
                 Pool.IndiceChanged = true;
             }
         }
     }
 }
-

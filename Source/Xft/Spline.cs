@@ -1,8 +1,8 @@
-﻿namespace Xft
-{
-    using System.Collections.Generic;
-    using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
+namespace Xft
+{
     public class Spline
     {
         public int Granularity = 20;
@@ -79,13 +79,16 @@
                     point = mSegments[num2];
                     break;
                 }
+
                 num2++;
             }
+
             if (num2 == 0)
             {
                 localF = 0f;
                 return point;
             }
+
             var num3 = 0f;
             var num4 = point.SegmentIndex - 1;
             var point2 = mSegments[num4];
@@ -100,11 +103,13 @@
             {
                 return null;
             }
+
             var num = controlpoint.ControlPointIndex + 1;
             if (num >= mControlPoints.Count)
             {
                 return null;
             }
+
             return mControlPoints[num];
         }
 
@@ -115,6 +120,7 @@
             {
                 return point.Normal;
             }
+
             return controlpoint.Normal;
         }
 
@@ -125,6 +131,7 @@
             {
                 return point.Position;
             }
+
             return controlpoint.Position;
         }
 
@@ -134,11 +141,13 @@
             {
                 return null;
             }
+
             var num = controlpoint.ControlPointIndex - 1;
             if (num < 0)
             {
                 return null;
             }
+
             return mControlPoints[num];
         }
 
@@ -149,6 +158,7 @@
             {
                 return point.Normal;
             }
+
             return controlpoint.Normal;
         }
 
@@ -159,6 +169,7 @@
             {
                 return point.Position;
             }
+
             return controlpoint.Position;
         }
 
@@ -187,15 +198,13 @@
                     mControlPoints[i].SegmentIndex = mSegments.Count - 1;
                 }
             }
+
             RefreshDistance();
         }
 
         public List<SplineControlPoint> ControlPoints
         {
-            get
-            {
-                return mControlPoints;
-            }
+            get { return mControlPoints; }
         }
 
         public SplineControlPoint this[int index]
@@ -206,17 +215,14 @@
                 {
                     return mSegments[index];
                 }
+
                 return null;
             }
         }
 
         public List<SplineControlPoint> Segments
         {
-            get
-            {
-                return mSegments;
-            }
+            get { return mSegments; }
         }
     }
 }
-

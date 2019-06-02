@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Volume")]
 public class TweenVolume : UITweener
@@ -14,7 +9,7 @@ public class TweenVolume : UITweener
 
     public static TweenVolume Begin(GameObject go, float duration, float targetVolume)
     {
-        var volume = UITweener.Begin<TweenVolume>(go, duration);
+        var volume = Begin<TweenVolume>(go, duration);
         volume.from = volume.volume;
         volume.to = targetVolume;
         if (duration <= 0f)

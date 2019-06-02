@@ -1,12 +1,7 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
+﻿using System.Collections;
 using ExitGames.Client.Photon;
-using System;
-using System.Collections;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public static class Extensions
 {
@@ -59,73 +54,45 @@ public static class Extensions
 
     public static void Merge(this IDictionary target, IDictionary addHash)
     {
-        if (addHash != null && !target.Equals(addHash))
+        if (addHash == null || target.Equals(addHash))
         {
-            var enumerator = addHash.Keys.GetEnumerator();
-            try
+            return;
+        }
+        foreach (var current in addHash.Keys)
+        {
+            target[current] = addHash[current];
+        }
+    }
+
+
+    // Extensions
+    public static void MergeStringKeys(this IDictionary target, IDictionary addHash)
+    {
+        if (addHash == null || target.Equals(addHash))
+        {
+            return;
+        }
+        foreach (var current in addHash.Keys)
+        {
+            if (current is string)
             {
-                while (enumerator.MoveNext())
-                {
-                    var current = enumerator.Current;
-                    target[current] = addHash[current];
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                target[current] = addHash[current];
             }
         }
     }
 
-    public static void MergeStringKeys(this IDictionary target, IDictionary addHash)
-    {
-        if (addHash != null && !target.Equals(addHash))
-        {
-            var enumerator = addHash.Keys.GetEnumerator();
-            try
-            {
-                while (enumerator.MoveNext())
-                {
-                    var current = enumerator.Current;
-                    if (current is string)
-                    {
-                        target[current] = addHash[current];
-                    }
-                }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
-            }
-        }
-    }
 
     public static void StripKeysWithNullValues(this IDictionary original)
     {
-        var objArray = new object[original.Count];
+        var array = new object[original.Count];
         var num = 0;
-        var enumerator = original.Keys.GetEnumerator();
-        try
+        foreach (var current in original.Keys)
         {
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                objArray[num++] = current;
-            }
+            array[num++] = current;
         }
-        finally
+        for (var i = 0; i < array.Length; i++)
         {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
-        }
-        for (var i = 0; i < objArray.Length; i++)
-        {
-            var key = objArray[i];
+            var key = array[i];
             if (original[key] == null)
             {
                 original.Remove(key);
@@ -133,29 +100,19 @@ public static class Extensions
         }
     }
 
-    public static ExitGames.Client.Photon.Hashtable StripToStringKeys(this IDictionary original)
+    public static Hashtable StripToStringKeys(this IDictionary original)
     {
-        var hashtable = new ExitGames.Client.Photon.Hashtable();
-        var enumerator = original.GetEnumerator();
-        try
+        var hashtable = new Hashtable();
+        foreach (DictionaryEntry dictionaryEntry in original)
         {
-            while (enumerator.MoveNext())
+            if (dictionaryEntry.Key is string)
             {
-                var current = (DictionaryEntry) enumerator.Current;
-                if (current.Key is string)
-                {
-                    hashtable[current.Key] = current.Value;
-                }
+                hashtable[dictionaryEntry.Key] = dictionaryEntry.Value;
             }
-        }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
         }
         return hashtable;
     }
+
 
     public static string ToStringFull(this IDictionary origin)
     {

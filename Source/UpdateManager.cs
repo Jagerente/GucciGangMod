@@ -1,14 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 [AddComponentMenu("NGUI/Internal/Update Manager"), ExecuteInEditMode]
 public class UpdateManager : MonoBehaviour
@@ -31,9 +25,12 @@ public class UpdateManager : MonoBehaviour
             {
                 return;
             }
+
             num++;
         }
-        var item = new UpdateEntry {
+
+        var item = new UpdateEntry
+        {
             index = updateOrder,
             func = func,
             mb = mb,
@@ -42,7 +39,7 @@ public class UpdateManager : MonoBehaviour
         list.Add(item);
         if (updateOrder != 0)
         {
-            list.Sort(new Comparison<UpdateEntry>(Compare));
+            list.Sort(Compare);
         }
     }
 
@@ -52,7 +49,7 @@ public class UpdateManager : MonoBehaviour
         mInst.Add(mb, updateOrder, func, mInst.mOnCoro);
     }
 
-    public static void AddDestroy(UnityEngine.Object obj, float delay)
+    public static void AddDestroy(Object obj, float delay)
     {
         if (obj != null)
         {
@@ -61,7 +58,8 @@ public class UpdateManager : MonoBehaviour
                 if (delay > 0f)
                 {
                     CreateInstance();
-                    var item = new DestroyEntry {
+                    var item = new DestroyEntry
+                    {
                         obj = obj,
                         time = Time.realtimeSinceStartup + delay
                     };
@@ -97,17 +95,19 @@ public class UpdateManager : MonoBehaviour
         {
             return 1;
         }
+
         if (a.index > b.index)
         {
             return -1;
         }
+
         return 0;
     }
 
-    [DebuggerHidden]
+
     private IEnumerator CoroutineFunction()
     {
-        return new CoroutineFunctioncIterator8 { fthis = this };
+        return new CoroutineFunctionc__Iterator8 {f__this = this};
     }
 
     private bool CoroutineUpdate()
@@ -119,10 +119,10 @@ public class UpdateManager : MonoBehaviour
             mTime = realtimeSinceStartup;
             UpdateList(mOnCoro, delta);
             var isPlaying = Application.isPlaying;
-            var size = mDest.size;
+            int size = mDest.size;
             while (size > 0)
             {
-                var entry = mDest.buffer[--size];
+                DestroyEntry entry = mDest.buffer[--size];
                 if (!isPlaying || entry.time < mTime)
                 {
                     if (entry.obj != null)
@@ -130,15 +130,18 @@ public class UpdateManager : MonoBehaviour
                         NGUITools.Destroy(entry.obj);
                         entry.obj = null;
                     }
+
                     mDest.RemoveAt(size);
                 }
             }
+
             if (mOnUpdate.Count == 0 && mOnLate.Count == 0 && mOnCoro.Count == 0 && mDest.size == 0)
             {
                 NGUITools.Destroy(gameObject);
                 return false;
             }
         }
+
         return true;
     }
 
@@ -204,57 +207,62 @@ public class UpdateManager : MonoBehaviour
                     list.RemoveAt(count);
                     continue;
                 }
+
                 if (!entry.mb.enabled || !NGUITools.GetActive(entry.mb.gameObject))
                 {
                     continue;
                 }
             }
+
             entry.func(delta);
         }
     }
 
-    [CompilerGenerated]
-    private sealed class CoroutineFunctioncIterator8 : IEnumerator, IDisposable, IEnumerator<object>
-    {
-        internal object Scurrent;
-        internal int SPC;
-        internal UpdateManager fthis;
 
-        [DebuggerHidden]
+    private sealed class CoroutineFunctionc__Iterator8 : IEnumerator, IDisposable, IEnumerator<object>
+    {
+        internal object current;
+        internal int PC;
+        internal UpdateManager f__this;
+
+
         public void Dispose()
         {
-            SPC = -1;
+            PC = -1;
         }
 
         public bool MoveNext()
         {
-            var num = (uint) SPC;
-            SPC = -1;
+            var num = (uint) PC;
+            PC = -1;
             switch (num)
             {
                 case 0:
                 case 1:
                     if (Application.isPlaying)
                     {
-                        if (!fthis.CoroutineUpdate())
+                        if (!f__this.CoroutineUpdate())
                         {
                             break;
                         }
-                        Scurrent = null;
-                        SPC = 1;
+
+                        current = null;
+                        PC = 1;
                         return true;
                     }
+
                     break;
 
                 default:
                     goto Label_0061;
             }
-            SPC = -1;
-        Label_0061:
+
+            PC = -1;
+            Label_0061:
             return false;
         }
 
-        [DebuggerHidden]
+
         public void Reset()
         {
             throw new NotSupportedException();
@@ -262,26 +270,18 @@ public class UpdateManager : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            [DebuggerHidden]
-            get
-            {
-                return Scurrent;
-            }
+            get { return current; }
         }
 
         object IEnumerator.Current
         {
-            [DebuggerHidden]
-            get
-            {
-                return Scurrent;
-            }
+            get { return current; }
         }
     }
 
     public class DestroyEntry
     {
-        public UnityEngine.Object obj;
+        public Object obj;
         public float time;
     }
 
@@ -295,4 +295,3 @@ public class UpdateManager : MonoBehaviour
         public MonoBehaviour mb;
     }
 }
-

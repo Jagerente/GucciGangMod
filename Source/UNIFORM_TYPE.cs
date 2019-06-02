@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public enum UNIFORM_TYPE
+﻿public enum UNIFORM_TYPE
 {
     UniformA,
     UniformB,
@@ -11,4 +6,3 @@ public enum UNIFORM_TYPE
     CasualB,
     CasualAHSS
 }
-

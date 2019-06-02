@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Label"), ExecuteInEditMode]
 public class UILabel : UIWidget
@@ -59,7 +54,7 @@ public class UILabel : UIWidget
             verts.Add(verts.buffer[i]);
             uvs.Add(uvs.buffer[i]);
             cols.Add(cols.buffer[i]);
-            var vector = verts.buffer[i];
+            Vector3 vector = verts.buffer[i];
             vector.x += x;
             vector.y += y;
             verts.buffer[i] = vector;
@@ -106,7 +101,7 @@ public class UILabel : UIWidget
         if (mFont != null)
         {
             var pivot = this.pivot;
-            var size = verts.size;
+            int size = verts.size;
             var c = color;
             c.a *= mPanel.alpha;
             if (font.premultipliedAlpha)
@@ -133,7 +128,7 @@ public class UILabel : UIWidget
             }
             if (effectStyle != Effect.None)
             {
-                var end = verts.size;
+                int end = verts.size;
                 var num3 = 1f / mFont.size;
                 var x = num3 * mEffectDistance.x;
                 var y = num3 * mEffectDistance.y;

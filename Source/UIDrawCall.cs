@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Internal/Draw Call"), ExecuteInEditMode]
 public class UIDrawCall : MonoBehaviour
@@ -94,7 +89,7 @@ public class UIDrawCall : MonoBehaviour
 
     public void Set(BetterList<Vector3> verts, BetterList<Vector3> norms, BetterList<Vector4> tans, BetterList<Vector2> uvs, BetterList<Color32> cols)
     {
-        var size = verts.size;
+        int size = verts.size;
         if (size > 0 && size == uvs.size && size == cols.size && size % 4 == 0)
         {
             if (mFilter == null)
@@ -118,7 +113,7 @@ public class UIDrawCall : MonoBehaviour
             {
                 UpdateMaterials();
             }
-            if (verts.size < 65000)
+            if (verts.size < 0xfde8)
             {
                 var num2 = (size >> 1) * 3;
                 var rebuildIndices = mIndices == null || mIndices.Length != num2;

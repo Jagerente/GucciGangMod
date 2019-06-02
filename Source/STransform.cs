@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
 [StructLayout(LayoutKind.Sequential)]
@@ -11,6 +6,7 @@ public struct STransform
 {
     public Vector3 position;
     public Quaternion rotation;
+
     public void Reset()
     {
         position = Vector3.zero;
@@ -23,4 +19,3 @@ public struct STransform
         rotation = Quaternion.LookRotation(forward, up);
     }
 }
-

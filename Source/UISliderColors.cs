@@ -1,14 +1,9 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Slider Colors"), RequireComponent(typeof(UISlider)), ExecuteInEditMode]
 public class UISliderColors : MonoBehaviour
 {
-    public Color[] colors = new[] { Color.red, Color.yellow, Color.green };
+    public Color[] colors = {Color.red, Color.yellow, Color.green};
     private UISlider mSlider;
     public UISprite sprite;
 
@@ -41,9 +36,9 @@ public class UISliderColors : MonoBehaviour
                     color = colors[colors.Length - 1];
                 }
             }
+
             color.a = sprite.color.a;
             sprite.color = color;
         }
     }
 }
-

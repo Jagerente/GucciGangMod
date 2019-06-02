@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InstantiateTracker
 {
@@ -264,15 +259,15 @@ public class InstantiateTracker
                 var player = owner;
                 if (player != null && PhotonNetwork.isMasterClient)
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(player, true, "spamming instantiate (" + type.ToString() + ").");
+                    FengGameManagerMKII.instance.kickPlayerRC(player, true, "spamming instantiate (" + type + ").");
                 }
-                RCextensions.RemoveAt<Player>(ref players, num);
+                RCextensions.RemoveAt(ref players, num);
                 return false;
             }
         }
         else
         {
-            RCextensions.Add<Player>(ref players, new Player(owner.ID));
+            RCextensions.Add(ref players, new Player(owner.ID));
             players[players.Length - 1].IsThingExcessive(type);
         }
         return true;
@@ -290,7 +285,7 @@ public class InstantiateTracker
         }
         else
         {
-            RCextensions.Add<Player>(ref players, new Player(owner.ID));
+            RCextensions.Add(ref players, new Player(owner.ID));
             players[players.Length - 1].IsThingExcessive(GameResource.name);
         }
         return true;
@@ -325,7 +320,7 @@ public class InstantiateTracker
         {
             if (players[i].id == playerId)
             {
-                RCextensions.RemoveAt<Player>(ref players, i);
+                RCextensions.RemoveAt(ref players, i);
                 break;
             }
         }
@@ -366,7 +361,7 @@ public class InstantiateTracker
 
     private class BladeHitEffect : ThingToCheck
     {
-        private float accumTime = 0f;
+        private float accumTime;
         private float lastHit = Time.time;
 
         public BladeHitEffect()
@@ -394,7 +389,7 @@ public class InstantiateTracker
 
     private class BloodEffect : ThingToCheck
     {
-        private float accumTime = 0f;
+        private float accumTime;
         private float lastHit = Time.time;
 
         public BloodEffect()
@@ -558,7 +553,7 @@ public class InstantiateTracker
                 lastClear = Time.time;
             }
             count++;
-            return count > 35;
+            return count > 0x23;
         }
 
         public override void reset()
@@ -627,7 +622,7 @@ public class InstantiateTracker
             {
                 return thingsToCheck[thingToCheck].KickWorthy();
             }
-            RCextensions.Add<ThingToCheck>(ref thingsToCheck, GameResourceToThing(gr));
+            RCextensions.Add(ref thingsToCheck, GameResourceToThing(gr));
             return false;
         }
 

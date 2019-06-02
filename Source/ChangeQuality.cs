@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChangeQuality : MonoBehaviour
 {
@@ -64,6 +59,14 @@ public class ChangeQuality : MonoBehaviour
         else if (val <= 1f)
         {
             QualitySettings.SetQualityLevel(5, true);
+        }
+        if (val < 0.9f)
+        {
+            turnOffTiltShift();
+        }
+        else
+        {
+            turnOnTiltShift();
         }
     }
 

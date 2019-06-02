@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Window Drag Tilt")]
 public class WindowDragTilt : MonoBehaviour
@@ -23,6 +18,7 @@ public class WindowDragTilt : MonoBehaviour
             mTrans = transform;
             mLastPos = mTrans.position;
         }
+
         var vector = mTrans.position - mLastPos;
         mLastPos = mTrans.position;
         mAngle += vector.x * degrees;
@@ -37,7 +33,6 @@ public class WindowDragTilt : MonoBehaviour
 
     private void Start()
     {
-        UpdateManager.AddCoroutine(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
+        UpdateManager.AddCoroutine(this, updateOrder, CoroutineUpdate);
     }
 }
-

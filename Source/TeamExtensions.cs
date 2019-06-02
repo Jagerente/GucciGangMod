@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using UnityEngine;
 
 internal static class TeamExtensions
@@ -15,6 +10,7 @@ internal static class TeamExtensions
         {
             return (PunTeams.Team) (byte) obj2;
         }
+
         return PunTeams.Team.none;
     }
 
@@ -22,8 +18,10 @@ internal static class TeamExtensions
     {
         if (!PhotonNetwork.connectedAndReady)
         {
-            Debug.LogWarning("JoinTeam was called in state: " + PhotonNetwork.connectionStateDetailed + ". Not connectedAndReady.");
+            Debug.LogWarning("JoinTeam was called in state: " + PhotonNetwork.connectionStateDetailed +
+                             ". Not connectedAndReady.");
         }
+
         if (PhotonNetwork.player.GetTeam() != team)
         {
             var propertiesToSet = new Hashtable();
@@ -32,4 +30,3 @@ internal static class TeamExtensions
         }
     }
 }
-

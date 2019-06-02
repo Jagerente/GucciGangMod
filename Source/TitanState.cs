@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public enum TitanState
+﻿public enum TitanState
 {
     idle,
     attack,
@@ -22,4 +17,3 @@ public enum TitanState
     sit,
     recover
 }
-

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 
 [Serializable]
 public class InvStat
@@ -18,27 +13,27 @@ public class InvStat
         var num2 = (int) b.id;
         if (a.id == Identifier.Armor)
         {
-            id -= 10000;
+            id -= 0x2710;
         }
         else if (a.id == Identifier.Damage)
         {
-            id -= 5000;
+            id -= 0x1388;
         }
         if (b.id == Identifier.Armor)
         {
-            num2 -= 10000;
+            num2 -= 0x2710;
         }
         else if (b.id == Identifier.Damage)
         {
-            num2 -= 5000;
+            num2 -= 0x1388;
         }
         if (a.amount < 0)
         {
-            id += 1000;
+            id += 0x3e8;
         }
         if (b.amount < 0)
         {
-            num2 += 1000;
+            num2 += 0x3e8;
         }
         if (a.modifier == Modifier.Percent)
         {
@@ -65,27 +60,27 @@ public class InvStat
         var num2 = (int) b.id;
         if (a.id == Identifier.Damage)
         {
-            id -= 10000;
+            id -= 0x2710;
         }
         else if (a.id == Identifier.Armor)
         {
-            id -= 5000;
+            id -= 0x1388;
         }
         if (b.id == Identifier.Damage)
         {
-            num2 -= 10000;
+            num2 -= 0x2710;
         }
         else if (b.id == Identifier.Armor)
         {
-            num2 -= 5000;
+            num2 -= 0x1388;
         }
         if (a.amount < 0)
         {
-            id += 1000;
+            id += 0x3e8;
         }
         if (b.amount < 0)
         {
-            num2 += 1000;
+            num2 += 0x3e8;
         }
         if (a.modifier == Modifier.Percent)
         {

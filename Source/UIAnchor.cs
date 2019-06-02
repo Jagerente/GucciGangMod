@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Anchor"), ExecuteInEditMode]
 public class UIAnchor : MonoBehaviour
@@ -11,7 +6,7 @@ public class UIAnchor : MonoBehaviour
     public bool halfPixelOffset = true;
     private Animation mAnim;
     private bool mNeedsHalfPixelOffset;
-    private Rect mRect = new Rect();
+    private Rect mRect;
     private UIRoot mRoot;
     private Transform mTrans;
     public UIPanel panelContainer;
@@ -71,8 +66,8 @@ public class UIAnchor : MonoBehaviour
                 var cachedTransform = widgetContainer.cachedTransform;
                 var localScale = cachedTransform.localScale;
                 var localPosition = cachedTransform.localPosition;
-                var relativeSize = (Vector3) widgetContainer.relativeSize;
-                var pivotOffset = (Vector3) widgetContainer.pivotOffset;
+                Vector3 relativeSize = widgetContainer.relativeSize;
+                Vector3 pivotOffset = widgetContainer.pivotOffset;
                 pivotOffset.y--;
                 pivotOffset.x *= widgetContainer.relativeSize.x * localScale.x;
                 pivotOffset.y *= widgetContainer.relativeSize.y * localScale.y;

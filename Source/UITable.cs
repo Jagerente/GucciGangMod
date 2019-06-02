@@ -1,10 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode, AddComponentMenu("NGUI/Interaction/Table")]
@@ -43,6 +37,7 @@ public class UITable : MonoBehaviour
             {
                 RepositionVariableSize(children);
             }
+
             if (mDrag != null)
             {
                 mDrag.UpdateScrollbars(true);
@@ -52,10 +47,8 @@ public class UITable : MonoBehaviour
             {
                 mPanel.ConstrainTargetToBounds(target, true);
             }
-            if (onReposition != null)
-            {
-                onReposition();
-            }
+
+            onReposition?.Invoke();
         }
         else
         {
@@ -79,7 +72,7 @@ public class UITable : MonoBehaviour
         while (num7 < count)
         {
             var trans = children[num7];
-            var bounds = NGUIMath.CalculateRelativeWidgetBounds(trans);
+            Bounds bounds = NGUIMath.CalculateRelativeWidgetBounds(trans);
             var localScale = trans.localScale;
             bounds.min = Vector3.Scale(bounds.min, localScale);
             bounds.max = Vector3.Scale(bounds.max, localScale);
@@ -91,8 +84,10 @@ public class UITable : MonoBehaviour
                 index = 0;
                 num6++;
             }
+
             num7++;
         }
+
         index = 0;
         num6 = 0;
         var num9 = 0;
@@ -116,6 +111,7 @@ public class UITable : MonoBehaviour
                 localPosition.y = num2 + bounds2.extents.y - bounds2.center.y;
                 localPosition.y += (bounds2.max.y - bounds2.min.y - bounds4.max.y + bounds4.min.y) * 0.5f - padding.y;
             }
+
             num += bounds3.max.x - bounds3.min.x + padding.x * 2f;
             transform2.localPosition = localPosition;
             if (++index >= columns && columns > 0)
@@ -125,6 +121,7 @@ public class UITable : MonoBehaviour
                 num = 0f;
                 num2 += bounds4.size.y + padding.y * 2f;
             }
+
             num9++;
         }
     }
@@ -142,6 +139,7 @@ public class UITable : MonoBehaviour
             mPanel = NGUITools.FindInParents<UIPanel>(gameObject);
             mDrag = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
         }
+
         Reposition();
     }
 
@@ -156,16 +154,19 @@ public class UITable : MonoBehaviour
                 for (var i = 0; i < transform.childCount; i++)
                 {
                     var child = transform.GetChild(i);
-                    if (child != null && child.gameObject != null && (!hideInactive || NGUITools.GetActive(child.gameObject)))
+                    if (child != null && child.gameObject != null &&
+                        (!hideInactive || NGUITools.GetActive(child.gameObject)))
                     {
                         mChildren.Add(child);
                     }
                 }
+
                 if (sorted)
                 {
-                    mChildren.Sort(new Comparison<Transform>(SortByName));
+                    mChildren.Sort(SortByName);
                 }
             }
+
             return mChildren;
         }
     }
@@ -178,4 +179,3 @@ public class UITable : MonoBehaviour
 
     public delegate void OnReposition();
 }
-

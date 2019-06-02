@@ -1,17 +1,11 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
+using ExitGames.Client.Photon;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
+internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
 {
     public static bool AppQuits;
     internal static CloudRegionCode BestRegionCodeCurrently = CloudRegionCode.none;
@@ -32,8 +26,8 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         }
         SP = this;
         DontDestroyOnLoad(gameObject);
-        updateInterval = 1000 / PhotonNetwork.sendRate;
-        updateIntervalOnSerialize = 1000 / PhotonNetwork.sendRateOnSerialize;
+        updateInterval = 0x3e8 / PhotonNetwork.sendRate;
+        updateIntervalOnSerialize = 0x3e8 / PhotonNetwork.sendRateOnSerialize;
         StartFallbackSendAckThread();
     }
 
@@ -41,19 +35,19 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
     {
         if (level == DebugLevel.ERROR)
         {
-            UnityEngine.Debug.LogError(message);
+            Debug.LogError(message);
         }
         else if (level == DebugLevel.WARNING)
         {
-            UnityEngine.Debug.LogWarning(message);
+            Debug.LogWarning(message);
         }
         else if (level == DebugLevel.INFO && PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
         {
-            UnityEngine.Debug.Log(message);
+            Debug.Log(message);
         }
         else if (level == DebugLevel.ALL && PhotonNetwork.logLevel == PhotonLogLevel.Full)
         {
-            UnityEngine.Debug.Log(message);
+            Debug.Log(message);
         }
     }
 
@@ -106,10 +100,53 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         SP.StartCoroutine(SP.PingAvailableRegionsCoroutine(true));
     }
 
-    [DebuggerHidden]
+    
     internal IEnumerator PingAvailableRegionsCoroutine(bool connectToBest)
     {
-        return new PingAvailableRegionsCoroutinecIteratorA { connectToBest = connectToBest, SconnectToBest = connectToBest };
+        BestRegionCodeCurrently = CloudRegionCode.none;
+        while (PhotonNetwork.networkingPeer.AvailableRegions == null)
+        {
+            if (PhotonNetwork.connectionStateDetailed != PeerStates.ConnectingToNameServer && PhotonNetwork.connectionStateDetailed != PeerStates.ConnectedToNameServer)
+            {
+                Debug.LogError("Call ConnectToNameServer to ping available regions.");
+                yield break;
+            }
+            Debug.Log("Waiting for AvailableRegions. State: " + PhotonNetwork.connectionStateDetailed + " Server: " + PhotonNetwork.Server + " PhotonNetwork.networkingPeer.AvailableRegions " + (PhotonNetwork.networkingPeer.AvailableRegions != null));
+            yield return new WaitForSeconds(0.25f);
+        }
+        if (PhotonNetwork.networkingPeer.AvailableRegions == null || PhotonNetwork.networkingPeer.AvailableRegions.Count == 0)
+        {
+            Debug.LogError("No regions available. Are you sure your appid is valid and setup?");
+        }
+        else
+        {
+            var pingManager = new PhotonPingManager();
+            var enumerator = PhotonNetwork.networkingPeer.AvailableRegions.GetEnumerator();
+            try
+            {
+                while (enumerator.MoveNext())
+                {
+                    var region = enumerator.Current;
+                    SP.StartCoroutine(pingManager.PingSocket(region));
+                }
+            }
+            finally
+            {
+                ((IDisposable)enumerator).Dispose();
+            }
+            while (!pingManager.Done)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            var best = pingManager.BestRegion;
+            BestRegionCodeCurrently = best.Code;
+            BestRegionCodeInPreferences = best.Code;
+            Debug.Log("Found best region: " + best.Code + " ping: " + best.Ping + ". Calling ConnectToRegionMaster() is: " + connectToBest);
+            if (connectToBest)
+            {
+                PhotonNetwork.networkingPeer.ConnectToRegionMaster(best.Code);
+            }
+        }
     }
 
     public static void StartFallbackSendAckThread()
@@ -117,7 +154,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         if (!sendThreadShouldRun)
         {
             sendThreadShouldRun = true;
-            SupportClass.CallInBackground(new Func<bool>(FallbackSendAckThread));
+            SupportClass.CallInBackground(FallbackSendAckThread);
         }
     }
 
@@ -130,7 +167,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
     {
         if (PhotonNetwork.networkingPeer == null)
         {
-            UnityEngine.Debug.LogError("NetworkPeer broke!");
+            Debug.LogError("NetworkPeer broke!");
         }
         else if (PhotonNetwork.connectionStateDetailed != PeerStates.PeerCreated && PhotonNetwork.connectionStateDetailed != PeerStates.Disconnected && !PhotonNetwork.offlineMode && PhotonNetwork.isMessageQueueRunning)
         {
@@ -175,121 +212,6 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
             else
             {
                 PlayerPrefs.SetString("PUNCloudBestRegion", value.ToString());
-            }
-        }
-    }
-
-    [CompilerGenerated]
-    private sealed class PingAvailableRegionsCoroutinecIteratorA : IEnumerator, IDisposable, IEnumerator<object>
-    {
-        internal object Scurrent;
-        internal int SPC;
-        internal bool SconnectToBest;
-        internal List<Region>.Enumerator Ss_891;
-        internal Region best3;
-        internal PhotonPingManager pingManager0;
-        internal Region region2;
-        internal bool connectToBest;
-
-        [DebuggerHidden]
-        public void Dispose()
-        {
-            SPC = -1;
-        }
-
-        public bool MoveNext()
-        {
-            var num = (uint) SPC;
-            SPC = -1;
-            switch (num)
-            {
-                case 0:
-                    BestRegionCodeCurrently = CloudRegionCode.none;
-                    break;
-
-                case 1:
-                    break;
-
-                case 2:
-                    goto Label_01A4;
-
-                default:
-                    goto Label_0266;
-            }
-            if (PhotonNetwork.networkingPeer.AvailableRegions == null)
-            {
-                if (PhotonNetwork.connectionStateDetailed != PeerStates.ConnectingToNameServer && PhotonNetwork.connectionStateDetailed != PeerStates.ConnectedToNameServer)
-                {
-                    UnityEngine.Debug.LogError("Call ConnectToNameServer to ping available regions.");
-                    goto Label_0266;
-                }
-                UnityEngine.Debug.Log(string.Concat("Waiting for AvailableRegions. State: ", PhotonNetwork.connectionStateDetailed, " Server: ", PhotonNetwork.Server, " PhotonNetwork.networkingPeer.AvailableRegions ", PhotonNetwork.networkingPeer.AvailableRegions != null));
-                Scurrent = new WaitForSeconds(0.25f);
-                SPC = 1;
-                //goto Label_0268;
-            }
-            if (PhotonNetwork.networkingPeer.AvailableRegions == null || PhotonNetwork.networkingPeer.AvailableRegions.Count == 0)
-            {
-                UnityEngine.Debug.LogError("No regions available. Are you sure your appid is valid and setup?");
-                goto Label_0266;
-            }
-            pingManager0 = new PhotonPingManager();
-            Ss_891 = PhotonNetwork.networkingPeer.AvailableRegions.GetEnumerator();
-            try
-            {
-                while (Ss_891.MoveNext())
-                {
-                    region2 = Ss_891.Current;
-                    SP.StartCoroutine(pingManager0.PingSocket(region2));
-                }
-            }
-            finally
-            {
-                Ss_891.Dispose();
-            }
-        Label_01A4:
-            while (!pingManager0.Done)
-            {
-                Scurrent = new WaitForSeconds(0.1f);
-                SPC = 2;
-                //goto Label_0268;
-            }
-            best3 = pingManager0.BestRegion;
-            BestRegionCodeCurrently = best3.Code;
-            BestRegionCodeInPreferences = best3.Code;
-            UnityEngine.Debug.Log(string.Concat("Found best region: ", best3.Code, " ping: ", best3.Ping, ". Calling ConnectToRegionMaster() is: ", connectToBest));
-            if (connectToBest)
-            {
-                PhotonNetwork.networkingPeer.ConnectToRegionMaster(best3.Code);
-            }
-            SPC = -1;
-        Label_0266:
-            return false;
-        Label_0268:
-            return true;
-        }
-
-        [DebuggerHidden]
-        public void Reset()
-        {
-            throw new NotSupportedException();
-        }
-
-        object IEnumerator<object>.Current
-        {
-            [DebuggerHidden]
-            get
-            {
-                return Scurrent;
-            }
-        }
-
-        object IEnumerator.Current
-        {
-            [DebuggerHidden]
-            get
-            {
-                return Scurrent;
             }
         }
     }

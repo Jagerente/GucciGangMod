@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterStatComponent : MonoBehaviour
 {
@@ -20,4 +15,3 @@ public class CharacterStatComponent : MonoBehaviour
         manager.GetComponent<CustomCharacterManager>().prevStatOption(type);
     }
 }
-

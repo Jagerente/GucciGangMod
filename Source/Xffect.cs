@@ -1,10 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("Xffect")]
@@ -17,24 +11,15 @@ public class Xffect : MonoBehaviour
 
     public void Active()
     {
-        var enumerator = transform.GetEnumerator();
-        try
+        foreach (Transform transform in this.transform)
         {
-            while (enumerator.MoveNext())
-            {
-                var current = (Transform) enumerator.Current;
-                current.gameObject.SetActive(true);
-            }
+            transform.gameObject.SetActive(true);
         }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
-        }
+
         gameObject.SetActive(true);
         ElapsedTime = 0f;
     }
+
 
     private void Awake()
     {
@@ -43,78 +28,61 @@ public class Xffect : MonoBehaviour
 
     public void DeActive()
     {
-        var enumerator = transform.GetEnumerator();
-        try
+        foreach (Transform transform in this.transform)
         {
-            while (enumerator.MoveNext())
-            {
-                var current = (Transform) enumerator.Current;
-                current.gameObject.SetActive(false);
-            }
+            transform.gameObject.SetActive(false);
         }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
-        }
+
         gameObject.SetActive(false);
     }
 
+
+    // Xffect
     public void Initialize()
     {
-        if (EflList.Count <= 0)
+        if (EflList.Count > 0)
         {
-            var enumerator = transform.GetEnumerator();
-            try
+            return;
+        }
+
+        foreach (Transform transform in this.transform)
+        {
+            var effectLayer = (EffectLayer) transform.GetComponent(typeof(EffectLayer));
+            if (!(effectLayer == null) && !(effectLayer.Material == null))
             {
-                while (enumerator.MoveNext())
+                var material = effectLayer.Material;
+                EflList.Add(effectLayer);
+                var transform2 = this.transform.Find("mesh " + material.name);
+                if (transform2 != null)
                 {
-                    var current = (Transform) enumerator.Current;
-                    var component = (EffectLayer) current.GetComponent(typeof(EffectLayer));
-                    if (component != null && component.Material != null)
-                    {
-                        MeshFilter filter;
-                        MeshRenderer renderer;
-                        var material = component.Material;
-                        EflList.Add(component);
-                        var transform2 = transform.Find("mesh " + material.name);
-                        if (transform2 != null)
-                        {
-                            filter = (MeshFilter) transform2.GetComponent(typeof(MeshFilter));
-                            renderer = (MeshRenderer) transform2.GetComponent(typeof(MeshRenderer));
-                            filter.mesh.Clear();
-                            MatDic[material.name] = new VertexPool(filter.mesh, material);
-                        }
-                        if (!MatDic.ContainsKey(material.name))
-                        {
-                            var obj2 = new GameObject("mesh " + material.name) {
-                                transform = { parent = transform }
-                            };
-                            obj2.AddComponent("MeshFilter");
-                            obj2.AddComponent("MeshRenderer");
-                            filter = (MeshFilter) obj2.GetComponent(typeof(MeshFilter));
-                            renderer = (MeshRenderer) obj2.GetComponent(typeof(MeshRenderer));
-                            renderer.castShadows = false;
-                            renderer.receiveShadows = false;
-                            renderer.renderer.material = material;
-                            MatDic[material.name] = new VertexPool(filter.mesh, material);
-                        }
-                    }
+                    var meshFilter = (MeshFilter) transform2.GetComponent(typeof(MeshFilter));
+                    var meshRenderer = (MeshRenderer) transform2.GetComponent(typeof(MeshRenderer));
+                    meshFilter.mesh.Clear();
+                    MatDic[material.name] = new VertexPool(meshFilter.mesh, material);
+                }
+
+                if (!MatDic.ContainsKey(material.name))
+                {
+                    var gameObject = new GameObject("mesh " + material.name);
+                    gameObject.transform.parent = this.transform;
+                    gameObject.AddComponent("MeshFilter");
+                    gameObject.AddComponent("MeshRenderer");
+                    var meshFilter = (MeshFilter) gameObject.GetComponent(typeof(MeshFilter));
+                    var meshRenderer = (MeshRenderer) gameObject.GetComponent(typeof(MeshRenderer));
+                    meshRenderer.castShadows = false;
+                    meshRenderer.receiveShadows = false;
+                    meshRenderer.renderer.material = material;
+                    MatDic[material.name] = new VertexPool(meshFilter.mesh, material);
                 }
             }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
-            }
-            foreach (var layer2 in EflList)
-            {
-                layer2.Vertexpool = MatDic[layer2.Material.name];
-            }
+        }
+
+        foreach (var current in EflList)
+        {
+            current.Vertexpool = MatDic[current.Material.name];
         }
     }
+
 
     private void LateUpdate()
     {
@@ -122,12 +90,14 @@ public class Xffect : MonoBehaviour
         {
             pair.Value.LateUpdate();
         }
+
         if (ElapsedTime > LifeTime && LifeTime >= 0f)
         {
             foreach (var layer in EflList)
             {
                 layer.Reset();
             }
+
             DeActive();
             ElapsedTime = 0f;
         }
@@ -163,31 +133,22 @@ public class Xffect : MonoBehaviour
 
     private void Start()
     {
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.identity;
-        transform.localScale = Vector3.one;
-        var enumerator = transform.GetEnumerator();
-        try
+        this.transform.position = Vector3.zero;
+        this.transform.rotation = Quaternion.identity;
+        this.transform.localScale = Vector3.one;
+        foreach (Transform transform in this.transform)
         {
-            while (enumerator.MoveNext())
-            {
-                var current = (Transform) enumerator.Current;
-                current.transform.position = Vector3.zero;
-                current.transform.rotation = Quaternion.identity;
-                current.transform.localScale = Vector3.one;
-            }
+            transform.transform.position = Vector3.zero;
+            transform.transform.rotation = Quaternion.identity;
+            transform.transform.localScale = Vector3.one;
         }
-        finally
+
+        foreach (var current in EflList)
         {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
-        }
-        foreach (var layer in EflList)
-        {
-            layer.StartCustom();
+            current.StartCustom();
         }
     }
+
 
     private void Update()
     {
@@ -201,4 +162,3 @@ public class Xffect : MonoBehaviour
         }
     }
 }
-

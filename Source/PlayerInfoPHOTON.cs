@@ -1,7 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
+﻿using UnityEngine;
 
 public class PlayerInfoPHOTON
 {
@@ -29,7 +26,7 @@ public class PlayerInfoPHOTON
 
     public void initAsGuest()
     {
-        name = "GUEST" + UnityEngine.Random.Range(0, 100000);
+        name = "GUEST" + Random.Range(0, 0x186a0);
         kills = 0;
         die = 0;
         maxDamage = 0;

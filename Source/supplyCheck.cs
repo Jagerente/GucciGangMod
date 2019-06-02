@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class supplyCheck : MonoBehaviour
 {
@@ -35,7 +30,8 @@ public class supplyCheck : MonoBehaviour
                             obj2.GetComponent<HERO>().getSupply();
                         }
                     }
-                    else if (obj2.GetPhotonView().isMine && Vector3.Distance(obj2.transform.position, transform.position) < 1.5f)
+                    else if (obj2.GetPhotonView().isMine &&
+                             Vector3.Distance(obj2.transform.position, transform.position) < 1.5f)
                     {
                         obj2.GetComponent<HERO>().getSupply();
                     }
@@ -44,4 +40,3 @@ public class supplyCheck : MonoBehaviour
         }
     }
 }
-

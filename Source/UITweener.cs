@@ -1,8 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
+﻿using AnimationOrTween;
 using UnityEngine;
 
 public abstract class UITweener : IgnoreTimeScale
@@ -26,26 +22,27 @@ public abstract class UITweener : IgnoreTimeScale
 
     protected UITweener()
     {
-        var keys = new[] { new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f) };
+        Keyframe[] keys = {new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f)};
         animationCurve = new AnimationCurve(keys);
         ignoreTimeScale = true;
         duration = 1f;
         mAmountPerDelta = 1f;
     }
 
-    public static T Begin<T>(GameObject go, float duration) where T: UITweener
+    public static T Begin<T>(GameObject go, float duration) where T : UITweener
     {
         var component = go.GetComponent<T>();
         if (component == null)
         {
             component = go.AddComponent<T>();
         }
+
         component.mStarted = false;
         component.duration = duration;
         component.mFactor = 0f;
         component.mAmountPerDelta = Mathf.Abs(component.mAmountPerDelta);
         component.style = Style.Once;
-        var keys = new[] { new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f) };
+        Keyframe[] keys = {new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f)};
         component.animationCurve = new AnimationCurve(keys);
         component.eventReceiver = null;
         component.callWhenFinished = null;
@@ -61,16 +58,19 @@ public abstract class UITweener : IgnoreTimeScale
             val = 7.5685f * val * val;
             return val;
         }
+
         if (val < 0.727272f)
         {
             val = 7.5625f * (val -= 0.545454f) * val + 0.75f;
             return val;
         }
+
         if (val < 0.90909f)
         {
             val = 7.5625f * (val -= 0.818181f) * val + 0.9375f;
             return val;
         }
+
         val = 7.5625f * (val -= 0.9545454f) * val + 0.984375f;
         return val;
     }
@@ -81,6 +81,7 @@ public abstract class UITweener : IgnoreTimeScale
     }
 
     protected abstract void OnUpdate(float factor, bool isFinished);
+
     public void Play(bool forward)
     {
         mAmountPerDelta = Mathf.Abs(amountPerDelta);
@@ -88,6 +89,7 @@ public abstract class UITweener : IgnoreTimeScale
         {
             mAmountPerDelta = -mAmountPerDelta;
         }
+
         enabled = true;
     }
 
@@ -138,6 +140,7 @@ public abstract class UITweener : IgnoreTimeScale
         {
             f = 1f - BounceLogic(1f - f);
         }
+
         OnUpdate(animationCurve == null ? f : animationCurve.Evaluate(f), isFinished);
     }
 
@@ -156,6 +159,7 @@ public abstract class UITweener : IgnoreTimeScale
         {
             mAmountPerDelta = Mathf.Abs(amountPerDelta);
         }
+
         enabled = true;
     }
 
@@ -168,6 +172,7 @@ public abstract class UITweener : IgnoreTimeScale
             mStarted = true;
             mStartTime = num2 + delay;
         }
+
         if (num2 >= mStartTime)
         {
             mFactor += amountPerDelta * num;
@@ -192,18 +197,17 @@ public abstract class UITweener : IgnoreTimeScale
                     mAmountPerDelta = -mAmountPerDelta;
                 }
             }
+
             if (style == Style.Once && (mFactor > 1f || mFactor < 0f))
             {
                 mFactor = Mathf.Clamp01(mFactor);
                 Sample(mFactor, true);
-                if (onFinished != null)
-                {
-                    onFinished(this);
-                }
+                onFinished?.Invoke(this);
                 if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                 {
                     eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
                 }
+
                 if (mFactor == 1f && mAmountPerDelta > 0f || mFactor == 0f && mAmountPerDelta < 0f)
                 {
                     enabled = false;
@@ -225,24 +229,19 @@ public abstract class UITweener : IgnoreTimeScale
                 mDuration = duration;
                 mAmountPerDelta = Mathf.Abs(duration <= 0f ? 1000f : 1f / duration);
             }
+
             return mAmountPerDelta;
         }
     }
 
-    public AnimationOrTween.Direction direction
+    public Direction direction
     {
-        get
-        {
-            return mAmountPerDelta >= 0f ? AnimationOrTween.Direction.Forward : AnimationOrTween.Direction.Reverse;
-        }
+        get { return mAmountPerDelta >= 0f ? Direction.Forward : Direction.Reverse; }
     }
 
     public float tweenFactor
     {
-        get
-        {
-            return mFactor;
-        }
+        get { return mFactor; }
     }
 
     public enum Method
@@ -264,4 +263,3 @@ public abstract class UITweener : IgnoreTimeScale
         PingPong
     }
 }
-

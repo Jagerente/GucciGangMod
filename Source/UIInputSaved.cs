@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Input (Saved)")]
 public class UIInputSaved : UIInput
@@ -12,7 +7,7 @@ public class UIInputSaved : UIInput
 
     private void Awake()
     {
-        onSubmit = new OnSubmit(SaveToPlayerPrefs);
+        onSubmit = SaveToPlayerPrefs;
         if (!string.IsNullOrEmpty(playerPrefsField) && PlayerPrefs.HasKey(playerPrefsField))
         {
             text = PlayerPrefs.GetString(playerPrefsField);
@@ -34,10 +29,7 @@ public class UIInputSaved : UIInput
 
     public override string text
     {
-        get
-        {
-            return base.text;
-        }
+        get { return base.text; }
         set
         {
             base.text = value;
@@ -45,4 +37,3 @@ public class UIInputSaved : UIInput
         }
     }
 }
-

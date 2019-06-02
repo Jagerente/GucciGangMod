@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public enum RCGlobals
+﻿public enum RCGlobals
 {
     timeElapsed,
     titansAlive,
@@ -13,4 +8,3 @@ public enum RCGlobals
     cyanAlive,
     magentaAlive
 }
-

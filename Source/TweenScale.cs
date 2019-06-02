@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Scale")]
 public class TweenScale : UITweener
@@ -16,7 +11,7 @@ public class TweenScale : UITweener
 
     public static TweenScale Begin(GameObject go, float duration, Vector3 scale)
     {
-        var scale2 = UITweener.Begin<TweenScale>(go, duration);
+        var scale2 = Begin<TweenScale>(go, duration);
         scale2.from = scale2.scale;
         scale2.to = scale;
         if (duration <= 0f)

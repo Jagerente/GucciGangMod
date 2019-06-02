@@ -1,11 +1,6 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
-using System;
+﻿using System;
 using System.Net.Sockets;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class PingMonoEditor : PhotonPing
@@ -21,6 +16,7 @@ public class PingMonoEditor : PhotonPing
         catch
         {
         }
+
         sock = null;
     }
 
@@ -32,14 +28,17 @@ public class PingMonoEditor : PhotonPing
             {
                 return false;
             }
+
             var num = sock.Receive(PingBytes, SocketFlags.None);
             if (PingBytes[PingBytes.Length - 1] != PingId || num != PingLength)
             {
                 Debug.Log("ReplyMatch is false! ");
             }
+
             Successful = num == PingBytes.Length && PingBytes[PingBytes.Length - 1] == PingId;
             GotResult = true;
         }
+
         return true;
     }
 
@@ -48,8 +47,8 @@ public class PingMonoEditor : PhotonPing
         Init();
         try
         {
-            sock.ReceiveTimeout = 5000;
-            sock.Connect(ip, 5055);
+            sock.ReceiveTimeout = 0x1388;
+            sock.Connect(ip, 0x13bf);
             PingBytes[PingBytes.Length - 1] = PingId;
             sock.Send(PingBytes);
             PingBytes[PingBytes.Length - 1] = (byte) (PingId - 1);
@@ -59,7 +58,7 @@ public class PingMonoEditor : PhotonPing
             sock = null;
             Console.WriteLine(exception);
         }
+
         return false;
     }
 }
-

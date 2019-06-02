@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Field of View"), RequireComponent(typeof(Camera))]
 public class TweenFOV : UITweener
@@ -14,7 +9,7 @@ public class TweenFOV : UITweener
 
     public static TweenFOV Begin(GameObject go, float duration, float to)
     {
-        var nfov = UITweener.Begin<TweenFOV>(go, duration);
+        var nfov = Begin<TweenFOV>(go, duration);
         nfov.from = nfov.fov;
         nfov.to = to;
         if (duration <= 0f)

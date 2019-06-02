@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PhotonView))]
 public class ManualPhotonViewAllocator : MonoBehaviour
@@ -12,7 +7,7 @@ public class ManualPhotonViewAllocator : MonoBehaviour
 
     public void AllocateManualPhotonView()
     {
-        var photonView = gameObject.GetPhotonView();
+        PhotonView photonView = gameObject.GetPhotonView();
         if (photonView == null)
         {
             Debug.LogError("Can't do manual instantiation without PhotonView component.");
@@ -20,7 +15,7 @@ public class ManualPhotonViewAllocator : MonoBehaviour
         else
         {
             var num = PhotonNetwork.AllocateViewID();
-            var parameters = new object[] { num };
+            object[] parameters = { num };
             photonView.RPC("InstantiateRpc", PhotonTargets.AllBuffered, parameters);
         }
     }

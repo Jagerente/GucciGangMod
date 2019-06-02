@@ -1,12 +1,5 @@
-using System.Resources;
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
+﻿// Assembly Assembly-CSharp, Version 0.0.0.0
 
-// Assembly Assembly-CSharp, Version 0.0.0.0
+using System.Runtime.CompilerServices;
 
-
-[assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
-[assembly: NeutralResourcesLanguage("")]
-
+[assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]

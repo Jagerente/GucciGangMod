@@ -1,16 +1,12 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 [RequireComponent(typeof(PhotonView))]
-public class PickupItem : Photon.MonoBehaviour, IPunObservable
+public class PickupItem : MonoBehaviour, IPunObservable
 {
     public static HashSet<PickupItem> DisabledPickupItems = new HashSet<PickupItem>();
-    public MonoBehaviour OnPickedUpCall;
+    public UnityEngine.MonoBehaviour OnPickedUpCall;
     public bool PickupIsMine;
     public bool PickupOnTrigger;
     public float SecondsBeforeRespawn = 2f;
@@ -29,7 +25,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
     {
         if (PickupIsMine)
         {
-            var parameters = new object[] { newPosition };
+            object[] parameters = { newPosition };
             photonView.RPC("PunRespawn", PhotonTargets.AllViaServer, parameters);
         }
     }

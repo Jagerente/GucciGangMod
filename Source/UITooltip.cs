@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Tooltip")]
 public class UITooltip : MonoBehaviour
@@ -54,6 +49,7 @@ public class UITooltip : MonoBehaviour
             {
                 text.text = tooltipText;
             }
+
             mPos = Input.mousePosition;
             if (background != null)
             {
@@ -69,6 +65,7 @@ public class UITooltip : MonoBehaviour
                 mSize.z = 1f;
                 transform.localScale = mSize;
             }
+
             if (uiCamera != null)
             {
                 mPos.x = Mathf.Clamp01(mPos.x / Screen.width);
@@ -90,10 +87,12 @@ public class UITooltip : MonoBehaviour
                 {
                     mPos.x = Screen.width - mSize.x;
                 }
+
                 if (mPos.y - mSize.y < 0f)
                 {
                     mPos.y = mSize.y;
                 }
+
                 mPos.x -= Screen.width * 0.5f;
                 mPos.y -= Screen.height * 0.5f;
             }
@@ -122,6 +121,7 @@ public class UITooltip : MonoBehaviour
         {
             uiCamera = NGUITools.FindCameraForLayer(gameObject.layer);
         }
+
         SetAlpha(0f);
     }
 
@@ -134,6 +134,7 @@ public class UITooltip : MonoBehaviour
             {
                 mCurrent = mTarget;
             }
+
             SetAlpha(mCurrent * mCurrent);
             if (scalingTransitions)
             {
@@ -147,4 +148,3 @@ public class UITooltip : MonoBehaviour
         }
     }
 }
-

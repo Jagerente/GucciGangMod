@@ -1,14 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 public class PBitStream
 {
-    private int currentByte;
     private List<byte> streamBytes;
     private int totalBits;
 
@@ -37,8 +31,8 @@ public class PBitStream
         }
         if (val)
         {
-            var currentByteBit = 7 - totalBits % 8;
-			streamBytes[num] |= (byte)(1 << currentByteBit);
+            var currentByteBits = 7 - totalBits % 8;
+            streamBytes[num] |= (byte)(1 << currentByteBits);
         }
         totalBits++;
     }
@@ -73,8 +67,8 @@ public class PBitStream
     public void Set(int bitIndex, bool value)
     {
         var byteIndex = bitIndex / 8;
-		var bitInByIndex = 7 - bitIndex % 8;
-		streamBytes[byteIndex] |= (byte)(1 << bitInByIndex);
+        var bitInByIndex = 7 - bitIndex % 8;
+        streamBytes[byteIndex] |= (byte)(1 << bitInByIndex);
     }
 
     public byte[] ToBytes()

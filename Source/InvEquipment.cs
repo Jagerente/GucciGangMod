@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Equipment")]
 public class InvEquipment : MonoBehaviour
@@ -130,13 +125,10 @@ public class InvEquipment : MonoBehaviour
 
     public InvGameItem Unequip(InvGameItem item)
     {
-        if (item != null)
+        var baseItem = item?.baseItem;
+        if (baseItem != null)
         {
-            var baseItem = item.baseItem;
-            if (baseItem != null)
-            {
-                return Replace(baseItem.slot, null);
-            }
+            return Replace(baseItem.slot, null);
         }
         return item;
     }

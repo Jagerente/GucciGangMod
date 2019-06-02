@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -72,7 +67,7 @@ public class InvGameItem
                 }
                 num2++;
             }
-            list.Sort(new Comparison<InvStat>(InvStat.CompareArmor));
+            list.Sort(InvStat.CompareArmor);
         }
         return list;
     }
@@ -120,25 +115,25 @@ public class InvGameItem
                     return new Color(1f, 1f, 1f);
 
                 case Quality.Polished:
-                    return NGUIMath.HexToColor(3774856959);
+                    return NGUIMath.HexToColor(0xe0ffbeff);
 
                 case Quality.Improved:
-                    return NGUIMath.HexToColor(2480359935);
+                    return NGUIMath.HexToColor(0x93d749ff);
 
                 case Quality.Crafted:
-                    return NGUIMath.HexToColor(1325334783);
+                    return NGUIMath.HexToColor(0x4eff00ff);
 
                 case Quality.Superior:
-                    return NGUIMath.HexToColor(12255231);
+                    return NGUIMath.HexToColor(0xbaffff);
 
                 case Quality.Enchanted:
-                    return NGUIMath.HexToColor(1937178111);
+                    return NGUIMath.HexToColor(0x7376fdff);
 
                 case Quality.Epic:
-                    return NGUIMath.HexToColor(2516647935);
+                    return NGUIMath.HexToColor(0x9600ffff);
 
                 case Quality.Legendary:
-                    return NGUIMath.HexToColor(4287627519);
+                    return NGUIMath.HexToColor(0xff9000ff);
             }
             return white;
         }
@@ -152,7 +147,7 @@ public class InvGameItem
             {
                 return null;
             }
-            return quality.ToString() + " " + baseItem.name;
+            return quality + " " + baseItem.name;
         }
     }
 
@@ -211,8 +206,8 @@ public class InvGameItem
                     num = 3f;
                     break;
             }
-            var a = itemLevel / 50f;
-            return num * Mathf.Lerp(a, a * a, 0.5f);
+            var from = itemLevel / 50f;
+            return num * Mathf.Lerp(@from, @from * @from, 0.5f);
         }
     }
 

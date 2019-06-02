@@ -1,10 +1,11 @@
-﻿namespace ExitGames.Client.Photon
-{
-    using System;
-    using System.Net.Sockets;
-    using System.Security;
-    using System.Threading;
+﻿using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Security;
+using System.Threading;
 
+namespace ExitGames.Client.Photon
+{
     internal class SocketUdp : IPhotonSocket
     {
         private Socket sock;
@@ -31,7 +32,7 @@
                     return false;
                 }
                 State = PhotonSocketState.Connecting;
-                new Thread(new ThreadStart(DnsAndConnect)) { Name = "photon dns thread", IsBackground = true }.Start();
+                new Thread(DnsAndConnect) { Name = "photon dns thread", IsBackground = true }.Start();
                 return true;
             }
         }
@@ -80,7 +81,7 @@
             {
                 if (ReportDebugOfLevel(DebugLevel.ERROR))
                 {
-                    Listener.DebugReturn(DebugLevel.ERROR, "Connect() failed: " + exception.ToString());
+                    Listener.DebugReturn(DebugLevel.ERROR, "Connect() failed: " + exception);
                 }
                 HandleException(StatusCode.SecurityExceptionOnConnect);
                 return;
@@ -89,12 +90,12 @@
             {
                 if (ReportDebugOfLevel(DebugLevel.ERROR))
                 {
-                    Listener.DebugReturn(DebugLevel.ERROR, "Connect() failed: " + exception2.ToString());
+                    Listener.DebugReturn(DebugLevel.ERROR, "Connect() failed: " + exception2);
                 }
                 HandleException(StatusCode.ExceptionOnConnect);
                 return;
             }
-            new Thread(new ThreadStart(ReceiveLoop)) { Name = "photon receive thread", IsBackground = true }.Start();
+            new Thread(ReceiveLoop) { Name = "photon receive thread", IsBackground = true }.Start();
         }
 
         public override PhotonSocketError Receive(out byte[] data)
@@ -112,7 +113,6 @@
                 {
                     var length = sock.Receive(buffer);
                     HandleReceivedDatagram(buffer, length, true);
-                    continue;
                 }
                 catch (Exception exception)
                 {
@@ -124,7 +124,6 @@
                         }
                         HandleException(StatusCode.ExceptionOnReceive);
                     }
-                    continue;
                 }
             }
             Disconnect();

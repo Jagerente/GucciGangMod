@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class RCEvent
 {
@@ -37,10 +32,7 @@ public class RCEvent
             case 1:
                 if (!condition.checkCondition())
                 {
-                    if (elseAction != null)
-                    {
-                        elseAction.doAction();
-                    }
+                    elseAction?.doAction();
                     break;
                 }
                 for (num2 = 0; num2 < trueActions.Count; num2++)

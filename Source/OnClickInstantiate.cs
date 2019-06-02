@@ -1,14 +1,9 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class OnClickInstantiate : MonoBehaviour
 {
     public int InstantiateType;
-    private string[] InstantiateTypeNames = new[] { "Mine", "Scene" };
+    private string[] InstantiateTypeNames = { "Mine", "Scene" };
     public GameObject Prefab;
     public bool showGui;
 

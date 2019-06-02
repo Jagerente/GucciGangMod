@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Checkbox Controlled Object")]
 public class UICheckboxControlledObject : MonoBehaviour
@@ -16,7 +11,7 @@ public class UICheckboxControlledObject : MonoBehaviour
         if (target != null)
         {
             NGUITools.SetActive(target, !inverse ? isActive : !isActive);
-            var panel = NGUITools.FindInParents<UIPanel>(target);
+            UIPanel panel = NGUITools.FindInParents<UIPanel>(target);
             if (panel != null)
             {
                 panel.Refresh();

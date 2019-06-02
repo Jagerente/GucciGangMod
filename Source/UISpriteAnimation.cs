@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Sprite Animation"), RequireComponent(typeof(UISprite)), ExecuteInEditMode]
@@ -11,13 +6,10 @@ public class UISpriteAnimation : MonoBehaviour
 {
     private bool mActive = true;
     private float mDelta;
-    [HideInInspector, SerializeField]
-    private int mFPS = 30;
+    [HideInInspector, SerializeField] private int mFPS = 30;
     private int mIndex;
-    [SerializeField, HideInInspector]
-    private bool mLoop = true;
-    [HideInInspector, SerializeField]
-    private string mPrefix = string.Empty;
+    [SerializeField, HideInInspector] private bool mLoop = true;
+    [HideInInspector, SerializeField] private string mPrefix = string.Empty;
     private UISprite mSprite;
     private List<string> mSpriteNames = new List<string>();
 
@@ -27,6 +19,7 @@ public class UISpriteAnimation : MonoBehaviour
         {
             mSprite = GetComponent<UISprite>();
         }
+
         mSpriteNames.Clear();
         if (mSprite != null && mSprite.atlas != null)
         {
@@ -40,8 +33,10 @@ public class UISpriteAnimation : MonoBehaviour
                 {
                     mSpriteNames.Add(sprite.name);
                 }
+
                 num++;
             }
+
             mSpriteNames.Sort();
         }
     }
@@ -76,6 +71,7 @@ public class UISpriteAnimation : MonoBehaviour
                     mIndex = 0;
                     mActive = loop;
                 }
+
                 if (mActive)
                 {
                     mSprite.spriteName = mSpriteNames[mIndex];
@@ -87,50 +83,29 @@ public class UISpriteAnimation : MonoBehaviour
 
     public int frames
     {
-        get
-        {
-            return mSpriteNames.Count;
-        }
+        get { return mSpriteNames.Count; }
     }
 
     public int framesPerSecond
     {
-        get
-        {
-            return mFPS;
-        }
-        set
-        {
-            mFPS = value;
-        }
+        get { return mFPS; }
+        set { mFPS = value; }
     }
 
     public bool isPlaying
     {
-        get
-        {
-            return mActive;
-        }
+        get { return mActive; }
     }
 
     public bool loop
     {
-        get
-        {
-            return mLoop;
-        }
-        set
-        {
-            mLoop = value;
-        }
+        get { return mLoop; }
+        set { mLoop = value; }
     }
 
     public string namePrefix
     {
-        get
-        {
-            return mPrefix;
-        }
+        get { return mPrefix; }
         set
         {
             if (mPrefix != value)
@@ -141,4 +116,3 @@ public class UISpriteAnimation : MonoBehaviour
         }
     }
 }
-

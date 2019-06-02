@@ -1,13 +1,9 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-public class CannonPropRegion : Photon.MonoBehaviour
+public class CannonPropRegion : MonoBehaviour
 {
     public bool destroyed;
     public bool disabled;
@@ -138,7 +134,7 @@ public class CannonPropRegion : Photon.MonoBehaviour
 
     public void Start()
     {
-        if ((int) FengGameManagerMKII.settings[64] >= 100)
+        if ((int) FengGameManagerMKII.settings[0x40] >= 100)
         {
             GetComponent<Collider>().enabled = false;
         }

@@ -1,16 +1,10 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Alpha")]
 public class TweenAlpha : UITweener
 {
     public float from = 1f;
     private UIPanel mPanel;
-    private Transform mTrans;
     private UIWidget mWidget;
     public float to = 1f;
 
@@ -25,7 +19,7 @@ public class TweenAlpha : UITweener
 
     public static TweenAlpha Begin(GameObject go, float duration, float alpha)
     {
-        var alpha2 = UITweener.Begin<TweenAlpha>(go, duration);
+        var alpha2 = Begin<TweenAlpha>(go, duration);
         alpha2.from = alpha2.alpha;
         alpha2.to = alpha;
         if (duration <= 0f)

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("Camera-Control/Mouse Orbit")]
 public class PlanetMouseOrbit : MonoBehaviour
@@ -16,7 +11,7 @@ public class PlanetMouseOrbit : MonoBehaviour
     public int yMaxLimit = 80;
     public int yMinLimit = -20;
     public float ySpeed = 120f;
-    public int zoomRate = 25;
+    public int zoomRate = 0x19;
 
     public static float ClampAngle(float angle, float min, float max)
     {
@@ -24,10 +19,12 @@ public class PlanetMouseOrbit : MonoBehaviour
         {
             angle += 360f;
         }
+
         if (angle > 360f)
         {
             angle -= 360f;
         }
+
         return Mathf.Clamp(angle, min, max);
     }
 
@@ -57,4 +54,3 @@ public class PlanetMouseOrbit : MonoBehaviour
         }
     }
 }
-

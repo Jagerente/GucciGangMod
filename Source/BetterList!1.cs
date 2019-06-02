@@ -1,13 +1,6 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BetterList<T>
@@ -26,7 +19,7 @@ public class BetterList<T>
 
     private void AllocateMore()
     {
-        var array = buffer == null ? new T[32] : new T[Mathf.Max(buffer.Length << 1, 32)];
+        var array = buffer == null ? new T[0x20] : new T[Mathf.Max(buffer.Length << 1, 0x20)];
         if (buffer != null && size > 0)
         {
             buffer.CopyTo(array, 0);
@@ -54,10 +47,10 @@ public class BetterList<T>
         return false;
     }
 
-    [DebuggerHidden]
+    
     public IEnumerator<T> GetEnumerator()
     {
-        return new GetEnumeratorcIterator9<T> { fthis = this };
+        return new GetEnumeratorc__Iterator9 {f__this = this };
     }
 
     public void Insert(int index, T item)
@@ -86,10 +79,10 @@ public class BetterList<T>
         if (buffer != null && size != 0)
         {
             var local = buffer[--size];
-            buffer[size] = default(T);
+            buffer[size] = default;
             return local;
         }
-        return default(T);
+        return default;
     }
 
     public void Release()
@@ -108,7 +101,7 @@ public class BetterList<T>
                 if (comparer.Equals(buffer[i], item))
                 {
                     size--;
-                    buffer[i] = default(T);
+                    buffer[i] = default;
                     for (var j = i; j < size; j++)
                     {
                         buffer[j] = buffer[j + 1];
@@ -125,7 +118,7 @@ public class BetterList<T>
         if (buffer != null && index < size)
         {
             size--;
-            buffer[index] = default(T);
+            buffer[index] = default;
             for (var i = index; i < size; i++)
             {
                 buffer[i] = buffer[i + 1];
@@ -190,54 +183,54 @@ public class BetterList<T>
         }
     }
 
-    [CompilerGenerated]
-    private sealed class GetEnumeratorcIterator9<T> : IEnumerator, IDisposable, IEnumerator<T>
+    
+    private sealed class GetEnumeratorc__Iterator9 : IEnumerator, IDisposable, IEnumerator<T>
     {
-        internal T Scurrent;
-        internal int SPC;
-        internal BetterList<T> fthis;
-        internal int i0;
+        internal T current;
+        internal int PC;
+        internal BetterList<T> f__this;
+        internal int __0;
 
-        [DebuggerHidden]
+        
         public void Dispose()
         {
-            SPC = -1;
+            PC = -1;
         }
 
         public bool MoveNext()
         {
-            var num = (uint) SPC;
-            SPC = -1;
+            var num = (uint) PC;
+            PC = -1;
             switch (num)
             {
                 case 0:
-                    if (fthis.buffer == null)
+                    if (f__this.buffer == null)
                     {
                         goto Label_0086;
                     }
-                    i0 = 0;
+                    __0 = 0;
                     break;
 
                 case 1:
-                    i0++;
+                    __0++;
                     break;
 
                 default:
                     goto Label_008D;
             }
-            if (i0 < fthis.size)
+            if (__0 < f__this.size)
             {
-                Scurrent = fthis.buffer[i0];
-                SPC = 1;
+                current = f__this.buffer[__0];
+                PC = 1;
                 return true;
             }
         Label_0086:
-            SPC = -1;
+            PC = -1;
         Label_008D:
             return false;
         }
 
-        [DebuggerHidden]
+        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -245,19 +238,19 @@ public class BetterList<T>
 
         T IEnumerator<T>.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
 
         object IEnumerator.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
     }

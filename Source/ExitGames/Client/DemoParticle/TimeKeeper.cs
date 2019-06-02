@@ -1,7 +1,7 @@
-﻿namespace ExitGames.Client.DemoParticle
-{
-    using System;
+﻿using System;
 
+namespace ExitGames.Client.DemoParticle
+{
     public class TimeKeeper
     {
         private int lastExecutionTime = Environment.TickCount;

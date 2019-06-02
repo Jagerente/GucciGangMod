@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [ExecuteInEditMode, AddComponentMenu("NGUI/UI/Image Button")]
 public class UIImageButton : MonoBehaviour
@@ -61,6 +56,7 @@ public class UIImageButton : MonoBehaviour
             {
                 target.spriteName = disabledSprite;
             }
+
             target.MakePixelPerfect();
         }
     }
@@ -83,4 +79,3 @@ public class UIImageButton : MonoBehaviour
         }
     }
 }
-

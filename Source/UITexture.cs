@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [ExecuteInEditMode, AddComponentMenu("NGUI/UI/Texture")]
 public class UITexture : UIWidget
@@ -11,12 +6,9 @@ public class UITexture : UIWidget
     private bool mCreatingMat;
     private Material mDynamicMat;
     private int mPMA = -1;
-    [HideInInspector, SerializeField]
-    private Rect mRect = new Rect(0f, 0f, 1f, 1f);
-    [SerializeField, HideInInspector]
-    private Shader mShader;
-    [SerializeField, HideInInspector]
-    private Texture mTexture;
+    [HideInInspector, SerializeField] private Rect mRect = new Rect(0f, 0f, 1f, 1f);
+    [SerializeField, HideInInspector] private Shader mShader;
+    [SerializeField, HideInInspector] private Texture mTexture;
 
     public override void MakePixelPerfect()
     {
@@ -29,6 +21,7 @@ public class UITexture : UIWidget
             localScale.z = 1f;
             cachedTransform.localScale = localScale;
         }
+
         base.MakePixelPerfect();
     }
 
@@ -58,38 +51,31 @@ public class UITexture : UIWidget
 
     public bool hasDynamicMaterial
     {
-        get
-        {
-            return mDynamicMat != null;
-        }
+        get { return mDynamicMat != null; }
     }
 
     public override bool keepMaterial
     {
-        get
-        {
-            return true;
-        }
+        get { return true; }
     }
 
     public override Texture mainTexture
     {
-        get
-        {
-            return mTexture == null ? base.mainTexture : mTexture;
-        }
+        get { return mTexture == null ? base.mainTexture : mTexture; }
         set
         {
             if (mPanel != null && mMat != null)
             {
                 mPanel.RemoveWidget(this);
             }
+
             if (mMat == null)
             {
                 mDynamicMat = new Material(shader);
                 mDynamicMat.hideFlags = HideFlags.DontSave;
                 mMat = mDynamicMat;
             }
+
             mPanel = null;
             mTex = value;
             mTexture = value;
@@ -114,14 +100,17 @@ public class UITexture : UIWidget
                     {
                         mShader = Shader.Find("Unlit/Texture");
                     }
+
                     mDynamicMat = new Material(mShader);
                     mDynamicMat.hideFlags = HideFlags.DontSave;
                     mDynamicMat.mainTexture = mainTexture;
                     base.material = mDynamicMat;
                     mPMA = 0;
                 }
+
                 mCreatingMat = false;
             }
+
             return mMat;
         }
         set
@@ -131,6 +120,7 @@ public class UITexture : UIWidget
                 NGUITools.Destroy(mDynamicMat);
                 mDynamicMat = null;
             }
+
             base.material = value;
             mPMA = -1;
         }
@@ -143,8 +133,11 @@ public class UITexture : UIWidget
             if (mPMA == -1)
             {
                 var material = this.material;
-                mPMA = material == null || material.shader == null || !material.shader.name.Contains("Premultiplied") ? 0 : 1;
+                mPMA = material == null || material.shader == null || !material.shader.name.Contains("Premultiplied")
+                    ? 0
+                    : 1;
             }
+
             return mPMA == 1;
         }
     }
@@ -160,11 +153,13 @@ public class UITexture : UIWidget
                 {
                     mShader = material.shader;
                 }
+
                 if (mShader == null)
                 {
                     mShader = Shader.Find("Unlit/Texture");
                 }
             }
+
             return mShader;
         }
         set
@@ -177,6 +172,7 @@ public class UITexture : UIWidget
                 {
                     material.shader = value;
                 }
+
                 mPMA = -1;
             }
         }
@@ -184,10 +180,7 @@ public class UITexture : UIWidget
 
     public Rect uvRect
     {
-        get
-        {
-            return mRect;
-        }
+        get { return mRect; }
         set
         {
             if (mRect != value)
@@ -198,4 +191,3 @@ public class UITexture : UIWidget
         }
     }
 }
-

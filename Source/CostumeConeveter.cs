@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class CostumeConeveter
@@ -113,9 +108,9 @@ public class CostumeConeveter
         player.SetCustomProperties(propertiesToSet);
         propertiesToSet = new Hashtable();
         var costumeId = costume.costumeId;
-        if (costumeId == 26)
+        if (costumeId == 0x1a)
         {
-            costumeId = 25;
+            costumeId = 0x19;
         }
         propertiesToSet.Add(PhotonPlayerProperty.costumeId, costumeId);
         player.SetCustomProperties(propertiesToSet);
@@ -236,8 +231,7 @@ public class CostumeConeveter
             id = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.heroCostumeId),
             costumeId = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.costumeId),
             cape = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.cape) != 1 ? false : true,
-            hairInfo = IntToSex(PlayerPrefs.GetInt(slot + PhotonPlayerProperty.sex)) == SEX.FEMALE ? CostumeHair.hairsF[PlayerPrefs.GetInt(slot + PhotonPlayerProperty.hairInfo)] : CostumeHair.hairsM[PlayerPrefs.GetInt(slot + PhotonPlayerProperty.hairInfo)],
-            //hairInfo = (costume.sex != SEX.MALE) ? CostumeHair.hairsF[PlayerPrefs.GetInt(slot + PhotonPlayerProperty.hairInfo)] : CostumeHair.hairsM[PlayerPrefs.GetInt(slot + PhotonPlayerProperty.hairInfo)],
+            hairInfo = IntToSex(PlayerPrefs.GetInt(slot + PhotonPlayerProperty.sex)) != SEX.MALE ? CostumeHair.hairsF[PlayerPrefs.GetInt(slot + PhotonPlayerProperty.hairInfo)] : CostumeHair.hairsM[PlayerPrefs.GetInt(slot + PhotonPlayerProperty.hairInfo)],
             eye_texture_id = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.eye_texture_id),
             beard_texture_id = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.beard_texture_id),
             glass_texture_id = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.glass_texture_id),
@@ -251,7 +245,7 @@ public class CostumeConeveter
         costume.stat.BLA = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.statBLA);
         costume.stat.ACL = PlayerPrefs.GetInt(slot + PhotonPlayerProperty.statACL);
         costume.stat.skillId = PlayerPrefs.GetString(slot + PhotonPlayerProperty.statSKILL);
-        costume.setBodyByCostumeId(-1);
+        costume.setBodyByCostumeId();
         costume.setMesh2();
         costume.setTexture();
         return costume;
@@ -265,7 +259,7 @@ public class CostumeConeveter
             costumeId = (int) player.customProperties[PhotonPlayerProperty.costumeId],
             id = (int) player.customProperties[PhotonPlayerProperty.heroCostumeId],
             cape = (bool) player.customProperties[PhotonPlayerProperty.cape],
-            hairInfo = costume.sex != SEX.MALE ? CostumeHair.hairsF[(int)player.customProperties[PhotonPlayerProperty.hairInfo]] : CostumeHair.hairsM[(int)player.customProperties[PhotonPlayerProperty.hairInfo]],
+            hairInfo = costume.sex != SEX.MALE ? CostumeHair.hairsF[(int) player.customProperties[PhotonPlayerProperty.hairInfo]] : CostumeHair.hairsM[(int) player.customProperties[PhotonPlayerProperty.hairInfo]],
             eye_texture_id = (int) player.customProperties[PhotonPlayerProperty.eye_texture_id],
             beard_texture_id = (int) player.customProperties[PhotonPlayerProperty.beard_texture_id],
             glass_texture_id = (int) player.customProperties[PhotonPlayerProperty.glass_texture_id],
@@ -279,7 +273,7 @@ public class CostumeConeveter
         costume.stat.BLA = (int) player.customProperties[PhotonPlayerProperty.statBLA];
         costume.stat.ACL = (int) player.customProperties[PhotonPlayerProperty.statACL];
         costume.stat.skillId = (string) player.customProperties[PhotonPlayerProperty.statSKILL];
-        costume.setBodyByCostumeId(-1);
+        costume.setBodyByCostumeId();
         costume.setMesh2();
         costume.setTexture();
         return costume;
@@ -308,11 +302,11 @@ public class CostumeConeveter
         costume.stat.BLA = (int) player.customProperties[PhotonPlayerProperty.statBLA];
         costume.stat.ACL = (int) player.customProperties[PhotonPlayerProperty.statACL];
         costume.stat.skillId = (string) player.customProperties[PhotonPlayerProperty.statSKILL];
-        if (costume.costumeId == 25 && costume.sex == SEX.FEMALE)
+        if (costume.costumeId == 0x19 && costume.sex == SEX.FEMALE)
         {
-            costume.costumeId = 26;
+            costume.costumeId = 0x1a;
         }
-        costume.setBodyByCostumeId(-1);
+        costume.setBodyByCostumeId();
         costume.setMesh2();
         costume.setTexture();
         return costume;

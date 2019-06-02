@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 
 public class UVAnimation
@@ -72,6 +67,7 @@ public class UVAnimation
                 index++;
             }
         }
+
         return frames;
     }
 
@@ -92,6 +88,7 @@ public class UVAnimation
                 {
                     return false;
                 }
+
                 numLoops++;
                 if (loopReverse)
                 {
@@ -102,6 +99,7 @@ public class UVAnimation
                 {
                     curFrame = 0;
                 }
+
                 uv = frames[curFrame];
                 dm = UVDimensions[curFrame];
             }
@@ -112,6 +110,7 @@ public class UVAnimation
             uv = frames[curFrame];
             dm = UVDimensions[curFrame];
         }
+
         return true;
     }
 
@@ -133,4 +132,3 @@ public class UVAnimation
         frames = anim;
     }
 }
-

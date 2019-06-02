@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class custom_inputs : MonoBehaviour
 {
@@ -67,7 +62,6 @@ public class custom_inputs : MonoBehaviour
     private bool tempbool;
     private bool[] tempjoy1;
     private bool[] tempjoy2;
-    private string tempkeyPressed;
     private int tempLength;
 
     private void checDoubleAxis(string testAxisString, int o, int p)
@@ -128,21 +122,21 @@ public class custom_inputs : MonoBehaviour
 
     private void drawButtons1()
     {
-        var y = Boxes_Y;
+        var top = Boxes_Y;
         var x = Input.mousePosition.x;
-        var num3 = Input.mousePosition.y;
-        var point = GUI.matrix.inverse.MultiplyPoint3x4(new Vector3(x, Screen.height - num3, 1f));
+        var y = Input.mousePosition.y;
+        var point = GUI.matrix.inverse.MultiplyPoint3x4(new Vector3(x, Screen.height - y, 1f));
         GUI.skin = OurSkin;
         GUI.Box(new Rect(0f, 0f, Screen.width, Screen.height), string.Empty);
         GUI.Box(new Rect(60f, 60f, Screen.width - 120, Screen.height - 120), string.Empty, "window");
-        GUI.Label(new Rect(DescriptionBox_X, y - 10f, DescriptionSize, buttonHeight), "name", "textfield");
-        GUI.Label(new Rect(InputBox1_X, y - 10f, DescriptionSize, buttonHeight), "input", "textfield");
-        GUI.Label(new Rect(InputBox2_X, y - 10f, DescriptionSize, buttonHeight), "alt input", "textfield");
+        GUI.Label(new Rect(DescriptionBox_X, top - 10f, DescriptionSize, buttonHeight), "name", "textfield");
+        GUI.Label(new Rect(InputBox1_X, top - 10f, DescriptionSize, buttonHeight), "input", "textfield");
+        GUI.Label(new Rect(InputBox2_X, top - 10f, DescriptionSize, buttonHeight), "alt input", "textfield");
         for (var i = 0; i < DescriptionString.Length; i++)
         {
-            y += BoxesMargin_Y;
-            GUI.Label(new Rect(DescriptionBox_X, y, DescriptionSize, buttonHeight), DescriptionString[i], "box");
-            var position = new Rect(InputBox1_X, y, buttonSize, buttonHeight);
+            top += BoxesMargin_Y;
+            GUI.Label(new Rect(DescriptionBox_X, top, DescriptionSize, buttonHeight), DescriptionString[i], "box");
+            var position = new Rect(InputBox1_X, top, buttonSize, buttonHeight);
             GUI.Button(position, inputString[i]);
             if (!joystickActive[i] && inputKey[i] == KeyCode.None)
             {
@@ -178,7 +172,7 @@ public class custom_inputs : MonoBehaviour
             }
             if (mouseButtonsOn)
             {
-                var num5 = 323;
+                var num5 = 0x143;
                 for (var k = 0; k < 6; k++)
                 {
                     if (Input.GetMouseButton(k) && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
@@ -194,7 +188,7 @@ public class custom_inputs : MonoBehaviour
                     }
                 }
             }
-            for (var j = 350; j < 409; j++)
+            for (var j = 350; j < 0x199; j++)
             {
                 if (Input.GetKey((KeyCode) j) && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
                 {
@@ -442,15 +436,15 @@ public class custom_inputs : MonoBehaviour
 
     private void drawButtons2()
     {
-        var y = Boxes_Y;
+        var top = Boxes_Y;
         var x = Input.mousePosition.x;
-        var num3 = Input.mousePosition.y;
-        var point = GUI.matrix.inverse.MultiplyPoint3x4(new Vector3(x, Screen.height - num3, 1f));
+        var y = Input.mousePosition.y;
+        var point = GUI.matrix.inverse.MultiplyPoint3x4(new Vector3(x, Screen.height - y, 1f));
         GUI.skin = OurSkin;
         for (var i = 0; i < DescriptionString.Length; i++)
         {
-            y += BoxesMargin_Y;
-            var position = new Rect(InputBox2_X, y, buttonSize, buttonHeight);
+            top += BoxesMargin_Y;
+            var position = new Rect(InputBox2_X, top, buttonSize, buttonHeight);
             GUI.Button(position, inputString2[i]);
             if (!joystickActive2[i] && inputKey2[i] == KeyCode.None)
             {
@@ -479,7 +473,7 @@ public class custom_inputs : MonoBehaviour
             }
             if (mouseButtonsOn)
             {
-                var num5 = 323;
+                var num5 = 0x143;
                 for (var k = 0; k < 6; k++)
                 {
                     if (Input.GetMouseButton(k) && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
@@ -495,7 +489,7 @@ public class custom_inputs : MonoBehaviour
                     }
                 }
             }
-            for (var j = 350; j < 409; j++)
+            for (var j = 350; j < 0x199; j++)
             {
                 if (Input.GetKey((KeyCode) j) && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
                 {
@@ -835,17 +829,17 @@ public class custom_inputs : MonoBehaviour
         var str4 = PlayerPrefs.GetString("KeyCodes2");
         var str5 = PlayerPrefs.GetString("Joystick_input2");
         var str6 = PlayerPrefs.GetString("Names_input2");
-        var separator = new[] { '*' };
+        char[] separator = { '*' };
         var strArray = str.Split(separator);
-        var chArray2 = new[] { '*' };
+        char[] chArray2 = { '*' };
         joystickString = str2.Split(chArray2);
-        var chArray3 = new[] { '*' };
+        char[] chArray3 = { '*' };
         inputString = str3.Split(chArray3);
-        var chArray4 = new[] { '*' };
+        char[] chArray4 = { '*' };
         var strArray2 = str4.Split(chArray4);
-        var chArray5 = new[] { '*' };
+        char[] chArray5 = { '*' };
         joystickString2 = str5.Split(chArray5);
-        var chArray6 = new[] { '*' };
+        char[] chArray6 = { '*' };
         inputString2 = str6.Split(chArray6);
         for (var i = 0; i < DescriptionString.Length; i++)
         {
@@ -910,13 +904,13 @@ public class custom_inputs : MonoBehaviour
         {
             str = (int) default_inputKeys[i] + "*" + str;
             str2 = str2 + "#*";
-            str3 = default_inputKeys[i].ToString() + "*" + str3;
+            str3 = default_inputKeys[i] + "*" + str3;
             PlayerPrefs.SetString("KeyCodes", str);
             PlayerPrefs.SetString("Joystick_input", str2);
             PlayerPrefs.SetString("Names_input", str3);
             str4 = (int) alt_default_inputKeys[i] + "*" + str4;
             str5 = str5 + "#*";
-            str6 = alt_default_inputKeys[i].ToString() + "*" + str6;
+            str6 = alt_default_inputKeys[i] + "*" + str6;
             PlayerPrefs.SetString("KeyCodes2", str4);
             PlayerPrefs.SetString("Joystick_input2", str5);
             PlayerPrefs.SetString("Names_input2", str6);

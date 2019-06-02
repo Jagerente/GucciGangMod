@@ -1,16 +1,10 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Drag Camera"), ExecuteInEditMode]
 public class UIDragCamera : IgnoreTimeScale
 {
     public UIDraggableCamera draggableCamera;
-    [SerializeField, HideInInspector]
-    private Component target;
+    [SerializeField, HideInInspector] private Component target;
 
     private void Awake()
     {
@@ -24,6 +18,7 @@ public class UIDragCamera : IgnoreTimeScale
                     draggableCamera = target.gameObject.AddComponent<UIDraggableCamera>();
                 }
             }
+
             target = null;
         }
         else if (draggableCamera == null)
@@ -56,4 +51,3 @@ public class UIDragCamera : IgnoreTimeScale
         }
     }
 }
-

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Look At Target")]
 public class LookAtTarget : MonoBehaviour
@@ -20,8 +15,8 @@ public class LookAtTarget : MonoBehaviour
             var forward = target.position - mTrans.position;
             if (forward.magnitude > 0.001f)
             {
-                var b = Quaternion.LookRotation(forward);
-                mTrans.rotation = Quaternion.Slerp(mTrans.rotation, b, Mathf.Clamp01(speed * Time.deltaTime));
+                var to = Quaternion.LookRotation(forward);
+                mTrans.rotation = Quaternion.Slerp(mTrans.rotation, to, Mathf.Clamp01(speed * Time.deltaTime));
             }
         }
     }

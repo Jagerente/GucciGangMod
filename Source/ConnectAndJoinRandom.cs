@@ -1,11 +1,7 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-using UnityEngine;
-
-public class ConnectAndJoinRandom : Photon.MonoBehaviour
+public class ConnectAndJoinRandom : MonoBehaviour
 {
     public bool AutoConnect = true;
     private bool ConnectInUpdate = true;

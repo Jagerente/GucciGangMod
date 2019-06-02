@@ -1,13 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CheckBoxCamera : MonoBehaviour
 {
-    public CAMERA_TYPE camera;
+    public new CAMERA_TYPE camera;
 
     private void OnSelectionChange(bool yes)
     {

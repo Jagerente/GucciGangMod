@@ -1,12 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 [RequireComponent(typeof(PhotonView))]
-public class PickupItemSimple : Photon.MonoBehaviour
+public class PickupItemSimple : MonoBehaviour
 {
     public bool PickupOnCollide;
     public float SecondsBeforeRespawn = 2f;
@@ -36,6 +32,7 @@ public class PickupItemSimple : Photon.MonoBehaviour
         if (!SentPickup || !msgInfo.sender.isLocal || gameObject.GetActive())
         {
         }
+
         SentPickup = false;
         if (!gameObject.GetActive())
         {
@@ -61,4 +58,3 @@ public class PickupItemSimple : Photon.MonoBehaviour
         }
     }
 }
-

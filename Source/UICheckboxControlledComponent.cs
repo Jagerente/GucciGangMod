@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Checkbox Controlled Component")]
@@ -35,8 +30,8 @@ public class UICheckboxControlledComponent : MonoBehaviour
         if (component != null)
         {
             mUsingDelegates = true;
-            component.onStateChange = (UICheckbox.OnStateChange) Delegate.Combine(component.onStateChange, new UICheckbox.OnStateChange(OnActivateDelegate));
+            component.onStateChange = (UICheckbox.OnStateChange) Delegate.Combine(component.onStateChange,
+                new UICheckbox.OnStateChange(OnActivateDelegate));
         }
     }
 }
-

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using UnityEngine;
 
 public class InputManagerRC
@@ -28,8 +23,8 @@ public class InputManagerRC
         horseKeys = new KeyCode[7];
         titanWheel = new int[15];
         titanKeys = new KeyCode[15];
-        levelWheel = new int[17];
-        levelKeys = new KeyCode[17];
+        levelWheel = new int[0x11];
+        levelKeys = new KeyCode[0x11];
         cannonWheel = new int[7];
         cannonKeys = new KeyCode[7];
         for (num = 0; num < humanWheel.Length; num++)

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -69,10 +64,7 @@ public class BMFont
             while (num < count)
             {
                 var glyph = mSaved[num];
-                if (glyph != null)
-                {
-                    glyph.Trim(xMin, yMin, xMax, yMax);
-                }
+                glyph?.Trim(xMin, yMin, xMax, yMax);
                 num++;
             }
         }

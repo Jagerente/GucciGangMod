@@ -1,19 +1,15 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-public class Cannon : Photon.MonoBehaviour
+public class Cannon : MonoBehaviour
 {
     public Transform ballPoint;
     public Transform barrel;
     private Quaternion correctBarrelRot = Quaternion.identity;
     private Vector3 correctPlayerPos = Vector3.zero;
     private Quaternion correctPlayerRot = Quaternion.identity;
-    public float currentRot = 0f;
+    public float currentRot;
     public Transform firingPoint;
     public bool isCannonGround;
     public GameObject myCannonBall;
@@ -91,7 +87,7 @@ public class Cannon : Photon.MonoBehaviour
             {
                 if (strArray.Length > 15)
                 {
-                    var go = PhotonNetwork.Instantiate("RCAsset/" + strArray[1] + "Prop", new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]), Convert.ToSingle(strArray[14])), new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[16]), Convert.ToSingle(strArray[17]), Convert.ToSingle(strArray[18])), 0);
+                    var go = PhotonNetwork.Instantiate("RCAsset/" + strArray[1] + "Prop", new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]), Convert.ToSingle(strArray[14])), new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]), Convert.ToSingle(strArray[0x11]), Convert.ToSingle(strArray[0x12])), 0);
                     go.GetComponent<CannonPropRegion>().settings = settings;
                     go.GetPhotonView().RPC("SetSize", PhotonTargets.AllBuffered, settings);
                 }
@@ -271,7 +267,7 @@ public class Cannon : Photon.MonoBehaviour
                 {
                     myHero.isCannon = false;
                     myHero.myCannonRegion = null;
-                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(myHero.gameObject, true, false);
+                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(myHero.gameObject);
                     myHero.baseRigidBody.velocity = Vector3.zero;
                     myHero.photonView.RPC("ReturnFromCannon", PhotonTargets.Others);
                     myHero.skillCDLast = myHero.skillCDLastCannon;

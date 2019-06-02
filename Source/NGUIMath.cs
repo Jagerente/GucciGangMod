@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class NGUIMath
 {
@@ -205,8 +200,8 @@ public static class NGUIMath
     public static int ColorToInt(Color c)
     {
         var num = 0;
-        num |= Mathf.RoundToInt(c.r * 255f) << 24;
-        num |= Mathf.RoundToInt(c.g * 255f) << 16;
+        num |= Mathf.RoundToInt(c.r * 255f) << 0x18;
+        num |= Mathf.RoundToInt(c.g * 255f) << 0x10;
         num |= Mathf.RoundToInt(c.b * 255f) << 8;
         return num | Mathf.RoundToInt(c.a * 255f);
     }
@@ -282,7 +277,7 @@ public static class NGUIMath
 
     public static string DecimalToHex(int num)
     {
-        num &= 16777215;
+        num &= 0xffffff;
         return num.ToString("X6");
     }
 
@@ -294,9 +289,9 @@ public static class NGUIMath
         }
         if (num < 10)
         {
-            return (char) (48 + num);
+            return (char) (0x30 + num);
         }
-        return (char) (65 + num - 10);
+        return (char) (0x41 + num - 10);
     }
 
     private static float DistancePointToLineSegment(Vector2 point, Vector2 a, Vector2 b)
@@ -324,7 +319,7 @@ public static class NGUIMath
         return vector6.magnitude;
     }
 
-    public static unsafe float DistanceToRectangle(Vector2[] screenPoints, Vector2 mousePos)
+    public static float DistanceToRectangle(Vector2[] screenPoints, Vector2 mousePos)
     {
         var flag = false;
         var val = 4;
@@ -338,23 +333,24 @@ public static class NGUIMath
             }
             val = i;
         }
-        if (flag)
+        if (!flag)
         {
-            return 0f;
-        }
-        var num3 = -1f;
-        for (var j = 0; j < 4; j++)
-        {
-            Vector3 a = screenPoints[j];
-            Vector3 b = screenPoints[RepeatIndex(j + 1, 4)];
-            var num5 = DistancePointToLineSegment(mousePos, a, b);
-            if (num5 < num3 || num3 < 0f)
+            var num = -1f;
+            for (var j = 0; j < 4; j++)
             {
-                num3 = num5;
+                Vector3 v = screenPoints[j];
+                Vector3 v2 = screenPoints[RepeatIndex(j + 1, 4)];
+                var num2 = DistancePointToLineSegment(mousePos, v, v2);
+                if (num2 < num || num < 0f)
+                {
+                    num = num2;
+                }
             }
+            return num;
         }
-        return num3;
+        return 0f;
     }
+
 
     public static float DistanceToRectangle(Vector3[] worldPoints, Vector2 mousePos, Camera cam)
     {
@@ -472,8 +468,8 @@ public static class NGUIMath
             switch (num)
             {
                 case 8:
-                case 16:
-                case 24:
+                case 0x10:
+                case 0x18:
                     str = str + " ";
                     break;
             }
@@ -486,10 +482,10 @@ public static class NGUIMath
     {
         var num = 0.003921569f;
         var black = Color.black;
-        black.r = num * ((val >> 24) & 255);
-        black.g = num * ((val >> 16) & 255);
-        black.b = num * ((val >> 8) & 255);
-        black.a = num * (val & 255);
+        black.r = num * ((val >> 0x18) & 0xff);
+        black.g = num * ((val >> 0x10) & 0xff);
+        black.b = num * ((val >> 8) & 0xff);
+        black.a = num * (val & 0xff);
         return black;
     }
 
@@ -586,12 +582,12 @@ public static class NGUIMath
         }
         var num = Mathf.RoundToInt(deltaTime * 1000f);
         deltaTime = 0.001f * strength;
-        var a = 0f;
+        var from = 0f;
         for (var i = 0; i < num; i++)
         {
-            a = Mathf.Lerp(a, 1f, deltaTime);
+            from = Mathf.Lerp(from, 1f, deltaTime);
         }
-        return a;
+        return from;
     }
 
     public static float SpringLerp(float from, float to, float strength, float deltaTime)

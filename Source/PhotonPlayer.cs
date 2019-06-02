@@ -1,8 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
+﻿using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
@@ -52,29 +48,6 @@ public class PhotonPlayer
         return null;
     }
 
-    public Hashtable ChangeLocalPlayer(int NewID, string inputname)
-    {
-        /*PhotonNetwork.UnAllocateViewID(PhotonView.fi);*/
-        actorID = NewID;
-        string memes;
-        nameField = memes = string.Format("{0}_ID:{1}", inputname, NewID);
-        var hashtable = new Hashtable();
-        hashtable.Add(PhotonPlayerProperty.name, memes);
-        hashtable.Add(PhotonPlayerProperty.guildName, LoginFengKAI.player.guildname);
-        hashtable.Add(PhotonPlayerProperty.kills, 0);
-        hashtable.Add(PhotonPlayerProperty.max_dmg, 0);
-        hashtable.Add(PhotonPlayerProperty.total_dmg, 0);
-        hashtable.Add(PhotonPlayerProperty.deaths, 0);
-        hashtable.Add(PhotonPlayerProperty.dead, true);
-        hashtable.Add(PhotonPlayerProperty.isTitan, 0);
-        hashtable.Add(PhotonPlayerProperty.RCteam, 0);
-        hashtable.Add(PhotonPlayerProperty.currentLevel, string.Empty);
-        var propertiesToSet = hashtable;
-        PhotonNetwork.AllocateViewID();
-        PhotonNetwork.player.SetCustomProperties(propertiesToSet);
-        return propertiesToSet;
-    }
-
     public PhotonPlayer Get(int id)
     {
         return Find(id);
@@ -106,7 +79,7 @@ public class PhotonPlayer
             return null;
         }
         var mActors = PhotonNetwork.networkingPeer.mActors;
-        var num = 2147483647;
+        var num = 0x7fffffff;
         var num2 = currentPlayerId;
         foreach (var num3 in mActors.Keys)
         {
@@ -119,16 +92,16 @@ public class PhotonPlayer
                 num = num3;
             }
         }
-        return num == 2147483647 ? mActors[num2] : mActors[num];
+        return num == 0x7fffffff ? mActors[num2] : mActors[num];
     }
 
     internal void InternalCacheProperties(Hashtable properties)
     {
         if (properties != null && properties.Count != 0 && !customProperties.Equals(properties))
         {
-            if (properties.ContainsKey((byte) 255))
+            if (properties.ContainsKey((byte) 0xff))
             {
-                nameField = (string) properties[(byte) 255];
+                nameField = (string) properties[(byte) 0xff];
             }
             customProperties.MergeStringKeys(properties);
             customProperties.StripKeysWithNullValues();
@@ -153,12 +126,12 @@ public class PhotonPlayer
         {
             customProperties.MergeStringKeys(propertiesToSet);
             customProperties.StripKeysWithNullValues();
-            var actorProperties = propertiesToSet.StripToStringKeys();
+            Hashtable actorProperties = propertiesToSet.StripToStringKeys();
             if (actorID > 0 && !PhotonNetwork.offlineMode)
             {
                 PhotonNetwork.networkingPeer.OpSetCustomPropertiesOfActor(actorID, actorProperties, true, 0);
             }
-            var parameters = new object[] { this, propertiesToSet };
+            object[] parameters = { this, propertiesToSet };
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnPhotonPlayerPropertiesChanged, parameters);
         }
     }
@@ -183,7 +156,7 @@ public class PhotonPlayer
         {
             var target = new Hashtable();
             target.Merge(customProperties);
-            target[(byte) 255] = name;
+            target[(byte) 0xff] = name;
             return target;
         }
     }
@@ -203,21 +176,6 @@ public class PhotonPlayer
         get
         {
             return PhotonNetwork.networkingPeer.mMasterClient == this;
-        }
-    }
-
-    protected internal string Name
-    {
-        get
-        {
-            var a = customProperties["name"];
-            var b = a as string;
-            return b ?? string.Empty;
-        }
-        set
-        {
-            var propertiesToSet = new Hashtable { { "name", value } };
-            SetCustomProperties(propertiesToSet);
         }
     }
 

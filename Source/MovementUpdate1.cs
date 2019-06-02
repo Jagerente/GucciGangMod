@@ -1,16 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovementUpdate1 : MonoBehaviour
 {
     public bool disabled;
-    private Vector3 lastPosition;
-    private Quaternion lastRotation;
-    private Vector3 lastVelocity;
 
     private void Start()
     {
@@ -21,7 +13,7 @@ public class MovementUpdate1 : MonoBehaviour
         }
         else if (networkView.isMine)
         {
-            var args = new object[] { transform.position, transform.rotation, transform.lossyScale };
+            object[] args = { transform.position, transform.rotation, transform.lossyScale };
             networkView.RPC("updateMovement1", RPCMode.OthersBuffered, args);
         }
         else
@@ -34,7 +26,7 @@ public class MovementUpdate1 : MonoBehaviour
     {
         if (!disabled)
         {
-            var args = new object[] { transform.position, transform.rotation, transform.lossyScale };
+            object[] args = { transform.position, transform.rotation, transform.lossyScale };
             networkView.RPC("updateMovement1", RPCMode.Others, args);
         }
     }

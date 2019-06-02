@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Spring Position")]
 public class SpringPosition : IgnoreTimeScale
@@ -56,10 +51,7 @@ public class SpringPosition : IgnoreTimeScale
             if (mThreshold >= vector2.magnitude)
             {
                 mTrans.position = target;
-                if (onFinished != null)
-                {
-                    onFinished(this);
-                }
+                onFinished?.Invoke(this);
                 if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                 {
                     eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
@@ -79,10 +71,7 @@ public class SpringPosition : IgnoreTimeScale
             if (mThreshold >= vector4.magnitude)
             {
                 mTrans.localPosition = target;
-                if (onFinished != null)
-                {
-                    onFinished(this);
-                }
+                onFinished?.Invoke(this);
                 if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                 {
                     eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);

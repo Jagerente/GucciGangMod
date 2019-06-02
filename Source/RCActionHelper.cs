@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 
 public class RCActionHelper
 {
@@ -131,7 +126,7 @@ public class RCActionHelper
                             }
                             return false;
                         }
-                        case 16:
+                        case 0x10:
                         {
                             var num6 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num6))
@@ -141,7 +136,7 @@ public class RCActionHelper
                             }
                             return false;
                         }
-                        case 17:
+                        case 0x11:
                         {
                             var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
@@ -334,7 +329,7 @@ public class RCActionHelper
                             }
                             return 0f;
                         }
-                        case 16:
+                        case 0x10:
                         {
                             var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
@@ -344,7 +339,7 @@ public class RCActionHelper
                             }
                             return 0f;
                         }
-                        case 17:
+                        case 0x11:
                         {
                             var num8 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num8))
@@ -541,7 +536,7 @@ public class RCActionHelper
                             }
                             return 0;
                         }
-                        case 16:
+                        case 0x10:
                         {
                             var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
@@ -551,7 +546,7 @@ public class RCActionHelper
                             }
                             return 0;
                         }
-                        case 17:
+                        case 0x11:
                         {
                             var num8 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num8))
@@ -769,7 +764,7 @@ public class RCActionHelper
                             }
                             return string.Empty;
                         }
-                        case 16:
+                        case 0x10:
                         {
                             var num6 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num6))
@@ -779,7 +774,7 @@ public class RCActionHelper
                             }
                             return string.Empty;
                         }
-                        case 17:
+                        case 0x11:
                         {
                             var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))

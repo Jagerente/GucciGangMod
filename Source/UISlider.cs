@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Slider")]
@@ -24,8 +19,7 @@ public class UISlider : IgnoreTimeScale
     private Transform mTrans;
     public int numberOfSteps;
     public OnValueChange onValueChange;
-    [HideInInspector, SerializeField]
-    private float rawValue = 1f;
+    [HideInInspector, SerializeField] private float rawValue = 1f;
     public Transform thumb;
 
     private void Awake()
@@ -51,6 +45,7 @@ public class UISlider : IgnoreTimeScale
             {
                 mSize = foreground.localScale;
             }
+
             if (mCenter == Vector2.zero)
             {
                 mCenter = foreground.localPosition + foreground.localScale * 0.5f;
@@ -62,6 +57,7 @@ public class UISlider : IgnoreTimeScale
             {
                 mSize = mCol.size;
             }
+
             if (mCenter == Vector2.zero)
             {
                 mCenter = mCol.center;
@@ -129,17 +125,19 @@ public class UISlider : IgnoreTimeScale
         {
             Init();
         }
+
         var num = Mathf.Clamp01(input);
         if (num < 0.001f)
         {
             num = 0f;
         }
+
         var sliderValue = this.sliderValue;
         rawValue = num;
         var num3 = this.sliderValue;
         if (force || sliderValue != num3)
         {
-            var mSize = (Vector3) this.mSize;
+            Vector3 mSize = this.mSize;
             if (direction == Direction.Horizontal)
             {
                 mSize.x *= num3;
@@ -148,6 +146,7 @@ public class UISlider : IgnoreTimeScale
             {
                 mSize.y *= num3;
             }
+
             if (mFGFilled != null && mFGFilled.type == UISprite.Type.Filled)
             {
                 mFGFilled.fillAmount = num3;
@@ -168,6 +167,7 @@ public class UISlider : IgnoreTimeScale
                     }
                 }
             }
+
             if (thumb != null)
             {
                 var localPosition = thumb.localPosition;
@@ -183,7 +183,8 @@ public class UISlider : IgnoreTimeScale
                     }
                     else
                     {
-                        Debug.LogWarning("Slider thumb is only supported with Horizontal or Vertical fill direction", this);
+                        Debug.LogWarning("Slider thumb is only supported with Horizontal or Vertical fill direction",
+                            this);
                     }
                 }
                 else if (direction == Direction.Horizontal)
@@ -194,17 +195,17 @@ public class UISlider : IgnoreTimeScale
                 {
                     localPosition.y = mSize.y;
                 }
+
                 thumb.localPosition = localPosition;
             }
+
             current = this;
             if (eventReceiver != null && !string.IsNullOrEmpty(functionName) && Application.isPlaying)
             {
                 eventReceiver.SendMessage(functionName, num3, SendMessageOptions.DontRequireReceiver);
             }
-            if (onValueChange != null)
-            {
-                onValueChange(num3);
-            }
+
+            onValueChange?.Invoke(num3);
             current = null;
         }
     }
@@ -215,9 +216,12 @@ public class UISlider : IgnoreTimeScale
         if (Application.isPlaying && thumb != null && thumb.collider != null)
         {
             var listener = UIEventListener.Get(thumb.gameObject);
-            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress, new UIEventListener.BoolDelegate(OnPressThumb));
-            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag, new UIEventListener.VectorDelegate(OnDragThumb));
+            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress,
+                new UIEventListener.BoolDelegate(OnPressThumb));
+            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag,
+                new UIEventListener.VectorDelegate(OnDragThumb));
         }
+
         Set(rawValue, true);
     }
 
@@ -241,10 +245,7 @@ public class UISlider : IgnoreTimeScale
 
     public Vector2 fullSize
     {
-        get
-        {
-            return mSize;
-        }
+        get { return mSize; }
         set
         {
             if (mSize != value)
@@ -264,12 +265,10 @@ public class UISlider : IgnoreTimeScale
             {
                 rawValue = Mathf.Round(rawValue * (numberOfSteps - 1)) / (numberOfSteps - 1);
             }
+
             return rawValue;
         }
-        set
-        {
-            Set(value, false);
-        }
+        set { Set(value, false); }
     }
 
     public enum Direction
@@ -280,4 +279,3 @@ public class UISlider : IgnoreTimeScale
 
     public delegate void OnValueChange(float val);
 }
-

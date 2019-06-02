@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BTN_RESULT_TO_MAIN : MonoBehaviour
 {
@@ -15,7 +10,7 @@ public class BTN_RESULT_TO_MAIN : MonoBehaviour
             PhotonNetwork.Disconnect();
         }
         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-        FengGameManagerMKII.GameStart = false;
+        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameStart = false;
         Screen.lockCursor = false;
         Screen.showCursor = true;
         GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;

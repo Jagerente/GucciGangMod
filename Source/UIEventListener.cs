@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Internal/Event Listener")]
 public class UIEventListener : MonoBehaviour
@@ -28,95 +23,63 @@ public class UIEventListener : MonoBehaviour
         {
             component = go.AddComponent<UIEventListener>();
         }
+
         return component;
     }
 
     private void OnClick()
     {
-        if (onClick != null)
-        {
-            onClick(gameObject);
-        }
+        onClick?.Invoke(gameObject);
     }
 
     private void OnDoubleClick()
     {
-        if (onDoubleClick != null)
-        {
-            onDoubleClick(gameObject);
-        }
+        onDoubleClick?.Invoke(gameObject);
     }
 
     private void OnDrag(Vector2 delta)
     {
-        if (onDrag != null)
-        {
-            onDrag(gameObject, delta);
-        }
+        onDrag?.Invoke(gameObject, delta);
     }
 
     private void OnDrop(GameObject go)
     {
-        if (onDrop != null)
-        {
-            onDrop(gameObject, go);
-        }
+        onDrop?.Invoke(gameObject, go);
     }
 
     private void OnHover(bool isOver)
     {
-        if (onHover != null)
-        {
-            onHover(gameObject, isOver);
-        }
+        onHover?.Invoke(gameObject, isOver);
     }
 
     private void OnInput(string text)
     {
-        if (onInput != null)
-        {
-            onInput(gameObject, text);
-        }
+        onInput?.Invoke(gameObject, text);
     }
 
     private void OnKey(KeyCode key)
     {
-        if (onKey != null)
-        {
-            onKey(gameObject, key);
-        }
+        onKey?.Invoke(gameObject, key);
     }
 
     private void OnPress(bool isPressed)
     {
-        if (onPress != null)
-        {
-            onPress(gameObject, isPressed);
-        }
+        onPress?.Invoke(gameObject, isPressed);
     }
 
     private void OnScroll(float delta)
     {
-        if (onScroll != null)
-        {
-            onScroll(gameObject, delta);
-        }
+        onScroll?.Invoke(gameObject, delta);
     }
 
     private void OnSelect(bool selected)
     {
-        if (onSelect != null)
-        {
-            onSelect(gameObject, selected);
-        }
+        onSelect?.Invoke(gameObject, selected);
     }
 
     private void OnSubmit()
     {
-        if (onSubmit != null)
-        {
-            onSubmit(gameObject);
-        }
+        onSubmit?.Invoke(gameObject);
     }
 
     public delegate void BoolDelegate(GameObject go, bool state);
@@ -133,4 +96,3 @@ public class UIEventListener : MonoBehaviour
 
     public delegate void VoidDelegate(GameObject go);
 }
-

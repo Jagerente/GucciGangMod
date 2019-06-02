@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class HeroStat
 {
@@ -51,28 +46,28 @@ public class HeroStat
         SASHA = new HeroStat();
         MIKASA.name = "MIKASA";
         MIKASA.skillId = "mikasa";
-        MIKASA.SPD = 125;
-        MIKASA.GAS = 75;
-        MIKASA.BLA = 75;
-        MIKASA.ACL = 135;
+        MIKASA.SPD = 0x7d;
+        MIKASA.GAS = 0x4b;
+        MIKASA.BLA = 0x4b;
+        MIKASA.ACL = 0x87;
         LEVI.name = "LEVI";
         LEVI.skillId = "levi";
-        LEVI.SPD = 95;
+        LEVI.SPD = 0x5f;
         LEVI.GAS = 100;
         LEVI.BLA = 100;
         LEVI.ACL = 150;
         ARMIN.name = "ARMIN";
         ARMIN.skillId = "armin";
-        ARMIN.SPD = 75;
+        ARMIN.SPD = 0x4b;
         ARMIN.GAS = 150;
-        ARMIN.BLA = 125;
-        ARMIN.ACL = 85;
+        ARMIN.BLA = 0x7d;
+        ARMIN.ACL = 0x55;
         MARCO.name = "MARCO";
         MARCO.skillId = "marco";
         MARCO.SPD = 110;
         MARCO.GAS = 100;
-        MARCO.BLA = 115;
-        MARCO.ACL = 95;
+        MARCO.BLA = 0x73;
+        MARCO.ACL = 0x5f;
         JEAN.name = "JEAN";
         JEAN.skillId = "jean";
         JEAN.SPD = 100;
@@ -96,7 +91,7 @@ public class HeroStat
         SASHA.SPD = 140;
         SASHA.GAS = 100;
         SASHA.BLA = 100;
-        SASHA.ACL = 115;
+        SASHA.ACL = 0x73;
         var stat = new HeroStat {
             skillId = "petra",
             SPD = 100,

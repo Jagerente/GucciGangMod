@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 using Xft;
 
 public class XWeaponTrailDemo : MonoBehaviour
@@ -24,14 +19,17 @@ public class XWeaponTrailDemo : MonoBehaviour
             SwordAnimation.Play();
             SimpleTrail.Activate();
         }
+
         if (GUI.Button(new Rect(0f, 30f, 150f, 30f), "Stop Trail1"))
         {
             SimpleTrail.Deactivate();
         }
+
         if (GUI.Button(new Rect(0f, 60f, 150f, 30f), "Stop Trail1 Smoothly"))
         {
             SimpleTrail.StopSmoothly(0.3f);
         }
+
         if (GUI.Button(new Rect(0f, 120f, 150f, 30f), "Activate Trail2"))
         {
             SimpleTrail.Deactivate();
@@ -40,12 +38,14 @@ public class XWeaponTrailDemo : MonoBehaviour
             ProTrailShort.Activate();
             ProTraillong.Activate();
         }
+
         if (GUI.Button(new Rect(0f, 150f, 150f, 30f), "Stop Trail2"))
         {
             ProTrailDistort.Deactivate();
             ProTrailShort.Deactivate();
             ProTraillong.Deactivate();
         }
+
         if (GUI.Button(new Rect(0f, 180f, 150f, 30f), "Stop Trail2 Smoothly"))
         {
             ProTrailDistort.StopSmoothly(0.3f);
@@ -62,4 +62,3 @@ public class XWeaponTrailDemo : MonoBehaviour
         SimpleTrail.Init();
     }
 }
-

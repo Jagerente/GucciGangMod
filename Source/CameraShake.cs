@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
@@ -40,7 +35,7 @@ public class CameraShake : MonoBehaviour
     {
     }
 
-    public void startShake(float R, float duration, float decay = 0.95f)
+    public void startShake(float R, float duration,  float decay = 0.95f)
     {
         if (this.duration < duration)
         {

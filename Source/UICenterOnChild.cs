@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Center On Child")]
 public class UICenterOnChild : MonoBehaviour
@@ -33,20 +28,25 @@ public class UICenterOnChild : MonoBehaviour
             mDrag = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
             if (mDrag == null)
             {
-                Debug.LogWarning(string.Concat(GetType(), " requires ", typeof(UIDraggablePanel), " on a parent object in order to work"), this);
+                Debug.LogWarning(
+                    string.Concat(GetType(), " requires ", typeof(UIDraggablePanel),
+                        " on a parent object in order to work"), this);
                 enabled = false;
                 return;
             }
-            mDrag.onDragFinished = new UIDraggablePanel.OnDragFinished(OnDragFinished);
+
+            mDrag.onDragFinished = OnDragFinished;
             if (mDrag.horizontalScrollBar != null)
             {
-                mDrag.horizontalScrollBar.onDragFinished = new UIScrollBar.OnDragFinished(OnDragFinished);
+                mDrag.horizontalScrollBar.onDragFinished = OnDragFinished;
             }
+
             if (mDrag.verticalScrollBar != null)
             {
-                mDrag.verticalScrollBar.onDragFinished = new UIScrollBar.OnDragFinished(OnDragFinished);
+                mDrag.verticalScrollBar.onDragFinished = OnDragFinished;
             }
         }
+
         if (mDrag.panel != null)
         {
             var clipRange = mDrag.panel.clipRange;
@@ -71,8 +71,10 @@ public class UICenterOnChild : MonoBehaviour
                     maxValue = num4;
                     transform2 = child;
                 }
+
                 index++;
             }
+
             if (transform2 != null)
             {
                 mCenteredObject = transform2.gameObject;
@@ -83,15 +85,19 @@ public class UICenterOnChild : MonoBehaviour
                 {
                     vector6.x = 0f;
                 }
+
                 if (mDrag.scale.y == 0f)
                 {
                     vector6.y = 0f;
                 }
+
                 if (mDrag.scale.z == 0f)
                 {
                     vector6.z = 0f;
                 }
-                SpringPanel.Begin(mDrag.gameObject, cachedTransform.localPosition - vector6, springStrength).onFinished = onFinished;
+
+                SpringPanel.Begin(mDrag.gameObject, cachedTransform.localPosition - vector6, springStrength)
+                    .onFinished = onFinished;
             }
             else
             {
@@ -102,10 +108,6 @@ public class UICenterOnChild : MonoBehaviour
 
     public GameObject centeredObject
     {
-        get
-        {
-            return mCenteredObject;
-        }
+        get { return mCenteredObject; }
     }
 }
-

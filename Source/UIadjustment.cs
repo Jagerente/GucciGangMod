@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UIadjustment : MonoBehaviour
 {
@@ -17,4 +12,3 @@ public class UIadjustment : MonoBehaviour
         transform.localScale = new Vector3(Screen.width / 960, Screen.height / 600, 0f);
     }
 }
-

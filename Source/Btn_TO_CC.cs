@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Btn_TO_CC : MonoBehaviour
 {
@@ -12,4 +7,3 @@ public class Btn_TO_CC : MonoBehaviour
         Application.LoadLevel("characterCreation");
     }
 }
-

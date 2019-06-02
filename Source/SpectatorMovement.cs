@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpectatorMovement : MonoBehaviour
 {
@@ -27,6 +22,7 @@ public class SpectatorMovement : MonoBehaviour
             {
                 speed *= 3f;
             }
+
             if (inputManager.isInput[InputCode.up])
             {
                 num2 = 1f;
@@ -39,6 +35,7 @@ public class SpectatorMovement : MonoBehaviour
             {
                 num2 = 0f;
             }
+
             if (inputManager.isInput[InputCode.left])
             {
                 num3 = -1f;
@@ -51,6 +48,7 @@ public class SpectatorMovement : MonoBehaviour
             {
                 num3 = 0f;
             }
+
             var transform = this.transform;
             if (num2 > 0f)
             {
@@ -60,6 +58,7 @@ public class SpectatorMovement : MonoBehaviour
             {
                 transform.position -= this.transform.forward * speed * Time.deltaTime;
             }
+
             if (num3 > 0f)
             {
                 transform.position += this.transform.right * speed * Time.deltaTime;
@@ -68,6 +67,7 @@ public class SpectatorMovement : MonoBehaviour
             {
                 transform.position -= this.transform.right * speed * Time.deltaTime;
             }
+
             if (inputManager.isInput[InputCode.leftRope])
             {
                 transform.position -= this.transform.up * speed * Time.deltaTime;
@@ -79,4 +79,3 @@ public class SpectatorMovement : MonoBehaviour
         }
     }
 }
-

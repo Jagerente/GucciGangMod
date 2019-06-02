@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Stretch"), ExecuteInEditMode]
 public class UIStretch : MonoBehaviour
@@ -32,6 +27,7 @@ public class UIStretch : MonoBehaviour
         {
             uiCamera = NGUITools.FindCameraForLayer(gameObject.layer);
         }
+
         mRoot = NGUITools.FindInParents<UIRoot>(gameObject);
     }
 
@@ -63,8 +59,8 @@ public class UIStretch : MonoBehaviour
                 var cachedTransform = widgetContainer.cachedTransform;
                 var vector2 = cachedTransform.localScale;
                 var localPosition = cachedTransform.localPosition;
-                var relativeSize = (Vector3) widgetContainer.relativeSize;
-                var pivotOffset = (Vector3) widgetContainer.pivotOffset;
+                Vector3 relativeSize = widgetContainer.relativeSize;
+                Vector3 pivotOffset = widgetContainer.pivotOffset;
                 pivotOffset.y--;
                 pivotOffset.x *= widgetContainer.relativeSize.x * vector2.x;
                 pivotOffset.y *= widgetContainer.relativeSize.y * vector2.y;
@@ -85,6 +81,7 @@ public class UIStretch : MonoBehaviour
             {
                 return;
             }
+
             var width = mRect.width;
             var height = mRect.height;
             if (pixelSizeAdjustment != 1f && height > 1f)
@@ -93,6 +90,7 @@ public class UIStretch : MonoBehaviour
                 width *= num4;
                 height *= num4;
             }
+
             var localScale = mTrans.localScale;
             if (style == Style.BasedOnHeight)
             {
@@ -139,11 +137,13 @@ public class UIStretch : MonoBehaviour
                 {
                     localScale.x = relativeSize.x * width;
                 }
+
                 if (style == Style.Both || style == Style.Vertical)
                 {
                     localScale.y = relativeSize.y * height;
                 }
             }
+
             if (mTrans.localScale != localScale)
             {
                 mTrans.localScale = localScale;
@@ -162,4 +162,3 @@ public class UIStretch : MonoBehaviour
         FitInternalKeepingRatio
     }
 }
-

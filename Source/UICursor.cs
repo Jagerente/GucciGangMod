@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(UISprite)), AddComponentMenu("NGUI/Examples/UI Cursor")]
 public class UICursor : MonoBehaviour
@@ -78,4 +73,3 @@ public class UICursor : MonoBehaviour
         }
     }
 }
-

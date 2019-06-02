@@ -1,29 +1,24 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public static class PhotonNetwork
 {
-    public static bool bWasJustKicked = false;
-    private static bool _mAutomaticallySyncScene = false;
+    private static bool _mAutomaticallySyncScene;
     private static bool autoJoinLobbyField = true;
     public static bool InstantiateInRoomOnly = true;
-    private static bool isOfflineMode = false;
-    internal static int lastUsedViewSubId = 0;
-    internal static int lastUsedViewSubIdStatic = 0;
+    private static bool isOfflineMode;
+    internal static int lastUsedViewSubId;
+    internal static int lastUsedViewSubIdStatic;
     public static PhotonLogLevel logLevel = PhotonLogLevel.ErrorsOnly;
     private static bool m_autoCleanUpPlayerObjects = true;
     private static bool m_isMessageQueueRunning = true;
     internal static List<int> manuallyAllocatedViewIds = new List<int>();
-    public static readonly int MAX_VIEW_IDS = 1000;
+    public static readonly int MAX_VIEW_IDS = 0x3e8;
     internal static NetworkingPeer networkingPeer;
-    private static Room offlineModeRoom = null;
+    private static Room offlineModeRoom;
     public static EventCallback OnEventCall;
     internal static readonly PhotonHandler photonMono;
     public static ServerSettings PhotonServerSettings = (ServerSettings) Resources.Load("PhotonServerSettings", typeof(ServerSettings));
@@ -126,7 +121,7 @@ public static class PhotonNetwork
         var options = new RaiseEventOptions();
         options.TargetActors = new[] { kickPlayer.ID };
         var raiseEventOptions = options;
-        return networkingPeer.OpRaiseEvent(203, null, true, raiseEventOptions);
+        return networkingPeer.OpRaiseEvent(0xcb, null, true, raiseEventOptions);
     }
 
     public static bool ConnectToBestCloudServer(string gameVersion)
@@ -322,18 +317,15 @@ public static class PhotonNetwork
             networkingPeer.State = PeerStates.Disconnecting;
             networkingPeer.OnStatusChanged(StatusCode.Disconnect);
         }
-        else if (networkingPeer != null)
+        else
         {
-            networkingPeer.Disconnect();
+            networkingPeer?.Disconnect();
         }
     }
 
     public static void FetchServerTimestamp()
     {
-        if (networkingPeer != null)
-        {
-            networkingPeer.FetchServerTimestamp();
-        }
+        networkingPeer?.FetchServerTimestamp();
     }
 
     public static bool FindFriends(string[] friendsToFind)
@@ -404,7 +396,7 @@ public static class PhotonNetwork
             viewIDs[i] = AllocateViewID(player.ID);
         }
         var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, false);
-        return networkingPeer.DoInstantiate2(evData, networkingPeer.mLocalActor, obj2);
+        return networkingPeer.DoInstantiate(evData, networkingPeer.mLocalActor, obj2);
     }
 
     public static GameObject InstantiateSceneObject(string prefabName, Vector3 position, Quaternion rotation, int group, object[] data)
@@ -445,12 +437,12 @@ public static class PhotonNetwork
             return null;
         }
         var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, true);
-        return networkingPeer.DoInstantiate2(evData, networkingPeer.mLocalActor, obj2);
+        return networkingPeer.DoInstantiate(evData, networkingPeer.mLocalActor, obj2);
     }
 
     public static void InternalCleanPhotonMonoFromSceneIfStuck()
     {
-        var handlerArray = UnityEngine.Object.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
+        var handlerArray = Object.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
         if (handlerArray != null && handlerArray.Length > 0)
         {
             Debug.Log("Cleaning up hidden PhotonHandler instances in scene. Please save it. This is not an issue.");
@@ -459,9 +451,9 @@ public static class PhotonNetwork
                 handler.gameObject.hideFlags = HideFlags.None;
                 if (handler.gameObject != null && handler.gameObject.name == "PhotonMono")
                 {
-                    UnityEngine.Object.DestroyImmediate(handler.gameObject);
+                    Object.DestroyImmediate(handler.gameObject);
                 }
-                UnityEngine.Object.DestroyImmediate(handler);
+                Object.DestroyImmediate(handler);
             }
         }
     }
@@ -548,7 +540,7 @@ public static class PhotonNetwork
         target.MergeStringKeys(expectedCustomRoomProperties);
         if (expectedMaxPlayers > 0)
         {
-            target[(byte) 255] = expectedMaxPlayers;
+            target[(byte) 0xff] = expectedMaxPlayers;
         }
         return networkingPeer.OpJoinRandomRoom(target, 0, null, matchingType, typedLobby, sqlLobbyFilter);
     }
@@ -612,50 +604,19 @@ public static class PhotonNetwork
         return connected && Server == ServerConnection.MasterServer && networkingPeer.OpLeaveLobby();
     }
 
-    public static bool RejoinRoom(string roomName, RoomOptions roomOptions, TypedLobby typedLobby, bool createIfNotExists, Hashtable Hash)
-    {
-        var onGameServer = networkingPeer.server == ServerConnection.GameServer;
-        if (!onGameServer)
-        {
-            var mRoomToGetInto = new Room(roomName, roomOptions);
-            networkingPeer.mRoomToEnterLobby = null;
-            if (createIfNotExists)
-            {
-                if (typedLobby == null)
-                {
-                }
-                networkingPeer.mRoomToEnterLobby = !networkingPeer.insideLobby ? null : networkingPeer.lobby;
-            }
-        }
-        return networkingPeer.OpJoinRoom(roomName, roomOptions, networkingPeer.mRoomToEnterLobby, createIfNotExists, Hash, onGameServer);
-    }
-
     public static bool LeaveRoom()
     {
-        bWasJustKicked = true;
-         var CurRoom = room;
-//         networkingPeer.OpLeave();
-         var MyHash = player.ChangeLocalPlayer(player.ID + 1, GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().name);
-       // GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().name = PhotonNetwork.player.name;
-
-         RejoinRoom(CurRoom.name, null, null, false, MyHash);
-        if (!isMasterClient)
+        if (offlineMode)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("RequireStatus", PhotonTargets.MasterClient);
+            offlineModeRoom = null;
+            NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnLeftRoom);
+            return true;
         }
-        return true;
-
-//         if (offlineMode)
-//         {
-//             offlineModeRoom = null;
-//             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnLeftRoom, new object[0]);
-//             return true;
-//         }
-//         if (room == null)
-//         {
-//             Debug.LogWarning("PhotonNetwork.room is null. You don't have to call LeaveRoom() when you're not in one. State: " + connectionStateDetailed);
-//         }
-//         return networkingPeer.OpLeave();
+        if (room == null)
+        {
+            Debug.LogWarning("PhotonNetwork.room is null. You don't have to call LeaveRoom() when you're not in one. State: " + connectionStateDetailed);
+        }
+        return networkingPeer.OpLeave();
     }
 
     public static void LoadLevel(int levelNumber)
@@ -695,7 +656,7 @@ public static class PhotonNetwork
 
     public static bool RaiseEvent(byte eventCode, object eventContent, bool sendReliable, RaiseEventOptions options)
     {
-        if (inRoom && eventCode < 255)
+        if (inRoom && eventCode < 0xff)
         {
             return networkingPeer.OpRaiseEvent(eventCode, eventContent, sendReliable, options);
         }
@@ -1200,11 +1161,7 @@ public static class PhotonNetwork
     {
         get
         {
-            if (networkingPeer == null)
-            {
-                return null;
-            }
-            return networkingPeer.mMasterClient;
+            return networkingPeer?.mMasterClient;
         }
     }
 
@@ -1319,11 +1276,7 @@ public static class PhotonNetwork
     {
         get
         {
-            if (networkingPeer == null)
-            {
-                return null;
-            }
-            return networkingPeer.mLocalActor;
+            return networkingPeer?.mLocalActor;
         }
     }
 
@@ -1375,11 +1328,11 @@ public static class PhotonNetwork
     {
         get
         {
-            return 1000 / sendInterval;
+            return 0x3e8 / sendInterval;
         }
         set
         {
-            sendInterval = 1000 / value;
+            sendInterval = 0x3e8 / value;
             if (photonMono != null)
             {
                 photonMono.updateInterval = sendInterval;
@@ -1395,7 +1348,7 @@ public static class PhotonNetwork
     {
         get
         {
-            return 1000 / sendIntervalOnSerialize;
+            return 0x3e8 / sendIntervalOnSerialize;
         }
         set
         {
@@ -1404,7 +1357,7 @@ public static class PhotonNetwork
                 Debug.LogError("Error, can not set the OnSerialize SendRate more often then the overall SendRate");
                 value = sendRate;
             }
-            sendIntervalOnSerialize = 1000 / value;
+            sendIntervalOnSerialize = 0x3e8 / value;
             if (photonMono != null)
             {
                 photonMono.updateIntervalOnSerialize = sendIntervalOnSerialize;

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class VortexAffector : Affector
 {
@@ -43,6 +38,7 @@ public class VortexAffector : Affector
             {
                 zero = Vector3.Cross(Direction, rhs).normalized;
             }
+
             var elapsedTime = Node.GetElapsedTime();
             if (UseCurve)
             {
@@ -52,9 +48,9 @@ public class VortexAffector : Affector
             {
                 magnitude = Magnitude;
             }
+
             zero = zero * (magnitude * Time.deltaTime);
             Node.Position += zero;
         }
     }
 }
-

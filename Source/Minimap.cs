@@ -1,17 +1,11 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using GGM;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class Minimap : MonoBehaviour
 {
-    private bool assetsInitialized = false;
+    private bool assetsInitialized;
     private static UnityEngine.Sprite borderSprite;
     private RectTransform borderT;
     private Canvas canvas;
@@ -24,17 +18,16 @@ public class Minimap : MonoBehaviour
     private Vector3 lastMinimapCenter;
     private float lastMinimapOrthoSize;
     private Camera lastUsedCamera;
-    private bool maximized = false;
+    private bool maximized;
     private RectTransform minimap;
     private float MINIMAP_CORNER_SIZE;
-    private float MINIMAP_CORNER_SIZE_SCALED;
     private Vector2 MINIMAP_ICON_SIZE;
     private float MINIMAP_POINTER_DIST;
     private float MINIMAP_POINTER_SIZE;
     private int MINIMAP_SIZE;
     private Vector2 MINIMAP_SUPPLY_SIZE;
     private MinimapIcon[] minimapIcons;
-    private bool minimapIsCreated = false;
+    private bool minimapIsCreated;
     private RectTransform minimapMaskT;
     private Bounds minimapOrthographicBounds;
     public RenderTexture minimapRT;
@@ -138,7 +131,7 @@ public class Minimap : MonoBehaviour
 
     private void CheckUserInput()
     {
-        if (Settings.Minimap == 1 && RCSettings.globalDisableMinimap == 0)
+        if ((int) FengGameManagerMKII.settings[0xe7] == 1 && RCSettings.globalDisableMinimap == 0)
         {
             if (minimapIsCreated)
             {
@@ -223,7 +216,7 @@ public class Minimap : MonoBehaviour
         }
     }
 
-    public void CreateMinimap(Camera cam, int minimapResolution = 512, float cornerSize = 0.3f, Preset mapPreset = null)
+    public void CreateMinimap(Camera cam, int minimapResolution = 0x200, float cornerSize = 0.3f, Preset mapPreset = null)
     {
         isEnabled = true;
         lastUsedCamera = cam;
@@ -254,7 +247,7 @@ public class Minimap : MonoBehaviour
         }
         cam.nearClipPlane = 0.3f;
         cam.farClipPlane = 1000f;
-        cam.cullingMask = 512;
+        cam.cullingMask = 0x200;
         cam.clearFlags = CameraClearFlags.Color;
         MINIMAP_SIZE = minimapResolution;
         MINIMAP_CORNER_SIZE = MINIMAP_SIZE * cornerSize;
@@ -293,7 +286,7 @@ public class Minimap : MonoBehaviour
         {
             var flag2 = SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.RGB565);
             var format = flag2 ? RenderTextureFormat.RGB565 : RenderTextureFormat.Default;
-            minimapRT = new RenderTexture(pixelSize, pixelSize, 16, RenderTextureFormat.RGB565);
+            minimapRT = new RenderTexture(pixelSize, pixelSize, 0x10, RenderTextureFormat.RGB565);
             if (!flag2)
             {
                 Debug.Log(SystemInfo.graphicsDeviceName + " (" + SystemInfo.graphicsDeviceVendor + ") does not support RGB565 format, the minimap will have transparency issues on certain maps");
@@ -567,7 +560,7 @@ public class Minimap : MonoBehaviour
             cam.nearClipPlane = 0.3f;
             cam.farClipPlane = 1000f;
             cam.clearFlags = CameraClearFlags.Color;
-            cam.cullingMask = 512;
+            cam.cullingMask = 0x200;
             CreateMinimapRT(cam, MINIMAP_SIZE);
             ManualSetCameraProperties(cam, centerPosition, orthoSize);
             CaptureMinimapRT(cam);
@@ -689,12 +682,12 @@ public class Minimap : MonoBehaviour
                 var icon = minimapIcons[i];
                 if (icon == null)
                 {
-                    RCextensions.RemoveAt<MinimapIcon>(ref minimapIcons, i);
+                    RCextensions.RemoveAt(ref minimapIcons, i);
                 }
                 else if (!icon.UpdateUI(minimapOrthographicBounds, maximized ? MINIMAP_SIZE : MINIMAP_CORNER_SIZE))
                 {
                     icon.Destroy();
-                    RCextensions.RemoveAt<MinimapIcon>(ref minimapIcons, i);
+                    RCextensions.RemoveAt(ref minimapIcons, i);
                 }
             }
         }
@@ -864,7 +857,7 @@ public class Minimap : MonoBehaviour
             vector.x = vector.x < 0f ? -num2 : num2;
             var num3 = Mathf.Abs(vector.y) / x;
             vector.y = vector.y < 0f ? -num3 : num3;
-            var vector2 = (Vector2) (vector * minimapSize);
+            Vector2 vector2 = vector * minimapSize;
             uiRect.anchoredPosition = vector2;
             if (rotation)
             {

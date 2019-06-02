@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Item Attachment Point")]
 public class InvAttachmentPoint : MonoBehaviour
@@ -21,6 +16,7 @@ public class InvAttachmentPoint : MonoBehaviour
             {
                 Destroy(mChild);
             }
+
             if (mPrefab != null)
             {
                 var transform = this.transform;
@@ -32,7 +28,7 @@ public class InvAttachmentPoint : MonoBehaviour
                 transform2.localScale = Vector3.one;
             }
         }
+
         return mChild;
     }
 }
-

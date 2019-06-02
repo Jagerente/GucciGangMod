@@ -1,18 +1,15 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public static class NGUITools
 {
     private static float mGlobalVolume = 1f;
     private static Color mInvisible = new Color(0f, 0f, 0f, 0f);
     private static AudioListener mListener;
-    private static bool mLoaded = false;
+    private static bool mLoaded;
 
     private static void Activate(Transform t)
     {
@@ -60,7 +57,7 @@ public static class NGUITools
 
     public static GameObject AddChild(GameObject parent, GameObject prefab)
     {
-        var obj2 = UnityEngine.Object.Instantiate(prefab) as GameObject;
+        var obj2 = Object.Instantiate(prefab) as GameObject;
         if (obj2 != null && parent != null)
         {
             var transform = obj2.transform;
@@ -110,11 +107,11 @@ public static class NGUITools
             {
                 if (Application.isPlaying)
                 {
-                    UnityEngine.Object.Destroy(component);
+                    Object.Destroy(component);
                 }
                 else
                 {
-                    UnityEngine.Object.DestroyImmediate(component);
+                    Object.DestroyImmediate(component);
                 }
             }
             collider2 = go.AddComponent<BoxCollider>();
@@ -140,7 +137,7 @@ public static class NGUITools
 
     public static void Broadcast(string funcName)
     {
-        var objArray = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var objArray = Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
         var index = 0;
         var length = objArray.Length;
         while (index < length)
@@ -152,7 +149,7 @@ public static class NGUITools
 
     public static void Broadcast(string funcName, object param)
     {
-        var objArray = UnityEngine.Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        var objArray = Object.FindObjectsOfType(typeof(GameObject)) as GameObject[];
         var index = 0;
         var length = objArray.Length;
         while (index < length)
@@ -181,7 +178,7 @@ public static class NGUITools
         SetActiveSelf(t.gameObject, false);
     }
 
-    public static void Destroy(UnityEngine.Object obj)
+    public static void Destroy(Object obj)
     {
         if (obj != null)
         {
@@ -192,39 +189,39 @@ public static class NGUITools
                     var obj2 = obj as GameObject;
                     obj2.transform.parent = null;
                 }
-                UnityEngine.Object.Destroy(obj);
+                Object.Destroy(obj);
             }
             else
             {
-                UnityEngine.Object.DestroyImmediate(obj);
+                Object.DestroyImmediate(obj);
             }
         }
     }
 
-    public static void DestroyImmediate(UnityEngine.Object obj)
+    public static void DestroyImmediate(Object obj)
     {
         if (obj != null)
         {
             if (Application.isEditor)
             {
-                UnityEngine.Object.DestroyImmediate(obj);
+                Object.DestroyImmediate(obj);
             }
             else
             {
-                UnityEngine.Object.Destroy(obj);
+                Object.Destroy(obj);
             }
         }
     }
 
     public static string EncodeColor(Color c)
     {
-        var num = 16777215 & (NGUIMath.ColorToInt(c) >> 8);
+        var num = 0xffffff & (NGUIMath.ColorToInt(c) >> 8);
         return NGUIMath.DecimalToHex(num);
     }
 
     public static T[] FindActive<T>() where T: Component
     {
-        return UnityEngine.Object.FindObjectsOfType(typeof(T)) as T[];
+        return Object.FindObjectsOfType(typeof(T)) as T[];
     }
 
     public static Camera FindCameraForLayer(int layer)
@@ -387,7 +384,7 @@ public static class NGUITools
         }
         catch (Exception exception)
         {
-            Debug.LogError(exception == null ? "null" : exception.Message);
+            Debug.LogError(exception == null ? "<null>" : exception.Message);
         }
         return www;
     }
@@ -457,13 +454,13 @@ public static class NGUITools
         {
             if (mListener == null)
             {
-                mListener = UnityEngine.Object.FindObjectOfType(typeof(AudioListener)) as AudioListener;
+                mListener = Object.FindObjectOfType(typeof(AudioListener)) as AudioListener;
                 if (mListener == null)
                 {
                     var main = Camera.main;
                     if (main == null)
                     {
-                        main = UnityEngine.Object.FindObjectOfType(typeof(Camera)) as Camera;
+                        main = Object.FindObjectOfType(typeof(Camera)) as Camera;
                     }
                     if (main != null)
                     {
@@ -473,14 +470,14 @@ public static class NGUITools
             }
             if (mListener != null && mListener.enabled && GetActive(mListener.gameObject))
             {
-                var source = mListener.audio;
-                if (source == null)
+                var audio = mListener.audio;
+                if (audio == null)
                 {
-                    source = mListener.gameObject.AddComponent<AudioSource>();
+                    audio = mListener.gameObject.AddComponent<AudioSource>();
                 }
-                source.pitch = pitch;
-                source.PlayOneShot(clip, volume);
-                return source;
+                audio.pitch = pitch;
+                audio.PlayOneShot(clip, volume);
+                return audio;
             }
         }
         return null;
@@ -492,7 +489,7 @@ public static class NGUITools
         {
             return min;
         }
-        return UnityEngine.Random.Range(min, max + 1);
+        return Random.Range(min, max + 1);
     }
 
     public static Vector3 Round(Vector3 v)

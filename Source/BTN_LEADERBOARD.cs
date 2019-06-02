@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BTN_LEADERBOARD : MonoBehaviour
 {
@@ -16,4 +11,3 @@ public class BTN_LEADERBOARD : MonoBehaviour
         NGUITools.SetActive(leaderboard, true);
     }
 }
-

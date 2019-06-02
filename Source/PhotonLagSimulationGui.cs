@@ -1,15 +1,10 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class PhotonLagSimulationGui : MonoBehaviour
 {
     public bool Visible = true;
-    public int WindowId = 101;
+    public int WindowId = 0x65;
     public Rect WindowRect = new Rect(0f, 100f, 120f, 100f);
 
     private void NetSimHasNoPeerWindow(int windowId)
@@ -54,11 +49,11 @@ public class PhotonLagSimulationGui : MonoBehaviour
         {
             if (Peer == null)
             {
-                WindowRect = GUILayout.Window(WindowId, WindowRect, new GUI.WindowFunction(NetSimHasNoPeerWindow), "Netw. Sim.");
+                WindowRect = GUILayout.Window(WindowId, WindowRect, NetSimHasNoPeerWindow, "Netw. Sim.");
             }
             else
             {
-                WindowRect = GUILayout.Window(WindowId, WindowRect, new GUI.WindowFunction(NetSimWindow), "Netw. Sim.");
+                WindowRect = GUILayout.Window(WindowId, WindowRect, NetSimWindow, "Netw. Sim.");
             }
         }
     }

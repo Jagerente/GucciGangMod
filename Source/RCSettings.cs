@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public static class RCSettings
+﻿public static class RCSettings
 {
     public static int ahssReload;
     public static float aRate;

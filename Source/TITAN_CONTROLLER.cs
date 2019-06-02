@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TITAN_CONTROLLER : MonoBehaviour
 {
@@ -65,6 +60,7 @@ public class TITAN_CONTROLLER : MonoBehaviour
             {
                 num = 0;
             }
+
             if (FengGameManagerMKII.inputRC.isInputHorse(InputCodeRC.horseLeft))
             {
                 num2 = -1;
@@ -77,6 +73,7 @@ public class TITAN_CONTROLLER : MonoBehaviour
             {
                 num2 = 0;
             }
+
             if (num2 != 0 || num != 0)
             {
                 y = currentCamera.transform.rotation.eulerAngles.y;
@@ -89,21 +86,25 @@ public class TITAN_CONTROLLER : MonoBehaviour
             {
                 targetDirection = -874f;
             }
+
             isAttackDown = false;
             isAttackIIDown = false;
             if (targetDirection != -874f)
             {
                 currentDirection = targetDirection;
             }
+
             num6 = currentCamera.transform.rotation.eulerAngles.y - currentDirection;
             if (num6 >= 180f)
             {
                 num6 -= 360f;
             }
+
             if (FengGameManagerMKII.inputRC.isInputHorse(InputCodeRC.horseJump))
             {
                 isAttackDown = true;
             }
+
             isWALKDown = FengGameManagerMKII.inputRC.isInputHorse(InputCodeRC.horseWalk);
         }
         else
@@ -120,6 +121,7 @@ public class TITAN_CONTROLLER : MonoBehaviour
             {
                 num = 0;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanLeft))
             {
                 num2 = -1;
@@ -132,6 +134,7 @@ public class TITAN_CONTROLLER : MonoBehaviour
             {
                 num2 = 0;
             }
+
             if (num2 != 0 || num != 0)
             {
                 y = currentCamera.transform.rotation.eulerAngles.y;
@@ -144,6 +147,7 @@ public class TITAN_CONTROLLER : MonoBehaviour
             {
                 targetDirection = -874f;
             }
+
             isAttackDown = false;
             isJumpDown = false;
             isAttackIIDown = false;
@@ -167,81 +171,99 @@ public class TITAN_CONTROLLER : MonoBehaviour
             {
                 currentDirection = targetDirection;
             }
+
             num6 = currentCamera.transform.rotation.eulerAngles.y - currentDirection;
             if (num6 >= 180f)
             {
                 num6 -= 360f;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanPunch))
             {
                 isAttackDown = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanSlam))
             {
                 isAttackIIDown = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanJump))
             {
                 isJumpDown = true;
             }
+
             if (inputManager.GetComponent<FengCustomInputs>().isInputDown[InputCode.restart])
             {
                 isSuicide = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanCover))
             {
                 cover = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanSit))
             {
                 sit = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanGrabFront) && num6 >= 0f)
             {
                 grabfrontr = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanGrabFront) && num6 < 0f)
             {
                 grabfrontl = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanGrabBack) && num6 >= 0f)
             {
                 grabbackr = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanGrabBack) && num6 < 0f)
             {
                 grabbackl = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanGrabNape) && num6 >= 0f)
             {
                 grabnaper = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanGrabNape) && num6 < 0f)
             {
                 grabnapel = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanAntiAE) && num6 >= 0f)
             {
                 choptr = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanAntiAE) && num6 < 0f)
             {
                 choptl = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanBite) && num6 > 7.5f)
             {
                 biter = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanBite) && num6 < -7.5f)
             {
                 bitel = true;
             }
+
             if (FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanBite) && num6 >= -7.5f && num6 <= 7.5f)
             {
                 bite = true;
             }
+
             isWALKDown = FengGameManagerMKII.inputRC.isInputTitan(InputCodeRC.titanWalk);
         }
     }
 }
-

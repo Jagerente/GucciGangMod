@@ -1,12 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 [RequireComponent(typeof(PhotonView))]
-public class OnAwakeUsePhotonView : Photon.MonoBehaviour
+public class OnAwakeUsePhotonView : MonoBehaviour
 {
     private void Awake()
     {
@@ -32,7 +28,7 @@ public class OnAwakeUsePhotonView : Photon.MonoBehaviour
     {
         if (photonView.isMine)
         {
-            var parameters = new object[] { (byte) 1 };
+            object[] parameters = { (byte) 1 };
             photonView.RPC("OnAwakeRPC", PhotonTargets.All, parameters);
         }
     }

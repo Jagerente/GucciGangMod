@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-internal enum JoinType
+﻿internal enum JoinType
 {
     CreateGame,
     JoinGame,

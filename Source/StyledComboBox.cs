@@ -1,12 +1,6 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
 public class StyledComboBox : StyledItem
@@ -27,8 +21,8 @@ public class StyledComboBox : StyledItem
     {
         if (itemPrefab != null)
         {
-            var yf = new AddItemcAnonStoreyF {
-                fthis = this
+            var yf = new AddItemc__AnonStoreyF {
+                f__this = this
             };
             var fourCornersArray = new Vector3[4];
             itemPrefab.GetComponent<RectTransform>().GetLocalCorners(fourCornersArray);
@@ -51,7 +45,7 @@ public class StyledComboBox : StyledItem
             yf.curIndex = items.Count - 1;
             if (button != null)
             {
-                button.onClick.AddListener(new UnityAction(yf.m0));
+                button.onClick.AddListener(yf.m__0);
             }
         }
     }
@@ -103,7 +97,7 @@ public class StyledComboBox : StyledItem
             var button = item.GetButton();
             if (button != null)
             {
-                button.onClick.AddListener(new UnityAction(TogglePanelState));
+                button.onClick.AddListener(TogglePanelState);
             }
         }
     }
@@ -134,10 +128,7 @@ public class StyledComboBox : StyledItem
     {
         SelectedIndex = index;
         TogglePanelState();
-        if (OnSelectionChanged != null)
-        {
-            OnSelectionChanged(item);
-        }
+        OnSelectionChanged?.Invoke(item);
     }
 
     public void TogglePanelState()
@@ -174,16 +165,16 @@ public class StyledComboBox : StyledItem
         }
     }
 
-    [CompilerGenerated]
-    private sealed class AddItemcAnonStoreyF
+    
+    private sealed class AddItemc__AnonStoreyF
     {
-        internal StyledComboBox fthis;
+        internal StyledComboBox f__this;
         internal int curIndex;
         internal StyledItem styledItem;
 
-        internal void m0()
+        internal void m__0()
         {
-            fthis.OnItemClicked(styledItem, curIndex);
+            f__this.OnItemClicked(styledItem, curIndex);
         }
     }
 

@@ -1,26 +1,16 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Atlas")]
 public class UIAtlas : MonoBehaviour
 {
-    [SerializeField, HideInInspector]
-    private Material material;
-    [HideInInspector, SerializeField]
-    private Coordinates mCoordinates;
-    [HideInInspector, SerializeField]
-    private float mPixelSize = 1f;
+    [SerializeField, HideInInspector] private Material material;
+    [HideInInspector, SerializeField] private Coordinates mCoordinates;
+    [HideInInspector, SerializeField] private float mPixelSize = 1f;
     private int mPMA = -1;
-    [HideInInspector, SerializeField]
-    private UIAtlas mReplacement;
-    [SerializeField, HideInInspector]
-    private List<Sprite> sprites = new List<Sprite>();
+    [HideInInspector, SerializeField] private UIAtlas mReplacement;
+    [SerializeField, HideInInspector] private List<Sprite> sprites = new List<Sprite>();
 
     public static bool CheckIfRelated(UIAtlas a, UIAtlas b)
     {
@@ -28,6 +18,7 @@ public class UIAtlas : MonoBehaviour
         {
             return false;
         }
+
         return a == b || a.References(b) || b.References(a);
     }
 
@@ -42,6 +33,7 @@ public class UIAtlas : MonoBehaviour
         {
             return mReplacement.GetListOfSprites();
         }
+
         var list = new BetterList<string>();
         var num = 0;
         var count = sprites.Count;
@@ -52,8 +44,10 @@ public class UIAtlas : MonoBehaviour
             {
                 list.Add(sprite.name);
             }
+
             num++;
         }
+
         return list;
     }
 
@@ -63,29 +57,35 @@ public class UIAtlas : MonoBehaviour
         {
             return mReplacement.GetListOfSprites(match);
         }
+
         if (string.IsNullOrEmpty(match))
         {
             return GetListOfSprites();
         }
+
         var list = new BetterList<string>();
         var num = 0;
         var count = sprites.Count;
         while (num < count)
         {
             var sprite = sprites[num];
-            if (sprite != null && !string.IsNullOrEmpty(sprite.name) && string.Equals(match, sprite.name, StringComparison.OrdinalIgnoreCase))
+            if (sprite != null && !string.IsNullOrEmpty(sprite.name) &&
+                string.Equals(match, sprite.name, StringComparison.OrdinalIgnoreCase))
             {
                 list.Add(sprite.name);
                 return list;
             }
+
             num++;
         }
-        var separator = new[] { ' ' };
+
+        char[] separator = {' '};
         var strArray = match.Split(separator, StringSplitOptions.RemoveEmptyEntries);
         for (var i = 0; i < strArray.Length; i++)
         {
             strArray[i] = strArray[i].ToLower();
         }
+
         var num4 = 0;
         var num5 = sprites.Count;
         while (num4 < num5)
@@ -102,13 +102,16 @@ public class UIAtlas : MonoBehaviour
                         num6++;
                     }
                 }
+
                 if (num6 == strArray.Length)
                 {
                     list.Add(sprite2.name);
                 }
             }
+
             num4++;
         }
+
         return list;
     }
 
@@ -118,6 +121,7 @@ public class UIAtlas : MonoBehaviour
         {
             return mReplacement.GetSprite(name);
         }
+
         if (!string.IsNullOrEmpty(name))
         {
             var num = 0;
@@ -129,9 +133,11 @@ public class UIAtlas : MonoBehaviour
                 {
                     return sprite;
                 }
+
                 num++;
             }
         }
+
         return null;
     }
 
@@ -141,7 +147,8 @@ public class UIAtlas : MonoBehaviour
         {
             mReplacement.MarkAsDirty();
         }
-        var spriteArray = NGUITools.FindActive<UISprite>();
+
+        UISprite[] spriteArray = NGUITools.FindActive<UISprite>();
         var index = 0;
         var length = spriteArray.Length;
         while (index < length)
@@ -153,8 +160,10 @@ public class UIAtlas : MonoBehaviour
                 sprite.atlas = null;
                 sprite.atlas = atlas;
             }
+
             index++;
         }
+
         var fontArray = Resources.FindObjectsOfTypeAll(typeof(UIFont)) as UIFont[];
         var num3 = 0;
         var num4 = fontArray.Length;
@@ -167,9 +176,11 @@ public class UIAtlas : MonoBehaviour
                 font.atlas = null;
                 font.atlas = atlas2;
             }
+
             num3++;
         }
-        var labelArray = NGUITools.FindActive<UILabel>();
+
+        UILabel[] labelArray = NGUITools.FindActive<UILabel>();
         var num5 = 0;
         var num6 = labelArray.Length;
         while (num5 < num6)
@@ -181,6 +192,7 @@ public class UIAtlas : MonoBehaviour
                 label.font = null;
                 label.font = font2;
             }
+
             num5++;
         }
     }
@@ -191,15 +203,13 @@ public class UIAtlas : MonoBehaviour
         {
             return false;
         }
+
         return atlas == this || mReplacement != null && mReplacement.References(atlas);
     }
 
     public Coordinates coordinates
     {
-        get
-        {
-            return mReplacement == null ? mCoordinates : mReplacement.coordinates;
-        }
+        get { return mReplacement == null ? mCoordinates : mReplacement.coordinates; }
         set
         {
             if (mReplacement != null)
@@ -223,14 +233,19 @@ public class UIAtlas : MonoBehaviour
                         var sprite = sprites[num];
                         if (mCoordinates == Coordinates.TexCoords)
                         {
-                            sprite.outer = NGUIMath.ConvertToTexCoords(sprite.outer, mainTexture.width, mainTexture.height);
-                            sprite.inner = NGUIMath.ConvertToTexCoords(sprite.inner, mainTexture.width, mainTexture.height);
+                            sprite.outer =
+                                NGUIMath.ConvertToTexCoords(sprite.outer, mainTexture.width, mainTexture.height);
+                            sprite.inner =
+                                NGUIMath.ConvertToTexCoords(sprite.inner, mainTexture.width, mainTexture.height);
                         }
                         else
                         {
-                            sprite.outer = NGUIMath.ConvertToPixels(sprite.outer, mainTexture.width, mainTexture.height, true);
-                            sprite.inner = NGUIMath.ConvertToPixels(sprite.inner, mainTexture.width, mainTexture.height, true);
+                            sprite.outer = NGUIMath.ConvertToPixels(sprite.outer, mainTexture.width, mainTexture.height,
+                                true);
+                            sprite.inner = NGUIMath.ConvertToPixels(sprite.inner, mainTexture.width, mainTexture.height,
+                                true);
                         }
+
                         num++;
                     }
                 }
@@ -240,10 +255,7 @@ public class UIAtlas : MonoBehaviour
 
     public float pixelSize
     {
-        get
-        {
-            return mReplacement == null ? mPixelSize : mReplacement.pixelSize;
-        }
+        get { return mReplacement == null ? mPixelSize : mReplacement.pixelSize; }
         set
         {
             if (mReplacement != null)
@@ -270,21 +282,23 @@ public class UIAtlas : MonoBehaviour
             {
                 return mReplacement.premultipliedAlpha;
             }
+
             if (mPMA == -1)
             {
                 var spriteMaterial = this.spriteMaterial;
-                mPMA = spriteMaterial == null || spriteMaterial.shader == null || !spriteMaterial.shader.name.Contains("Premultiplied") ? 0 : 1;
+                mPMA = spriteMaterial == null || spriteMaterial.shader == null ||
+                       !spriteMaterial.shader.name.Contains("Premultiplied")
+                    ? 0
+                    : 1;
             }
+
             return mPMA == 1;
         }
     }
 
     public UIAtlas replacement
     {
-        get
-        {
-            return mReplacement;
-        }
+        get { return mReplacement; }
         set
         {
             var atlas = value;
@@ -292,16 +306,19 @@ public class UIAtlas : MonoBehaviour
             {
                 atlas = null;
             }
+
             if (mReplacement != atlas)
             {
                 if (atlas != null && atlas.replacement == this)
                 {
                     atlas.replacement = null;
                 }
+
                 if (mReplacement != null)
                 {
                     MarkAsDirty();
                 }
+
                 mReplacement = atlas;
                 MarkAsDirty();
             }
@@ -310,10 +327,7 @@ public class UIAtlas : MonoBehaviour
 
     public List<Sprite> spriteList
     {
-        get
-        {
-            return mReplacement == null ? sprites : mReplacement.spriteList;
-        }
+        get { return mReplacement == null ? sprites : mReplacement.spriteList; }
         set
         {
             if (mReplacement != null)
@@ -329,10 +343,7 @@ public class UIAtlas : MonoBehaviour
 
     public Material spriteMaterial
     {
-        get
-        {
-            return mReplacement == null ? material : mReplacement.spriteMaterial;
-        }
+        get { return mReplacement == null ? material : mReplacement.spriteMaterial; }
         set
         {
             if (mReplacement != null)
@@ -356,10 +367,7 @@ public class UIAtlas : MonoBehaviour
 
     public Texture texture
     {
-        get
-        {
-            return mReplacement == null ? material == null ? null : material.mainTexture : mReplacement.texture;
-        }
+        get { return mReplacement == null ? material == null ? null : material.mainTexture : mReplacement.texture; }
     }
 
     public enum Coordinates
@@ -382,11 +390,7 @@ public class UIAtlas : MonoBehaviour
 
         public bool hasPadding
         {
-            get
-            {
-                return paddingLeft != 0f || paddingRight != 0f || paddingTop != 0f || paddingBottom != 0f;
-            }
+            get { return paddingLeft != 0f || paddingRight != 0f || paddingTop != 0f || paddingBottom != 0f; }
         }
     }
 }
-

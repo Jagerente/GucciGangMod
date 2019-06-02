@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Transform")]
 public class TweenTransform : UITweener
@@ -23,7 +18,7 @@ public class TweenTransform : UITweener
 
     public static TweenTransform Begin(GameObject go, float duration, Transform from, Transform to)
     {
-        var transform = UITweener.Begin<TweenTransform>(go, duration);
+        var transform = Begin<TweenTransform>(go, duration);
         transform.from = from;
         transform.to = to;
         if (duration <= 0f)

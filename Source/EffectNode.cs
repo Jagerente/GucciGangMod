@@ -1,10 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class EffectNode
@@ -99,6 +93,7 @@ public class EffectNode
         Owner.RemoveActiveNode(this);
     }
 
+   
     public void Reset()
     {
         Position = Vector3.up * 9999f;
@@ -106,19 +101,9 @@ public class EffectNode
         Acceleration = 0f;
         ElapsedTime = 0f;
         LastWorldPos = CurWorldPos = Vector3.zero;
-        var enumerator = AffectorList.GetEnumerator();
-        try
+        foreach (Affector affector in AffectorList)
         {
-            while (enumerator.MoveNext())
-            {
-                ((Affector) enumerator.Current).Reset();
-            }
-        }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
+            affector.Reset();
         }
         if (Type == 1)
         {
@@ -136,6 +121,7 @@ public class EffectNode
             Ribbon.UpdateVertices(Vector3.zero);
         }
     }
+
 
     public void SetAffectorList(ArrayList afts)
     {
@@ -159,22 +145,13 @@ public class EffectNode
         Sprite = Owner.GetVertexPool().AddSprite(width, height, type, orip, Camera.main, uvStretch, maxFps);
     }
 
+   
     public void Update()
     {
         ElapsedTime += Time.deltaTime;
-        var enumerator = AffectorList.GetEnumerator();
-        try
+        foreach (Affector affector in AffectorList)
         {
-            while (enumerator.MoveNext())
-            {
-                ((Affector) enumerator.Current).Update();
-            }
-        }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
+            affector.Update();
         }
         Position += Velocity * Time.deltaTime;
         if (Mathf.Abs(Acceleration) > 0.0001)
@@ -204,6 +181,7 @@ public class EffectNode
             Remove();
         }
     }
+
 
     public void UpdateRibbonTrail()
     {

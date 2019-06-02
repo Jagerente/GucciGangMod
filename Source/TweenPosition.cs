@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Position")]
 public class TweenPosition : UITweener
@@ -14,7 +9,7 @@ public class TweenPosition : UITweener
 
     public static TweenPosition Begin(GameObject go, float duration, Vector3 pos)
     {
-        var position = UITweener.Begin<TweenPosition>(go, duration);
+        var position = Begin<TweenPosition>(go, duration);
         position.from = position.position;
         position.to = pos;
         if (duration <= 0f)

@@ -1,8 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
+﻿using AnimationOrTween;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Checkbox")]
@@ -90,10 +86,7 @@ public class UICheckbox : MonoBehaviour
                 }
             }
             current = this;
-            if (onStateChange != null)
-            {
-                onStateChange(mChecked);
-            }
+            onStateChange?.Invoke(mChecked);
             if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
             {
                 eventReceiver.SendMessage(functionName, mChecked, SendMessageOptions.DontRequireReceiver);
@@ -101,7 +94,7 @@ public class UICheckbox : MonoBehaviour
             current = null;
             if (checkAnimation != null)
             {
-                ActiveAnimation.Play(checkAnimation, !state ? AnimationOrTween.Direction.Reverse : AnimationOrTween.Direction.Forward);
+                ActiveAnimation.Play(checkAnimation, !state ? Direction.Reverse : Direction.Forward);
             }
         }
     }

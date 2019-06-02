@@ -1,11 +1,7 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-using UnityEngine;
-
-public class EnemyCheckCollider : Photon.MonoBehaviour
+public class EnemyCheckCollider : MonoBehaviour
 {
     public bool active_me;
     private int count;
@@ -58,7 +54,7 @@ public class EnemyCheckCollider : Photon.MonoBehaviour
                         }
                         else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                         {
-                            var parameters = new object[] { vector.normalized * num3 + Vector3.up * 1f };
+                            object[] parameters = { vector.normalized * num3 + Vector3.up * 1f };
                             component.transform.root.GetComponent<HERO>().photonView.RPC("blowAway", PhotonTargets.All, parameters);
                         }
                     }

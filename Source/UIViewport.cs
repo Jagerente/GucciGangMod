@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Camera)), AddComponentMenu("NGUI/UI/Viewport Camera"), ExecuteInEditMode]
 public class UIViewport : MonoBehaviour
@@ -20,12 +15,14 @@ public class UIViewport : MonoBehaviour
         {
             var vector = sourceCamera.WorldToScreenPoint(topLeft.position);
             var vector2 = sourceCamera.WorldToScreenPoint(bottomRight.position);
-            var rect = new Rect(vector.x / Screen.width, vector2.y / Screen.height, (vector2.x - vector.x) / Screen.width, (vector.y - vector2.y) / Screen.height);
+            var rect = new Rect(vector.x / Screen.width, vector2.y / Screen.height,
+                (vector2.x - vector.x) / Screen.width, (vector.y - vector2.y) / Screen.height);
             var num = fullSize * rect.height;
             if (rect != mCam.rect)
             {
                 mCam.rect = rect;
             }
+
             if (mCam.orthographicSize != num)
             {
                 mCam.orthographicSize = num;
@@ -42,4 +39,3 @@ public class UIViewport : MonoBehaviour
         }
     }
 }
-

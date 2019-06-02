@@ -1,13 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RibbonTrail
 {
-    public const int CHAIN_EMPTY = 99999;
+    public const int CHAIN_EMPTY = 0x1869f;
     protected Color Color = Color.white;
     protected float ElapsedTime;
     public int ElemCount;
@@ -36,7 +31,7 @@ public class RibbonTrail
         MaxElements = maxelemnt;
         Vertexsegment = segment;
         ElementArray = new Element[MaxElements];
-        Head = Tail = 99999;
+        Head = Tail = 0x1869f;
         SetTrailLen(len);
         UnitWidth = width;
         HeadPosition = pos;
@@ -51,7 +46,7 @@ public class RibbonTrail
 
     public void AddElememt(Element dtls)
     {
-        if (Head == 99999)
+        if (Head == 0x1869f)
         {
             Tail = MaxElements - 1;
             Head = Tail;
@@ -95,7 +90,7 @@ public class RibbonTrail
 
     public void ResetElementsPos()
     {
-        if (Head != 99999 && Head != Tail)
+        if (Head != 0x1869f && Head != Tail)
         {
             var head = Head;
             while (true)
@@ -238,7 +233,7 @@ public class RibbonTrail
         if (IndexDirty)
         {
             var pool = Vertexsegment.Pool;
-            if (Head != 99999 && Head != Tail)
+            if (Head != 0x1869f && Head != Tail)
             {
                 var head = Head;
                 var num2 = 0;
@@ -249,7 +244,7 @@ public class RibbonTrail
                     {
                         num3 = 0;
                     }
-                    if (num3 * 2 >= 65536)
+                    if (num3 * 2 >= 0x10000)
                     {
                         Debug.LogError("Too many elements!");
                     }
@@ -281,7 +276,7 @@ public class RibbonTrail
         var num = 0f;
         var num2 = 0f;
         var num3 = ElemLength * (MaxElements - 2);
-        if (Head == 99999 || Head == Tail)
+        if (Head == 0x1869f || Head == Tail)
         {
             return;
         }
@@ -293,7 +288,7 @@ public class RibbonTrail
             index = 0;
         }
         var element = ElementArray[index];
-        if (index * 2 >= 65536)
+        if (index * 2 >= 0x10000)
         {
             Debug.LogError("Too many elements!");
         }

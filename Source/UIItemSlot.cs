@@ -1,8 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class UIItemSlot : MonoBehaviour
@@ -17,10 +13,6 @@ public abstract class UIItemSlot : MonoBehaviour
     private string mText = string.Empty;
     public AudioClip placeSound;
 
-    protected UIItemSlot()
-    {
-    }
-
     private void OnClick()
     {
         if (mDraggedItem != null)
@@ -34,6 +26,7 @@ public abstract class UIItemSlot : MonoBehaviour
             {
                 NGUITools.PlaySound(grabSound);
             }
+
             UpdateCursor();
         }
     }
@@ -64,6 +57,7 @@ public abstract class UIItemSlot : MonoBehaviour
         {
             NGUITools.PlaySound(placeSound);
         }
+
         mDraggedItem = item;
         UpdateCursor();
     }
@@ -71,67 +65,73 @@ public abstract class UIItemSlot : MonoBehaviour
     private void OnTooltip(bool show)
     {
         var item = !show ? null : mItem;
-        if (item != null)
+        InvBaseItem baseItem = item?.baseItem;
+        if (baseItem != null)
         {
-            var baseItem = item.baseItem;
-            if (baseItem != null)
+            string[] textArray1 = {"[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n"};
+            var str2 = string.Concat(textArray1);
+            object[] objArray1 = {str2, "[AFAFAF]Level ", item.itemLevel, " ", baseItem.slot};
+            var tooltipText = string.Concat(objArray1);
+            var list = item.CalculateStats();
+            var num = 0;
+            var count = list.Count;
+            while (num < count)
             {
-                var textArray1 = new[] { "[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n" };
-                var str2 = string.Concat(textArray1);
-                var objArray1 = new object[] { str2, "[AFAFAF]Level ", item.itemLevel, " ", baseItem.slot };
-                var tooltipText = string.Concat(objArray1);
-                var list = item.CalculateStats();
-                var num = 0;
-                var count = list.Count;
-                while (num < count)
+                var stat = list[num];
+                if (stat.amount != 0)
                 {
-                    var stat = list[num];
-                    if (stat.amount != 0)
+                    if (stat.amount < 0)
                     {
-                        if (stat.amount < 0)
-                        {
-                            tooltipText = tooltipText + "\n[FF0000]" + stat.amount;
-                        }
-                        else
-                        {
-                            tooltipText = tooltipText + "\n[00FF00]+" + stat.amount;
-                        }
-                        if (stat.modifier == InvStat.Modifier.Percent)
-                        {
-                            tooltipText = tooltipText + "%";
-                        }
-                        tooltipText = tooltipText + " " + stat.id + "[-]";
+                        tooltipText = tooltipText + "\n[FF0000]" + stat.amount;
                     }
-                    num++;
+                    else
+                    {
+                        tooltipText = tooltipText + "\n[00FF00]+" + stat.amount;
+                    }
+
+                    if (stat.modifier == InvStat.Modifier.Percent)
+                    {
+                        tooltipText = tooltipText + "%";
+                    }
+
+                    tooltipText = tooltipText + " " + stat.id + "[-]";
                 }
-                if (!string.IsNullOrEmpty(baseItem.description))
-                {
-                    tooltipText = tooltipText + "\n[FF9900]" + baseItem.description;
-                }
-                UITooltip.ShowText(tooltipText);
-                return;
+
+                num++;
             }
+
+            if (!string.IsNullOrEmpty(baseItem.description))
+            {
+                tooltipText = tooltipText + "\n[FF9900]" + baseItem.description;
+            }
+
+            UITooltip.ShowText(tooltipText);
+            return;
         }
+
         UITooltip.ShowText(null);
     }
 
     protected abstract InvGameItem Replace(InvGameItem item);
+
     private void Update()
     {
         var observedItem = this.observedItem;
         if (mItem != observedItem)
         {
             mItem = observedItem;
-            var item2 = observedItem == null ? null : observedItem.baseItem;
+            InvBaseItem item2 = observedItem == null ? null : observedItem.baseItem;
             if (label != null)
             {
-                var str = observedItem == null ? null : observedItem.name;
+                string str = observedItem == null ? null : observedItem.name;
                 if (string.IsNullOrEmpty(mText))
                 {
                     mText = label.text;
                 }
+
                 label.text = str == null ? mText : str;
             }
+
             if (icon != null)
             {
                 if (item2 == null || item2.iconAtlas == null)
@@ -146,6 +146,7 @@ public abstract class UIItemSlot : MonoBehaviour
                     icon.MakePixelPerfect();
                 }
             }
+
             if (background != null)
             {
                 background.color = observedItem == null ? Color.white : observedItem.color;
@@ -167,4 +168,3 @@ public abstract class UIItemSlot : MonoBehaviour
 
     protected abstract InvGameItem observedItem { get; }
 }
-

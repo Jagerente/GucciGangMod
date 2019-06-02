@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PanelGroupManager
 {
@@ -15,7 +10,7 @@ public class PanelGroupManager
         {
             obj2.SetActive(false);
         }
+
         panelGroup[index].SetActive(true);
     }
 }
-

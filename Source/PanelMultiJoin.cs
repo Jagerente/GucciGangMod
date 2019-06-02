@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PanelMultiJoin : MonoBehaviour
@@ -23,26 +18,24 @@ public class PanelMultiJoin : MonoBehaviour
             items[num].SetActive(false);
         }
         num = 10 * (currentPage - 1) + index;
-        var separator = new[] { "`"[0] };
+        char[] separator = { "`"[0] };
         var strArray = roomName.Split(separator);
         if (strArray[5] != string.Empty)
         {
             PanelMultiJoinPWD.Password = strArray[5];
             PanelMultiJoinPWD.roomName = roomName;
-            NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiPWD, true);
-            NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, false);
+            NGUITools.SetActive(UIMainReferences.instance.PanelMultiPWD, true);
+            NGUITools.SetActive(UIMainReferences.instance.panelMultiROOM, false);
+            return;
         }
-        else
-        {
-            PhotonNetwork.JoinRoom(roomName);
-        }
+        PhotonNetwork.JoinRoom(roomName);
     }
 
     private string getServerDataString(RoomInfo room)
     {
-        var separator = new[] { "`"[0] };
+        char[] separator = { "`"[0] };
         var strArray = room.name.Split(separator);
-        var objArray1 = new object[] { !(strArray[5] == string.Empty) ? "[PWD]" : string.Empty, strArray[0], "/", strArray[1], "/", strArray[2], "/", strArray[4], " ", room.playerCount, "/", room.maxPlayers };
+        object[] objArray1 = { !(strArray[5] == string.Empty) ? "[PWD]" : string.Empty, strArray[0], "/", strArray[1], "/", strArray[2], "/", strArray[4], " ", room.playerCount, "/", room.maxPlayers };
         return string.Concat(objArray1);
     }
 
@@ -91,17 +84,6 @@ public class PanelMultiJoin : MonoBehaviour
 
     private void showlist()
     {
-        if (FengGameManagerMKII.shallRejoin[0] is bool && (bool)FengGameManagerMKII.shallRejoin[0])
-        {
-            if ((((RoomInfo)FengGameManagerMKII.shallRejoin[2]).maxPlayers == 0 || ((RoomInfo)FengGameManagerMKII.shallRejoin[2]).maxPlayers > ((RoomInfo)FengGameManagerMKII.shallRejoin[2]).playerCount) && ((RoomInfo)FengGameManagerMKII.shallRejoin[2]).open)
-            {
-                PhotonNetwork.JoinRoom(((RoomInfo)FengGameManagerMKII.shallRejoin[2]).name);
-            }
-            else
-            {
-                FengGameManagerMKII.shallRejoin[0] = false;
-            }
-        }
         if (filter == string.Empty)
         {
             if (PhotonNetwork.GetRoomList().Length > 0)

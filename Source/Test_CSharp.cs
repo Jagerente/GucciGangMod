@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using SimpleJSON;
+﻿using SimpleJSON;
 using UnityEngine;
 
 internal class Test_CSharp : MonoBehaviour
@@ -79,9 +74,8 @@ internal class Test_CSharp : MonoBehaviour
         P(class2.ToString());
         P(string.Empty);
         P("I[\"data\"][0]            : " + class2["data"][0]);
-        P("I[\"data\"][0].ToString() : " + class2["data"][0].ToString());
+        P("I[\"data\"][0].ToString() : " + class2["data"][0]);
         P("I[\"data\"][0].Value      : " + class2["data"][0].Value);
         P(class2.ToString());
     }
 }
-

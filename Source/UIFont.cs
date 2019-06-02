@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -19,7 +14,7 @@ public class UIFont : MonoBehaviour
     [HideInInspector, SerializeField]
     private float mDynamicFontOffset;
     [SerializeField, HideInInspector]
-    private int mDynamicFontSize = 16;
+    private int mDynamicFontSize = 0x10;
     [SerializeField, HideInInspector]
     private FontStyle mDynamicFontStyle;
     [SerializeField, HideInInspector]
@@ -80,7 +75,7 @@ public class UIFont : MonoBehaviour
                 }
                 for (var i = indexOffset; i < verts.size; i++)
                 {
-                    var vector = verts.buffer[i];
+                    Vector3 vector = verts.buffer[i];
                     vector.x += num2;
                     verts.buffer[i] = vector;
                 }
@@ -104,7 +99,7 @@ public class UIFont : MonoBehaviour
             }
             if (isDynamic)
             {
-                mDynamicFont.textureRebuildCallback = new Font.FontTextureRebuildCallback(OnFontChanged);
+                mDynamicFont.textureRebuildCallback = OnFontChanged;
                 mDynamicFont.RequestCharactersInTexture(text, mDynamicFontSize, mDynamicFontStyle);
                 mDynamicFont.textureRebuildCallback = null;
             }
@@ -138,7 +133,7 @@ public class UIFont : MonoBehaviour
                     var symbol = !flag2 ? null : MatchSymbol(text, i, length);
                     if (symbol == null)
                     {
-                        var glyph = mFont.GetGlyph(index);
+                        BMGlyph glyph = mFont.GetGlyph(index);
                         if (glyph != null)
                         {
                             num3 += mSpacingX + (previousChar == 0 ? glyph.advance : glyph.advance + glyph.GetKerning(previousChar));
@@ -205,7 +200,7 @@ public class UIFont : MonoBehaviour
         var isDynamic = this.isDynamic;
         if (isDynamic)
         {
-            mDynamicFont.textureRebuildCallback = new Font.FontTextureRebuildCallback(OnFontChanged);
+            mDynamicFont.textureRebuildCallback = OnFontChanged;
             mDynamicFont.RequestCharactersInTexture(text, mDynamicFontSize, mDynamicFontStyle);
             mDynamicFont.textureRebuildCallback = null;
         }
@@ -221,7 +216,7 @@ public class UIFont : MonoBehaviour
                     mSpacingX += symbol.advance;
                     goto Label_017F;
                 }
-                var glyph2 = mFont.GetGlyph(index);
+                BMGlyph glyph2 = mFont.GetGlyph(index);
                 if (glyph2 != null)
                 {
                     mSpacingX += glyph2.advance + (glyph != null ? glyph.GetKerning(index) : 0);
@@ -277,7 +272,7 @@ public class UIFont : MonoBehaviour
         }
         RecalculateDynamicOffset();
         mSprite = null;
-        var labelArray = NGUITools.FindActive<UILabel>();
+        UILabel[] labelArray = NGUITools.FindActive<UILabel>();
         var index = 0;
         var length = labelArray.Length;
         while (index < length)
@@ -309,7 +304,7 @@ public class UIFont : MonoBehaviour
             for (var i = 0; i < count; i++)
             {
                 var symbol = mSymbols[i];
-                var length = symbol.length;
+                int length = symbol.length;
                 if (length != 0 && textLength >= length)
                 {
                     var flag = true;
@@ -353,7 +348,7 @@ public class UIFont : MonoBehaviour
                 var isDynamic = this.isDynamic;
                 if (isDynamic)
                 {
-                    mDynamicFont.textureRebuildCallback = new Font.FontTextureRebuildCallback(OnFontChanged);
+                    mDynamicFont.textureRebuildCallback = OnFontChanged;
                     mDynamicFont.RequestCharactersInTexture(text, mDynamicFontSize, mDynamicFontStyle);
                     mDynamicFont.textureRebuildCallback = null;
                 }
@@ -361,7 +356,7 @@ public class UIFont : MonoBehaviour
                 mColors.Add(color);
                 var size = this.size;
                 var vector = size <= 0 ? Vector2.one : new Vector2(1f / size, 1f / size);
-                var indexOffset = verts.size;
+                int indexOffset = verts.size;
                 var num3 = 0;
                 var x = 0;
                 var num5 = 0;
@@ -401,7 +396,7 @@ public class UIFont : MonoBehaviour
                     }
                     if (encoding && index == '[')
                     {
-                        var num12 = NGUITools.ParseSymbol(text, i, mColors, premultiply);
+                        int num12 = NGUITools.ParseSymbol(text, i, mColors, premultiply);
                         if (num12 > 0)
                         {
                             color = mColors[mColors.Count - 1];
@@ -414,7 +409,7 @@ public class UIFont : MonoBehaviour
                         var symbol = !flag2 ? null : MatchSymbol(text, i, length);
                         if (symbol == null)
                         {
-                            var glyph = mFont.GetGlyph(index);
+                            BMGlyph glyph = mFont.GetGlyph(index);
                             if (glyph == null)
                             {
                                 continue;
@@ -448,7 +443,7 @@ public class UIFont : MonoBehaviour
                             }
                             else
                             {
-                                var item = (Color) color;
+                                Color item = color;
                                 item = item * 0.49f;
                                 switch (glyph.channel)
                                 {
@@ -480,7 +475,7 @@ public class UIFont : MonoBehaviour
                             zero.y = -vector.y * (num5 + symbol.offsetY);
                             vector3.x = zero.x + vector.x * symbol.width;
                             vector3.y = zero.y - vector.y * symbol.height;
-                            var uvRect = symbol.uvRect;
+                            Rect uvRect = symbol.uvRect;
                             vector4.x = uvRect.xMin;
                             vector4.y = uvRect.yMax;
                             vector5.x = uvRect.xMax;
@@ -610,7 +605,7 @@ public class UIFont : MonoBehaviour
         var texture = mAtlas.texture;
         if (texture != null && mSprite != null)
         {
-            var rect = NGUIMath.ConvertToPixels(mUVRect, this.texture.width, this.texture.height, true);
+            Rect rect = NGUIMath.ConvertToPixels(mUVRect, this.texture.width, this.texture.height, true);
             var rect2 = mAtlas.coordinates != UIAtlas.Coordinates.TexCoords ? mSprite.outer : NGUIMath.ConvertToPixels(mSprite.outer, texture.width, texture.height, true);
             var xMin = Mathf.RoundToInt(rect2.xMin - rect.xMin);
             var yMin = Mathf.RoundToInt(rect2.yMin - rect.yMin);
@@ -677,7 +672,7 @@ public class UIFont : MonoBehaviour
         var isDynamic = this.isDynamic;
         if (isDynamic)
         {
-            mDynamicFont.textureRebuildCallback = new Font.FontTextureRebuildCallback(OnFontChanged);
+            mDynamicFont.textureRebuildCallback = OnFontChanged;
             mDynamicFont.RequestCharactersInTexture(text, mDynamicFontSize, mDynamicFontStyle);
             mDynamicFont.textureRebuildCallback = null;
         }
@@ -705,7 +700,7 @@ public class UIFont : MonoBehaviour
                 previousChar = 0;
                 goto Label_03E7;
             }
-            if (ch == ' ' && previousChar != 32 && startIndex < offset)
+            if (ch == ' ' && previousChar != 0x20 && startIndex < offset)
             {
                 s.Append(text.Substring(startIndex, offset - startIndex + 1));
                 flag = false;
@@ -735,7 +730,7 @@ public class UIFont : MonoBehaviour
                 }
                 else
                 {
-                    var glyph = symbol != null ? null : mFont.GetGlyph(ch);
+                    BMGlyph glyph = symbol != null ? null : mFont.GetGlyph(ch);
                     if (glyph == null)
                     {
                         goto Label_03E7;
@@ -885,7 +880,7 @@ public class UIFont : MonoBehaviour
             }
             else
             {
-                value = Mathf.Clamp(value, 4, 128);
+                value = Mathf.Clamp(value, 4, 0x80);
                 if (mDynamicFontSize != value)
                 {
                     mDynamicFontSize = value;

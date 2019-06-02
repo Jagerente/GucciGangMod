@@ -1,12 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 [RequireComponent(typeof(PhotonView))]
-public class OnClickDestroy : Photon.MonoBehaviour
+public class OnClickDestroy : MonoBehaviour
 {
     public bool DestroyByRpc;
 

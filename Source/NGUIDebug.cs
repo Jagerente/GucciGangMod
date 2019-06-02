@@ -1,15 +1,10 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Internal/Debug")]
 public class NGUIDebug : MonoBehaviour
 {
-    private static NGUIDebug mInstance = null;
+    private static NGUIDebug mInstance;
     private static List<string> mLines = new List<string>();
 
     public static void DrawBounds(Bounds b)

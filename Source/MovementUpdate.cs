@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovementUpdate : MonoBehaviour
 {
@@ -22,7 +17,7 @@ public class MovementUpdate : MonoBehaviour
         }
         else if (networkView.isMine)
         {
-            var args = new object[] { transform.position, transform.rotation, transform.localScale, Vector3.zero };
+            object[] args = { transform.position, transform.rotation, transform.localScale, Vector3.zero };
             networkView.RPC("updateMovement", RPCMode.OthersBuffered, args);
         }
         else
@@ -40,19 +35,19 @@ public class MovementUpdate : MonoBehaviour
                 if (Vector3.Distance(transform.position, lastPosition) >= 0.5f)
                 {
                     lastPosition = transform.position;
-                    var args = new object[] { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
+                    object[] args = { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
                     networkView.RPC("updateMovement", RPCMode.Others, args);
                 }
                 else if (Vector3.Distance(transform.rigidbody.velocity, lastVelocity) >= 0.1f)
                 {
                     lastVelocity = transform.rigidbody.velocity;
-                    var objArray2 = new object[] { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
+                    object[] objArray2 = { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
                     networkView.RPC("updateMovement", RPCMode.Others, objArray2);
                 }
                 else if (Quaternion.Angle(transform.rotation, lastRotation) >= 1f)
                 {
                     lastRotation = transform.rotation;
-                    var objArray3 = new object[] { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
+                    object[] objArray3 = { transform.position, transform.rotation, transform.localScale, rigidbody.velocity };
                     networkView.RPC("updateMovement", RPCMode.Others, objArray3);
                 }
             }

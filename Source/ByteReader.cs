@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -26,7 +21,7 @@ public class ByteReader
     public Dictionary<string, string> ReadDictionary()
     {
         var dictionary = new Dictionary<string, string>();
-        var separator = new[] { '=' };
+        char[] separator = { '=' };
         while (canRead)
         {
             var str = ReadLine();
@@ -52,7 +47,7 @@ public class ByteReader
     {
         string str;
         var length = mBuffer.Length;
-        while (this.mOffset < length && mBuffer[this.mOffset] < 32)
+        while (this.mOffset < length && mBuffer[this.mOffset] < 0x20)
         {
             this.mOffset++;
         }

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Window Auto-Yaw")]
 public class WindowAutoYaw : MonoBehaviour
@@ -33,8 +28,8 @@ public class WindowAutoYaw : MonoBehaviour
         {
             uiCamera = NGUITools.FindCameraForLayer(gameObject.layer);
         }
+
         mTrans = transform;
-        UpdateManager.AddCoroutine(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
+        UpdateManager.AddCoroutine(this, updateOrder, CoroutineUpdate);
     }
 }
-

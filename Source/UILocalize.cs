@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Localize"), RequireComponent(typeof(UIWidget))]
 public class UILocalize : MonoBehaviour
@@ -14,7 +9,7 @@ public class UILocalize : MonoBehaviour
 
     public void Localize()
     {
-        var instance = Localization.instance;
+        Localization instance = Localization.instance;
         var component = GetComponent<UIWidget>();
         var label = component as UILabel;
         var sprite = component as UISprite;
@@ -22,10 +17,11 @@ public class UILocalize : MonoBehaviour
         {
             key = label.text;
         }
+
         var str = !string.IsNullOrEmpty(key) ? instance.Get(key) : string.Empty;
         if (label != null)
         {
-            var input = NGUITools.FindInParents<UIInput>(label.gameObject);
+            UIInput input = NGUITools.FindInParents<UIInput>(label.gameObject);
             if (input != null && input.label == label)
             {
                 input.defaultText = str;
@@ -40,6 +36,7 @@ public class UILocalize : MonoBehaviour
             sprite.spriteName = str;
             sprite.MakePixelPerfect();
         }
+
         mLanguage = instance.currentLanguage;
     }
 
@@ -68,4 +65,3 @@ public class UILocalize : MonoBehaviour
         }
     }
 }
-

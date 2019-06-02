@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class KillInfoComponent : MonoBehaviour
 {
@@ -17,7 +12,7 @@ public class KillInfoComponent : MonoBehaviour
     public GameObject leftTitan;
     private float lifeTime = 8f;
     private float maxScale = 1.5f;
-    private int offset = 24;
+    private int offset = 0x18;
     public GameObject rightTitan;
     public GameObject slabelNameLeft;
     public GameObject slabelNameRight;
@@ -113,7 +108,7 @@ public class KillInfoComponent : MonoBehaviour
         {
             labelScore.GetComponent<UILabel>().text = dmg.ToString();
             slabelScore.GetComponent<UILabel>().text = dmg.ToString();
-            if (dmg > 1000)
+            if (dmg > 0x3e8)
             {
                 labelScore.GetComponent<UILabel>().color = Color.red;
                 slabelScore.GetComponent<UILabel>().color = Color.red;

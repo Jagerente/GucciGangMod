@@ -1,13 +1,9 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Reflection;
+﻿using System.Reflection;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 [AddComponentMenu("Miscellaneous/Photon View &v")]
-public class PhotonView : Photon.MonoBehaviour
+public class PhotonView : MonoBehaviour
 {
     protected internal bool destroyedByPhotonNetworkOrQuit;
     protected internal bool didAwake;
@@ -38,14 +34,14 @@ public class PhotonView : Photon.MonoBehaviour
     {
         if (!failedToFindOnSerialize)
         {
-            if (OnSerializeMethodInfo == null && !NetworkingPeer.GetMethod(observed as MonoBehaviour, PhotonNetworkingMessage.OnPhotonSerializeView.ToString(), out OnSerializeMethodInfo))
+            if (OnSerializeMethodInfo == null && !NetworkingPeer.GetMethod(observed as UnityEngine.MonoBehaviour, PhotonNetworkingMessage.OnPhotonSerializeView.ToString(), out OnSerializeMethodInfo))
             {
                 Debug.LogError("The observed monobehaviour (" + observed.name + ") of this PhotonView does not implement OnPhotonSerializeView()!");
                 failedToFindOnSerialize = true;
             }
             else
             {
-                var parameters = new object[] { pStream, info };
+                object[] parameters = { pStream, info };
                 OnSerializeMethodInfo.Invoke(observed, parameters);
             }
         }
@@ -98,7 +94,7 @@ public class PhotonView : Photon.MonoBehaviour
             var flag = obj2 == gameObject;
             if (flag)
             {
-                var args = new object[] { this, instantiationId, !Application.isLoadingLevel ? string.Empty : "Loading new scene caused this.", flag, destroyedByPhotonNetworkOrQuit };
+                object[] args = { this, instantiationId, !Application.isLoadingLevel ? string.Empty : "Loading new scene caused this.", flag, destroyedByPhotonNetworkOrQuit };
                 Debug.LogWarning(string.Format("OnDestroy for PhotonView {0} but GO is still in instantiatedObjects. instantiationId: {1}. Use PhotonNetwork.Destroy(). {2} Identical with this: {3} PN.Destroyed called for this PV: {4}", args));
             }
         }
@@ -123,7 +119,7 @@ public class PhotonView : Photon.MonoBehaviour
 
     public override string ToString()
     {
-        var args = new object[] { viewID, gameObject == null ? "GO==null" : gameObject.name, !isSceneView ? string.Empty : "(scene)", prefix };
+        object[] args = { viewID, gameObject == null ? "GO==null" : gameObject.name, !isSceneView ? string.Empty : "(scene)", prefix };
         return string.Format("View ({3}){0} on {1} {2}", args);
     }
 

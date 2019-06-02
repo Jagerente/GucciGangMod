@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RockScript : MonoBehaviour
 {
@@ -39,20 +34,23 @@ public class RockScript : MonoBehaviour
                 {
                     if (FengGameManagerMKII.LAN)
                     {
-                        Network.Instantiate(Resources.Load("FX/boom1_CT_KICK"), this.transform.position + Vector3.up * 30f, Quaternion.Euler(270f, 0f, 0f), 0);
+                        Network.Instantiate(Resources.Load("FX/boom1_CT_KICK"),
+                            this.transform.position + Vector3.up * 30f, Quaternion.Euler(270f, 0f, 0f), 0);
                     }
                     else
                     {
-                        PhotonNetwork.Instantiate("FX/boom1_CT_KICK", this.transform.position + Vector3.up * 30f, Quaternion.Euler(270f, 0f, 0f), 0);
+                        PhotonNetwork.Instantiate("FX/boom1_CT_KICK", this.transform.position + Vector3.up * 30f,
+                            Quaternion.Euler(270f, 0f, 0f), 0);
                     }
                 }
                 else
                 {
-                    Instantiate(Resources.Load("FX/boom1_CT_KICK"), this.transform.position + Vector3.up * 30f, Quaternion.Euler(270f, 0f, 0f));
+                    Instantiate(Resources.Load("FX/boom1_CT_KICK"), this.transform.position + Vector3.up * 30f,
+                        Quaternion.Euler(270f, 0f, 0f));
                 }
+
                 disable = true;
             }
         }
     }
 }
-

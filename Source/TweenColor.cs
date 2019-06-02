@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Tween/Color")]
 public class TweenColor : UITweener
@@ -11,7 +6,6 @@ public class TweenColor : UITweener
     public Color from = Color.white;
     private Light mLight;
     private Material mMat;
-    private Transform mTrans;
     private UIWidget mWidget;
     public Color to = Color.white;
 
@@ -28,7 +22,7 @@ public class TweenColor : UITweener
 
     public static TweenColor Begin(GameObject go, float duration, Color color)
     {
-        var color2 = UITweener.Begin<TweenColor>(go, duration);
+        var color2 = Begin<TweenColor>(go, duration);
         color2.from = color2.color;
         color2.to = color;
         if (duration <= 0f)

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LevelBottom : MonoBehaviour
 {
@@ -22,7 +17,8 @@ public class LevelBottom : MonoBehaviour
                     {
                         if (other.gameObject.GetPhotonView().isMine)
                         {
-                            other.gameObject.GetComponent<HERO>().netDieLocal(rigidbody.velocity * 50f, false, -1, string.Empty, true);
+                            other.gameObject.GetComponent<HERO>()
+                                .netDieLocal(rigidbody.velocity * 50f, false, -1, string.Empty);
                         }
                     }
                     else
@@ -53,4 +49,3 @@ public class LevelBottom : MonoBehaviour
     {
     }
 }
-

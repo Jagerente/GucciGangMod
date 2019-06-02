@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public class InputCodeRC
+﻿public class InputCodeRC
 {
     public static int cannonBack = 1;
     public static int cannonFire = 4;
@@ -25,7 +20,7 @@ public class InputCodeRC
     public static int levelCursor = 6;
     public static int levelDelete = 8;
     public static int levelDown = 5;
-    public static int levelFast = 16;
+    public static int levelFast = 0x10;
     public static int levelForward = 0;
     public static int levelLeft = 2;
     public static int levelPlace = 7;

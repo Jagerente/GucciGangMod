@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FlareMovement : MonoBehaviour
 {
@@ -40,9 +35,9 @@ public class FlareMovement : MonoBehaviour
             var num = Mathf.Atan2(-vector.z, vector.x) * 57.29578f;
             hint.transform.rotation = Quaternion.Euler(-90f, num + 180f, 0f);
             hint.transform.localScale = Vector3.zero;
-            var args = new object[] { "x", 1f, "y", 1f, "z", 1f, "easetype", iTween.EaseType.easeOutElastic, "time", 1f };
+            object[] args = { "x", 1f, "y", 1f, "z", 1f, "easetype", iTween.EaseType.easeOutElastic, "time", 1f };
             iTween.ScaleTo(hint, iTween.Hash(args));
-            var objArray2 = new object[] { "x", 0, "y", 0, "z", 0, "easetype", iTween.EaseType.easeInBounce, "time", 0.5f, "delay", 2.5f };
+            object[] objArray2 = { "x", 0, "y", 0, "z", 0, "easetype", iTween.EaseType.easeInBounce, "time", 0.5f, "delay", 2.5f };
             iTween.ScaleTo(hint, iTween.Hash(objArray2));
         }
     }

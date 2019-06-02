@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.IO;
+﻿using System.IO;
 
 public class EanAnimation
 {
@@ -22,7 +17,7 @@ public class EanAnimation
     public void Load(BinaryReader br, FileStream fs)
     {
         Offset = br.ReadInt32();
-        Offset += 16;
+        Offset += 0x10;
         FrameCount = br.ReadInt32();
         MipWidth = br.ReadInt32();
         MipHeight = br.ReadInt32();

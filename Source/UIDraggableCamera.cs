@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Camera)), AddComponentMenu("NGUI/Interaction/Draggable Camera")]
 public class UIDraggableCamera : IgnoreTimeScale
@@ -29,7 +24,8 @@ public class UIDraggableCamera : IgnoreTimeScale
         mTrans = transform;
         if (rootForBounds == null)
         {
-            Debug.LogError(NGUITools.GetHierarchy(gameObject) + " needs the 'Root For Bounds' parameter to be set", this);
+            Debug.LogError(NGUITools.GetHierarchy(gameObject) + " needs the 'Root For Bounds' parameter to be set",
+                this);
             enabled = false;
         }
     }
@@ -40,6 +36,7 @@ public class UIDraggableCamera : IgnoreTimeScale
         {
             return Vector3.zero;
         }
+
         var position = new Vector3(mCam.rect.xMin * Screen.width, mCam.rect.yMin * Screen.height, 0f);
         var vector2 = new Vector3(mCam.rect.xMax * Screen.width, mCam.rect.yMax * Screen.height, 0f);
         position = mCam.ScreenToWorldPoint(position);
@@ -66,9 +63,11 @@ public class UIDraggableCamera : IgnoreTimeScale
                     position.ignoreTimeScale = true;
                     position.worldSpace = true;
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -85,8 +84,9 @@ public class UIDraggableCamera : IgnoreTimeScale
             {
                 delta = delta * mRoot.pixelSizeAdjustment;
             }
+
             var vector = Vector2.Scale(delta, -scale);
-            mTrans.localPosition += (Vector3)vector;
+            mTrans.localPosition += (Vector3) vector;
             mMomentum = Vector2.Lerp(mMomentum, mMomentum + vector * (0.01f * momentumAmount), 0.67f);
             if (dragEffect != UIDragObject.DragEffect.MomentumAndSpring && ConstrainToBounds(true))
             {
@@ -96,12 +96,14 @@ public class UIDraggableCamera : IgnoreTimeScale
         }
     }
 
+
     public void Press(bool isPressed)
     {
         if (isPressed)
         {
             mDragStarted = false;
         }
+
         if (rootForBounds != null)
         {
             mPressed = isPressed;
@@ -131,6 +133,7 @@ public class UIDraggableCamera : IgnoreTimeScale
             {
                 mScroll = 0f;
             }
+
             mScroll += delta * scrollWheelFactor;
         }
     }
@@ -150,6 +153,7 @@ public class UIDraggableCamera : IgnoreTimeScale
             {
                 component.enabled = false;
             }
+
             mScroll = 0f;
         }
         else
@@ -158,33 +162,29 @@ public class UIDraggableCamera : IgnoreTimeScale
             mScroll = NGUIMath.SpringLerp(mScroll, 0f, 20f, deltaTime);
             if (mMomentum.magnitude > 0.01f)
             {
-                mTrans.localPosition += (Vector3)NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
+                mTrans.localPosition += (Vector3) NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
                 mBounds = NGUIMath.CalculateAbsoluteWidgetBounds(rootForBounds);
                 if (!ConstrainToBounds(dragEffect == UIDragObject.DragEffect.None))
                 {
-                    var position2 = GetComponent<SpringPosition>();
-                    if (position2 != null)
+                    var component2 = GetComponent<SpringPosition>();
+                    if (component2 != null)
                     {
-                        position2.enabled = false;
+                        component2.enabled = false;
                     }
                 }
+
                 return;
             }
+
             mScroll = 0f;
         }
+
         NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
     }
 
     public Vector2 currentMomentum
     {
-        get
-        {
-            return mMomentum;
-        }
-        set
-        {
-            mMomentum = value;
-        }
+        get { return mMomentum; }
+        set { mMomentum = value; }
     }
 }
-

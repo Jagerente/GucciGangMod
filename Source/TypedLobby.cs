@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public class TypedLobby
+﻿public class TypedLobby
 {
     public static readonly TypedLobby Default = new TypedLobby();
     public string Name;
@@ -28,10 +23,6 @@ public class TypedLobby
 
     public bool IsDefault
     {
-        get
-        {
-            return Type == LobbyType.Default && string.IsNullOrEmpty(Name);
-        }
+        get { return Type == LobbyType.Default && string.IsNullOrEmpty(Name); }
     }
 }
-

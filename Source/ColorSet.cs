@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public class ColorSet
+﻿public class ColorSet
 {
     public static string color_A = "FAAC58";
     public static string color_B = "F4FA58";

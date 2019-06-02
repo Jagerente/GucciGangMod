@@ -1,10 +1,6 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
+﻿using System;
 using ExitGames.Client.Photon;
-using System;
+using Random = UnityEngine.Random;
 
 public class RCAction
 {
@@ -120,11 +116,11 @@ public class RCAction
                     case 12:
                         if (!FengGameManagerMKII.intVariables.ContainsKey(key))
                         {
-                            FengGameManagerMKII.intVariables.Add(key, UnityEngine.Random.Range(num2, parameters[2].returnInt(null)));
+                            FengGameManagerMKII.intVariables.Add(key, Random.Range(num2, parameters[2].returnInt(null)));
                         }
                         else
                         {
-                            FengGameManagerMKII.intVariables[key] = UnityEngine.Random.Range(num2, parameters[2].returnInt(null));
+                            FengGameManagerMKII.intVariables[key] = Random.Range(num2, parameters[2].returnInt(null));
                         }
                         return;
                 }
@@ -150,11 +146,11 @@ public class RCAction
                     case 12:
                         if (!FengGameManagerMKII.boolVariables.ContainsKey(str2))
                         {
-                            FengGameManagerMKII.boolVariables.Add(str2, Convert.ToBoolean(UnityEngine.Random.Range(0, 2)));
+                            FengGameManagerMKII.boolVariables.Add(str2, Convert.ToBoolean(Random.Range(0, 2)));
                         }
                         else
                         {
-                            FengGameManagerMKII.boolVariables[str2] = Convert.ToBoolean(UnityEngine.Random.Range(0, 2));
+                            FengGameManagerMKII.boolVariables[str2] = Convert.ToBoolean(Random.Range(0, 2));
                         }
                         return;
 
@@ -321,11 +317,11 @@ public class RCAction
                     case 12:
                         if (!FengGameManagerMKII.floatVariables.ContainsKey(str9))
                         {
-                            FengGameManagerMKII.floatVariables.Add(str9, UnityEngine.Random.Range(num4, parameters[2].returnFloat(null)));
+                            FengGameManagerMKII.floatVariables.Add(str9, Random.Range(num4, parameters[2].returnFloat(null)));
                         }
                         else
                         {
-                            FengGameManagerMKII.floatVariables[str9] = UnityEngine.Random.Range(num4, parameters[2].returnFloat(null));
+                            FengGameManagerMKII.floatVariables[str9] = Random.Range(num4, parameters[2].returnFloat(null));
                         }
                         return;
                 }
@@ -345,7 +341,6 @@ public class RCAction
                     {
                         FengGameManagerMKII.playerVariables[str10] = player;
                     }
-                    break;
                 }
                 break;
             }
@@ -363,7 +358,6 @@ public class RCAction
                     {
                         FengGameManagerMKII.titanVariables[str11] = titan;
                     }
-                    break;
                 }
                 break;
             }
@@ -495,7 +489,7 @@ public class RCAction
                     case 0:
                     {
                         var titan2 = this.parameters[0].returnTitan(null);
-                        var parameters = new object[] { this.parameters[1].returnPlayer(null).ID, this.parameters[2].returnInt(null) };
+                        object[] parameters = { this.parameters[1].returnPlayer(null).ID, this.parameters[2].returnInt(null) };
                         titan2.photonView.RPC("titanGetHit", titan2.photonView.owner, parameters);
                         return;
                     }
@@ -543,7 +537,7 @@ public class RCAction
                         return;
 
                     case 1:
-                        FengGameManagerMKII.instance.gameWin2();
+                        FengGameManagerMKII.instance.gameWin();
                         if (this.parameters[0].returnBool(null))
                         {
                             FengGameManagerMKII.intVariables.Clear();
@@ -556,7 +550,7 @@ public class RCAction
                         return;
 
                     case 2:
-                        FengGameManagerMKII.instance.gameLose2();
+                        FengGameManagerMKII.instance.gameLose();
                         if (this.parameters[0].returnBool(null))
                         {
                             FengGameManagerMKII.intVariables.Clear();
@@ -578,7 +572,7 @@ public class RCAction
                             FengGameManagerMKII.playerVariables.Clear();
                             FengGameManagerMKII.titanVariables.Clear();
                         }
-                        FengGameManagerMKII.instance.restartGame2(false);
+                        FengGameManagerMKII.instance.restartGame(false);
                         return;
                 }
                 break;

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/UI/Input (Basic)")]
 public class UIInput : MonoBehaviour
@@ -52,10 +47,7 @@ public class UIInput : MonoBehaviour
                     if ((UICamera.current.submitKey0 == KeyCode.Return || UICamera.current.submitKey1 == KeyCode.Return) && (!label.multiLine || !Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl)))
                     {
                         current = this;
-                        if (onSubmit != null)
-                        {
-                            onSubmit(mText);
-                        }
+                        onSubmit?.Invoke(mText);
                         if (eventReceiver == null)
                         {
                             eventReceiver = gameObject;
@@ -188,7 +180,7 @@ public class UIInput : MonoBehaviour
                 }
                 Input.imeCompositionMode = IMECompositionMode.On;
                 var cachedTransform = label.cachedTransform;
-                var pivotOffset = (Vector3) label.pivotOffset;
+                Vector3 pivotOffset = label.pivotOffset;
                 pivotOffset.y += label.relativeSize.y;
                 pivotOffset = cachedTransform.TransformPoint(pivotOffset);
                 Input.compositionCursorPos = UICamera.currentCamera.WorldToScreenPoint(pivotOffset);

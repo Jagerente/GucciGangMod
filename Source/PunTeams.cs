@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,47 +20,29 @@ public class PunTeams : MonoBehaviour
     public void Start()
     {
         PlayersPerTeam = new Dictionary<Team, List<PhotonPlayer>>();
-        var enumerator = Enum.GetValues(typeof(Team)).GetEnumerator();
-        try
+        var values = Enum.GetValues(typeof(Team));
+        foreach (var current in values)
         {
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                PlayersPerTeam[(Team) (byte) current] = new List<PhotonPlayer>();
-            }
-        }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
+            PlayersPerTeam[(Team)(byte)current] = new List<PhotonPlayer>();
         }
     }
 
+
     public void UpdateTeams()
     {
-        var enumerator = Enum.GetValues(typeof(Team)).GetEnumerator();
-        try
+        var values = Enum.GetValues(typeof(Team));
+        foreach (var current in values)
         {
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                PlayersPerTeam[(Team) (byte) current].Clear();
-            }
-        }
-        finally
-        {
-            var disposable = enumerator as IDisposable;
-            if (disposable != null)
-            	disposable.Dispose();
+            PlayersPerTeam[(Team)(byte)current].Clear();
         }
         for (var i = 0; i < PhotonNetwork.playerList.Length; i++)
         {
-            var player = PhotonNetwork.playerList[i];
-            var team = player.GetTeam();
-            PlayersPerTeam[team].Add(player);
+            var photonPlayer = PhotonNetwork.playerList[i];
+            var team = photonPlayer.GetTeam();
+            PlayersPerTeam[team].Add(photonPlayer);
         }
     }
+
 
     public enum Team : byte
     {

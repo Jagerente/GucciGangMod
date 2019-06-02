@@ -1,10 +1,10 @@
-﻿namespace Photon
-{
-    using UnityEngine;
+﻿using UnityEngine;
 
+namespace Photon
+{
     public class MonoBehaviour : UnityEngine.MonoBehaviour
     {
-        public PhotonView networkView
+        public new PhotonView networkView
         {
             get
             {
@@ -15,11 +15,7 @@
 
         public PhotonView photonView
         {
-            get
-            {
-                return PhotonView.Get(this);
-            }
+            get { return PhotonView.Get(this); }
         }
     }
 }
-

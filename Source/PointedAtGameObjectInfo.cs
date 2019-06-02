@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(InputToEvent))]
 public class PointedAtGameObjectInfo : MonoBehaviour
@@ -12,13 +7,17 @@ public class PointedAtGameObjectInfo : MonoBehaviour
     {
         if (InputToEvent.goPointedAt != null)
         {
-            var photonView = InputToEvent.goPointedAt.GetPhotonView();
+            PhotonView photonView = InputToEvent.goPointedAt.GetPhotonView();
             if (photonView != null)
             {
-                var args = new object[] { photonView.viewID, photonView.instantiationId, photonView.prefix, !photonView.isSceneView ? !photonView.isMine ? "owner: " + photonView.ownerId : "mine" : "scene" };
-                GUI.Label(new Rect(Input.mousePosition.x + 5f, Screen.height - Input.mousePosition.y - 15f, 300f, 30f), string.Format("ViewID {0} InstID {1} Lvl {2} {3}", args));
+                object[] args =
+                {
+                    photonView.viewID, photonView.instantiationId, photonView.prefix,
+                    !photonView.isSceneView ? !photonView.isMine ? "owner: " + photonView.ownerId : "mine" : "scene"
+                };
+                GUI.Label(new Rect(Input.mousePosition.x + 5f, Screen.height - Input.mousePosition.y - 15f, 300f, 30f),
+                    string.Format("ViewID {0} InstID {1} Lvl {2} {3}", args));
             }
         }
     }
 }
-

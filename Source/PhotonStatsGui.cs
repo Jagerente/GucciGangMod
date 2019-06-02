@@ -1,8 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
+﻿using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class PhotonStatsGui : MonoBehaviour
@@ -11,7 +7,7 @@ public class PhotonStatsGui : MonoBehaviour
     public bool healthStatsVisible;
     public bool statsOn = true;
     public Rect statsRect = new Rect(0f, 100f, 200f, 50f);
-    public bool statsWindowOn = false;
+    public bool statsWindowOn = true;
     public bool trafficStatsOn;
     public int WindowId = 100;
 
@@ -23,7 +19,7 @@ public class PhotonStatsGui : MonoBehaviour
         }
         if (statsWindowOn)
         {
-            statsRect = GUILayout.Window(WindowId, statsRect, new GUI.WindowFunction(TrafficStatsWindow), "Messages (shift+tab)");
+            statsRect = GUILayout.Window(WindowId, statsRect, TrafficStatsWindow, "Messages (shift+tab)");
         }
     }
 
@@ -36,7 +32,7 @@ public class PhotonStatsGui : MonoBehaviour
     {
         var flag = false;
         var trafficStatsGameLevel = PhotonNetwork.networkingPeer.TrafficStatsGameLevel;
-        var num = PhotonNetwork.networkingPeer.TrafficStatsElapsedMs / 1000L;
+        var num = PhotonNetwork.networkingPeer.TrafficStatsElapsedMs / 0x3e8L;
         if (num == 0)
         {
             num = 1L;
@@ -68,21 +64,21 @@ public class PhotonStatsGui : MonoBehaviour
         var str5 = string.Empty;
         if (trafficStatsOn)
         {
-            str4 = "Incoming: " + PhotonNetwork.networkingPeer.TrafficStatsIncoming.ToString();
-            str5 = "Outgoing: " + PhotonNetwork.networkingPeer.TrafficStatsOutgoing.ToString();
+            str4 = "Incoming: " + PhotonNetwork.networkingPeer.TrafficStatsIncoming;
+            str5 = "Outgoing: " + PhotonNetwork.networkingPeer.TrafficStatsOutgoing;
             GUILayout.Label(str4);
             GUILayout.Label(str5);
         }
         var str6 = string.Empty;
         if (healthStatsVisible)
         {
-            var args = new object[] { trafficStatsGameLevel.LongestDeltaBetweenSending, trafficStatsGameLevel.LongestDeltaBetweenDispatching, trafficStatsGameLevel.LongestEventCallback, trafficStatsGameLevel.LongestEventCallbackCode, trafficStatsGameLevel.LongestOpResponseCallback, trafficStatsGameLevel.LongestOpResponseCallbackOpCode, PhotonNetwork.networkingPeer.RoundTripTime, PhotonNetwork.networkingPeer.RoundTripTimeVariance };
+            object[] args = { trafficStatsGameLevel.LongestDeltaBetweenSending, trafficStatsGameLevel.LongestDeltaBetweenDispatching, trafficStatsGameLevel.LongestEventCallback, trafficStatsGameLevel.LongestEventCallbackCode, trafficStatsGameLevel.LongestOpResponseCallback, trafficStatsGameLevel.LongestOpResponseCallbackOpCode, PhotonNetwork.networkingPeer.RoundTripTime, PhotonNetwork.networkingPeer.RoundTripTimeVariance };
             str6 = string.Format("ping: {6}[+/-{7}]ms\nlongest delta between\nsend: {0,4}ms disp: {1,4}ms\nlongest time for:\nev({3}):{2,3}ms op({5}):{4,3}ms", args);
             GUILayout.Label(str6);
         }
         if (flag)
         {
-            var objArray2 = new object[] { text, str2, str3, str4, str5, str6 };
+            object[] objArray2 = { text, str2, str3, str4, str5, str6 };
             Debug.Log(string.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", objArray2));
         }
         if (GUI.changed)

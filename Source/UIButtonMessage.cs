@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Button Message")]
 public class UIButtonMessage : MonoBehaviour
@@ -47,6 +42,7 @@ public class UIButtonMessage : MonoBehaviour
             {
                 Send();
             }
+
             mHighlighted = isOver;
         }
     }
@@ -67,6 +63,7 @@ public class UIButtonMessage : MonoBehaviour
             {
                 target = gameObject;
             }
+
             if (includeChildren)
             {
                 var componentsInChildren = target.GetComponentsInChildren<Transform>();
@@ -101,4 +98,3 @@ public class UIButtonMessage : MonoBehaviour
         OnDoubleClick
     }
 }
-

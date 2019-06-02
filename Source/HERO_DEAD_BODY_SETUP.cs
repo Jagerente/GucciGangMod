@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HERO_DEAD_BODY_SETUP : MonoBehaviour
 {
@@ -133,4 +128,3 @@ public class HERO_DEAD_BODY_SETUP : MonoBehaviour
         }
     }
 }
-

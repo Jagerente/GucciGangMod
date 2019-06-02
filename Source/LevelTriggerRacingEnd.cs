@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LevelTriggerRacingEnd : MonoBehaviour
 {
@@ -15,7 +10,7 @@ public class LevelTriggerRacingEnd : MonoBehaviour
         {
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin2();
+                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
                 disable = true;
             }
             else if (other.gameObject.GetComponent<HERO>().photonView.isMine)
@@ -31,4 +26,3 @@ public class LevelTriggerRacingEnd : MonoBehaviour
         disable = false;
     }
 }
-

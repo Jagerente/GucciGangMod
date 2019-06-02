@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using UnityEngine;
 
 [ExecuteInEditMode, RequireComponent(typeof(UIPanel)), AddComponentMenu("NGUI/Interaction/Draggable Panel")]
@@ -148,15 +143,15 @@ public class UIDraggablePanel : IgnoreTimeScale
                 if (mMomentum.magnitude > 0.0001f)
                 {
                     mScroll = NGUIMath.SpringLerp(mScroll, 0f, 20f, deltaTime);
-                    var absolute = NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
+                    Vector3 absolute = NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
                     MoveAbsolute(absolute);
                     if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None)
                     {
                         RestrictWithinBounds(false);
                     }
-                    if (mMomentum.magnitude < 0.0001f && onDragFinished != null)
+                    if (mMomentum.magnitude < 0.0001f)
                     {
-                        onDragFinished();
+                        onDragFinished?.Invoke();
                     }
                     return;
                 }
@@ -253,10 +248,8 @@ public class UIDraggablePanel : IgnoreTimeScale
                     {
                         RestrictWithinBounds(false);
                     }
-                    if (onDragFinished != null)
-                    {
-                        onDragFinished();
-                    }
+
+                    onDragFinished?.Invoke();
                 }
             }
         }
@@ -312,18 +305,18 @@ public class UIDraggablePanel : IgnoreTimeScale
             var clipRange = mPanel.clipRange;
             var num = clipRange.z * 0.5f;
             var num2 = clipRange.w * 0.5f;
-            var a = bounds.min.x + num;
-            var b = bounds.max.x - num;
+            var from = bounds.min.x + num;
+            var to = bounds.max.x - num;
             var num5 = bounds.min.y + num2;
             var num6 = bounds.max.y - num2;
             if (mPanel.clipping == UIDrawCall.Clipping.SoftClip)
             {
-                a -= mPanel.clipSoftness.x;
-                b += mPanel.clipSoftness.x;
+                from -= mPanel.clipSoftness.x;
+                to += mPanel.clipSoftness.x;
                 num5 -= mPanel.clipSoftness.y;
                 num6 += mPanel.clipSoftness.y;
             }
-            var num7 = Mathf.Lerp(a, b, x);
+            var num7 = Mathf.Lerp(from, to, x);
             var num8 = Mathf.Lerp(num6, num5, y);
             if (!updateScrollbars)
             {

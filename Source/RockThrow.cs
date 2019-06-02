@@ -1,11 +1,7 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-using UnityEngine;
-
-public class RockThrow : Photon.MonoBehaviour
+public class RockThrow : MonoBehaviour
 {
     private bool launched;
     private Vector3 oldP;
@@ -20,18 +16,22 @@ public class RockThrow : Photon.MonoBehaviour
             obj2 = PhotonNetwork.Instantiate("FX/boom6", transform.position, transform.rotation, 0);
             if (transform.root.gameObject.GetComponent<EnemyfxIDcontainer>() != null)
             {
-                obj2.GetComponent<EnemyfxIDcontainer>().myOwnerViewID = transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID;
-                obj2.GetComponent<EnemyfxIDcontainer>().titanName = transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().titanName;
+                obj2.GetComponent<EnemyfxIDcontainer>().myOwnerViewID =
+                    transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID;
+                obj2.GetComponent<EnemyfxIDcontainer>().titanName =
+                    transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().titanName;
             }
         }
         else
         {
             obj2 = (GameObject) Instantiate(Resources.Load("FX/boom6"), transform.position, transform.rotation);
         }
+
         obj2.transform.localScale = transform.localScale;
-        var b = 1f - Vector3.Distance(GameObject.Find("MainCamera").transform.position, obj2.transform.position) * 0.05f;
+        var b = 1f - Vector3.Distance(GameObject.Find("MainCamera").transform.position, obj2.transform.position) *
+                0.05f;
         b = Mathf.Min(1f, b);
-        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b, 0.95f);
+        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b);
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
             Destroy(gameObject);
@@ -53,7 +53,8 @@ public class RockThrow : Photon.MonoBehaviour
                     hero.GetComponent<HERO>().die(v.normalized * 1000f + Vector3.up * 50f, false);
                 }
             }
-            else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && !hero.GetComponent<HERO>().HasDied() && !hero.GetComponent<HERO>().isGrabbed)
+            else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && !hero.GetComponent<HERO>().HasDied() &&
+                     !hero.GetComponent<HERO>().isGrabbed)
             {
                 hero.GetComponent<HERO>().markDie();
                 var myOwnerViewID = -1;
@@ -63,8 +64,9 @@ public class RockThrow : Photon.MonoBehaviour
                     myOwnerViewID = transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID;
                     titanName = transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().titanName;
                 }
+
                 Debug.Log("rock hit player " + titanName);
-                var parameters = new object[] { v.normalized * 1000f + Vector3.up * 50f, false, myOwnerViewID, titanName, true };
+                object[] parameters = {v.normalized * 1000f + Vector3.up * 50f, false, myOwnerViewID, titanName, true};
                 hero.GetComponent<HERO>().photonView.RPC("netDie", PhotonTargets.All, parameters);
             }
         }
@@ -74,7 +76,8 @@ public class RockThrow : Photon.MonoBehaviour
     private void initRPC(int viewID, Vector3 scale, Vector3 pos, float level)
     {
         var gameObject = PhotonView.Find(viewID).gameObject;
-        var transform = gameObject.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
+        var transform = gameObject.transform.Find(
+            "Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
         this.transform.localScale = gameObject.transform.localScale;
         this.transform.parent = transform;
         this.transform.localPosition = pos;
@@ -87,7 +90,7 @@ public class RockThrow : Photon.MonoBehaviour
         v = v1;
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
-            var parameters = new object[] { v, oldP };
+            object[] parameters = {v, oldP};
             photonView.RPC("launchRPC", PhotonTargets.Others, parameters);
         }
     }
@@ -122,7 +125,8 @@ public class RockThrow : Photon.MonoBehaviour
                 LayerMask mask2 = 1 << LayerMask.NameToLayer("Players");
                 LayerMask mask3 = 1 << LayerMask.NameToLayer("EnemyAABB");
                 LayerMask mask4 = mask2 | mask | mask3;
-                foreach (var hit in Physics.SphereCastAll(this.transform.position, 2.5f * this.transform.lossyScale.x, this.transform.position - oldP, Vector3.Distance(this.transform.position, oldP), mask4))
+                foreach (var hit in Physics.SphereCastAll(this.transform.position, 2.5f * this.transform.lossyScale.x,
+                    this.transform.position - oldP, Vector3.Distance(this.transform.position, oldP), mask4))
                 {
                     if (LayerMask.LayerToName(hit.collider.gameObject.layer) == "EnemyAABB")
                     {
@@ -137,13 +141,19 @@ public class RockThrow : Photon.MonoBehaviour
                             }
                             else
                             {
-                                if (this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>() != null && PhotonView.Find(this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID) != null)
+                                if (this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>() != null &&
+                                    PhotonView.Find(this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>()
+                                        .myOwnerViewID) != null)
                                 {
-                                    position = PhotonView.Find(this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID).transform.position;
+                                    position = PhotonView
+                                        .Find(this.transform.root.gameObject.GetComponent<EnemyfxIDcontainer>()
+                                            .myOwnerViewID).transform.position;
                                 }
+
                                 gameObject.GetComponent<HERO>().photonView.RPC("hitAnkleRPC", PhotonTargets.All);
                             }
                         }
+
                         explore();
                     }
                     else if (LayerMask.LayerToName(hit.collider.gameObject.layer) == "Players")
@@ -166,9 +176,9 @@ public class RockThrow : Photon.MonoBehaviour
                         explore();
                     }
                 }
+
                 oldP = this.transform.position;
             }
         }
     }
 }
-

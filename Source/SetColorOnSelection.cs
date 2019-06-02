@@ -1,17 +1,11 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Set Color on Selection"), ExecuteInEditMode, RequireComponent(typeof(UIWidget))]
 public class SetColorOnSelection : MonoBehaviour
 {
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap4;
+    
+    private static Dictionary<string, int> f__switchmap4;
     private UIWidget mWidget;
 
     private void OnSelectionChange(string val)
@@ -24,7 +18,7 @@ public class SetColorOnSelection : MonoBehaviour
         if (key != null)
         {
             int num;
-            if (fswitchSmap4 == null)
+            if (f__switchmap4 == null)
             {
                 var dictionary = new Dictionary<string, int>(7);
                 dictionary.Add("White", 0);
@@ -34,9 +28,9 @@ public class SetColorOnSelection : MonoBehaviour
                 dictionary.Add("Yellow", 4);
                 dictionary.Add("Cyan", 5);
                 dictionary.Add("Magenta", 6);
-                fswitchSmap4 = dictionary;
+                f__switchmap4 = dictionary;
             }
-            if (fswitchSmap4.TryGetValue(key, out num))
+            if (f__switchmap4.TryGetValue(key, out num))
             {
                 switch (num)
                 {

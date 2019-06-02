@@ -1,16 +1,10 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterCreateAnimationControl : MonoBehaviour
 {
-    [CompilerGenerated]
-    private static Dictionary<string, int> fswitchSmap0;
+    
+    private static Dictionary<string, int> f__switchmap0;
     private string currentAnimation;
     private float interval = 10f;
     private HERO_SETUP setup;
@@ -28,7 +22,7 @@ public class CharacterCreateAnimationControl : MonoBehaviour
         if (key != null)
         {
             int num;
-            if (fswitchSmap0 == null)
+            if (f__switchmap0 == null)
             {
                 var dictionary = new Dictionary<string, int>(7);
                 dictionary.Add("mikasa", 0);
@@ -38,9 +32,9 @@ public class CharacterCreateAnimationControl : MonoBehaviour
                 dictionary.Add("marco", 4);
                 dictionary.Add("armin", 5);
                 dictionary.Add("petra", 6);
-                fswitchSmap0 = dictionary;
+                f__switchmap0 = dictionary;
             }
-            if (fswitchSmap0.TryGetValue(key, out num))
+            if (f__switchmap0.TryGetValue(key, out num))
             {
                 switch (num)
                 {
@@ -106,11 +100,11 @@ public class CharacterCreateAnimationControl : MonoBehaviour
             if (timeElapsed > interval)
             {
                 timeElapsed = 0f;
-                if (Random.Range(1, 1000) < 350)
+                if (Random.Range(1, 0x3e8) < 350)
                 {
                     play("salute");
                 }
-                else if (Random.Range(1, 1000) < 350)
+                else if (Random.Range(1, 0x3e8) < 350)
                 {
                     play("supply");
                 }

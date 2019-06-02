@@ -1,21 +1,10 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
-using GGM;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 {
-    public RotationAxes axes;
-    public AudioSource bgmusic;
     public static float cameraDistance = 0.6f;
     public static CAMERA_TYPE cameraMode;
     public static int cameraTilt = 1;
-    public static int character = 1;
     private float closestDistance;
     private int currentPeekPlayerIndex;
     public static DayLight dayLight = DayLight.Dawn;
@@ -32,16 +21,11 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public static GAMETYPE gametype = GAMETYPE.STOP;
     private bool hasSnapShot;
     private Transform head;
-    private float height = 5f;
-    private float heightDamping = 2f;
     private float heightMulti;
     public FengCustomInputs inputManager;
     public static int invertY = 1;
-    public static bool isCheating;
     public static bool isPausing;
     public static bool isTyping;
-    public float justHit;
-    public int lastScore;
     public static int level;
     private bool lockAngle;
     private Vector3 lockCameraPosition;
@@ -54,7 +38,6 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public float minimumY = -60f;
     private bool needSetHUD;
     private float R;
-    private float rotationY;
     public int score;
     public static float sensitivityMulti = 0.5f;
     public static string singleCharacter;
@@ -76,21 +59,32 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public bool spectatorMode;
     private bool startSnapShotFrameCount;
     public static STEREO_3D_TYPE stereoType;
-    private Transform target;
     public Texture texture;
     public float timer;
     public static bool triggerAutoLock;
     public static bool usingTitan;
     private Vector3 verticalHeightOffset = Vector3.zero;
-    private float verticalRotationOffset;
-    private float xSpeed = -3f;
-    private float ySpeed = -0.8f;
 
     private void Awake()
     {
         isTyping = false;
         isPausing = false;
         name = "MainCamera";
+        if (PlayerPrefs.HasKey("GameQuality"))
+        {
+            if (PlayerPrefs.GetFloat("GameQuality") >= 0.9f)
+            {
+                GetComponent<TiltShift>().enabled = true;
+            }
+            else
+            {
+                GetComponent<TiltShift>().enabled = false;
+            }
+        }
+        else
+        {
+            GetComponent<TiltShift>().enabled = true;
+        }
         CreateMinimap();
     }
 
@@ -102,61 +96,53 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         transform.position += Vector3.up * heightMulti;
         var transform2 = this.transform;
         transform2.position -= Vector3.up * (0.6f - cameraDistance) * 2f;
-        switch (cameraMode)
+        if (cameraMode == CAMERA_TYPE.WOW)
         {
-            case CAMERA_TYPE.WOW:
+            if (Input.GetKey(KeyCode.Mouse1))
             {
-                if (Input.GetKey(KeyCode.Mouse1))
-                {
-                    var angle = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
-                    var num2 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
-                    this.transform.RotateAround(this.transform.position, Vector3.up, angle);
-                    this.transform.RotateAround(this.transform.position, this.transform.right, num2);
-                }
-                var transform3 = this.transform;
-                transform3.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
-                break;
+                var angle = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
+                var num2 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
+                this.transform.RotateAround(this.transform.position, Vector3.up, angle);
+                this.transform.RotateAround(this.transform.position, this.transform.right, num2);
             }
-            case CAMERA_TYPE.ORIGINAL:
+            var transform3 = this.transform;
+            transform3.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
+        }
+        else if (cameraMode == CAMERA_TYPE.ORIGINAL)
+        {
+            var num3 = 0f;
+            if (Input.mousePosition.x < Screen.width * 0.4f)
             {
-                var num3 = 0f;
-                if (Input.mousePosition.x < Screen.width * 0.4f)
-                {
-                    num3 = -((Screen.width * 0.4f - Input.mousePosition.x) / Screen.width * 0.4f) * getSensitivityMultiWithDeltaTime() * 150f;
-                    this.transform.RotateAround(this.transform.position, Vector3.up, num3);
-                }
-                else if (Input.mousePosition.x > Screen.width * 0.6f)
-                {
-                    num3 = (Input.mousePosition.x - Screen.width * 0.6f) / Screen.width * 0.4f * getSensitivityMultiWithDeltaTime() * 150f;
-                    this.transform.RotateAround(this.transform.position, Vector3.up, num3);
-                }
-                var x = 140f * (Screen.height * 0.6f - Input.mousePosition.y) / Screen.height * 0.5f;
-                this.transform.rotation = Quaternion.Euler(x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
-                var transform4 = this.transform;
-                transform4.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
-                break;
+                num3 = -((Screen.width * 0.4f - Input.mousePosition.x) / Screen.width * 0.4f) * getSensitivityMultiWithDeltaTime() * 150f;
+                this.transform.RotateAround(this.transform.position, Vector3.up, num3);
             }
-            case CAMERA_TYPE.TPS:
+            else if (Input.mousePosition.x > Screen.width * 0.6f)
             {
-                if (!inputManager.menuOn)
-                {
-                    Screen.lockCursor = true;
-                }
-                var num5 = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
-                var num6 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
-                this.transform.RotateAround(this.transform.position, Vector3.up, num5);
-                var num7 = this.transform.rotation.eulerAngles.x % 360f;
-                var num8 = num7 + num6;
-                if ((num6 <= 0f || (num7 >= 260f || num8 <= 260f) && (num7 >= 80f || num8 <= 80f)) && (num6 >= 0f || (num7 <= 280f || num8 >= 280f) && (num7 <= 100f || num8 >= 100f)))
-                {
-                    this.transform.RotateAround(this.transform.position, this.transform.right, num6);
-                }
-                var transform5 = this.transform;
-                transform5.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
-                break;
+                num3 = (Input.mousePosition.x - Screen.width * 0.6f) / Screen.width * 0.4f * getSensitivityMultiWithDeltaTime() * 150f;
+                this.transform.RotateAround(this.transform.position, Vector3.up, num3);
             }
-            default:
-                throw new ArgumentOutOfRangeException();
+            var x = 140f * (Screen.height * 0.6f - Input.mousePosition.y) / Screen.height * 0.5f;
+            this.transform.rotation = Quaternion.Euler(x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+            var transform4 = this.transform;
+            transform4.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
+        }
+        else if (cameraMode == CAMERA_TYPE.TPS)
+        {
+            if (!inputManager.menuOn)
+            {
+                Screen.lockCursor = true;
+            }
+            var num5 = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
+            var num6 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
+            this.transform.RotateAround(this.transform.position, Vector3.up, num5);
+            var num7 = this.transform.rotation.eulerAngles.x % 360f;
+            var num8 = num7 + num6;
+            if ((num6 <= 0f || (num7 >= 260f || num8 <= 260f) && (num7 >= 80f || num8 <= 80f)) && (num6 >= 0f || (num7 <= 280f || num8 >= 280f) && (num7 <= 100f || num8 >= 100f)))
+            {
+                this.transform.RotateAround(this.transform.position, this.transform.right, num6);
+            }
+            var transform5 = this.transform;
+            transform5.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
         }
         if (cameraDistance < 0.65f)
         {
@@ -168,7 +154,14 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public void CameraMovementLive(HERO hero)
     {
         var magnitude = hero.rigidbody.velocity.magnitude;
-        Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, magnitude > 10f ? Mathf.Min(100f, magnitude + 40f) : 50f, 0.1f);
+        if (magnitude > 10f)
+        {
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, Mathf.Min(100f, magnitude + 40f), 0.1f);
+        }
+        else
+        {
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 50f, 0.1f);
+        }
         var num2 = hero.CameraMultiplier * (200f - Camera.main.fieldOfView) / 150f;
         this.transform.position = head.transform.position + Vector3.up * heightMulti - Vector3.up * (0.6f - cameraDistance) * 2f;
         var transform = this.transform;
@@ -194,15 +187,15 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 Minimap.instance.myCam.farClipPlane = 1000f;
                 Minimap.instance.myCam.enabled = false;
             }
-            minimap.CreateMinimap(Minimap.instance.myCam, 512, 0.3f, info.minimapPreset);
-            if (Settings.Minimap == 0 || RCSettings.globalDisableMinimap == 1)
+            minimap.CreateMinimap(Minimap.instance.myCam, 0x200, 0.3f, info.minimapPreset);
+            if ((int) FengGameManagerMKII.settings[0xe7] == 0 || RCSettings.globalDisableMinimap == 1)
             {
                 minimap.SetEnabled(false);
             }
         }
     }
 
-    private void CreateSnapShotRt()
+    public void createSnapShotRT()
     {
         if (snapshotRT != null)
         {
@@ -210,12 +203,12 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         }
         if (QualitySettings.GetQualityLevel() > 3)
         {
-            snapshotRT = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 24);
+            snapshotRT = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 0x18);
             snapShotCamera.GetComponent<Camera>().targetTexture = snapshotRT;
         }
         else
         {
-            snapshotRT = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 24);
+            snapshotRT = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 0x18);
             snapShotCamera.GetComponent<Camera>().targetTexture = snapshotRT;
         }
     }
@@ -265,25 +258,11 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     {
         if (gametype == GAMETYPE.SINGLE)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().restartGameSingle2();
+            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().restartGameSingle();
         }
     }
 
     private Texture2D RTImage(Camera cam)
-    {
-        var active = RenderTexture.active;
-        RenderTexture.active = cam.targetTexture;
-        cam.Render();
-        var textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height);
-        var num = (int) (cam.targetTexture.width * 0.04f);
-        var destX = (int) (cam.targetTexture.width * 0.02f);
-        textured.ReadPixels(new Rect(num, num, cam.targetTexture.width - num, cam.targetTexture.height - num), destX, destX);
-        textured.Apply();
-        RenderTexture.active = active;
-        return textured;
-    }
-
-    private Texture2D RTImage2(Camera cam)
     {
         var active = RenderTexture.active;
         RenderTexture.active = cam.targetTexture;
@@ -377,21 +356,21 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             if (gametype == GAMETYPE.SINGLE)
             {
-                main_object.GetComponent<HERO>().setSkillHUDPosition2();
+                main_object.GetComponent<HERO>().setSkillHUDPosition();
             }
             else if (main_object.GetPhotonView() != null && main_object.GetPhotonView().isMine)
             {
-                main_object.GetComponent<HERO>().setSkillHUDPosition2();
+                main_object.GetComponent<HERO>().setSkillHUDPosition();
             }
         }
         if (stereoType == STEREO_3D_TYPE.SIDE_BY_SIDE)
         {
             gameObject.GetComponent<Camera>().aspect = Screen.width / Screen.height;
         }
-        CreateSnapShotRt();
+        createSnapShotRT();
     }
 
-    public GameObject setMainObject(GameObject obj, bool resetRotation = true, bool lockAngle = false)
+    public GameObject setMainObject(GameObject obj,  bool resetRotation = true, bool lockAngle = false)
     {
         main_object = obj;
         if (obj == null)
@@ -528,17 +507,17 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         switch (index)
         {
             case 1:
-                snapshot1 = RTImage2(snapShotCamera.GetComponent<Camera>());
+                snapshot1 = RTImage(snapShotCamera.GetComponent<Camera>());
                 SnapShotSaves.addIMG(snapshot1, snapShotDmg);
                 break;
 
             case 2:
-                snapshot2 = RTImage2(snapShotCamera.GetComponent<Camera>());
+                snapshot2 = RTImage(snapShotCamera.GetComponent<Camera>());
                 SnapShotSaves.addIMG(snapshot2, snapShotDmg);
                 break;
 
             case 3:
-                snapshot3 = RTImage2(snapShotCamera.GetComponent<Camera>());
+                snapshot3 = RTImage(snapShotCamera.GetComponent<Camera>());
                 SnapShotSaves.addIMG(snapshot3, snapShotDmg);
                 break;
         }
@@ -551,7 +530,14 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localScale = new Vector3(Screen.width * 0.4f, Screen.height * 0.4f, 1f);
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localPosition = new Vector3(-Screen.width * 0.225f, Screen.height * 0.225f, 0f);
             GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.rotation = Quaternion.Euler(0f, 0f, 10f);
-            GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = Settings.SnapshotsInGame == 1;
+            if (PlayerPrefs.HasKey("showSSInGame") && PlayerPrefs.GetInt("showSSInGame") == 1)
+            {
+                GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = true;
+            }
+            else
+            {
+                GameObject.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = false;
+            }
         }
     }
 
@@ -600,10 +586,24 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     {
         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addCamera(this);
         isPausing = false;
+        sensitivityMulti = PlayerPrefs.GetFloat("MouseSensitivity");
+        invertY = PlayerPrefs.GetInt("invertMouseY");
         inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
         setDayLight(dayLight);
         locker = GameObject.Find("locker");
-        CreateSnapShotRt();
+        if (PlayerPrefs.HasKey("cameraTilt"))
+        {
+            cameraTilt = PlayerPrefs.GetInt("cameraTilt");
+        }
+        else
+        {
+            cameraTilt = 1;
+        }
+        if (PlayerPrefs.HasKey("cameraDistance"))
+        {
+            cameraDistance = PlayerPrefs.GetFloat("cameraDistance") + 0.3f;
+        }
+        createSnapShotRT();
     }
 
     public void startShake(float R, float duration, float decay = 0.95f)
@@ -616,10 +616,10 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         }
     }
 
-    public void StartSnapShot(Vector3 p, int dmg, GameObject target, float startTime)
+    public void startSnapShot(Vector3 p, int dmg, GameObject target, float startTime)
     {
         int num;
-        if (int.TryParse(Settings.SnapshotsMinDamage, out num))
+        if (int.TryParse((string) FengGameManagerMKII.settings[0x5f], out num))
         {
             if (dmg >= num)
             {
@@ -644,6 +644,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         }
     }
 
+   
     public void update()
     {
         if (flashDuration > 0f)
@@ -720,7 +721,8 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 {
                     if (main_object != null)
                     {
-                        var position = head == null ? main_object.transform.position : head.transform.position;
+                        var position = transform.position;
+                        position = head == null ? main_object.transform.position : head.transform.position;
                         position += Vector3.up * heightMulti;
                         transform.position = Vector3.Lerp(transform.position, position - transform.forward * 5f, 0.2f);
                     }
@@ -729,9 +731,10 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 isPausing = !isPausing;
                 if (isPausing)
                 {
-                    Pages.Opening = true;
-                    Pages.Done = false;
-                    Pages.position = new Rect(Screen.width / 2f, Screen.height / 2f, 0f, 0f);
+                    if (gametype == GAMETYPE.SINGLE)
+                    {
+                        Time.timeScale = 0f;
+                    }
                     GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = true;
                     Screen.showCursor = true;
                     Screen.lockCursor = false;
@@ -782,8 +785,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         cameraMode = CAMERA_TYPE.ORIGINAL;
                         Screen.lockCursor = false;
                     }
-                    verticalRotationOffset = 0f;
-                    if ((int) FengGameManagerMKII.settings[245] == 1 || main_object.GetComponent<HERO>() == null)
+                    if ((int) FengGameManagerMKII.settings[0xf5] == 1 || main_object.GetComponent<HERO>() == null)
                     {
                         Screen.showCursor = false;
                     }
@@ -809,17 +811,17 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 {
                     if (FengGameManagerMKII.inputRC.isInputHumanDown(InputCodeRC.liveCam))
                     {
-                        if ((int) FengGameManagerMKII.settings[263] == 0)
+                        if ((int) FengGameManagerMKII.settings[0x107] == 0)
                         {
-                            FengGameManagerMKII.settings[263] = 1;
+                            FengGameManagerMKII.settings[0x107] = 1;
                         }
                         else
                         {
-                            FengGameManagerMKII.settings[263] = 0;
+                            FengGameManagerMKII.settings[0x107] = 0;
                         }
                     }
                     var component = main_object.GetComponent<HERO>();
-                    if (component != null && (int) FengGameManagerMKII.settings[263] == 1 && component.GetComponent<SmoothSyncMovement>().enabled && component.isPhotonCamera)
+                    if (component != null && (int) FengGameManagerMKII.settings[0x107] == 1 && component.GetComponent<SmoothSyncMovement>().enabled && component.isPhotonCamera)
                     {
                         CameraMovementLive(component);
                     }

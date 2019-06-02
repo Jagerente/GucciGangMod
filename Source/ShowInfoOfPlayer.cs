@@ -1,12 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 [RequireComponent(typeof(PhotonView))]
-public class ShowInfoOfPlayer : Photon.MonoBehaviour
+public class ShowInfoOfPlayer : MonoBehaviour
 {
     public bool DisableOnOwnObjects;
     public Font font;
@@ -37,6 +33,7 @@ public class ShowInfoOfPlayer : Photon.MonoBehaviour
             font = (Font) Resources.FindObjectsOfTypeAll(typeof(Font))[0];
             Debug.LogWarning("No font defined. Found font: " + font);
         }
+
         if (tm == null)
         {
             textGo = new GameObject("3d text");
@@ -49,6 +46,7 @@ public class ShowInfoOfPlayer : Photon.MonoBehaviour
             tm.fontSize = 0;
             tm.anchor = TextAnchor.MiddleCenter;
         }
+
         if (!DisableOnOwnObjects && photonView.isMine)
         {
             enabled = false;
@@ -91,4 +89,3 @@ public class ShowInfoOfPlayer : Photon.MonoBehaviour
         }
     }
 }
-

@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 
 public class RoomInfo
 {
@@ -24,33 +19,33 @@ public class RoomInfo
     {
         if (propertiesToCache != null && propertiesToCache.Count != 0 && !customPropertiesField.Equals(propertiesToCache))
         {
-            if (propertiesToCache.ContainsKey((byte) 251))
+            if (propertiesToCache.ContainsKey((byte) 0xfb))
             {
-                removedFromList = (bool) propertiesToCache[(byte) 251];
+                removedFromList = (bool) propertiesToCache[(byte) 0xfb];
                 if (removedFromList)
                 {
                     return;
                 }
             }
-            if (propertiesToCache.ContainsKey((byte) 255))
+            if (propertiesToCache.ContainsKey((byte) 0xff))
             {
-                maxPlayersField = (byte) propertiesToCache[(byte) 255];
+                maxPlayersField = (byte) propertiesToCache[(byte) 0xff];
             }
-            if (propertiesToCache.ContainsKey((byte) 253))
+            if (propertiesToCache.ContainsKey((byte) 0xfd))
             {
-                openField = (bool) propertiesToCache[(byte) 253];
+                openField = (bool) propertiesToCache[(byte) 0xfd];
             }
-            if (propertiesToCache.ContainsKey((byte) 254))
+            if (propertiesToCache.ContainsKey((byte) 0xfe))
             {
-                visibleField = (bool) propertiesToCache[(byte) 254];
+                visibleField = (bool) propertiesToCache[(byte) 0xfe];
             }
-            if (propertiesToCache.ContainsKey((byte) 252))
+            if (propertiesToCache.ContainsKey((byte) 0xfc))
             {
-                playerCount = (byte) propertiesToCache[(byte) 252];
+                playerCount = (byte) propertiesToCache[(byte) 0xfc];
             }
-            if (propertiesToCache.ContainsKey((byte) 249))
+            if (propertiesToCache.ContainsKey((byte) 0xf9))
             {
-                autoCleanUpField = (bool) propertiesToCache[(byte) 249];
+                autoCleanUpField = (bool) propertiesToCache[(byte) 0xf9];
             }
             customPropertiesField.MergeStringKeys(propertiesToCache);
         }
@@ -69,13 +64,13 @@ public class RoomInfo
 
     public override string ToString()
     {
-        var args = new object[] { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount };
+        object[] args = { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount };
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.", args);
     }
 
     public string ToStringFull()
     {
-        var args = new object[] { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount, customPropertiesField.ToStringFull() };
+        object[] args = { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount, customPropertiesField.ToStringFull() };
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", args);
     }
 

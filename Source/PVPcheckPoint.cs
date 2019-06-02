@@ -1,12 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-public class PVPcheckPoint : Photon.MonoBehaviour
+public class PVPcheckPoint : MonoBehaviour
 {
     private bool annie;
     public GameObject[] chkPtNextArr;
@@ -161,7 +157,7 @@ public class PVPcheckPoint : Photon.MonoBehaviour
             titanPt = 0f;
             syncPts();
             state = CheckPointState.Human;
-            var parameters = new object[] { 1 };
+            object[] parameters = { 1 };
             photonView.RPC("changeState", PhotonTargets.All, parameters);
             if (LevelInfo.getInfo(FengGameManagerMKII.level).mapName != "The City I")
             {
@@ -172,7 +168,7 @@ public class PVPcheckPoint : Photon.MonoBehaviour
             GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
             if (checkIfHumanWins())
             {
-                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin2();
+                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
             }
         }
         else
@@ -193,7 +189,7 @@ public class PVPcheckPoint : Photon.MonoBehaviour
                 if (state != CheckPointState.Titan)
                 {
                     state = CheckPointState.Non;
-                    var parameters = new object[] { 0 };
+                    object[] parameters = { 0 };
                     photonView.RPC("changeState", PhotonTargets.Others, parameters);
                 }
             }
@@ -267,9 +263,9 @@ public class PVPcheckPoint : Photon.MonoBehaviour
 
     private void syncPts()
     {
-        var parameters = new object[] { titanPt };
+        object[] parameters = { titanPt };
         photonView.RPC("changeTitanPt", PhotonTargets.Others, parameters);
-        var objArray2 = new object[] { humanPt };
+        object[] objArray2 = { humanPt };
         photonView.RPC("changeHumanPt", PhotonTargets.Others, objArray2);
     }
 
@@ -285,14 +281,14 @@ public class PVPcheckPoint : Photon.MonoBehaviour
                 PhotonNetwork.Destroy(supply);
             }
             state = CheckPointState.Titan;
-            var parameters = new object[] { 2 };
+            object[] parameters = { 2 };
             photonView.RPC("changeState", PhotonTargets.All, parameters);
             var component = GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
             component.PVPtitanScore += 2;
             GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
             if (checkIfTitanWins())
             {
-                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose2();
+                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
             }
             if (hasAnnie)
             {
@@ -329,7 +325,7 @@ public class PVPcheckPoint : Photon.MonoBehaviour
                 if (state != CheckPointState.Human)
                 {
                     state = CheckPointState.Non;
-                    var parameters = new object[] { 0 };
+                    object[] parameters = { 0 };
                     photonView.RPC("changeState", PhotonTargets.All, parameters);
                 }
             }

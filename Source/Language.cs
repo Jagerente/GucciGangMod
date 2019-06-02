@@ -1,60 +1,55 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Language
 {
-    public static string[] abnormal = new string[25];
-    public static string[] btn_back = new string[25];
-    public static string[] btn_continue = new string[25];
-    public static string[] btn_create_game = new string[25];
-    public static string[] btn_credits = new string[25];
-    public static string[] btn_default = new string[25];
-    public static string[] btn_join = new string[25];
-    public static string[] btn_LAN = new string[25];
-    public static string[] btn_multiplayer = new string[25];
-    public static string[] btn_option = new string[25];
-    public static string[] btn_QUICK_MATCH = new string[25];
-    public static string[] btn_quit = new string[25];
-    public static string[] btn_ready = new string[25];
-    public static string[] btn_refresh = new string[25];
-    public static string[] btn_server_ASIA = new string[25];
-    public static string[] btn_server_EU = new string[25];
-    public static string[] btn_server_JAPAN = new string[25];
-    public static string[] btn_server_US = new string[25];
-    public static string[] btn_single = new string[25];
-    public static string[] btn_start = new string[25];
-    public static string[] camera_info = new string[25];
-    public static string[] camera_original = new string[25];
-    public static string[] camera_tilt = new string[25];
-    public static string[] camera_tps = new string[25];
-    public static string[] camera_type = new string[25];
-    public static string[] camera_wow = new string[25];
-    public static string[] change_quality = new string[25];
-    public static string[] choose_character = new string[25];
-    public static string[] choose_map = new string[25];
-    public static string[] choose_region_server = new string[25];
-    public static string[] difficulty = new string[25];
-    public static string[] game_time = new string[25];
-    public static string[] hard = new string[25];
-    public static string[] invert_mouse = new string[25];
-    public static string[] key_set_info_1 = new string[25];
-    public static string[] key_set_info_2 = new string[25];
-    public static string[] max_player = new string[25];
-    public static string[] max_Time = new string[25];
-    public static string[] mouse_sensitivity = new string[25];
-    public static string[] normal = new string[25];
-    public static string[] port = new string[25];
-    public static string[] select_titan = new string[25];
-    public static string[] server_ip = new string[25];
-    public static string[] server_name = new string[25];
-    public static string[] soldier = new string[25];
-    public static string[] titan = new string[25];
+    public static string[] abnormal = new string[0x19];
+    public static string[] btn_back = new string[0x19];
+    public static string[] btn_continue = new string[0x19];
+    public static string[] btn_create_game = new string[0x19];
+    public static string[] btn_credits = new string[0x19];
+    public static string[] btn_default = new string[0x19];
+    public static string[] btn_join = new string[0x19];
+    public static string[] btn_LAN = new string[0x19];
+    public static string[] btn_multiplayer = new string[0x19];
+    public static string[] btn_option = new string[0x19];
+    public static string[] btn_QUICK_MATCH = new string[0x19];
+    public static string[] btn_quit = new string[0x19];
+    public static string[] btn_ready = new string[0x19];
+    public static string[] btn_refresh = new string[0x19];
+    public static string[] btn_server_ASIA = new string[0x19];
+    public static string[] btn_server_EU = new string[0x19];
+    public static string[] btn_server_JAPAN = new string[0x19];
+    public static string[] btn_server_US = new string[0x19];
+    public static string[] btn_single = new string[0x19];
+    public static string[] btn_start = new string[0x19];
+    public static string[] camera_info = new string[0x19];
+    public static string[] camera_original = new string[0x19];
+    public static string[] camera_tilt = new string[0x19];
+    public static string[] camera_tps = new string[0x19];
+    public static string[] camera_type = new string[0x19];
+    public static string[] camera_wow = new string[0x19];
+    public static string[] change_quality = new string[0x19];
+    public static string[] choose_character = new string[0x19];
+    public static string[] choose_map = new string[0x19];
+    public static string[] choose_region_server = new string[0x19];
+    public static string[] difficulty = new string[0x19];
+    public static string[] game_time = new string[0x19];
+    public static string[] hard = new string[0x19];
+    public static string[] invert_mouse = new string[0x19];
+    public static string[] key_set_info_1 = new string[0x19];
+    public static string[] key_set_info_2 = new string[0x19];
+    public static string[] max_player = new string[0x19];
+    public static string[] max_Time = new string[0x19];
+    public static string[] mouse_sensitivity = new string[0x19];
+    public static string[] normal = new string[0x19];
+    public static string[] port = new string[0x19];
+    public static string[] select_titan = new string[0x19];
+    public static string[] server_ip = new string[0x19];
+    public static string[] server_name = new string[0x19];
+    public static string[] soldier = new string[0x19];
+    public static string[] titan = new string[0x19];
     public static int type = -1;
-    public static string[] waiting_for_input = new string[25];
+    public static string[] waiting_for_input = new string[0x19];
 
     public static string GetLang(int id)
     {
@@ -120,19 +115,19 @@ public class Language
             {
                 return "Thai";
             }
-            if (id == 16)
+            if (id == 0x10)
             {
                 return "Русский";
             }
-            if (id == 17)
+            if (id == 0x11)
             {
                 return "NEDERLANDS";
             }
-            if (id == 18)
+            if (id == 0x12)
             {
                 return "Hebrew";
             }
-            if (id == 19)
+            if (id == 0x13)
             {
                 return "DANSK";
             }
@@ -194,19 +189,19 @@ public class Language
             }
             if (txt == "Русский")
             {
-                return 16;
+                return 0x10;
             }
             if (txt == "NEDERLANDS")
             {
-                return 17;
+                return 0x11;
             }
             if (txt == "Hebrew")
             {
-                return 18;
+                return 0x12;
             }
             if (txt == "DANSK")
             {
-                return 19;
+                return 0x13;
             }
             if (txt == "简体中文")
             {
@@ -226,7 +221,7 @@ public class Language
 
     public static void init()
     {
-        var separator = new[] { "\n"[0] };
+        char[] separator = { "\n"[0] };
         var strArray = ((TextAsset) Resources.Load("lang")).text.Split(separator);
         var txt = string.Empty;
         var index = 0;
@@ -239,7 +234,7 @@ public class Language
             {
                 if (str5.Contains("#START"))
                 {
-                    var chArray2 = new[] { "@"[0] };
+                    char[] chArray2 = { "@"[0] };
                     txt = str5.Split(chArray2)[1];
                     index = GetLangIndex(txt);
                 }
@@ -249,9 +244,9 @@ public class Language
                 }
                 else if (txt != string.Empty && str5.Contains("@"))
                 {
-                    var chArray3 = new[] { "@"[0] };
+                    char[] chArray3 = { "@"[0] };
                     str3 = str5.Split(chArray3)[0];
-                    var chArray4 = new[] { "@"[0] };
+                    char[] chArray4 = { "@"[0] };
                     str4 = str5.Split(chArray4)[1];
                     switch (str3)
                     {
@@ -312,7 +307,7 @@ public class Language
                             break;
 
                         case "btn_QUICK_MATCH":
-                            btn_QUICK_MATCH[index] = "OFFLINE";
+                            btn_QUICK_MATCH[index] = str4;
                             break;
 
                         case "btn_default":

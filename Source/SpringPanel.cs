@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(UIPanel)), AddComponentMenu("NGUI/Internal/Spring Panel")]
 public class SpringPanel : IgnoreTimeScale
@@ -68,9 +63,9 @@ public class SpringPanel : IgnoreTimeScale
         {
             mDrag.UpdateScrollbars(false);
         }
-        if (flag && onFinished != null)
+        if (flag)
         {
-            onFinished();
+            onFinished?.Invoke();
         }
     }
 

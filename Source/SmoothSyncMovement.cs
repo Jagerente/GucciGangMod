@@ -1,13 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
+﻿using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-using UnityEngine;
-
-public class SmoothSyncMovement : Photon.MonoBehaviour
+public class SmoothSyncMovement : MonoBehaviour
 {
-    private Vector3 correctCameraPos;
     public Quaternion correctCameraRot;
     private Vector3 correctPlayerPos = Vector3.zero;
     private Quaternion correctPlayerRot = Quaternion.identity;
@@ -23,6 +18,7 @@ public class SmoothSyncMovement : Photon.MonoBehaviour
         {
             enabled = false;
         }
+
         correctPlayerPos = transform.position;
         correctPlayerRot = transform.rotation;
         if (rigidbody == null)
@@ -41,6 +37,7 @@ public class SmoothSyncMovement : Photon.MonoBehaviour
             {
                 stream.SendNext(rigidbody.velocity);
             }
+
             if (PhotonCamera)
             {
                 stream.SendNext(Camera.main.transform.rotation);
@@ -54,6 +51,7 @@ public class SmoothSyncMovement : Photon.MonoBehaviour
             {
                 correctPlayerVelocity = (Vector3) stream.ReceiveNext();
             }
+
             if (PhotonCamera)
             {
                 correctCameraRot = (Quaternion) stream.ReceiveNext();
@@ -74,4 +72,3 @@ public class SmoothSyncMovement : Photon.MonoBehaviour
         }
     }
 }
-

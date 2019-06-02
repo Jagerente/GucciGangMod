@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class EffectLayer : MonoBehaviour
@@ -158,10 +153,7 @@ public class EffectLayer : MonoBehaviour
         for (var i = 0; i < MaxENodes; i++)
         {
             var node = ActiveENodes[i];
-            if (node != null)
-            {
-                node.Update();
-            }
+            node?.Update();
         }
     }
 
@@ -269,12 +261,12 @@ public class EffectLayer : MonoBehaviour
             ColorAffector affector4;
             if (ColorAffectType == 2)
             {
-                var colorArr = new[] { Color1, Color2, Color3, Color4 };
+                Color[] colorArr = { Color1, Color2, Color3, Color4 };
                 affector4 = new ColorAffector(colorArr, ColorGradualTimeLength, ColorGradualType, node);
             }
             else
             {
-                var colorArray2 = new[] { Color1, Color2 };
+                Color[] colorArray2 = { Color1, Color2 };
                 affector4 = new ColorAffector(colorArray2, ColorGradualTimeLength, ColorGradualType, node);
             }
             list.Add(affector4);

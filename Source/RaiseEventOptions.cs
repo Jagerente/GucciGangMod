@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using ExitGames.Client.Photon.Lite;
+﻿using ExitGames.Client.Photon.Lite;
 
 public class RaiseEventOptions
 {

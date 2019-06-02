@@ -1,10 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using AnimationOrTween;
-using System;
+﻿using AnimationOrTween;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Internal/Active Animation"), RequireComponent(typeof(Animation))]
@@ -13,6 +7,8 @@ public class ActiveAnimation : IgnoreTimeScale
     public string callWhenFinished;
     public GameObject eventReceiver;
     private Animation mAnim;
+
+
     private Direction mDisableDirection;
     private Direction mLastDirection;
     private bool mNotify;
@@ -28,7 +24,9 @@ public class ActiveAnimation : IgnoreTimeScale
             {
                 playDirection = mLastDirection == Direction.Forward ? Direction.Reverse : Direction.Forward;
             }
-            if (string.IsNullOrEmpty(clipName))
+
+            var flag = string.IsNullOrEmpty(clipName);
+            if (flag)
             {
                 if (!mAnim.isPlaying)
                 {
@@ -39,33 +37,24 @@ public class ActiveAnimation : IgnoreTimeScale
             {
                 mAnim.Play(clipName);
             }
-            var enumerator = mAnim.GetEnumerator();
-            try
+
+            foreach (AnimationState animationState in mAnim)
             {
-                while (enumerator.MoveNext())
+                if (string.IsNullOrEmpty(clipName) || animationState.name == clipName)
                 {
-                    var current = (AnimationState) enumerator.Current;
-                    if (string.IsNullOrEmpty(clipName) || current.name == clipName)
+                    var num = Mathf.Abs(animationState.speed);
+                    animationState.speed = num * (float) playDirection;
+                    if (playDirection == Direction.Reverse && animationState.time == 0f)
                     {
-                        var num = Mathf.Abs(current.speed);
-                        current.speed = num * (float) playDirection;
-                        if (playDirection == Direction.Reverse && current.time == 0f)
-                        {
-                            current.time = current.length;
-                        }
-                        else if (playDirection == Direction.Forward && current.time == current.length)
-                        {
-                            current.time = 0f;
-                        }
+                        animationState.time = animationState.length;
+                    }
+                    else if (playDirection == Direction.Forward && animationState.time == animationState.length)
+                    {
+                        animationState.time = 0f;
                     }
                 }
             }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
-            }
+
             mLastDirection = playDirection;
             mNotify = true;
             mAnim.Sample();
@@ -82,7 +71,8 @@ public class ActiveAnimation : IgnoreTimeScale
         return Play(anim, clipName, playDirection, EnableCondition.DoNothing, DisableCondition.DoNotDisable);
     }
 
-    public static ActiveAnimation Play(Animation anim, string clipName, Direction playDirection, EnableCondition enableBeforePlay, DisableCondition disableCondition)
+    public static ActiveAnimation Play(Animation anim, string clipName, Direction playDirection,
+        EnableCondition enableBeforePlay, DisableCondition disableCondition)
     {
         if (!NGUITools.GetActive(anim.gameObject))
         {
@@ -90,6 +80,7 @@ public class ActiveAnimation : IgnoreTimeScale
             {
                 return null;
             }
+
             NGUITools.SetActive(anim.gameObject, true);
             var componentsInChildren = anim.gameObject.GetComponentsInChildren<UIPanel>();
             var index = 0;
@@ -100,11 +91,13 @@ public class ActiveAnimation : IgnoreTimeScale
                 index++;
             }
         }
+
         var component = anim.GetComponent<ActiveAnimation>();
         if (component == null)
         {
             component = anim.gameObject.AddComponent<ActiveAnimation>();
         }
+
         component.mAnim = anim;
         component.mDisableDirection = (Direction) disableCondition;
         component.eventReceiver = null;
@@ -118,103 +111,85 @@ public class ActiveAnimation : IgnoreTimeScale
     {
         if (mAnim != null)
         {
-            var enumerator = mAnim.GetEnumerator();
-            try
+            foreach (AnimationState animationState in mAnim)
             {
-                while (enumerator.MoveNext())
+                if (mLastDirection == Direction.Reverse)
                 {
-                    var current = (AnimationState) enumerator.Current;
-                    if (mLastDirection == Direction.Reverse)
-                    {
-                        current.time = current.length;
-                    }
-                    else if (mLastDirection == Direction.Forward)
-                    {
-                        current.time = 0f;
-                    }
+                    animationState.time = animationState.length;
                 }
-            }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
+                else if (mLastDirection == Direction.Forward)
+                {
+                    animationState.time = 0f;
+                }
             }
         }
     }
 
+
     private void Update()
     {
         var num = UpdateRealTimeDelta();
-        if (num != 0f)
+        if (num == 0f)
         {
-            if (mAnim != null)
+            return;
+        }
+
+        if (mAnim != null)
+        {
+            var flag = false;
+            foreach (AnimationState animationState in mAnim)
             {
-                var flag = false;
-                var enumerator = mAnim.GetEnumerator();
-                try
+                if (mAnim.IsPlaying(animationState.name))
                 {
-                    while (enumerator.MoveNext())
+                    var num2 = animationState.speed * num;
+                    animationState.time += num2;
+                    if (num2 < 0f)
                     {
-                        var current = (AnimationState) enumerator.Current;
-                        if (mAnim.IsPlaying(current.name))
+                        if (animationState.time > 0f)
                         {
-                            var num2 = current.speed * num;
-                            current.time += num2;
-                            if (num2 < 0f)
-                            {
-                                if (current.time > 0f)
-                                {
-                                    flag = true;
-                                }
-                                else
-                                {
-                                    current.time = 0f;
-                                }
-                            }
-                            else if (current.time < current.length)
-                            {
-                                flag = true;
-                            }
-                            else
-                            {
-                                current.time = current.length;
-                            }
+                            flag = true;
+                        }
+                        else
+                        {
+                            animationState.time = 0f;
                         }
                     }
-                }
-                finally
-                {
-                    var disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                    	disposable.Dispose();
-                }
-                mAnim.Sample();
-                if (!flag)
-                {
-                    enabled = false;
-                    if (mNotify)
+                    else if (animationState.time < animationState.length)
                     {
-                        mNotify = false;
-                        if (onFinished != null)
-                        {
-                            onFinished(this);
-                        }
-                        if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
-                        {
-                            eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
-                        }
-                        if (mDisableDirection != Direction.Toggle && mLastDirection == mDisableDirection)
-                        {
-                            NGUITools.SetActive(gameObject, false);
-                        }
+                        flag = true;
+                    }
+                    else
+                    {
+                        animationState.time = animationState.length;
                     }
                 }
             }
-            else
+
+            mAnim.Sample();
+            if (flag)
             {
-                enabled = false;
+                return;
             }
+
+            enabled = false;
+            if (mNotify)
+            {
+                mNotify = false;
+                onFinished?.Invoke(this);
+                if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
+                {
+                    eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
+                }
+
+                if (mDisableDirection != Direction.Toggle && mLastDirection == mDisableDirection)
+                {
+                    NGUITools.SetActive(gameObject, false);
+                }
+            }
+        }
+        else
+        {
+            enabled = false;
         }
     }
 
@@ -222,49 +197,44 @@ public class ActiveAnimation : IgnoreTimeScale
     {
         get
         {
-            if (mAnim != null)
+            if (mAnim == null)
             {
-                var enumerator = mAnim.GetEnumerator();
-                try
+                return false;
+            }
+
+            foreach (AnimationState animationState in mAnim)
+            {
+                if (mAnim.IsPlaying(animationState.name))
                 {
-                    while (enumerator.MoveNext())
+                    if (mLastDirection == Direction.Forward)
                     {
-                        var current = (AnimationState) enumerator.Current;
-                        if (mAnim.IsPlaying(current.name))
+                        if (animationState.time < animationState.length)
                         {
-                            if (mLastDirection == Direction.Forward)
-                            {
-                                if (current.time < current.length)
-                                {
-                                    return true;
-                                }
-                            }
-                            else
-                            {
-                                if (mLastDirection == Direction.Reverse)
-                                {
-                                    if (current.time > 0f)
-                                    {
-                                        return true;
-                                    }
-                                    continue;
-                                }
-                                return true;
-                            }
+                            var result = true;
+                            return result;
+                        }
+                    }
+                    else
+                    {
+                        if (mLastDirection != Direction.Reverse)
+                        {
+                            var result = true;
+                            return result;
+                        }
+
+                        if (animationState.time > 0f)
+                        {
+                            var result = true;
+                            return result;
                         }
                     }
                 }
-                finally
-                {
-                    var disposable = enumerator as IDisposable;
-                    if (disposable != null)
-                    	disposable.Dispose();
-                }
             }
+
             return false;
         }
     }
 
+
     public delegate void OnFinished(ActiveAnimation anim);
 }
-

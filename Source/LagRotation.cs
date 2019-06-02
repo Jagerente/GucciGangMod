@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Lag Rotation")]
 public class LagRotation : MonoBehaviour
@@ -32,11 +27,11 @@ public class LagRotation : MonoBehaviour
         mAbsolute = mTrans.rotation;
         if (ignoreTimeScale)
         {
-            UpdateManager.AddCoroutine(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
+            UpdateManager.AddCoroutine(this, updateOrder, CoroutineUpdate);
         }
         else
         {
-            UpdateManager.AddLateUpdate(this, updateOrder, new UpdateManager.OnUpdate(CoroutineUpdate));
+            UpdateManager.AddLateUpdate(this, updateOrder, CoroutineUpdate);
         }
     }
 }

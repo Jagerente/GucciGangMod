@@ -1,13 +1,9 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
-public class CannonBall : Photon.MonoBehaviour
+public class CannonBall : MonoBehaviour
 {
     private Vector3 correctPos;
     private Vector3 correctVelocity;
@@ -103,7 +99,7 @@ public class CannonBall : Photon.MonoBehaviour
             for (var i = 0; i < colliderArray.Length; i++)
             {
                 var gameObject = colliderArray[i].gameObject;
-                if (gameObject.layer == 16)
+                if (gameObject.layer == 0x10)
                 {
                     var component = gameObject.GetComponent<TitanTrigger>();
                     if (!(component == null || myTitanTriggers.Contains(component)))

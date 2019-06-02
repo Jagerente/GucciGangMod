@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SnapShotSaves
 {
@@ -25,6 +20,7 @@ public class SnapShotSaves
         {
             index = 0;
         }
+
         maxIndex = Mathf.Max(index, maxIndex);
     }
 
@@ -34,6 +30,7 @@ public class SnapShotSaves
         {
             return 0;
         }
+
         return dmg[currentIndex];
     }
 
@@ -43,6 +40,7 @@ public class SnapShotSaves
         {
             return null;
         }
+
         return img[currentIndex];
     }
 
@@ -68,6 +66,7 @@ public class SnapShotSaves
         {
             currentIndex = 0;
         }
+
         return getCurrentIMG();
     }
 
@@ -78,6 +77,7 @@ public class SnapShotSaves
         {
             currentIndex = maxIndex - 1;
         }
+
         return getCurrentIMG();
     }
 
@@ -88,9 +88,8 @@ public class SnapShotSaves
             inited = true;
             index = 0;
             maxIndex = 0;
-            img = new Texture2D[99];
-            dmg = new int[99];
+            img = new Texture2D[0x63];
+            dmg = new int[0x63];
         }
     }
 }
-

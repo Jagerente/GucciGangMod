@@ -1,13 +1,9 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 [RequireComponent(typeof(PhotonView))]
-public class PickupItemSyncer : Photon.MonoBehaviour
+public class PickupItemSyncer : MonoBehaviour
 {
     public bool IsWaitingForPickupInit;
     private const float TimeDeltaToIgnore = 0.2f;
@@ -134,7 +130,7 @@ public class PickupItemSyncer : Photon.MonoBehaviour
                 }
             }
             Debug.Log(string.Concat("Sent count: ", list.Count, " now: ", time));
-            var parameters = new object[] { PhotonNetwork.time, list.ToArray() };
+            object[] parameters = { PhotonNetwork.time, list.ToArray() };
             photonView.RPC("PickupItemInit", targtePlayer, parameters);
         }
     }

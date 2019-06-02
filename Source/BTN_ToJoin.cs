@@ -1,13 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BTN_ToJoin : MonoBehaviour
 {
-    public static GameObject CreateInput(GameObject parent, GameObject toClone, Vector3 position, Quaternion rotation, string name, string hint, uint width = 100, int maxChars = 100, bool isPassword = false)
+    public static GameObject CreateInput(GameObject parent, GameObject toClone, Vector3 position, Quaternion rotation, string name, string hint, uint width, int maxChars,  bool isPassword)
     {
         var prefab = (GameObject) Instantiate(toClone);
         var obj3 = NGUITools.AddChild(parent, prefab);
@@ -29,7 +24,7 @@ public class BTN_ToJoin : MonoBehaviour
         return obj3;
     }
 
-    public static GameObject CreateLabel(GameObject parent, GameObject toClone, Vector3 position, Quaternion rotation, string name, string text, int fontsize, int lineWidth = 130)
+    public static GameObject CreateLabel(GameObject parent, GameObject toClone, Vector3 position, Quaternion rotation, string name, string text, int fontsize,  int lineWidth)
     {
         var prefab = (GameObject) Instantiate(toClone);
         var obj3 = NGUITools.AddChild(parent, prefab);

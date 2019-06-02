@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BTN_START_MULTI_SERVER : MonoBehaviour
 {
@@ -28,11 +23,7 @@ public class BTN_START_MULTI_SERVER : MonoBehaviour
             str4 = "night";
         }
         var unencrypted = GameObject.Find("InputStartServerPWD").GetComponent<UIInput>().label.text;
-        if (unencrypted.Length > 0)
-        {
-            unencrypted = new SimpleAES().Encrypt(unencrypted);
-        }
-        PhotonNetwork.CreateRoom(string.Concat(text, "`", selection, "`", str3, "`", num2, "`", str4, "`", unencrypted, "`", Random.Range(0, 50000)), true, true, maxPlayers);
+        PhotonNetwork.CreateRoom(string.Concat(text, "`", selection, "`", str3, "`", num2, "`", str4, "`", unencrypted.Length > 0 ? new SimpleAES().Encrypt(unencrypted) : "", "`", Random.Range(0, 0xc350)), new RoomOptions { isOpen = true, isVisible = true, maxPlayers = maxPlayers }, null);
     }
 }
 

@@ -1,16 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System.Collections;
-
-public class KickState
+﻿public class KickState
 {
     public int id;
     private int kickCount;
     private string kickers;
-    private ArrayList kickers2;
     public string name;
 
     public void addKicker(string n)

@@ -1,13 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class VertexPool
 {
-    public const int BlockSize = 36;
+    public const int BlockSize = 0x24;
     public float BoundsScheduleTime = 1f;
     public bool ColorChanged;
     public Color[] Colors;
@@ -43,10 +38,12 @@ public class VertexPool
 
     public RibbonTrail AddRibbonTrail(float width, int maxelemnt, float len, Vector3 pos, int stretchType, float maxFps)
     {
-        return new RibbonTrail(GetVertices(maxelemnt * 2, (maxelemnt - 1) * 6), width, maxelemnt, len, pos, stretchType, maxFps);
+        return new RibbonTrail(GetVertices(maxelemnt * 2, (maxelemnt - 1) * 6), width, maxelemnt, len, pos, stretchType,
+            maxFps);
     }
 
-    public Sprite AddSprite(float width, float height, STYPE type, ORIPOINT ori, Camera cam, int uvStretch, float maxFps)
+    public Sprite AddSprite(float width, float height, STYPE type, ORIPOINT ori, Camera cam, int uvStretch,
+        float maxFps)
     {
         return new Sprite(GetVertices(4, 6), width, height, type, ori, cam, uvStretch, maxFps);
     }
@@ -83,12 +80,14 @@ public class VertexPool
         var num2 = 0;
         if (VertexUsed + vcount >= VertexTotal)
         {
-            count = (vcount / 36 + 1) * 36;
+            count = (vcount / 0x24 + 1) * 0x24;
         }
+
         if (IndexUsed + icount >= IndexTotal)
         {
-            num2 = (icount / 36 + 1) * 36;
+            num2 = (icount / 0x24 + 1) * 0x24;
         }
+
         VertexUsed += vcount;
         IndexUsed += icount;
         if (count != 0 || num2 != 0)
@@ -97,6 +96,7 @@ public class VertexPool
             VertexTotal += count;
             IndexTotal += num2;
         }
+
         return new VertexSegment(VertexUsed - vcount, vcount, IndexUsed - icount, icount, this);
     }
 
@@ -116,29 +116,35 @@ public class VertexPool
         {
             Mesh.Clear();
         }
+
         Mesh.vertices = Vertices;
         if (UVChanged)
         {
             Mesh.uv = UVs;
         }
+
         if (ColorChanged)
         {
             Mesh.colors = Colors;
         }
+
         if (IndiceChanged)
         {
             Mesh.triangles = Indices;
         }
+
         ElapsedTime += Time.deltaTime;
         if (ElapsedTime > BoundsScheduleTime || FirstUpdate)
         {
             RecalculateBounds();
             ElapsedTime = 0f;
         }
+
         if (ElapsedTime > BoundsScheduleTime)
         {
             FirstUpdate = false;
         }
+
         VertCountChanged = false;
         IndiceChanged = false;
         ColorChanged = false;
@@ -169,4 +175,3 @@ public class VertexPool
         }
     }
 }
-

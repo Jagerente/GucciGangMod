@@ -1,29 +1,18 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Interaction/Scroll Bar"), ExecuteInEditMode]
 public class UIScrollBar : MonoBehaviour
 {
-    [HideInInspector, SerializeField]
-    private UISprite mBG;
+    [HideInInspector, SerializeField] private UISprite mBG;
     private Camera mCam;
-    [HideInInspector, SerializeField]
-    private Direction mDir;
-    [HideInInspector, SerializeField]
-    private UISprite mFG;
-    [SerializeField, HideInInspector]
-    private bool mInverted;
+    [HideInInspector, SerializeField] private Direction mDir;
+    [HideInInspector, SerializeField] private UISprite mFG;
+    [SerializeField, HideInInspector] private bool mInverted;
     private bool mIsDirty;
     private Vector2 mScreenPos = Vector2.zero;
-    [SerializeField, HideInInspector]
-    private float mScroll;
-    [HideInInspector, SerializeField]
-    private float mSize = 1f;
+    [SerializeField, HideInInspector] private float mScroll;
+    [HideInInspector, SerializeField] private float mSize = 1f;
     private Transform mTrans;
     public OnScrollBarChange onChange;
     public OnDragFinished onDragFinished;
@@ -32,8 +21,8 @@ public class UIScrollBar : MonoBehaviour
     {
         if (mBG != null && mFG != null)
         {
-            var bounds = NGUIMath.CalculateRelativeInnerBounds(cachedTransform, mBG);
-            var bounds2 = NGUIMath.CalculateRelativeInnerBounds(cachedTransform, mFG);
+            Bounds bounds = NGUIMath.CalculateRelativeInnerBounds(cachedTransform, mBG);
+            Bounds bounds2 = NGUIMath.CalculateRelativeInnerBounds(cachedTransform, mFG);
             if (mDir == Direction.Horizontal)
             {
                 var num = bounds.size.x - bounds2.size.x;
@@ -62,7 +51,8 @@ public class UIScrollBar : MonoBehaviour
             mScroll = Mathf.Clamp01(mScroll);
             var border = mBG.border;
             var vector2 = mFG.border;
-            var vector3 = new Vector2(Mathf.Max(0f, mBG.cachedTransform.localScale.x - border.x - border.z), Mathf.Max(0f, mBG.cachedTransform.localScale.y - border.y - border.w));
+            var vector3 = new Vector2(Mathf.Max(0f, mBG.cachedTransform.localScale.x - border.x - border.z),
+                Mathf.Max(0f, mBG.cachedTransform.localScale.y - border.y - border.w));
             var num = !mInverted ? mScroll : 1f - mScroll;
             if (mDir == Direction.Horizontal)
             {
@@ -70,8 +60,10 @@ public class UIScrollBar : MonoBehaviour
                 mFG.pivot = UIWidget.Pivot.Left;
                 mBG.pivot = UIWidget.Pivot.Left;
                 mBG.cachedTransform.localPosition = Vector3.zero;
-                mFG.cachedTransform.localPosition = new Vector3(border.x - vector2.x + (vector3.x - vector6.x) * num, 0f, 0f);
-                mFG.cachedTransform.localScale = new Vector3(vector6.x + vector2.x + vector2.z, vector6.y + vector2.y + vector2.w, 1f);
+                mFG.cachedTransform.localPosition =
+                    new Vector3(border.x - vector2.x + (vector3.x - vector6.x) * num, 0f, 0f);
+                mFG.cachedTransform.localScale = new Vector3(vector6.x + vector2.x + vector2.z,
+                    vector6.y + vector2.y + vector2.w, 1f);
                 if (num < 0.999f && num > 0.001f)
                 {
                     mFG.MakePixelPerfect();
@@ -83,8 +75,10 @@ public class UIScrollBar : MonoBehaviour
                 mFG.pivot = UIWidget.Pivot.Top;
                 mBG.pivot = UIWidget.Pivot.Top;
                 mBG.cachedTransform.localPosition = Vector3.zero;
-                mFG.cachedTransform.localPosition = new Vector3(0f, -border.y + vector2.y - (vector3.y - vector7.y) * num, 0f);
-                mFG.cachedTransform.localScale = new Vector3(vector7.x + vector2.x + vector2.z, vector7.y + vector2.y + vector2.w, 1f);
+                mFG.cachedTransform.localPosition =
+                    new Vector3(0f, -border.y + vector2.y - (vector3.y - vector7.y) * num, 0f);
+                mFG.cachedTransform.localScale = new Vector3(vector7.x + vector2.x + vector2.z,
+                    vector7.y + vector2.y + vector2.w, 1f);
                 if (num < 0.999f && num > 0.001f)
                 {
                     mFG.MakePixelPerfect();
@@ -109,9 +103,9 @@ public class UIScrollBar : MonoBehaviour
     {
         mCam = UICamera.currentCamera;
         Reposition(UICamera.lastTouchPosition);
-        if (!isPressed && onDragFinished != null)
+        if (!isPressed)
         {
-            onDragFinished();
+            onDragFinished?.Invoke();
         }
     }
 
@@ -123,9 +117,9 @@ public class UIScrollBar : MonoBehaviour
             var bounds = NGUIMath.CalculateAbsoluteWidgetBounds(mFG.cachedTransform);
             mScreenPos = mCam.WorldToScreenPoint(bounds.center);
         }
-        else if (onDragFinished != null)
+        else
         {
-            onDragFinished();
+            onDragFinished?.Invoke();
         }
     }
 
@@ -146,15 +140,21 @@ public class UIScrollBar : MonoBehaviour
         if (background != null && background.collider != null)
         {
             var listener = UIEventListener.Get(background.gameObject);
-            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress, new UIEventListener.BoolDelegate(OnPressBackground));
-            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag, new UIEventListener.VectorDelegate(OnDragBackground));
+            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress,
+                new UIEventListener.BoolDelegate(OnPressBackground));
+            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag,
+                new UIEventListener.VectorDelegate(OnDragBackground));
         }
+
         if (foreground != null && foreground.collider != null)
         {
             var listener2 = UIEventListener.Get(foreground.gameObject);
-            listener2.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener2.onPress, new UIEventListener.BoolDelegate(OnPressForeground));
-            listener2.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener2.onDrag, new UIEventListener.VectorDelegate(OnDragForeground));
+            listener2.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener2.onPress,
+                new UIEventListener.BoolDelegate(OnPressForeground));
+            listener2.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener2.onDrag,
+                new UIEventListener.VectorDelegate(OnDragForeground));
         }
+
         ForceUpdate();
     }
 
@@ -174,10 +174,12 @@ public class UIScrollBar : MonoBehaviour
             {
                 return mFG.alpha;
             }
+
             if (mBG != null)
             {
                 return mBG.alpha;
             }
+
             return 0f;
         }
         set
@@ -187,6 +189,7 @@ public class UIScrollBar : MonoBehaviour
                 mFG.alpha = value;
                 NGUITools.SetActiveSelf(mFG.gameObject, mFG.alpha > 0.001f);
             }
+
             if (mBG != null)
             {
                 mBG.alpha = value;
@@ -197,10 +200,7 @@ public class UIScrollBar : MonoBehaviour
 
     public UISprite background
     {
-        get
-        {
-            return mBG;
-        }
+        get { return mBG; }
         set
         {
             if (mBG != value)
@@ -213,10 +213,7 @@ public class UIScrollBar : MonoBehaviour
 
     public float barSize
     {
-        get
-        {
-            return mSize;
-        }
+        get { return mSize; }
         set
         {
             var num = Mathf.Clamp01(value);
@@ -224,10 +221,7 @@ public class UIScrollBar : MonoBehaviour
             {
                 mSize = num;
                 mIsDirty = true;
-                if (onChange != null)
-                {
-                    onChange(this);
-                }
+                onChange?.Invoke(this);
             }
         }
     }
@@ -240,6 +234,7 @@ public class UIScrollBar : MonoBehaviour
             {
                 mCam = NGUITools.FindCameraForLayer(gameObject.layer);
             }
+
             return mCam;
         }
     }
@@ -252,16 +247,14 @@ public class UIScrollBar : MonoBehaviour
             {
                 mTrans = transform;
             }
+
             return mTrans;
         }
     }
 
     public Direction direction
     {
-        get
-        {
-            return mDir;
-        }
+        get { return mDir; }
         set
         {
             if (mDir != value)
@@ -272,7 +265,8 @@ public class UIScrollBar : MonoBehaviour
                 {
                     var cachedTransform = mBG.cachedTransform;
                     var localScale = cachedTransform.localScale;
-                    if (mDir == Direction.Vertical && localScale.x > localScale.y || mDir == Direction.Horizontal && localScale.x < localScale.y)
+                    if (mDir == Direction.Vertical && localScale.x > localScale.y ||
+                        mDir == Direction.Horizontal && localScale.x < localScale.y)
                     {
                         var x = localScale.x;
                         localScale.x = localScale.y;
@@ -283,6 +277,7 @@ public class UIScrollBar : MonoBehaviour
                         {
                             NGUITools.AddWidgetCollider(mBG.gameObject);
                         }
+
                         if (mFG.collider != null)
                         {
                             NGUITools.AddWidgetCollider(mFG.gameObject);
@@ -295,10 +290,7 @@ public class UIScrollBar : MonoBehaviour
 
     public UISprite foreground
     {
-        get
-        {
-            return mFG;
-        }
+        get { return mFG; }
         set
         {
             if (mFG != value)
@@ -311,10 +303,7 @@ public class UIScrollBar : MonoBehaviour
 
     public bool inverted
     {
-        get
-        {
-            return mInverted;
-        }
+        get { return mInverted; }
         set
         {
             if (mInverted != value)
@@ -327,10 +316,7 @@ public class UIScrollBar : MonoBehaviour
 
     public float scrollValue
     {
-        get
-        {
-            return mScroll;
-        }
+        get { return mScroll; }
         set
         {
             var num = Mathf.Clamp01(value);
@@ -338,10 +324,7 @@ public class UIScrollBar : MonoBehaviour
             {
                 mScroll = num;
                 mIsDirty = true;
-                if (onChange != null)
-                {
-                    onChange(this);
-                }
+                onChange?.Invoke(this);
             }
         }
     }
@@ -356,4 +339,3 @@ public class UIScrollBar : MonoBehaviour
 
     public delegate void OnScrollBarChange(UIScrollBar sb);
 }
-

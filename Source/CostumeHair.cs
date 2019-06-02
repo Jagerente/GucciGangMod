@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-public class CostumeHair
+﻿public class CostumeHair
 {
     public string hair = string.Empty;
     public string hair_1 = string.Empty;

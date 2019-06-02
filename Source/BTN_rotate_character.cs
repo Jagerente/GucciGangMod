@@ -1,13 +1,8 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BTN_rotate_character : MonoBehaviour
 {
-    public GameObject camera;
+    public new GameObject camera;
     private float distance = 3f;
     public GameObject hero;
     private bool isRotate;
@@ -33,10 +28,10 @@ public class BTN_rotate_character : MonoBehaviour
         transform.position += Vector3.up * 1.1f;
         if (isRotate)
         {
-            var x = Input.GetAxis("Mouse X") * 2.5f;
-            var y = -Input.GetAxis("Mouse Y") * 2.5f;
-            camera.transform.RotateAround(camera.transform.position, Vector3.up, x);
-            camera.transform.RotateAround(camera.transform.position, camera.transform.right, y);
+            var angle = Input.GetAxis("Mouse X") * 2.5f;
+            var num2 = -Input.GetAxis("Mouse Y") * 2.5f;
+            camera.transform.RotateAround(camera.transform.position, Vector3.up, angle);
+            camera.transform.RotateAround(camera.transform.position, camera.transform.right, num2);
         }
         var transform2 = camera.transform;
         transform2.position -= camera.transform.forward * distance;

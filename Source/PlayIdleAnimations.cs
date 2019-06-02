@@ -1,10 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("NGUI/Examples/Play Idle Animations")]
@@ -26,37 +20,28 @@ public class PlayIdleAnimations : MonoBehaviour
         }
         else
         {
-            var enumerator = mAnim.GetEnumerator();
-            try
+            foreach (AnimationState animationState in mAnim)
             {
-                while (enumerator.MoveNext())
+                if (animationState.clip.name == "idle")
                 {
-                    var current = (AnimationState) enumerator.Current;
-                    if (current.clip.name == "idle")
-                    {
-                        current.layer = 0;
-                        mIdle = current.clip;
-                        mAnim.Play(mIdle.name);
-                    }
-                    else if (current.clip.name.StartsWith("idle"))
-                    {
-                        current.layer = 1;
-                        mBreaks.Add(current.clip);
-                    }
+                    animationState.layer = 0;
+                    mIdle = animationState.clip;
+                    mAnim.Play(mIdle.name);
+                }
+                else if (animationState.clip.name.StartsWith("idle"))
+                {
+                    animationState.layer = 1;
+                    mBreaks.Add(animationState.clip);
                 }
             }
-            finally
-            {
-                var disposable = enumerator as IDisposable;
-                if (disposable != null)
-                	disposable.Dispose();
-            }
+
             if (mBreaks.Count == 0)
             {
                 Destroy(this);
             }
         }
     }
+
 
     private void Update()
     {
@@ -65,12 +50,12 @@ public class PlayIdleAnimations : MonoBehaviour
             if (mBreaks.Count == 1)
             {
                 var clip = mBreaks[0];
-                mNextBreak = Time.time + clip.length + UnityEngine.Random.Range(5f, 15f);
+                mNextBreak = Time.time + clip.length + Random.Range(5f, 15f);
                 mAnim.CrossFade(clip.name);
             }
             else
             {
-                var num = UnityEngine.Random.Range(0, mBreaks.Count - 1);
+                var num = Random.Range(0, mBreaks.Count - 1);
                 if (mLastIndex == num)
                 {
                     num++;
@@ -79,12 +64,12 @@ public class PlayIdleAnimations : MonoBehaviour
                         num = 0;
                     }
                 }
+
                 mLastIndex = num;
                 var clip2 = mBreaks[num];
-                mNextBreak = Time.time + clip2.length + UnityEngine.Random.Range(2f, 8f);
+                mNextBreak = Time.time + clip2.length + Random.Range(2f, 8f);
                 mAnim.CrossFade(clip2.name);
             }
         }
     }
 }
-

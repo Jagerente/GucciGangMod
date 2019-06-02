@@ -1,13 +1,6 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(UITexture))]
@@ -29,68 +22,68 @@ public class DownloadTexture : MonoBehaviour
         }
     }
 
-    [DebuggerHidden]
+    
     private IEnumerator Start()
     {
-        return new StartcIterator7 { fthis = this };
+        return new Startc__Iterator7 { f__this = this };
     }
 
-    [CompilerGenerated]
-    private sealed class StartcIterator7 : IEnumerator, IDisposable, IEnumerator<object>
+    
+    private sealed class Startc__Iterator7 : IEnumerator, IDisposable, IEnumerator<object>
     {
-        internal object Scurrent;
-        internal int SPC;
-        internal DownloadTexture fthis;
-        internal UITexture ut1;
-        internal WWW www0;
+        internal object current;
+        internal int PC;
+        internal DownloadTexture f__this;
+        internal UITexture ut__1;
+        internal WWW www__0;
 
-        [DebuggerHidden]
+        
         public void Dispose()
         {
-            SPC = -1;
+            PC = -1;
         }
 
         public bool MoveNext()
         {
-            var num = (uint) SPC;
-            SPC = -1;
+            var num = (uint) PC;
+            PC = -1;
             switch (num)
             {
                 case 0:
-                    www0 = new WWW(fthis.url);
-                    Scurrent = www0;
-                    SPC = 1;
+                    www__0 = new WWW(f__this.url);
+                    current = www__0;
+                    PC = 1;
                     return true;
 
                 case 1:
-                    fthis.mTex = www0.texture;
-                    if (fthis.mTex == null)
+                    f__this.mTex = www__0.texture;
+                    if (f__this.mTex == null)
                     {
                         goto Label_0118;
                     }
-                    ut1 = fthis.GetComponent<UITexture>();
-                    if (ut1.material != null)
+                    ut__1 = f__this.GetComponent<UITexture>();
+                    if (ut__1.material != null)
                     {
-                        fthis.mMat = new Material(ut1.material);
+                        f__this.mMat = new Material(ut__1.material);
                         break;
                     }
-                    fthis.mMat = new Material(Shader.Find("Unlit/Transparent Colored"));
+                    f__this.mMat = new Material(Shader.Find("Unlit/Transparent Colored"));
                     break;
 
                 default:
                     goto Label_012A;
             }
-            ut1.material = fthis.mMat;
-            fthis.mMat.mainTexture = fthis.mTex;
-            ut1.MakePixelPerfect();
+            ut__1.material = f__this.mMat;
+            f__this.mMat.mainTexture = f__this.mTex;
+            ut__1.MakePixelPerfect();
         Label_0118:
-            www0.Dispose();
-            SPC = -1;
+            www__0.Dispose();
+            PC = -1;
         Label_012A:
             return false;
         }
 
-        [DebuggerHidden]
+        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -98,19 +91,19 @@ public class DownloadTexture : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
 
         object IEnumerator.Current
         {
-            [DebuggerHidden]
+            
             get
             {
-                return Scurrent;
+                return current;
             }
         }
     }

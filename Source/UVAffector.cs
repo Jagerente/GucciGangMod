@@ -1,9 +1,4 @@
-//Fixed With [DOGE]DEN aottg Sources fixer
-//Doge Guardians FTW
-//DEN is OP as fuck.
-//Farewell Cowboy
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UVAffector : Affector
 {
@@ -35,6 +30,7 @@ public class UVAffector : Affector
         {
             num = UVTime / Frames.frames.Length;
         }
+
         if (ElapsedTime >= num)
         {
             var zero = Vector2.zero;
@@ -46,4 +42,3 @@ public class UVAffector : Affector
         }
     }
 }
-
