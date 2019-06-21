@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace Xft
+﻿namespace Xft
 {
+    using System.Collections.Generic;
+    using UnityEngine;
+
     public class XWeaponTrail : MonoBehaviour
     {
-        public float Fps = 60f;
+        private static float fps;
+        private float deltaTime;
+        public static float FadeTime = 0.3f;
         public int Granularity = 60;
-        public int MaxFrame = 14;
+        public int MaxFrame;
         protected float mElapsedTime;
         protected float mFadeElapsedime;
         protected float mFadeT = 1f;
@@ -25,11 +27,12 @@ namespace Xft
         public Material MyMaterial;
         public Transform PointEnd;
         public Transform PointStart;
+        public static int AppearanceType = 1;
         public static string Version = "1.0.1";
 
         public void Activate()
         {
-            MaxFrame = 14;
+            MaxFrame = 60;
             Init();
             if (mMeshObj == null)
             {
@@ -42,7 +45,6 @@ namespace Xft
                 {
                     mMeshObj.SetActive(true);
                 }
-
                 mFadeT = 1f;
                 mIsFading = false;
                 mFadeTime = 1f;
@@ -55,7 +57,6 @@ namespace Xft
                     mSpline.ControlPoints[i].Position = mSnapshotList[i].Pos;
                     mSpline.ControlPoints[i].Normal = mSnapshotList[i].PointEnd - mSnapshotList[i].PointStart;
                 }
-
                 RefreshSpline();
                 UpdateVertex();
             }
@@ -161,7 +162,6 @@ namespace Xft
                 mSpline.ControlPoints[i].Position = mSnapshotList[i].Pos;
                 mSpline.ControlPoints[i].Normal = mSnapshotList[i].PointEnd - mSnapshotList[i].PointStart;
             }
-
             mSpline.RefreshSpline();
         }
 
@@ -198,6 +198,9 @@ namespace Xft
                     }
                 }
             }
+
+            deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+            fps = 1.0f / deltaTime;
         }
 
         private void UpdateFade()
@@ -241,7 +244,6 @@ namespace Xft
                 pool.Indices[index + 10] = num2 + 2;
                 pool.Indices[index + 11] = num2 + 1;
             }
-
             pool.IndiceChanged = true;
         }
 
@@ -251,7 +253,7 @@ namespace Xft
             for (var i = 0; i < Granularity; i++)
             {
                 var index = mVertexSegment.VertStart + i * 3;
-                var num3 = i / (float) Granularity;
+                var num3 = i / (float)Granularity;
                 var tl = num3 * mFadeT;
                 var zero = Vector2.zero;
                 var vector2 = mSpline.InterpolateByLen(tl);
@@ -274,7 +276,6 @@ namespace Xft
                 zero.y = num3;
                 pool.UVs[index + 2] = zero;
             }
-
             mVertexSegment.Pool.UVChanged = true;
             mVertexSegment.Pool.VertChanged = true;
             mVertexSegment.Pool.ColorChanged = true;
@@ -282,17 +283,26 @@ namespace Xft
 
         public Vector3 CurHeadPos
         {
-            get { return (PointStart.position + PointEnd.position) / 2f; }
+            get
+            {
+                return (PointStart.position + PointEnd.position) / 2f;
+            }
         }
 
         public float TrailWidth
         {
-            get { return mTrailWidth; }
+            get
+            {
+                return mTrailWidth;
+            }
         }
 
         public float UpdateInterval
         {
-            get { return 1f / Fps; }
+            get
+            {
+                return 1f / fps;
+            }
         }
 
         public class Element
@@ -312,7 +322,10 @@ namespace Xft
 
             public Vector3 Pos
             {
-                get { return (PointStart + PointEnd) / 2f; }
+                get
+                {
+                    return (PointStart + PointEnd) / 2f;
+                }
             }
         }
     }
