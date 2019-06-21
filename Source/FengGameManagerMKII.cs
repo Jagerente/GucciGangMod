@@ -7813,7 +7813,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 settings[0xb8] = GUI.TextField(new Rect(num7 + 234f, num8 + 184f, 80f, 20f),
                                     (string) settings[0xb8]);
                                 Application.targetFrameRate = -1;
-                                if (int.TryParse((string) settings[0xb8], out num47) && num47 > 0)
+                                if (int.TryParse((string) settings[0xb8], out num47) && num47 >= 60)
                                 {
                                     Application.targetFrameRate = num47;
                                 }
