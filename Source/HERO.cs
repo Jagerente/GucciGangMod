@@ -745,7 +745,7 @@ public class HERO : MonoBehaviour
 
     private void checkDashRebind()
     {
-        if (FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.dash))
+        if (FengGameManagerMKII.inputRC.isInputHumanDown(InputCodeRC.dash))
         {
             if (inputManager.isInput[InputCode.up])
             {
@@ -4137,7 +4137,6 @@ public class HERO : MonoBehaviour
         }
     }
 
-    // HERO
     public void resetAnimationSpeed()
     {
         foreach (AnimationState animationState in animation)
