@@ -49,6 +49,19 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="GGM\Caching\Colors.cs" />
+    <Compile Include="GGM\Extensions.cs" />
+    <Compile Include="GGM\Config\BoolSetting.cs" />
+    <Compile Include="GGM\Config\FloatSetting.cs" />
+    <Compile Include="GGM\Config\IntSetting.cs" />
+    <Compile Include="GGM\Config\ISetting.cs" />
+    <Compile Include="GGM\Config\Setting.cs" />
+    <Compile Include="GGM\Config\Settings.cs" />
+    <Compile Include="GGM\Config\StringSetting.cs" />
+    <Compile Include="GGM\Storage\IDataStorage.cs" />
+    <Compile Include="GGM\Storage\ISerializable.cs" />
+    <Compile Include="GGM\Storage\JsonStorage.cs" />
+    <Compile Include="GGM\Storage\PrefStorage.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="AHSSShotGunCollider.cs" />
     <Compile Include="GAMETYPE.cs" />
@@ -522,4 +535,5 @@
       <HintPath>..\Assemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
 </Project>
