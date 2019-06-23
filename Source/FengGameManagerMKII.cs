@@ -9551,13 +9551,7 @@ public class FengGameManagerMKII : MonoBehaviour
         name = LoginFengKAI.player.name;
         if (loginstate != 3)
         {
-            name = nameField;
-            if (!name.StartsWith("[") || name.Length < 8 || name.Substring(7, 1) != "]")
-            {
-                name = "[9999FF]" + name;
-            }
-
-            name = name.Replace("[-]", "");
+            name = nameField.Replace("[-]", "");
             LoginFengKAI.player.name = name;
         }
 
