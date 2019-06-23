@@ -51,6 +51,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="GGM\Caching\Colors.cs" />
     <Compile Include="GGM\Caching\GameObjectCache.cs" />
+    <Compile Include="GGM\Caching\ResourcesCache.cs" />
     <Compile Include="GGM\Extensions.cs" />
     <Compile Include="GGM\Config\BoolSetting.cs" />
     <Compile Include="GGM\Config\FloatSetting.cs" />
