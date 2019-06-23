@@ -14,11 +14,6 @@ public class RCActionHelper
         parameters = options;
     }
 
-    public void callException(string str)
-    {
-        FengGameManagerMKII.instance.chatRoom.AddLine(str);
-    }
-
     public bool returnBool(object sentObject)
     {
         var parameters = sentObject;
