@@ -93,24 +93,6 @@ public static class ClothFactory
         return obj4;
     }
 
-    public static string GetDebugInfo()
-    {
-        var num = 0;
-        foreach (var pair in clothCache)
-        {
-            num += clothCache[pair.Key].Count;
-        }
-        var num2 = 0;
-        foreach (var cloth in Object.FindObjectsOfType<Cloth>())
-        {
-            if (cloth.enabled)
-            {
-                num2++;
-            }
-        }
-        return string.Format("{0} cached cloths, {1} active cloths, {2} types cached", num, num2, clothCache.Keys.Count);
-    }
-
     public static GameObject GetHair(GameObject reference, string name, Material material, Color color)
     {
         List<GameObject> list;
