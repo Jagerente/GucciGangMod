@@ -405,16 +405,16 @@ public class Minimap : MonoBehaviour
     private void Initialize()
     {
         var pivot = new Vector3(0.5f, 0.5f);
-        var texture = (Texture2D) FengGameManagerMKII.RCassets.Load("icon");
+        var texture = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D("icon");
         var rect = new Rect(0f, 0f, texture.width, texture.height);
         whiteIconSprite = UnityEngine.Sprite.Create(texture, rect, pivot);
-        texture = (Texture2D) FengGameManagerMKII.RCassets.Load("iconpointer");
+        texture = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D("iconpointer");
         rect = new Rect(0f, 0f, texture.width, texture.height);
         pointerSprite = UnityEngine.Sprite.Create(texture, rect, pivot);
-        texture = (Texture2D) FengGameManagerMKII.RCassets.Load("supplyicon");
+        texture = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D("supplyicon");
         rect = new Rect(0f, 0f, texture.width, texture.height);
         supplySprite = UnityEngine.Sprite.Create(texture, rect, pivot);
-        texture = (Texture2D) FengGameManagerMKII.RCassets.Load("mapborder");
+        texture = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D("mapborder");
         rect = new Rect(0f, 0f, texture.width, texture.height);
         var border = new Vector4(5f, 5f, 5f, 5f);
         borderSprite = UnityEngine.Sprite.Create(texture, rect, pivot, 100f, 1, SpriteMeshType.FullRect, border);

@@ -137,7 +137,7 @@ public class Cannon : MonoBehaviour
                         }
                         foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
-                            renderer.material = (Material) FengGameManagerMKII.RCassets.Load("transparent");
+                            renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM("transparent");
                             if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                             {
                                 renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
@@ -150,7 +150,7 @@ public class Cannon : MonoBehaviour
                         {
                             if (!renderer.name.Contains("Line Renderer"))
                             {
-                                renderer.material = (Material) FengGameManagerMKII.RCassets.Load(strArray[2]);
+                                renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM(strArray[2]);
                                 if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                                 {
                                     renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
