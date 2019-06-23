@@ -291,9 +291,9 @@ public class InRoomChat : MonoBehaviour
             case "pos":
                 {
                     string[] msg = { "Your position:\n",
-                        $"X - {GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" +
-                        $"Y - {GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" +
-                        $"Z - {GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
+                        $"\nX", " - ", $"{GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" +
+                        $"\nY", " - ", $"{GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" +
+                        $"\nZ", " - ", $"{GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
 
                     SystemMessageLocal(msg);
                 }

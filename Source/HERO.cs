@@ -230,7 +230,7 @@ public class HERO : MonoBehaviour
         ungrabbed();
         falseAttack();
         skillCDDuration = skillCDLast;
-        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(gameObject);
+        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(gameObject);
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
             photonView.RPC("backToHumanRPC", PhotonTargets.Others);
@@ -504,17 +504,17 @@ public class HERO : MonoBehaviour
     {
         baseTransform = transform;
         baseRigidBody = rigidbody;
-        maincamera = GameObject.Find("MainCamera");
+        maincamera = GGM.Caching.GameObjectCache.Find("MainCamera");
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
             baseAnimation = animation;
-            cross1 = GameObject.Find("cross1");
-            cross2 = GameObject.Find("cross2");
-            crossL1 = GameObject.Find("crossL1");
-            crossL2 = GameObject.Find("crossL2");
-            crossR1 = GameObject.Find("crossR1");
-            crossR2 = GameObject.Find("crossR2");
-            LabelDistance = GameObject.Find("LabelDistance");
+            cross1 = GGM.Caching.GameObjectCache.Find("cross1");
+            cross2 = GGM.Caching.GameObjectCache.Find("cross2");
+            crossL1 = GGM.Caching.GameObjectCache.Find("crossL1");
+            crossL2 = GGM.Caching.GameObjectCache.Find("crossL2");
+            crossR1 = GGM.Caching.GameObjectCache.Find("crossR1");
+            crossR2 = GGM.Caching.GameObjectCache.Find("crossR2");
+            LabelDistance = GGM.Caching.GameObjectCache.Find("LabelDistance");
             cachedSprites = new Dictionary<string, UISprite>();
             foreach (GameObject obj2 in FindObjectsOfType(typeof(GameObject)))
             {
@@ -955,7 +955,7 @@ public class HERO : MonoBehaviour
 
             breakApart(v, isBite);
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
             falseAttack();
             hasDied = true;
             Transform transform = this.transform.Find("audio_die");
@@ -963,7 +963,7 @@ public class HERO : MonoBehaviour
             transform.GetComponent<AudioSource>().Play();
             if (PlayerPrefs.HasKey("EnableSS") && (PlayerPrefs.GetInt("EnableSS") == 1))
             {
-                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                     .startSnapShot(this.transform.position, 0, null, 0.02f);
             }
 
@@ -996,7 +996,7 @@ public class HERO : MonoBehaviour
             meatDie.Play();
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
             falseAttack();
             hasDied = true;
             GameObject obj2 = (GameObject) Instantiate(Resources.Load("hitMeat2"));
@@ -1142,8 +1142,8 @@ public class HERO : MonoBehaviour
         }
 
         eren_titan.GetComponent<TITAN_EREN>().realBody = gameObject;
-        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().flashBlind();
-        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(eren_titan);
+        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().flashBlind();
+        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(eren_titan);
         eren_titan.GetComponent<TITAN_EREN>().born();
         eren_titan.rigidbody.velocity = rigidbody.velocity;
         rigidbody.velocity = Vector3.zero;
@@ -4047,9 +4047,9 @@ public class HERO : MonoBehaviour
             releaseIfIHookSb();
         }
 
-        if (GameObject.Find("MultiplayerManager") != null)
+        if (GGM.Caching.GameObjectCache.Find("MultiplayerManager") != null)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeHero(this);
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeHero(this);
         }
 
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && photonView.isMine)
@@ -4381,10 +4381,10 @@ public class HERO : MonoBehaviour
 
     public void setSkillHUDPosition()
     {
-        skillCD = GameObject.Find("skill_cd_" + skillIDHUD);
+        skillCD = GGM.Caching.GameObjectCache.Find("skill_cd_" + skillIDHUD);
         if (skillCD != null)
         {
-            skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
+            skillCD.transform.localPosition = GGM.Caching.GameObjectCache.Find("skill_cd_bottom").transform.localPosition;
         }
 
         if (useGun && (RCSettings.bombMode == 0))
@@ -4469,28 +4469,28 @@ public class HERO : MonoBehaviour
         totalGas = currentGas = setup.myCostume.stat.GAS;
         totalBladeSta = currentBladeSta = setup.myCostume.stat.BLA;
         baseRigidBody.mass = 0.5f - ((setup.myCostume.stat.ACL - 100) * 0.001f);
-        GameObject.Find("skill_cd_bottom").transform.localPosition = new Vector3(0f, (-Screen.height * 0.5f) + 5f, 0f);
-        skillCD = GameObject.Find("skill_cd_" + skillIDHUD);
-        skillCD.transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
-        GameObject.Find("GasUI").transform.localPosition = GameObject.Find("skill_cd_bottom").transform.localPosition;
+        GGM.Caching.GameObjectCache.Find("skill_cd_bottom").transform.localPosition = new Vector3(0f, (-Screen.height * 0.5f) + 5f, 0f);
+        skillCD = GGM.Caching.GameObjectCache.Find("skill_cd_" + skillIDHUD);
+        skillCD.transform.localPosition = GGM.Caching.GameObjectCache.Find("skill_cd_bottom").transform.localPosition;
+        GGM.Caching.GameObjectCache.Find("GasUI").transform.localPosition = GGM.Caching.GameObjectCache.Find("skill_cd_bottom").transform.localPosition;
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
-            GameObject.Find("bulletL").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL1").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR1").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL2").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR2").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL3").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR3").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL4").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR4").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL5").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR5").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL6").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR6").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletL7").GetComponent<UISprite>().enabled = false;
-            GameObject.Find("bulletR7").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL1").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR1").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL2").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR2").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL3").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR3").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL4").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR4").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL5").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR5").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL6").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR6").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL7").GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR7").GetComponent<UISprite>().enabled = false;
         }
 
         if (setup.myCostume.uniform_type == UNIFORM_TYPE.CasualAHSS)
@@ -4505,34 +4505,34 @@ public class HERO : MonoBehaviour
             setTeam(2);
             if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
             {
-                GameObject.Find("bladeCL").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladeCR").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel1").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader1").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel2").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader2").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel3").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader3").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel4").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader4").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bladel5").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("blader5").GetComponent<UISprite>().enabled = false;
-                GameObject.Find("bulletL").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL1").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR1").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL2").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR2").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL3").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR3").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL4").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR4").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL5").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR5").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL6").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR6").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletL7").GetComponent<UISprite>().enabled = true;
-                GameObject.Find("bulletR7").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bladeCL").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("bladeCR").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("bladel1").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("blader1").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("bladel2").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("blader2").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("bladel3").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("blader3").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("bladel4").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("blader4").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("bladel5").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("blader5").GetComponent<UISprite>().enabled = false;
+                GGM.Caching.GameObjectCache.Find("bulletL").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletR").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletL1").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletR1").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletL2").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletR2").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletL3").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletR3").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletL4").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletR4").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletL5").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletR5").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletL6").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletR6").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletL7").GetComponent<UISprite>().enabled = true;
+                GGM.Caching.GameObjectCache.Find("bulletR7").GetComponent<UISprite>().enabled = true;
                 if (skillId != "bomb")
                 {
                     skillCD.transform.localPosition = Vector3.up * 5000f;
@@ -4870,7 +4870,7 @@ public class HERO : MonoBehaviour
     [RPC]
     private void showHitDamage()
     {
-        GameObject target = GameObject.Find("LabelScore");
+        GameObject target = GGM.Caching.GameObjectCache.Find("LabelScore");
         if (target != null)
         {
             speed = Mathf.Max(10f, speed);
@@ -5001,7 +5001,7 @@ public class HERO : MonoBehaviour
                 }
             }
 
-            GameObject obj2 = GameObject.Find("UI_IN_GAME");
+            GameObject obj2 = GGM.Caching.GameObjectCache.Find("UI_IN_GAME");
             myNetWorkName = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
             myNetWorkName.name = "LabelNameOverHead";
             myNetWorkName.transform.parent = obj2.GetComponent<UIReferArray>().panels[0].transform;
@@ -5107,8 +5107,8 @@ public class HERO : MonoBehaviour
         }
         else
         {
-            currentCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
-            inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
+            currentCamera = GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<Camera>();
+            inputManager = GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>();
             loadskin();
             hasspawn = true;
             StartCoroutine(reloadSky());
@@ -6531,12 +6531,12 @@ public class HERO : MonoBehaviour
     {
         for (int i = 1; i <= bulletMAX; i++)
         {
-            GameObject.Find("bulletL" + i).GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletL" + i).GetComponent<UISprite>().enabled = false;
         }
 
         for (int j = 1; j <= leftBulletLeft; j++)
         {
-            GameObject.Find("bulletL" + j).GetComponent<UISprite>().enabled = true;
+            GGM.Caching.GameObjectCache.Find("bulletL" + j).GetComponent<UISprite>().enabled = true;
         }
     }
 
@@ -6544,12 +6544,12 @@ public class HERO : MonoBehaviour
     {
         for (int i = 1; i <= bulletMAX; i++)
         {
-            GameObject.Find("bulletR" + i).GetComponent<UISprite>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("bulletR" + i).GetComponent<UISprite>().enabled = false;
         }
 
         for (int j = 1; j <= rightBulletLeft; j++)
         {
-            GameObject.Find("bulletR" + j).GetComponent<UISprite>().enabled = true;
+            GGM.Caching.GameObjectCache.Find("bulletR" + j).GetComponent<UISprite>().enabled = true;
         }
     }
 
