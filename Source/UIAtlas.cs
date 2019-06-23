@@ -148,7 +148,7 @@ public class UIAtlas : MonoBehaviour
             mReplacement.MarkAsDirty();
         }
 
-        UISprite[] spriteArray = NGUITools.FindActive<UISprite>();
+        var spriteArray = NGUITools.FindActive<UISprite>();
         var index = 0;
         var length = spriteArray.Length;
         while (index < length)
@@ -180,7 +180,7 @@ public class UIAtlas : MonoBehaviour
             num3++;
         }
 
-        UILabel[] labelArray = NGUITools.FindActive<UILabel>();
+        var labelArray = NGUITools.FindActive<UILabel>();
         var num5 = 0;
         var num6 = labelArray.Length;
         while (num5 < num6)

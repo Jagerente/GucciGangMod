@@ -544,7 +544,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 return null;
             }
         }
-        PhotonView[] photonViewsInChildren = resourceGameObject.GetPhotonViewsInChildren();
+        var photonViewsInChildren = resourceGameObject.GetPhotonViewsInChildren();
         if (photonViewsInChildren.Length != numArray.Length)
         {
             throw new Exception("Error in Instantiation! The resource's PhotonView count is not the same as in incoming data.");
@@ -571,7 +571,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             var str2 = string.Empty;
             if (go != null)
             {
-                foreach (PhotonView view in go.GetPhotonViewsInChildren())
+                foreach (var view in go.GetPhotonViewsInChildren())
                 {
                     if (view != null)
                     {
@@ -888,7 +888,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             Debug.LogError("GetInstantiatedObjectsId() for GO == null.");
             return num;
         }
-        PhotonView[] photonViewsInChildren = go.GetPhotonViewsInChildren();
+        var photonViewsInChildren = go.GetPhotonViewsInChildren();
         if (photonViewsInChildren != null && photonViewsInChildren.Length > 0 && photonViewsInChildren[0] != null)
         {
             return photonViewsInChildren[0].instantiationId;

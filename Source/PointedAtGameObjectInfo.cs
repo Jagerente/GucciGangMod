@@ -7,7 +7,7 @@ public class PointedAtGameObjectInfo : MonoBehaviour
     {
         if (InputToEvent.goPointedAt != null)
         {
-            PhotonView photonView = InputToEvent.goPointedAt.GetPhotonView();
+            var photonView = InputToEvent.goPointedAt.GetPhotonView();
             if (photonView != null)
             {
                 object[] args =

@@ -300,7 +300,7 @@ public class HERO_SETUP : MonoBehaviour
         if (myCostume.hair_1_mesh.Length > 0 && !isDeadBody)
         {
             var name = "Character/" + myCostume.hair_1_mesh;
-            Material material = CharacterMaterials.materials[myCostume.hairInfo.texture];
+            var material = CharacterMaterials.materials[myCostume.hairInfo.texture];
             part_hair_1 = ClothFactory.GetHair(reference, name, material, myCostume.hair_color);
         }
     }

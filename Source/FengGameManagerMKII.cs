@@ -13698,7 +13698,7 @@ public class FengGameManagerMKII : MonoBehaviour
         name = string.Empty;
         if (nameField == null)
         {
-            nameField = "GUEST" + Random.Range(0, 0x186a0);
+            nameField = string.Empty;
         }
 
         if (privateServerField == null)

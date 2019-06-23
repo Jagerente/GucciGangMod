@@ -23,7 +23,7 @@ public class UIGeometry
         {
             mRtpVerts.Clear();
             var num = 0;
-            int size = verts.size;
+            var size = verts.size;
             while (num < size)
             {
                 mRtpVerts.Add(widgetToPanel.MultiplyPoint3x4(verts[num]));

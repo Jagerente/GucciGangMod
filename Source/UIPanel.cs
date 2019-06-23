@@ -81,7 +81,7 @@ public class UIPanel : MonoBehaviour
 
     public bool ConstrainTargetToBounds(Transform target, bool immediate)
     {
-        Bounds targetBounds = NGUIMath.CalculateRelativeWidgetBounds(cachedTransform, target);
+        var targetBounds = NGUIMath.CalculateRelativeWidgetBounds(cachedTransform, target);
         return ConstrainTargetToBounds(target, ref targetBounds, immediate);
     }
 
@@ -116,7 +116,7 @@ public class UIPanel : MonoBehaviour
         var index = 0;
         while (index < mWidgets.size)
         {
-            UIWidget widget = mWidgets.buffer[index];
+            var widget = mWidgets.buffer[index];
             if (widget == null)
             {
                 mWidgets.RemoveAt(index);
@@ -196,10 +196,10 @@ public class UIPanel : MonoBehaviour
     private UIDrawCall GetDrawCall(Material mat, bool createIfMissing)
     {
         var index = 0;
-        int size = drawCalls.size;
+        var size = drawCalls.size;
         while (index < size)
         {
-            UIDrawCall call = drawCalls.buffer[index];
+            var call = drawCalls.buffer[index];
             if (call.material == mat)
             {
                 return call;
@@ -325,7 +325,7 @@ public class UIPanel : MonoBehaviour
             mCam = camera == null ? NGUITools.FindCameraForLayer(mLayer) : camera.cachedCamera;
             SetChildLayer(cachedTransform, mLayer);
             var num = 0;
-            int num2 = drawCalls.size;
+            var num2 = drawCalls.size;
             while (num < num2)
             {
                 mDrawCalls.buffer[num].gameObject.layer = mLayer;
@@ -334,10 +334,10 @@ public class UIPanel : MonoBehaviour
         }
         var forceVisible = !cullWhileDragging ? clipping == UIDrawCall.Clipping.None || mCullTime > mUpdateTime : false;
         var num3 = 0;
-        int size = mWidgets.size;
+        var size = mWidgets.size;
         while (num3 < size)
         {
-            UIWidget widget = mWidgets[num3];
+            var widget = mWidgets[num3];
             if (widget.UpdateGeometry(this, forceVisible) && !mChanged.Contains(widget.material))
             {
                 mChanged.Add(widget.material);
@@ -354,7 +354,7 @@ public class UIPanel : MonoBehaviour
             mWidgets.Sort(UIWidget.CompareFunc);
         }
         var index = 0;
-        int num6 = mChanged.size;
+        var num6 = mChanged.size;
         while (index < num6)
         {
             Fill(mChanged.buffer[index]);
@@ -381,10 +381,10 @@ public class UIPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        int size = mDrawCalls.size;
+        var size = mDrawCalls.size;
         while (size > 0)
         {
-            UIDrawCall call = mDrawCalls.buffer[--size];
+            var call = mDrawCalls.buffer[--size];
             if (call != null)
             {
                 NGUITools.DestroyImmediate(call.gameObject);
@@ -399,7 +399,7 @@ public class UIPanel : MonoBehaviour
         var index = 0;
         while (index < mWidgets.size)
         {
-            UIWidget widget = mWidgets.buffer[index];
+            var widget = mWidgets.buffer[index];
             if (widget != null)
             {
                 MarkMaterialAsChanged(widget.material, true);
@@ -497,10 +497,10 @@ public class UIPanel : MonoBehaviour
         }
         var cachedTransform = this.cachedTransform;
         var index = 0;
-        int size = mDrawCalls.size;
+        var size = mDrawCalls.size;
         while (index < size)
         {
-            UIDrawCall call = mDrawCalls.buffer[index];
+            var call = mDrawCalls.buffer[index];
             call.clipping = mClipping;
             call.clipRange = zero;
             call.clipSoftness = mClipSoftness;
@@ -553,7 +553,7 @@ public class UIPanel : MonoBehaviour
                 mAlpha = num;
                 for (var i = 0; i < mDrawCalls.size; i++)
                 {
-                    UIDrawCall call = mDrawCalls[i];
+                    var call = mDrawCalls[i];
                     MarkMaterialAsChanged(call.material, false);
                 }
                 for (var j = 0; j < mWidgets.size; j++)
@@ -653,10 +653,10 @@ public class UIPanel : MonoBehaviour
                 var drawCalls = this.drawCalls;
                 var flags = mDebugInfo != DebugInfo.Geometry ? HideFlags.HideAndDontSave : HideFlags.NotEditable | HideFlags.DontSave;
                 var num = 0;
-                int size = drawCalls.size;
+                var size = drawCalls.size;
                 while (num < size)
                 {
-                    UIDrawCall call = drawCalls[num];
+                    var call = drawCalls[num];
                     var gameObject = call.gameObject;
                     NGUITools.SetActiveSelf(gameObject, false);
                     gameObject.hideFlags = flags;
@@ -671,10 +671,10 @@ public class UIPanel : MonoBehaviour
     {
         get
         {
-            int size = mDrawCalls.size;
+            var size = mDrawCalls.size;
             while (size > 0)
             {
-                UIDrawCall call = mDrawCalls[--size];
+                var call = mDrawCalls[--size];
                 if (call == null)
                 {
                     mDrawCalls.RemoveAt(size);

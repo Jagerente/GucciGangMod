@@ -119,10 +119,10 @@ public class UpdateManager : MonoBehaviour
             mTime = realtimeSinceStartup;
             UpdateList(mOnCoro, delta);
             var isPlaying = Application.isPlaying;
-            int size = mDest.size;
+            var size = mDest.size;
             while (size > 0)
             {
-                DestroyEntry entry = mDest.buffer[--size];
+                var entry = mDest.buffer[--size];
                 if (!isPlaying || entry.time < mTime)
                 {
                     if (entry.obj != null)

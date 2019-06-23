@@ -1,5 +1,4 @@
-﻿using ExitGames.Client.Photon;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PhotonStatsGui : MonoBehaviour
 {

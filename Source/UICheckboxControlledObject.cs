@@ -11,7 +11,7 @@ public class UICheckboxControlledObject : MonoBehaviour
         if (target != null)
         {
             NGUITools.SetActive(target, !inverse ? isActive : !isActive);
-            UIPanel panel = NGUITools.FindInParents<UIPanel>(target);
+            var panel = NGUITools.FindInParents<UIPanel>(target);
             if (panel != null)
             {
                 panel.Refresh();

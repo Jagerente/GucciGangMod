@@ -414,7 +414,7 @@ public class UISprite : UIWidget
                     var vector5 = cachedTransform.localScale;
                     if (mainTexture != null)
                     {
-                        Rect rect = NGUIMath.ConvertToPixels(outerUV, mainTexture.width, mainTexture.height, true);
+                        var rect = NGUIMath.ConvertToPixels(outerUV, mainTexture.width, mainTexture.height, true);
                         var pixelSize = atlas.pixelSize;
                         vector5.x = Mathf.RoundToInt(rect.width * pixelSize) * Mathf.Sign(vector5.x);
                         vector5.y = Mathf.RoundToInt(rect.height * pixelSize) * Mathf.Sign(vector5.y);

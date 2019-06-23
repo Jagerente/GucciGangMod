@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class PhotonPlayer
@@ -126,7 +125,7 @@ public class PhotonPlayer
         {
             customProperties.MergeStringKeys(propertiesToSet);
             customProperties.StripKeysWithNullValues();
-            Hashtable actorProperties = propertiesToSet.StripToStringKeys();
+            var actorProperties = propertiesToSet.StripToStringKeys();
             if (actorID > 0 && !PhotonNetwork.offlineMode)
             {
                 PhotonNetwork.networkingPeer.OpSetCustomPropertiesOfActor(actorID, actorProperties, true, 0);

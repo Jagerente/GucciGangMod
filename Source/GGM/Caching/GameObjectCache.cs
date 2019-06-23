@@ -11,10 +11,10 @@ namespace GGM.Caching
 
         internal static T Find<T>(string name) where T : Component
         {
-            typeCache.TryGetValue(name, out Component obj);
+            typeCache.TryGetValue(name, out var obj);
             if (obj != null) return obj as T;
             var go = Find(name);
-            T value = go == null ? default(T) : go.GetComponent<T>();
+            var value = go == null ? default(T) : go.GetComponent<T>();
             if (value != null)
             {
                 if (typeCache.ContainsKey(name)) typeCache[name] = value;
@@ -44,7 +44,7 @@ namespace GGM.Caching
                     return GameObject.Find(name);
 
                 default:
-                    goCache.TryGetValue(name, out GameObject obj);
+                    goCache.TryGetValue(name, out var obj);
                     if (obj != null && obj.activeInHierarchy) return obj;
                     var go = GameObject.Find(name);
                     if (go == null) return null;

@@ -61,7 +61,7 @@ public class TITAN_SETUP : MonoBehaviour
             {
                 var link = new WWW(hairlink);
                 yield return link;
-                Texture2D iteratorVariable4 = RCextensions.loadimage(link, mipmap, 0x30d40);
+                var iteratorVariable4 = RCextensions.loadimage(link, mipmap, 0x30d40);
                 link.Dispose();
                 if (!FengGameManagerMKII.linkHash[0].ContainsKey(hairlink))
                 {

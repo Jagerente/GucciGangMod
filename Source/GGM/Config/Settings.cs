@@ -43,7 +43,7 @@ namespace GGM.Config
 
         private static void CreateStorage()
         {
-            int choice = UnityEngine.PlayerPrefs.GetInt("StorageType", 0);
+            var choice = UnityEngine.PlayerPrefs.GetInt("StorageType", 0);
             switch (choice)
             {
                 case 0:
@@ -59,7 +59,7 @@ namespace GGM.Config
         {
             if (Storage == null)
                 CreateStorage();
-            foreach(ISetting set in _allSettings)
+            foreach(var set in _allSettings)
             {
                 set.Load();
             }
@@ -67,7 +67,7 @@ namespace GGM.Config
 
         public static void Save()
         {
-            foreach(ISetting set in _allSettings)
+            foreach(var set in _allSettings)
             {
                 set.Save();
             }

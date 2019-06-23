@@ -190,9 +190,9 @@ public class HERO : MonoBehaviour
 
     public void attackAccordingToTarget(Transform a)
     {
-        Vector3 vector = a.position - transform.position;
-        float current = -Mathf.Atan2(vector.z, vector.x) * 57.29578f;
-        float f = -Mathf.DeltaAngle(current, transform.rotation.eulerAngles.y - 90f);
+        var vector = a.position - transform.position;
+        var current = -Mathf.Atan2(vector.z, vector.x) * 57.29578f;
+        var f = -Mathf.DeltaAngle(current, transform.rotation.eulerAngles.y - 90f);
         if (((Mathf.Abs(f) < 90f) && (vector.magnitude < 6f)) &&
             ((a.position.y <= (transform.position.y + 2f)) && (a.position.y >= (transform.position.y - 5f))))
         {
@@ -266,16 +266,16 @@ public class HERO : MonoBehaviour
     {
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
-            float z = 0f;
+            var z = 0f;
             needLean = false;
             if ((!useGun && (state == HERO_STATE.Attack)) &&
                 ((attackAnimation != "attack3_1") && (attackAnimation != "attack3_2")))
             {
-                float y = rigidbody.velocity.y;
-                float x = rigidbody.velocity.x;
-                float num4 = rigidbody.velocity.z;
-                float num5 = Mathf.Sqrt((x * x) + (num4 * num4));
-                float num6 = Mathf.Atan2(y, num5) * 57.29578f;
+                var y = rigidbody.velocity.y;
+                var x = rigidbody.velocity.x;
+                var num4 = rigidbody.velocity.z;
+                var num5 = Mathf.Sqrt((x * x) + (num4 * num4));
+                var num6 = Mathf.Atan2(y, num5) * 57.29578f;
                 targetRotation =
                     Quaternion.Euler(-num6 * (1f - (Vector3.Angle(rigidbody.velocity, transform.forward) / 90f)),
                         facingDirection, 0f);
@@ -307,7 +307,7 @@ public class HERO : MonoBehaviour
 
                 if (needLean)
                 {
-                    float a = 0f;
+                    var a = 0f;
                     if (!useGun && (state != HERO_STATE.Attack))
                     {
                         a = currentSpeed * 0.1f;
@@ -330,10 +330,10 @@ public class HERO : MonoBehaviour
         skillCDDuration = skillCDLast;
         if (RCSettings.bombMode == 1)
         {
-            int num = (int) FengGameManagerMKII.settings[250];
-            int num2 = (int) FengGameManagerMKII.settings[0xfb];
-            int num3 = (int) FengGameManagerMKII.settings[0xfc];
-            int num4 = (int) FengGameManagerMKII.settings[0xfd];
+            var num = (int) FengGameManagerMKII.settings[250];
+            var num2 = (int) FengGameManagerMKII.settings[0xfb];
+            var num3 = (int) FengGameManagerMKII.settings[0xfc];
+            var num4 = (int) FengGameManagerMKII.settings[0xfd];
             if ((num < 0) || (num > 10))
             {
                 num = 5;
@@ -374,7 +374,7 @@ public class HERO : MonoBehaviour
             bombRadius = (num * 4f) + 20f;
             bombCD = (num4 * -0.4f) + 5f;
             bombSpeed = (num3 * 60f) + 200f;
-            Hashtable propertiesToSet = new Hashtable();
+            var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.RCBombR, (float) FengGameManagerMKII.settings[0xf6]);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombG, (float) FengGameManagerMKII.settings[0xf7]);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombB, (float) FengGameManagerMKII.settings[0xf8]);
@@ -399,7 +399,7 @@ public class HERO : MonoBehaviour
         GameObject obj8;
         GameObject obj9;
         GameObject obj10;
-        GameObject obj2 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
+        var obj2 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
             this.transform.position, this.transform.rotation);
         obj2.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
         obj2.GetComponent<HERO_SETUP>().isDeadBody = true;
@@ -407,11 +407,11 @@ public class HERO : MonoBehaviour
             .init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.ARM_R);
         if (!isBite)
         {
-            GameObject gO = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
+            var gO = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
                 this.transform.position, this.transform.rotation);
-            GameObject obj4 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
+            var obj4 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
                 this.transform.position, this.transform.rotation);
-            GameObject obj5 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
+            var obj5 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
                 this.transform.position, this.transform.rotation);
             gO.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
             obj4.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
@@ -439,9 +439,9 @@ public class HERO : MonoBehaviour
         }
 
         applyForceToBody(obj2, v);
-        Transform transform = this.transform
+        var transform = this.transform
             .Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L").transform;
-        Transform transform2 = this.transform
+        var transform2 = this.transform
             .Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R").transform;
         if (useGun)
         {
@@ -520,7 +520,7 @@ public class HERO : MonoBehaviour
             {
                 if ((obj2.GetComponent<UISprite>() != null) && obj2.activeInHierarchy)
                 {
-                    string name = obj2.name;
+                    var name = obj2.name;
                     if (!(((!name.Contains("blade") && !name.Contains("bullet")) &&
                            ((!name.Contains("gas") && !name.Contains("flare")) && !name.Contains("skill_cd"))) ||
                           cachedSprites.ContainsKey(name)))
@@ -769,26 +769,26 @@ public class HERO : MonoBehaviour
     public void checkTitan()
     {
         int count;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         LayerMask mask = 1 << LayerMask.NameToLayer("PlayerAttackBox");
         LayerMask mask2 = 1 << LayerMask.NameToLayer("Ground");
         LayerMask mask3 = 1 << LayerMask.NameToLayer("EnemyBox");
         LayerMask mask4 = (mask | mask2) | mask3;
-        RaycastHit[] hitArray = Physics.RaycastAll(ray, 180f, mask4.value);
-        List<RaycastHit> list = new List<RaycastHit>();
-        List<TITAN> list2 = new List<TITAN>();
+        var hitArray = Physics.RaycastAll(ray, 180f, mask4.value);
+        var list = new List<RaycastHit>();
+        var list2 = new List<TITAN>();
         for (count = 0; count < hitArray.Length; count++)
         {
-            RaycastHit item = hitArray[count];
+            var item = hitArray[count];
             list.Add(item);
         }
 
         list.Sort((x, y) => x.distance.CompareTo(y.distance));
-        float num2 = 180f;
+        var num2 = 180f;
         for (count = 0; count < list.Count; count++)
         {
-            RaycastHit hit2 = list[count];
-            GameObject gameObject = hit2.collider.gameObject;
+            var hit2 = list[count];
+            var gameObject = hit2.collider.gameObject;
             if (gameObject.layer == 0x10)
             {
                 if (gameObject.name.Contains("PlayerDetectorRC") && ((hit2 = list[count]).distance < num2))
@@ -799,7 +799,7 @@ public class HERO : MonoBehaviour
                         count = list.Count;
                     }
 
-                    TITAN component = gameObject.transform.root.gameObject.GetComponent<TITAN>();
+                    var component = gameObject.transform.root.gameObject.GetComponent<TITAN>();
                     if (component != null)
                     {
                         list2.Add(component);
@@ -814,7 +814,7 @@ public class HERO : MonoBehaviour
 
         for (count = 0; count < myTitans.Count; count++)
         {
-            TITAN titan2 = myTitans[count];
+            var titan2 = myTitans[count];
             if (!list2.Contains(titan2))
             {
                 titan2.isLook = false;
@@ -823,7 +823,7 @@ public class HERO : MonoBehaviour
 
         for (count = 0; count < list2.Count; count++)
         {
-            TITAN titan3 = list2[count];
+            var titan3 = list2[count];
             titan3.isLook = true;
         }
 
@@ -904,7 +904,7 @@ public class HERO : MonoBehaviour
             facingDirection = getGlobalFacingDirection(horizontal, vertical);
             dashV = getGlobaleFacingVector3(facingDirection);
             originVM = currentSpeed;
-            Quaternion quaternion = Quaternion.Euler(0f, facingDirection, 0f);
+            var quaternion = Quaternion.Euler(0f, facingDirection, 0f);
             rigidbody.rotation = quaternion;
             targetRotation = quaternion;
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
@@ -958,7 +958,7 @@ public class HERO : MonoBehaviour
             GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
             falseAttack();
             hasDied = true;
-            Transform transform = this.transform.Find("audio_die");
+            var transform = this.transform.Find("audio_die");
             transform.parent = null;
             transform.GetComponent<AudioSource>().Play();
             if (PlayerPrefs.HasKey("EnableSS") && (PlayerPrefs.GetInt("EnableSS") == 1))
@@ -990,7 +990,7 @@ public class HERO : MonoBehaviour
                 bulletRight.GetComponent<Bullet>().removeMe();
             }
 
-            Transform transform = this.transform.Find("audio_die");
+            var transform = this.transform.Find("audio_die");
             transform.parent = null;
             transform.GetComponent<AudioSource>().Play();
             meatDie.Play();
@@ -999,7 +999,7 @@ public class HERO : MonoBehaviour
             GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
             falseAttack();
             hasDied = true;
-            GameObject obj2 = (GameObject) Instantiate(Resources.Load("hitMeat2"));
+            var obj2 = (GameObject) Instantiate(Resources.Load("hitMeat2"));
             obj2.transform.position = this.transform.position;
             Destroy(gameObject);
         }
@@ -1045,7 +1045,7 @@ public class HERO : MonoBehaviour
                     num2 = 0f;
                 }
 
-                float num3 = getGlobalFacingDirection(num2, num);
+                var num3 = getGlobalFacingDirection(num2, num);
                 if ((num2 != 0f) || (num != 0f))
                 {
                     facingDirection = num3 + 180f;
@@ -1100,7 +1100,7 @@ public class HERO : MonoBehaviour
                     num2 = 0f;
                 }
 
-                float num3 = getGlobalFacingDirection(num2, num);
+                var num3 = getGlobalFacingDirection(num2, num);
                 if ((num2 != 0f) || (num != 0f))
                 {
                     facingDirection = num3 + 180f;
@@ -1209,14 +1209,14 @@ public class HERO : MonoBehaviour
 
     private GameObject findNearestTitan()
     {
-        GameObject[] objArray = GameObject.FindGameObjectsWithTag("titan");
+        var objArray = GameObject.FindGameObjectsWithTag("titan");
         GameObject obj2 = null;
-        float positiveInfinity = float.PositiveInfinity;
-        Vector3 position = transform.position;
-        foreach (GameObject obj3 in objArray)
+        var positiveInfinity = float.PositiveInfinity;
+        var position = transform.position;
+        foreach (var obj3 in objArray)
         {
-            Vector3 vector2 = obj3.transform.position - position;
-            float sqrMagnitude = vector2.sqrMagnitude;
+            var vector2 = obj3.transform.position - position;
+            var sqrMagnitude = vector2.sqrMagnitude;
             if (sqrMagnitude < positiveInfinity)
             {
                 obj2 = obj3;
@@ -1266,8 +1266,8 @@ public class HERO : MonoBehaviour
                     {
                         if (hookTarget != null)
                         {
-                            Vector3 vector2 = hookTarget.transform.position - baseTransform.position;
-                            float magnitude = vector2.magnitude;
+                            var vector2 = hookTarget.transform.position - baseTransform.position;
+                            var magnitude = vector2.magnitude;
                             if (magnitude > 2f)
                             {
                                 baseRigidBody.AddForce(
@@ -1284,8 +1284,8 @@ public class HERO : MonoBehaviour
                     {
                         if (badGuy != null)
                         {
-                            Vector3 vector3 = badGuy.transform.position - baseTransform.position;
-                            float f = vector3.magnitude;
+                            var vector3 = badGuy.transform.position - baseTransform.position;
+                            var f = vector3.magnitude;
                             if (f > 5f)
                             {
                                 baseRigidBody.AddForce((vector3.normalized * Mathf.Pow(f, 0.15f)) * 0.2f,
@@ -1298,8 +1298,8 @@ public class HERO : MonoBehaviour
                         }
                     }
 
-                    float x = 0f;
-                    float z = 0f;
+                    var x = 0f;
+                    var z = 0f;
                     if (!IN_GAME_MAIN_CAMERA.isTyping)
                     {
                         if (inputManager.isInput[InputCode.up])
@@ -1329,9 +1329,9 @@ public class HERO : MonoBehaviour
                         }
                     }
 
-                    bool flag2 = false;
-                    bool flag3 = false;
-                    bool flag4 = false;
+                    var flag2 = false;
+                    var flag3 = false;
+                    var flag4 = false;
                     isLeftHandHooked = false;
                     isRightHandHooked = false;
                     if (isLaunchLeft)
@@ -1339,7 +1339,7 @@ public class HERO : MonoBehaviour
                         if ((bulletLeft != null) && bulletLeft.GetComponent<Bullet>().isHooked())
                         {
                             isLeftHandHooked = true;
-                            Vector3 to = bulletLeft.transform.position - baseTransform.position;
+                            var to = bulletLeft.transform.position - baseTransform.position;
                             to.Normalize();
                             to = to * 10f;
                             if (!isLaunchRight)
@@ -1387,7 +1387,7 @@ public class HERO : MonoBehaviour
                         if ((bulletRight != null) && bulletRight.GetComponent<Bullet>().isHooked())
                         {
                             isRightHandHooked = true;
-                            Vector3 vector5 = bulletRight.transform.position - baseTransform.position;
+                            var vector5 = bulletRight.transform.position - baseTransform.position;
                             vector5.Normalize();
                             vector5 = vector5 * 10f;
                             if (!isLaunchLeft)
@@ -1433,7 +1433,7 @@ public class HERO : MonoBehaviour
                     if (grounded)
                     {
                         Vector3 vector7;
-                        Vector3 zero = Vector3.zero;
+                        var zero = Vector3.zero;
                         if (state == HERO_STATE.Attack)
                         {
                             if (attackAnimation == "attack5")
@@ -1528,10 +1528,10 @@ public class HERO : MonoBehaviour
                         }
                         else if (state == HERO_STATE.Idle)
                         {
-                            Vector3 vector8 = new Vector3(x, 0f, z);
-                            float resultAngle = getGlobalFacingDirection(x, z);
+                            var vector8 = new Vector3(x, 0f, z);
+                            var resultAngle = getGlobalFacingDirection(x, z);
                             zero = getGlobaleFacingVector3(resultAngle);
-                            float num6 = (vector8.magnitude <= 0.95f)
+                            var num6 = (vector8.magnitude <= 0.95f)
                                 ? ((vector8.magnitude >= 0.25f) ? vector8.magnitude : 0f)
                                 : 1f;
                             zero = zero * num6;
@@ -1591,8 +1591,8 @@ public class HERO : MonoBehaviour
                             }
                         }
 
-                        Vector3 velocity = baseRigidBody.velocity;
-                        Vector3 force = zero - velocity;
+                        var velocity = baseRigidBody.velocity;
+                        var force = zero - velocity;
                         force.x = Mathf.Clamp(force.x, -maxVelocityChange, maxVelocityChange);
                         force.z = Mathf.Clamp(force.z, -maxVelocityChange, maxVelocityChange);
                         force.y = 0f;
@@ -1605,11 +1605,11 @@ public class HERO : MonoBehaviour
                              (baseAnimation["horse_geton"].normalizedTime > 0.18f)) &&
                             (baseAnimation["horse_geton"].normalizedTime < 1f))
                         {
-                            float num7 = 6f;
+                            var num7 = 6f;
                             force = -baseRigidBody.velocity;
                             force.y = num7;
-                            float num8 = Vector3.Distance(myHorse.transform.position, baseTransform.position);
-                            float num9 = ((0.6f * gravity) * num8) / (2f * num7);
+                            var num8 = Vector3.Distance(myHorse.transform.position, baseTransform.position);
+                            var num9 = ((0.6f * gravity) * num8) / (2f * num7);
                             vector7 = myHorse.transform.position - baseTransform.position;
                             force += num9 * vector7.normalized;
                         }
@@ -1659,9 +1659,9 @@ public class HERO : MonoBehaviour
                             }
                             else
                             {
-                                bool flag5 =
+                                var flag5 =
                                     (Mathf.Abs(baseRigidBody.velocity.x) + Mathf.Abs(baseRigidBody.velocity.z)) > 25f;
-                                bool flag6 = baseRigidBody.velocity.y < 0f;
+                                var flag6 = baseRigidBody.velocity.y < 0f;
                                 if (!flag5)
                                 {
                                     if (flag6)
@@ -1678,9 +1678,9 @@ public class HERO : MonoBehaviour
                                 }
                                 else if (!isLeftHandHooked && !isRightHandHooked)
                                 {
-                                    float current = -Mathf.Atan2(baseRigidBody.velocity.z, baseRigidBody.velocity.x) *
+                                    var current = -Mathf.Atan2(baseRigidBody.velocity.z, baseRigidBody.velocity.x) *
                                                     57.29578f;
-                                    float num11 = -Mathf.DeltaAngle(current,
+                                    var num11 = -Mathf.DeltaAngle(current,
                                         baseTransform.rotation.eulerAngles.y - 90f);
                                     if (Mathf.Abs(num11) < 45f)
                                     {
@@ -1818,10 +1818,10 @@ public class HERO : MonoBehaviour
                         else if ((!baseAnimation.IsPlaying("attack5") && !baseAnimation.IsPlaying("special_petra")) &&
                                  (!baseAnimation.IsPlaying("dash") && !baseAnimation.IsPlaying("jump")))
                         {
-                            Vector3 vector11 = new Vector3(x, 0f, z);
-                            float num12 = getGlobalFacingDirection(x, z);
-                            Vector3 vector12 = getGlobaleFacingVector3(num12);
-                            float num13 = (vector11.magnitude <= 0.95f)
+                            var vector11 = new Vector3(x, 0f, z);
+                            var num12 = getGlobalFacingDirection(x, z);
+                            var vector12 = getGlobaleFacingVector3(num12);
+                            var num13 = (vector11.magnitude <= 0.95f)
                                 ? ((vector11.magnitude >= 0.25f) ? vector11.magnitude : 0f)
                                 : 1f;
                             vector12 = vector12 * num13;
@@ -1867,11 +1867,11 @@ public class HERO : MonoBehaviour
 
                     if (flag3 && flag4)
                     {
-                        float num14 = currentSpeed + 0.1f;
+                        var num14 = currentSpeed + 0.1f;
                         baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
-                        Vector3 vector13 = (bulletRight.transform.position + bulletLeft.transform.position) * 0.5f -
+                        var vector13 = (bulletRight.transform.position + bulletLeft.transform.position) * 0.5f -
                                            baseTransform.position;
-                        float num15 = 0f;
+                        var num15 = 0f;
                         if ((((int) FengGameManagerMKII.settings[0x61]) == 1) &&
                             FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
@@ -1888,18 +1888,18 @@ public class HERO : MonoBehaviour
                         }
 
                         num15 = Mathf.Clamp(num15, -0.8f, 0.8f);
-                        float num16 = 1f + num15;
-                        Vector3 vector14 = Vector3.RotateTowards(vector13, baseRigidBody.velocity, 1.53938f * num16,
+                        var num16 = 1f + num15;
+                        var vector14 = Vector3.RotateTowards(vector13, baseRigidBody.velocity, 1.53938f * num16,
                             1.53938f * num16);
                         vector14.Normalize();
                         baseRigidBody.velocity = vector14 * num14;
                     }
                     else if (flag3)
                     {
-                        float num17 = currentSpeed + 0.1f;
+                        var num17 = currentSpeed + 0.1f;
                         baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
-                        Vector3 vector15 = bulletLeft.transform.position - baseTransform.position;
-                        float num18 = 0f;
+                        var vector15 = bulletLeft.transform.position - baseTransform.position;
+                        var num18 = 0f;
                         if ((((int) FengGameManagerMKII.settings[0x61]) == 1) &&
                             FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
@@ -1916,18 +1916,18 @@ public class HERO : MonoBehaviour
                         }
 
                         num18 = Mathf.Clamp(num18, -0.8f, 0.8f);
-                        float num19 = 1f + num18;
-                        Vector3 vector16 = Vector3.RotateTowards(vector15, baseRigidBody.velocity, 1.53938f * num19,
+                        var num19 = 1f + num18;
+                        var vector16 = Vector3.RotateTowards(vector15, baseRigidBody.velocity, 1.53938f * num19,
                             1.53938f * num19);
                         vector16.Normalize();
                         baseRigidBody.velocity = vector16 * num17;
                     }
                     else if (flag4)
                     {
-                        float num20 = currentSpeed + 0.1f;
+                        var num20 = currentSpeed + 0.1f;
                         baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
-                        Vector3 vector17 = bulletRight.transform.position - baseTransform.position;
-                        float num21 = 0f;
+                        var vector17 = bulletRight.transform.position - baseTransform.position;
+                        var num21 = 0f;
                         if ((((int) FengGameManagerMKII.settings[0x61]) == 1) &&
                             FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
@@ -1944,8 +1944,8 @@ public class HERO : MonoBehaviour
                         }
 
                         num21 = Mathf.Clamp(num21, -0.8f, 0.8f);
-                        float num22 = 1f + num21;
-                        Vector3 vector18 = Vector3.RotateTowards(vector17, baseRigidBody.velocity, 1.53938f * num22,
+                        var num22 = 1f + num21;
+                        var vector18 = Vector3.RotateTowards(vector17, baseRigidBody.velocity, 1.53938f * num22,
                             1.53938f * num22);
                         vector18.Normalize();
                         baseRigidBody.velocity = vector18 * num20;
@@ -1958,7 +1958,7 @@ public class HERO : MonoBehaviour
                         attackMove = true;
                         if (launchPointRight.magnitude > 0f)
                         {
-                            Vector3 vector19 = launchPointRight - baseTransform.position;
+                            var vector19 = launchPointRight - baseTransform.position;
                             vector19.Normalize();
                             vector19 = vector19 * 13f;
                             baseRigidBody.AddForce(vector19, ForceMode.Impulse);
@@ -1966,7 +1966,7 @@ public class HERO : MonoBehaviour
 
                         if ((attackAnimation == "special_petra") && (launchPointLeft.magnitude > 0f))
                         {
-                            Vector3 vector20 = launchPointLeft - baseTransform.position;
+                            var vector20 = launchPointLeft - baseTransform.position;
                             vector20.Normalize();
                             vector20 = vector20 * 13f;
                             baseRigidBody.AddForce(vector20, ForceMode.Impulse);
@@ -1986,7 +1986,7 @@ public class HERO : MonoBehaviour
                         baseRigidBody.AddForce(Vector3.up * 2f, ForceMode.Impulse);
                     }
 
-                    bool flag7 = false;
+                    var flag7 = false;
                     if ((bulletLeft != null) || (bulletRight != null))
                     {
                         if (((bulletLeft != null) &&
@@ -2070,20 +2070,20 @@ public class HERO : MonoBehaviour
 
     public string getDebugInfo()
     {
-        string str = "\n";
+        var str = "\n";
         str = "Left:" + isLeftHandHooked + " ";
         if (isLeftHandHooked && (bulletLeft != null))
         {
-            Vector3 vector = bulletLeft.transform.position - transform.position;
+            var vector = bulletLeft.transform.position - transform.position;
             str = str + ((int) (Mathf.Atan2(vector.x, vector.z) * 57.29578f));
         }
 
-        string str2 = str;
+        var str2 = str;
         object[] objArray1 = {str2, "\nRight:", isRightHandHooked, " "};
         str = string.Concat(objArray1);
         if (isRightHandHooked && (bulletRight != null))
         {
-            Vector3 vector2 = bulletRight.transform.position - transform.position;
+            var vector2 = bulletRight.transform.position - transform.position;
             str = str + ((int) (Mathf.Atan2(vector2.x, vector2.z) * 57.29578f));
         }
 
@@ -2099,15 +2099,15 @@ public class HERO : MonoBehaviour
 
     private Vector3 getGlobaleFacingVector3(float resultAngle)
     {
-        float num = -resultAngle + 90f;
-        float x = Mathf.Cos(num * 0.01745329f);
+        var num = -resultAngle + 90f;
+        var x = Mathf.Cos(num * 0.01745329f);
         return new Vector3(x, 0f, Mathf.Sin(num * 0.01745329f));
     }
 
     private Vector3 getGlobaleFacingVector3(float horizontal, float vertical)
     {
-        float num = -getGlobalFacingDirection(horizontal, vertical) + 90f;
-        float x = Mathf.Cos(num * 0.01745329f);
+        var num = -getGlobalFacingDirection(horizontal, vertical) + 90f;
+        var x = Mathf.Cos(num * 0.01745329f);
         return new Vector3(x, 0f, Mathf.Sin(num * 0.01745329f));
     }
 
@@ -2118,8 +2118,8 @@ public class HERO : MonoBehaviour
             return transform.rotation.eulerAngles.y;
         }
 
-        float y = currentCamera.transform.rotation.eulerAngles.y;
-        float num2 = Mathf.Atan2(vertical, horizontal) * 57.29578f;
+        var y = currentCamera.transform.rotation.eulerAngles.y;
+        var num2 = Mathf.Atan2(vertical, horizontal) * 57.29578f;
         num2 = -num2 + 90f;
         return (y + num2);
     }
@@ -2131,15 +2131,15 @@ public class HERO : MonoBehaviour
             return 0f;
         }
 
-        float num = p.y - transform.position.y;
-        float num2 = Vector3.Distance(p, transform.position);
-        float a = Mathf.Acos(num / num2) * 57.29578f;
+        var num = p.y - transform.position.y;
+        var num2 = Vector3.Distance(p, transform.position);
+        var a = Mathf.Acos(num / num2) * 57.29578f;
         a *= 0.1f;
         a *= 1f + Mathf.Pow(rigidbody.velocity.magnitude, 0.2f);
-        Vector3 vector3 = p - transform.position;
-        float current = Mathf.Atan2(vector3.x, vector3.z) * 57.29578f;
-        float target = Mathf.Atan2(rigidbody.velocity.x, rigidbody.velocity.z) * 57.29578f;
-        float num6 = Mathf.DeltaAngle(current, target);
+        var vector3 = p - transform.position;
+        var current = Mathf.Atan2(vector3.x, vector3.z) * 57.29578f;
+        var target = Mathf.Atan2(rigidbody.velocity.x, rigidbody.velocity.z) * 57.29578f;
+        var num6 = Mathf.DeltaAngle(current, target);
         a += Mathf.Abs(num6 * 0.5f);
         if (state != HERO_STATE.Attack)
         {
@@ -2160,7 +2160,7 @@ public class HERO : MonoBehaviour
             return (a * ((num6 >= 0f) ? 1 : -1));
         }
 
-        float num7 = 0f;
+        var num7 = 0f;
         if ((left && (num6 < 0f)) || (!left && (num6 > 0f)))
         {
             num7 = 0.1f;
@@ -2234,17 +2234,17 @@ public class HERO : MonoBehaviour
 
     private void headMovement()
     {
-        Transform transform = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head");
-        Transform transform2 = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck");
-        float x = Mathf.Sqrt(((gunTarget.x - this.transform.position.x) * (gunTarget.x - this.transform.position.x)) +
+        var transform = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head");
+        var transform2 = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck");
+        var x = Mathf.Sqrt(((gunTarget.x - this.transform.position.x) * (gunTarget.x - this.transform.position.x)) +
                              ((gunTarget.z - this.transform.position.z) * (gunTarget.z - this.transform.position.z)));
         targetHeadRotation = transform.rotation;
-        Vector3 vector5 = gunTarget - this.transform.position;
-        float current = -Mathf.Atan2(vector5.z, vector5.x) * 57.29578f;
-        float num3 = -Mathf.DeltaAngle(current, this.transform.rotation.eulerAngles.y - 90f);
+        var vector5 = gunTarget - this.transform.position;
+        var current = -Mathf.Atan2(vector5.z, vector5.x) * 57.29578f;
+        var num3 = -Mathf.DeltaAngle(current, this.transform.rotation.eulerAngles.y - 90f);
         num3 = Mathf.Clamp(num3, -40f, 40f);
-        float y = transform2.position.y - gunTarget.y;
-        float num5 = Mathf.Atan2(y, x) * 57.29578f;
+        var y = transform2.position.y - gunTarget.y;
+        var num5 = Mathf.Atan2(y, x) * 57.29578f;
         num5 = Mathf.Clamp(num5, -40f, 30f);
         targetHeadRotation = Quaternion.Euler(transform.rotation.eulerAngles.x + num5,
             transform.rotation.eulerAngles.y + num3, transform.rotation.eulerAngles.z);
@@ -2276,7 +2276,7 @@ public class HERO : MonoBehaviour
         }
 
         launchForce = hookPosition - transform.position;
-        float num = Mathf.Pow(launchForce.magnitude, 0.1f);
+        var num = Mathf.Pow(launchForce.magnitude, 0.1f);
         if (grounded)
         {
             rigidbody.AddForce(Vector3.up * Mathf.Min(launchForce.magnitude * 0.2f, 10f), ForceMode.Impulse);
@@ -2352,9 +2352,9 @@ public class HERO : MonoBehaviour
                 myNetWorkName.transform.localPosition = (Vector3.up * Screen.height) * 2f;
             }
 
-            Vector3 start = new Vector3(baseTransform.position.x, baseTransform.position.y + 2f,
+            var start = new Vector3(baseTransform.position.x, baseTransform.position.y + 2f,
                 baseTransform.position.z);
-            GameObject maincamera = this.maincamera;
+            var maincamera = this.maincamera;
             LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
             LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
             LayerMask mask3 = mask2 | mask;
@@ -2377,8 +2377,8 @@ public class HERO : MonoBehaviour
                 ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine))
             {
                 Quaternion quaternion2;
-                Vector3 zero = Vector3.zero;
-                Vector3 position = Vector3.zero;
+                var zero = Vector3.zero;
+                var position = Vector3.zero;
                 if ((isLaunchLeft && (bulletLeft != null)) && bulletLeft.GetComponent<Bullet>().isHooked())
                 {
                     zero = bulletLeft.transform.position;
@@ -2389,7 +2389,7 @@ public class HERO : MonoBehaviour
                     position = bulletRight.transform.position;
                 }
 
-                Vector3 vector5 = Vector3.zero;
+                var vector5 = Vector3.zero;
                 if ((zero.magnitude != 0f) && (position.magnitude == 0f))
                 {
                     vector5 = zero;
@@ -2403,13 +2403,13 @@ public class HERO : MonoBehaviour
                     vector5 = (zero + position) * 0.5f;
                 }
 
-                Vector3 from = Vector3.Project(vector5 - baseTransform.position, maincamera.transform.up);
-                Vector3 vector7 = Vector3.Project(vector5 - baseTransform.position, maincamera.transform.right);
+                var from = Vector3.Project(vector5 - baseTransform.position, maincamera.transform.up);
+                var vector7 = Vector3.Project(vector5 - baseTransform.position, maincamera.transform.right);
                 if (vector5.magnitude > 0f)
                 {
-                    Vector3 to = from + vector7;
-                    float num = Vector3.Angle(vector5 - baseTransform.position, baseRigidBody.velocity) * 0.005f;
-                    Vector3 vector9 = maincamera.transform.right + vector7.normalized;
+                    var to = from + vector7;
+                    var num = Vector3.Angle(vector5 - baseTransform.position, baseRigidBody.velocity) * 0.005f;
+                    var vector9 = maincamera.transform.right + vector7.normalized;
                     quaternion2 = Quaternion.Euler(maincamera.transform.rotation.eulerAngles.x,
                         maincamera.transform.rotation.eulerAngles.y,
                         (vector9.magnitude >= 1f) ? (-Vector3.Angle(from, to) * num) : (Vector3.Angle(from, to) * num));
@@ -2442,9 +2442,9 @@ public class HERO : MonoBehaviour
             {
                 if (leftArmAim || rightArmAim)
                 {
-                    Vector3 vector10 = gunTarget - baseTransform.position;
-                    float current = -Mathf.Atan2(vector10.z, vector10.x) * 57.29578f;
-                    float num3 = -Mathf.DeltaAngle(current, baseTransform.rotation.eulerAngles.y - 90f);
+                    var vector10 = gunTarget - baseTransform.position;
+                    var current = -Mathf.Atan2(vector10.z, vector10.x) * 57.29578f;
+                    var num3 = -Mathf.DeltaAngle(current, baseTransform.rotation.eulerAngles.y - 90f);
                     headMovement();
                     if ((!isLeftHandHooked && leftArmAim) && ((num3 < 40f) && (num3 > -90f)))
                     {
@@ -2490,7 +2490,7 @@ public class HERO : MonoBehaviour
             idle();
         }
 
-        Vector3 vector = des - transform.position;
+        var vector = des - transform.position;
         if (left)
         {
             launchPointLeft = des;
@@ -2567,7 +2567,7 @@ public class HERO : MonoBehaviour
         }
 
         facingDirection = Mathf.Atan2(launchForce.x, launchForce.z) * 57.29578f;
-        Quaternion quaternion = Quaternion.Euler(0f, facingDirection, 0f);
+        var quaternion = Quaternion.Euler(0f, facingDirection, 0f);
         gameObject.transform.rotation = quaternion;
         rigidbody.rotation = quaternion;
         targetRotation = quaternion;
@@ -2619,12 +2619,12 @@ public class HERO : MonoBehaviour
                 bulletLeft = PhotonNetwork.Instantiate("hook", transform.position, transform.rotation, 0);
             }
 
-            GameObject obj2 = !useGun ? hookRefL1 : hookRefL2;
-            string str = !useGun ? "hookRefL1" : "hookRefL2";
+            var obj2 = !useGun ? hookRefL1 : hookRefL2;
+            var str = !useGun ? "hookRefL1" : "hookRefL2";
             bulletLeft.transform.position = obj2.transform.position;
-            Bullet component = bulletLeft.GetComponent<Bullet>();
-            float num = !single ? ((hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f)) : 0f;
-            Vector3 vector = (hit.point - transform.right * num) - bulletLeft.transform.position;
+            var component = bulletLeft.GetComponent<Bullet>();
+            var num = !single ? ((hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f)) : 0f;
+            var vector = (hit.point - transform.right * num) - bulletLeft.transform.position;
             vector.Normalize();
             if (mode == 1)
             {
@@ -2653,12 +2653,12 @@ public class HERO : MonoBehaviour
                 bulletRight = PhotonNetwork.Instantiate("hook", transform.position, transform.rotation, 0);
             }
 
-            GameObject obj2 = !useGun ? hookRefR1 : hookRefR2;
-            string str = !useGun ? "hookRefR1" : "hookRefR2";
+            var obj2 = !useGun ? hookRefR1 : hookRefR2;
+            var str = !useGun ? "hookRefR1" : "hookRefR2";
             bulletRight.transform.position = obj2.transform.position;
-            Bullet component = bulletRight.GetComponent<Bullet>();
-            float num = !single ? ((hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f)) : 0f;
-            Vector3 vector = (hit.point + transform.right * num) - bulletRight.transform.position;
+            var component = bulletRight.GetComponent<Bullet>();
+            var num = !single ? ((hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f)) : 0f;
+            var vector = (hit.point + transform.right * num) - bulletRight.transform.position;
             vector.Normalize();
             if (mode == 1)
             {
@@ -2675,10 +2675,10 @@ public class HERO : MonoBehaviour
 
     private void leftArmAimTo(Vector3 target)
     {
-        float y = target.x - upperarmL.transform.position.x;
-        float num2 = target.y - upperarmL.transform.position.y;
-        float x = target.z - upperarmL.transform.position.z;
-        float num4 = Mathf.Sqrt((y * y) + (x * x));
+        var y = target.x - upperarmL.transform.position.x;
+        var num2 = target.y - upperarmL.transform.position.y;
+        var x = target.z - upperarmL.transform.position.z;
+        var num4 = Mathf.Sqrt((y * y) + (x * x));
         handL.localRotation = Quaternion.Euler(90f, 0f, 0f);
         forearmL.localRotation = Quaternion.Euler(-90f, 0f, 0f);
         upperarmL.rotation =
@@ -2691,7 +2691,7 @@ public class HERO : MonoBehaviour
         {
             if (((int) FengGameManagerMKII.settings[0x5d]) == 1)
             {
-                foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+                foreach (var renderer in GetComponentsInChildren<Renderer>())
                 {
                     if (renderer.name.Contains("speed"))
                     {
@@ -2702,19 +2702,19 @@ public class HERO : MonoBehaviour
 
             if (((int) FengGameManagerMKII.settings[0]) == 1)
             {
-                int index = 14;
-                int num3 = 4;
-                int num4 = 5;
-                int num5 = 6;
-                int num6 = 7;
-                int num7 = 8;
-                int num8 = 9;
-                int num9 = 10;
-                int num10 = 11;
-                int num11 = 12;
-                int num12 = 13;
-                int num13 = 3;
-                int num14 = 0x5e;
+                var index = 14;
+                var num3 = 4;
+                var num4 = 5;
+                var num5 = 6;
+                var num6 = 7;
+                var num7 = 8;
+                var num8 = 9;
+                var num9 = 10;
+                var num10 = 11;
+                var num11 = 12;
+                var num12 = 13;
+                var num13 = 3;
+                var num14 = 0x5e;
                 if (((int) FengGameManagerMKII.settings[0x85]) == 1)
                 {
                     num13 = 0x86;
@@ -2748,20 +2748,20 @@ public class HERO : MonoBehaviour
                     num14 = 0x9f;
                 }
 
-                string str = (string) FengGameManagerMKII.settings[index];
-                string str2 = (string) FengGameManagerMKII.settings[num3];
-                string str3 = (string) FengGameManagerMKII.settings[num4];
-                string str4 = (string) FengGameManagerMKII.settings[num5];
-                string str5 = (string) FengGameManagerMKII.settings[num6];
-                string str6 = (string) FengGameManagerMKII.settings[num7];
-                string str7 = (string) FengGameManagerMKII.settings[num8];
-                string str8 = (string) FengGameManagerMKII.settings[num9];
-                string str9 = (string) FengGameManagerMKII.settings[num10];
-                string str10 = (string) FengGameManagerMKII.settings[num11];
-                string str11 = (string) FengGameManagerMKII.settings[num12];
-                string str12 = (string) FengGameManagerMKII.settings[num13];
-                string str13 = (string) FengGameManagerMKII.settings[num14];
-                string url = str12 + "," + str2 + "," + str3 + "," + str4 + "," + str5 + "," + str6 + "," + str7 + "," +
+                var str = (string) FengGameManagerMKII.settings[index];
+                var str2 = (string) FengGameManagerMKII.settings[num3];
+                var str3 = (string) FengGameManagerMKII.settings[num4];
+                var str4 = (string) FengGameManagerMKII.settings[num5];
+                var str5 = (string) FengGameManagerMKII.settings[num6];
+                var str6 = (string) FengGameManagerMKII.settings[num7];
+                var str7 = (string) FengGameManagerMKII.settings[num8];
+                var str8 = (string) FengGameManagerMKII.settings[num9];
+                var str9 = (string) FengGameManagerMKII.settings[num10];
+                var str10 = (string) FengGameManagerMKII.settings[num11];
+                var str11 = (string) FengGameManagerMKII.settings[num12];
+                var str12 = (string) FengGameManagerMKII.settings[num13];
+                var str13 = (string) FengGameManagerMKII.settings[num14];
+                var url = str12 + "," + str2 + "," + str3 + "," + str4 + "," + str5 + "," + str6 + "," + str7 + "," +
                              str8 + "," + str9 + "," + str10 + "," + str11 + "," + str + "," + str13;
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                 {
@@ -2769,7 +2769,7 @@ public class HERO : MonoBehaviour
                 }
                 else
                 {
-                    int viewID = -1;
+                    var viewID = -1;
                     if (myHorse != null)
                     {
                         viewID = myHorse.GetPhotonView().viewID;
@@ -3507,7 +3507,7 @@ public class HERO : MonoBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             onDeathEvent(viewID, killByTitan);
-            int iD = photonView.owner.ID;
+            var iD = photonView.owner.ID;
             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
             {
                 FengGameManagerMKII.heroHash.Remove(iD);
@@ -3516,7 +3516,7 @@ public class HERO : MonoBehaviour
 
         if (photonView.isMine)
         {
-            Vector3 vector = Vector3.up * 5000f;
+            var vector = Vector3.up * 5000f;
             if (myBomb != null)
             {
                 myBomb.destroyMe();
@@ -3567,7 +3567,7 @@ public class HERO : MonoBehaviour
         }
 
         hasDied = true;
-        Transform transform = this.transform.Find("audio_die");
+        var transform = this.transform.Find("audio_die");
         if (transform != null)
         {
             transform.parent = null;
@@ -3578,7 +3578,7 @@ public class HERO : MonoBehaviour
         if (photonView.isMine)
         {
             PhotonNetwork.RemoveRPCs(photonView);
-            Hashtable propertiesToSet = new Hashtable();
+            var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new Hashtable();
@@ -3590,7 +3590,7 @@ public class HERO : MonoBehaviour
             FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
             {
-                PhotonView view2 = PhotonView.Find(viewID);
+                var view2 = PhotonView.Find(viewID);
                 if (view2 != null)
                 {
                     FengGameManagerMKII.instance.sendKillInfo(killByTitan,
@@ -3668,7 +3668,7 @@ public class HERO : MonoBehaviour
 
         if (photonView.isMine)
         {
-            Vector3 vector = Vector3.up * 5000f;
+            var vector = Vector3.up * 5000f;
             if (myBomb != null)
             {
                 myBomb.destroyMe();
@@ -3702,7 +3702,7 @@ public class HERO : MonoBehaviour
             bulletRight.GetComponent<Bullet>().removeMe();
         }
 
-        Transform transform = this.transform.Find("audio_die");
+        var transform = this.transform.Find("audio_die");
         transform.parent = null;
         transform.GetComponent<AudioSource>().Play();
         if (photonView.isMine)
@@ -3719,7 +3719,7 @@ public class HERO : MonoBehaviour
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && photonView.isMine)
         {
             PhotonNetwork.RemoveRPCs(photonView);
-            Hashtable propertiesToSet = new Hashtable();
+            var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new Hashtable();
@@ -3728,7 +3728,7 @@ public class HERO : MonoBehaviour
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             if (viewID != -1)
             {
-                PhotonView view2 = PhotonView.Find(viewID);
+                var view2 = PhotonView.Find(viewID);
                 if (view2 != null)
                 {
                     FengGameManagerMKII.instance.sendKillInfo(true,
@@ -3773,7 +3773,7 @@ public class HERO : MonoBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             onDeathEvent(viewID, true);
-            int iD = photonView.owner.ID;
+            var iD = photonView.owner.ID;
             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
             {
                 FengGameManagerMKII.heroHash.Remove(iD);
@@ -3785,7 +3785,7 @@ public class HERO : MonoBehaviour
     {
         if (photonView.isMine)
         {
-            Vector3 vector = Vector3.up * 5000f;
+            var vector = Vector3.up * 5000f;
             if (titanForm && (eren_titan != null))
             {
                 eren_titan.GetComponent<TITAN_EREN>().lifeTime = 0.1f;
@@ -3836,14 +3836,14 @@ public class HERO : MonoBehaviour
         }
 
         hasDied = true;
-        Transform transform = this.transform.Find("audio_die");
+        var transform = this.transform.Find("audio_die");
         transform.parent = null;
         transform.GetComponent<AudioSource>().Play();
         gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
         if (photonView.isMine)
         {
             PhotonNetwork.RemoveRPCs(photonView);
-            Hashtable propertiesToSet = new Hashtable();
+            var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new Hashtable();
@@ -3855,7 +3855,7 @@ public class HERO : MonoBehaviour
             FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
             {
-                PhotonView view = PhotonView.Find(viewID);
+                var view = PhotonView.Find(viewID);
                 if (view != null)
                 {
                     FengGameManagerMKII.instance.sendKillInfo(killByTitan,
@@ -3885,7 +3885,7 @@ public class HERO : MonoBehaviour
         if (PhotonNetwork.isMasterClient)
         {
             onDeathEvent(viewID, killByTitan);
-            int iD = photonView.owner.ID;
+            var iD = photonView.owner.ID;
             if (FengGameManagerMKII.heroHash.ContainsKey(iD))
             {
                 FengGameManagerMKII.heroHash.Remove(iD);
@@ -3903,7 +3903,7 @@ public class HERO : MonoBehaviour
     [RPC]
     private void netlaughAttack()
     {
-        foreach (GameObject obj2 in GameObject.FindGameObjectsWithTag("titan"))
+        foreach (var obj2 in GameObject.FindGameObjectsWithTag("titan"))
         {
             if (((Vector3.Distance(obj2.transform.position, transform.position) < 50f) &&
                  (Vector3.Angle(obj2.transform.forward, transform.position - obj2.transform.position) < 90f)) &&
@@ -3953,7 +3953,7 @@ public class HERO : MonoBehaviour
     [RPC]
     private void netTauntAttack(float tauntTime, float distance = 100f)
     {
-        foreach (GameObject obj2 in GameObject.FindGameObjectsWithTag("titan"))
+        foreach (var obj2 in GameObject.FindGameObjectsWithTag("titan"))
         {
             if ((Vector3.Distance(obj2.transform.position, transform.position) < distance) &&
                 (obj2.GetComponent<TITAN>() != null))
@@ -4054,7 +4054,7 @@ public class HERO : MonoBehaviour
 
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && photonView.isMine)
         {
-            Vector3 vector = Vector3.up * 5000f;
+            var vector = Vector3.up * 5000f;
             cross1.transform.localPosition = vector;
             cross2.transform.localPosition = vector;
             crossL1.transform.localPosition = vector;
@@ -4160,10 +4160,10 @@ public class HERO : MonoBehaviour
 
     private void rightArmAimTo(Vector3 target)
     {
-        float y = target.x - upperarmR.transform.position.x;
-        float num2 = target.y - upperarmR.transform.position.y;
-        float x = target.z - upperarmR.transform.position.z;
-        float num4 = Mathf.Sqrt((y * y) + (x * x));
+        var y = target.x - upperarmR.transform.position.x;
+        var num2 = target.y - upperarmR.transform.position.y;
+        var x = target.z - upperarmR.transform.position.z;
+        var num4 = Mathf.Sqrt((y * y) + (x * x));
         handR.localRotation = Quaternion.Euler(-90f, 0f, 0f);
         forearmR.localRotation = Quaternion.Euler(90f, 0f, 0f);
         upperarmR.rotation =
@@ -4179,7 +4179,7 @@ public class HERO : MonoBehaviour
         {
             launchForce = PhotonView.Find(hooker).gameObject.transform.position - transform.position;
             rigidbody.AddForce(-rigidbody.velocity * 0.9f, ForceMode.VelocityChange);
-            float num = Mathf.Pow(launchForce.magnitude, 0.1f);
+            var num = Mathf.Pow(launchForce.magnitude, 0.1f);
             if (grounded)
             {
                 rigidbody.AddForce(Vector3.up * Mathf.Min(launchForce.magnitude * 0.2f, 10f), ForceMode.Impulse);
@@ -4194,7 +4194,7 @@ public class HERO : MonoBehaviour
                 state = HERO_STATE.AirDodge;
                 falseAttack();
                 facingDirection = Mathf.Atan2(launchForce.x, launchForce.z) * 57.29578f;
-                Quaternion quaternion = Quaternion.Euler(0f, facingDirection, 0f);
+                var quaternion = Quaternion.Euler(0f, facingDirection, 0f);
                 gameObject.transform.rotation = quaternion;
                 rigidbody.rotation = quaternion;
                 targetRotation = quaternion;
@@ -4221,17 +4221,17 @@ public class HERO : MonoBehaviour
         {
             if ((bulletLeft != null) && (bulletRight != null))
             {
-                Vector3 normal = bulletLeft.transform.position - bulletRight.transform.position;
+                var normal = bulletLeft.transform.position - bulletRight.transform.position;
                 if (normal.sqrMagnitude < 4f)
                 {
-                    Vector3 vector2 = (bulletLeft.transform.position + bulletRight.transform.position) * 0.5f -
+                    var vector2 = (bulletLeft.transform.position + bulletRight.transform.position) * 0.5f -
                                       transform.position;
                     facingDirection = Mathf.Atan2(vector2.x, vector2.z) * 57.29578f;
                     if (useGun && (state != HERO_STATE.Attack))
                     {
-                        float current = -Mathf.Atan2(rigidbody.velocity.z, rigidbody.velocity.x) * 57.29578f;
-                        float target = -Mathf.Atan2(vector2.z, vector2.x) * 57.29578f;
-                        float num3 = -Mathf.DeltaAngle(current, target);
+                        var current = -Mathf.Atan2(rigidbody.velocity.z, rigidbody.velocity.x) * 57.29578f;
+                        var target = -Mathf.Atan2(vector2.z, vector2.x) * 57.29578f;
+                        var num3 = -Mathf.DeltaAngle(current, target);
                         facingDirection += num3;
                     }
 
@@ -4239,23 +4239,23 @@ public class HERO : MonoBehaviour
                 }
                 else
                 {
-                    Vector3 to = transform.position - bulletLeft.transform.position;
-                    Vector3 vector6 = transform.position - bulletRight.transform.position;
-                    Vector3 vector7 = (bulletLeft.transform.position + bulletRight.transform.position) * 0.5f;
-                    Vector3 from = transform.position - vector7;
+                    var to = transform.position - bulletLeft.transform.position;
+                    var vector6 = transform.position - bulletRight.transform.position;
+                    var vector7 = (bulletLeft.transform.position + bulletRight.transform.position) * 0.5f;
+                    var from = transform.position - vector7;
                     if ((Vector3.Angle(from, to) < 30f) && (Vector3.Angle(from, vector6) < 30f))
                     {
                         almostSingleHook = true;
-                        Vector3 vector9 = vector7 - transform.position;
+                        var vector9 = vector7 - transform.position;
                         facingDirection = Mathf.Atan2(vector9.x, vector9.z) * 57.29578f;
                     }
                     else
                     {
                         almostSingleHook = false;
-                        Vector3 forward = transform.forward;
+                        var forward = transform.forward;
                         Vector3.OrthoNormalize(ref normal, ref forward);
                         facingDirection = Mathf.Atan2(forward.x, forward.z) * 57.29578f;
-                        float num4 = Mathf.Atan2(to.x, to.z) * 57.29578f;
+                        var num4 = Mathf.Atan2(to.x, to.z) * 57.29578f;
                         if (Mathf.DeltaAngle(num4, facingDirection) > 0f)
                         {
                             facingDirection += 180f;
@@ -4267,7 +4267,7 @@ public class HERO : MonoBehaviour
         else
         {
             almostSingleHook = true;
-            Vector3 zero = Vector3.zero;
+            var zero = Vector3.zero;
             if (isRightHandHooked && (bulletRight != null))
             {
                 zero = bulletRight.transform.position - transform.position;
@@ -4284,16 +4284,16 @@ public class HERO : MonoBehaviour
             facingDirection = Mathf.Atan2(zero.x, zero.z) * 57.29578f;
             if (state != HERO_STATE.Attack)
             {
-                float num6 = -Mathf.Atan2(rigidbody.velocity.z, rigidbody.velocity.x) * 57.29578f;
-                float num7 = -Mathf.Atan2(zero.z, zero.x) * 57.29578f;
-                float num8 = -Mathf.DeltaAngle(num6, num7);
+                var num6 = -Mathf.Atan2(rigidbody.velocity.z, rigidbody.velocity.x) * 57.29578f;
+                var num7 = -Mathf.Atan2(zero.z, zero.x) * 57.29578f;
+                var num8 = -Mathf.DeltaAngle(num6, num7);
                 if (useGun)
                 {
                     facingDirection += num8;
                 }
                 else
                 {
-                    float num9 = 0f;
+                    var num9 = 0f;
                     if ((isLeftHandHooked && (num8 < 0f)) || (isRightHandHooked && (num8 > 0f)))
                     {
                         num9 = -0.1f;
@@ -4314,7 +4314,7 @@ public class HERO : MonoBehaviour
     {
         if (info.sender == photonView.owner)
         {
-            PhotonView view = PhotonView.Find(viewID);
+            var view = PhotonView.Find(viewID);
             if (view != null)
             {
                 myCannon = view.gameObject;
@@ -4358,7 +4358,7 @@ public class HERO : MonoBehaviour
             }
             else if (RCSettings.pvpMode == 1)
             {
-                int num = 0;
+                var num = 0;
                 if (photonView.owner.customProperties[PhotonPlayerProperty.RCteam] != null)
                 {
                     num = RCextensions.returnIntFromObject(
@@ -4433,8 +4433,8 @@ public class HERO : MonoBehaviour
                 }
                 else
                 {
-                    int num = 0;
-                    foreach (PhotonPlayer player in PhotonNetwork.playerList)
+                    var num = 0;
+                    foreach (var player in PhotonNetwork.playerList)
                     {
                         if ((RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.isTitan]) ==
                              1) && (RCextensions
@@ -4557,7 +4557,7 @@ public class HERO : MonoBehaviour
         {
             object[] parameters = {team};
             photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, parameters);
-            Hashtable propertiesToSet = new Hashtable();
+            var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.team, team);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
         }
@@ -4569,7 +4569,7 @@ public class HERO : MonoBehaviour
 
     public void shootFlare(int type)
     {
-        bool flag = false;
+        var flag = false;
         if ((type == 1) && (flare1CD == 0f))
         {
             flare1CD = flareTotalCD;
@@ -4592,7 +4592,7 @@ public class HERO : MonoBehaviour
         {
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                GameObject obj2 = (GameObject) Instantiate(Resources.Load("FX/flareBullet" + type), transform.position,
+                var obj2 = (GameObject) Instantiate(Resources.Load("FX/flareBullet" + type), transform.position,
                     transform.rotation);
                 obj2.GetComponent<FlareMovement>().dontShowHint();
                 Destroy(obj2, 25f);
@@ -4610,13 +4610,13 @@ public class HERO : MonoBehaviour
         Vector3 vector;
         if (Screen.showCursor)
         {
-            GameObject obj2 = cross1;
-            GameObject obj3 = cross2;
-            GameObject obj4 = crossL1;
-            GameObject obj5 = crossL2;
-            GameObject obj6 = crossR1;
-            GameObject obj7 = crossR2;
-            GameObject labelDistance = LabelDistance;
+            var obj2 = cross1;
+            var obj3 = cross2;
+            var obj4 = crossL1;
+            var obj5 = crossL2;
+            var obj6 = crossR1;
+            var obj7 = crossR2;
+            var labelDistance = LabelDistance;
             vector = Vector3.up * 10000f;
             obj7.transform.localPosition = vector;
             obj6.transform.localPosition = vector;
@@ -4630,23 +4630,23 @@ public class HERO : MonoBehaviour
         {
             RaycastHit hit;
             checkTitan();
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
             LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
             LayerMask mask3 = mask2 | mask;
             if (Physics.Raycast(ray, out hit, 1E+07f, mask3.value))
             {
                 RaycastHit hit2;
-                GameObject obj9 = cross1;
-                GameObject obj10 = cross2;
+                var obj9 = cross1;
+                var obj10 = cross2;
                 obj9.transform.localPosition = Input.mousePosition;
-                Transform transform = obj9.transform;
+                var transform = obj9.transform;
                 transform.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
                 obj10.transform.localPosition = obj9.transform.localPosition;
                 vector = hit.point - baseTransform.position;
-                float magnitude = vector.magnitude;
-                GameObject obj11 = LabelDistance;
-                string str = (magnitude <= 1000f) ? ((int) magnitude).ToString() : "???";
+                var magnitude = vector.magnitude;
+                var obj11 = LabelDistance;
+                var str = (magnitude <= 1000f) ? ((int) magnitude).ToString() : "???";
                 if (((int) FengGameManagerMKII.settings[0xbd]) == 1)
                 {
                     str = str + "\n" + currentSpeed.ToString("F1") + " u/s";
@@ -4659,26 +4659,26 @@ public class HERO : MonoBehaviour
                 obj11.GetComponent<UILabel>().text = str;
                 if (magnitude > 120f)
                 {
-                    Transform transform11 = obj9.transform;
+                    var transform11 = obj9.transform;
                     transform11.localPosition += Vector3.up * 10000f;
                     obj11.transform.localPosition = obj10.transform.localPosition;
                 }
                 else
                 {
-                    Transform transform12 = obj10.transform;
+                    var transform12 = obj10.transform;
                     transform12.localPosition += Vector3.up * 10000f;
                     obj11.transform.localPosition = obj9.transform.localPosition;
                 }
 
-                Transform transform13 = obj11.transform;
+                var transform13 = obj11.transform;
                 transform13.localPosition -= new Vector3(0f, 15f, 0f);
-                Vector3 vector2 = new Vector3(0f, 0.4f, 0f);
+                var vector2 = new Vector3(0f, 0.4f, 0f);
                 vector2 -= baseTransform.right * 0.3f;
-                Vector3 vector3 = new Vector3(0f, 0.4f, 0f);
+                var vector3 = new Vector3(0f, 0.4f, 0f);
                 vector3 += baseTransform.right * 0.3f;
-                float num4 = (hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f);
-                Vector3 vector4 = (hit.point - baseTransform.right * num4) - (baseTransform.position + vector2);
-                Vector3 vector5 = (hit.point + baseTransform.right * num4) - (baseTransform.position + vector3);
+                var num4 = (hit.distance <= 50f) ? (hit.distance * 0.05f) : (hit.distance * 0.3f);
+                var vector4 = (hit.point - baseTransform.right * num4) - (baseTransform.position + vector2);
+                var vector5 = (hit.point + baseTransform.right * num4) - (baseTransform.position + vector3);
                 vector4.Normalize();
                 vector5.Normalize();
                 vector4 = vector4 * 1000000f;
@@ -4686,25 +4686,25 @@ public class HERO : MonoBehaviour
                 if (Physics.Linecast(baseTransform.position + vector2, (baseTransform.position + vector2) + vector4,
                     out hit2, mask3.value))
                 {
-                    GameObject obj12 = crossL1;
+                    var obj12 = crossL1;
                     obj12.transform.localPosition = currentCamera.WorldToScreenPoint(hit2.point);
-                    Transform transform14 = obj12.transform;
+                    var transform14 = obj12.transform;
                     transform14.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
                     obj12.transform.localRotation = Quaternion.Euler(0f, 0f,
                         (Mathf.Atan2(obj12.transform.localPosition.y - (Input.mousePosition.y - (Screen.height * 0.5f)),
                              obj12.transform.localPosition.x - (Input.mousePosition.x - (Screen.width * 0.5f))) *
                          57.29578f) + 180f);
-                    GameObject obj13 = crossL2;
+                    var obj13 = crossL2;
                     obj13.transform.localPosition = obj12.transform.localPosition;
                     obj13.transform.localRotation = obj12.transform.localRotation;
                     if (hit2.distance > 120f)
                     {
-                        Transform transform15 = obj12.transform;
+                        var transform15 = obj12.transform;
                         transform15.localPosition += Vector3.up * 10000f;
                     }
                     else
                     {
-                        Transform transform16 = obj13.transform;
+                        var transform16 = obj13.transform;
                         transform16.localPosition += Vector3.up * 10000f;
                     }
                 }
@@ -4712,25 +4712,25 @@ public class HERO : MonoBehaviour
                 if (Physics.Linecast(baseTransform.position + vector3, (baseTransform.position + vector3) + vector5,
                     out hit2, mask3.value))
                 {
-                    GameObject obj14 = crossR1;
+                    var obj14 = crossR1;
                     obj14.transform.localPosition = currentCamera.WorldToScreenPoint(hit2.point);
-                    Transform transform17 = obj14.transform;
+                    var transform17 = obj14.transform;
                     transform17.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
                     obj14.transform.localRotation = Quaternion.Euler(0f, 0f,
                         Mathf.Atan2(obj14.transform.localPosition.y - (Input.mousePosition.y - (Screen.height * 0.5f)),
                             obj14.transform.localPosition.x - (Input.mousePosition.x - (Screen.width * 0.5f))) *
                         57.29578f);
-                    GameObject obj15 = crossR2;
+                    var obj15 = crossR2;
                     obj15.transform.localPosition = obj14.transform.localPosition;
                     obj15.transform.localRotation = obj14.transform.localRotation;
                     if (hit2.distance > 120f)
                     {
-                        Transform transform18 = obj14.transform;
+                        var transform18 = obj14.transform;
                         transform18.localPosition += Vector3.up * 10000f;
                     }
                     else
                     {
-                        Transform transform19 = obj15.transform;
+                        var transform19 = obj15.transform;
                         transform19.localPosition += Vector3.up * 10000f;
                     }
                 }
@@ -4750,8 +4750,8 @@ public class HERO : MonoBehaviour
 
     private void showGas()
     {
-        float num = currentGas / totalGas;
-        float num2 = currentBladeSta / totalBladeSta;
+        var num = currentGas / totalGas;
+        var num2 = currentBladeSta / totalBladeSta;
         cachedSprites["gasL1"].fillAmount = currentGas / totalGas;
         cachedSprites["gasR1"].fillAmount = currentGas / totalGas;
         if (!useGun)
@@ -4870,7 +4870,7 @@ public class HERO : MonoBehaviour
     [RPC]
     private void showHitDamage()
     {
-        GameObject target = GGM.Caching.GameObjectCache.Find("LabelScore");
+        var target = GGM.Caching.GameObjectCache.Find("LabelScore");
         if (target != null)
         {
             speed = Mathf.Max(10f, speed);
@@ -4925,7 +4925,7 @@ public class HERO : MonoBehaviour
 
             smoke_3dmg.enableEmission = false;
             rigidbody.velocity = Vector3.zero;
-            string[] strArray = settings.Split(',');
+            var strArray = settings.Split(',');
             if (strArray.Length > 15)
             {
                 myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1],
@@ -4990,7 +4990,7 @@ public class HERO : MonoBehaviour
         {
             if (PhotonNetwork.isMasterClient)
             {
-                int iD = photonView.owner.ID;
+                var iD = photonView.owner.ID;
                 if (FengGameManagerMKII.heroHash.ContainsKey(iD))
                 {
                     FengGameManagerMKII.heroHash[iD] = this;
@@ -5001,7 +5001,7 @@ public class HERO : MonoBehaviour
                 }
             }
 
-            GameObject obj2 = GGM.Caching.GameObjectCache.Find("UI_IN_GAME");
+            var obj2 = GGM.Caching.GameObjectCache.Find("UI_IN_GAME");
             myNetWorkName = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
             myNetWorkName.name = "LabelNameOverHead";
             myNetWorkName.transform.parent = obj2.GetComponent<UIReferArray>().panels[0].transform;
@@ -5020,7 +5020,7 @@ public class HERO : MonoBehaviour
             }
             else
             {
-                bool flag2 = false;
+                var flag2 = false;
                 if (photonView.owner.customProperties[PhotonPlayerProperty.RCteam] != null)
                 {
                     switch (RCextensions.returnIntFromObject(
@@ -5060,12 +5060,12 @@ public class HERO : MonoBehaviour
                 }
             }
 
-            string str =
+            var str =
                 RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.guildName]);
             if (str != string.Empty)
             {
-                UILabel component = myNetWorkName.GetComponent<UILabel>();
-                string text = component.text;
+                var component = myNetWorkName.GetComponent<UILabel>();
+                var text = component.text;
                 string[] strArray2 =
                 {
                     text, "[FFFF00]", str, "\n[FFFFFF]",
@@ -5075,7 +5075,7 @@ public class HERO : MonoBehaviour
             }
             else
             {
-                UILabel label2 = myNetWorkName.GetComponent<UILabel>();
+                var label2 = myNetWorkName.GetComponent<UILabel>();
                 label2.text = label2.text +
                               RCextensions.returnStringFromObject(
                                   photonView.owner.customProperties[PhotonPlayerProperty.name]);
@@ -5087,7 +5087,7 @@ public class HERO : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("NetworkObject");
             if (IN_GAME_MAIN_CAMERA.dayLight == DayLight.Night)
             {
-                GameObject obj3 = (GameObject) Instantiate(Resources.Load("flashlight"));
+                var obj3 = (GameObject) Instantiate(Resources.Load("flashlight"));
                 obj3.transform.parent = baseTransform;
                 obj3.transform.position = baseTransform.position + Vector3.up;
                 obj3.transform.rotation = Quaternion.Euler(353f, 0f, 0f);
@@ -5140,19 +5140,19 @@ public class HERO : MonoBehaviour
 
     private void throwBlades()
     {
-        Transform transform = setup.part_blade_l.transform;
-        Transform transform2 = setup.part_blade_r.transform;
-        GameObject obj2 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_l"),
+        var transform = setup.part_blade_l.transform;
+        var transform2 = setup.part_blade_r.transform;
+        var obj2 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_l"),
             transform.position, transform.rotation);
-        GameObject obj3 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_r"),
+        var obj3 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_r"),
             transform2.position, transform2.rotation);
         obj2.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
         obj3.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
-        Vector3 force = (this.transform.forward + this.transform.up * 2f) - this.transform.right;
+        var force = (this.transform.forward + this.transform.up * 2f) - this.transform.right;
         obj2.rigidbody.AddForce(force, ForceMode.Impulse);
-        Vector3 vector2 = (this.transform.forward + this.transform.up * 2f) + this.transform.right;
+        var vector2 = (this.transform.forward + this.transform.up * 2f) + this.transform.right;
         obj3.rigidbody.AddForce(vector2, ForceMode.Impulse);
-        Vector3 torque = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), Random.Range(-100, 100));
+        var torque = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), Random.Range(-100, 100));
         torque.Normalize();
         obj2.rigidbody.AddTorque(torque);
         torque = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), Random.Range(-100, 100));
@@ -5274,7 +5274,7 @@ public class HERO : MonoBehaviour
 
                             if (inputManager.isInputDown[InputCode.attack1])
                             {
-                                bool flag2 = false;
+                                var flag2 = false;
                                 if ((skillCDDuration > 0f) || flag2)
                                 {
                                     flag2 = true;
@@ -5424,7 +5424,7 @@ public class HERO : MonoBehaviour
                             if ((!isMounted && (inputManager.isInputDown[InputCode.attack0] ||
                                                 inputManager.isInputDown[InputCode.attack1])) && !useGun)
                             {
-                                bool flag3 = false;
+                                var flag3 = false;
                                 if (inputManager.isInputDown[InputCode.attack1])
                                 {
                                     if ((skillCDDuration > 0f) || flag3)
@@ -5495,7 +5495,7 @@ public class HERO : MonoBehaviour
                                             attackAnimation = "attack5";
                                             playAnimation("attack5");
                                             baseRigidBody.velocity += Vector3.up * 5f;
-                                            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                                             LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
                                             LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
                                             LayerMask mask3 = mask2 | mask;
@@ -5522,7 +5522,7 @@ public class HERO : MonoBehaviour
                                             attackAnimation = "special_petra";
                                             playAnimation("special_petra");
                                             baseRigidBody.velocity += Vector3.up * 5f;
-                                            Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                            var ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
                                             LayerMask mask4 = 1 << LayerMask.NameToLayer("Ground");
                                             LayerMask mask5 = 1 << LayerMask.NameToLayer("EnemyBox");
                                             LayerMask mask6 = mask5 | mask4;
@@ -5627,7 +5627,7 @@ public class HERO : MonoBehaviour
                                     }
                                     else if ((bulletLeft != null) && (bulletLeft.transform.parent != null))
                                     {
-                                        Transform a =
+                                        var a =
                                             bulletLeft.transform.parent.transform.root.Find(
                                                 "Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                         if (a != null)
@@ -5641,7 +5641,7 @@ public class HERO : MonoBehaviour
                                     }
                                     else if ((bulletRight != null) && (bulletRight.transform.parent != null))
                                     {
-                                        Transform transform2 =
+                                        var transform2 =
                                             bulletRight.transform.parent.transform.root.Find(
                                                 "Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                         if (transform2 != null)
@@ -5655,10 +5655,10 @@ public class HERO : MonoBehaviour
                                     }
                                     else
                                     {
-                                        GameObject obj2 = findNearestTitan();
+                                        var obj2 = findNearestTitan();
                                         if (obj2 != null)
                                         {
-                                            Transform transform3 =
+                                            var transform3 =
                                                 obj2.transform.Find(
                                                     "Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                             if (transform3 != null)
@@ -5741,7 +5741,7 @@ public class HERO : MonoBehaviour
                                 if (leftArmAim || rightArmAim)
                                 {
                                     RaycastHit hit3;
-                                    Ray ray3 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                    var ray3 = Camera.main.ScreenPointToRay(Input.mousePosition);
                                     LayerMask mask7 = 1 << LayerMask.NameToLayer("Ground");
                                     LayerMask mask8 = 1 << LayerMask.NameToLayer("EnemyBox");
                                     LayerMask mask9 = mask8 | mask7;
@@ -5751,9 +5751,9 @@ public class HERO : MonoBehaviour
                                     }
                                 }
 
-                                bool flag4 = false;
-                                bool flag5 = false;
-                                bool flag6 = false;
+                                var flag4 = false;
+                                var flag5 = false;
+                                var flag6 = false;
                                 if (inputManager.isInputUp[InputCode.attack1] && (skillId != "bomb"))
                                 {
                                     if (leftGunHasBullet && rightGunHasBullet)
@@ -6028,7 +6028,7 @@ public class HERO : MonoBehaviour
                                         }
                                         else
                                         {
-                                            foreach (GameObject obj3 in GameObject.FindGameObjectsWithTag("titan"))
+                                            foreach (var obj3 in GameObject.FindGameObjectsWithTag("titan"))
                                             {
                                                 if (((Vector3.Distance(obj3.transform.position,
                                                           baseTransform.position) < 50f) &&
@@ -6070,7 +6070,7 @@ public class HERO : MonoBehaviour
                                 {
                                     GameObject obj4;
                                     attackReleased = true;
-                                    bool flag7 = false;
+                                    var flag7 = false;
                                     if ((attackAnimation == "AHSS_shoot_both") ||
                                         (attackAnimation == "AHSS_shoot_both_air"))
                                     {
@@ -6095,7 +6095,7 @@ public class HERO : MonoBehaviour
                                     }
 
                                     baseRigidBody.AddForce(Vector3.up * 200f, ForceMode.Acceleration);
-                                    string prefabName = "FX/shotGun";
+                                    var prefabName = "FX/shotGun";
                                     if (flag7)
                                     {
                                         prefabName = "FX/shotGun 1";
@@ -6141,16 +6141,16 @@ public class HERO : MonoBehaviour
                                     if (!(leftGunHasBullet || !setup.part_blade_l.activeSelf))
                                     {
                                         setup.part_blade_l.SetActive(false);
-                                        Transform transform = setup.part_blade_l.transform;
-                                        GameObject obj5 = (GameObject) Instantiate(
+                                        var transform = setup.part_blade_l.transform;
+                                        var obj5 = (GameObject) Instantiate(
                                             Resources.Load("Character_parts/character_gun_l"), transform.position,
                                             transform.rotation);
                                         obj5.renderer.material =
                                             CharacterMaterials.materials[setup.myCostume._3dmg_texture];
-                                        Vector3 force = (-baseTransform.forward * 10f) + (baseTransform.up * 5f) -
+                                        var force = (-baseTransform.forward * 10f) + (baseTransform.up * 5f) -
                                                         baseTransform.right;
                                         obj5.rigidbody.AddForce(force, ForceMode.Impulse);
-                                        Vector3 torque = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100),
+                                        var torque = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100),
                                             Random.Range(-100, 100));
                                         obj5.rigidbody.AddTorque(torque, ForceMode.Acceleration);
                                     }
@@ -6158,17 +6158,17 @@ public class HERO : MonoBehaviour
                                     if (!(rightGunHasBullet || !setup.part_blade_r.activeSelf))
                                     {
                                         setup.part_blade_r.SetActive(false);
-                                        Transform transform5 = setup.part_blade_r.transform;
-                                        GameObject obj6 = (GameObject) Instantiate(
+                                        var transform5 = setup.part_blade_r.transform;
+                                        var obj6 = (GameObject) Instantiate(
                                             Resources.Load("Character_parts/character_gun_r"), transform5.position,
                                             transform5.rotation);
                                         obj6.renderer.material =
                                             CharacterMaterials.materials[setup.myCostume._3dmg_texture];
-                                        Vector3 vector3 =
+                                        var vector3 =
                                             (-baseTransform.forward * 10f) + (baseTransform.up * 5f) +
                                             baseTransform.right;
                                         obj6.rigidbody.AddForce(vector3, ForceMode.Impulse);
-                                        Vector3 vector4 = new Vector3(Random.Range(-300, 300), Random.Range(-300, 300),
+                                        var vector4 = new Vector3(Random.Range(-300, 300), Random.Range(-300, 300),
                                             Random.Range(-300, 300));
                                         obj6.rigidbody.AddTorque(vector4, ForceMode.Acceleration);
                                     }
@@ -6338,7 +6338,7 @@ public class HERO : MonoBehaviour
                             else
                             {
                                 RaycastHit hit4;
-                                Ray ray4 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                var ray4 = Camera.main.ScreenPointToRay(Input.mousePosition);
                                 LayerMask mask10 = 1 << LayerMask.NameToLayer("Ground");
                                 LayerMask mask11 = 1 << LayerMask.NameToLayer("EnemyBox");
                                 LayerMask mask12 = mask11 | mask10;
@@ -6366,7 +6366,7 @@ public class HERO : MonoBehaviour
                             else
                             {
                                 RaycastHit hit5;
-                                Ray ray5 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                var ray5 = Camera.main.ScreenPointToRay(Input.mousePosition);
                                 LayerMask mask13 = 1 << LayerMask.NameToLayer("Ground");
                                 LayerMask mask14 = 1 << LayerMask.NameToLayer("EnemyBox");
                                 LayerMask mask15 = mask14 | mask13;
@@ -6392,7 +6392,7 @@ public class HERO : MonoBehaviour
                             if ((bulletLeft == null) && (bulletRight == null))
                             {
                                 RaycastHit hit6;
-                                Ray ray6 = Camera.main.ScreenPointToRay(Input.mousePosition);
+                                var ray6 = Camera.main.ScreenPointToRay(Input.mousePosition);
                                 LayerMask mask16 = 1 << LayerMask.NameToLayer("Ground");
                                 LayerMask mask17 = 1 << LayerMask.NameToLayer("EnemyBox");
                                 LayerMask mask18 = mask17 | mask16;
@@ -6457,7 +6457,7 @@ public class HERO : MonoBehaviour
             }
         }
 
-        Hashtable propertiesToSet = new Hashtable();
+        var propertiesToSet = new Hashtable();
         propertiesToSet.Add(PhotonPlayerProperty.current_gas, currentGas);
     }
 
@@ -6480,8 +6480,8 @@ public class HERO : MonoBehaviour
 
                 detonate = false;
                 skillCDDuration = bombCD;
-                RaycastHit hitInfo = new RaycastHit();
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                var hitInfo = new RaycastHit();
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
                 LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
                 LayerMask mask3 = mask2 | mask;
@@ -6492,8 +6492,8 @@ public class HERO : MonoBehaviour
                     targetV = hitInfo.point;
                 }
 
-                Vector3 vector = Vector3.Normalize(targetV - currentV);
-                GameObject obj2 = PhotonNetwork.Instantiate("RCAsset/BombMain", currentV + vector * 4f,
+                var vector = Vector3.Normalize(targetV - currentV);
+                var obj2 = PhotonNetwork.Instantiate("RCAsset/BombMain", currentV + vector * 4f,
                     new Quaternion(0f, 0f, 0f, 1f), 0);
                 obj2.rigidbody.velocity = vector * bombSpeed;
                 myBomb = obj2.GetComponent<Bomb>();
@@ -6502,7 +6502,7 @@ public class HERO : MonoBehaviour
             else if ((myBomb != null) && !myBomb.disabled)
             {
                 bombTime += Time.deltaTime;
-                bool flag2 = false;
+                var flag2 = false;
                 if (inputManager.isInputUp[InputCode.attack1])
                 {
                     detonate = true;
@@ -6529,12 +6529,12 @@ public class HERO : MonoBehaviour
 
     private void updateLeftMagUI()
     {
-        for (int i = 1; i <= bulletMAX; i++)
+        for (var i = 1; i <= bulletMAX; i++)
         {
             GGM.Caching.GameObjectCache.Find("bulletL" + i).GetComponent<UISprite>().enabled = false;
         }
 
-        for (int j = 1; j <= leftBulletLeft; j++)
+        for (var j = 1; j <= leftBulletLeft; j++)
         {
             GGM.Caching.GameObjectCache.Find("bulletL" + j).GetComponent<UISprite>().enabled = true;
         }
@@ -6542,12 +6542,12 @@ public class HERO : MonoBehaviour
 
     private void updateRightMagUI()
     {
-        for (int i = 1; i <= bulletMAX; i++)
+        for (var i = 1; i <= bulletMAX; i++)
         {
             GGM.Caching.GameObjectCache.Find("bulletR" + i).GetComponent<UISprite>().enabled = false;
         }
 
-        for (int j = 1; j <= rightBulletLeft; j++)
+        for (var j = 1; j <= rightBulletLeft; j++)
         {
             GGM.Caching.GameObjectCache.Find("bulletR" + j).GetComponent<UISprite>().enabled = true;
         }

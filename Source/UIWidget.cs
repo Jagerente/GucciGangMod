@@ -516,10 +516,10 @@ public abstract class UIWidget : MonoBehaviour
         {
             if (mPivot != value)
             {
-                Vector3 vector = NGUIMath.CalculateWidgetCorners(this)[0];
+                var vector = NGUIMath.CalculateWidgetCorners(this)[0];
                 mPivot = value;
                 mChanged = true;
-                Vector3 vector2 = NGUIMath.CalculateWidgetCorners(this)[0];
+                var vector2 = NGUIMath.CalculateWidgetCorners(this)[0];
                 var cachedTransform = this.cachedTransform;
                 var position = cachedTransform.position;
                 var z = cachedTransform.localPosition.z;

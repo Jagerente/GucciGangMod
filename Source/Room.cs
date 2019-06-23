@@ -23,7 +23,7 @@ public class Room : RoomInfo
         {
             customProperties.MergeStringKeys(propertiesToSet);
             customProperties.StripKeysWithNullValues();
-            Hashtable gameProperties = propertiesToSet.StripToStringKeys();
+            var gameProperties = propertiesToSet.StripToStringKeys();
             if (!PhotonNetwork.offlineMode)
             {
                 PhotonNetwork.networkingPeer.OpSetCustomPropertiesOfRoom(gameProperties, true, 0);

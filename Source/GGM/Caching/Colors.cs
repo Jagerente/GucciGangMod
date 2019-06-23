@@ -2,7 +2,7 @@
 
 namespace GGM.Caching
 {
-    class Colors
+    public static class Colors
     {
         public static readonly Color black = Color.black;
         public static readonly Color blue = Color.blue;

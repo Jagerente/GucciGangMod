@@ -7,7 +7,7 @@ public class ManualPhotonViewAllocator : MonoBehaviour
 
     public void AllocateManualPhotonView()
     {
-        PhotonView photonView = gameObject.GetPhotonView();
+        var photonView = gameObject.GetPhotonView();
         if (photonView == null)
         {
             Debug.LogError("Can't do manual instantiation without PhotonView component.");

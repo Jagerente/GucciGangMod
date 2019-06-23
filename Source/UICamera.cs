@@ -263,7 +263,7 @@ public class UICamera : MonoBehaviour
 
     private static bool IsVisible(ref RaycastHit hit)
     {
-        UIPanel panel = NGUITools.FindInParents<UIPanel>(hit.collider.gameObject);
+        var panel = NGUITools.FindInParents<UIPanel>(hit.collider.gameObject);
         if (panel != null && !panel.IsVisible(hit.point))
         {
             return false;

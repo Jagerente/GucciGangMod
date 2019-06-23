@@ -21,8 +21,8 @@ public class UIScrollBar : MonoBehaviour
     {
         if (mBG != null && mFG != null)
         {
-            Bounds bounds = NGUIMath.CalculateRelativeInnerBounds(cachedTransform, mBG);
-            Bounds bounds2 = NGUIMath.CalculateRelativeInnerBounds(cachedTransform, mFG);
+            var bounds = NGUIMath.CalculateRelativeInnerBounds(cachedTransform, mBG);
+            var bounds2 = NGUIMath.CalculateRelativeInnerBounds(cachedTransform, mFG);
             if (mDir == Direction.Horizontal)
             {
                 var num = bounds.size.x - bounds2.size.x;

@@ -72,7 +72,7 @@ public class UITable : MonoBehaviour
         while (num7 < count)
         {
             var trans = children[num7];
-            Bounds bounds = NGUIMath.CalculateRelativeWidgetBounds(trans);
+            var bounds = NGUIMath.CalculateRelativeWidgetBounds(trans);
             var localScale = trans.localScale;
             bounds.min = Vector3.Scale(bounds.min, localScale);
             bounds.max = Vector3.Scale(bounds.max, localScale);

@@ -78,7 +78,7 @@ public class UIGrid : MonoBehaviour
                 }
             }
 
-            UIDraggablePanel panel = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
+            var panel = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
             if (panel != null)
             {
                 panel.UpdateScrollbars(true);

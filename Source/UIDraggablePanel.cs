@@ -143,7 +143,7 @@ public class UIDraggablePanel : IgnoreTimeScale
                 if (mMomentum.magnitude > 0.0001f)
                 {
                     mScroll = NGUIMath.SpringLerp(mScroll, 0f, 20f, deltaTime);
-                    Vector3 absolute = NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
+                    var absolute = NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
                     MoveAbsolute(absolute);
                     if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None)
                     {

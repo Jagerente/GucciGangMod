@@ -111,7 +111,7 @@ public class UIPopupList : MonoBehaviour
             }
 
             var child = this.transform;
-            Bounds bounds = NGUIMath.CalculateRelativeWidgetBounds(child.parent, child);
+            var bounds = NGUIMath.CalculateRelativeWidgetBounds(child.parent, child);
             mChild = new GameObject("Drop-down List");
             mChild.layer = gameObject.layer;
             var transform = mChild.transform;
@@ -142,7 +142,7 @@ public class UIPopupList : MonoBehaviour
                 while (num5 < count)
                 {
                     var key = items[num5];
-                    UILabel item = NGUITools.AddWidget<UILabel>(mChild);
+                    var item = NGUITools.AddWidget<UILabel>(mChild);
                     item.pivot = UIWidget.Pivot.TopLeft;
                     item.font = font;
                     item.text = !isLocalized || Localization.instance == null ? key : Localization.instance.Get(key);
@@ -180,7 +180,7 @@ public class UIPopupList : MonoBehaviour
                 while (num7 < num8)
                 {
                     var label2 = list[num7];
-                    BoxCollider collider = NGUITools.AddWidgetCollider(label2.gameObject);
+                    var collider = NGUITools.AddWidgetCollider(label2.gameObject);
                     vector5.z = collider.center.z;
                     collider.center = vector5;
                     collider.size = vector6;

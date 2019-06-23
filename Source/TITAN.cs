@@ -2234,7 +2234,7 @@ public class TITAN : MonoBehaviour
                     {
                         var link = new WWW(eye);
                         yield return link;
-                        Texture2D iteratorVariable4 = RCextensions.loadimage(link, mipmap, 0x30d40);
+                        var iteratorVariable4 = RCextensions.loadimage(link, mipmap, 0x30d40);
                         link.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(eye))
                         {
@@ -2262,7 +2262,7 @@ public class TITAN : MonoBehaviour
                 {
                     var iteratorVariable5 = new WWW(body);
                     yield return iteratorVariable5;
-                    Texture2D iteratorVariable6 = RCextensions.loadimage(iteratorVariable5, mipmap, 0xf4240);
+                    var iteratorVariable6 = RCextensions.loadimage(iteratorVariable5, mipmap, 0xf4240);
                     iteratorVariable5.Dispose();
                     if (!FengGameManagerMKII.linkHash[2].ContainsKey(body))
                     {

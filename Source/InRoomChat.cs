@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using ExitGames.Client.Photon;
-using UnityEngine;
-using GGM;
-using MonoBehaviour = Photon.MonoBehaviour;
-using GGM.Config;
 using System.Text;
+using ExitGames.Client.Photon;
+using GGM.Caching;
+using GGM.Config;
+using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 public class InRoomChat : MonoBehaviour
 {
     private readonly bool AlignBottom = true;
     internal static InRoomChat Chat;
-    public static readonly string ChatRPC = "Chat";
     public static Rect GuiRect = new Rect(0f, 100f, 300f, 470f);
     public static Rect GuiRect2 = new Rect(30f, 575f, 300f, 25f);
     private string inputLine = string.Empty;
     public static List<string> Messages = new List<string>();
-    private Vector2 scrollPos = Vector2.zero;
 
     public static void AddLine(string newLine = "")
     {
@@ -25,7 +23,7 @@ public class InRoomChat : MonoBehaviour
     
     /// <param name="type">
     /// 0 - Not MC
-    /// 1 - Existance
+    /// 1 - Existence
     /// 2 - Self cast
     /// </param>
     /// <param name="text">Cast</param>
@@ -70,8 +68,8 @@ public class InRoomChat : MonoBehaviour
 
     public static void SystemMessageLocal(string[] str, bool parity = true)
     {
-        StringBuilder msg = new StringBuilder();
-        for (int i = 0; i < str.Length; i++)
+        var msg = new StringBuilder();
+        for (var i = 0; i < str.Length; i++)
         {
             if (i % 2 == 0 || i == 0)
             {
@@ -174,8 +172,8 @@ public class InRoomChat : MonoBehaviour
 
     public static void SystemMessageGlobal(string[] str, bool parity = true)
     {
-        StringBuilder msg = new StringBuilder();
-        for (int i = 0; i < str.Length; i++)
+        var msg = new StringBuilder();
+        for (var i = 0; i < str.Length; i++)
         {
             if (i % 2 == 0 || i == 0)
             {
@@ -263,13 +261,14 @@ public class InRoomChat : MonoBehaviour
             string.Empty);
     }
 
-    public static void MCRequired()
+    public static bool MCRequired()
     {
         if (!PhotonNetwork.isMasterClient)
         {
             SystemMessageLocal(Error(0));
-            return;
         }
+
+        return !PhotonNetwork.isMasterClient;
     }
 
     private void Awake()
@@ -277,23 +276,16 @@ public class InRoomChat : MonoBehaviour
         Chat = this;
     }
 
-    private void commandSwitch(string[] args)
+    private static void CommandSwitch(string[] args)
     {
         switch (args[0])
         {
-            case "test":
-                {
-                    string[] test = { "1", "2", "3" };
-                    SystemMessageLocal(test, true);
-                    SystemMessageLocal(test, false);
-                }
-                break;
             case "pos":
                 {
                     string[] msg = { "Your position:\n",
-                        $"\nX", " - ", $"{GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" +
-                        $"\nY", " - ", $"{GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" +
-                        $"\nZ", " - ", $"{GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
+                        "\nX", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" +
+                        "\nY", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" +
+                        "\nZ", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
 
                     SystemMessageLocal(msg);
                 }
@@ -301,7 +293,7 @@ public class InRoomChat : MonoBehaviour
 
             case "ban":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     var id = Convert.ToInt32(args[1]);
                     
@@ -352,7 +344,7 @@ public class InRoomChat : MonoBehaviour
                     default:
                         string[] err = {
                             "Invalid command. Possibles:",
-                            "\n/aso kdr", " - peserves players KDR's from disconnects.",
+                            "\n/aso kdr", " - preserves players KDR's from disconnects.",
                             "\n/aso racing", " - racing will not restart on finish.",
                             "\n/aso damage", " - sets ASO Damage settings." };
                         SystemMessageLocal(err);
@@ -363,7 +355,7 @@ public class InRoomChat : MonoBehaviour
             case "pause":
             case "unpause":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     FengGameManagerMKII.instance.SetPause();
                 }
@@ -378,7 +370,7 @@ public class InRoomChat : MonoBehaviour
 
             case "slots":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     var slots = Convert.ToInt32(args[1]);
                     PhotonNetwork.room.maxPlayers = slots;
@@ -389,7 +381,7 @@ public class InRoomChat : MonoBehaviour
 
             case "time":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     var time = (FengGameManagerMKII.instance.time - (int)FengGameManagerMKII.instance.timeTotalServer - Convert.ToInt32(args[1])) * -1;
                     FengGameManagerMKII.instance.addTime(time);
@@ -412,7 +404,7 @@ public class InRoomChat : MonoBehaviour
 
             case "resetkdall":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     var hash = new Hashtable { { "kills", 0 }, { "deaths", 0 }, { "max_dmg", 0 }, { "total_dmg", 0 } };
                     foreach (var player in PhotonNetwork.playerList)
@@ -425,7 +417,7 @@ public class InRoomChat : MonoBehaviour
 
             case "revive":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     var player = PhotonPlayer.Find(Convert.ToInt32(args[1]));
                     FengGameManagerMKII.instance.photonView.RPC("respawnHeroInNewRound", player);
@@ -435,7 +427,7 @@ public class InRoomChat : MonoBehaviour
 
             case "reviveall":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     FengGameManagerMKII.instance.photonView.RPC("respawnHeroInNewRound", PhotonTargets.All);
                     SystemMessageGlobal("All players have been revived.");
@@ -451,7 +443,7 @@ public class InRoomChat : MonoBehaviour
                         msg += args[i] + (i == args.Length - 1 ? "" : " ");
                     }
                     var myName = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties["name"]).hexColor();
-                    var sendName = "";
+                    string sendName;
                     switch (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties["RCteam"]))
                     {
                         case 1:
@@ -537,7 +529,7 @@ public class InRoomChat : MonoBehaviour
 
             case "kick":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     var num8 = Convert.ToInt32(args[1]);
                     if (num8 == PhotonNetwork.player.ID)
@@ -575,7 +567,7 @@ public class InRoomChat : MonoBehaviour
 
             case "restart":
                 {
-                    MCRequired();
+                    if (MCRequired()) return;
 
                     FengGameManagerMKII.instance.restartGame(false);
                     string[] msg = { "MasterClient ", "has restarted the game." };
@@ -685,22 +677,22 @@ public class InRoomChat : MonoBehaviour
                     if (RCSettings.infectionMode > 0)
                     {
                         string[] msg = { "Infection ", "mode with ", $"[{Convert.ToString(RCSettings.infectionMode)}]", " infected on start." };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        SystemMessageLocal(msg, false);
                     }
                     if (RCSettings.damageMode > 0)
                     {
                         string[] msg = { "Minimum Nape Damage ", "is ", $"[{Convert.ToString(RCSettings.damageMode)}]", "." };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        SystemMessageLocal(msg, false);
                     }
                     if (RCSettings.moreTitans > 0)
                     {
                         string[] msg = { "Custom Titans Amount ", "is ", $"[{Convert.ToString(RCSettings.moreTitans)}]", "." };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        SystemMessageLocal(msg, false);
                     }
                     if (RCSettings.sizeMode > 0)
                     {
                         string[] msg = { "Custom Titans Size ", "is ", $"[{RCSettings.sizeLower.ToString("F2")} - {RCSettings.sizeUpper.ToString("F2")}]", "." };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        SystemMessageLocal(msg, false);
                     }
                     if (RCSettings.banEren > 0)
                     {
@@ -710,7 +702,7 @@ public class InRoomChat : MonoBehaviour
                     if (RCSettings.waveModeOn == 1)
                     {
                         string[] msg = { "Custom Titans/Wave ", "amount is ", $"[{Convert.ToString(RCSettings.waveModeNum)}]", "." };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        SystemMessageLocal(msg, false);
                     }
                     if (RCSettings.friendlyMode > 0)
                     {
@@ -735,7 +727,7 @@ public class InRoomChat : MonoBehaviour
                     if (RCSettings.maxWave > 0)
                     {
                         string[] msg = { "Custom Maximum Wave ", "is ", $"[{RCSettings.maxWave.ToString()}]", "." };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        SystemMessageLocal(msg, false);
                     }
                     if (RCSettings.horseMode > 0)
                     {
@@ -755,7 +747,7 @@ public class InRoomChat : MonoBehaviour
                     if (RCSettings.endlessMode > 0)
                     {
                         string[] msg = { "Endless Respawn ", "is ", $"[{RCSettings.endlessMode.ToString()}]", " seconds." };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        SystemMessageLocal(msg, false);
                     }
                     if (RCSettings.globalDisableMinimap > 0)
                     {
@@ -836,7 +828,7 @@ public class InRoomChat : MonoBehaviour
 
                 if (!inputLine.StartsWith("/"))
                 {
-                    string str2 = RCextensions
+                    var str2 = RCextensions
                         .returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name])
                         .hexColor();
                     if (str2 == string.Empty)
@@ -863,7 +855,7 @@ public class InRoomChat : MonoBehaviour
                 }
                 else
                 {
-                    commandSwitch(inputLine.Remove(0, 1).Split(' '));
+                    CommandSwitch(inputLine.Remove(0, 1).Split(' '));
                 }
 
                 inputLine = string.Empty;

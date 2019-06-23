@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class UIItemSlot : MonoBehaviour
 {
@@ -65,7 +64,7 @@ public abstract class UIItemSlot : MonoBehaviour
     private void OnTooltip(bool show)
     {
         var item = !show ? null : mItem;
-        InvBaseItem baseItem = item?.baseItem;
+        var baseItem = item?.baseItem;
         if (baseItem != null)
         {
             string[] textArray1 = {"[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n"};
@@ -120,10 +119,10 @@ public abstract class UIItemSlot : MonoBehaviour
         if (mItem != observedItem)
         {
             mItem = observedItem;
-            InvBaseItem item2 = observedItem == null ? null : observedItem.baseItem;
+            var item2 = observedItem == null ? null : observedItem.baseItem;
             if (label != null)
             {
-                string str = observedItem == null ? null : observedItem.name;
+                var str = observedItem == null ? null : observedItem.name;
                 if (string.IsNullOrEmpty(mText))
                 {
                     mText = label.text;

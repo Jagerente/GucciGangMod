@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -27,9 +26,9 @@ namespace GGM
         public static Color ToColor(this string hex, byte a = 255)
         {
             if (hex.Length != 6) return Caching.Colors.white;
-            byte r = byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
-            byte g = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
-            byte b = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
+            var r = byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
+            var g = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
+            var b = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
             return new Color32(r, g, b, a);
         }
 
@@ -50,7 +49,7 @@ namespace GGM
         /// <returns></returns>
         public static string stripHEX(this string text)
         {
-            List<char> list = new char[]
+            var list = new[]
             {
                 'A',
                 'B',
@@ -68,14 +67,14 @@ namespace GGM
                 '7',
                 '8',
                 '9'
-            }.ToList<char>();
-            for (int i = 0; i < text.Length; i++)
+            }.ToList();
+            for (var i = 0; i < text.Length; i++)
             {
                 if (text[i] == '[')
                 {
-                    int num = i;
-                    int num2 = 1;
-                    bool flag = false;
+                    var num = i;
+                    var num2 = 1;
+                    var flag = false;
                     while (num + num2 < text.Length)
                     {
                         num2++;
@@ -83,17 +82,17 @@ namespace GGM
                         {
                             break;
                         }
-                        int num3 = num + num2 - 1;
+                        var num3 = num + num2 - 1;
                         if (text[num3] == ']')
                         {
                             if (num2 >= 3 && (num2 != 3 || text[num3 - 1] == '-'))
                             {
                                 flag = true;
-                                break;
                             }
                             break;
                         }
-                        else if (!list.Contains(char.ToUpper(text[num3])) && (num3 + 1 >= text.Length || text[num3 + 1] != ']'))
+
+                        if (!list.Contains(char.ToUpper(text[num3])) && (num3 + 1 >= text.Length || text[num3 + 1] != ']'))
                         {
                             break;
                         }
@@ -107,6 +106,5 @@ namespace GGM
             }
             return string.Concat(text);
         }
-
     }
 }

@@ -89,7 +89,7 @@ public class UIDrawCall : MonoBehaviour
 
     public void Set(BetterList<Vector3> verts, BetterList<Vector3> norms, BetterList<Vector4> tans, BetterList<Vector2> uvs, BetterList<Color32> cols)
     {
-        int size = verts.size;
+        var size = verts.size;
         if (size > 0 && size == uvs.size && size == cols.size && size % 4 == 0)
         {
             if (mFilter == null)

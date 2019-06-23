@@ -9,7 +9,7 @@ public class UILocalize : MonoBehaviour
 
     public void Localize()
     {
-        Localization instance = Localization.instance;
+        var instance = Localization.instance;
         var component = GetComponent<UIWidget>();
         var label = component as UILabel;
         var sprite = component as UISprite;
@@ -21,7 +21,7 @@ public class UILocalize : MonoBehaviour
         var str = !string.IsNullOrEmpty(key) ? instance.Get(key) : string.Empty;
         if (label != null)
         {
-            UIInput input = NGUITools.FindInParents<UIInput>(label.gameObject);
+            var input = NGUITools.FindInParents<UIInput>(label.gameObject);
             if (input != null && input.label == label)
             {
                 input.defaultText = str;
