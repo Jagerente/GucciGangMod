@@ -3472,34 +3472,34 @@ public class HERO : MonoBehaviour
 
             if (!info.sender.isLocal && !info.sender.isMasterClient)
             {
-                if ((info.sender.customProperties[PhotonPlayerProperty.name] == null) ||
+                if ((info.sender.customProperties[PhotonPlayerProperty.name] == null) || 
                     (info.sender.customProperties[PhotonPlayerProperty.isTitan] == null))
                 {
-                    FengGameManagerMKII.instance.chatRoom.AddLine(
-                        "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + "</color>");
+                    InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
+                    return;
                 }
                 else if (viewID < 0)
                 {
                     if (titanName == "")
                     {
-                        FengGameManagerMKII.instance.chatRoom.AddLine(
-                            "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + " (possibly valid).</color>");
+                        InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender, ". [Possibly valid].");
+                        return;
                     }
                     else
                     {
-                        FengGameManagerMKII.instance.chatRoom.AddLine(
-                            "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + "</color>");
+                        InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
+                        return;
                     }
                 }
                 else if (PhotonView.Find(viewID) == null)
                 {
-                    FengGameManagerMKII.instance.chatRoom.AddLine(
-                        "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + "</color>");
+                    InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
+                    return;
                 }
                 else if (PhotonView.Find(viewID).owner.ID != info.sender.ID)
                 {
-                    FengGameManagerMKII.instance.chatRoom.AddLine(
-                        "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + "</color>");
+                    InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
+                    return;
                 }
             }
         }
@@ -3637,31 +3637,31 @@ public class HERO : MonoBehaviour
                 if ((info.sender.customProperties[PhotonPlayerProperty.name] == null) ||
                     (info.sender.customProperties[PhotonPlayerProperty.isTitan] == null))
                 {
-                    FengGameManagerMKII.instance.chatRoom.AddLine(
-                        "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + "</color>");
+                    InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
+                    return;
                 }
                 else if (viewID < 0)
                 {
                     if (titanName == "")
                     {
-                        FengGameManagerMKII.instance.chatRoom.AddLine(
-                            "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + " (possibly valid).</color>");
+                        InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender, ". Possibly valid.");
+                        return;
                     }
                     else if ((RCSettings.bombMode == 0) && (RCSettings.deadlyCannons == 0))
                     {
-                        FengGameManagerMKII.instance.chatRoom.AddLine(
-                            "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + "</color>");
+                        InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
+                        return;
                     }
                 }
                 else if (PhotonView.Find(viewID) == null)
                 {
-                    FengGameManagerMKII.instance.chatRoom.AddLine(
-                        "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + "</color>");
+                    InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
+                    return;
                 }
                 else if (PhotonView.Find(viewID).owner.ID != info.sender.ID)
                 {
-                    FengGameManagerMKII.instance.chatRoom.AddLine(
-                        "<color=#FFCC00>Unusual Kill from ID " + info.sender.ID + "</color>");
+                    InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
+                    return;
                 }
             }
         }

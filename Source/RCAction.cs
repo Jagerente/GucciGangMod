@@ -19,7 +19,7 @@ public class RCAction
 
     public void callException(string str)
     {
-        FengGameManagerMKII.instance.chatRoom.AddLine(str);
+        InRoomChat.SystemMessageLocal(str, false);
     }
 
     public void doAction()

@@ -77,7 +77,8 @@ public class PVPcheckPoint : MonoBehaviour
                     if (GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint != gameObject)
                     {
                         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = gameObject;
-                        GameObject.Find("Chatroom").GetComponent<InRoomChat>().AddLine("<color=#A8FF24>Respawn point changed to point" + id + "</color>");
+                        string[] msg = { "Respawn point changed to point ", id.ToString(), "." };
+                        InRoomChat.SystemMessageLocal(msg);
                     }
                     break;
                 }
@@ -93,7 +94,8 @@ public class PVPcheckPoint : MonoBehaviour
                     if (GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint != gameObject)
                     {
                         GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = gameObject;
-                        GameObject.Find("Chatroom").GetComponent<InRoomChat>().AddLine("<color=#A8FF24>Respawn point changed to point" + id + "</color>");
+                        string[] msg = { "Respawn point changed to point ", id.ToString(), "." };
+                        InRoomChat.SystemMessageLocal(msg);
                     }
                     break;
                 }

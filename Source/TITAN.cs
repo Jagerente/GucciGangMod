@@ -4150,7 +4150,8 @@ public class TITAN : MonoBehaviour
                             {
                                 if (checkPoints.Count == 4)
                                 {
-                                    MultiplayerManager.sendChatContentInfo("<color=#A8FF24>*WARNING!* An abnormal titan is approaching the north gate!</color>");
+                                    InRoomChat.SystemMessageLocal("WARNING!", false);
+                                    InRoomChat.SystemMessageLocal("An abnormal titan is approaching the north gate!");
                                 }
                                 var vector17 = (Vector3) checkPoints[0];
                                 targetCheckPt = vector17;
