@@ -533,26 +533,26 @@ public class FengCustomInputs : MonoBehaviour
     {
         for (var i = 0; i < DescriptionString.Length; i++)
         {
-            if (GameObject.Find("CInput" + i) != null)
+            if (GGM.Caching.GameObjectCache.Find("CInput" + i) != null)
             {
-                GameObject.Find("CInput" + i).transform.Find("Label").gameObject.GetComponent<UILabel>().text = inputString[i];
+                GGM.Caching.GameObjectCache.Find("CInput" + i).transform.Find("Label").gameObject.GetComponent<UILabel>().text = inputString[i];
             }
         }
-        if (GameObject.Find("ChangeQuality") != null)
+        if (GGM.Caching.GameObjectCache.Find("ChangeQuality") != null)
         {
-            GameObject.Find("ChangeQuality").GetComponent<UISlider>().sliderValue = PlayerPrefs.GetFloat("GameQuality");
+            GGM.Caching.GameObjectCache.Find("ChangeQuality").GetComponent<UISlider>().sliderValue = PlayerPrefs.GetFloat("GameQuality");
         }
-        if (GameObject.Find("MouseSensitivity") != null)
+        if (GGM.Caching.GameObjectCache.Find("MouseSensitivity") != null)
         {
-            GameObject.Find("MouseSensitivity").GetComponent<UISlider>().sliderValue = PlayerPrefs.GetFloat("MouseSensitivity");
+            GGM.Caching.GameObjectCache.Find("MouseSensitivity").GetComponent<UISlider>().sliderValue = PlayerPrefs.GetFloat("MouseSensitivity");
         }
-        if (GameObject.Find("CheckboxSettings") != null)
+        if (GGM.Caching.GameObjectCache.Find("CheckboxSettings") != null)
         {
-            GameObject.Find("CheckboxSettings").GetComponent<UICheckbox>().isChecked = PlayerPrefs.GetInt("invertMouseY") != 1;
+            GGM.Caching.GameObjectCache.Find("CheckboxSettings").GetComponent<UICheckbox>().isChecked = PlayerPrefs.GetInt("invertMouseY") != 1;
         }
-        if (GameObject.Find("CheckboxCameraTilt") != null)
+        if (GGM.Caching.GameObjectCache.Find("CheckboxCameraTilt") != null)
         {
-            GameObject.Find("CheckboxCameraTilt").GetComponent<UICheckbox>().isChecked = PlayerPrefs.GetInt("cameraTilt") == 1;
+            GGM.Caching.GameObjectCache.Find("CheckboxCameraTilt").GetComponent<UICheckbox>().isChecked = PlayerPrefs.GetInt("cameraTilt") == 1;
         }
     }
 

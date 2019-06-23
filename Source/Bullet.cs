@@ -406,7 +406,7 @@ public class Bullet : MonoBehaviour
     {
         rope = (GameObject) Instantiate(Resources.Load("rope"));
         lineRenderer = rope.GetComponent<LineRenderer>();
-        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addHook(this);
+        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addHook(this);
     }
 
     [RPC]

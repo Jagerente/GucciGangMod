@@ -8,7 +8,7 @@ public class SpectatorMovement : MonoBehaviour
 
     private void Start()
     {
-        inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
+        inputManager = GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>();
     }
 
     private void Update()

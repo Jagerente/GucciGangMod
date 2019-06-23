@@ -5,7 +5,7 @@ public class BTN_toSingleSet : MonoBehaviour
     private void OnClick()
     {
         NGUITools.SetActive(transform.parent.gameObject, false);
-        NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelSingleSet, true);
+        NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelSingleSet, true);
     }
 
     private void Start()

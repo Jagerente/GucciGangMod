@@ -501,9 +501,9 @@ public class COLOSSAL_TITAN : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameObject.Find("MultiplayerManager") != null)
+        if (GGM.Caching.GameObjectCache.Find("MultiplayerManager") != null)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeCT(this);
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeCT(this);
         }
     }
 
@@ -624,7 +624,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
 
     private void startMain()
     {
-        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addCT(this);
+        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addCT(this);
         if (myHero == null)
         {
             findNearestHero();
@@ -667,8 +667,8 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             GetComponent<NetworkView>().enabled = false;
         }
-        door_broken = GameObject.Find("door_broke");
-        door_closed = GameObject.Find("door_fine");
+        door_broken = GGM.Caching.GameObjectCache.Find("door_broke");
+        door_closed = GGM.Caching.GameObjectCache.Find("door_fine");
         door_broken.SetActive(false);
         door_closed.SetActive(true);
     }
@@ -737,15 +737,15 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         {
                             photonView.RPC("netDie", PhotonTargets.OthersBuffered);
                             netDie();
-                            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().titanGetKill(view.owner, speed, name);
+                            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().titanGetKill(view.owner, speed, name);
                         }
                     }
                 }
                 else
                 {
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Colossal Titan's neck", speed);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Colossal Titan's neck", speed);
                     object[] parameters = { speed };
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
                 healthTime = 0.2f;
             }
@@ -974,7 +974,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                             {
                                 PhotonNetwork.Destroy(photonView);
                             }
-                            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
+                            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
                         }
                         findNearestHero();
                         idle();

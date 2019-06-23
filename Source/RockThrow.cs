@@ -28,10 +28,10 @@ public class RockThrow : MonoBehaviour
         }
 
         obj2.transform.localScale = transform.localScale;
-        var b = 1f - Vector3.Distance(GameObject.Find("MainCamera").transform.position, obj2.transform.position) *
+        var b = 1f - Vector3.Distance(GGM.Caching.GameObjectCache.Find("MainCamera").transform.position, obj2.transform.position) *
                 0.05f;
         b = Mathf.Min(1f, b);
-        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b);
+        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().startShake(b, b);
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
             Destroy(gameObject);

@@ -73,18 +73,18 @@ public class ChangeQuality : MonoBehaviour
     public static void turnOffTiltShift()
     {
         isTiltShiftOn = false;
-        if (GameObject.Find("MainCamera") != null)
+        if (GGM.Caching.GameObjectCache.Find("MainCamera") != null)
         {
-            GameObject.Find("MainCamera").GetComponent<TiltShift>().enabled = false;
+            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<TiltShift>().enabled = false;
         }
     }
 
     public static void turnOnTiltShift()
     {
         isTiltShiftOn = true;
-        if (GameObject.Find("MainCamera") != null)
+        if (GGM.Caching.GameObjectCache.Find("MainCamera") != null)
         {
-            GameObject.Find("MainCamera").GetComponent<TiltShift>().enabled = true;
+            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<TiltShift>().enabled = true;
         }
     }
 }

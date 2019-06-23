@@ -121,7 +121,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             num2 = Mathf.Max(10, num2);
                             if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                     .startSnapShot(item.transform.position, num2, item.transform.root.gameObject,
                                         0.02f);
                             }
@@ -129,9 +129,9 @@ public class TriggerColliderWeapon : MonoBehaviour
                             item.transform.root.GetComponent<TITAN>().die();
                             napeMeat(currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity,
                                 item.transform.root);
-                            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
+                            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
                                 .netShowDamage(num2);
-                            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
+                            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
                                 .playerKillInfoSingleUpdate(num2);
                         }
                     }
@@ -148,7 +148,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                                 num3 = Mathf.Max(10, num3);
                                 if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                                 {
-                                    GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                    GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                         .startSnapShot(item.transform.position, num3, item.transform.root.gameObject,
                                             0.02f);
                                     item.transform.root.GetComponent<TITAN>().asClientLookTarget = false;
@@ -201,7 +201,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             num6 = Mathf.Max(10, num6);
                             if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                     .startSnapShot(item.transform.position, num6, item.transform.root.gameObject,
                                         0.02f);
                             }
@@ -222,7 +222,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             num7 = Mathf.Max(10, num7);
                             if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                     .startSnapShot(item.transform.position, num7, null, 0.02f);
                             }
 
@@ -242,7 +242,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             num8 = Mathf.Max(10, num8);
                             if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                     .startSnapShot(item.transform.position, num8, null, 0.02f);
                             }
 
@@ -421,6 +421,6 @@ public class TriggerColliderWeapon : MonoBehaviour
 
     private void Start()
     {
-        currentCamera = GameObject.Find("MainCamera");
+        currentCamera = GGM.Caching.GameObjectCache.Find("MainCamera");
     }
 }

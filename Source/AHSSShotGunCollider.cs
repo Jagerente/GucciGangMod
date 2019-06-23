@@ -101,19 +101,19 @@ public class AHSSShotGunCollider : MonoBehaviour
                                 item.transform.root.rigidbody.velocity;
                             var num2 = (int) (vector3.magnitude * 10f * scoreMulti);
                             num2 = Mathf.Max(10, num2);
-                            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
+                            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
                                 .netShowDamage(num2);
                             if (num2 > item.transform.root.GetComponent<TITAN>().myLevel * 100f)
                             {
                                 item.transform.root.GetComponent<TITAN>().die();
                                 if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                                 {
-                                    GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                    GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                         .startSnapShot(item.transform.position, num2, item.transform.root.gameObject,
                                             0.02f);
                                 }
 
-                                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
+                                GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
                                     .playerKillInfoSingleUpdate(num2);
                             }
                         }
@@ -133,7 +133,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                                 {
                                     if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                                     {
-                                        GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                             .startSnapShot(item.transform.position, num3,
                                                 item.transform.root.gameObject, 0.02f);
                                         item.transform.root.GetComponent<TITAN>().asClientLookTarget = false;
@@ -185,7 +185,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                             {
                                 if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                                 {
-                                    GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                    GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                         .startSnapShot(item.transform.position, num6, item.transform.root.gameObject,
                                             0.02f);
                                 }
@@ -206,7 +206,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                             num7 = Mathf.Max(10, num7);
                             if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                             {
-                                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                                GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                     .startSnapShot(item.transform.position, num7, null, 0.02f);
                             }
 
@@ -223,7 +223,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                         num8 = Mathf.Max(10, num8);
                         if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
                         {
-                            GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
+                            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                 .startSnapShot(item.transform.position, num8, null, 0.02f);
                         }
 
@@ -418,12 +418,12 @@ public class AHSSShotGunCollider : MonoBehaviour
         }
         else
         {
-            myTeam = GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.GetComponent<HERO>()
+            myTeam = GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.GetComponent<HERO>()
                 .myTeam;
         }
 
         active_me = true;
         count = 0;
-        currentCamera = GameObject.Find("MainCamera");
+        currentCamera = GGM.Caching.GameObjectCache.Find("MainCamera");
     }
 }

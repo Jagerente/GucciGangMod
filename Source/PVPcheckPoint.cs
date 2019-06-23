@@ -74,9 +74,9 @@ public class PVPcheckPoint : MonoBehaviour
                 playerOn = true;
                 if (state == CheckPointState.Human && objArray[num].GetPhotonView().isMine)
                 {
-                    if (GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint != gameObject)
+                    if (GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint != gameObject)
                     {
-                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = gameObject;
+                        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = gameObject;
                         string[] msg = { "Respawn point changed to point ", id.ToString(), "." };
                         InRoomChat.SystemMessageLocal(msg);
                     }
@@ -91,9 +91,9 @@ public class PVPcheckPoint : MonoBehaviour
                 titanOn = true;
                 if (state == CheckPointState.Titan && objArray2[num].GetPhotonView().isMine && objArray2[num].GetComponent<TITAN>() != null && objArray2[num].GetComponent<TITAN>().nonAI)
                 {
-                    if (GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint != gameObject)
+                    if (GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint != gameObject)
                     {
-                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = gameObject;
+                        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = gameObject;
                         string[] msg = { "Respawn point changed to point ", id.ToString(), "." };
                         InRoomChat.SystemMessageLocal(msg);
                     }
@@ -165,12 +165,12 @@ public class PVPcheckPoint : MonoBehaviour
             {
                 supply = PhotonNetwork.Instantiate("aot_supply", transform.position - Vector3.up * (transform.position.y - getHeight(transform.position)), transform.rotation, 0);
             }
-            var component = GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
+            var component = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
             component.PVPhumanScore += 2;
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
             if (checkIfHumanWins())
             {
-                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
+                GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
             }
         }
         else
@@ -200,7 +200,7 @@ public class PVPcheckPoint : MonoBehaviour
 
     private void newTitan()
     {
-        var obj2 = GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().spawnTitan(normalTitanRate, transform.position - Vector3.up * (transform.position.y - getHeight(transform.position)), transform.rotation, false);
+        var obj2 = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().spawnTitan(normalTitanRate, transform.position - Vector3.up * (transform.position.y - getHeight(transform.position)), transform.rotation, false);
         if (LevelInfo.getInfo(FengGameManagerMKII.level).mapName == "The City I")
         {
             obj2.GetComponent<TITAN>().chaseDistance = 120f;
@@ -285,12 +285,12 @@ public class PVPcheckPoint : MonoBehaviour
             state = CheckPointState.Titan;
             object[] parameters = { 2 };
             photonView.RPC("changeState", PhotonTargets.All, parameters);
-            var component = GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
+            var component = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
             component.PVPtitanScore += 2;
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
             if (checkIfTitanWins())
             {
-                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
+                GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
             }
             if (hasAnnie)
             {
@@ -387,10 +387,10 @@ public class PVPcheckPoint : MonoBehaviour
                     getPtsTimer = 0f;
                     if (!isBase)
                     {
-                        var component = GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
+                        var component = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
                         component.PVPhumanScore++;
                     }
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
                 }
             }
             else if (state == CheckPointState.Titan)
@@ -409,10 +409,10 @@ public class PVPcheckPoint : MonoBehaviour
                     getPtsTimer = 0f;
                     if (!isBase)
                     {
-                        var local2 = GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
+                        var local2 = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
                         local2.PVPtitanScore++;
                     }
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
                 }
                 spawnTitanTimer += Time.deltaTime;
                 if (spawnTitanTimer > titanInterval)

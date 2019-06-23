@@ -464,7 +464,7 @@ public class TITAN : MonoBehaviour
             return false;
         }
         hasDie = true;
-        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().oneTitanDown(string.Empty, false);
+        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().oneTitanDown(string.Empty, false);
         dieAnimation();
         return true;
     }
@@ -500,7 +500,7 @@ public class TITAN : MonoBehaviour
             dieBlowFunc(attacker, hitPauseTime);
             if (GameObject.FindGameObjectsWithTag("titan").Length <= 1)
             {
-                GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+                GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
             }
         }
         else
@@ -522,7 +522,7 @@ public class TITAN : MonoBehaviour
             animation[hitAnimation].time = 0f;
             animation[hitAnimation].speed = 0f;
             needFreshCorePosition = true;
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().oneTitanDown(string.Empty, false);
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().oneTitanDown(string.Empty, false);
             if (photonView.isMine)
             {
                 if (grabbedTarget != null)
@@ -593,7 +593,7 @@ public class TITAN : MonoBehaviour
                 dieHeadBlowFunc(attacker, hitPauseTime);
                 if (GameObject.FindGameObjectsWithTag("titan").Length <= 1)
                 {
-                    GameObject.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+                    GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
                 }
             }
             else
@@ -617,7 +617,7 @@ public class TITAN : MonoBehaviour
             playAnimation(hitAnimation);
             animation[hitAnimation].time = 0f;
             animation[hitAnimation].speed = 0f;
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().oneTitanDown(string.Empty, false);
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().oneTitanDown(string.Empty, false);
             needFreshCorePosition = true;
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
             {
@@ -2533,9 +2533,9 @@ public class TITAN : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameObject.Find("MultiplayerManager") != null)
+        if (GGM.Caching.GameObjectCache.Find("MultiplayerManager") != null)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeTitan(this);
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeTitan(this);
         }
     }
 
@@ -2773,7 +2773,7 @@ public class TITAN : MonoBehaviour
         else if (type == AbnormalType.TYPE_CRAWLER)
         {
             num = 3;
-            if (GameObject.Find("Crawler") != null && Random.Range(0, 0x3e8) > 5)
+            if (GGM.Caching.GameObjectCache.Find("Crawler") != null && Random.Range(0, 0x3e8) > 5)
             {
                 num = 2;
             }
@@ -3000,7 +3000,7 @@ public class TITAN : MonoBehaviour
         animation.cullingType = AnimationCullingType.BasedOnRenderers;
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
         {
-            object[] parameters = { myLevel, GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().difficulty, Random.Range(0, 4) };
+            object[] parameters = { myLevel, GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().difficulty, Random.Range(0, 4) };
             photonView.RPC("netSetLevel", PhotonTargets.AllBuffered, parameters);
             animation.cullingType = AnimationCullingType.AlwaysAnimate;
         }
@@ -3067,7 +3067,7 @@ public class TITAN : MonoBehaviour
         {
             Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.yellow, false, true);
         }
-        currentCamera = GameObject.Find("MainCamera");
+        currentCamera = GGM.Caching.GameObjectCache.Find("MainCamera");
         runAnimation = "run_walk";
         grabTF = new GameObject();
         grabTF.name = "titansTmpGrabTF";
@@ -3129,10 +3129,10 @@ public class TITAN : MonoBehaviour
         netDie();
         if (nonAI)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, string.Empty, true, (string) PhotonNetwork.player.customProperties[PhotonPlayerProperty.name], 0);
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, string.Empty, true, (string) PhotonNetwork.player.customProperties[PhotonPlayerProperty.name], 0);
         }
-        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().needChooseSide = true;
-        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().justSuicide = true;
+        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().needChooseSide = true;
+        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().justSuicide = true;
     }
 
     public void testVisual(bool setCollider)
@@ -3384,7 +3384,7 @@ public class TITAN : MonoBehaviour
                     }
                     if (!IN_GAME_MAIN_CAMERA.isPausing)
                     {
-                        GameObject.Find("stamina_titan").transform.localScale = new Vector3(stamina, 16f);
+                        GGM.Caching.GameObjectCache.Find("stamina_titan").transform.localScale = new Vector3(stamina, 16f);
                     }
                 }
                 if (state == TitanState.laugh)

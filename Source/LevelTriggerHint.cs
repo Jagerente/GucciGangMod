@@ -30,13 +30,13 @@ public class LevelTriggerHint : MonoBehaviour
                     string[] textArray2 =
                     {
                         "Hello soldier!\nWelcome to Attack On Titan Tribute Game!\n Press [F7D358]",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.up],
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.left],
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.down],
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.right],
                         "[-] to Move."
                     };
@@ -53,10 +53,10 @@ public class LevelTriggerHint : MonoBehaviour
                     string[] textArray3 =
                     {
                         "Press [F7D358]",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.camera],
                         "[-] to change camera mode\nPress [F7D358]",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.hideCursor],
                         "[-] to hide or show the cursor."
                     };
@@ -66,13 +66,13 @@ public class LevelTriggerHint : MonoBehaviour
 
                 case HintType.JUMP:
                     content = "Press [F7D358]" +
-                              GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                              GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                                   .inputString[InputCode.jump] + "[-] to Jump.";
                     break;
 
                 case HintType.JUMP2:
                     content = "Press [F7D358]" +
-                              GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                              GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                                   .inputString[InputCode.up] + "[-] towards a wall to perform a wall-run.";
                     break;
 
@@ -81,10 +81,10 @@ public class LevelTriggerHint : MonoBehaviour
                     string[] textArray4 =
                     {
                         "Press and Hold[F7D358] ",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.leftRope],
                         "[-] or [F7D358]",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.rightRope],
                         "[-] to launch your grapple.\nNow Try hooking to the [>3<] box. "
                     };
@@ -97,10 +97,10 @@ public class LevelTriggerHint : MonoBehaviour
                     string[] textArray5 =
                     {
                         "Press and Hold[F7D358] ",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.bothRope],
                         "[-] to launch both of your grapples at the same Time.\n\nNow aim between the two black blocks. \nYou will see the mark '<' and '>' appearing on the blocks. \nThen press ",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.bothRope],
                         " to hook the blocks."
                     };
@@ -110,14 +110,14 @@ public class LevelTriggerHint : MonoBehaviour
 
                 case HintType.SUPPLY:
                     content = "Press [F7D358]" +
-                              GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                              GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                                   .inputString[InputCode.reload] +
                               "[-] to reload your blades.\n Move to the supply station to refill your gas and blades.";
                     break;
 
                 case HintType.DODGE:
                     content = "Press [F7D358]" +
-                              GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                              GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                                   .inputString[InputCode.dodge] + "[-] to Dodge.";
                     break;
 
@@ -126,10 +126,10 @@ public class LevelTriggerHint : MonoBehaviour
                     string[] textArray1 =
                     {
                         "Press [F7D358]",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.attack0],
                         "[-] to Attack. \nPress [F7D358]",
-                        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>()
+                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.attack1],
                         "[-] to use special attack.\n***You can only kill a titan by slashing his [FA5858]NAPE[-].***\n\n"
                     };
@@ -144,7 +144,7 @@ public class LevelTriggerHint : MonoBehaviour
     {
         if (on)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>()
                 .ShowHUDInfoCenter(content + "\n\n\n\n\n");
             on = false;
         }

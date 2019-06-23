@@ -975,9 +975,9 @@ public class FEMALE_TITAN : MonoBehaviour
                     {
                         getDown();
                     }
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
                     object[] parameters = { dmg };
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
             }
         }
@@ -1015,9 +1015,9 @@ public class FEMALE_TITAN : MonoBehaviour
                     {
                         getDown();
                     }
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
                     object[] parameters = { dmg };
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
             }
         }
@@ -1270,9 +1270,9 @@ public class FEMALE_TITAN : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameObject.Find("MultiplayerManager") != null)
+        if (GGM.Caching.GameObjectCache.Find("MultiplayerManager") != null)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeFT(this);
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeFT(this);
         }
     }
 
@@ -1359,11 +1359,11 @@ public class FEMALE_TITAN : MonoBehaviour
     }
     private void startMain()
     {
-        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addFT(this);
+        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addFT(this);
         name = "Female Titan";
         grabTF = new GameObject();
         grabTF.name = "titansTmpGrabTF";
-        currentCamera = GameObject.Find("MainCamera");
+        currentCamera = GGM.Caching.GameObjectCache.Find("MainCamera");
         oldCorePosition = transform.position - transform.Find("Amarture/Core").position;
         if (myHero == null)
         {
@@ -1451,14 +1451,14 @@ public class FEMALE_TITAN : MonoBehaviour
                             grabbedTarget.GetPhotonView().RPC("netUngrabbed", PhotonTargets.All);
                         }
                         netDie();
-                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().titanGetKill(view.owner, speed, name);
+                        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().titanGetKill(view.owner, speed, name);
                     }
                 }
                 else
                 {
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's neck", speed);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's neck", speed);
                     object[] parameters = { speed };
-                    GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
                 healthTime = 0.2f;
             }
@@ -1506,7 +1506,7 @@ public class FEMALE_TITAN : MonoBehaviour
                     {
                         for (var i = 0; i < 15; i++)
                         {
-                            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().randomSpawnOneTitan("titanRespawn", 50).GetComponent<TITAN>().beTauntedBy(gameObject, 20f);
+                            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().randomSpawnOneTitan("titanRespawn", 50).GetComponent<TITAN>().beTauntedBy(gameObject, 20f);
                         }
                     }
                 }

@@ -5,7 +5,7 @@ public class BTN_toPublicServer : MonoBehaviour
     private void OnClick()
     {
         NGUITools.SetActive(transform.parent.gameObject, false);
-        NGUITools.SetActive(GameObject.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
+        NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
     }
 }
 

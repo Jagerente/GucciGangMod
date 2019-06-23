@@ -9600,6 +9600,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        GGM.Caching.GameObjectCache.Clear();
         if (level != 0 && Application.loadedLevelName != "characterCreation" &&
             Application.loadedLevelName != "SnapShot")
         {

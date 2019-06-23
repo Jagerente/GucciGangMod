@@ -6,7 +6,7 @@ public class SupportLogger : MonoBehaviour
 
     public void Start()
     {
-        if (GameObject.Find("PunSupportLogger") == null)
+        if (GGM.Caching.GameObjectCache.Find("PunSupportLogger") == null)
         {
             var target = new GameObject("PunSupportLogger");
             DontDestroyOnLoad(target);

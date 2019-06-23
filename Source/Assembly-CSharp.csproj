@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="GGM\Caching\Colors.cs" />
+    <Compile Include="GGM\Caching\GameObjectCache.cs" />
     <Compile Include="GGM\Extensions.cs" />
     <Compile Include="GGM\Config\BoolSetting.cs" />
     <Compile Include="GGM\Config\FloatSetting.cs" />
@@ -60,7 +61,6 @@
     <Compile Include="GGM\Config\StringSetting.cs" />
     <Compile Include="GGM\Storage\IDataStorage.cs" />
     <Compile Include="GGM\Storage\ISerializable.cs" />
-    <Compile Include="GGM\Storage\JsonStorage.cs" />
     <Compile Include="GGM\Storage\PrefStorage.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="AHSSShotGunCollider.cs" />

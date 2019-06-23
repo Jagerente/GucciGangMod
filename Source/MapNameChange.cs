@@ -7,7 +7,7 @@ public class MapNameChange : MonoBehaviour
         var info = LevelInfo.getInfo(GetComponent<UIPopupList>().selection);
         if (info != null)
         {
-            GameObject.Find("LabelLevelInfo").GetComponent<UILabel>().text = info.desc;
+            GGM.Caching.GameObjectCache.Find("LabelLevelInfo").GetComponent<UILabel>().text = info.desc;
         }
         if (!GetComponent<UIPopupList>().items.Contains("Custom"))
         {

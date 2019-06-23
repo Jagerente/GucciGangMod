@@ -158,7 +158,7 @@ public class PanelMultiJoin : MonoBehaviour
                     }
                 }
             }
-            GameObject.Find("LabelServerListPage").GetComponent<UILabel>().text = currentPage + "/" + totalPage;
+            GGM.Caching.GameObjectCache.Find("LabelServerListPage").GetComponent<UILabel>().text = currentPage + "/" + totalPage;
         }
         else
         {
@@ -166,7 +166,7 @@ public class PanelMultiJoin : MonoBehaviour
             {
                 items[i].SetActive(false);
             }
-            GameObject.Find("LabelServerListPage").GetComponent<UILabel>().text = currentPage + "/" + totalPage;
+            GGM.Caching.GameObjectCache.Find("LabelServerListPage").GetComponent<UILabel>().text = currentPage + "/" + totalPage;
         }
     }
 

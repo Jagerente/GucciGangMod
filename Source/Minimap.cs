@@ -224,7 +224,7 @@ public class Minimap : MonoBehaviour
         {
             Initialize();
         }
-        var obj2 = GameObject.Find("mainLight");
+        var obj2 = GGM.Caching.GameObjectCache.Find("mainLight");
         Light component = null;
         var identity = Quaternion.identity;
         var none = LightShadows.None;
@@ -536,7 +536,7 @@ public class Minimap : MonoBehaviour
     {
         if (minimap != null)
         {
-            var obj2 = GameObject.Find("mainLight");
+            var obj2 = GGM.Caching.GameObjectCache.Find("mainLight");
             Light component = null;
             var identity = Quaternion.identity;
             var none = LightShadows.None;

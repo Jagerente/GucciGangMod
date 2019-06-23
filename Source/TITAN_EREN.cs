@@ -380,7 +380,7 @@ public class TITAN_EREN : MonoBehaviour
             {
                 crossFade("die", 0.1f);
                 isHitWhileCarryingRock = true;
-                GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
+                GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
                 object[] parameters = { "set" };
                 photonView.RPC("rockPlayAnimation", PhotonTargets.All, parameters);
             }
@@ -418,8 +418,8 @@ public class TITAN_EREN : MonoBehaviour
     {
         if ((!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && !rockLift && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine))
         {
-            var to = Quaternion.Euler(GameObject.Find("MainCamera").transform.rotation.eulerAngles.x, GameObject.Find("MainCamera").transform.rotation.eulerAngles.y, 0f);
-            GameObject.Find("MainCamera").transform.rotation = Quaternion.Lerp(GameObject.Find("MainCamera").transform.rotation, to, Time.deltaTime * 2f);
+            var to = Quaternion.Euler(GGM.Caching.GameObjectCache.Find("MainCamera").transform.rotation.eulerAngles.x, GGM.Caching.GameObjectCache.Find("MainCamera").transform.rotation.eulerAngles.y, 0f);
+            GGM.Caching.GameObjectCache.Find("MainCamera").transform.rotation = Quaternion.Lerp(GGM.Caching.GameObjectCache.Find("MainCamera").transform.rotation, to, Time.deltaTime * 2f);
         }
     }
 
@@ -528,9 +528,9 @@ public class TITAN_EREN : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameObject.Find("MultiplayerManager") != null)
+        if (GGM.Caching.GameObjectCache.Find("MultiplayerManager") != null)
         {
-            GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeET(this);
+            GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().removeET(this);
         }
     }
 
@@ -685,14 +685,14 @@ public class TITAN_EREN : MonoBehaviour
                                 targetCheckPt = vector6;
                                 checkPoints.RemoveAt(0);
                                 var objArray = GameObject.FindGameObjectsWithTag("titanRespawn2");
-                                var obj2 = GameObject.Find("titanRespawnTrost" + (7 - checkPoints.Count));
+                                var obj2 = GGM.Caching.GameObjectCache.Find("titanRespawnTrost" + (7 - checkPoints.Count));
                                 if (obj2 != null)
                                 {
                                     foreach (var obj3 in objArray)
                                     {
                                         if (obj3.transform.parent.gameObject == obj2)
                                         {
-                                            var obj4 = GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().spawnTitan(70, obj3.transform.position, obj3.transform.rotation, false);
+                                            var obj4 = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().spawnTitan(70, obj3.transform.position, obj3.transform.rotation, false);
                                             obj4.GetComponent<TITAN>().isAlarm = true;
                                             obj4.GetComponent<TITAN>().chaseDistance = 999999f;
                                         }
@@ -726,7 +726,7 @@ public class TITAN_EREN : MonoBehaviour
                             y = hit.point.y;
                         }
                         position += Vector3.up * y;
-                        var obj5 = GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().spawnTitan(70, position, transform.rotation, false);
+                        var obj5 = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().spawnTitan(70, position, transform.rotation, false);
                         obj5.GetComponent<TITAN>().isAlarm = true;
                         obj5.GetComponent<TITAN>().chaseDistance = 999999f;
                     }
@@ -762,7 +762,7 @@ public class TITAN_EREN : MonoBehaviour
                     {
                         crossFade("die", 0.1f);
                         rockPhase++;
-                        GameObject.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
+                        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
                     }
                     if (animation["rock_fix_hole"].normalizedTime >= 0.62f && !rockHitGround)
                     {
@@ -783,7 +783,7 @@ public class TITAN_EREN : MonoBehaviour
 
     public void setRoute()
     {
-        var obj2 = GameObject.Find("routeTrost");
+        var obj2 = GGM.Caching.GameObjectCache.Find("routeTrost");
         checkPoints = new ArrayList();
         for (var i = 1; i <= 7; i++)
         {
@@ -794,13 +794,13 @@ public class TITAN_EREN : MonoBehaviour
 
     private void showAimUI()
     {
-        var obj2 = GameObject.Find("cross1");
-        var obj3 = GameObject.Find("cross2");
-        var obj4 = GameObject.Find("crossL1");
-        var obj5 = GameObject.Find("crossL2");
-        var obj6 = GameObject.Find("crossR1");
-        var obj7 = GameObject.Find("crossR2");
-        var obj8 = GameObject.Find("LabelDistance");
+        var obj2 = GGM.Caching.GameObjectCache.Find("cross1");
+        var obj3 = GGM.Caching.GameObjectCache.Find("cross2");
+        var obj4 = GGM.Caching.GameObjectCache.Find("crossL1");
+        var obj5 = GGM.Caching.GameObjectCache.Find("crossL2");
+        var obj6 = GGM.Caching.GameObjectCache.Find("crossR1");
+        var obj7 = GGM.Caching.GameObjectCache.Find("crossR2");
+        var obj8 = GGM.Caching.GameObjectCache.Find("LabelDistance");
         var vector = Vector3.up * 10000f;
         obj7.transform.localPosition = vector;
         obj6.transform.localPosition = vector;
@@ -813,7 +813,7 @@ public class TITAN_EREN : MonoBehaviour
 
     private void showSkillCD()
     {
-        GameObject.Find("skill_cd_eren").GetComponent<UISprite>().fillAmount = lifeTime / lifeTimeMax;
+        GGM.Caching.GameObjectCache.Find("skill_cd_eren").GetComponent<UISprite>().fillAmount = lifeTime / lifeTimeMax;
     }
 
     private void Start()
@@ -822,13 +822,13 @@ public class TITAN_EREN : MonoBehaviour
         FengGameManagerMKII.instance.addET(this);
         if (rockLift)
         {
-            rock = GameObject.Find("rock");
+            rock = GGM.Caching.GameObjectCache.Find("rock");
             rock.animation["lift"].speed = 0f;
         }
         else
         {
-            currentCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
-            inputManager = GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>();
+            currentCamera = GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<Camera>();
+            inputManager = GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>();
             oldCorePosition = transform.position - transform.Find("Amarture/Core").position;
             myR = sqrt2 * 6f;
             animation["hit_annie_1"].speed = 0.8f;

@@ -4,8 +4,8 @@ public class BTN_SetDefault : MonoBehaviour
 {
     private void OnClick()
     {
-        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
-        GameObject.Find("InputManagerController").GetComponent<FengCustomInputs>().showKeyMap();
+        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
+        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().showKeyMap();
     }
 }
 
