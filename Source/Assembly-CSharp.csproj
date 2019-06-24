@@ -60,6 +60,7 @@
     <Compile Include="GGM\Config\Setting.cs" />
     <Compile Include="GGM\Config\Settings.cs" />
     <Compile Include="GGM\Config\StringSetting.cs" />
+    <Compile Include="GGM\Labels.cs" />
     <Compile Include="GGM\Storage\IDataStorage.cs" />
     <Compile Include="GGM\Storage\ISerializable.cs" />
     <Compile Include="GGM\Storage\PrefStorage.cs" />
