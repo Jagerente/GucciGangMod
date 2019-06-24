@@ -13,6 +13,8 @@ namespace GGM.Caching
         public static readonly Color green = Color.green;
         public static readonly Color grey = Color.grey;
         public static readonly Color magenta = Color.magenta;
+        public static readonly Color melon = new Color(0.992f, 0.737f, 0.706f);
+        public static readonly Color froly = new Color(0.941f, 0.502f, 0.502f);
         public static readonly Color orange = new Color(1f, 0.35f, 0f, 1f);
         public static readonly Color rc = new Color(1f, 0.753f, 0f, 1f);
         public static readonly Color red = Color.red;
