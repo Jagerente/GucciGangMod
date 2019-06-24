@@ -106,5 +106,25 @@ namespace GGM
             }
             return string.Concat(text);
         }
+
+        public static int CountWords(this string s, string s1)
+        {
+            return (s.Length - s.Replace(s1, "").Length) / s1.Length;
+        }
+
+        public static string ToHTML(this string str)
+        {
+            if (Regex.IsMatch(str, @"\[([0-9a-zA-Z]{6})\]"))
+            {
+                str = str.Contains("[-]") ? Regex.Replace(str, @"\[([0-9a-fA-F]{6})\]", "<color=#$1>").Replace("[-]", "</color>") : Regex.Replace(str, @"\[([0-9a-fA-F]{6})\]", "<color=#$1>");
+                var c = (short)(str.CountWords("<color=") - str.CountWords("</color>"));
+                for (short i = 0; i < c; i++)
+                {
+                    str += "</color>";
+                }
+            }
+            return str;
+        }
+
     }
 }
