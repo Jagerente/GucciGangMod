@@ -171,7 +171,7 @@ namespace GGM
             }
         }
 
-        public static string VERSION
+        public static string Version
         {
             get
             {
