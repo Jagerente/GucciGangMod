@@ -191,7 +191,7 @@ public class FengGameManagerMKII : MonoBehaviour
     private void cache()
     {
         ClothFactory.ClearClothCache();
-        inputManager = GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>();
+        inputManager = GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>();
         playersRPC.Clear();
         titanSpawners.Clear();
         groundList.Clear();
@@ -1407,7 +1407,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             ShowHUDInfoCenter(string.Empty);
                             startRacing = true;
                             endRacing = false;
-                            GGM.Caching.GameObjectCache.Find("door").SetActive(false);
+                            GameObjectCache.Find("door").SetActive(false);
                         }
                     }
                     else
@@ -1427,7 +1427,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             ShowHUDInfoCenter(string.Empty);
                             startRacing = true;
                             endRacing = false;
-                            var obj2 = GGM.Caching.GameObjectCache.Find("door");
+                            var obj2 = GameObjectCache.Find("door");
                             if (obj2 != null)
                             {
                                 obj2.SetActive(false);
@@ -1596,7 +1596,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         ShowHUDInfoTopRightMAPNAME("\n" + level + " : " + str4);
                     }
-                    this.ShowHUDInfoTopRightMAPNAME($"\nFPS [{Settings.ChatMinorColor}]{FPS.FPS}[-]");
+                    ShowHUDInfoTopRightMAPNAME($"\nFPS [{Settings.ChatMinorColor}]{FPS.FPS}[-]");
 
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                     {
@@ -2035,7 +2035,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     num2 = 1f;
                     obj2 = null;
-                    obj2 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray[1]),
+                    obj2 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray[1]),
                         new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]),
                             Convert.ToSingle(strArray[14])),
                         new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]),
@@ -2051,7 +2051,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             foreach (var renderer in obj2.GetComponentsInChildren<Renderer>())
                             {
-                                renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM("transparent");
+                                renderer.material = (Material) ResourcesCache.RCLoadM("transparent");
                                 if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                                 {
                                     renderer.material.mainTextureScale = new Vector2(
@@ -2064,7 +2064,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         {
                             foreach (var renderer in obj2.GetComponentsInChildren<Renderer>())
                             {
-                                renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM(strArray[2]);
+                                renderer.material = (Material) ResourcesCache.RCLoadM(strArray[2]);
                                 if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                                 {
                                     renderer.material.mainTextureScale = new Vector2(
@@ -2129,7 +2129,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                 foreach (var renderer in obj2.GetComponentsInChildren<Renderer>())
                                 {
-                                    renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM("transparent");
+                                    renderer.material = (Material) ResourcesCache.RCLoadM("transparent");
                                     if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                                     {
                                         renderer.material.mainTextureScale = new Vector2(
@@ -2144,7 +2144,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 {
                                     if (!renderer.name.Contains("Particle System") || !obj2.name.Contains("aot_supply"))
                                     {
-                                        renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM(strArray[2]);
+                                        renderer.material = (Material) ResourcesCache.RCLoadM(strArray[2]);
                                         if (Convert.ToSingle(strArray[10]) != 1f ||
                                             Convert.ToSingle(strArray[11]) != 1f)
                                         {
@@ -2188,7 +2188,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     if (strArray[1].StartsWith("barrier"))
                     {
                         obj2 = null;
-                        obj2 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray[1]),
+                        obj2 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray[1]),
                             new Vector3(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]),
                                 Convert.ToSingle(strArray[7])),
                             new Quaternion(Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]),
@@ -2202,7 +2202,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     else if (strArray[1].StartsWith("racingStart"))
                     {
                         obj2 = null;
-                        obj2 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray[1]),
+                        obj2 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray[1]),
                             new Vector3(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]),
                                 Convert.ToSingle(strArray[7])),
                             new Quaternion(Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]),
@@ -2217,7 +2217,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     else if (strArray[1].StartsWith("racingEnd"))
                     {
                         obj2 = null;
-                        obj2 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray[1]),
+                        obj2 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray[1]),
                             new Vector3(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]),
                                 Convert.ToSingle(strArray[7])),
                             new Quaternion(Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]),
@@ -2238,7 +2238,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         var key = strArray[2];
                         if (RCRegionTriggers.ContainsKey(key))
                         {
-                            var obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO("region"));
+                            var obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO("region"));
                             obj3.transform.position = loc;
                             obj3.AddComponent<RegionTrigger>();
                             obj3.GetComponent<RegionTrigger>().CopyTrigger((RegionTrigger) RCRegionTriggers[key]);
@@ -2258,7 +2258,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     if (strArray[1].StartsWith("start"))
                     {
                         obj2 = null;
-                        obj2 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray[1]),
+                        obj2 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray[1]),
                             new Vector3(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]),
                                 Convert.ToSingle(strArray[7])),
                             new Quaternion(Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]),
@@ -2273,7 +2273,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     else if (strArray[1].StartsWith("end"))
                     {
                         obj2 = null;
-                        obj2 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray[1]),
+                        obj2 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray[1]),
                             new Vector3(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]),
                                 Convert.ToSingle(strArray[7])),
                             new Quaternion(Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]),
@@ -2288,7 +2288,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     else if (strArray[1].StartsWith("kill"))
                     {
                         obj2 = null;
-                        obj2 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray[1]),
+                        obj2 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray[1]),
                             new Vector3(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]),
                                 Convert.ToSingle(strArray[7])),
                             new Quaternion(Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]),
@@ -2303,7 +2303,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     else if (strArray[1].StartsWith("checkpoint"))
                     {
                         obj2 = null;
-                        obj2 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray[1]),
+                        obj2 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray[1]),
                             new Vector3(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]),
                                 Convert.ToSingle(strArray[7])),
                             new Quaternion(Convert.ToSingle(strArray[8]), Convert.ToSingle(strArray[9]),
@@ -2320,8 +2320,8 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     if (strArray[1].StartsWith("disablebounds"))
                     {
-                        Destroy(GGM.Caching.GameObjectCache.Find("gameobjectOutSide"));
-                        Instantiate(GGM.Caching.ResourcesCache.RCLoadGO("outside"));
+                        Destroy(GameObjectCache.Find("gameobjectOutSide"));
+                        Instantiate(ResourcesCache.RCLoadGO("outside"));
                     }
                 }
                 else if (PhotonNetwork.isMasterClient && strArray[0].StartsWith("photon"))
@@ -2546,7 +2546,7 @@ public class FengGameManagerMKII : MonoBehaviour
             string[] strArray2 = {"Flare", "LabelInfoBottomRight"};
             foreach (var str2 in strArray2)
             {
-                var item = GGM.Caching.GameObjectCache.Find(str2);
+                var item = GameObjectCache.Find(str2);
                 if (item != null)
                 {
                     if (!spectateSprites.Contains(item))
@@ -2579,9 +2579,9 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
 
-            NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
-            NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);
-            NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
+            NGUITools.SetActive(GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
+            NGUITools.SetActive(GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);
+            NGUITools.SetActive(GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
             FGM.needChooseSide = false;
             Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
             if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.ORIGINAL)
@@ -2606,9 +2606,9 @@ public class FengGameManagerMKII : MonoBehaviour
         }
         else
         {
-            if (GGM.Caching.GameObjectCache.Find("cross1") != null)
+            if (GameObjectCache.Find("cross1") != null)
             {
-                GGM.Caching.GameObjectCache.Find("cross1").transform.localPosition = Vector3.up * 5000f;
+                GameObjectCache.Find("cross1").transform.localPosition = Vector3.up * 5000f;
             }
 
             if (spectateSprites != null)
@@ -2623,9 +2623,9 @@ public class FengGameManagerMKII : MonoBehaviour
             }
 
             spectateSprites = new List<GameObject>();
-            NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
-            NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);
-            NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
+            NGUITools.SetActive(GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
+            NGUITools.SetActive(GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);
+            NGUITools.SetActive(GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
             FGM.needChooseSide = true;
             Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
             Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
@@ -2805,7 +2805,7 @@ public class FengGameManagerMKII : MonoBehaviour
     public static GameObject InstantiateCustomAsset(string key)
     {
         key = key.Substring(8);
-        return (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(key);
+        return (GameObject) ResourcesCache.RCLoadGO(key);
     }
 
     public bool isPlayerAllDead()
@@ -3970,12 +3970,12 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
 
-            GGM.Caching.GameObjectCache.Find("Cube_001").renderer.material.mainTexture = ((Material) GGM.Caching.ResourcesCache.RCLoadM("grass")).mainTexture;
-            Instantiate(GGM.Caching.ResourcesCache.RCLoadGO("spawnPlayer"), new Vector3(-10f, 1f, -10f), new Quaternion(0f, 0f, 0f, 1f));
+            GameObjectCache.Find("Cube_001").renderer.material.mainTexture = ((Material) ResourcesCache.RCLoadM("grass")).mainTexture;
+            Instantiate(ResourcesCache.RCLoadGO("spawnPlayer"), new Vector3(-10f, 1f, -10f), new Quaternion(0f, 0f, 0f, 1f));
             for (num = 0; num < strArray2.Length; num++)
             {
                 var name = strArray2[num];
-                var obj3 = GGM.Caching.GameObjectCache.Find(name);
+                var obj3 = GameObjectCache.Find(name);
                 if (obj3 != null)
                 {
                     Destroy(obj3);
@@ -4030,7 +4030,7 @@ public class FengGameManagerMKII : MonoBehaviour
             if (!level.StartsWith("Custom") && (int) settings[2] == 1 &&
                 (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || PhotonNetwork.isMasterClient))
             {
-                obj4 = GGM.Caching.GameObjectCache.Find("aot_supply");
+                obj4 = GameObjectCache.Find("aot_supply");
                 if (obj4 != null && Minimap.instance != null)
                 {
                     Minimap.instance.TrackGameObjectOnMinimap(obj4, Color.white, false, true, Minimap.IconStyle.SUPPLY);
@@ -4125,7 +4125,7 @@ public class FengGameManagerMKII : MonoBehaviour
                              obj2.renderer != null)
                     {
                         groundList.Add(obj2);
-                        obj2.renderer.material.mainTexture = ((Material) GGM.Caching.ResourcesCache.RCLoadM("grass")).mainTexture;
+                        obj2.renderer.material.mainTexture = ((Material) ResourcesCache.RCLoadM("grass")).mainTexture;
                     }
                 }
 
@@ -4846,8 +4846,8 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     public void netShowDamage(int speed)
     {
-        GGM.Caching.GameObjectCache.Find("Stylish").GetComponent<StylishComponent>().Style(speed);
-        var target = GGM.Caching.GameObjectCache.Find("LabelScore");
+        GameObjectCache.Find("Stylish").GetComponent<StylishComponent>().Style(speed);
+        var target = GameObjectCache.Find("LabelScore");
         if (target != null)
         {
             target.GetComponent<UILabel>().text = speed.ToString();
@@ -4888,10 +4888,10 @@ public class FengGameManagerMKII : MonoBehaviour
         Screen.showCursor = true;
         ShowHUDInfoCenter(
             "the game has started for 60 seconds.\n please wait for next round.\n Click Right Mouse Key to Enter or Exit the Spectator Mode.");
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
     }
 
     public void NOTSpawnNonAITitanRC(string id)
@@ -4916,10 +4916,10 @@ public class FengGameManagerMKII : MonoBehaviour
 
         Screen.showCursor = true;
         ShowHUDInfoCenter("Syncing spawn locations...");
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
     }
 
     public void NOTSpawnPlayer(string id)
@@ -4945,10 +4945,10 @@ public class FengGameManagerMKII : MonoBehaviour
         Screen.showCursor = false;
         ShowHUDInfoCenter(
             "the game has started for 60 seconds.\n please wait for next round.\n Click Right Mouse Key to Enter or Exit the Spectator Mode.");
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
     }
 
     public void NOTSpawnPlayerRC(string id)
@@ -4972,10 +4972,10 @@ public class FengGameManagerMKII : MonoBehaviour
         }
 
         Screen.showCursor = false;
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
     }
 
     public void OnConnectedToMaster()
@@ -5000,7 +5000,7 @@ public class FengGameManagerMKII : MonoBehaviour
         NGUITools.SetActive(ui.GetComponent<UIReferArray>().panels[2], false);
         NGUITools.SetActive(ui.GetComponent<UIReferArray>().panels[3], false);
         NGUITools.SetActive(ui.GetComponent<UIReferArray>().panels[4], true);
-        GGM.Caching.GameObjectCache.Find("LabelDisconnectInfo").GetComponent<UILabel>().text = "OnConnectionFail : " + cause;
+        GameObjectCache.Find("LabelDisconnectInfo").GetComponent<UILabel>().text = "OnConnectionFail : " + cause;
     }
 
     public void OnCreatedRoom()
@@ -5178,184 +5178,10 @@ public class FengGameManagerMKII : MonoBehaviour
         float num8;
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.STOP && Application.loadedLevelName != "characterCreation")
         {
-            if (isAssetLoaded)
+            if (isAssetLoaded && GameObjectCache.Find("PanelMain").GetActive())
             {
-                var text = GGM.Caching.GameObjectCache.Find("VERSION").GetComponent<UILabel>().text;
-                if (text != null)
-                {
-                    if (text.StartsWith("Verifying"))
-                    {
-                        GUI.backgroundColor = new Color(0f, 0f, 0f, 1f);
-                        var left = Screen.width / 2 - 115f;
-                        var top = Screen.height / 2 - 45f;
-                        GUI.Box(new Rect(left, top, 230f, 90f), string.Empty);
-                        GUI.DrawTexture(new Rect(left + 2f, top + 2f, 226f, 86f), textureBackgroundBlack);
-                        GUI.Label(new Rect(left + 13f, top + 20f, 172f, 70f),
-                            "Verifying client...please wait before joining the server.");
-                    }
-                    else if (text.StartsWith("Verification"))
-                    {
-                        GUI.backgroundColor = new Color(0f, 0f, 0f, 1f);
-                        var num3 = Screen.width / 2 - 115f;
-                        var num4 = Screen.height / 2 - 45f;
-                        GUI.Box(new Rect(num3, num4, 230f, 90f), string.Empty);
-                        GUI.DrawTexture(new Rect(num3 + 2f, num4 + 2f, 226f, 86f), textureBackgroundBlack);
-                        GUI.Label(new Rect(num3 + 13f, num4 + 20f, 172f, 70f),
-                            "Verification failed. Please clear your cache or try a different browser.");
-                    }
-                    else if (text.StartsWith("Mod"))
-                    {
-                        GUI.backgroundColor = new Color(0f, 0f, 0f, 1f);
-                        var num5 = Screen.width / 2 - 115f;
-                        var num6 = Screen.height / 2 - 45f;
-                        GUI.Box(new Rect(num5, num6, 230f, 90f), string.Empty);
-                        GUI.DrawTexture(new Rect(num5 + 2f, num6 + 2f, 226f, 86f), textureBackgroundBlack);
-                        GUI.Label(new Rect(num5 + 13f, num6 + 20f, 172f, 70f),
-                            "Mod is outdated. Please clear your cache or try a different browser.");
-                    }
-                    else if (GGM.Caching.GameObjectCache.Find("ButtonCREDITS") != null &&
-                             GGM.Caching.GameObjectCache.Find("ButtonCREDITS").transform.parent.gameObject != null &&
-                             NGUITools.GetActive(GGM.Caching.GameObjectCache.Find("ButtonCREDITS").transform.parent.gameObject))
-                    {
-                        num7 = Screen.width / 2f - 85f;
-                        num8 = Screen.height / 2f;
-                        GUI.backgroundColor = new Color(0.08f, 0.3f, 0.4f, 1f);
-                        GUI.DrawTexture(new Rect(12f, 32f, 216f, 146f), textureBackgroundBlue);
-                        GUI.DrawTexture(new Rect(num7 + 2f, 7f, 146f, 101f), textureBackgroundBlue);
-                        GUI.Box(new Rect(num7, 5f, 150f, 105f), string.Empty);
-                        if (GUI.Button(new Rect(num7 + 11f, 15f, 128f, 25f), "Level Editor"))
-                        {
-                            settings[0x40] = 0x65;
-                            Application.LoadLevel(2);
-                        }
-                        else if (GUI.Button(new Rect(num7 + 11f, 45f, 128f, 25f), "Custom Characters"))
-                        {
-                            Application.LoadLevel("characterCreation");
-                        }
-                        else if (GUI.Button(new Rect(num7 + 11f, 75f, 128f, 25f), "Snapshot Reviewer"))
-                        {
-                            Application.LoadLevel("SnapShot");
-                        }
-
-                        GUI.Box(new Rect(10f, 30f, 220f, 150f), string.Empty);
-                        if (GUI.Button(new Rect(17.5f, 40f, 40f, 25f), "Login", "box"))
-                        {
-                            settings[0xbb] = 0;
-                        }
-                        else if (GUI.Button(new Rect(65f, 40f, 95f, 25f), "Custom Name", "box"))
-                        {
-                            settings[0xbb] = 1;
-                        }
-                        else if (GUI.Button(new Rect(167.5f, 40f, 55f, 25f), "Servers", "box"))
-                        {
-                            settings[0xbb] = 2;
-                        }
-
-                        if ((int) settings[0xbb] == 1)
-                        {
-                            if (loginstate == 3)
-                            {
-                                GUI.Label(new Rect(30f, 80f, 180f, 60f), "You're already logged in!", "Label");
-                            }
-                            else
-                            {
-                                GUI.Label(new Rect(20f, 80f, 45f, 20f), "Name:", "Label");
-                                nameField = GUI.TextField(new Rect(65f, 80f, 145f, 20f), nameField, 40);
-                                GUI.Label(new Rect(20f, 105f, 45f, 20f), "Guild:", "Label");
-                                LoginFengKAI.player.guildname = GUI.TextField(new Rect(65f, 105f, 145f, 20f),
-                                    LoginFengKAI.player.guildname, 40);
-                                if (GUI.Button(new Rect(42f, 140f, 50f, 25f), "Save"))
-                                {
-                                    PlayerPrefs.SetString("name", nameField);
-                                    PlayerPrefs.SetString("guildname", LoginFengKAI.player.guildname);
-                                }
-                                else if (GUI.Button(new Rect(128f, 140f, 50f, 25f), "Load"))
-                                {
-                                    nameField = PlayerPrefs.GetString("name", string.Empty);
-                                    LoginFengKAI.player.guildname = PlayerPrefs.GetString("guildname", string.Empty);
-                                }
-                            }
-                        }
-                        else if ((int) settings[0xbb] == 0)
-                        {
-                            if (loginstate == 3)
-                            {
-                                GUI.Label(new Rect(20f, 80f, 70f, 20f), "Username:", "Label");
-                                GUI.Label(new Rect(90f, 80f, 90f, 20f), LoginFengKAI.player.name, "Label");
-                                GUI.Label(new Rect(20f, 105f, 45f, 20f), "Guild:", "Label");
-                                LoginFengKAI.player.guildname = GUI.TextField(new Rect(65f, 105f, 145f, 20f),
-                                    LoginFengKAI.player.guildname, 40);
-                                if (GUI.Button(new Rect(35f, 140f, 70f, 25f), "Set Guild"))
-                                {
-                                    StartCoroutine(setGuildFeng());
-                                }
-                                else if (GUI.Button(new Rect(130f, 140f, 65f, 25f), "Logout"))
-                                {
-                                    loginstate = 0;
-                                }
-                            }
-                            else
-                            {
-                                GUI.Label(new Rect(20f, 80f, 70f, 20f), "Username:", "Label");
-                                usernameField = GUI.TextField(new Rect(90f, 80f, 130f, 20f), usernameField, 40);
-                                GUI.Label(new Rect(20f, 105f, 70f, 20f), "Password:", "Label");
-                                passwordField = GUI.PasswordField(new Rect(90f, 105f, 130f, 20f), passwordField, '*',
-                                    40);
-                                if (GUI.Button(new Rect(30f, 140f, 50f, 25f), "Login") && loginstate != 1)
-                                {
-                                    StartCoroutine(loginFeng());
-                                    loginstate = 1;
-                                }
-
-                                if (loginstate == 1)
-                                {
-                                    GUI.Label(new Rect(100f, 140f, 120f, 25f), "Logging in...", "Label");
-                                }
-                                else if (loginstate == 2)
-                                {
-                                    GUI.Label(new Rect(100f, 140f, 120f, 25f), "Login Failed.", "Label");
-                                }
-                            }
-                        }
-                        else if ((int) settings[0xbb] == 2)
-                        {
-                            if (UIMainReferences.version == UIMainReferences.fengVersion)
-                            {
-                                GUI.Label(new Rect(37f, 75f, 190f, 25f), "Connected to public server.", "Label");
-                            }
-                            else if (UIMainReferences.version == s[0])
-                            {
-                                GUI.Label(new Rect(28f, 75f, 190f, 25f), "Connected to RC private server.", "Label");
-                            }
-                            else if (UIMainReferences.version == "DontUseThisVersionPlease173")
-                            {
-                                GUI.Label(new Rect(28f, 75f, 190f, 25f), "Connecting to crypto server...", "Label");
-                            }
-                            else
-                            {
-                                GUI.Label(new Rect(37f, 75f, 190f, 25f), "Connected to custom server.", "Label");
-                            }
-
-                            GUI.Label(new Rect(20f, 100f, 90f, 25f), "Public Server:", "Label");
-                            GUI.Label(new Rect(20f, 125f, 80f, 25f), "RC Private:", "Label");
-                            GUI.Label(new Rect(20f, 150f, 60f, 25f), "Custom:", "Label");
-                            if (GUI.Button(new Rect(160f, 100f, 60f, 20f), "Connect"))
-                            {
-                                UIMainReferences.version = UIMainReferences.fengVersion;
-                            }
-                            else if (GUI.Button(new Rect(160f, 125f, 60f, 20f), "Connect"))
-                            {
-                                UIMainReferences.version = s[0];
-                            }
-                            else if (GUI.Button(new Rect(160f, 150f, 60f, 20f), "Connect"))
-                            {
-                                UIMainReferences.version = privateServerField;
-                            }
-
-                            privateServerField = GUI.TextField(new Rect(78f, 153f, 70f, 18f), privateServerField, 50);
-                        }
-                    }
-                }
+                Labels.NetworkStatus = string.Empty;
+                GGM.GUI.Pages.MainMenu();
             }
             else
             {
@@ -5460,7 +5286,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 GameObject obj3 = null;
                                 if (strArray2[0].StartsWith("custom"))
                                 {
-                                    obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray2[1]),
+                                    obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray2[1]),
                                         new Vector3(Convert.ToSingle(strArray2[12]), Convert.ToSingle(strArray2[13]),
                                             Convert.ToSingle(strArray2[14])),
                                         new Quaternion(Convert.ToSingle(strArray2[15]),
@@ -5474,7 +5300,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         if (strArray2.Length < 15)
                                         {
                                             obj3 = (GameObject) Instantiate(
-                                                (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray2[1] + "Prop"),
+                                                (GameObject) ResourcesCache.RCLoadGO(strArray2[1] + "Prop"),
                                                 new Vector3(Convert.ToSingle(strArray2[2]),
                                                     Convert.ToSingle(strArray2[3]), Convert.ToSingle(strArray2[4])),
                                                 new Quaternion(Convert.ToSingle(strArray2[5]),
@@ -5484,7 +5310,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         else
                                         {
                                             obj3 = (GameObject) Instantiate(
-                                                (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray2[1] + "Prop"),
+                                                (GameObject) ResourcesCache.RCLoadGO(strArray2[1] + "Prop"),
                                                 new Vector3(Convert.ToSingle(strArray2[12]),
                                                     Convert.ToSingle(strArray2[13]), Convert.ToSingle(strArray2[14])),
                                                 new Quaternion(Convert.ToSingle(strArray2[15]),
@@ -5495,7 +5321,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     }
                                     else
                                     {
-                                        obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray2[1]),
+                                        obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray2[1]),
                                             new Vector3(Convert.ToSingle(strArray2[4]), Convert.ToSingle(strArray2[5]),
                                                 Convert.ToSingle(strArray2[6])),
                                             new Quaternion(Convert.ToSingle(strArray2[7]),
@@ -5505,7 +5331,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 }
                                 else if (strArray2[0].StartsWith("spawnpoint"))
                                 {
-                                    obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray2[1]),
+                                    obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray2[1]),
                                         new Vector3(Convert.ToSingle(strArray2[2]), Convert.ToSingle(strArray2[3]),
                                             Convert.ToSingle(strArray2[4])),
                                         new Quaternion(Convert.ToSingle(strArray2[5]), Convert.ToSingle(strArray2[6]),
@@ -5536,7 +5362,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 {
                                     if (strArray2[1].StartsWith("barrier"))
                                     {
-                                        obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO("barrierEditor"),
+                                        obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO("barrierEditor"),
                                             new Vector3(Convert.ToSingle(strArray2[5]), Convert.ToSingle(strArray2[6]),
                                                 Convert.ToSingle(strArray2[7])),
                                             new Quaternion(Convert.ToSingle(strArray2[8]),
@@ -5545,7 +5371,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     }
                                     else if (strArray2[1].StartsWith("region"))
                                     {
-                                        obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO("regionEditor"));
+                                        obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO("regionEditor"));
                                         obj3.transform.position = new Vector3(Convert.ToSingle(strArray2[6]),
                                             Convert.ToSingle(strArray2[7]), Convert.ToSingle(strArray2[8]));
                                         obj4 = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
@@ -5570,7 +5396,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     }
                                     else if (strArray2[1].StartsWith("racingStart"))
                                     {
-                                        obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO("racingStart"),
+                                        obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO("racingStart"),
                                             new Vector3(Convert.ToSingle(strArray2[5]), Convert.ToSingle(strArray2[6]),
                                                 Convert.ToSingle(strArray2[7])),
                                             new Quaternion(Convert.ToSingle(strArray2[8]),
@@ -5579,7 +5405,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     }
                                     else if (strArray2[1].StartsWith("racingEnd"))
                                     {
-                                        obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO("racingEnd"),
+                                        obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO("racingEnd"),
                                             new Vector3(Convert.ToSingle(strArray2[5]), Convert.ToSingle(strArray2[6]),
                                                 Convert.ToSingle(strArray2[7])),
                                             new Quaternion(Convert.ToSingle(strArray2[8]),
@@ -5589,7 +5415,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 }
                                 else if (strArray2[0].StartsWith("racing"))
                                 {
-                                    obj3 = (GameObject) Instantiate((GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray2[1]),
+                                    obj3 = (GameObject) Instantiate((GameObject) ResourcesCache.RCLoadGO(strArray2[1]),
                                         new Vector3(Convert.ToSingle(strArray2[5]), Convert.ToSingle(strArray2[6]),
                                             Convert.ToSingle(strArray2[7])),
                                         new Quaternion(Convert.ToSingle(strArray2[8]), Convert.ToSingle(strArray2[9]),
@@ -5606,7 +5432,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         if (!(renderer.name.Contains("Particle System") &&
                                               obj3.name.Contains("aot_supply")))
                                         {
-                                            renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM(strArray2[2]);
+                                            renderer.material = (Material) ResourcesCache.RCLoadM(strArray2[2]);
                                             renderer.material.mainTextureScale =
                                                 new Vector2(
                                                     renderer.material.mainTextureScale.x *
@@ -5714,7 +5540,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         Screen.showCursor = true;
                         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
                         inputManager.menuOn = false;
-                        Destroy(GGM.Caching.GameObjectCache.Find("MultiplayerManager"));
+                        Destroy(GameObjectCache.Find("MultiplayerManager"));
                         Application.LoadLevel("menu");
                     }
                     else if (GUI.Button(new Rect(15f, 70f, 115f, 30f), "Copy to Clipboard"))
@@ -6101,14 +5927,14 @@ public class FengGameManagerMKII : MonoBehaviour
                     else if (GUI.Button(new Rect(num11 + 118f, 179f, 64f, 60f), "Cannon \nWall"))
                     {
                         flag2 = true;
-                        obj5 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("CannonWallProp");
+                        obj5 = (GameObject) ResourcesCache.RCLoadGO("CannonWallProp");
                         selectedObj = (GameObject) Instantiate(obj5);
                         selectedObj.name = "photon,CannonWall";
                     }
                     else if (GUI.Button(new Rect(num11 + 209f, 179f, 64f, 60f), "Cannon\n Ground"))
                     {
                         flag2 = true;
-                        obj5 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("CannonGroundProp");
+                        obj5 = (GameObject) ResourcesCache.RCLoadGO("CannonGroundProp");
                         selectedObj = (GameObject) Instantiate(obj5);
                         selectedObj.name = "photon,CannonGround";
                     }
@@ -6116,7 +5942,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         flag2 = true;
                         flag3 = true;
-                        obj5 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("titan");
+                        obj5 = (GameObject) ResourcesCache.RCLoadGO("titan");
                         selectedObj = (GameObject) Instantiate(obj5);
                         selectedObj.name = "spawnpoint,titan";
                     }
@@ -6124,7 +5950,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         flag2 = true;
                         flag3 = true;
-                        obj5 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("playerC");
+                        obj5 = (GameObject) ResourcesCache.RCLoadGO("playerC");
                         selectedObj = (GameObject) Instantiate(obj5);
                         selectedObj.name = "spawnpoint,playerC";
                     }
@@ -6132,7 +5958,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         flag2 = true;
                         flag3 = true;
-                        obj5 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("playerM");
+                        obj5 = (GameObject) ResourcesCache.RCLoadGO("playerM");
                         selectedObj = (GameObject) Instantiate(obj5);
                         selectedObj.name = "spawnpoint,playerM";
                     }
@@ -6166,7 +5992,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         {
                             flag2 = true;
                             flag3 = true;
-                            obj6 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("barrierEditor");
+                            obj6 = (GameObject) ResourcesCache.RCLoadGO("barrierEditor");
                             selectedObj = (GameObject) Instantiate(obj6);
                             selectedObj.name = "misc,barrier";
                         }
@@ -6179,7 +6005,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             flag2 = true;
                             flag3 = true;
-                            obj6 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("regionEditor");
+                            obj6 = (GameObject) ResourcesCache.RCLoadGO("regionEditor");
                             selectedObj = (GameObject) Instantiate(obj6);
                             obj4 = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
                             obj4.name = "RegionLabel";
@@ -6253,7 +6079,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             flag2 = true;
                             flag3 = true;
-                            obj7 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("spawnTitan");
+                            obj7 = (GameObject) ResourcesCache.RCLoadGO("spawnTitan");
                             selectedObj = (GameObject) Instantiate(obj7);
                             num30 = (int) settings[0x54];
                             selectedObj.name = "photon,spawnTitan," + (string) settings[0x53] + "," + num30;
@@ -6267,7 +6093,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             flag2 = true;
                             flag3 = true;
-                            obj7 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("spawnAbnormal");
+                            obj7 = (GameObject) ResourcesCache.RCLoadGO("spawnAbnormal");
                             selectedObj = (GameObject) Instantiate(obj7);
                             num30 = (int) settings[0x54];
                             selectedObj.name = "photon,spawnAbnormal," + (string) settings[0x53] + "," + num30;
@@ -6281,7 +6107,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             flag2 = true;
                             flag3 = true;
-                            obj7 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("spawnJumper");
+                            obj7 = (GameObject) ResourcesCache.RCLoadGO("spawnJumper");
                             selectedObj = (GameObject) Instantiate(obj7);
                             num30 = (int) settings[0x54];
                             selectedObj.name = "photon,spawnJumper," + (string) settings[0x53] + "," + num30;
@@ -6295,7 +6121,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             flag2 = true;
                             flag3 = true;
-                            obj7 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("spawnCrawler");
+                            obj7 = (GameObject) ResourcesCache.RCLoadGO("spawnCrawler");
                             selectedObj = (GameObject) Instantiate(obj7);
                             num30 = (int) settings[0x54];
                             selectedObj.name = "photon,spawnCrawler," + (string) settings[0x53] + "," + num30;
@@ -6309,7 +6135,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             flag2 = true;
                             flag3 = true;
-                            obj7 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("spawnPunk");
+                            obj7 = (GameObject) ResourcesCache.RCLoadGO("spawnPunk");
                             selectedObj = (GameObject) Instantiate(obj7);
                             num30 = (int) settings[0x54];
                             selectedObj.name = "photon,spawnPunk," + (string) settings[0x53] + "," + num30;
@@ -6323,7 +6149,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             flag2 = true;
                             flag3 = true;
-                            obj7 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO("spawnAnnie");
+                            obj7 = (GameObject) ResourcesCache.RCLoadGO("spawnAnnie");
                             selectedObj = (GameObject) Instantiate(obj7);
                             num30 = (int) settings[0x54];
                             selectedObj.name = "photon,spawnAnnie," + (string) settings[0x53] + "," + num30;
@@ -6374,7 +6200,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     strArray14[num13]))
                                 {
                                     flag2 = true;
-                                    obj6 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray14[num13]);
+                                    obj6 = (GameObject) ResourcesCache.RCLoadGO(strArray14[num13]);
                                     selectedObj = (GameObject) Instantiate(obj6);
                                     selectedObj.name = "custom," + strArray14[num13];
                                 }
@@ -6412,7 +6238,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         strArray14[num13]))
                                     {
                                         flag2 = true;
-                                        obj8 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray14[num13]);
+                                        obj8 = (GameObject) ResourcesCache.RCLoadGO(strArray14[num13]);
                                         selectedObj = (GameObject) Instantiate(obj8);
                                         if (list4.Contains(strArray14[num13]))
                                         {
@@ -6451,7 +6277,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         strArray14[num13]))
                                     {
                                         flag2 = true;
-                                        obj8 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray14[num13]);
+                                        obj8 = (GameObject) ResourcesCache.RCLoadGO(strArray14[num13]);
                                         selectedObj = (GameObject) Instantiate(obj8);
                                         if (list4.Contains(strArray14[num13]))
                                         {
@@ -6499,7 +6325,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         flag2 = true;
                                         flag3 = true;
-                                        obj8 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray14[num13]);
+                                        obj8 = (GameObject) ResourcesCache.RCLoadGO(strArray14[num13]);
                                         selectedObj = (GameObject) Instantiate(obj8);
                                         selectedObj.name = "racing," + strArray14[num13];
                                     }
@@ -6526,7 +6352,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         flag2 = true;
                                         flag3 = true;
-                                        obj8 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray14[num13]);
+                                        obj8 = (GameObject) ResourcesCache.RCLoadGO(strArray14[num13]);
                                         selectedObj = (GameObject) Instantiate(obj8);
                                         selectedObj.name = "racing," + strArray14[num13];
                                     }
@@ -6553,7 +6379,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         flag2 = true;
                                         flag3 = true;
-                                        obj8 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray14[num13]);
+                                        obj8 = (GameObject) ResourcesCache.RCLoadGO(strArray14[num13]);
                                         selectedObj = (GameObject) Instantiate(obj8);
                                         selectedObj.name = "racing," + strArray14[num13];
                                     }
@@ -6580,7 +6406,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         flag2 = true;
                                         flag3 = true;
-                                        obj8 = (GameObject) GGM.Caching.ResourcesCache.RCLoadGO(strArray14[num13]);
+                                        obj8 = (GameObject) ResourcesCache.RCLoadGO(strArray14[num13]);
                                         selectedObj = (GameObject) Instantiate(obj8);
                                         selectedObj.name = "racing," + strArray14[num13];
                                     }
@@ -6657,7 +6483,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                 foreach (var renderer2 in selectedObj.GetComponentsInChildren<Renderer>())
                                 {
-                                    renderer2.material = (Material) GGM.Caching.ResourcesCache.RCLoadM("transparent");
+                                    renderer2.material = (Material) ResourcesCache.RCLoadM("transparent");
                                     renderer2.material.mainTextureScale = new Vector2(
                                         renderer2.material.mainTextureScale.x *
                                         Convert.ToSingle((string) settings[0x4f]),
@@ -6672,7 +6498,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     if (!(renderer2.name.Contains("Particle System") &&
                                           selectedObj.name.Contains("aot_supply")))
                                     {
-                                        renderer2.material = (Material) GGM.Caching.ResourcesCache.RCLoadM((string) settings[0x45]);
+                                        renderer2.material = (Material) ResourcesCache.RCLoadM((string) settings[0x45]);
                                         renderer2.material.mainTextureScale = new Vector2(
                                             renderer2.material.mainTextureScale.x *
                                             Convert.ToSingle((string) settings[0x4f]),
@@ -9323,7 +9149,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     }
                     else if (GUI.Button(new Rect(num7 + 500f, num8 + 465f, 60f, 25f), "Default"))
                     {
-                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
+                        GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
                     }
                     else if (GUI.Button(new Rect(num7 + 565f, num8 + 465f, 75f, 25f), "Continue"))
                     {
@@ -9336,7 +9162,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         {
                             Screen.showCursor = true;
                             Screen.lockCursor = true;
-                            GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                            GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                             Camera.main.GetComponent<SpectatorMovement>().disable = false;
                             Camera.main.GetComponent<MouseLook>().disable = false;
                         }
@@ -9354,8 +9180,8 @@ public class FengGameManagerMKII : MonoBehaviour
                                 Screen.lockCursor = false;
                             }
 
-                            GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
-                            GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
+                            GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                            GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
                         }
                     }
                     else if (GUI.Button(new Rect(num7 + 645f, num8 + 465f, 40f, 25f), "Quit"))
@@ -9373,9 +9199,9 @@ public class FengGameManagerMKII : MonoBehaviour
                         Screen.showCursor = true;
                         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
                         gameStart = false;
-                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                        GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                         DestroyAllExistingCloths();
-                        Destroy(GGM.Caching.GameObjectCache.Find("MultiplayerManager"));
+                        Destroy(GameObjectCache.Find("MultiplayerManager"));
                         Application.LoadLevel("menu");
                     }
                 }
@@ -9424,10 +9250,10 @@ public class FengGameManagerMKII : MonoBehaviour
                         Screen.lockCursor = false;
                         Screen.showCursor = true;
                         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
-                        GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameStart = false;
-                        GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+                        GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameStart = false;
+                        GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                         DestroyAllExistingCloths();
-                        Destroy(GGM.Caching.GameObjectCache.Find("MultiplayerManager"));
+                        Destroy(GameObjectCache.Find("MultiplayerManager"));
                         Application.LoadLevel("menu");
                     }
                 }
@@ -9437,9 +9263,9 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnJoinedLobby()
     {
-        NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, false);
-        NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
-        NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiJoinPrivate, false);
+        NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, false);
+        NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
+        NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiJoinPrivate, false);
     }
 
     public void OnJoinedRoom()
@@ -9555,14 +9381,14 @@ public class FengGameManagerMKII : MonoBehaviour
             Screen.showCursor = true;
             inputManager.menuOn = false;
             DestroyAllExistingCloths();
-            Destroy(GGM.Caching.GameObjectCache.Find("MultiplayerManager"));
+            Destroy(GameObjectCache.Find("MultiplayerManager"));
             Application.LoadLevel("menu");
         }
     }
 
     private void OnLevelWasLoaded(int level)
     {
-        GGM.Caching.GameObjectCache.Clear();
+        GameObjectCache.Clear();
         if (level != 0 && Application.loadedLevelName != "characterCreation" &&
             Application.loadedLevelName != "SnapShot")
         {
@@ -9579,9 +9405,9 @@ public class FengGameManagerMKII : MonoBehaviour
             gameStart = true;
             ShowHUDInfoCenter(string.Empty);
             var obj3 = (GameObject) Instantiate(Resources.Load("MainCamera_mono"),
-                GGM.Caching.GameObjectCache.Find("cameraDefaultPosition").transform.position,
-                GGM.Caching.GameObjectCache.Find("cameraDefaultPosition").transform.rotation);
-            Destroy(GGM.Caching.GameObjectCache.Find("cameraDefaultPosition"));
+                GameObjectCache.Find("cameraDefaultPosition").transform.position,
+                GameObjectCache.Find("cameraDefaultPosition").transform.rotation);
+            Destroy(GameObjectCache.Find("cameraDefaultPosition"));
             obj3.name = "MainCamera";
             Screen.lockCursor = true;
             Screen.showCursor = true;
@@ -9633,17 +9459,17 @@ public class FengGameManagerMKII : MonoBehaviour
                 IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.MULTIPLAYER;
                 if (info.type == GAMEMODE.TROST)
                 {
-                    GGM.Caching.GameObjectCache.Find("playerRespawn").SetActive(false);
-                    Destroy(GGM.Caching.GameObjectCache.Find("playerRespawn"));
-                    GGM.Caching.GameObjectCache.Find("rock").animation["lift"].speed = 0f;
-                    GGM.Caching.GameObjectCache.Find("door_fine").SetActive(false);
-                    GGM.Caching.GameObjectCache.Find("door_broke").SetActive(true);
-                    Destroy(GGM.Caching.GameObjectCache.Find("ppl"));
+                    GameObjectCache.Find("playerRespawn").SetActive(false);
+                    Destroy(GameObjectCache.Find("playerRespawn"));
+                    GameObjectCache.Find("rock").animation["lift"].speed = 0f;
+                    GameObjectCache.Find("door_fine").SetActive(false);
+                    GameObjectCache.Find("door_broke").SetActive(true);
+                    Destroy(GameObjectCache.Find("ppl"));
                 }
                 else if (info.type == GAMEMODE.BOSS_FIGHT_CT)
                 {
-                    GGM.Caching.GameObjectCache.Find("playerRespawnTrost").SetActive(false);
-                    Destroy(GGM.Caching.GameObjectCache.Find("playerRespawnTrost"));
+                    GameObjectCache.Find("playerRespawnTrost").SetActive(false);
+                    Destroy(GameObjectCache.Find("playerRespawnTrost"));
                 }
 
                 if (needChooseSide)
@@ -9666,11 +9492,11 @@ public class FengGameManagerMKII : MonoBehaviour
                         if (RCextensions.returnIntFromObject(
                                 PhotonNetwork.player.customProperties[PhotonPlayerProperty.isTitan]) == 2)
                         {
-                            checkpoint = GGM.Caching.GameObjectCache.Find("PVPchkPtT");
+                            checkpoint = GameObjectCache.Find("PVPchkPtT");
                         }
                         else
                         {
-                            checkpoint = GGM.Caching.GameObjectCache.Find("PVPchkPtH");
+                            checkpoint = GameObjectCache.Find("PVPchkPtH");
                         }
                     }
 
@@ -9687,7 +9513,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                 if (info.type == GAMEMODE.BOSS_FIGHT_CT)
                 {
-                    Destroy(GGM.Caching.GameObjectCache.Find("rock"));
+                    Destroy(GameObjectCache.Find("rock"));
                 }
 
                 if (PhotonNetwork.isMasterClient)
@@ -9706,7 +9532,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             }
 
                             var objArray2 = GameObject.FindGameObjectsWithTag("titanRespawn");
-                            var obj4 = GGM.Caching.GameObjectCache.Find("titanRespawnTrost");
+                            var obj4 = GameObjectCache.Find("titanRespawnTrost");
                             if (obj4 != null)
                             {
                                 foreach (var obj5 in objArray2)
@@ -9733,8 +9559,8 @@ public class FengGameManagerMKII : MonoBehaviour
                         if (info.name == "Annie" || info.name == "Annie II")
                         {
                             PhotonNetwork.Instantiate("FEMALE_TITAN",
-                                GGM.Caching.GameObjectCache.Find("titanRespawn").transform.position,
-                                GGM.Caching.GameObjectCache.Find("titanRespawn").transform.rotation, 0);
+                                GameObjectCache.Find("titanRespawn").transform.position,
+                                GameObjectCache.Find("titanRespawn").transform.rotation, 0);
                         }
                         else
                         {
@@ -9766,7 +9592,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                 if (!info.supply)
                 {
-                    Destroy(GGM.Caching.GameObjectCache.Find("aot_supply"));
+                    Destroy(GameObjectCache.Find("aot_supply"));
                 }
 
                 if (!PhotonNetwork.isMasterClient)
@@ -9778,10 +9604,10 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     Instantiate(Resources.Load("levelBottom"), new Vector3(0f, -29.5f, 0f),
                         Quaternion.Euler(0f, 0f, 0f));
-                    GGM.Caching.GameObjectCache.Find("aot_supply").transform.position =
-                        GGM.Caching.GameObjectCache.Find("aot_supply_lava_position").transform.position;
-                    GGM.Caching.GameObjectCache.Find("aot_supply").transform.rotation =
-                        GGM.Caching.GameObjectCache.Find("aot_supply_lava_position").transform.rotation;
+                    GameObjectCache.Find("aot_supply").transform.position =
+                        GameObjectCache.Find("aot_supply_lava_position").transform.position;
+                    GameObjectCache.Find("aot_supply").transform.rotation =
+                        GameObjectCache.Find("aot_supply_lava_position").transform.rotation;
                 }
 
                 if ((int) settings[0xf5] == 1)
@@ -11161,7 +10987,7 @@ public class FengGameManagerMKII : MonoBehaviour
             return assetCacheTextures[tex];
         }
 
-        var textured2 = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D(tex);
+        var textured2 = (Texture2D) ResourcesCache.RCLoadT2D(tex);
         assetCacheTextures.Add(tex, textured2);
         return textured2;
     }
@@ -11222,9 +11048,9 @@ public class FengGameManagerMKII : MonoBehaviour
         timeTotalServer = time2;
         startRacing = startRacin;
         endRacing = endRacin;
-        if (startRacing && GGM.Caching.GameObjectCache.Find("door") != null)
+        if (startRacing && GameObjectCache.Find("door") != null)
         {
-            GGM.Caching.GameObjectCache.Find("door").SetActive(false);
+            GameObjectCache.Find("door").SetActive(false);
         }
     }
 
@@ -11394,10 +11220,10 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void respawnHeroInNewRound()
     {
-        if (!needChooseSide && GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver)
+        if (!needChooseSide && GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver)
         {
             SpawnPlayer(myLastHero, myLastRespawnTag);
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = false;
+            GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = false;
             ShowHUDInfoCenter(string.Empty);
         }
     }
@@ -12653,10 +12479,10 @@ public class FengGameManagerMKII : MonoBehaviour
             chatContent.RemoveAt(0);
         }
 
-        GGM.Caching.GameObjectCache.Find("LabelChatContent").GetComponent<UILabel>().text = string.Empty;
+        GameObjectCache.Find("LabelChatContent").GetComponent<UILabel>().text = string.Empty;
         for (var i = 0; i < chatContent.Count; i++)
         {
-            var component = GGM.Caching.GameObjectCache.Find("LabelChatContent").GetComponent<UILabel>();
+            var component = GameObjectCache.Find("LabelChatContent").GetComponent<UILabel>();
             component.text = component.text + chatContent[i];
         }
     }
@@ -12664,37 +12490,37 @@ public class FengGameManagerMKII : MonoBehaviour
     #region UILabels
     public void ShowHUDInfoCenter(string content)
     {
-        GGM.Labels.Center = content.ToHTML();
+        Labels.Center = content.ToHTML();
     }
 
     public void ShowHUDInfoCenterADD(string content)
     {
-        GGM.Labels.Center = content.ToHTML();
+        Labels.Center = content.ToHTML();
     }
 
     public void ShowHUDInfoTopCenter(string content)
     {
-        GGM.Labels.TopCenter = content.ToHTML();
+        Labels.TopCenter = content.ToHTML();
     }
 
     public void ShowHUDInfoTopCenterADD(string content)
     {
-        GGM.Labels.TopCenter = content.ToHTML();
+        Labels.TopCenter = content.ToHTML();
     }
 
     public void ShowHUDInfoTopLeft(string content)
     {
-        GGM.Labels.TopLeft = content.ToHTML();
+        Labels.TopLeft = content.ToHTML();
     }
 
     public void ShowHUDInfoTopRight(string content)
     {
-        GGM.Labels.TopRight = content.ToHTML();
+        Labels.TopRight = content.ToHTML();
     }
 
     public void ShowHUDInfoTopRightMAPNAME(string content)
     {
-        GGM.Labels.TopRight += content.ToHTML();
+        Labels.TopRight += content.ToHTML();
     }
     #endregion
 
@@ -12705,17 +12531,17 @@ public class FengGameManagerMKII : MonoBehaviour
         if (!(gameTimesUp || !t.sender.isMasterClient))
         {
             gameTimesUp = true;
-            var obj2 = GGM.Caching.GameObjectCache.Find("UI_IN_GAME");
+            var obj2 = GameObjectCache.Find("UI_IN_GAME");
             NGUITools.SetActive(obj2.GetComponent<UIReferArray>().panels[0], false);
             NGUITools.SetActive(obj2.GetComponent<UIReferArray>().panels[1], false);
             NGUITools.SetActive(obj2.GetComponent<UIReferArray>().panels[2], true);
             NGUITools.SetActive(obj2.GetComponent<UIReferArray>().panels[3], false);
-            GGM.Caching.GameObjectCache.Find("LabelName").GetComponent<UILabel>().text = text0;
-            GGM.Caching.GameObjectCache.Find("LabelKill").GetComponent<UILabel>().text = text1;
-            GGM.Caching.GameObjectCache.Find("LabelDead").GetComponent<UILabel>().text = text2;
-            GGM.Caching.GameObjectCache.Find("LabelMaxDmg").GetComponent<UILabel>().text = text3;
-            GGM.Caching.GameObjectCache.Find("LabelTotalDmg").GetComponent<UILabel>().text = text4;
-            GGM.Caching.GameObjectCache.Find("LabelResultTitle").GetComponent<UILabel>().text = text6;
+            GameObjectCache.Find("LabelName").GetComponent<UILabel>().text = text0;
+            GameObjectCache.Find("LabelKill").GetComponent<UILabel>().text = text1;
+            GameObjectCache.Find("LabelDead").GetComponent<UILabel>().text = text2;
+            GameObjectCache.Find("LabelMaxDmg").GetComponent<UILabel>().text = text3;
+            GameObjectCache.Find("LabelTotalDmg").GetComponent<UILabel>().text = text4;
+            GameObjectCache.Find("LabelResultTitle").GetComponent<UILabel>().text = text6;
             Screen.lockCursor = false;
             Screen.showCursor = true;
             IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
@@ -12729,7 +12555,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void SingleShowHUDInfoTopCenter(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoTopCenter");
+        var obj2 = GameObjectCache.Find("LabelInfoTopCenter");
         if (obj2 != null)
         {
             obj2.GetComponent<UILabel>().text = content;
@@ -12738,7 +12564,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void SingleShowHUDInfoTopLeft(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoTopLeft");
+        var obj2 = GameObjectCache.Find("LabelInfoTopLeft");
         if (obj2 != null)
         {
             content = content.Replace("[0]", "[*^_^*]");
@@ -12814,7 +12640,7 @@ public class FengGameManagerMKII : MonoBehaviour
             obj3 = PhotonNetwork.Instantiate("TITAN_VER3.1", obj2.transform.position, obj2.transform.rotation, 0);
         }
 
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObjectASTITAN(obj3);
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObjectASTITAN(obj3);
         obj3.GetComponent<TITAN>().nonAI = true;
         obj3.GetComponent<TITAN>().speed = 30f;
         obj3.GetComponent<TITAN_CONTROLLER>().enabled = true;
@@ -12823,10 +12649,10 @@ public class FengGameManagerMKII : MonoBehaviour
             obj3.GetComponent<TITAN>().setAbnormalType(AbnormalType.TYPE_CRAWLER, true);
         }
 
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<SpectatorMovement>().disable = true;
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<MouseLook>().disable = true;
-        GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = false;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
+        GameObjectCache.Find("MainCamera").GetComponent<SpectatorMovement>().disable = true;
+        GameObjectCache.Find("MainCamera").GetComponent<MouseLook>().disable = true;
+        GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = false;
         var hashtable = new Hashtable();
         hashtable.Add("dead", false);
         var propertiesToSet = hashtable;
@@ -12873,7 +12699,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 obj3 = PhotonNetwork.Instantiate("TITAN_VER3.1", position, obj2.transform.rotation, 0);
             }
 
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObjectASTITAN(obj3);
+            GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setMainObjectASTITAN(obj3);
             obj3.GetComponent<TITAN>().nonAI = true;
             obj3.GetComponent<TITAN>().speed = 30f;
             obj3.GetComponent<TITAN_CONTROLLER>().enabled = true;
@@ -12882,10 +12708,10 @@ public class FengGameManagerMKII : MonoBehaviour
                 obj3.GetComponent<TITAN>().setAbnormalType(AbnormalType.TYPE_CRAWLER, true);
             }
 
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<SpectatorMovement>().disable = true;
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<MouseLook>().disable = true;
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = false;
+            GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
+            GameObjectCache.Find("MainCamera").GetComponent<SpectatorMovement>().disable = true;
+            GameObjectCache.Find("MainCamera").GetComponent<MouseLook>().disable = true;
+            GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = false;
             var hashtable = new Hashtable();
             hashtable.Add("dead", false);
             var propertiesToSet = hashtable;
@@ -12977,7 +12803,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
 
-            var component = GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>();
+            var component = GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>();
             myLastHero = id.ToUpper();
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
@@ -13122,9 +12948,9 @@ public class FengGameManagerMKII : MonoBehaviour
             }
 
             component.enabled = true;
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setHUDposition();
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<SpectatorMovement>().disable = true;
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<MouseLook>().disable = true;
+            GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setHUDposition();
+            GameObjectCache.Find("MainCamera").GetComponent<SpectatorMovement>().disable = true;
+            GameObjectCache.Find("MainCamera").GetComponent<MouseLook>().disable = true;
             component.gameOver = false;
             if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
             {
@@ -13231,9 +13057,9 @@ public class FengGameManagerMKII : MonoBehaviour
             propertiesToSet = hashtable;
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             component.enabled = true;
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setHUDposition();
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<SpectatorMovement>().disable = true;
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<MouseLook>().disable = true;
+            GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().setHUDposition();
+            GameObjectCache.Find("MainCamera").GetComponent<SpectatorMovement>().disable = true;
+            GameObjectCache.Find("MainCamera").GetComponent<MouseLook>().disable = true;
             component.gameOver = false;
             if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
             {
@@ -13252,7 +13078,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void spawnPlayerCustomMap()
     {
-        if (!needChooseSide && GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver)
+        if (!needChooseSide && GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().gameOver)
         {
             Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = false;
             if (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.isTitan]) ==
@@ -13726,7 +13552,24 @@ public class FengGameManagerMKII : MonoBehaviour
 
         loadconfig();
         var list2 = new List<string>
-            {"AOTTG_HERO", "Colossal", "Icosphere", "Cube", "colossal", "CITY", "city", "rock", "PanelLogin", "LOGIN", "BG"};
+        {
+            "AOTTG_HERO",
+            "Colossal",
+            "Icosphere",
+            "Cube",
+            "colossal",
+            "CITY",
+            "city",
+            "rock",
+            "PanelLogin",
+            "LOGIN",
+            "BG_TITLE",
+            "ButtonOPTION",
+            "ButtonSINGLE",
+            "ButtonLAN",
+            "ButtonCREDITS",
+            "PopupListLang"
+        };
         foreach (GameObject obj2 in FindObjectsOfType(typeof(GameObject)))
         {
             foreach (var str in list2)
@@ -13744,6 +13587,7 @@ public class FengGameManagerMKII : MonoBehaviour
         }
         StartCoroutine(LoadBackground());
         ChangeQuality.setCurrentQuality();
+        gameObject.AddComponent<HotKeys>();
     }
 
     [RPC]
@@ -13808,7 +13652,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
-            Labels.NetworkStatus = PhotonNetwork.connectionStateDetailed.ToString() + (PhotonNetwork.connected ? " ping: " + PhotonNetwork.GetPing() : "");
+            Labels.NetworkStatus = PhotonNetwork.connectionState.ToString() + (PhotonNetwork.connected ? " ping: " + PhotonNetwork.GetPing() : "");
         }
 
         if (gameStart)
@@ -13860,7 +13704,7 @@ public class FengGameManagerMKII : MonoBehaviour
     private void updateKillInfo(bool t1, string killer, bool t2, string victim, int dmg)
     {
         GameObject obj4;
-        var obj2 = GGM.Caching.GameObjectCache.Find("UI_IN_GAME");
+        var obj2 = GameObjectCache.Find("UI_IN_GAME");
         var obj3 = (GameObject) Instantiate(Resources.Load("UI/KillInfo"));
         for (var i = 0; i < killInfoGO.Count; i++)
         {
