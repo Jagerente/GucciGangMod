@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIMainReferences : MonoBehaviour
 {
-    public static string fengVersion;
+    public static string fengVersion = "01042015";
     public static UIMainReferences instance;
     private static bool isGAMEFirstLaunch = true;
     public GameObject panelCredits;
