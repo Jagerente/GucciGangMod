@@ -20,13 +20,14 @@ public class UIMainReferences : MonoBehaviour
     public GameObject panelSingleSet;
     public GameObject PanelSnapShot;
     public static string version = "01042015";
+    public const string Version = "GucciGangMod v5.6.24";
 
     private void Awake()
     {
         instance = this;
     }
 
-    public IEnumerator request(string versionShow, string versionForm)
+    public IEnumerator request()
     {
         var url = Application.dataPath + "/RCAssets.unity3d";
         if (!Application.isWebPlayer)
@@ -47,28 +48,21 @@ public class UIMainReferences : MonoBehaviour
             }
             FengGameManagerMKII.RCassets = iteratorVariable2.assetBundle;
             FengGameManagerMKII.isAssetLoaded = true;
-            FengGameManagerMKII.FGM.setBackground();
         }
+    }
+
+    private IEnumerator OnOpen()
+    {
+        yield return StartCoroutine(request());
+        yield return StartCoroutine(GGM.Labels.LoadFonts());
+        GGM.Labels.Version = Version;
     }
 
     private void Start()
     {
-        var versionShow = "8/12/2015";
-        var versionForm = "08122015";
-        fengVersion = "01042015";
+        gameObject.AddComponent<GGM.GUI.Styles>();
         NGUITools.SetActive(panelMain, true);
-        if (version == null || version.StartsWith("error"))
-        {
-            GGM.Caching.GameObjectCache.Find("VERSION").GetComponent<UILabel>().text = "Verification failed. Please clear your cache or try another browser";
-        }
-        else if (version.StartsWith("outdated"))
-        {
-            GGM.Caching.GameObjectCache.Find("VERSION").GetComponent<UILabel>().text = "Mod is outdated. Please clear your cache or try another browser.";
-        }
-        else
-        {
-            GGM.Caching.GameObjectCache.Find("VERSION").GetComponent<UILabel>().text = "Client verified. Last updated " + versionShow + ".";
-        }
+        GGM.Labels.Version = Version;
         if (isGAMEFirstLaunch)
         {
             version = fengVersion;
@@ -76,10 +70,9 @@ public class UIMainReferences : MonoBehaviour
             var target = (GameObject) Instantiate(Resources.Load("InputManagerController"));
             target.name = "InputManagerController";
             DontDestroyOnLoad(target);
-            GGM.Caching.GameObjectCache.Find("VERSION").GetComponent<UILabel>().text = "Client verified. Last updated " + versionShow + ".";
+            GGM.Caching.GameObjectCache.Find("VERSION").GetComponent<UILabel>().text = "Client verified. Last updated " + Version + ".";
             FengGameManagerMKII.s = "verified343,hair,character_eye,glass,character_face,character_head,character_hand,character_body,character_arm,character_leg,character_chest,character_cape,character_brand,character_3dmg,r,character_blade_l,character_3dmg_gas_r,character_blade_r,3dmg_smoke,HORSE,hair,body_001,Cube,Plane_031,mikasa_asset,character_cap_,character_gun".Split(',');
-            StartCoroutine(GGM.Labels.LoadFonts());
-            StartCoroutine(request(versionShow, versionForm));
+            StartCoroutine(OnOpen());
             FengGameManagerMKII.loginstate = 0;
         }
     }
