@@ -385,7 +385,7 @@ public class HERO : MonoBehaviour
             skillIDHUD = "armin";
             skillCDLast = bombCD;
             skillCDDuration = 10f;
-            if (FengGameManagerMKII.instance.roundTime > 10f)
+            if (FengGameManagerMKII.FGM.roundTime > 10f)
             {
                 skillCDDuration = 5f;
             }
@@ -832,7 +832,7 @@ public class HERO : MonoBehaviour
 
     public void ClearPopup()
     {
-        FengGameManagerMKII.instance.ShowHUDInfoCenter(string.Empty);
+        FengGameManagerMKII.FGM.ShowHUDInfoCenter(string.Empty);
     }
 
     public void continueAnimation()
@@ -3394,7 +3394,7 @@ public class HERO : MonoBehaviour
         #endregion
         if (unloadAssets)
         {
-            FengGameManagerMKII.instance.unloadAssets();
+            FengGameManagerMKII.FGM.unloadAssets();
         }
     }
 
@@ -3563,7 +3563,7 @@ public class HERO : MonoBehaviour
         {
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
-            FengGameManagerMKII.instance.myRespawnTime = 0f;
+            FengGameManagerMKII.FGM.myRespawnTime = 0f;
         }
 
         hasDied = true;
@@ -3587,13 +3587,13 @@ public class HERO : MonoBehaviour
                 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             object[] parameters = {!(titanName == string.Empty) ? 1 : 0};
-            FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
+            FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
             {
                 var view2 = PhotonView.Find(viewID);
                 if (view2 != null)
                 {
-                    FengGameManagerMKII.instance.sendKillInfo(killByTitan,
+                    FengGameManagerMKII.FGM.sendKillInfo(killByTitan,
                         "[FFC000][" + info.sender.ID + "][FFFFFF]" +
                         RCextensions.returnStringFromObject(view2.owner.customProperties[PhotonPlayerProperty.name]),
                         false,
@@ -3607,7 +3607,7 @@ public class HERO : MonoBehaviour
             }
             else
             {
-                FengGameManagerMKII.instance.sendKillInfo(!(titanName == string.Empty),
+                FengGameManagerMKII.FGM.sendKillInfo(!(titanName == string.Empty),
                     "[FFC000][" + info.sender.ID + "][FFFFFF]" + titanName, false,
                     RCextensions.returnStringFromObject(
                         PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
@@ -3710,7 +3710,7 @@ public class HERO : MonoBehaviour
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
-            FengGameManagerMKII.instance.myRespawnTime = 0f;
+            FengGameManagerMKII.FGM.myRespawnTime = 0f;
         }
 
         falseAttack();
@@ -3731,7 +3731,7 @@ public class HERO : MonoBehaviour
                 var view2 = PhotonView.Find(viewID);
                 if (view2 != null)
                 {
-                    FengGameManagerMKII.instance.sendKillInfo(true,
+                    FengGameManagerMKII.FGM.sendKillInfo(true,
                         "[FFC000][" + info.sender.ID + "][FFFFFF]" +
                         RCextensions.returnStringFromObject(view2.owner.customProperties[PhotonPlayerProperty.name]),
                         false,
@@ -3745,14 +3745,14 @@ public class HERO : MonoBehaviour
             }
             else
             {
-                FengGameManagerMKII.instance.sendKillInfo(true, "[FFC000][" + info.sender.ID + "][FFFFFF]" + titanName,
+                FengGameManagerMKII.FGM.sendKillInfo(true, "[FFC000][" + info.sender.ID + "][FFFFFF]" + titanName,
                     false,
                     RCextensions.returnStringFromObject(
                         PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
 
             object[] parameters = {!(titanName == string.Empty) ? 1 : 0};
-            FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
+            FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
         }
 
         if ((IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE) && photonView.isMine)
@@ -3832,7 +3832,7 @@ public class HERO : MonoBehaviour
         {
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
             currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
-            FengGameManagerMKII.instance.myRespawnTime = 0f;
+            FengGameManagerMKII.FGM.myRespawnTime = 0f;
         }
 
         hasDied = true;
@@ -3852,13 +3852,13 @@ public class HERO : MonoBehaviour
                 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             object[] parameters = {!(titanName == string.Empty) ? 1 : 0};
-            FengGameManagerMKII.instance.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
+            FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
             {
                 var view = PhotonView.Find(viewID);
                 if (view != null)
                 {
-                    FengGameManagerMKII.instance.sendKillInfo(killByTitan,
+                    FengGameManagerMKII.FGM.sendKillInfo(killByTitan,
                         RCextensions.returnStringFromObject(view.owner.customProperties[PhotonPlayerProperty.name]),
                         false,
                         RCextensions.returnStringFromObject(
@@ -3871,7 +3871,7 @@ public class HERO : MonoBehaviour
             }
             else
             {
-                FengGameManagerMKII.instance.sendKillInfo(!(titanName == string.Empty), titanName, false,
+                FengGameManagerMKII.FGM.sendKillInfo(!(titanName == string.Empty), titanName, false,
                     RCextensions.returnStringFromObject(
                         PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
@@ -4960,7 +4960,7 @@ public class HERO : MonoBehaviour
 
     private void Start()
     {
-        FengGameManagerMKII.instance.addHero(this);
+        FengGameManagerMKII.FGM.addHero(this);
         if (((LevelInfo.getInfo(FengGameManagerMKII.level).horse || (RCSettings.horseMode == 1)) &&
              (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)) && photonView.isMine)
         {
@@ -5133,8 +5133,8 @@ public class HERO : MonoBehaviour
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
             netDieLocal(rigidbody.velocity * 50f, false, -1, string.Empty);
-            FengGameManagerMKII.instance.needChooseSide = true;
-            FengGameManagerMKII.instance.justSuicide = true;
+            FengGameManagerMKII.FGM.needChooseSide = true;
+            FengGameManagerMKII.FGM.justSuicide = true;
         }
     }
 
@@ -5215,7 +5215,7 @@ public class HERO : MonoBehaviour
                 {
                     if (myCannonRegion != null)
                     {
-                        FengGameManagerMKII.instance.ShowHUDInfoCenter("Press 'Cannon Mount' key to use Cannon.");
+                        FengGameManagerMKII.FGM.ShowHUDInfoCenter("Press 'Cannon Mount' key to use Cannon.");
                         if (FengGameManagerMKII.inputRC.isInputCannonDown(InputCodeRC.cannonMount))
                         {
                             myCannonRegion.photonView.RPC("RequestControlRPC", PhotonTargets.MasterClient,

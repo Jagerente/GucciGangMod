@@ -161,7 +161,7 @@ public class InRoomChat : MonoBehaviour
     {
         SystemMessageLocal(str, major);
 
-        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.Others, 
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, 
             ChatFormatting(
                 str,
                 major ? Settings.ChatMajorColor : Settings.ChatMinorColor,
@@ -194,14 +194,14 @@ public class InRoomChat : MonoBehaviour
         }
 
         SystemMessageLocal(msg.ToString(), parity);
-        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.Others, msg.ToString(), string.Empty);
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, msg.ToString(), string.Empty);
     }
 
     public static void SystemMessageGlobal(string str, PhotonPlayer player)
     {
         SystemMessageLocal(str, player);
 
-        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.Others,
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others,
             ChatFormatting(
                 str, 
                 Settings.ChatMajorColor, 
@@ -225,7 +225,7 @@ public class InRoomChat : MonoBehaviour
     {
         SystemMessageLocal(player, str);
 
-        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.Others,
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others,
             ChatFormatting(
                 $"[{player.ID}] {player.Name.hexColor()} ",
                 Settings.ChatMinorColor,
@@ -243,7 +243,7 @@ public class InRoomChat : MonoBehaviour
     {
         SystemMessageLocal(str, player, str2);
 
-        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.Others,
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others,
             ChatFormatting(
                 str,
                 Settings.ChatMajorColor,
@@ -303,7 +303,7 @@ public class InRoomChat : MonoBehaviour
                     }
                     else if (!(FengGameManagerMKII.OnPrivateServer || PhotonNetwork.isMasterClient))
                     {
-                        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, "/kick #" + Convert.ToString(id), LoginFengKAI.player.name);
+                        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.All, "/kick #" + Convert.ToString(id), LoginFengKAI.player.name);
                     }
                     else
                     {
@@ -313,11 +313,11 @@ public class InRoomChat : MonoBehaviour
                             {
                                 if (FengGameManagerMKII.OnPrivateServer)
                                 {
-                                    FengGameManagerMKII.instance.kickPlayerRC(player, true, "");
+                                    FengGameManagerMKII.FGM.kickPlayerRC(player, true, "");
                                 }
                                 else if (PhotonNetwork.isMasterClient)
                                 {
-                                    FengGameManagerMKII.instance.kickPlayerRC(player, true, "");
+                                    FengGameManagerMKII.FGM.kickPlayerRC(player, true, "");
                                     SystemMessageGlobal(player, "has been banned.");
                                 }
                             }
@@ -357,7 +357,7 @@ public class InRoomChat : MonoBehaviour
                 {
                     if (MCRequired()) return;
 
-                    FengGameManagerMKII.instance.SetPause();
+                    FengGameManagerMKII.FGM.SetPause();
                 }
                 break;
 
@@ -383,8 +383,8 @@ public class InRoomChat : MonoBehaviour
                 {
                     if (MCRequired()) return;
 
-                    var time = (FengGameManagerMKII.instance.time - (int)FengGameManagerMKII.instance.timeTotalServer - Convert.ToInt32(args[1])) * -1;
-                    FengGameManagerMKII.instance.addTime(time);
+                    var time = (FengGameManagerMKII.FGM.time - (int)FengGameManagerMKII.FGM.timeTotalServer - Convert.ToInt32(args[1])) * -1;
+                    FengGameManagerMKII.FGM.addTime(time);
                     string[] msg = { "Time set to", time.ToString(), "." };
                     SystemMessageGlobal(msg);
                 }
@@ -420,7 +420,7 @@ public class InRoomChat : MonoBehaviour
                     if (MCRequired()) return;
 
                     var player = PhotonPlayer.Find(Convert.ToInt32(args[1]));
-                    FengGameManagerMKII.instance.photonView.RPC("respawnHeroInNewRound", player);
+                    FengGameManagerMKII.FGM.photonView.RPC("respawnHeroInNewRound", player);
                     SystemMessageGlobal(player, "has been revived.");
                 }
                 break;
@@ -429,7 +429,7 @@ public class InRoomChat : MonoBehaviour
                 {
                     if (MCRequired()) return;
 
-                    FengGameManagerMKII.instance.photonView.RPC("respawnHeroInNewRound", PhotonTargets.All);
+                    FengGameManagerMKII.FGM.photonView.RPC("respawnHeroInNewRound", PhotonTargets.All);
                     SystemMessageGlobal("All players have been revived.");
                 }
                 break;
@@ -456,7 +456,7 @@ public class InRoomChat : MonoBehaviour
                             sendName = myName;
                             break;
                     }
-                    FengGameManagerMKII.instance.photonView.RPC("ChatPM", player, sendName, msg);
+                    FengGameManagerMKII.FGM.photonView.RPC("ChatPM", player, sendName, msg);
                     Messages.Add(
             ChatFormatting(
                 "PM to",
@@ -511,10 +511,10 @@ public class InRoomChat : MonoBehaviour
                             SystemMessageLocal(err);
                             return;
                     }
-                    FengGameManagerMKII.instance.photonView.RPC("setTeamRPC", PhotonNetwork.player, teamValue);
+                    FengGameManagerMKII.FGM.photonView.RPC("setTeamRPC", PhotonNetwork.player, teamValue);
                     string[] msg2 = { "You have joined ", "Team " + newTeamName, "." };
                     SystemMessageLocal(msg2);
-                    foreach (var obj in FengGameManagerMKII.instance.getPlayers())
+                    foreach (var obj in FengGameManagerMKII.FGM.getPlayers())
                     {
                         var her = (HERO)obj;
                         if (her.photonView.isMine)
@@ -538,7 +538,7 @@ public class InRoomChat : MonoBehaviour
                     }
                     else if (!(FengGameManagerMKII.OnPrivateServer || PhotonNetwork.isMasterClient))
                     {
-                        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, "/kick #" + Convert.ToString(num8), LoginFengKAI.player.name);
+                        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.All, "/kick #" + Convert.ToString(num8), LoginFengKAI.player.name);
                     }
                     else
                     {
@@ -548,11 +548,11 @@ public class InRoomChat : MonoBehaviour
                             {
                                 if (FengGameManagerMKII.OnPrivateServer)
                                 {
-                                    FengGameManagerMKII.instance.kickPlayerRC(player, false, "");
+                                    FengGameManagerMKII.FGM.kickPlayerRC(player, false, "");
                                 }
                                 else if (PhotonNetwork.isMasterClient)
                                 {
-                                    FengGameManagerMKII.instance.kickPlayerRC(player, false, "");
+                                    FengGameManagerMKII.FGM.kickPlayerRC(player, false, "");
                                     SystemMessageGlobal(player, "has been kicked.");
                                 }
                             }
@@ -569,7 +569,7 @@ public class InRoomChat : MonoBehaviour
                 {
                     if (MCRequired()) return;
 
-                    FengGameManagerMKII.instance.restartGame(false);
+                    FengGameManagerMKII.FGM.restartGame(false);
                     string[] msg = { "MasterClient ", "has restarted the game." };
                     SystemMessageLocal(msg, false);
                 }
@@ -579,14 +579,14 @@ public class InRoomChat : MonoBehaviour
                 if ((int)FengGameManagerMKII.settings[0xf5] == 0)
                 {
                     FengGameManagerMKII.settings[0xf5] = 1;
-                    FengGameManagerMKII.instance.EnterSpecMode(true);
+                    FengGameManagerMKII.FGM.EnterSpecMode(true);
                     string[] msg = { "You have entered ", "Spectator ", "mode." };
                     SystemMessageLocal(msg);
                 }
                 else
                 {
                     FengGameManagerMKII.settings[0xf5] = 0;
-                    FengGameManagerMKII.instance.EnterSpecMode(false);
+                    FengGameManagerMKII.FGM.EnterSpecMode(false);
                     string[] msg = { "You have exited ", "Spectator ", "mode." };
                     SystemMessageLocal(msg);
                 }
@@ -851,7 +851,7 @@ public class InRoomChat : MonoBehaviour
                     }
 
                     object[] parameters = {inputLine, str2};
-                    FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, parameters);
+                    FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.All, parameters);
                 }
                 else
                 {

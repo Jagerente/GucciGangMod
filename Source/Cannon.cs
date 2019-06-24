@@ -40,12 +40,12 @@ public class Cannon : MonoBehaviour
             if (PhotonNetwork.isMasterClient)
             {
                 var owner = photonView.owner;
-                if (FengGameManagerMKII.instance.allowedToCannon.ContainsKey(owner.ID))
+                if (FengGameManagerMKII.FGM.allowedToCannon.ContainsKey(owner.ID))
                 {
-                    settings = FengGameManagerMKII.instance.allowedToCannon[owner.ID].settings;
+                    settings = FengGameManagerMKII.FGM.allowedToCannon[owner.ID].settings;
                     photonView.RPC("SetSize", PhotonTargets.All, settings);
-                    var viewID = FengGameManagerMKII.instance.allowedToCannon[owner.ID].viewID;
-                    FengGameManagerMKII.instance.allowedToCannon.Remove(owner.ID);
+                    var viewID = FengGameManagerMKII.FGM.allowedToCannon[owner.ID].viewID;
+                    FengGameManagerMKII.FGM.allowedToCannon.Remove(owner.ID);
                     var component = PhotonView.Find(viewID).gameObject.GetComponent<CannonPropRegion>();
                     if (component != null)
                     {
@@ -54,9 +54,9 @@ public class Cannon : MonoBehaviour
                         PhotonNetwork.Destroy(component.gameObject);
                     }
                 }
-                else if (!(owner.isLocal || FengGameManagerMKII.instance.restartingMC))
+                else if (!(owner.isLocal || FengGameManagerMKII.FGM.restartingMC))
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(owner, false, "spawning cannon without request.");
+                    FengGameManagerMKII.FGM.kickPlayerRC(owner, false, "spawning cannon without request.");
                 }
             }
         }
@@ -80,7 +80,7 @@ public class Cannon : MonoBehaviour
 
     public void OnDestroy()
     {
-        if (PhotonNetwork.isMasterClient && !FengGameManagerMKII.instance.isRestarting)
+        if (PhotonNetwork.isMasterClient && !FengGameManagerMKII.FGM.isRestarting)
         {
             var strArray = settings.Split(',');
             if (strArray[0] == "photon")
