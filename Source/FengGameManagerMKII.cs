@@ -87,7 +87,6 @@ public class FengGameManagerMKII : MonoBehaviour
     public static string oldScript;
     public static string oldScriptLogic;
     public static bool OnPrivateServer;
-    public static string passwordField;
     public float pauseWaitTime;
     public string playerList;
     public List<Vector3> playerSpawnsC;
@@ -147,7 +146,6 @@ public class FengGameManagerMKII : MonoBehaviour
     public float transparencySlider;
     private GameObject ui;
     public float updateTime;
-    public static string usernameField;
     public int wave = 1;
 
     public void addCamera(IN_GAME_MAIN_CAMERA c)
@@ -4748,36 +4746,6 @@ public class FengGameManagerMKII : MonoBehaviour
         if ((int) settings[2] == 1 && info.sender.isMasterClient)
         {
             StartCoroutine(loadskinE(n, url, url2, skybox));
-        }
-    }
-
-    private IEnumerator loginFeng()
-    {
-        WWW iteratorVariable1;
-        var form = new WWWForm();
-        form.AddField("userid", usernameField);
-        form.AddField("password", passwordField);
-        if (Application.isWebPlayer)
-        {
-            iteratorVariable1 = new WWW("http://aotskins.com/version/getinfo.php", form);
-        }
-        else
-        {
-            iteratorVariable1 = new WWW("http://fenglee.com/game/aog/require_user_info.php", form);
-        }
-
-        yield return iteratorVariable1;
-        if (!(iteratorVariable1.error != null || iteratorVariable1.text.Contains("Error,please sign in again.")))
-        {
-            char[] separator = {'|'};
-            var strArray = iteratorVariable1.text.Split(separator);
-            LoginFengKAI.player.name = usernameField;
-            LoginFengKAI.player.guildname = strArray[0];
-            loginstate = 3;
-        }
-        else
-        {
-            loginstate = 2;
         }
     }
 
@@ -13691,18 +13659,16 @@ public class FengGameManagerMKII : MonoBehaviour
         cT = new ArrayList();
         hooks = new ArrayList();
         name = string.Empty;
-        if (nameField == null)
-        {
-            nameField = string.Empty;
-        }
+
+        FengGameManagerMKII.nameField = PlayerPrefs.GetString("Name", string.Empty);
+        LoginFengKAI.player.guildname = PlayerPrefs.GetString("Guild", string.Empty);
+
 
         if (privateServerField == null)
         {
             privateServerField = string.Empty;
         }
 
-        usernameField = string.Empty;
-        passwordField = string.Empty;
         resetGameSettings();
         banHash = new Hashtable();
         imatitan = new Hashtable();
