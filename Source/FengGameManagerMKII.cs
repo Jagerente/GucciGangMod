@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using GGM;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using MonoBehaviour = Photon.MonoBehaviour;
@@ -47,7 +48,8 @@ public class FengGameManagerMKII : MonoBehaviour
     public static Hashtable imatitan;
     public FengCustomInputs inputManager;
     public static InputManagerRC inputRC;
-    public static FengGameManagerMKII instance;
+    public static FengGameManagerMKII FGM;
+    public static FPSCounter FPS = new FPSCounter();
     public static Hashtable intVariables;
     public static bool isAssetLoaded;
     public bool isFirstLoad;
@@ -2555,7 +2557,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
 
-            foreach (HERO hero in instance.getPlayers())
+            foreach (HERO hero in FGM.getPlayers())
             {
                 if (hero.photonView.isMine)
                 {
@@ -2567,7 +2569,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 2 && !RCextensions.returnBoolFromObject(
                     PhotonNetwork.player.customProperties[PhotonPlayerProperty.dead]))
             {
-                foreach (TITAN titan in instance.getTitans())
+                foreach (TITAN titan in FGM.getTitans())
                 {
                     if (titan.photonView.isMine)
                     {
@@ -2579,7 +2581,7 @@ public class FengGameManagerMKII : MonoBehaviour
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
-            instance.needChooseSide = false;
+            FGM.needChooseSide = false;
             Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().enabled = true;
             if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.ORIGINAL)
             {
@@ -2623,7 +2625,7 @@ public class FengGameManagerMKII : MonoBehaviour
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
-            instance.needChooseSide = true;
+            FGM.needChooseSide = true;
             Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(null);
             Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
             Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver = true;
@@ -12663,71 +12665,42 @@ public class FengGameManagerMKII : MonoBehaviour
         }
     }
 
-    public void ShowHUDInfoCenter(string content)
+    #region Show UILabels
+    internal void ShowHUDInfoCenter(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoCenter");
-        if (obj2 != null)
-        {
-            obj2.GetComponent<UILabel>().text = content;
-        }
+        GGM.Labels.Center = content.ToHTML();
     }
 
-    public void ShowHUDInfoCenterADD(string content)
+    internal void ShowHUDInfoCenterADD(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoCenter");
-        if (obj2 != null)
-        {
-            var component = obj2.GetComponent<UILabel>();
-            component.text = component.text + content;
-        }
+        GGM.Labels.Center = content.ToHTML();
     }
 
-    private void ShowHUDInfoTopCenter(string content)
+    internal void ShowHUDInfoTopCenter(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoTopCenter");
-        if (obj2 != null)
-        {
-            obj2.GetComponent<UILabel>().text = content;
-        }
+        GGM.Labels.TopCenter = content.ToHTML();
     }
 
-    private void ShowHUDInfoTopCenterADD(string content)
+    internal void ShowHUDInfoTopCenterADD(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoTopCenter");
-        if (obj2 != null)
-        {
-            var component = obj2.GetComponent<UILabel>();
-            component.text = component.text + content;
-        }
+        GGM.Labels.TopCenter = content.ToHTML();
     }
 
-    private void ShowHUDInfoTopLeft(string content)
+    internal void ShowHUDInfoTopLeft(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoTopLeft");
-        if (obj2 != null)
-        {
-            obj2.GetComponent<UILabel>().text = content;
-        }
+        GGM.Labels.TopLeft = content.ToHTML();
     }
 
-    private void ShowHUDInfoTopRight(string content)
+    internal void ShowHUDInfoTopRight(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoTopRight");
-        if (obj2 != null)
-        {
-            obj2.GetComponent<UILabel>().text = content;
-        }
+        GGM.Labels.TopRight = content.ToHTML();
     }
 
-    private void ShowHUDInfoTopRightMAPNAME(string content)
+    internal void ShowHUDInfoTopRightMAPNAME(string content)
     {
-        var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoTopRight");
-        if (obj2 != null)
-        {
-            var component = obj2.GetComponent<UILabel>();
-            component.text = component.text + content;
-        }
+        GGM.Labels.TopRight += content.ToHTML();
     }
+    #endregion
 
     [RPC]
     private void showResult(string text0, string text1, string text2, string text3, string text4, string text6,
@@ -13678,7 +13651,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
+        FGM = this;
         gameObject.name = "MultiplayerManager";
         HeroCostume.init2();
         CharacterMaterials.init();
@@ -13838,15 +13811,11 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void Update()
     {
-        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && GGM.Caching.GameObjectCache.Find("LabelNetworkStatus"))
+        FPS.Update();
+
+        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
-            GGM.Caching.GameObjectCache.Find("LabelNetworkStatus").GetComponent<UILabel>().text =
-                PhotonNetwork.connectionStateDetailed.ToString();
-            if (PhotonNetwork.connected)
-            {
-                var expr_5A = GGM.Caching.GameObjectCache.Find("LabelNetworkStatus").GetComponent<UILabel>();
-                expr_5A.text = expr_5A.text + " ping:" + PhotonNetwork.GetPing();
-            }
+            Labels.NetworkStatus = PhotonNetwork.connectionStateDetailed.ToString() + (PhotonNetwork.connected ? " ping: " + PhotonNetwork.GetPing() : "");
         }
 
         if (gameStart)
