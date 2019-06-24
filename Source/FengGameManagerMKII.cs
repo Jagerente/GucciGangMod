@@ -5205,6 +5205,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnGUI()
     {
+        GGM.GUI.Styles.Init();
         float num7;
         float num8;
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.STOP && Application.loadedLevelName != "characterCreation")

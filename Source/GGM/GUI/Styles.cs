@@ -4,8 +4,8 @@ namespace GGM.GUI
 {
     class Styles : MonoBehaviour
     {
+        private static bool Inited;
         private static string StylePath = "Gucci/";
-
         public static Texture2D Box;
         private static Texture2D Window;
         private static Texture2D ButtonN;
@@ -205,11 +205,11 @@ namespace GGM.GUI
                 Slider = slider.texture;
                 Slider.Apply();
             }
-            Init();
         }
 
-        private void Init()
+        public static void Init()
         {
+            if (Inited) return;
             UnityEngine.GUI.skin.button.normal.textColor = Color.white;
             UnityEngine.GUI.skin.button.active.textColor = Color.white;
             UnityEngine.GUI.skin.button.hover.textColor = Color.white;
@@ -290,6 +290,7 @@ namespace GGM.GUI
             UnityEngine.GUI.skin.window.active.background = Window;
             UnityEngine.GUI.skin.window.onNormal.background = Window;
             UnityEngine.GUI.skin.window.onActive.background = Window;
+            Inited = true;
         }
     }
 }
