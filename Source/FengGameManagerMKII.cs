@@ -8,6 +8,8 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 using GGM.Config;
+using GGM.Caching;
+using UnityEngine.UI;
 
 public class FengGameManagerMKII : MonoBehaviour
 {
@@ -5388,13 +5390,7 @@ public class FengGameManagerMKII : MonoBehaviour
             }
             else
             {
-                GUI.backgroundColor = new Color(0f, 0f, 0f, 1f);
-                var num9 = Screen.width / 2 - 115f;
-                var num10 = Screen.height / 2 - 45f;
-                GUI.Box(new Rect(num9, num10, 230f, 90f), string.Empty);
-                GUI.DrawTexture(new Rect(num9 + 2f, num10 + 2f, 226f, 86f), textureBackgroundBlack);
-                GUI.Label(new Rect(num9 + 13f, num10 + 20f, 172f, 70f),
-                    "Downloading custom assets. Clear your cache or try a different browser if this takes longer than 10 seconds.");
+                GGM.GUI.Pages.LoadingScreen();
             }
         }
         else if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.STOP)
@@ -12013,11 +12009,41 @@ public class FengGameManagerMKII : MonoBehaviour
         }
     }
 
-    public void setBackground()
+    public GameObject cameraObject;
+    public GameObject canvasObject;
+    public IEnumerator LoadBackground()
     {
-        if (isAssetLoaded)
+        using (var www = new WWW("file:///" + Application.dataPath + "/Background.png"))
         {
-            Instantiate(GGM.Caching.ResourcesCache.RCLoadGO("backgroundCamera"));
+            yield return www;
+            if (www.texture != null)
+            {
+                cameraObject = new GameObject();
+                var camera = cameraObject.AddComponent<Camera>();
+                camera.clearFlags = CameraClearFlags.Color;
+                camera.depth = -1f;
+                cameraObject.AddComponent<GUILayer>();
+                canvasObject = new GameObject();
+                var canvas = canvasObject.AddComponent<Canvas>();
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                canvas.worldCamera = camera;
+                canvas.pixelPerfect = true;
+                canvas.sortingOrder = -1;
+                var canvasScaler = canvasObject.AddComponent<CanvasScaler>();
+                canvasObject.GetComponent<RectTransform>();
+                canvasObject.AddComponent<CanvasRenderer>();
+                canvasObject.AddComponent<GraphicRaycaster>();
+                canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                canvasScaler.referenceResolution = new Vector2(Screen.width, Screen.height);
+                canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                canvasScaler.matchWidthOrHeight = -1f;
+                canvasScaler.referencePixelsPerUnit = 100f;
+                var image = canvasObject.AddComponent<Image>();
+                image.sprite = UnityEngine.Sprite.Create(www.texture, new Rect(0f, 0f, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+                image.color = new Color(255f, 255f, 255f, 255f);
+                //image.type = Image.Type.Simple;
+                image.preserveAspect = false;
+            }
         }
     }
 
@@ -13733,7 +13759,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
         loadconfig();
         var list2 = new List<string>
-            {"AOTTG_HERO", "Colossal", "Icosphere", "Cube", "colossal", "CITY", "city", "rock", "PanelLogin", "LOGIN"};
+            {"AOTTG_HERO", "Colossal", "Icosphere", "Cube", "colossal", "CITY", "city", "rock", "PanelLogin", "LOGIN", "BG"};
         foreach (GameObject obj2 in FindObjectsOfType(typeof(GameObject)))
         {
             foreach (var str in list2)
@@ -13749,8 +13775,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
         }
-
-        setBackground();
+        StartCoroutine(LoadBackground());
         ChangeQuality.setCurrentQuality();
     }
 
