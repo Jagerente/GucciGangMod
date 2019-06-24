@@ -1596,6 +1596,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         ShowHUDInfoTopRightMAPNAME("\n" + level + " : " + str4);
                     }
+                    this.ShowHUDInfoTopRightMAPNAME($"\nFPS [{Settings.ChatMinorColor}]{FPS.FPS}[-]");
 
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                     {
@@ -12665,38 +12666,38 @@ public class FengGameManagerMKII : MonoBehaviour
         }
     }
 
-    #region Show UILabels
-    internal void ShowHUDInfoCenter(string content)
+    #region UILabels
+    public void ShowHUDInfoCenter(string content)
     {
         GGM.Labels.Center = content.ToHTML();
     }
 
-    internal void ShowHUDInfoCenterADD(string content)
+    public void ShowHUDInfoCenterADD(string content)
     {
         GGM.Labels.Center = content.ToHTML();
     }
 
-    internal void ShowHUDInfoTopCenter(string content)
+    public void ShowHUDInfoTopCenter(string content)
     {
         GGM.Labels.TopCenter = content.ToHTML();
     }
 
-    internal void ShowHUDInfoTopCenterADD(string content)
+    public void ShowHUDInfoTopCenterADD(string content)
     {
         GGM.Labels.TopCenter = content.ToHTML();
     }
 
-    internal void ShowHUDInfoTopLeft(string content)
+    public void ShowHUDInfoTopLeft(string content)
     {
         GGM.Labels.TopLeft = content.ToHTML();
     }
 
-    internal void ShowHUDInfoTopRight(string content)
+    public void ShowHUDInfoTopRight(string content)
     {
         GGM.Labels.TopRight = content.ToHTML();
     }
 
-    internal void ShowHUDInfoTopRightMAPNAME(string content)
+    public void ShowHUDInfoTopRightMAPNAME(string content)
     {
         GGM.Labels.TopRight += content.ToHTML();
     }
