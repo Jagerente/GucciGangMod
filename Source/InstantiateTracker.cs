@@ -19,7 +19,7 @@ public class InstantiateTracker
             {
                 if (PhotonNetwork.isMasterClient)
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning invalid photon view.");
+                    FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning invalid photon view.");
                 }
                 return false;
             }
@@ -31,9 +31,9 @@ public class InstantiateTracker
             case "rcasset/bombexplodemain":
                 if (RCSettings.bombMode <= 0)
                 {
-                    if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.instance.restartingBomb))
+                    if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.FGM.restartingBomb))
                     {
-                        FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning bomb item (" + key + ").");
+                        FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning bomb item (" + key + ").");
                     }
                     return false;
                 }
@@ -70,9 +70,9 @@ public class InstantiateTracker
                 {
                     return Instantiated(photonPlayer, GameResource.effect);
                 }
-                if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.instance.restartingTitan))
+                if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.FGM.restartingTitan))
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, false, "spawning titan effects.");
+                    FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning titan effects.");
                 }
                 return false;
 
@@ -89,9 +89,9 @@ public class InstantiateTracker
 
             case "rcasset/cannonwall":
             case "rcasset/cannonground":
-                if (PhotonNetwork.isMasterClient && !(FengGameManagerMKII.instance.allowedToCannon.ContainsKey(photonPlayer.ID) || FengGameManagerMKII.instance.restartingMC))
+                if (PhotonNetwork.isMasterClient && !(FengGameManagerMKII.FGM.allowedToCannon.ContainsKey(photonPlayer.ID) || FengGameManagerMKII.FGM.restartingMC))
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, false, "spawning cannon item (" + key + ").");
+                    FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning cannon item (" + key + ").");
                 }
                 return Instantiated(photonPlayer, GameResource.general);
 
@@ -99,7 +99,7 @@ public class InstantiateTracker
             case "rcasset/cannongroundprop":
                 if (PhotonNetwork.isMasterClient)
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
+                    FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
                 }
                 return false;
 
@@ -108,9 +108,9 @@ public class InstantiateTracker
                 {
                     if (RCSettings.banEren > 0)
                     {
-                        if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.instance.restartingEren))
+                        if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.FGM.restartingEren))
                         {
-                            FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, false, "spawning titan eren (" + key + ").");
+                            FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning titan eren (" + key + ").");
                         }
                         return false;
                     }
@@ -118,7 +118,7 @@ public class InstantiateTracker
                 }
                 if (PhotonNetwork.isMasterClient)
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning titan eren (" + key + ").");
+                    FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning titan eren (" + key + ").");
                 }
                 return false;
 
@@ -132,9 +132,9 @@ public class InstantiateTracker
                 {
                     if (RCSettings.banEren > 0)
                     {
-                        if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.instance.restartingEren))
+                        if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.FGM.restartingEren))
                         {
-                            FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, false, "spawning eren effect (" + key + ").");
+                            FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning eren effect (" + key + ").");
                         }
                         return false;
                     }
@@ -142,7 +142,7 @@ public class InstantiateTracker
                 }
                 if (PhotonNetwork.isMasterClient)
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning eren effect (" + key + ").");
+                    FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning eren effect (" + key + ").");
                 }
                 return false;
 
@@ -153,7 +153,7 @@ public class InstantiateTracker
                 {
                     return Instantiated(photonPlayer, GameResource.effect);
                 }
-                FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning colossal effect (" + key + ").");
+                FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning colossal effect (" + key + ").");
                 return false;
 
             case "rock":
@@ -161,7 +161,7 @@ public class InstantiateTracker
                 {
                     return Instantiated(photonPlayer, GameResource.general);
                 }
-                FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
+                FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
                 return false;
 
             case "horse":
@@ -169,9 +169,9 @@ public class InstantiateTracker
                 {
                     return Instantiated(photonPlayer, GameResource.general);
                 }
-                if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.instance.restartingHorse))
+                if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.FGM.restartingHorse))
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning horse (" + key + ").");
+                    FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning horse (" + key + ").");
                 }
                 return false;
 
@@ -182,7 +182,7 @@ public class InstantiateTracker
                     if (FengGameManagerMKII.masterRC && IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT)
                     {
                         num4 = 0;
-                        foreach (TITAN titan in FengGameManagerMKII.instance.getTitans())
+                        foreach (TITAN titan in FengGameManagerMKII.FGM.getTitans())
                         {
                             if (titan.photonView.owner == photonPlayer)
                             {
@@ -196,12 +196,12 @@ public class InstantiateTracker
                     }
                     break;
                 }
-                if (LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || RCSettings.infectionMode > 0 || IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT || FengGameManagerMKII.instance.restartingTitan)
+                if (LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || RCSettings.infectionMode > 0 || IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT || FengGameManagerMKII.FGM.restartingTitan)
                 {
                     if (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT)
                     {
                         num4 = 0;
-                        foreach (TITAN titan in FengGameManagerMKII.instance.getTitans())
+                        foreach (TITAN titan in FengGameManagerMKII.FGM.getTitans())
                         {
                             if (titan.photonView.owner == photonPlayer)
                             {
@@ -210,13 +210,13 @@ public class InstantiateTracker
                         }
                         if (num4 > 1)
                         {
-                            FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, false, "spawning titan (" + key + ").");
+                            FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning titan (" + key + ").");
                             return false;
                         }
                     }
                     break;
                 }
-                FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, false, "spawning titan (" + key + ").");
+                FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning titan (" + key + ").");
                 return false;
 
             case "colossal_titan":
@@ -234,7 +234,7 @@ public class InstantiateTracker
                     }
                     return Instantiated(photonPlayer, GameResource.general);
                 }
-                FengGameManagerMKII.instance.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
+                FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
                 return false;
 
             default:
@@ -259,7 +259,7 @@ public class InstantiateTracker
                 var player = owner;
                 if (player != null && PhotonNetwork.isMasterClient)
                 {
-                    FengGameManagerMKII.instance.kickPlayerRC(player, true, "spamming instantiate (" + type + ").");
+                    FengGameManagerMKII.FGM.kickPlayerRC(player, true, "spamming instantiate (" + type + ").");
                 }
                 RCextensions.RemoveAt(ref players, num);
                 return false;

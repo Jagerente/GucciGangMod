@@ -83,7 +83,7 @@ public class TITAN_SETUP : MonoBehaviour
         }
         if (iteratorVariable0)
         {
-            FengGameManagerMKII.instance.unloadAssets();
+            FengGameManagerMKII.FGM.unloadAssets();
         }
     }
 

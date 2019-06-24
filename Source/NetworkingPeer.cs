@@ -1308,7 +1308,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         {
                             FengGameManagerMKII.noRestart = true;
                             PhotonNetwork.SetMasterClient(PhotonNetwork.player);
-                            FengGameManagerMKII.instance.kickPlayerRC(sender, true, "stealing MC.");
+                            FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "stealing MC.");
                         }
                         return;
                     }
@@ -1438,22 +1438,22 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                         var player2 = sender;
                                         if (pActorProperties.ContainsKey("statACL") && RCextensions.returnIntFromObject(pActorProperties["statACL"]) > 150)
                                         {
-                                            FengGameManagerMKII.instance.kickPlayerRC(sender, true, "excessive stats.");
+                                            FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
                                         if (pActorProperties.ContainsKey("statBLA") && RCextensions.returnIntFromObject(pActorProperties["statBLA"]) > 0x7d)
                                         {
-                                            FengGameManagerMKII.instance.kickPlayerRC(sender, true, "excessive stats.");
+                                            FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
                                         if (pActorProperties.ContainsKey("statGAS") && RCextensions.returnIntFromObject(pActorProperties["statGAS"]) > 150)
                                         {
-                                            FengGameManagerMKII.instance.kickPlayerRC(sender, true, "excessive stats.");
+                                            FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
                                         if (pActorProperties.ContainsKey("statSPD") && RCextensions.returnIntFromObject(pActorProperties["statSPD"]) > 140)
                                         {
-                                            FengGameManagerMKII.instance.kickPlayerRC(sender, true, "excessive stats.");
+                                            FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
                                     }

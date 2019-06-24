@@ -375,7 +375,7 @@ public class TITAN : MonoBehaviour
         obj2.layer = 0x10;
         obj2.transform.parent = baseTransform.Find("AABB");
         obj2.transform.localPosition = new Vector3(0f, 0f, 0f);
-        MultiplayerManager = FengGameManagerMKII.instance;
+        MultiplayerManager = FengGameManagerMKII.FGM;
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine)
         {
             baseGameObjectTransform = gameObject.transform;
@@ -571,16 +571,16 @@ public class TITAN : MonoBehaviour
             }
             if (nonAI)
             {
-                FengGameManagerMKII.instance.titanGetKill(view.owner, damage, (string) PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]);
+                FengGameManagerMKII.FGM.titanGetKill(view.owner, damage, (string) PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]);
             }
             else
             {
-                FengGameManagerMKII.instance.titanGetKill(view.owner, damage, name);
+                FengGameManagerMKII.FGM.titanGetKill(view.owner, damage, name);
             }
         }
         else
         {
-            FengGameManagerMKII.instance.photonView.RPC("netShowDamage", view.owner, speed);
+            FengGameManagerMKII.FGM.photonView.RPC("netShowDamage", view.owner, speed);
         }
     }
 
@@ -2285,7 +2285,7 @@ public class TITAN : MonoBehaviour
         }
         if (iteratorVariable1)
         {
-            FengGameManagerMKII.instance.unloadAssets();
+            FengGameManagerMKII.FGM.unloadAssets();
         }
     }
 
@@ -2804,7 +2804,7 @@ public class TITAN : MonoBehaviour
                 }
                 if (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.SURVIVE_MODE)
                 {
-                    var wave = FengGameManagerMKII.instance.wave;
+                    var wave = FengGameManagerMKII.FGM.wave;
                     if (wave != 5 && wave != 10 && wave != 15 && wave != 20)
                     {
                         num = 1;
@@ -3185,16 +3185,16 @@ public class TITAN : MonoBehaviour
                     netDie();
                     if (nonAI)
                     {
-                        FengGameManagerMKII.instance.titanGetKill(view.owner, speed, (string) PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]);
+                        FengGameManagerMKII.FGM.titanGetKill(view.owner, speed, (string) PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]);
                     }
                     else
                     {
-                        FengGameManagerMKII.instance.titanGetKill(view.owner, speed, name);
+                        FengGameManagerMKII.FGM.titanGetKill(view.owner, speed, name);
                     }
                 }
                 else
                 {
-                    FengGameManagerMKII.instance.photonView.RPC("netShowDamage", view.owner, speed);
+                    FengGameManagerMKII.FGM.photonView.RPC("netShowDamage", view.owner, speed);
                 }
             }
         }

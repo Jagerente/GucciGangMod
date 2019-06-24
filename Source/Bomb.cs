@@ -69,7 +69,7 @@ public class Bomb : MonoBehaviour
         rigidbody.velocity = Vector3.zero;
         var position = transform.position;
         myExplosion = PhotonNetwork.Instantiate("RCAsset/BombExplodeMain", position, Quaternion.Euler(0f, 0f, 0f), 0);
-        foreach (HERO hero in FengGameManagerMKII.instance.getPlayers())
+        foreach (HERO hero in FengGameManagerMKII.FGM.getPlayers())
         {
             var gameObject = hero.gameObject;
             if (Vector3.Distance(gameObject.transform.position, position) < radius && !gameObject.GetPhotonView().isMine && !hero.bombImmune)
@@ -83,14 +83,14 @@ public class Bomb : MonoBehaviour
                     {
                         gameObject.GetComponent<HERO>().markDie();
                         gameObject.GetComponent<HERO>().photonView.RPC("netDie2", PhotonTargets.All, -1, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]) + " ");
-                        FengGameManagerMKII.instance.playerKillInfoUpdate(PhotonNetwork.player, 0);
+                        FengGameManagerMKII.FGM.playerKillInfoUpdate(PhotonNetwork.player, 0);
                     }
                 }
                 else
                 {
                     gameObject.GetComponent<HERO>().markDie();
                     gameObject.GetComponent<HERO>().photonView.RPC("netDie2", PhotonTargets.All, -1, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]) + " ");
-                    FengGameManagerMKII.instance.playerKillInfoUpdate(PhotonNetwork.player, 0);
+                    FengGameManagerMKII.FGM.playerKillInfoUpdate(PhotonNetwork.player, 0);
                 }
             }
         }

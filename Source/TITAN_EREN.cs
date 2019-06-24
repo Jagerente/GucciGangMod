@@ -478,7 +478,7 @@ public class TITAN_EREN : MonoBehaviour
         }
         if (iteratorVariable1)
         {
-            FengGameManagerMKII.instance.unloadAssets();
+            FengGameManagerMKII.FGM.unloadAssets();
         }
     }
 
@@ -819,7 +819,7 @@ public class TITAN_EREN : MonoBehaviour
     private void Start()
     {
         loadskin();
-        FengGameManagerMKII.instance.addET(this);
+        FengGameManagerMKII.FGM.addET(this);
         if (rockLift)
         {
             rock = GGM.Caching.GameObjectCache.Find("rock");

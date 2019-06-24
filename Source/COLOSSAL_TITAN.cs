@@ -425,7 +425,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         }
         if (iteratorVariable1)
         {
-            FengGameManagerMKII.instance.unloadAssets();
+            FengGameManagerMKII.FGM.unloadAssets();
         }
     }
 

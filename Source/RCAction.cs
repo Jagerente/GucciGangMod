@@ -382,11 +382,11 @@ public class RCAction
                         return;
                     }
                     case 1:
-                        FengGameManagerMKII.instance.photonView.RPC("respawnHeroInNewRound", targetPlayer);
+                        FengGameManagerMKII.FGM.photonView.RPC("respawnHeroInNewRound", targetPlayer);
                         return;
 
                     case 2:
-                        FengGameManagerMKII.instance.photonView.RPC("spawnPlayerAtRPC", targetPlayer, parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null));
+                        FengGameManagerMKII.FGM.photonView.RPC("spawnPlayerAtRPC", targetPlayer, parameters[1].returnFloat(null), parameters[2].returnFloat(null), parameters[3].returnFloat(null));
                         return;
 
                     case 3:
@@ -494,11 +494,11 @@ public class RCAction
                         return;
                     }
                     case 1:
-                        FengGameManagerMKII.instance.spawnTitanAction(this.parameters[0].returnInt(null), this.parameters[1].returnFloat(null), this.parameters[2].returnInt(null), this.parameters[3].returnInt(null));
+                        FengGameManagerMKII.FGM.spawnTitanAction(this.parameters[0].returnInt(null), this.parameters[1].returnFloat(null), this.parameters[2].returnInt(null), this.parameters[3].returnInt(null));
                         return;
 
                     case 2:
-                        FengGameManagerMKII.instance.spawnTitanAtAction(this.parameters[0].returnInt(null), this.parameters[1].returnFloat(null), this.parameters[2].returnInt(null), this.parameters[3].returnInt(null), this.parameters[4].returnFloat(null), this.parameters[5].returnFloat(null), this.parameters[6].returnFloat(null));
+                        FengGameManagerMKII.FGM.spawnTitanAtAction(this.parameters[0].returnInt(null), this.parameters[1].returnFloat(null), this.parameters[2].returnInt(null), this.parameters[3].returnInt(null), this.parameters[4].returnFloat(null), this.parameters[5].returnFloat(null), this.parameters[6].returnFloat(null));
                         return;
 
                     case 3:
@@ -533,11 +533,11 @@ public class RCAction
                 switch (actionType)
                 {
                     case 0:
-                        FengGameManagerMKII.instance.photonView.RPC("Chat", PhotonTargets.All, this.parameters[0].returnString(null), string.Empty);
+                        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.All, this.parameters[0].returnString(null), string.Empty);
                         return;
 
                     case 1:
-                        FengGameManagerMKII.instance.gameWin();
+                        FengGameManagerMKII.FGM.gameWin();
                         if (this.parameters[0].returnBool(null))
                         {
                             FengGameManagerMKII.intVariables.Clear();
@@ -550,7 +550,7 @@ public class RCAction
                         return;
 
                     case 2:
-                        FengGameManagerMKII.instance.gameLose();
+                        FengGameManagerMKII.FGM.gameLose();
                         if (this.parameters[0].returnBool(null))
                         {
                             FengGameManagerMKII.intVariables.Clear();
@@ -572,7 +572,7 @@ public class RCAction
                             FengGameManagerMKII.playerVariables.Clear();
                             FengGameManagerMKII.titanVariables.Clear();
                         }
-                        FengGameManagerMKII.instance.restartGame(false);
+                        FengGameManagerMKII.FGM.restartGame(false);
                         return;
                 }
                 break;

@@ -339,9 +339,9 @@ public class Bullet : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (FengGameManagerMKII.instance != null)
+        if (FengGameManagerMKII.FGM != null)
         {
-            FengGameManagerMKII.instance.removeHook(this);
+            FengGameManagerMKII.FGM.removeHook(this);
         }
         if (myTitan != null)
         {

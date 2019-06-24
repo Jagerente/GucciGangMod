@@ -42,7 +42,7 @@ public class CannonBall : MonoBehaviour
             }
             if (RCSettings.deadlyCannons == 1)
             {
-                foreach (HERO hero in FengGameManagerMKII.instance.getPlayers())
+                foreach (HERO hero in FengGameManagerMKII.FGM.getPlayers())
                 {
                     if (hero != null && Vector3.Distance(hero.transform.position, transform.position) <= 20f && !hero.photonView.isMine)
                     {
@@ -56,14 +56,14 @@ public class CannonBall : MonoBehaviour
                             {
                                 gameObject.GetComponent<HERO>().markDie();
                                 gameObject.GetComponent<HERO>().photonView.RPC("netDie2", PhotonTargets.All, -1, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]) + " ");
-                                FengGameManagerMKII.instance.playerKillInfoUpdate(PhotonNetwork.player, 0);
+                                FengGameManagerMKII.FGM.playerKillInfoUpdate(PhotonNetwork.player, 0);
                             }
                         }
                         else
                         {
                             gameObject.GetComponent<HERO>().markDie();
                             gameObject.GetComponent<HERO>().photonView.RPC("netDie2", PhotonTargets.All, -1, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]) + " ");
-                            FengGameManagerMKII.instance.playerKillInfoUpdate(PhotonNetwork.player, 0);
+                            FengGameManagerMKII.FGM.playerKillInfoUpdate(PhotonNetwork.player, 0);
                         }
                     }
                 }
