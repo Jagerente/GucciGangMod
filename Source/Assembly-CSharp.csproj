@@ -26,11 +26,14 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\Games\Attack on Titan Tribute Game\Clear RC\RC_DATA\Managed\</OutputPath>
+    <OutputPath>..\Mod\GGM_DATA\Managed\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -65,6 +68,7 @@
     <Compile Include="GGM\GUI\Elements.cs" />
     <Compile Include="GGM\GUI\Pages.cs" />
     <Compile Include="GGM\GUI\Settings.cs" />
+    <Compile Include="GGM\HotKeys.cs" />
     <Compile Include="GGM\Labels.cs" />
     <Compile Include="GGM\Storage\IDataStorage.cs" />
     <Compile Include="GGM\Storage\ISerializable.cs" />

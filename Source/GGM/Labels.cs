@@ -9,7 +9,7 @@ namespace GGM
 {
     internal class Labels
     {
-        internal static Font tahoma;
+        internal static Font Tahoma;
         private static TextMesh bottomRight;
         private static TextMesh center;
         private static TextMesh topCenter;
@@ -26,7 +26,7 @@ namespace GGM
                 {
                     return bottomRight.text;
                 }
-                bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, white, tahoma, TextAlignment.Right);
+                bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, white, Tahoma, TextAlignment.Right);
                 if (bottomRight == null)
                     return "";
                 return bottomRight.text;
@@ -35,7 +35,7 @@ namespace GGM
             {
                 if (bottomRight == null)
                 {
-                    bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, white, tahoma, TextAlignment.Right);
+                    bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, white, Tahoma, TextAlignment.Right);
                     if (bottomRight == null)
                     {
                         return;
@@ -54,7 +54,7 @@ namespace GGM
                 {
                     return center.text;
                 }
-                center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, white, tahoma, TextAlignment.Center);
+                center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, white, Tahoma, TextAlignment.Center);
                 if (center == null)
                     return "";
                 return center.text;
@@ -63,7 +63,7 @@ namespace GGM
             {
                 if (center == null)
                 {
-                    center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, white, tahoma, TextAlignment.Center);
+                    center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, white, Tahoma, TextAlignment.Center);
                     if (center == null)
                         return;
                 }
@@ -79,16 +79,16 @@ namespace GGM
                 {
                     return networkStatus.text;
                 }
-                networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, white, tahoma, TextAlignment.Left);
+                networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, white, Tahoma, TextAlignment.Left);
                 if (networkStatus == null)
-                    return "";
+                    return string.Empty;
                 return networkStatus.text;
             }
             set
             {
                 if (networkStatus == null)
                 {
-                    networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, white, tahoma, TextAlignment.Left);
+                    networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, white, Tahoma, TextAlignment.Left);
                     if (networkStatus == null)
                         return;
                 }
@@ -104,7 +104,7 @@ namespace GGM
                 {
                     return topCenter.text;
                 }
-                topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, white, tahoma, TextAlignment.Center);
+                topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, white, Tahoma, TextAlignment.Center);
                 if (topCenter == null)
                     return "";
                 return topCenter.text;
@@ -113,7 +113,7 @@ namespace GGM
             {
                 if (topCenter == null)
                 {
-                    topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, white, tahoma, TextAlignment.Center);
+                    topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, white, Tahoma, TextAlignment.Center);
                     if (topCenter == null)
                         return;
                 }
@@ -129,7 +129,7 @@ namespace GGM
                 {
                     return topLeft.text;
                 }
-                topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, white, tahoma, TextAlignment.Left);
+                topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, white, Tahoma, TextAlignment.Left);
                 if (topLeft == null)
                     return "";
                 return topLeft.text;
@@ -138,7 +138,7 @@ namespace GGM
             {
                 if (topLeft == null)
                 {
-                    topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, white, tahoma, TextAlignment.Left);
+                    topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, white, Tahoma, TextAlignment.Left);
                     if (topLeft == null)
                         return;
                 }
@@ -154,7 +154,7 @@ namespace GGM
                 {
                     return topRight.text;
                 }
-                topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, white, tahoma, TextAlignment.Right);
+                topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, white, Tahoma, TextAlignment.Right);
                 if (topRight == null)
                     return "";
                 return topRight.text;
@@ -163,7 +163,7 @@ namespace GGM
             {
                 if (topRight == null)
                 {
-                    topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, white, tahoma, TextAlignment.Right);
+                    topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, white, Tahoma, TextAlignment.Right);
                     if (topRight == null)
                         return;
                 }
@@ -179,7 +179,7 @@ namespace GGM
                 {
                     return version.text;
                 }
-                version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, white, tahoma, TextAlignment.Center);
+                version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, white, Tahoma, TextAlignment.Center);
                 if (version == null)
                     return "";
                 return version.text;
@@ -188,7 +188,7 @@ namespace GGM
             {
                 if (version == null)
                 {
-                    version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, white, tahoma, TextAlignment.Center);
+                    version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, white, Tahoma, TextAlignment.Center);
                     if (version == null)
                         return;
                 }
@@ -200,7 +200,7 @@ namespace GGM
         {
             if (font == null)
                 return null;
-            GameObject res = GameObject.Find(name);
+            GameObject res = Caching.GameObjectCache.Find(name);
             if (res == null)
                 return null;
             if (res.GetComponent<UILabel>() == null)
@@ -230,11 +230,11 @@ namespace GGM
 
         public static System.Collections.IEnumerator LoadFonts()
         {
-            if (tahoma != null)
+            if (Tahoma != null)
                 yield break;
             AssetBundleCreateRequest bundle = AssetBundle.CreateFromMemory(System.IO.File.ReadAllBytes(Application.dataPath + "/Resources/Fonts.unity3d"));
             yield return bundle;
-            tahoma = (Font)(bundle.assetBundle.Load("tahoma"));
+            Tahoma = (Font)(bundle.assetBundle.Load("tahoma"));
         }
     }
 }

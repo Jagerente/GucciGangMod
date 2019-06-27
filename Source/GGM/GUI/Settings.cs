@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace GGM.GUI
 {
-    class Settings
+    internal class Settings
     {
         protected static readonly string[] Switcher = { "Off", "On" };
 
-        private static readonly float leftPos = Screen.width / 2f - 350f;
-        private static readonly float topPos = Screen.height / 2f - 250f;
+        internal static readonly float leftPos = Screen.width / 2f - 350f;
+        internal static readonly float topPos = Screen.height / 2f - 250f;
         private const float width = 730f;
         private const float height = 550f;
         /// <summary>
@@ -104,13 +104,6 @@ namespace GGM.GUI
                 }
             };
         }
-
-        //public enum Alignment
-        //{
-        //    Left,
-        //    Center,
-        //    Right
-        //}
 
         public enum LabelType
         {

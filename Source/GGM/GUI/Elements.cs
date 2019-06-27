@@ -3,13 +3,13 @@ using static GGM.GUI.GUIHelpers;
 
 namespace GGM.GUI
 {
-    class Elements : Settings
+    internal class Elements : Settings
     {
         /// <summary>
         /// GUILayout.Label
         /// </summary>
-        /// <param name="text">Text.</param>
-        /// <param name="type">Label;Sub Header;Header;Slider Value.</param>
+        /// <param name="text">Text</param>
+        /// <param name="type">Label;Sub Header;Header;Slider Value</param>
         /// <param name="align">LEFT;CENTER,RIGHT. Label only.</param>
         /// <param name="width">Label type only.</param>
         /// <param name="height">Label & Slider Value types only.</param>

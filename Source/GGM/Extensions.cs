@@ -37,7 +37,7 @@ namespace GGM
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static string stripHTML(this string input)
+        public static string StripHTML(this string input)
         {
             return Regex.Replace(input, "<.*?>", string.Empty);
         }
@@ -47,7 +47,7 @@ namespace GGM
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static string stripHEX(this string text)
+        public static string StripHEX(this string text)
         {
             var list = new[]
             {
@@ -125,6 +125,5 @@ namespace GGM
             }
             return str;
         }
-
     }
 }

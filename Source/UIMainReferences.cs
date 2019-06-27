@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 public class UIMainReferences : MonoBehaviour
 {
-    public static string fengVersion = "01042015";
     public static UIMainReferences instance;
     private static bool isGAMEFirstLaunch = true;
     public GameObject panelCredits;
@@ -19,7 +19,8 @@ public class UIMainReferences : MonoBehaviour
     public GameObject panelOption;
     public GameObject panelSingleSet;
     public GameObject PanelSnapShot;
-    public static string version = "01042015";
+    public static string ServerKey;
+    public static string PublicKey = "01042015";
     public const string Version = "GucciGangMod v5.6.24";
 
     private void Awake()
@@ -65,12 +66,11 @@ public class UIMainReferences : MonoBehaviour
         GGM.Labels.Version = Version;
         if (isGAMEFirstLaunch)
         {
-            version = fengVersion;
             isGAMEFirstLaunch = false;
+            ServerKey = PublicKey;
             var target = (GameObject) Instantiate(Resources.Load("InputManagerController"));
             target.name = "InputManagerController";
             DontDestroyOnLoad(target);
-            GGM.Caching.GameObjectCache.Find("VERSION").GetComponent<UILabel>().text = "Client verified. Last updated " + Version + ".";
             FengGameManagerMKII.s = "verified343,hair,character_eye,glass,character_face,character_head,character_hand,character_body,character_arm,character_leg,character_chest,character_cape,character_brand,character_3dmg,r,character_blade_l,character_3dmg_gas_r,character_blade_r,3dmg_smoke,HORSE,hair,body_001,Cube,Plane_031,mikasa_asset,character_cap_,character_gun".Split(',');
             StartCoroutine(OnOpen());
             FengGameManagerMKII.loginstate = 0;

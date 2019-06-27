@@ -2,7 +2,7 @@
 
 namespace GGM.GUI
 {
-    public static class GUIHelpers
+    internal static class GUIHelpers
     {
         //AlignRect takes a width and a height returned a rect snapped to the edge of the screen as defined by the alignment
         //If you want a different rect than the screen, use the parameter parentRect
