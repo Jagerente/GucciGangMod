@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics.Eventing.Reader;
+using System.Threading;
+using UnityEngine;
 
 public class PanelMain : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class PanelMain : MonoBehaviour
 
     private void OnEnable()
     {
+        GGM.GUI.Pages.Page = "Main Menu";
     }
 
     private void showTxt()
