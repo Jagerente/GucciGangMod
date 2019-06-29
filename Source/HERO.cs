@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GGM;
+using GGM.Config;
 using UnityEngine;
 using Xft;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -4628,13 +4630,12 @@ public class HERO : MonoBehaviour
         }
         else
         {
-            RaycastHit hit;
             checkTitan();
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
             LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
             LayerMask mask3 = mask2 | mask;
-            if (Physics.Raycast(ray, out hit, 1E+07f, mask3.value))
+            if (Physics.Raycast(ray, out var hit, 1E+07f, mask3.value))
             {
                 RaycastHit hit2;
                 var obj9 = cross1;
@@ -4646,17 +4647,18 @@ public class HERO : MonoBehaviour
                 vector = hit.point - baseTransform.position;
                 var magnitude = vector.magnitude;
                 var obj11 = LabelDistance;
-                var str = (magnitude <= 1000f) ? ((int) magnitude).ToString() : "???";
-                if (((int) FengGameManagerMKII.settings[0xbd]) == 1)
+                var str = (magnitude <= Settings.DrawDistanceSetting) ? ((int) magnitude).ToString() : "???";
+                switch ((int) FengGameManagerMKII.settings[0xbd])
                 {
-                    str = str + "\n" + currentSpeed.ToString("F1") + " u/s";
-                }
-                else if (((int) FengGameManagerMKII.settings[0xbd]) == 2)
-                {
-                    str = str + "\n" + ((currentSpeed / 100f)).ToString("F1") + "K";
+                    case 1:
+                        str = str + "\n" + currentSpeed.ToString("F1") + " U/S";
+                        break;
+                    case 2:
+                        str = str + "\n" + ((currentSpeed / 100f)).ToString("F1") + "K";
+                        break;
                 }
 
-                obj11.GetComponent<UILabel>().text = str;
+                Labels.Crosshair = str;
                 if (magnitude > 120f)
                 {
                     var transform11 = obj9.transform;
