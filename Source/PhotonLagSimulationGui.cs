@@ -4,7 +4,7 @@ using UnityEngine;
 public class PhotonLagSimulationGui : MonoBehaviour
 {
     public bool Visible = true;
-    public int WindowId = 0x65;
+    public int WindowId = 101;
     public Rect WindowRect = new Rect(0f, 100f, 120f, 100f);
 
     private void NetSimHasNoPeerWindow(int windowId)

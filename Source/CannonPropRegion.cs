@@ -134,7 +134,7 @@ public class CannonPropRegion : MonoBehaviour
 
     public void Start()
     {
-        if ((int) FengGameManagerMKII.settings[0x40] >= 100)
+        if ((int) FengGameManagerMKII.settings[64] >= 100)
         {
             GetComponent<Collider>().enabled = false;
         }

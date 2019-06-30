@@ -47,7 +47,7 @@ public class ByteReader
     {
         string str;
         var length = mBuffer.Length;
-        while (this.mOffset < length && mBuffer[this.mOffset] < 0x20)
+        while (this.mOffset < length && mBuffer[this.mOffset] < 32)
         {
             this.mOffset++;
         }

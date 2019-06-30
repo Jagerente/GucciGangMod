@@ -172,7 +172,7 @@ public class custom_inputs : MonoBehaviour
             }
             if (mouseButtonsOn)
             {
-                var num5 = 0x143;
+                var num5 = 323;
                 for (var k = 0; k < 6; k++)
                 {
                     if (Input.GetMouseButton(k) && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
@@ -188,7 +188,7 @@ public class custom_inputs : MonoBehaviour
                     }
                 }
             }
-            for (var j = 350; j < 0x199; j++)
+            for (var j = 350; j < 409; j++)
             {
                 if (Input.GetKey((KeyCode) j) && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
                 {
@@ -473,7 +473,7 @@ public class custom_inputs : MonoBehaviour
             }
             if (mouseButtonsOn)
             {
-                var num5 = 0x143;
+                var num5 = 323;
                 for (var k = 0; k < 6; k++)
                 {
                     if (Input.GetMouseButton(k) && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
@@ -489,7 +489,7 @@ public class custom_inputs : MonoBehaviour
                     }
                 }
             }
-            for (var j = 350; j < 0x199; j++)
+            for (var j = 350; j < 409; j++)
             {
                 if (Input.GetKey((KeyCode) j) && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
                 {

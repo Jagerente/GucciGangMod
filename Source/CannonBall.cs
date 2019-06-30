@@ -99,7 +99,7 @@ public class CannonBall : MonoBehaviour
             for (var i = 0; i < colliderArray.Length; i++)
             {
                 var gameObject = colliderArray[i].gameObject;
-                if (gameObject.layer == 0x10)
+                if (gameObject.layer == 16)
                 {
                     var component = gameObject.GetComponent<TitanTrigger>();
                     if (!(component == null || myTitanTriggers.Contains(component)))

@@ -427,7 +427,7 @@ public class TITAN_EREN : MonoBehaviour
     {
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
-            var url = (string) FengGameManagerMKII.settings[0x41];
+            var url = (string) FengGameManagerMKII.settings[65];
             if ((int) FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
             {
                 StartCoroutine(loadskinE(url));
@@ -435,7 +435,7 @@ public class TITAN_EREN : MonoBehaviour
         }
         else if (photonView.isMine && (int) FengGameManagerMKII.settings[1] == 1)
         {
-            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[0x41]);
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[65]);
         }
     }
 
@@ -447,7 +447,7 @@ public class TITAN_EREN : MonoBehaviour
         }
         var mipmap = true;
         var iteratorVariable1 = false;
-        if ((int) FengGameManagerMKII.settings[0x3f] == 1)
+        if ((int) FengGameManagerMKII.settings[63] == 1)
         {
             mipmap = false;
         }
@@ -457,7 +457,7 @@ public class TITAN_EREN : MonoBehaviour
             {
                 var link = new WWW(url);
                 yield return link;
-                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 0xf4240);
+                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 1000000);
                 link.Dispose();
                 if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))
                 {
@@ -705,7 +705,7 @@ public class TITAN_EREN : MonoBehaviour
                             rockPhase++;
                         }
                     }
-                    if (checkPoints.Count > 0 && Random.Range(0, 0xbb8) < 10 - checkPoints.Count)
+                    if (checkPoints.Count > 0 && Random.Range(0, 3000) < 10 - checkPoints.Count)
                     {
                         Quaternion quaternion;
                         RaycastHit hit;

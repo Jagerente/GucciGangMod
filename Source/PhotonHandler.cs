@@ -25,8 +25,8 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
         }
         SP = this;
         DontDestroyOnLoad(gameObject);
-        updateInterval = 0x3e8 / PhotonNetwork.sendRate;
-        updateIntervalOnSerialize = 0x3e8 / PhotonNetwork.sendRateOnSerialize;
+        updateInterval = 1000 / PhotonNetwork.sendRate;
+        updateIntervalOnSerialize = 1000 / PhotonNetwork.sendRateOnSerialize;
         StartFallbackSendAckThread();
     }
 

@@ -200,8 +200,8 @@ public static class NGUIMath
     public static int ColorToInt(Color c)
     {
         var num = 0;
-        num |= Mathf.RoundToInt(c.r * 255f) << 0x18;
-        num |= Mathf.RoundToInt(c.g * 255f) << 0x10;
+        num |= Mathf.RoundToInt(c.r * 255f) << 24;
+        num |= Mathf.RoundToInt(c.g * 255f) << 16;
         num |= Mathf.RoundToInt(c.b * 255f) << 8;
         return num | Mathf.RoundToInt(c.a * 255f);
     }
@@ -277,7 +277,7 @@ public static class NGUIMath
 
     public static string DecimalToHex(int num)
     {
-        num &= 0xffffff;
+        num &= 16777215;
         return num.ToString("X6");
     }
 
@@ -289,9 +289,9 @@ public static class NGUIMath
         }
         if (num < 10)
         {
-            return (char) (0x30 + num);
+            return (char) (48 + num);
         }
-        return (char) (0x41 + num - 10);
+        return (char) (65 + num - 10);
     }
 
     private static float DistancePointToLineSegment(Vector2 point, Vector2 a, Vector2 b)
@@ -468,8 +468,8 @@ public static class NGUIMath
             switch (num)
             {
                 case 8:
-                case 0x10:
-                case 0x18:
+                case 16:
+                case 24:
                     str = str + " ";
                     break;
             }
@@ -482,10 +482,10 @@ public static class NGUIMath
     {
         var num = 0.003921569f;
         var black = Color.black;
-        black.r = num * ((val >> 0x18) & 0xff);
-        black.g = num * ((val >> 0x10) & 0xff);
-        black.b = num * ((val >> 8) & 0xff);
-        black.a = num * (val & 0xff);
+        black.r = num * ((val >> 24) & 255);
+        black.g = num * ((val >> 16) & 255);
+        black.b = num * ((val >> 8) & 255);
+        black.a = num * (val & 255);
         return black;
     }
 

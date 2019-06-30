@@ -32,8 +32,8 @@ public class COLOSSAL_TITAN : MonoBehaviour
     public static GameObject minusDistanceEnemy;
     public float myDistance;
     public GameObject myHero;
-    public int NapeArmor = 0x2710;
-    public int NapeArmorTotal = 0x2710;
+    public int NapeArmor = 10000;
+    public int NapeArmorTotal = 10000;
     public GameObject neckSteamObject;
     public float size;
     private string state = "idle";
@@ -379,7 +379,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient && (int) FengGameManagerMKII.settings[1] == 1)
         {
-            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[0x43]);
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[67]);
         }
     }
 
@@ -391,7 +391,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         }
         var mipmap = true;
         var iteratorVariable1 = false;
-        if ((int) FengGameManagerMKII.settings[0x3f] == 1)
+        if ((int) FengGameManagerMKII.settings[63] == 1)
         {
             mipmap = false;
         }
@@ -403,7 +403,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 {
                     var link = new WWW(url);
                     yield return link;
-                    var iteratorVariable4 = RCextensions.loadimage(link, mipmap, 0xf4240);
+                    var iteratorVariable4 = RCextensions.loadimage(link, mipmap, 1000000);
                     link.Dispose();
                     if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))
                     {

@@ -11,7 +11,7 @@ public class TITAN : MonoBehaviour
     private static Dictionary<string, int> f__switchmap7;
     private Vector3 abnorma_jump_bite_horizon_v;
     public AbnormalType abnormalType;
-    public int activeRad = 0x7fffffff;
+    public int activeRad = 2147483647;
     private float angle;
     public bool asClientLookTarget;
     private string attackAnimation;
@@ -143,7 +143,7 @@ public class TITAN : MonoBehaviour
             int num;
             if (fswitchmap6 == null)
             {
-                var dictionary = new Dictionary<string, int>(0x16);
+                var dictionary = new Dictionary<string, int>(22);
                 dictionary.Add("abnormal_getup", 0);
                 dictionary.Add("abnormal_jump", 1);
                 dictionary.Add("combo_1", 2);
@@ -160,12 +160,12 @@ public class TITAN : MonoBehaviour
                 dictionary.Add("jumper_0", 13);
                 dictionary.Add("crawler_jump_0", 14);
                 dictionary.Add("anti_AE_l", 15);
-                dictionary.Add("anti_AE_r", 0x10);
-                dictionary.Add("anti_AE_low_l", 0x11);
-                dictionary.Add("anti_AE_low_r", 0x12);
-                dictionary.Add("quick_turn_l", 0x13);
+                dictionary.Add("anti_AE_r", 16);
+                dictionary.Add("anti_AE_low_l", 17);
+                dictionary.Add("anti_AE_low_r", 18);
+                dictionary.Add("quick_turn_l", 19);
                 dictionary.Add("quick_turn_r", 20);
-                dictionary.Add("throw", 0x15);
+                dictionary.Add("throw", 21);
                 fswitchmap6 = dictionary;
             }
             if (fswitchmap6.TryGetValue(key, out num))
@@ -275,25 +275,25 @@ public class TITAN : MonoBehaviour
                         leftHandAttack = true;
                         break;
 
-                    case 0x10:
+                    case 16:
                         attackCheckTimeA = 0.31f;
                         attackCheckTimeB = 0.4f;
                         leftHandAttack = false;
                         break;
 
-                    case 0x11:
+                    case 17:
                         attackCheckTimeA = 0.31f;
                         attackCheckTimeB = 0.4f;
                         leftHandAttack = true;
                         break;
 
-                    case 0x12:
+                    case 18:
                         attackCheckTimeA = 0.31f;
                         attackCheckTimeB = 0.4f;
                         leftHandAttack = false;
                         break;
 
-                    case 0x13:
+                    case 19:
                         attackCheckTimeA = 2f;
                         attackCheckTimeB = 2f;
                         isAttackMoveByCore = true;
@@ -305,7 +305,7 @@ public class TITAN : MonoBehaviour
                         isAttackMoveByCore = true;
                         break;
 
-                    case 0x15:
+                    case 21:
                         isAlarm = true;
                         chaseDistance = 99999f;
                         break;
@@ -372,7 +372,7 @@ public class TITAN : MonoBehaviour
         collider2.name = "PlayerDetectorRC";
         myTitanTrigger = obj2.AddComponent<TitanTrigger>();
         myTitanTrigger.isCollide = false;
-        obj2.layer = 0x10;
+        obj2.layer = 16;
         obj2.transform.parent = baseTransform.Find("AABB");
         obj2.transform.localPosition = new Vector3(0f, 0f, 0f);
         MultiplayerManager = FengGameManagerMKII.FGM;
@@ -748,7 +748,7 @@ public class TITAN : MonoBehaviour
             int num;
             if (fswitchmap5 == null)
             {
-                var dictionary = new Dictionary<string, int>(0x12);
+                var dictionary = new Dictionary<string, int>(18);
                 dictionary.Add("grab_ground_front_l", 0);
                 dictionary.Add("grab_ground_front_r", 1);
                 dictionary.Add("grab_ground_back_l", 2);
@@ -765,8 +765,8 @@ public class TITAN : MonoBehaviour
                 dictionary.Add("attack_slap_face", 13);
                 dictionary.Add("attack_stomp", 14);
                 dictionary.Add("attack_bite", 15);
-                dictionary.Add("attack_bite_l", 0x10);
-                dictionary.Add("attack_bite_r", 0x11);
+                dictionary.Add("attack_bite_l", 16);
+                dictionary.Add("attack_bite_r", 17);
                 fswitchmap5 = dictionary;
             }
             if (fswitchmap5.TryGetValue(key, out num))
@@ -837,11 +837,11 @@ public class TITAN : MonoBehaviour
                         attack("bite");
                         return true;
 
-                    case 0x10:
+                    case 16:
                         attack("bite_l");
                         return true;
 
-                    case 0x11:
+                    case 17:
                         attack("bite_r");
                         return true;
                 }
@@ -1267,7 +1267,7 @@ public class TITAN : MonoBehaviour
                 }
                 if (abnormalType == AbnormalType.NORMAL || abnormalType == AbnormalType.TYPE_PUNK)
                 {
-                    if (myDifficulty <= 0 && Random.Range(0, 0x3e8) >= 3)
+                    if (myDifficulty <= 0 && Random.Range(0, 1000) >= 3)
                     {
                         return strArray;
                     }
@@ -2179,15 +2179,15 @@ public class TITAN : MonoBehaviour
 
     public void loadskin()
     {
-        skin = 0x56;
+        skin = 86;
         this.eye = false;
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine) && (int) FengGameManagerMKII.settings[1] == 1)
         {
             var index = (int) Random.Range(86f, 90f);
             var num2 = index - 60;
-            if ((int) FengGameManagerMKII.settings[0x20] == 1)
+            if ((int) FengGameManagerMKII.settings[32] == 1)
             {
-                num2 = Random.Range(0x1a, 30);
+                num2 = Random.Range(26, 30);
             }
             var body = (string) FengGameManagerMKII.settings[index];
             var eye = (string) FengGameManagerMKII.settings[num2];
@@ -2216,7 +2216,7 @@ public class TITAN : MonoBehaviour
         }
         var mipmap = true;
         var iteratorVariable1 = false;
-        if ((int) FengGameManagerMKII.settings[0x3f] == 1)
+        if ((int) FengGameManagerMKII.settings[63] == 1)
         {
             mipmap = false;
         }
@@ -2234,7 +2234,7 @@ public class TITAN : MonoBehaviour
                     {
                         var link = new WWW(eye);
                         yield return link;
-                        var iteratorVariable4 = RCextensions.loadimage(link, mipmap, 0x30d40);
+                        var iteratorVariable4 = RCextensions.loadimage(link, mipmap, 200000);
                         link.Dispose();
                         if (!FengGameManagerMKII.linkHash[0].ContainsKey(eye))
                         {
@@ -2262,7 +2262,7 @@ public class TITAN : MonoBehaviour
                 {
                     var iteratorVariable5 = new WWW(body);
                     yield return iteratorVariable5;
-                    var iteratorVariable6 = RCextensions.loadimage(iteratorVariable5, mipmap, 0xf4240);
+                    var iteratorVariable6 = RCextensions.loadimage(iteratorVariable5, mipmap, 1000000);
                     iteratorVariable5.Dispose();
                     if (!FengGameManagerMKII.linkHash[2].ContainsKey(body))
                     {
@@ -2711,7 +2711,7 @@ public class TITAN : MonoBehaviour
     public void setAbnormalType(AbnormalType type, bool forceCrawler)
     {
         var flag = false;
-        if (RCSettings.spawnMode > 0 || (int) FengGameManagerMKII.settings[0x5b] == 1 && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
+        if (RCSettings.spawnMode > 0 || (int) FengGameManagerMKII.settings[91] == 1 && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
             flag = true;
         }
@@ -2773,7 +2773,7 @@ public class TITAN : MonoBehaviour
         else if (type == AbnormalType.TYPE_CRAWLER)
         {
             num = 3;
-            if (GGM.Caching.GameObjectCache.Find("Crawler") != null && Random.Range(0, 0x3e8) > 5)
+            if (GGM.Caching.GameObjectCache.Find("Crawler") != null && Random.Range(0, 1000) > 5)
             {
                 num = 2;
             }
@@ -3253,7 +3253,7 @@ public class TITAN : MonoBehaviour
             explode();
             if (!nonAI)
             {
-                if (activeRad < 0x7fffffff && (state == TitanState.idle || state == TitanState.wander || state == TitanState.chase))
+                if (activeRad < 2147483647 && (state == TitanState.idle || state == TitanState.wander || state == TitanState.chase))
                 {
                     if (checkPoints.Count > 1)
                     {
@@ -3571,7 +3571,7 @@ public class TITAN : MonoBehaviour
                                     if (PVPfromCheckPt.state == CheckPointState.Titan)
                                     {
                                         GameObject chkPtNext;
-                                        if (Random.Range(0, 100) > 0x30)
+                                        if (Random.Range(0, 100) > 48)
                                         {
                                             chkPtNext = PVPfromCheckPt.chkPtNext;
                                             if (chkPtNext != null && (chkPtNext.GetComponent<PVPcheckPoint>().state != CheckPointState.Titan || Random.Range(0, 100) < 20))

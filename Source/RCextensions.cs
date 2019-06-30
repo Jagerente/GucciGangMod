@@ -73,7 +73,7 @@ public static class RCextensions
         if (width < 4 || (width & (width - 1)) != 0)
         {
             num3 = 4;
-            width = Math.Min(width, 0x3ff);
+            width = Math.Min(width, 1023);
             while (num3 < width)
             {
                 num3 *= 2;
@@ -82,7 +82,7 @@ public static class RCextensions
         else if (height < 4 || (height & (height - 1)) != 0)
         {
             num3 = 4;
-            height = Math.Min(height, 0x3ff);
+            height = Math.Min(height, 1023);
             while (num3 < height)
             {
                 num3 *= 2;

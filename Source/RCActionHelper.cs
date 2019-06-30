@@ -121,7 +121,7 @@ public class RCActionHelper
                             }
                             return false;
                         }
-                        case 0x10:
+                        case 16:
                         {
                             var num6 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num6))
@@ -131,7 +131,7 @@ public class RCActionHelper
                             }
                             return false;
                         }
-                        case 0x11:
+                        case 17:
                         {
                             var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
@@ -324,7 +324,7 @@ public class RCActionHelper
                             }
                             return 0f;
                         }
-                        case 0x10:
+                        case 16:
                         {
                             var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
@@ -334,7 +334,7 @@ public class RCActionHelper
                             }
                             return 0f;
                         }
-                        case 0x11:
+                        case 17:
                         {
                             var num8 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num8))
@@ -531,7 +531,7 @@ public class RCActionHelper
                             }
                             return 0;
                         }
-                        case 0x10:
+                        case 16:
                         {
                             var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))
@@ -541,7 +541,7 @@ public class RCActionHelper
                             }
                             return 0;
                         }
-                        case 0x11:
+                        case 17:
                         {
                             var num8 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num8))
@@ -759,7 +759,7 @@ public class RCActionHelper
                             }
                             return string.Empty;
                         }
-                        case 0x10:
+                        case 16:
                         {
                             var num6 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num6))
@@ -769,7 +769,7 @@ public class RCActionHelper
                             }
                             return string.Empty;
                         }
-                        case 0x11:
+                        case 17:
                         {
                             var num7 = player.ID;
                             if (FengGameManagerMKII.heroHash.ContainsKey(num7))

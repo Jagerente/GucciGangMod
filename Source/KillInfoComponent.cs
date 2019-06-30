@@ -12,7 +12,7 @@ public class KillInfoComponent : MonoBehaviour
     public GameObject leftTitan;
     private float lifeTime = 8f;
     private float maxScale = 1.5f;
-    private int offset = 0x18;
+    private int offset = 24;
     public GameObject rightTitan;
     public GameObject slabelNameLeft;
     public GameObject slabelNameRight;
@@ -108,7 +108,7 @@ public class KillInfoComponent : MonoBehaviour
         {
             labelScore.GetComponent<UILabel>().text = dmg.ToString();
             slabelScore.GetComponent<UILabel>().text = dmg.ToString();
-            if (dmg > 0x3e8)
+            if (dmg > 1000)
             {
                 labelScore.GetComponent<UILabel>().color = Color.red;
                 slabelScore.GetComponent<UILabel>().color = Color.red;

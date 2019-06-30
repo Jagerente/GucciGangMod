@@ -553,7 +553,7 @@ public class InstantiateTracker
                 lastClear = Time.time;
             }
             count++;
-            return count > 0x23;
+            return count > 35;
         }
 
         public override void reset()

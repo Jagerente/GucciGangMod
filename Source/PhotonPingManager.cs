@@ -111,7 +111,7 @@ public class PhotonPingManager
         get
         {
             Region region = null;
-            var ping = 0x7fffffff;
+            var ping = 2147483647;
             foreach (var region2 in PhotonNetwork.networkingPeer.AvailableRegions)
             {
                 Debug.Log("BestRegion checks region: " + region2);

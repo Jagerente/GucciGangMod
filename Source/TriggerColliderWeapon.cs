@@ -161,7 +161,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                         }
                         else if (item.transform.root.GetComponent<FEMALE_TITAN>() != null)
                         {
-                            transform.root.GetComponent<HERO>().useBlade(0x7fffffff);
+                            transform.root.GetComponent<HERO>().useBlade(2147483647);
                             var vector5 =
                                 currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                 item.transform.root.rigidbody.velocity;
@@ -176,7 +176,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                         }
                         else if (item.transform.root.GetComponent<COLOSSAL_TITAN>() != null)
                         {
-                            transform.root.GetComponent<HERO>().useBlade(0x7fffffff);
+                            transform.root.GetComponent<HERO>().useBlade(2147483647);
                             if (!item.transform.root.GetComponent<COLOSSAL_TITAN>().hasDie)
                             {
                                 var vector6 =
@@ -212,7 +212,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                     }
                     else if (item.transform.root.GetComponent<FEMALE_TITAN>() != null)
                     {
-                        transform.root.GetComponent<HERO>().useBlade(0x7fffffff);
+                        transform.root.GetComponent<HERO>().useBlade(2147483647);
                         if (!item.transform.root.GetComponent<FEMALE_TITAN>().hasDie)
                         {
                             var vector8 =
@@ -232,7 +232,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                     }
                     else if (item.transform.root.GetComponent<COLOSSAL_TITAN>() != null)
                     {
-                        transform.root.GetComponent<HERO>().useBlade(0x7fffffff);
+                        transform.root.GetComponent<HERO>().useBlade(2147483647);
                         if (!item.transform.root.GetComponent<COLOSSAL_TITAN>().hasDie)
                         {
                             var vector9 =

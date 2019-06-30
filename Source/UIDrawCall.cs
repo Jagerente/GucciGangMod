@@ -113,7 +113,7 @@ public class UIDrawCall : MonoBehaviour
             {
                 UpdateMaterials();
             }
-            if (verts.size < 0xfde8)
+            if (verts.size < 65000)
             {
                 var num2 = (size >> 1) * 3;
                 var rebuildIndices = mIndices == null || mIndices.Length != num2;

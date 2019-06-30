@@ -17,7 +17,7 @@ public class EanAnimation
     public void Load(BinaryReader br, FileStream fs)
     {
         Offset = br.ReadInt32();
-        Offset += 0x10;
+        Offset += 16;
         FrameCount = br.ReadInt32();
         MipWidth = br.ReadInt32();
         MipHeight = br.ReadInt32();

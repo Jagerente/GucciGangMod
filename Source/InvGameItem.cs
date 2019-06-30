@@ -115,25 +115,25 @@ public class InvGameItem
                     return new Color(1f, 1f, 1f);
 
                 case Quality.Polished:
-                    return NGUIMath.HexToColor(0xe0ffbeff);
+                    return NGUIMath.HexToColor(3774856959);
 
                 case Quality.Improved:
-                    return NGUIMath.HexToColor(0x93d749ff);
+                    return NGUIMath.HexToColor(2480359935);
 
                 case Quality.Crafted:
-                    return NGUIMath.HexToColor(0x4eff00ff);
+                    return NGUIMath.HexToColor(1325334783);
 
                 case Quality.Superior:
-                    return NGUIMath.HexToColor(0xbaffff);
+                    return NGUIMath.HexToColor(12255231);
 
                 case Quality.Enchanted:
-                    return NGUIMath.HexToColor(0x7376fdff);
+                    return NGUIMath.HexToColor(1937178111);
 
                 case Quality.Epic:
-                    return NGUIMath.HexToColor(0x9600ffff);
+                    return NGUIMath.HexToColor(2516647935);
 
                 case Quality.Legendary:
-                    return NGUIMath.HexToColor(0xff9000ff);
+                    return NGUIMath.HexToColor(4287627519);
             }
             return white;
         }

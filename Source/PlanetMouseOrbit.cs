@@ -11,7 +11,7 @@ public class PlanetMouseOrbit : MonoBehaviour
     public int yMaxLimit = 80;
     public int yMinLimit = -20;
     public float ySpeed = 120f;
-    public int zoomRate = 0x19;
+    public int zoomRate = 25;
 
     public static float ClampAngle(float angle, float min, float max)
     {

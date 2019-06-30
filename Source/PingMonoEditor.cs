@@ -47,8 +47,8 @@ public class PingMonoEditor : PhotonPing
         Init();
         try
         {
-            sock.ReceiveTimeout = 0x1388;
-            sock.Connect(ip, 0x13bf);
+            sock.ReceiveTimeout = 5000;
+            sock.Connect(ip, 5055);
             PingBytes[PingBytes.Length - 1] = PingId;
             sock.Send(PingBytes);
             PingBytes[PingBytes.Length - 1] = (byte) (PingId - 1);

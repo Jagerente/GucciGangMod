@@ -59,7 +59,7 @@ public class FEMALE_TITAN : MonoBehaviour
     public static GameObject minusDistanceEnemy;
     public float myDistance;
     public GameObject myHero;
-    public int NapeArmor = 0x3e8;
+    public int NapeArmor = 1000;
     private bool needFreshCorePosition;
     private string nextAttackAnimation;
     private Vector3 oldCorePosition;
@@ -103,7 +103,7 @@ public class FEMALE_TITAN : MonoBehaviour
             int num;
             if (f__switchmap2 == null)
             {
-                var dictionary = new Dictionary<string, int>(0x11);
+                var dictionary = new Dictionary<string, int>(17);
                 dictionary.Add("combo_1", 0);
                 dictionary.Add("combo_2", 1);
                 dictionary.Add("combo_3", 2);
@@ -120,7 +120,7 @@ public class FEMALE_TITAN : MonoBehaviour
                 dictionary.Add("sweep_front_left", 13);
                 dictionary.Add("sweep_front_right", 14);
                 dictionary.Add("sweep_head_b_l", 15);
-                dictionary.Add("sweep_head_b_r", 0x10);
+                dictionary.Add("sweep_head_b_r", 16);
                 f__switchmap2 = dictionary;
             }
             if (f__switchmap2.TryGetValue(key, out num))
@@ -268,7 +268,7 @@ public class FEMALE_TITAN : MonoBehaviour
                         checkHitCapsuleR = 4f;
                         break;
 
-                    case 0x10:
+                    case 16:
                         isAttackMoveByCore = true;
                         attackCheckTimeA = 0.4f;
                         attackCheckTimeB = 0.51f;
@@ -447,7 +447,7 @@ public class FEMALE_TITAN : MonoBehaviour
         {
             if (f__switchmap1 == null)
             {
-                var dictionary = new Dictionary<string, int>(0x11);
+                var dictionary = new Dictionary<string, int>(17);
                 dictionary.Add("grab_bottom_left", 0);
                 dictionary.Add("grab_bottom_right", 1);
                 dictionary.Add("grab_mid_left", 2);
@@ -464,7 +464,7 @@ public class FEMALE_TITAN : MonoBehaviour
                 dictionary.Add("attack_sweep_front_right", 13);
                 dictionary.Add("attack_sweep_head_b_l", 14);
                 dictionary.Add("attack_sweep_head_b_r", 15);
-                dictionary.Add("turn180", 0x10);
+                dictionary.Add("turn180", 16);
                 f__switchmap1 = dictionary;
             }
             if (f__switchmap1.TryGetValue(key, out num5))
@@ -535,7 +535,7 @@ public class FEMALE_TITAN : MonoBehaviour
                         attack("sweep_head_b_r");
                         return true;
 
-                    case 0x10:
+                    case 16:
                         turn180();
                         return true;
                 }
@@ -1183,7 +1183,7 @@ public class FEMALE_TITAN : MonoBehaviour
     {
         if ((int) FengGameManagerMKII.settings[1] == 1)
         {
-            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[0x42]);
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[66]);
         }
     }
 
@@ -1195,7 +1195,7 @@ public class FEMALE_TITAN : MonoBehaviour
         }
         var mipmap = true;
         var iteratorVariable1 = false;
-        if ((int) FengGameManagerMKII.settings[0x3f] == 1)
+        if ((int) FengGameManagerMKII.settings[63] == 1)
         {
             mipmap = false;
         }
@@ -1205,7 +1205,7 @@ public class FEMALE_TITAN : MonoBehaviour
             {
                 var link = new WWW(url);
                 yield return link;
-                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 0xf4240);
+                var iteratorVariable6 = RCextensions.loadimage(link, mipmap, 1000000);
                 link.Dispose();
                 if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))
                 {

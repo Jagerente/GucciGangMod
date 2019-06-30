@@ -20,7 +20,7 @@
     public static int levelCursor = 6;
     public static int levelDelete = 8;
     public static int levelDown = 5;
-    public static int levelFast = 0x10;
+    public static int levelFast = 16;
     public static int levelForward = 0;
     public static int levelLeft = 2;
     public static int levelPlace = 7;

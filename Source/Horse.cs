@@ -343,7 +343,7 @@ public class Horse : MonoBehaviour
             }
             if (animation.IsPlaying("horse_idle0"))
             {
-                var num = Random.Range(0, 0x2710);
+                var num = Random.Range(0, 10000);
                 if (num < 10)
                 {
                     crossFade("horse_idle1", 0.1f);

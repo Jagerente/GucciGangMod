@@ -19,7 +19,7 @@ public class BetterList<T>
 
     private void AllocateMore()
     {
-        var array = buffer == null ? new T[0x20] : new T[Mathf.Max(buffer.Length << 1, 0x20)];
+        var array = buffer == null ? new T[32] : new T[Mathf.Max(buffer.Length << 1, 32)];
         if (buffer != null && size > 0)
         {
             buffer.CopyTo(array, 0);
