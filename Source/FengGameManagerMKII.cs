@@ -236,7 +236,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
 
-            if ((int)settings[0xf4] == 1)
+            if ((int)settings[244] == 1)
             {
                 string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round Start." };
                 InRoomChat.SystemMessageLocal(msg, false);
@@ -258,11 +258,11 @@ public class FengGameManagerMKII : MonoBehaviour
 
         content = InRoomChat.ChatFormatting(
             $"[{Convert.ToString(info.sender.ID)}]",
-            Settings.ChatMinorColor,
-            Settings.ChatMinorBold,
-            Settings.ChatMinorItalic) +
+            Settings.ChatMinorColorSetting,
+            Settings.ChatMinorBoldSetting,
+            Settings.ChatMinorItalicSetting) +
             content;
-        InRoomChat.AddLine($"<size={Settings.ChatSize}>{content}</size>");
+        InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
     }
 
     [RPC]
@@ -270,17 +270,17 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         content = InRoomChat.ChatFormatting(
             "Message from ",
-            Settings.ChatMajorColor,
-            Settings.ChatMajorBold,
-            Settings.ChatMajorItalic) +
+            Settings.ChatMajorColorSetting,
+            Settings.ChatMajorBoldSetting,
+            Settings.ChatMajorItalicSetting) +
             InRoomChat.ChatFormatting(
                 $"[{Convert.ToString(info.sender.ID)}]",
-                Settings.ChatMinorColor,
-                Settings.ChatMinorBold,
-                Settings.ChatMinorItalic) +
+                Settings.ChatMinorColorSetting,
+                Settings.ChatMinorBoldSetting,
+                Settings.ChatMinorItalicSetting) +
                 info.sender.Name.hexColor() +
                 content;
-        InRoomChat.AddLine($"<size={Settings.ChatSize}>{content}</size>");
+        InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
     }
 
     private Hashtable checkGameGUI()
@@ -294,14 +294,14 @@ public class FengGameManagerMKII : MonoBehaviour
         var hashtable = new Hashtable();
         if ((int)settings[200] > 0)
         {
-            settings[0xc0] = 0;
-            settings[0xc1] = 0;
-            settings[0xe2] = 0;
+            settings[192] = 0;
+            settings[193] = 0;
+            settings[226] = 0;
             settings[220] = 0;
             num = 1;
-            if (!int.TryParse((string)settings[0xc9], out num) || num > PhotonNetwork.countOfPlayers || num < 0)
+            if (!int.TryParse((string)settings[201], out num) || num > PhotonNetwork.countOfPlayers || num < 0)
             {
-                settings[0xc9] = "1";
+                settings[201] = "1";
             }
 
             hashtable.Add("infection", num);
@@ -335,20 +335,20 @@ public class FengGameManagerMKII : MonoBehaviour
             }
         }
 
-        if ((int)settings[0xc0] > 0)
+        if ((int)settings[192] > 0)
         {
-            hashtable.Add("bomb", (int)settings[0xc0]);
+            hashtable.Add("bomb", (int)settings[192]);
         }
 
-        if ((int)settings[0xeb] > 0)
+        if ((int)settings[235] > 0)
         {
-            hashtable.Add("globalDisableMinimap", (int)settings[0xeb]);
+            hashtable.Add("globalDisableMinimap", (int)settings[235]);
         }
 
-        if ((int)settings[0xc1] > 0)
+        if ((int)settings[193] > 0)
         {
-            hashtable.Add("team", (int)settings[0xc1]);
-            if (RCSettings.teamMode != (int)settings[0xc1])
+            hashtable.Add("team", (int)settings[193]);
+            if (RCSettings.teamMode != (int)settings[193])
             {
                 num4 = 1;
                 for (num2 = 0; num2 < PhotonNetwork.playerList.Length; num2++)
@@ -370,94 +370,94 @@ public class FengGameManagerMKII : MonoBehaviour
             }
         }
 
-        if ((int)settings[0xe2] > 0)
+        if ((int)settings[226] > 0)
         {
             num = 50;
-            if (!int.TryParse((string)settings[0xe3], out num) || num > 0x3e8 || num < 0)
+            if (!int.TryParse((string)settings[227], out num) || num > 1000 || num < 0)
             {
-                settings[0xe3] = "50";
+                settings[227] = "50";
             }
 
             hashtable.Add("point", num);
         }
 
-        if ((int)settings[0xc2] > 0)
+        if ((int)settings[194] > 0)
         {
-            hashtable.Add("rock", (int)settings[0xc2]);
+            hashtable.Add("rock", (int)settings[194]);
         }
 
-        if ((int)settings[0xc3] > 0)
+        if ((int)settings[195] > 0)
         {
             num = 30;
-            if (!int.TryParse((string)settings[0xc4], out num) || num > 100 || num < 0)
+            if (!int.TryParse((string)settings[196], out num) || num > 100 || num < 0)
             {
-                settings[0xc4] = "30";
+                settings[196] = "30";
             }
 
             hashtable.Add("explode", num);
         }
 
-        if ((int)settings[0xc5] > 0)
+        if ((int)settings[197] > 0)
         {
             var result = 100;
             var num7 = 200;
-            if (!int.TryParse((string)settings[0xc6], out result) || result > 0x186a0 || result < 0)
+            if (!int.TryParse((string)settings[198], out result) || result > 100000 || result < 0)
             {
-                settings[0xc6] = "100";
+                settings[198] = "100";
             }
 
-            if (!int.TryParse((string)settings[0xc7], out num7) || num7 > 0x186a0 || num7 < 0)
+            if (!int.TryParse((string)settings[199], out num7) || num7 > 100000 || num7 < 0)
             {
-                settings[0xc7] = "200";
+                settings[199] = "200";
             }
 
-            hashtable.Add("healthMode", (int)settings[0xc5]);
+            hashtable.Add("healthMode", (int)settings[197]);
             hashtable.Add("healthLower", result);
             hashtable.Add("healthUpper", num7);
         }
 
-        if ((int)settings[0xca] > 0)
+        if ((int)settings[202] > 0)
         {
-            hashtable.Add("eren", (int)settings[0xca]);
+            hashtable.Add("eren", (int)settings[202]);
         }
 
-        if ((int)settings[0xcb] > 0)
+        if ((int)settings[203] > 0)
         {
             num = 1;
-            if (!int.TryParse((string)settings[0xcc], out num) || num > 50 || num < 0)
+            if (!int.TryParse((string)settings[204], out num) || num > 50 || num < 0)
             {
-                settings[0xcc] = "1";
+                settings[204] = "1";
             }
 
             hashtable.Add("titanc", num);
         }
 
-        if ((int)settings[0xcd] > 0)
+        if ((int)settings[205] > 0)
         {
-            num = 0x3e8;
-            if (!int.TryParse((string)settings[0xce], out num) || num > 0x186a0 || num < 0)
+            num = 1000;
+            if (!int.TryParse((string)settings[206], out num) || num > 100000 || num < 0)
             {
-                settings[0xce] = "1000";
+                settings[206] = "1000";
             }
 
             hashtable.Add("damage", num);
         }
 
-        if ((int)settings[0xcf] > 0)
+        if ((int)settings[207] > 0)
         {
             num8 = 1f;
             num9 = 3f;
-            if (!float.TryParse((string)settings[0xd0], out num8) || num8 > 100f || num8 < 0f)
+            if (!float.TryParse((string)settings[208], out num8) || num8 > 100f || num8 < 0f)
             {
-                settings[0xd0] = "1.0";
+                settings[208] = "1.0";
             }
 
-            if (!float.TryParse((string)settings[0xd1], out num9) || num9 > 100f || num9 < 0f)
+            if (!float.TryParse((string)settings[209], out num9) || num9 > 100f || num9 < 0f)
             {
-                settings[0xd1] = "3.0";
+                settings[209] = "3.0";
             }
 
-            hashtable.Add("sizeMode", (int)settings[0xcf]);
+            hashtable.Add("sizeMode", (int)settings[207]);
             hashtable.Add("sizeLower", num8);
             hashtable.Add("sizeUpper", num9);
         }
@@ -469,38 +469,38 @@ public class FengGameManagerMKII : MonoBehaviour
             var num10 = 20f;
             var num11 = 20f;
             var num12 = 20f;
-            if (!(float.TryParse((string)settings[0xd3], out num8) && num8 >= 0f))
+            if (!(float.TryParse((string)settings[211], out num8) && num8 >= 0f))
             {
-                settings[0xd3] = "20.0";
+                settings[211] = "20.0";
             }
 
-            if (!(float.TryParse((string)settings[0xd4], out num9) && num9 >= 0f))
+            if (!(float.TryParse((string)settings[212], out num9) && num9 >= 0f))
             {
-                settings[0xd4] = "20.0";
+                settings[212] = "20.0";
             }
 
-            if (!(float.TryParse((string)settings[0xd5], out num10) && num10 >= 0f))
+            if (!(float.TryParse((string)settings[213], out num10) && num10 >= 0f))
             {
-                settings[0xd5] = "20.0";
+                settings[213] = "20.0";
             }
 
-            if (!(float.TryParse((string)settings[0xd6], out num11) && num11 >= 0f))
+            if (!(float.TryParse((string)settings[214], out num11) && num11 >= 0f))
             {
-                settings[0xd6] = "20.0";
+                settings[214] = "20.0";
             }
 
-            if (!(float.TryParse((string)settings[0xd7], out num12) && num12 >= 0f))
+            if (!(float.TryParse((string)settings[215], out num12) && num12 >= 0f))
             {
-                settings[0xd7] = "20.0";
+                settings[215] = "20.0";
             }
 
             if (num8 + num9 + num10 + num11 + num12 > 100f)
             {
-                settings[0xd3] = "20.0";
-                settings[0xd4] = "20.0";
-                settings[0xd5] = "20.0";
-                settings[0xd6] = "20.0";
-                settings[0xd7] = "20.0";
+                settings[211] = "20.0";
+                settings[212] = "20.0";
+                settings[213] = "20.0";
+                settings[214] = "20.0";
+                settings[215] = "20.0";
                 num8 = 20f;
                 num9 = 20f;
                 num10 = 20f;
@@ -516,26 +516,26 @@ public class FengGameManagerMKII : MonoBehaviour
             hashtable.Add("pRate", num12);
         }
 
-        if ((int)settings[0xd8] > 0)
+        if ((int)settings[216] > 0)
         {
-            hashtable.Add("horse", (int)settings[0xd8]);
+            hashtable.Add("horse", (int)settings[216]);
         }
 
-        if ((int)settings[0xd9] > 0)
+        if ((int)settings[217] > 0)
         {
             num = 1;
-            if (!(int.TryParse((string)settings[0xda], out num) && num <= 50))
+            if (!(int.TryParse((string)settings[218], out num) && num <= 50))
             {
-                settings[0xda] = "1";
+                settings[218] = "1";
             }
 
-            hashtable.Add("waveModeOn", (int)settings[0xd9]);
+            hashtable.Add("waveModeOn", (int)settings[217]);
             hashtable.Add("waveModeNum", num);
         }
 
-        if ((int)settings[0xdb] > 0)
+        if ((int)settings[219] > 0)
         {
-            hashtable.Add("friendly", (int)settings[0xdb]);
+            hashtable.Add("friendly", (int)settings[219]);
         }
 
         if ((int)settings[220] > 0)
@@ -543,46 +543,46 @@ public class FengGameManagerMKII : MonoBehaviour
             hashtable.Add("pvp", (int)settings[220]);
         }
 
-        if ((int)settings[0xdd] > 0)
+        if ((int)settings[221] > 0)
         {
             num = 20;
-            if (!int.TryParse((string)settings[0xde], out num) || num > 0xf4240 || num < 0)
+            if (!int.TryParse((string)settings[222], out num) || num > 1000000 || num < 0)
             {
-                settings[0xde] = "20";
+                settings[222] = "20";
             }
 
             hashtable.Add("maxwave", num);
         }
 
-        if ((int)settings[0xdf] > 0)
+        if ((int)settings[223] > 0)
         {
             num = 5;
-            if (!int.TryParse((string)settings[0xe0], out num) || num > 0xf4240 || num < 5)
+            if (!int.TryParse((string)settings[224], out num) || num > 1000000 || num < 5)
             {
-                settings[0xe0] = "5";
+                settings[224] = "5";
             }
 
             hashtable.Add("endless", num);
         }
 
-        if ((string)settings[0xe1] != string.Empty)
+        if ((string)settings[225] != string.Empty)
         {
-            hashtable.Add("motd", (string)settings[0xe1]);
+            hashtable.Add("motd", (string)settings[225]);
         }
 
-        if ((int)settings[0xe4] > 0)
+        if ((int)settings[228] > 0)
         {
-            hashtable.Add("ahssReload", (int)settings[0xe4]);
+            hashtable.Add("ahssReload", (int)settings[228]);
         }
 
-        if ((int)settings[0xe5] > 0)
+        if ((int)settings[229] > 0)
         {
-            hashtable.Add("punkWaves", (int)settings[0xe5]);
+            hashtable.Add("punkWaves", (int)settings[229]);
         }
 
-        if ((int)settings[0x105] > 0)
+        if ((int)settings[261] > 0)
         {
-            hashtable.Add("deadlycannons", (int)settings[0x105]);
+            hashtable.Add("deadlycannons", (int)settings[261]);
         }
 
         if (RCSettings.racingStatic > 0)
@@ -663,7 +663,7 @@ public class FengGameManagerMKII : MonoBehaviour
         var key = skybox[6];
         var mipmap = true;
         var iteratorVariable2 = false;
-        if ((int)settings[0x3f] == 1)
+        if ((int)settings[63] == 1)
         {
             mipmap = false;
         }
@@ -686,7 +686,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var link = new WWW(url);
                     yield return link;
-                    var texture = RCextensions.loadimage(link, mipmap, 0x7a120);
+                    var texture = RCextensions.loadimage(link, mipmap, 500000);
                     link.Dispose();
                     material.SetTexture("_FrontTex", texture);
                 }
@@ -696,7 +696,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable13 = new WWW(iteratorVariable6);
                     yield return iteratorVariable13;
-                    var iteratorVariable14 = RCextensions.loadimage(iteratorVariable13, mipmap, 0x7a120);
+                    var iteratorVariable14 = RCextensions.loadimage(iteratorVariable13, mipmap, 500000);
                     iteratorVariable13.Dispose();
                     material.SetTexture("_BackTex", iteratorVariable14);
                 }
@@ -706,7 +706,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable15 = new WWW(iteratorVariable7);
                     yield return iteratorVariable15;
-                    var iteratorVariable16 = RCextensions.loadimage(iteratorVariable15, mipmap, 0x7a120);
+                    var iteratorVariable16 = RCextensions.loadimage(iteratorVariable15, mipmap, 500000);
                     iteratorVariable15.Dispose();
                     material.SetTexture("_LeftTex", iteratorVariable16);
                 }
@@ -716,7 +716,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable17 = new WWW(iteratorVariable8);
                     yield return iteratorVariable17;
-                    var iteratorVariable18 = RCextensions.loadimage(iteratorVariable17, mipmap, 0x7a120);
+                    var iteratorVariable18 = RCextensions.loadimage(iteratorVariable17, mipmap, 500000);
                     iteratorVariable17.Dispose();
                     material.SetTexture("_RightTex", iteratorVariable18);
                 }
@@ -726,7 +726,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable19 = new WWW(iteratorVariable9);
                     yield return iteratorVariable19;
-                    var iteratorVariable20 = RCextensions.loadimage(iteratorVariable19, mipmap, 0x7a120);
+                    var iteratorVariable20 = RCextensions.loadimage(iteratorVariable19, mipmap, 500000);
                     iteratorVariable19.Dispose();
                     material.SetTexture("_UpTex", iteratorVariable20);
                 }
@@ -736,7 +736,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable21 = new WWW(iteratorVariable10);
                     yield return iteratorVariable21;
-                    var iteratorVariable22 = RCextensions.loadimage(iteratorVariable21, mipmap, 0x7a120);
+                    var iteratorVariable22 = RCextensions.loadimage(iteratorVariable21, mipmap, 500000);
                     iteratorVariable21.Dispose();
                     material.SetTexture("_DownTex", iteratorVariable22);
                 }
@@ -764,7 +764,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         {
                             var iteratorVariable25 = new WWW(key);
                             yield return iteratorVariable25;
-                            var iteratorVariable26 = RCextensions.loadimage(iteratorVariable25, mipmap, 0x30d40);
+                            var iteratorVariable26 = RCextensions.loadimage(iteratorVariable25, mipmap, 200000);
                             iteratorVariable25.Dispose();
                             if (!linkHash[0].ContainsKey(key))
                             {
@@ -1137,7 +1137,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void core()
     {
-        if ((int)settings[0x40] >= 100)
+        if ((int)settings[64] >= 100)
         {
             coreeditor();
         }
@@ -1192,7 +1192,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     ShowHUDInfoTopLeft(playerList);
                     if (Camera.main != null && IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.RACING &&
                         Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().gameOver && !needChooseSide &&
-                        (int)settings[0xf5] == 0)
+                        (int)settings[245] == 0)
                     {
                         ShowHUDInfoCenter("Press [F7D358]" + inputManager.inputString[InputCode.flare1] +
                                           "[-] to spectate the next player. \nPress [F7D358]" +
@@ -1598,7 +1598,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         ShowHUDInfoTopRightMAPNAME("\n" + level + " : " + str4);
                     }
-                    ShowHUDInfoTopRightMAPNAME($"\nFPS [{Settings.ChatMinorColor}]{FPS.FPS}[-]");
+                    ShowHUDInfoTopRightMAPNAME($"\nFPS [{Settings.ChatMinorColorSetting}]{FPS.FPS}[-]");
 
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                     {
@@ -1606,7 +1606,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         var str5 = PhotonNetwork.room.name.Split(separator)[0];
                         if (str5.Length > 20)
                         {
-                            str5 = str5.Remove(0x13) + "...";
+                            str5 = str5.Remove(19) + "...";
                         }
 
                         ShowHUDInfoTopRightMAPNAME("\n" + str5 + " [FFC000](" +
@@ -2040,8 +2040,8 @@ public class FengGameManagerMKII : MonoBehaviour
                     obj2 = (GameObject)Instantiate((GameObject)ResourcesCache.RCLoadGO(strArray[1]),
                         new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]),
                             Convert.ToSingle(strArray[14])),
-                        new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]),
-                            Convert.ToSingle(strArray[0x11]), Convert.ToSingle(strArray[0x12])));
+                        new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[16]),
+                            Convert.ToSingle(strArray[17]), Convert.ToSingle(strArray[18])));
                     if (strArray[2] != "default")
                     {
                         if (strArray[2].StartsWith("transparent"))
@@ -2118,8 +2118,8 @@ public class FengGameManagerMKII : MonoBehaviour
                         obj2 = (GameObject)Instantiate((GameObject)Resources.Load(strArray[1]),
                             new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]),
                                 Convert.ToSingle(strArray[14])),
-                            new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]),
-                                Convert.ToSingle(strArray[0x11]), Convert.ToSingle(strArray[0x12])));
+                            new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[16]),
+                                Convert.ToSingle(strArray[17]), Convert.ToSingle(strArray[18])));
                         if (strArray[2] != "default")
                         {
                             if (strArray[2].StartsWith("transparent"))
@@ -2335,8 +2335,8 @@ public class FengGameManagerMKII : MonoBehaviour
                             var go = PhotonNetwork.Instantiate("RCAsset/" + strArray[1] + "Prop",
                                 new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]),
                                     Convert.ToSingle(strArray[14])),
-                                new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]),
-                                    Convert.ToSingle(strArray[0x11]), Convert.ToSingle(strArray[0x12])), 0);
+                                new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[16]),
+                                    Convert.ToSingle(strArray[17]), Convert.ToSingle(strArray[18])), 0);
                             go.GetComponent<CannonPropRegion>().settings = content[num];
                             go.GetPhotonView().RPC("SetSize", PhotonTargets.AllBuffered, content[num]);
                         }
@@ -2646,7 +2646,7 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 object[] parameters = { titanScore };
                 photonView.RPC("netGameLose", PhotonTargets.Others, parameters);
-                if ((int)settings[0xf4] == 1)
+                if ((int)settings[244] == 1)
                 {
                     string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Lose]" };
                     InRoomChat.SystemMessageLocal(msg, false);
@@ -2676,7 +2676,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     object[] parameters = { 0 };
                     photonView.RPC("netGameWin", PhotonTargets.Others, parameters);
-                    if ((int)settings[0xf4] == 1)
+                    if ((int)settings[244] == 1)
                     {
                         string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Win]" };
                         InRoomChat.SystemMessageLocal(msg, false);
@@ -2690,7 +2690,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     object[] objArray3 = { teamWinner };
                     photonView.RPC("netGameWin", PhotonTargets.Others, objArray3);
-                    if ((int)settings[0xf4] == 1)
+                    if ((int)settings[244] == 1)
                     {
                         string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Win]" };
                         InRoomChat.SystemMessageLocal(msg, false);
@@ -2706,7 +2706,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     object[] objArray4 = { humanScore };
                     photonView.RPC("netGameWin", PhotonTargets.Others, objArray4);
-                    if ((int)settings[0xf4] == 1)
+                    if ((int)settings[244] == 1)
                     {
                         string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Win]" };
                         InRoomChat.SystemMessageLocal(msg, false);
@@ -2765,7 +2765,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         {
                             TargetActors = new[] { ID }
                         };
-                        PhotonNetwork.RaiseEvent(0xfe, null, true, options);
+                        PhotonNetwork.RaiseEvent(254, null, true, options);
                     }
                 }
             }
@@ -2794,7 +2794,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             {
                                 TargetActors = new[] { iD }
                             };
-                            PhotonNetwork.RaiseEvent(0xfe, null, true, options);
+                            PhotonNetwork.RaiseEvent(254, null, true, options);
                         }
                     }
                 }
@@ -3536,7 +3536,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     TargetActors = new[] { player.ID }
                 };
-                PhotonNetwork.RaiseEvent(0xfe, null, true, options);
+                PhotonNetwork.RaiseEvent(254, null, true, options);
             }
 
             if (!(!ban || banHash.ContainsKey(player.ID)))
@@ -3637,306 +3637,306 @@ public class FengGameManagerMKII : MonoBehaviour
         objArray[13] = PlayerPrefs.GetString("gas", string.Empty);
         objArray[14] = PlayerPrefs.GetString("hoodie", string.Empty);
         objArray[15] = PlayerPrefs.GetInt("gasenable", 0);
-        objArray[0x10] = PlayerPrefs.GetInt("titantype1", -1);
-        objArray[0x11] = PlayerPrefs.GetInt("titantype2", -1);
-        objArray[0x12] = PlayerPrefs.GetInt("titantype3", -1);
-        objArray[0x13] = PlayerPrefs.GetInt("titantype4", -1);
+        objArray[16] = PlayerPrefs.GetInt("titantype1", -1);
+        objArray[17] = PlayerPrefs.GetInt("titantype2", -1);
+        objArray[18] = PlayerPrefs.GetInt("titantype3", -1);
+        objArray[19] = PlayerPrefs.GetInt("titantype4", -1);
         objArray[20] = PlayerPrefs.GetInt("titantype5", -1);
-        objArray[0x15] = PlayerPrefs.GetString("titanhair1", string.Empty);
-        objArray[0x16] = PlayerPrefs.GetString("titanhair2", string.Empty);
-        objArray[0x17] = PlayerPrefs.GetString("titanhair3", string.Empty);
-        objArray[0x18] = PlayerPrefs.GetString("titanhair4", string.Empty);
-        objArray[0x19] = PlayerPrefs.GetString("titanhair5", string.Empty);
-        objArray[0x1a] = PlayerPrefs.GetString("titaneye1", string.Empty);
-        objArray[0x1b] = PlayerPrefs.GetString("titaneye2", string.Empty);
-        objArray[0x1c] = PlayerPrefs.GetString("titaneye3", string.Empty);
-        objArray[0x1d] = PlayerPrefs.GetString("titaneye4", string.Empty);
+        objArray[21] = PlayerPrefs.GetString("titanhair1", string.Empty);
+        objArray[22] = PlayerPrefs.GetString("titanhair2", string.Empty);
+        objArray[23] = PlayerPrefs.GetString("titanhair3", string.Empty);
+        objArray[24] = PlayerPrefs.GetString("titanhair4", string.Empty);
+        objArray[25] = PlayerPrefs.GetString("titanhair5", string.Empty);
+        objArray[26] = PlayerPrefs.GetString("titaneye1", string.Empty);
+        objArray[27] = PlayerPrefs.GetString("titaneye2", string.Empty);
+        objArray[28] = PlayerPrefs.GetString("titaneye3", string.Empty);
+        objArray[29] = PlayerPrefs.GetString("titaneye4", string.Empty);
         objArray[30] = PlayerPrefs.GetString("titaneye5", string.Empty);
-        objArray[0x1f] = 0;
-        objArray[0x20] = PlayerPrefs.GetInt("titanR", 0);
-        objArray[0x21] = PlayerPrefs.GetString("tree1", "http://i.imgur.com/QhvQaOY.png");
-        objArray[0x22] = PlayerPrefs.GetString("tree2", "http://i.imgur.com/QhvQaOY.png");
-        objArray[0x23] = PlayerPrefs.GetString("tree3", "http://i.imgur.com/k08IX81.png");
-        objArray[0x24] = PlayerPrefs.GetString("tree4", "http://i.imgur.com/k08IX81.png");
-        objArray[0x25] = PlayerPrefs.GetString("tree5", "http://i.imgur.com/JQPNchU.png");
-        objArray[0x26] = PlayerPrefs.GetString("tree6", "http://i.imgur.com/JQPNchU.png");
-        objArray[0x27] = PlayerPrefs.GetString("tree7", "http://i.imgur.com/IZdYWv4.png");
+        objArray[31] = 0;
+        objArray[32] = PlayerPrefs.GetInt("titanR", 0);
+        objArray[33] = PlayerPrefs.GetString("tree1", "http://i.imgur.com/QhvQaOY.png");
+        objArray[34] = PlayerPrefs.GetString("tree2", "http://i.imgur.com/QhvQaOY.png");
+        objArray[35] = PlayerPrefs.GetString("tree3", "http://i.imgur.com/k08IX81.png");
+        objArray[36] = PlayerPrefs.GetString("tree4", "http://i.imgur.com/k08IX81.png");
+        objArray[37] = PlayerPrefs.GetString("tree5", "http://i.imgur.com/JQPNchU.png");
+        objArray[38] = PlayerPrefs.GetString("tree6", "http://i.imgur.com/JQPNchU.png");
+        objArray[39] = PlayerPrefs.GetString("tree7", "http://i.imgur.com/IZdYWv4.png");
         objArray[40] = PlayerPrefs.GetString("tree8", "http://i.imgur.com/IZdYWv4.png");
-        objArray[0x29] = PlayerPrefs.GetString("leaf1", "http://i.imgur.com/oFGV5oL.png");
-        objArray[0x2a] = PlayerPrefs.GetString("leaf2", "http://i.imgur.com/oFGV5oL.png");
-        objArray[0x2b] = PlayerPrefs.GetString("leaf3", "http://i.imgur.com/mKzawrQ.png");
-        objArray[0x2c] = PlayerPrefs.GetString("leaf4", "http://i.imgur.com/mKzawrQ.png");
-        objArray[0x2d] = PlayerPrefs.GetString("leaf5", "http://i.imgur.com/Ymzavsi.png");
-        objArray[0x2e] = PlayerPrefs.GetString("leaf6", "http://i.imgur.com/Ymzavsi.png");
-        objArray[0x2f] = PlayerPrefs.GetString("leaf7", "http://i.imgur.com/oQfD1So.png");
-        objArray[0x30] = PlayerPrefs.GetString("leaf8", "http://i.imgur.com/oQfD1So.png");
-        objArray[0x31] = PlayerPrefs.GetString("forestG", "http://i.imgur.com/IsDTn7x.png");
+        objArray[41] = PlayerPrefs.GetString("leaf1", "http://i.imgur.com/oFGV5oL.png");
+        objArray[42] = PlayerPrefs.GetString("leaf2", "http://i.imgur.com/oFGV5oL.png");
+        objArray[43] = PlayerPrefs.GetString("leaf3", "http://i.imgur.com/mKzawrQ.png");
+        objArray[44] = PlayerPrefs.GetString("leaf4", "http://i.imgur.com/mKzawrQ.png");
+        objArray[45] = PlayerPrefs.GetString("leaf5", "http://i.imgur.com/Ymzavsi.png");
+        objArray[46] = PlayerPrefs.GetString("leaf6", "http://i.imgur.com/Ymzavsi.png");
+        objArray[47] = PlayerPrefs.GetString("leaf7", "http://i.imgur.com/oQfD1So.png");
+        objArray[48] = PlayerPrefs.GetString("leaf8", "http://i.imgur.com/oQfD1So.png");
+        objArray[49] = PlayerPrefs.GetString("forestG", "http://i.imgur.com/IsDTn7x.png");
         objArray[50] = PlayerPrefs.GetInt("forestR", 0);
-        objArray[0x33] = PlayerPrefs.GetString("house1", "http://i.imgur.com/wuy77R8.png");
-        objArray[0x34] = PlayerPrefs.GetString("house2", "http://i.imgur.com/wuy77R8.png");
-        objArray[0x35] = PlayerPrefs.GetString("house3", "http://i.imgur.com/wuy77R8.png");
-        objArray[0x36] = PlayerPrefs.GetString("house4", "http://i.imgur.com/wuy77R8.png");
-        objArray[0x37] = PlayerPrefs.GetString("house5", "http://i.imgur.com/wuy77R8.png");
-        objArray[0x38] = PlayerPrefs.GetString("house6", "http://i.imgur.com/wuy77R8.png");
-        objArray[0x39] = PlayerPrefs.GetString("house7", "http://i.imgur.com/wuy77R8.png");
-        objArray[0x3a] = PlayerPrefs.GetString("house8", "http://i.imgur.com/wuy77R8.png");
-        objArray[0x3b] = PlayerPrefs.GetString("cityG", "http://i.imgur.com/Mr9ZXip.png");
+        objArray[51] = PlayerPrefs.GetString("house1", "http://i.imgur.com/wuy77R8.png");
+        objArray[52] = PlayerPrefs.GetString("house2", "http://i.imgur.com/wuy77R8.png");
+        objArray[53] = PlayerPrefs.GetString("house3", "http://i.imgur.com/wuy77R8.png");
+        objArray[54] = PlayerPrefs.GetString("house4", "http://i.imgur.com/wuy77R8.png");
+        objArray[55] = PlayerPrefs.GetString("house5", "http://i.imgur.com/wuy77R8.png");
+        objArray[56] = PlayerPrefs.GetString("house6", "http://i.imgur.com/wuy77R8.png");
+        objArray[57] = PlayerPrefs.GetString("house7", "http://i.imgur.com/wuy77R8.png");
+        objArray[58] = PlayerPrefs.GetString("house8", "http://i.imgur.com/wuy77R8.png");
+        objArray[59] = PlayerPrefs.GetString("cityG", "http://i.imgur.com/Mr9ZXip.png");
         objArray[60] = PlayerPrefs.GetString("cityW", "http://i.imgur.com/Tm7XfQP.png");
-        objArray[0x3d] = PlayerPrefs.GetString("cityH", "http://i.imgur.com/Q3YXkNM.png");
-        objArray[0x3e] = PlayerPrefs.GetInt("skinQ", 0);
-        objArray[0x3f] = PlayerPrefs.GetInt("skinQL", 0);
-        objArray[0x40] = 0;
-        objArray[0x41] = PlayerPrefs.GetString("eren", string.Empty);
-        objArray[0x42] = PlayerPrefs.GetString("annie", string.Empty);
-        objArray[0x43] = PlayerPrefs.GetString("colossal", string.Empty);
-        objArray[0x44] = 100;
-        objArray[0x45] = "default";
+        objArray[61] = PlayerPrefs.GetString("cityH", "http://i.imgur.com/Q3YXkNM.png");
+        objArray[62] = PlayerPrefs.GetInt("skinQ", 0);
+        objArray[63] = PlayerPrefs.GetInt("skinQL", 0);
+        objArray[64] = 0;
+        objArray[65] = PlayerPrefs.GetString("eren", string.Empty);
+        objArray[66] = PlayerPrefs.GetString("annie", string.Empty);
+        objArray[67] = PlayerPrefs.GetString("colossal", string.Empty);
+        objArray[68] = 100;
+        objArray[69] = "default";
         objArray[70] = "1";
-        objArray[0x47] = "1";
-        objArray[0x48] = "1";
-        objArray[0x49] = 1f;
-        objArray[0x4a] = 1f;
-        objArray[0x4b] = 1f;
-        objArray[0x4c] = 0;
-        objArray[0x4d] = string.Empty;
-        objArray[0x4e] = 0;
-        objArray[0x4f] = "1.0";
+        objArray[71] = "1";
+        objArray[72] = "1";
+        objArray[73] = 1f;
+        objArray[74] = 1f;
+        objArray[75] = 1f;
+        objArray[76] = 0;
+        objArray[77] = string.Empty;
+        objArray[78] = 0;
+        objArray[79] = "1.0";
         objArray[80] = "1.0";
-        objArray[0x51] = 0;
-        objArray[0x52] = PlayerPrefs.GetString("cnumber", "1");
-        objArray[0x53] = "30";
-        objArray[0x54] = 0;
-        objArray[0x55] = PlayerPrefs.GetString("cmax", "20");
-        objArray[0x56] = PlayerPrefs.GetString("titanbody1", string.Empty);
-        objArray[0x57] = PlayerPrefs.GetString("titanbody2", string.Empty);
-        objArray[0x58] = PlayerPrefs.GetString("titanbody3", string.Empty);
-        objArray[0x59] = PlayerPrefs.GetString("titanbody4", string.Empty);
+        objArray[81] = 0;
+        objArray[82] = PlayerPrefs.GetString("cnumber", "1");
+        objArray[83] = "30";
+        objArray[84] = 0;
+        objArray[85] = PlayerPrefs.GetString("cmax", "20");
+        objArray[86] = PlayerPrefs.GetString("titanbody1", string.Empty);
+        objArray[87] = PlayerPrefs.GetString("titanbody2", string.Empty);
+        objArray[88] = PlayerPrefs.GetString("titanbody3", string.Empty);
+        objArray[89] = PlayerPrefs.GetString("titanbody4", string.Empty);
         objArray[90] = PlayerPrefs.GetString("titanbody5", string.Empty);
-        objArray[0x5b] = 0;
-        objArray[0x5c] = PlayerPrefs.GetInt("traildisable", 0);
-        objArray[0x5d] = PlayerPrefs.GetInt("wind", 0);
-        objArray[0x5e] = PlayerPrefs.GetString("trailskin", string.Empty);
-        objArray[0x5f] = PlayerPrefs.GetString("snapshot", "0");
-        objArray[0x60] = PlayerPrefs.GetString("trailskin2", string.Empty);
-        objArray[0x61] = PlayerPrefs.GetInt("reel", 0);
-        objArray[0x62] = PlayerPrefs.GetString("reelin", "LeftControl");
-        objArray[0x63] = PlayerPrefs.GetString("reelout", "LeftAlt");
+        objArray[91] = 0;
+        objArray[92] = PlayerPrefs.GetInt("traildisable", 0);
+        objArray[93] = PlayerPrefs.GetInt("wind", 0);
+        objArray[94] = PlayerPrefs.GetString("trailskin", string.Empty);
+        objArray[95] = PlayerPrefs.GetString("snapshot", "0");
+        objArray[96] = PlayerPrefs.GetString("trailskin2", string.Empty);
+        objArray[97] = PlayerPrefs.GetInt("reel", 0);
+        objArray[98] = PlayerPrefs.GetString("reelin", "LeftControl");
+        objArray[99] = PlayerPrefs.GetString("reelout", "LeftAlt");
         objArray[100] = 0;
-        objArray[0x65] = PlayerPrefs.GetString("tforward", "W");
-        objArray[0x66] = PlayerPrefs.GetString("tback", "S");
-        objArray[0x67] = PlayerPrefs.GetString("tleft", "A");
-        objArray[0x68] = PlayerPrefs.GetString("tright", "D");
-        objArray[0x69] = PlayerPrefs.GetString("twalk", "LeftShift");
-        objArray[0x6a] = PlayerPrefs.GetString("tjump", "Space");
-        objArray[0x6b] = PlayerPrefs.GetString("tpunch", "Q");
-        objArray[0x6c] = PlayerPrefs.GetString("tslam", "E");
-        objArray[0x6d] = PlayerPrefs.GetString("tgrabfront", "Alpha1");
+        objArray[101] = PlayerPrefs.GetString("tforward", "W");
+        objArray[102] = PlayerPrefs.GetString("tback", "S");
+        objArray[103] = PlayerPrefs.GetString("tleft", "A");
+        objArray[104] = PlayerPrefs.GetString("tright", "D");
+        objArray[105] = PlayerPrefs.GetString("twalk", "LeftShift");
+        objArray[106] = PlayerPrefs.GetString("tjump", "Space");
+        objArray[107] = PlayerPrefs.GetString("tpunch", "Q");
+        objArray[108] = PlayerPrefs.GetString("tslam", "E");
+        objArray[109] = PlayerPrefs.GetString("tgrabfront", "Alpha1");
         objArray[110] = PlayerPrefs.GetString("tgrabback", "Alpha3");
-        objArray[0x6f] = PlayerPrefs.GetString("tgrabnape", "Mouse1");
-        objArray[0x70] = PlayerPrefs.GetString("tantiae", "Mouse0");
-        objArray[0x71] = PlayerPrefs.GetString("tbite", "Alpha2");
-        objArray[0x72] = PlayerPrefs.GetString("tcover", "Z");
-        objArray[0x73] = PlayerPrefs.GetString("tsit", "X");
-        objArray[0x74] = PlayerPrefs.GetInt("reel2", 0);
-        objArray[0x75] = PlayerPrefs.GetString("lforward", "W");
-        objArray[0x76] = PlayerPrefs.GetString("lback", "S");
-        objArray[0x77] = PlayerPrefs.GetString("lleft", "A");
+        objArray[111] = PlayerPrefs.GetString("tgrabnape", "Mouse1");
+        objArray[112] = PlayerPrefs.GetString("tantiae", "Mouse0");
+        objArray[113] = PlayerPrefs.GetString("tbite", "Alpha2");
+        objArray[114] = PlayerPrefs.GetString("tcover", "Z");
+        objArray[115] = PlayerPrefs.GetString("tsit", "X");
+        objArray[116] = PlayerPrefs.GetInt("reel2", 0);
+        objArray[117] = PlayerPrefs.GetString("lforward", "W");
+        objArray[118] = PlayerPrefs.GetString("lback", "S");
+        objArray[119] = PlayerPrefs.GetString("lleft", "A");
         objArray[120] = PlayerPrefs.GetString("lright", "D");
-        objArray[0x79] = PlayerPrefs.GetString("lup", "Mouse1");
-        objArray[0x7a] = PlayerPrefs.GetString("ldown", "Mouse0");
-        objArray[0x7b] = PlayerPrefs.GetString("lcursor", "X");
-        objArray[0x7c] = PlayerPrefs.GetString("lplace", "Space");
-        objArray[0x7d] = PlayerPrefs.GetString("ldel", "Backspace");
-        objArray[0x7e] = PlayerPrefs.GetString("lslow", "LeftShift");
-        objArray[0x7f] = PlayerPrefs.GetString("lrforward", "R");
-        objArray[0x80] = PlayerPrefs.GetString("lrback", "F");
-        objArray[0x81] = PlayerPrefs.GetString("lrleft", "Q");
+        objArray[121] = PlayerPrefs.GetString("lup", "Mouse1");
+        objArray[122] = PlayerPrefs.GetString("ldown", "Mouse0");
+        objArray[123] = PlayerPrefs.GetString("lcursor", "X");
+        objArray[124] = PlayerPrefs.GetString("lplace", "Space");
+        objArray[125] = PlayerPrefs.GetString("ldel", "Backspace");
+        objArray[126] = PlayerPrefs.GetString("lslow", "LeftShift");
+        objArray[127] = PlayerPrefs.GetString("lrforward", "R");
+        objArray[128] = PlayerPrefs.GetString("lrback", "F");
+        objArray[129] = PlayerPrefs.GetString("lrleft", "Q");
         objArray[130] = PlayerPrefs.GetString("lrright", "E");
-        objArray[0x83] = PlayerPrefs.GetString("lrccw", "Z");
-        objArray[0x84] = PlayerPrefs.GetString("lrcw", "C");
-        objArray[0x85] = PlayerPrefs.GetInt("humangui", 0);
-        objArray[0x86] = PlayerPrefs.GetString("horse2", string.Empty);
-        objArray[0x87] = PlayerPrefs.GetString("hair2", string.Empty);
-        objArray[0x88] = PlayerPrefs.GetString("eye2", string.Empty);
-        objArray[0x89] = PlayerPrefs.GetString("glass2", string.Empty);
-        objArray[0x8a] = PlayerPrefs.GetString("face2", string.Empty);
-        objArray[0x8b] = PlayerPrefs.GetString("skin2", string.Empty);
+        objArray[131] = PlayerPrefs.GetString("lrccw", "Z");
+        objArray[132] = PlayerPrefs.GetString("lrcw", "C");
+        objArray[133] = PlayerPrefs.GetInt("humangui", 0);
+        objArray[134] = PlayerPrefs.GetString("horse2", string.Empty);
+        objArray[135] = PlayerPrefs.GetString("hair2", string.Empty);
+        objArray[136] = PlayerPrefs.GetString("eye2", string.Empty);
+        objArray[137] = PlayerPrefs.GetString("glass2", string.Empty);
+        objArray[138] = PlayerPrefs.GetString("face2", string.Empty);
+        objArray[139] = PlayerPrefs.GetString("skin2", string.Empty);
         objArray[140] = PlayerPrefs.GetString("costume2", string.Empty);
-        objArray[0x8d] = PlayerPrefs.GetString("logo2", string.Empty);
-        objArray[0x8e] = PlayerPrefs.GetString("bladel2", string.Empty);
-        objArray[0x8f] = PlayerPrefs.GetString("blader2", string.Empty);
-        objArray[0x90] = PlayerPrefs.GetString("gas2", string.Empty);
-        objArray[0x91] = PlayerPrefs.GetString("hoodie2", string.Empty);
-        objArray[0x92] = PlayerPrefs.GetString("trail2", string.Empty);
-        objArray[0x93] = PlayerPrefs.GetString("horse3", string.Empty);
-        objArray[0x94] = PlayerPrefs.GetString("hair3", string.Empty);
-        objArray[0x95] = PlayerPrefs.GetString("eye3", string.Empty);
+        objArray[141] = PlayerPrefs.GetString("logo2", string.Empty);
+        objArray[142] = PlayerPrefs.GetString("bladel2", string.Empty);
+        objArray[143] = PlayerPrefs.GetString("blader2", string.Empty);
+        objArray[144] = PlayerPrefs.GetString("gas2", string.Empty);
+        objArray[145] = PlayerPrefs.GetString("hoodie2", string.Empty);
+        objArray[146] = PlayerPrefs.GetString("trail2", string.Empty);
+        objArray[147] = PlayerPrefs.GetString("horse3", string.Empty);
+        objArray[148] = PlayerPrefs.GetString("hair3", string.Empty);
+        objArray[149] = PlayerPrefs.GetString("eye3", string.Empty);
         objArray[150] = PlayerPrefs.GetString("glass3", string.Empty);
-        objArray[0x97] = PlayerPrefs.GetString("face3", string.Empty);
-        objArray[0x98] = PlayerPrefs.GetString("skin3", string.Empty);
-        objArray[0x99] = PlayerPrefs.GetString("costume3", string.Empty);
-        objArray[0x9a] = PlayerPrefs.GetString("logo3", string.Empty);
-        objArray[0x9b] = PlayerPrefs.GetString("bladel3", string.Empty);
-        objArray[0x9c] = PlayerPrefs.GetString("blader3", string.Empty);
-        objArray[0x9d] = PlayerPrefs.GetString("gas3", string.Empty);
-        objArray[0x9e] = PlayerPrefs.GetString("hoodie3", string.Empty);
-        objArray[0x9f] = PlayerPrefs.GetString("trail3", string.Empty);
-        objArray[0xa1] = PlayerPrefs.GetString("lfast", "LeftControl");
-        objArray[0xa2] = PlayerPrefs.GetString("customGround", string.Empty);
-        objArray[0xa3] = PlayerPrefs.GetString("forestskyfront", string.Empty);
-        objArray[0xa4] = PlayerPrefs.GetString("forestskyback", string.Empty);
-        objArray[0xa5] = PlayerPrefs.GetString("forestskyleft", string.Empty);
-        objArray[0xa6] = PlayerPrefs.GetString("forestskyright", string.Empty);
-        objArray[0xa7] = PlayerPrefs.GetString("forestskyup", string.Empty);
-        objArray[0xa8] = PlayerPrefs.GetString("forestskydown", string.Empty);
-        objArray[0xa9] = PlayerPrefs.GetString("cityskyfront", string.Empty);
+        objArray[151] = PlayerPrefs.GetString("face3", string.Empty);
+        objArray[152] = PlayerPrefs.GetString("skin3", string.Empty);
+        objArray[153] = PlayerPrefs.GetString("costume3", string.Empty);
+        objArray[154] = PlayerPrefs.GetString("logo3", string.Empty);
+        objArray[155] = PlayerPrefs.GetString("bladel3", string.Empty);
+        objArray[156] = PlayerPrefs.GetString("blader3", string.Empty);
+        objArray[157] = PlayerPrefs.GetString("gas3", string.Empty);
+        objArray[158] = PlayerPrefs.GetString("hoodie3", string.Empty);
+        objArray[159] = PlayerPrefs.GetString("trail3", string.Empty);
+        objArray[161] = PlayerPrefs.GetString("lfast", "LeftControl");
+        objArray[162] = PlayerPrefs.GetString("customGround", string.Empty);
+        objArray[163] = PlayerPrefs.GetString("forestskyfront", string.Empty);
+        objArray[164] = PlayerPrefs.GetString("forestskyback", string.Empty);
+        objArray[165] = PlayerPrefs.GetString("forestskyleft", string.Empty);
+        objArray[166] = PlayerPrefs.GetString("forestskyright", string.Empty);
+        objArray[167] = PlayerPrefs.GetString("forestskyup", string.Empty);
+        objArray[168] = PlayerPrefs.GetString("forestskydown", string.Empty);
+        objArray[169] = PlayerPrefs.GetString("cityskyfront", string.Empty);
         objArray[170] = PlayerPrefs.GetString("cityskyback", string.Empty);
-        objArray[0xab] = PlayerPrefs.GetString("cityskyleft", string.Empty);
-        objArray[0xac] = PlayerPrefs.GetString("cityskyright", string.Empty);
-        objArray[0xad] = PlayerPrefs.GetString("cityskyup", string.Empty);
-        objArray[0xae] = PlayerPrefs.GetString("cityskydown", string.Empty);
-        objArray[0xaf] = PlayerPrefs.GetString("customskyfront", string.Empty);
-        objArray[0xb0] = PlayerPrefs.GetString("customskyback", string.Empty);
-        objArray[0xb1] = PlayerPrefs.GetString("customskyleft", string.Empty);
-        objArray[0xb2] = PlayerPrefs.GetString("customskyright", string.Empty);
-        objArray[0xb3] = PlayerPrefs.GetString("customskyup", string.Empty);
+        objArray[171] = PlayerPrefs.GetString("cityskyleft", string.Empty);
+        objArray[172] = PlayerPrefs.GetString("cityskyright", string.Empty);
+        objArray[173] = PlayerPrefs.GetString("cityskyup", string.Empty);
+        objArray[174] = PlayerPrefs.GetString("cityskydown", string.Empty);
+        objArray[175] = PlayerPrefs.GetString("customskyfront", string.Empty);
+        objArray[176] = PlayerPrefs.GetString("customskyback", string.Empty);
+        objArray[177] = PlayerPrefs.GetString("customskyleft", string.Empty);
+        objArray[178] = PlayerPrefs.GetString("customskyright", string.Empty);
+        objArray[179] = PlayerPrefs.GetString("customskyup", string.Empty);
         objArray[180] = PlayerPrefs.GetString("customskydown", string.Empty);
-        objArray[0xb5] = PlayerPrefs.GetInt("dashenable", 0);
-        objArray[0xb6] = PlayerPrefs.GetString("dashkey", "RightControl");
-        objArray[0xb7] = PlayerPrefs.GetInt("vsync", 0);
-        objArray[0xb8] = PlayerPrefs.GetString("fpscap", "0");
-        objArray[0xb9] = 0;
-        objArray[0xba] = 0;
-        objArray[0xbb] = 0;
-        objArray[0xbc] = 0;
-        objArray[0xbd] = PlayerPrefs.GetInt("speedometer", 0);
+        objArray[181] = PlayerPrefs.GetInt("dashenable", 0);
+        objArray[182] = PlayerPrefs.GetString("dashkey", "RightControl");
+        objArray[183] = PlayerPrefs.GetInt("vsync", 0);
+        objArray[184] = PlayerPrefs.GetString("fpscap", "0");
+        objArray[185] = 0;
+        objArray[186] = 0;
+        objArray[187] = 0;
+        objArray[188] = 0;
+        objArray[189] = PlayerPrefs.GetInt("speedometer", 0);
         objArray[190] = 0;
-        objArray[0xbf] = string.Empty;
-        objArray[0xc0] = PlayerPrefs.GetInt("bombMode", 0);
-        objArray[0xc1] = PlayerPrefs.GetInt("teamMode", 0);
-        objArray[0xc2] = PlayerPrefs.GetInt("rockThrow", 0);
-        objArray[0xc3] = PlayerPrefs.GetInt("explodeModeOn", 0);
-        objArray[0xc4] = PlayerPrefs.GetString("explodeModeNum", "30");
-        objArray[0xc5] = PlayerPrefs.GetInt("healthMode", 0);
-        objArray[0xc6] = PlayerPrefs.GetString("healthLower", "100");
-        objArray[0xc7] = PlayerPrefs.GetString("healthUpper", "200");
+        objArray[191] = string.Empty;
+        objArray[192] = PlayerPrefs.GetInt("bombMode", 0);
+        objArray[193] = PlayerPrefs.GetInt("teamMode", 0);
+        objArray[194] = PlayerPrefs.GetInt("rockThrow", 0);
+        objArray[195] = PlayerPrefs.GetInt("explodeModeOn", 0);
+        objArray[196] = PlayerPrefs.GetString("explodeModeNum", "30");
+        objArray[197] = PlayerPrefs.GetInt("healthMode", 0);
+        objArray[198] = PlayerPrefs.GetString("healthLower", "100");
+        objArray[199] = PlayerPrefs.GetString("healthUpper", "200");
         objArray[200] = PlayerPrefs.GetInt("infectionModeOn", 0);
-        objArray[0xc9] = PlayerPrefs.GetString("infectionModeNum", "1");
-        objArray[0xca] = PlayerPrefs.GetInt("banEren", 0);
-        objArray[0xcb] = PlayerPrefs.GetInt("moreTitanOn", 0);
-        objArray[0xcc] = PlayerPrefs.GetString("moreTitanNum", "1");
-        objArray[0xcd] = PlayerPrefs.GetInt("damageModeOn", 0);
-        objArray[0xce] = PlayerPrefs.GetString("damageModeNum", "1000");
-        objArray[0xcf] = PlayerPrefs.GetInt("sizeMode", 0);
-        objArray[0xd0] = PlayerPrefs.GetString("sizeLower", "1.0");
-        objArray[0xd1] = PlayerPrefs.GetString("sizeUpper", "3.0");
+        objArray[201] = PlayerPrefs.GetString("infectionModeNum", "1");
+        objArray[202] = PlayerPrefs.GetInt("banEren", 0);
+        objArray[203] = PlayerPrefs.GetInt("moreTitanOn", 0);
+        objArray[204] = PlayerPrefs.GetString("moreTitanNum", "1");
+        objArray[205] = PlayerPrefs.GetInt("damageModeOn", 0);
+        objArray[206] = PlayerPrefs.GetString("damageModeNum", "1000");
+        objArray[207] = PlayerPrefs.GetInt("sizeMode", 0);
+        objArray[208] = PlayerPrefs.GetString("sizeLower", "1.0");
+        objArray[209] = PlayerPrefs.GetString("sizeUpper", "3.0");
         objArray[210] = PlayerPrefs.GetInt("spawnModeOn", 0);
-        objArray[0xd3] = PlayerPrefs.GetString("nRate", "20.0");
-        objArray[0xd4] = PlayerPrefs.GetString("aRate", "20.0");
-        objArray[0xd5] = PlayerPrefs.GetString("jRate", "20.0");
-        objArray[0xd6] = PlayerPrefs.GetString("cRate", "20.0");
-        objArray[0xd7] = PlayerPrefs.GetString("pRate", "20.0");
-        objArray[0xd8] = PlayerPrefs.GetInt("horseMode", 0);
-        objArray[0xd9] = PlayerPrefs.GetInt("waveModeOn", 0);
-        objArray[0xda] = PlayerPrefs.GetString("waveModeNum", "1");
-        objArray[0xdb] = PlayerPrefs.GetInt("friendlyMode", 0);
+        objArray[211] = PlayerPrefs.GetString("nRate", "20.0");
+        objArray[212] = PlayerPrefs.GetString("aRate", "20.0");
+        objArray[213] = PlayerPrefs.GetString("jRate", "20.0");
+        objArray[214] = PlayerPrefs.GetString("cRate", "20.0");
+        objArray[215] = PlayerPrefs.GetString("pRate", "20.0");
+        objArray[216] = PlayerPrefs.GetInt("horseMode", 0);
+        objArray[217] = PlayerPrefs.GetInt("waveModeOn", 0);
+        objArray[218] = PlayerPrefs.GetString("waveModeNum", "1");
+        objArray[219] = PlayerPrefs.GetInt("friendlyMode", 0);
         objArray[220] = PlayerPrefs.GetInt("pvpMode", 0);
-        objArray[0xdd] = PlayerPrefs.GetInt("maxWaveOn", 0);
-        objArray[0xde] = PlayerPrefs.GetString("maxWaveNum", "20");
-        objArray[0xdf] = PlayerPrefs.GetInt("endlessModeOn", 0);
-        objArray[0xe0] = PlayerPrefs.GetString("endlessModeNum", "10");
-        objArray[0xe1] = PlayerPrefs.GetString("motd", string.Empty);
-        objArray[0xe2] = PlayerPrefs.GetInt("pointModeOn", 0);
-        objArray[0xe3] = PlayerPrefs.GetString("pointModeNum", "50");
-        objArray[0xe4] = PlayerPrefs.GetInt("ahssReload", 0);
-        objArray[0xe5] = PlayerPrefs.GetInt("punkWaves", 0);
+        objArray[221] = PlayerPrefs.GetInt("maxWaveOn", 0);
+        objArray[222] = PlayerPrefs.GetString("maxWaveNum", "20");
+        objArray[223] = PlayerPrefs.GetInt("endlessModeOn", 0);
+        objArray[224] = PlayerPrefs.GetString("endlessModeNum", "10");
+        objArray[225] = PlayerPrefs.GetString("motd", string.Empty);
+        objArray[226] = PlayerPrefs.GetInt("pointModeOn", 0);
+        objArray[227] = PlayerPrefs.GetString("pointModeNum", "50");
+        objArray[228] = PlayerPrefs.GetInt("ahssReload", 0);
+        objArray[229] = PlayerPrefs.GetInt("punkWaves", 0);
         objArray[230] = 0;
-        objArray[0xe7] = PlayerPrefs.GetInt("mapOn", 0);
-        objArray[0xe8] = PlayerPrefs.GetString("mapMaximize", "Tab");
-        objArray[0xe9] = PlayerPrefs.GetString("mapToggle", "M");
-        objArray[0xea] = PlayerPrefs.GetString("mapReset", "K");
-        objArray[0xeb] = PlayerPrefs.GetInt("globalDisableMinimap", 0);
-        objArray[0xec] = PlayerPrefs.GetString("chatRebind", "None");
-        objArray[0xed] = PlayerPrefs.GetString("hforward", "W");
-        objArray[0xee] = PlayerPrefs.GetString("hback", "S");
-        objArray[0xef] = PlayerPrefs.GetString("hleft", "A");
+        objArray[231] = PlayerPrefs.GetInt("mapOn", 0);
+        objArray[232] = PlayerPrefs.GetString("mapMaximize", "Tab");
+        objArray[233] = PlayerPrefs.GetString("mapToggle", "M");
+        objArray[234] = PlayerPrefs.GetString("mapReset", "K");
+        objArray[235] = PlayerPrefs.GetInt("globalDisableMinimap", 0);
+        objArray[236] = PlayerPrefs.GetString("chatRebind", "None");
+        objArray[237] = PlayerPrefs.GetString("hforward", "W");
+        objArray[238] = PlayerPrefs.GetString("hback", "S");
+        objArray[239] = PlayerPrefs.GetString("hleft", "A");
         objArray[240] = PlayerPrefs.GetString("hright", "D");
-        objArray[0xf1] = PlayerPrefs.GetString("hwalk", "LeftShift");
-        objArray[0xf2] = PlayerPrefs.GetString("hjump", "Q");
-        objArray[0xf3] = PlayerPrefs.GetString("hmount", "LeftControl");
-        objArray[0xf4] = PlayerPrefs.GetInt("chatfeed", 0);
-        objArray[0xf5] = 0;
-        objArray[0xf6] = PlayerPrefs.GetFloat("bombR", 1f);
-        objArray[0xf7] = PlayerPrefs.GetFloat("bombG", 1f);
-        objArray[0xf8] = PlayerPrefs.GetFloat("bombB", 1f);
-        objArray[0xf9] = PlayerPrefs.GetFloat("bombA", 1f);
+        objArray[241] = PlayerPrefs.GetString("hwalk", "LeftShift");
+        objArray[242] = PlayerPrefs.GetString("hjump", "Q");
+        objArray[243] = PlayerPrefs.GetString("hmount", "LeftControl");
+        objArray[244] = PlayerPrefs.GetInt("chatfeed", 0);
+        objArray[245] = 0;
+        objArray[246] = PlayerPrefs.GetFloat("bombR", 1f);
+        objArray[247] = PlayerPrefs.GetFloat("bombG", 1f);
+        objArray[248] = PlayerPrefs.GetFloat("bombB", 1f);
+        objArray[249] = PlayerPrefs.GetFloat("bombA", 1f);
         objArray[250] = PlayerPrefs.GetInt("bombRadius", 5);
-        objArray[0xfb] = PlayerPrefs.GetInt("bombRange", 5);
-        objArray[0xfc] = PlayerPrefs.GetInt("bombSpeed", 5);
-        objArray[0xfd] = PlayerPrefs.GetInt("bombCD", 5);
-        objArray[0xfe] = PlayerPrefs.GetString("cannonUp", "W");
-        objArray[0xff] = PlayerPrefs.GetString("cannonDown", "S");
-        objArray[0x100] = PlayerPrefs.GetString("cannonLeft", "A");
-        objArray[0x101] = PlayerPrefs.GetString("cannonRight", "D");
-        objArray[0x102] = PlayerPrefs.GetString("cannonFire", "Q");
-        objArray[0x103] = PlayerPrefs.GetString("cannonMount", "G");
+        objArray[251] = PlayerPrefs.GetInt("bombRange", 5);
+        objArray[252] = PlayerPrefs.GetInt("bombSpeed", 5);
+        objArray[253] = PlayerPrefs.GetInt("bombCD", 5);
+        objArray[254] = PlayerPrefs.GetString("cannonUp", "W");
+        objArray[255] = PlayerPrefs.GetString("cannonDown", "S");
+        objArray[256] = PlayerPrefs.GetString("cannonLeft", "A");
+        objArray[257] = PlayerPrefs.GetString("cannonRight", "D");
+        objArray[258] = PlayerPrefs.GetString("cannonFire", "Q");
+        objArray[259] = PlayerPrefs.GetString("cannonMount", "G");
         objArray[260] = PlayerPrefs.GetString("cannonSlow", "LeftShift");
-        objArray[0x105] = PlayerPrefs.GetInt("deadlyCannon", 0);
-        objArray[0x106] = PlayerPrefs.GetString("liveCam", "Y");
-        objArray[0x107] = 0;
+        objArray[261] = PlayerPrefs.GetInt("deadlyCannon", 0);
+        objArray[262] = PlayerPrefs.GetString("liveCam", "Y");
+        objArray[263] = 0;
         inputRC = new InputManagerRC();
-        inputRC.setInputHuman(InputCodeRC.reelin, (string)objArray[0x62]);
-        inputRC.setInputHuman(InputCodeRC.reelout, (string)objArray[0x63]);
-        inputRC.setInputHuman(InputCodeRC.dash, (string)objArray[0xb6]);
-        inputRC.setInputHuman(InputCodeRC.mapMaximize, (string)objArray[0xe8]);
-        inputRC.setInputHuman(InputCodeRC.mapToggle, (string)objArray[0xe9]);
-        inputRC.setInputHuman(InputCodeRC.mapReset, (string)objArray[0xea]);
-        inputRC.setInputHuman(InputCodeRC.chat, (string)objArray[0xec]);
-        inputRC.setInputHuman(InputCodeRC.liveCam, (string)objArray[0x106]);
-        if (!Enum.IsDefined(typeof(KeyCode), (string)objArray[0xe8]))
+        inputRC.setInputHuman(InputCodeRC.reelin, (string)objArray[98]);
+        inputRC.setInputHuman(InputCodeRC.reelout, (string)objArray[99]);
+        inputRC.setInputHuman(InputCodeRC.dash, (string)objArray[182]);
+        inputRC.setInputHuman(InputCodeRC.mapMaximize, (string)objArray[232]);
+        inputRC.setInputHuman(InputCodeRC.mapToggle, (string)objArray[233]);
+        inputRC.setInputHuman(InputCodeRC.mapReset, (string)objArray[234]);
+        inputRC.setInputHuman(InputCodeRC.chat, (string)objArray[236]);
+        inputRC.setInputHuman(InputCodeRC.liveCam, (string)objArray[262]);
+        if (!Enum.IsDefined(typeof(KeyCode), (string)objArray[232]))
         {
-            objArray[0xe8] = "None";
+            objArray[232] = "None";
         }
 
-        if (!Enum.IsDefined(typeof(KeyCode), (string)objArray[0xe9]))
+        if (!Enum.IsDefined(typeof(KeyCode), (string)objArray[233]))
         {
-            objArray[0xe9] = "None";
+            objArray[233] = "None";
         }
 
-        if (!Enum.IsDefined(typeof(KeyCode), (string)objArray[0xea]))
+        if (!Enum.IsDefined(typeof(KeyCode), (string)objArray[234]))
         {
-            objArray[0xea] = "None";
+            objArray[234] = "None";
         }
 
         for (num = 0; num < 15; num++)
         {
-            inputRC.setInputTitan(num, (string)objArray[0x65 + num]);
+            inputRC.setInputTitan(num, (string)objArray[101 + num]);
         }
 
-        for (num = 0; num < 0x10; num++)
+        for (num = 0; num < 16; num++)
         {
-            inputRC.setInputLevel(num, (string)objArray[0x75 + num]);
+            inputRC.setInputLevel(num, (string)objArray[117 + num]);
         }
 
         for (num = 0; num < 7; num++)
         {
-            inputRC.setInputHorse(num, (string)objArray[0xed + num]);
+            inputRC.setInputHorse(num, (string)objArray[237 + num]);
         }
 
         for (num = 0; num < 7; num++)
         {
-            inputRC.setInputCannon(num, (string)objArray[0xfe + num]);
+            inputRC.setInputCannon(num, (string)objArray[254 + num]);
         }
 
-        inputRC.setInputLevel(InputCodeRC.levelFast, (string)objArray[0xa1]);
+        inputRC.setInputLevel(InputCodeRC.levelFast, (string)objArray[161]);
         Application.targetFrameRate = -1;
-        if (int.TryParse((string)objArray[0xb8], out num2) && num2 > 0)
+        if (int.TryParse((string)objArray[184], out num2) && num2 > 0)
         {
             Application.targetFrameRate = num2;
         }
 
         QualitySettings.vSyncCount = 0;
-        if ((int)objArray[0xb7] == 1)
+        if ((int)objArray[183] == 1)
         {
             QualitySettings.vSyncCount = 1;
         }
@@ -3958,7 +3958,7 @@ public class FengGameManagerMKII : MonoBehaviour
         GameObject[] objArray;
         int num;
         GameObject obj2;
-        if ((int)settings[0x40] >= 100)
+        if ((int)settings[64] >= 100)
         {
             string[] strArray2 = { "Flare", "LabelInfoBottomRight", "LabelNetworkStatus", "skill_cd_bottom", "GasUI" };
             objArray = (GameObject[])FindObjectsOfType(typeof(GameObject));
@@ -4044,7 +4044,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 strArray3 = new[] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
                 if (LevelInfo.getInfo(level).mapName.Contains("City"))
                 {
-                    for (num = 0x33; num < 0x3b; num++)
+                    for (num = 51; num < 59; num++)
                     {
                         url = url + (string)settings[num] + ",";
                     }
@@ -4057,26 +4057,26 @@ public class FengGameManagerMKII : MonoBehaviour
                         num2++;
                     }
 
-                    str3 = (string)settings[0x3b] + "," + (string)settings[60] + "," + (string)settings[0x3d];
+                    str3 = (string)settings[59] + "," + (string)settings[60] + "," + (string)settings[61];
                     for (num = 0; num < 6; num++)
                     {
-                        strArray3[num] = (string)settings[num + 0xa9];
+                        strArray3[num] = (string)settings[num + 169];
                     }
                 }
                 else if (LevelInfo.getInfo(level).mapName.Contains("Forest"))
                 {
-                    for (var i = 0x21; i < 0x29; i++)
+                    for (var i = 33; i < 41; i++)
                     {
                         url = url + (string)settings[i] + ",";
                     }
 
                     url.TrimEnd(',');
-                    for (var j = 0x29; j < 0x31; j++)
+                    for (var j = 41; j < 49; j++)
                     {
                         str3 = str3 + (string)settings[j] + ",";
                     }
 
-                    str3 = str3 + (string)settings[0x31];
+                    str3 = str3 + (string)settings[49];
                     for (var k = 0; k < 150; k++)
                     {
                         var str5 = Convert.ToString((int)Random.Range(0f, 8f));
@@ -4093,7 +4093,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                     for (num = 0; num < 6; num++)
                     {
-                        strArray3[num] = (string)settings[num + 0xa3];
+                        strArray3[num] = (string)settings[num + 163];
                     }
                 }
 
@@ -4140,18 +4140,18 @@ public class FengGameManagerMKII : MonoBehaviour
                     };
                     for (num = 0; num < 6; num++)
                     {
-                        strArray3[num] = (string)settings[num + 0xaf];
+                        strArray3[num] = (string)settings[num + 175];
                     }
 
-                    strArray3[6] = (string)settings[0xa2];
-                    if (int.TryParse((string)settings[0x55], out num6))
+                    strArray3[6] = (string)settings[162];
+                    if (int.TryParse((string)settings[85], out num6))
                     {
                         RCSettings.titanCap = num6;
                     }
                     else
                     {
                         RCSettings.titanCap = 0;
-                        settings[0x55] = "0";
+                        settings[85] = "0";
                     }
 
                     RCSettings.titanCap = Math.Min(50, RCSettings.titanCap);
@@ -4185,7 +4185,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 string str6;
                                 if (num < Mathf.FloorToInt(strArray4.Length / 100))
                                 {
-                                    strArray5 = new string[0x65];
+                                    strArray5 = new string[101];
                                     num7 = 0;
                                     num2 = 100 * num;
                                     while (num2 < 100 * num + 100)
@@ -4215,7 +4215,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         num2++;
                                     }
 
-                                    str6 = Random.Range(0x2710, 0x1869f).ToString();
+                                    str6 = Random.Range(10000, 99999).ToString();
                                     strArray5[100] = str6;
                                     currentLevel = currentLevel + str6;
                                     levelCache.Add(strArray5);
@@ -4250,7 +4250,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         num7++;
                                     }
 
-                                    str6 = Random.Range(0x2710, 0x1869f).ToString();
+                                    str6 = Random.Range(10000, 99999).ToString();
                                     strArray5[strArray4.Length % 100] = str6;
                                     currentLevel = currentLevel + str6;
                                     levelCache.Add(strArray5);
@@ -4273,11 +4273,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                 list.Add("playerM," + vector.x + "," + vector.y + "," + vector.z);
                             }
 
-                            var item = "a" + Random.Range(0x2710, 0x1869f);
+                            var item = "a" + Random.Range(10000, 99999);
                             list.Add(item);
                             currentLevel = item + currentLevel;
                             levelCache.Insert(0, list.ToArray());
-                            var str8 = "z" + Random.Range(0x2710, 0x1869f);
+                            var str8 = "z" + Random.Range(10000, 99999);
                             levelCache.Add(new[] { str8 });
                             currentLevel = currentLevel + str8;
                             hashtable = new Hashtable();
@@ -4307,7 +4307,7 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         var mipmap = true;
         var iteratorVariable1 = false;
-        if ((int)settings[0x3f] == 1)
+        if ((int)settings[63] == 1)
         {
             mipmap = false;
         }
@@ -4331,7 +4331,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var link = new WWW(iteratorVariable4);
                     yield return link;
-                    var texture = RCextensions.loadimage(link, mipmap, 0x7a120);
+                    var texture = RCextensions.loadimage(link, mipmap, 500000);
                     link.Dispose();
                     texture.wrapMode = TextureWrapMode.Clamp;
                     material.SetTexture("_FrontTex", texture);
@@ -4342,7 +4342,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable12 = new WWW(iteratorVariable5);
                     yield return iteratorVariable12;
-                    var iteratorVariable13 = RCextensions.loadimage(iteratorVariable12, mipmap, 0x7a120);
+                    var iteratorVariable13 = RCextensions.loadimage(iteratorVariable12, mipmap, 500000);
                     iteratorVariable12.Dispose();
                     iteratorVariable13.wrapMode = TextureWrapMode.Clamp;
                     material.SetTexture("_BackTex", iteratorVariable13);
@@ -4353,7 +4353,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable14 = new WWW(iteratorVariable6);
                     yield return iteratorVariable14;
-                    var iteratorVariable15 = RCextensions.loadimage(iteratorVariable14, mipmap, 0x7a120);
+                    var iteratorVariable15 = RCextensions.loadimage(iteratorVariable14, mipmap, 500000);
                     iteratorVariable14.Dispose();
                     iteratorVariable15.wrapMode = TextureWrapMode.Clamp;
                     material.SetTexture("_LeftTex", iteratorVariable15);
@@ -4364,7 +4364,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable16 = new WWW(iteratorVariable7);
                     yield return iteratorVariable16;
-                    var iteratorVariable17 = RCextensions.loadimage(iteratorVariable16, mipmap, 0x7a120);
+                    var iteratorVariable17 = RCextensions.loadimage(iteratorVariable16, mipmap, 500000);
                     iteratorVariable16.Dispose();
                     iteratorVariable17.wrapMode = TextureWrapMode.Clamp;
                     material.SetTexture("_RightTex", iteratorVariable17);
@@ -4375,7 +4375,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable18 = new WWW(iteratorVariable8);
                     yield return iteratorVariable18;
-                    var iteratorVariable19 = RCextensions.loadimage(iteratorVariable18, mipmap, 0x7a120);
+                    var iteratorVariable19 = RCextensions.loadimage(iteratorVariable18, mipmap, 500000);
                     iteratorVariable18.Dispose();
                     iteratorVariable19.wrapMode = TextureWrapMode.Clamp;
                     material.SetTexture("_UpTex", iteratorVariable19);
@@ -4386,7 +4386,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     var iteratorVariable20 = new WWW(iteratorVariable9);
                     yield return iteratorVariable20;
-                    var iteratorVariable21 = RCextensions.loadimage(iteratorVariable20, mipmap, 0x7a120);
+                    var iteratorVariable21 = RCextensions.loadimage(iteratorVariable20, mipmap, 500000);
                     iteratorVariable20.Dispose();
                     iteratorVariable21.wrapMode = TextureWrapMode.Clamp;
                     material.SetTexture("_DownTex", iteratorVariable21);
@@ -4430,7 +4430,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             var iteratorVariable32 = iteratorVariable23[iteratorVariable28];
                             foreach (var iteratorVariable33 in iteratorVariable26.GetComponentsInChildren<Renderer>())
                             {
-                                if (iteratorVariable33.name.Contains(FengGameManagerMKII.s[0x16]))
+                                if (iteratorVariable33.name.Contains(FengGameManagerMKII.s[22]))
                                 {
                                     if (iteratorVariable31.EndsWith(".jpg") || iteratorVariable31.EndsWith(".png") ||
                                         iteratorVariable31.EndsWith(".jpeg"))
@@ -4440,7 +4440,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                             var iteratorVariable34 = new WWW(iteratorVariable31);
                                             yield return iteratorVariable34;
                                             var iteratorVariable35 =
-                                                RCextensions.loadimage(iteratorVariable34, mipmap, 0xf4240);
+                                                RCextensions.loadimage(iteratorVariable34, mipmap, 1000000);
                                             iteratorVariable34.Dispose();
                                             if (!linkHash[2].ContainsKey(iteratorVariable31))
                                             {
@@ -4462,7 +4462,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         }
                                     }
                                 }
-                                else if (iteratorVariable33.name.Contains(FengGameManagerMKII.s[0x17]))
+                                else if (iteratorVariable33.name.Contains(FengGameManagerMKII.s[23]))
                                 {
                                     if (iteratorVariable32.EndsWith(".jpg") || iteratorVariable32.EndsWith(".png") ||
                                         iteratorVariable32.EndsWith(".jpeg"))
@@ -4472,7 +4472,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                             var iteratorVariable36 = new WWW(iteratorVariable32);
                                             yield return iteratorVariable36;
                                             var iteratorVariable37 =
-                                                RCextensions.loadimage(iteratorVariable36, mipmap, 0x30d40);
+                                                RCextensions.loadimage(iteratorVariable36, mipmap, 200000);
                                             iteratorVariable36.Dispose();
                                             if (!linkHash[0].ContainsKey(iteratorVariable32))
                                             {
@@ -4518,7 +4518,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     var iteratorVariable40 = new WWW(iteratorVariable38);
                                     yield return iteratorVariable40;
                                     var iteratorVariable41 =
-                                        RCextensions.loadimage(iteratorVariable40, mipmap, 0x30d40);
+                                        RCextensions.loadimage(iteratorVariable40, mipmap, 200000);
                                     iteratorVariable40.Dispose();
                                     if (!linkHash[0].ContainsKey(iteratorVariable38))
                                     {
@@ -4577,7 +4577,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         var iteratorVariable50 = new WWW(iteratorVariable48);
                                         yield return iteratorVariable50;
                                         var iteratorVariable51 =
-                                            RCextensions.loadimage(iteratorVariable50, mipmap, 0x30d40);
+                                            RCextensions.loadimage(iteratorVariable50, mipmap, 200000);
                                         iteratorVariable50.Dispose();
                                         if (!linkHash[0].ContainsKey(iteratorVariable48))
                                         {
@@ -4626,7 +4626,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         var iteratorVariable54 = new WWW(iteratorVariable52);
                                         yield return iteratorVariable54;
                                         var iteratorVariable55 =
-                                            RCextensions.loadimage(iteratorVariable54, mipmap, 0x30d40);
+                                            RCextensions.loadimage(iteratorVariable54, mipmap, 200000);
                                         iteratorVariable54.Dispose();
                                         if (!linkHash[0].ContainsKey(iteratorVariable52))
                                         {
@@ -4672,7 +4672,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         var iteratorVariable60 = new WWW(iteratorVariable58);
                                         yield return iteratorVariable60;
                                         var iteratorVariable61 =
-                                            RCextensions.loadimage(iteratorVariable60, mipmap, 0xf4240);
+                                            RCextensions.loadimage(iteratorVariable60, mipmap, 1000000);
                                         iteratorVariable60.Dispose();
                                         if (!linkHash[2].ContainsKey(iteratorVariable58))
                                         {
@@ -4710,7 +4710,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     var iteratorVariable64 = new WWW(iteratorVariable62);
                                     yield return iteratorVariable64;
                                     var iteratorVariable65 =
-                                        RCextensions.loadimage(iteratorVariable64, mipmap, 0xf4240);
+                                        RCextensions.loadimage(iteratorVariable64, mipmap, 1000000);
                                     iteratorVariable64.Dispose();
                                     if (!linkHash[2].ContainsKey(iteratorVariable62))
                                     {
@@ -4788,7 +4788,7 @@ public class FengGameManagerMKII : MonoBehaviour
         isLosing = true;
         titanScore = score;
         gameEndCD = gameEndTotalCDtime;
-        if ((int)settings[0xf4] == 1)
+        if ((int)settings[244] == 1)
         {
             string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Lose]" };
             InRoomChat.SystemMessageLocal(msg, false);
@@ -4827,7 +4827,7 @@ public class FengGameManagerMKII : MonoBehaviour
             gameEndCD = gameEndTotalCDtime;
         }
 
-        if ((int)settings[0xf4] == 1)
+        if ((int)settings[244] == 1)
         {
             string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Win]" };
             InRoomChat.SystemMessageLocal(msg, false);
@@ -5175,9 +5175,10 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnGUI()
     {
+        GGM.GUI.Styles.Init();
+
         if (!isAssetLoaded) GGM.GUI.Pages.LoadingScreen();
 
-        GGM.GUI.Styles.Init();
 
         switch (GGM.GUI.Pages.Page)
         {
@@ -5236,12 +5237,12 @@ public class FengGameManagerMKII : MonoBehaviour
                     GUI.Box(new Rect(num11, 5f, 295f, 590f), string.Empty);
                     if (GUI.Button(new Rect(10f, 10f, 60f, 25f), "Script", "box"))
                     {
-                        settings[0x44] = 100;
+                        settings[68] = 100;
                     }
 
                     if (GUI.Button(new Rect(75f, 10f, 65f, 25f), "Controls", "box"))
                     {
-                        settings[0x44] = 0x65;
+                        settings[68] = 101;
                     }
 
                     if (GUI.Button(new Rect(210f, 10f, 80f, 25f), "Full Screen", "box"))
@@ -5257,7 +5258,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         }
                     }
 
-                    if ((int)settings[0x44] == 100 || (int)settings[0x44] == 0x66)
+                    if ((int)settings[68] == 100 || (int)settings[68] == 102)
                     {
                         string str2;
                         int num19;
@@ -5266,7 +5267,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         GUI.Label(new Rect(12f, 535f, 280f, 60f),
                             "Warning: your current level will be lost if you quit or import data. Make sure to save the level to a text document.",
                             "Label");
-                        settings[0x4d] = GUI.TextField(new Rect(10f, 140f, 285f, 350f), (string)settings[0x4d]);
+                        settings[77] = GUI.TextField(new Rect(10f, 140f, 285f, 350f), (string)settings[77]);
                         if (GUI.Button(new Rect(35f, 500f, 60f, 30f), "Apply"))
                         {
                             foreach (GameObject obj2 in FindObjectsOfType(typeof(GameObject)))
@@ -5280,8 +5281,8 @@ public class FengGameManagerMKII : MonoBehaviour
                             }
 
                             linkHash[3].Clear();
-                            settings[0xba] = 0;
-                            var strArray = Regex.Replace((string)settings[0x4d], @"\s+", "").Replace("\r\n", "")
+                            settings[186] = 0;
+                            var strArray = Regex.Replace((string)settings[77], @"\s+", "").Replace("\r\n", "")
                                 .Replace("\n", "").Replace("\r", "").Split(';');
                             for (num13 = 0; num13 < strArray.Length; num13++)
                             {
@@ -5300,8 +5301,8 @@ public class FengGameManagerMKII : MonoBehaviour
                                             new Vector3(Convert.ToSingle(strArray2[12]), Convert.ToSingle(strArray2[13]),
                                                 Convert.ToSingle(strArray2[14])),
                                             new Quaternion(Convert.ToSingle(strArray2[15]),
-                                                Convert.ToSingle(strArray2[0x10]), Convert.ToSingle(strArray2[0x11]),
-                                                Convert.ToSingle(strArray2[0x12])));
+                                                Convert.ToSingle(strArray2[16]), Convert.ToSingle(strArray2[17]),
+                                                Convert.ToSingle(strArray2[18])));
                                     }
                                     else if (strArray2[0].StartsWith("photon"))
                                     {
@@ -5324,9 +5325,9 @@ public class FengGameManagerMKII : MonoBehaviour
                                                     new Vector3(Convert.ToSingle(strArray2[12]),
                                                         Convert.ToSingle(strArray2[13]), Convert.ToSingle(strArray2[14])),
                                                     new Quaternion(Convert.ToSingle(strArray2[15]),
-                                                        Convert.ToSingle(strArray2[0x10]),
-                                                        Convert.ToSingle(strArray2[0x11]),
-                                                        Convert.ToSingle(strArray2[0x12])));
+                                                        Convert.ToSingle(strArray2[16]),
+                                                        Convert.ToSingle(strArray2[17]),
+                                                        Convert.ToSingle(strArray2[18])));
                                             }
                                         }
                                         else
@@ -5365,8 +5366,8 @@ public class FengGameManagerMKII : MonoBehaviour
                                                 new Vector3(Convert.ToSingle(strArray2[12]),
                                                     Convert.ToSingle(strArray2[13]), Convert.ToSingle(strArray2[14])),
                                                 new Quaternion(Convert.ToSingle(strArray2[15]),
-                                                    Convert.ToSingle(strArray2[0x10]), Convert.ToSingle(strArray2[0x11]),
-                                                    Convert.ToSingle(strArray2[0x12])));
+                                                    Convert.ToSingle(strArray2[16]), Convert.ToSingle(strArray2[17]),
+                                                    Convert.ToSingle(strArray2[18])));
                                         }
                                     }
                                     else if (strArray2[0].StartsWith("misc"))
@@ -5538,7 +5539,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 }
                                 else if (strArray2[0].StartsWith("map") && strArray2[1].StartsWith("disablebounds"))
                                 {
-                                    settings[0xba] = 1;
+                                    settings[186] = 1;
                                     if (!linkHash[3].ContainsKey("mapbounds"))
                                     {
                                         linkHash[3].Add("mapbounds", "map,disablebounds");
@@ -5547,7 +5548,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             }
 
                             unloadAssets();
-                            settings[0x4d] = string.Empty;
+                            settings[77] = string.Empty;
                         }
                         else if (GUI.Button(new Rect(205f, 500f, 60f, 30f), "Exit"))
                         {
@@ -5577,10 +5578,10 @@ public class FengGameManagerMKII : MonoBehaviour
                         }
                         else if (GUI.Button(new Rect(175f, 70f, 115f, 30f), "View Script"))
                         {
-                            settings[0x44] = 0x66;
+                            settings[68] = 102;
                         }
 
-                        if ((int)settings[0x44] == 0x66)
+                        if ((int)settings[68] == 102)
                         {
                             str2 = string.Empty;
                             num19 = 0;
@@ -5605,7 +5606,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             }
                             else if (GUI.Button(new Rect(num20 + 151f, num21 + 460f, 60f, 30f), "Done"))
                             {
-                                settings[0x44] = 100;
+                                settings[68] = 100;
                             }
 
                             GUI.TextArea(new Rect(num20 + 5f, num21 + 5f, 211f, 415f), str2);
@@ -5613,7 +5614,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 "Object Count: " + Convert.ToString(num19), "Label");
                         }
                     }
-                    else if ((int)settings[0x44] == 0x65)
+                    else if ((int)settings[68] == 101)
                     {
                         GUI.Label(new Rect(92f, 50f, 180f, 20f), "Level Editor Rebinds:", "Label");
                         GUI.Label(new Rect(12f, 80f, 145f, 20f), "Forward:", "Label");
@@ -5633,13 +5634,13 @@ public class FengGameManagerMKII : MonoBehaviour
                         GUI.Label(new Rect(12f, 430f, 145f, 20f), "Rotate CCW:", "Label");
                         GUI.Label(new Rect(12f, 455f, 145f, 20f), "Rotate CW:", "Label");
                         GUI.Label(new Rect(12f, 480f, 145f, 20f), "Movement-Speedup:", "Label");
-                        for (num13 = 0; num13 < 0x11; num13++)
+                        for (num13 = 0; num13 < 17; num13++)
                         {
                             var num22 = 80f + 25f * num13;
-                            num23 = 0x75 + num13;
-                            if (num13 == 0x10)
+                            num23 = 117 + num13;
+                            if (num13 == 16)
                             {
-                                num23 = 0xa1;
+                                num23 = 161;
                             }
 
                             if (GUI.Button(new Rect(135f, num22, 60f, 20f), (string)settings[num23], "box"))
@@ -5687,7 +5688,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 num13 = 0;
                                 while (num13 < 7)
                                 {
-                                    if (Input.GetKeyDown((KeyCode)(0x143 + num13)))
+                                    if (Input.GetKeyDown((KeyCode)(323 + num13)))
                                     {
                                         flag4 = true;
                                         str4 = "Mouse" + Convert.ToString(num13);
@@ -5699,12 +5700,12 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             if (flag4)
                             {
-                                for (num13 = 0; num13 < 0x11; num13++)
+                                for (num13 = 0; num13 < 17; num13++)
                                 {
-                                    num23 = 0x75 + num13;
-                                    if (num13 == 0x10)
+                                    num23 = 117 + num13;
+                                    if (num13 == 16)
                                     {
-                                        num23 = 0xa1;
+                                        num23 = 161;
                                     }
 
                                     if ((int)settings[100] == num23)
@@ -5719,39 +5720,39 @@ public class FengGameManagerMKII : MonoBehaviour
 
                         if (GUI.Button(new Rect(100f, 515f, 110f, 30f), "Save Controls"))
                         {
-                            PlayerPrefs.SetString("lforward", (string)settings[0x75]);
-                            PlayerPrefs.SetString("lback", (string)settings[0x76]);
-                            PlayerPrefs.SetString("lleft", (string)settings[0x77]);
+                            PlayerPrefs.SetString("lforward", (string)settings[117]);
+                            PlayerPrefs.SetString("lback", (string)settings[118]);
+                            PlayerPrefs.SetString("lleft", (string)settings[119]);
                             PlayerPrefs.SetString("lright", (string)settings[120]);
-                            PlayerPrefs.SetString("lup", (string)settings[0x79]);
-                            PlayerPrefs.SetString("ldown", (string)settings[0x7a]);
-                            PlayerPrefs.SetString("lcursor", (string)settings[0x7b]);
-                            PlayerPrefs.SetString("lplace", (string)settings[0x7c]);
-                            PlayerPrefs.SetString("ldel", (string)settings[0x7d]);
-                            PlayerPrefs.SetString("lslow", (string)settings[0x7e]);
-                            PlayerPrefs.SetString("lrforward", (string)settings[0x7f]);
-                            PlayerPrefs.SetString("lrback", (string)settings[0x80]);
-                            PlayerPrefs.SetString("lrleft", (string)settings[0x81]);
+                            PlayerPrefs.SetString("lup", (string)settings[121]);
+                            PlayerPrefs.SetString("ldown", (string)settings[122]);
+                            PlayerPrefs.SetString("lcursor", (string)settings[123]);
+                            PlayerPrefs.SetString("lplace", (string)settings[124]);
+                            PlayerPrefs.SetString("ldel", (string)settings[125]);
+                            PlayerPrefs.SetString("lslow", (string)settings[126]);
+                            PlayerPrefs.SetString("lrforward", (string)settings[127]);
+                            PlayerPrefs.SetString("lrback", (string)settings[128]);
+                            PlayerPrefs.SetString("lrleft", (string)settings[129]);
                             PlayerPrefs.SetString("lrright", (string)settings[130]);
-                            PlayerPrefs.SetString("lrccw", (string)settings[0x83]);
-                            PlayerPrefs.SetString("lrcw", (string)settings[0x84]);
-                            PlayerPrefs.SetString("lfast", (string)settings[0xa1]);
+                            PlayerPrefs.SetString("lrccw", (string)settings[131]);
+                            PlayerPrefs.SetString("lrcw", (string)settings[132]);
+                            PlayerPrefs.SetString("lfast", (string)settings[161]);
                         }
                     }
 
-                    if ((int)settings[0x40] != 0x69 && (int)settings[0x40] != 0x6a)
+                    if ((int)settings[64] != 105 && (int)settings[64] != 106)
                     {
                         GUI.Label(new Rect(num11 + 13f, 445f, 125f, 20f), "Scale Multipliers:", "Label");
                         GUI.Label(new Rect(num11 + 13f, 470f, 50f, 22f), "Length:", "Label");
-                        settings[0x48] = GUI.TextField(new Rect(num11 + 58f, 470f, 40f, 20f), (string)settings[0x48]);
+                        settings[72] = GUI.TextField(new Rect(num11 + 58f, 470f, 40f, 20f), (string)settings[72]);
                         GUI.Label(new Rect(num11 + 13f, 495f, 50f, 20f), "Width:", "Label");
                         settings[70] = GUI.TextField(new Rect(num11 + 58f, 495f, 40f, 20f), (string)settings[70]);
                         GUI.Label(new Rect(num11 + 13f, 520f, 50f, 22f), "Height:", "Label");
-                        settings[0x47] = GUI.TextField(new Rect(num11 + 58f, 520f, 40f, 20f), (string)settings[0x47]);
-                        if ((int)settings[0x40] <= 0x6a)
+                        settings[71] = GUI.TextField(new Rect(num11 + 58f, 520f, 40f, 20f), (string)settings[71]);
+                        if ((int)settings[64] <= 106)
                         {
                             GUI.Label(new Rect(num11 + 155f, 554f, 50f, 22f), "Tiling:", "Label");
-                            settings[0x4f] = GUI.TextField(new Rect(num11 + 200f, 554f, 40f, 20f), (string)settings[0x4f]);
+                            settings[79] = GUI.TextField(new Rect(num11 + 200f, 554f, 40f, 20f), (string)settings[79]);
                             settings[80] = GUI.TextField(new Rect(num11 + 245f, 554f, 40f, 20f), (string)settings[80]);
                             GUI.Label(new Rect(num11 + 219f, 570f, 10f, 22f), "x:", "Label");
                             GUI.Label(new Rect(num11 + 264f, 570f, 10f, 22f), "y:", "Label");
@@ -5759,19 +5760,19 @@ public class FengGameManagerMKII : MonoBehaviour
                             GUI.Label(new Rect(num11 + 155f, 470f, 10f, 20f), "R:", "Label");
                             GUI.Label(new Rect(num11 + 155f, 495f, 10f, 20f), "G:", "Label");
                             GUI.Label(new Rect(num11 + 155f, 520f, 10f, 20f), "B:", "Label");
-                            settings[0x49] = GUI.HorizontalSlider(new Rect(num11 + 170f, 475f, 100f, 20f),
-                                (float)settings[0x49], 0f, 1f);
-                            settings[0x4a] = GUI.HorizontalSlider(new Rect(num11 + 170f, 500f, 100f, 20f),
-                                (float)settings[0x4a], 0f, 1f);
-                            settings[0x4b] = GUI.HorizontalSlider(new Rect(num11 + 170f, 525f, 100f, 20f),
-                                (float)settings[0x4b], 0f, 1f);
+                            settings[73] = GUI.HorizontalSlider(new Rect(num11 + 170f, 475f, 100f, 20f),
+                                (float)settings[73], 0f, 1f);
+                            settings[74] = GUI.HorizontalSlider(new Rect(num11 + 170f, 500f, 100f, 20f),
+                                (float)settings[74], 0f, 1f);
+                            settings[75] = GUI.HorizontalSlider(new Rect(num11 + 170f, 525f, 100f, 20f),
+                                (float)settings[75], 0f, 1f);
                             GUI.Label(new Rect(num11 + 13f, 554f, 57f, 22f), "Material:", "Label");
-                            if (GUI.Button(new Rect(num11 + 66f, 554f, 60f, 20f), (string)settings[0x45]))
+                            if (GUI.Button(new Rect(num11 + 66f, 554f, 60f, 20f), (string)settings[69]))
                             {
-                                settings[0x4e] = 1;
+                                settings[78] = 1;
                             }
 
-                            if ((int)settings[0x4e] == 1)
+                            if ((int)settings[78] == 1)
                             {
                                 string[] strArray4 = { "bark", "bark2", "bark3", "bark4" };
                                 string[] strArray5 = { "wood1", "wood2", "wood3", "wood4" };
@@ -5800,11 +5801,11 @@ public class FengGameManagerMKII : MonoBehaviour
                             };
                                 string[] strArray13 =
                                     {"bark", "wood", "grass", "brick", "metal", "rock", "stone", "misc", "transparent"};
-                                var index = 0x4e;
-                                var num25 = 0x45;
+                                var index = 78;
+                                var num25 = 69;
                                 num20 = Screen.width / 2 - 110.5f;
                                 num21 = Screen.height / 2 - 220f;
-                                var num26 = (int)settings[0xb9];
+                                var num26 = (int)settings[185];
                                 num27 = 10f + 104f * (list2[num26].Length / 3 + 1);
                                 num27 = Math.Max(num27, 280f);
                                 GUI.DrawTexture(new Rect(num20 + 2f, num21 + 2f, 208f, 446f), textureBackgroundBlue);
@@ -5816,7 +5817,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     if (GUI.Button(new Rect(num20 + 5f + 69f * num29, num21 + 5f + 30 * num28, 64f, 25f),
                                         strArray13[num13], "box"))
                                     {
-                                        settings[0xb9] = num13;
+                                        settings[185] = num13;
                                     }
                                 }
 
@@ -5854,12 +5855,12 @@ public class FengGameManagerMKII : MonoBehaviour
                             }
 
                             flag5 = false;
-                            if ((int)settings[0x4c] == 1)
+                            if ((int)settings[76] == 1)
                             {
                                 flag5 = true;
                                 textured = new Texture2D(1, 1, TextureFormat.ARGB32, false);
                                 textured.SetPixel(0, 0,
-                                    new Color((float)settings[0x49], (float)settings[0x4a], (float)settings[0x4b], 1f));
+                                    new Color((float)settings[73], (float)settings[74], (float)settings[75], 1f));
                                 textured.Apply();
                                 GUI.DrawTexture(new Rect(num11 + 235f, 445f, 30f, 20f), textured, ScaleMode.StretchToFill);
                                 Destroy(textured);
@@ -5870,11 +5871,11 @@ public class FengGameManagerMKII : MonoBehaviour
                             {
                                 if (flag6)
                                 {
-                                    settings[0x4c] = 1;
+                                    settings[76] = 1;
                                 }
                                 else
                                 {
-                                    settings[0x4c] = 0;
+                                    settings[76] = 0;
                                 }
                             }
                         }
@@ -5882,38 +5883,38 @@ public class FengGameManagerMKII : MonoBehaviour
 
                     if (GUI.Button(new Rect(num11 + 5f, 10f, 60f, 25f), "General", "box"))
                     {
-                        settings[0x40] = 0x65;
+                        settings[64] = 101;
                     }
                     else if (GUI.Button(new Rect(num11 + 70f, 10f, 70f, 25f), "Geometry", "box"))
                     {
-                        settings[0x40] = 0x66;
+                        settings[64] = 102;
                     }
                     else if (GUI.Button(new Rect(num11 + 145f, 10f, 65f, 25f), "Buildings", "box"))
                     {
-                        settings[0x40] = 0x67;
+                        settings[64] = 103;
                     }
                     else if (GUI.Button(new Rect(num11 + 215f, 10f, 50f, 25f), "Nature", "box"))
                     {
-                        settings[0x40] = 0x68;
+                        settings[64] = 104;
                     }
                     else if (GUI.Button(new Rect(num11 + 5f, 45f, 70f, 25f), "Spawners", "box"))
                     {
-                        settings[0x40] = 0x69;
+                        settings[64] = 105;
                     }
                     else if (GUI.Button(new Rect(num11 + 80f, 45f, 70f, 25f), "Racing", "box"))
                     {
-                        settings[0x40] = 0x6c;
+                        settings[64] = 108;
                     }
                     else if (GUI.Button(new Rect(num11 + 155f, 45f, 40f, 25f), "Misc", "box"))
                     {
-                        settings[0x40] = 0x6b;
+                        settings[64] = 107;
                     }
                     else if (GUI.Button(new Rect(num11 + 200f, 45f, 70f, 25f), "Credits", "box"))
                     {
-                        settings[0x40] = 0x6a;
+                        settings[64] = 106;
                     }
 
-                    if ((int)settings[0x40] == 0x65)
+                    if ((int)settings[64] == 101)
                     {
                         GameObject obj5;
                         scroll = GUI.BeginScrollView(new Rect(num11, 80f, 305f, 350f), scroll,
@@ -5983,14 +5984,14 @@ public class FengGameManagerMKII : MonoBehaviour
                     else
                     {
                         GameObject obj6;
-                        if ((int)settings[0x40] == 0x6b)
+                        if ((int)settings[64] == 107)
                         {
                             GUI.DrawTexture(new Rect(num11 + 30f, 90f, 64f, 64f), RCLoadTexture("pbarrier"));
                             GUI.DrawTexture(new Rect(num11 + 30f, 199f, 64f, 64f), RCLoadTexture("pregion"));
                             GUI.Label(new Rect(num11 + 110f, 243f, 200f, 22f), "Region Name:", "Label");
                             GUI.Label(new Rect(num11 + 110f, 179f, 200f, 22f), "Disable Map Bounds:", "Label");
                             var flag7 = false;
-                            if ((int)settings[0xba] == 1)
+                            if ((int)settings[186] == 1)
                             {
                                 flag7 = true;
                                 if (!linkHash[3].ContainsKey("mapbounds"))
@@ -6013,9 +6014,9 @@ public class FengGameManagerMKII : MonoBehaviour
                             }
                             else if (GUI.Button(new Rect(num11 + 30f, 268f, 64f, 30f), "Region"))
                             {
-                                if ((string)settings[0xbf] == string.Empty)
+                                if ((string)settings[191] == string.Empty)
                                 {
-                                    settings[0xbf] = "Region" + Random.Range(0x2710, 0x1869f);
+                                    settings[191] = "Region" + Random.Range(10000, 99999);
                                 }
 
                                 flag2 = true;
@@ -6024,9 +6025,9 @@ public class FengGameManagerMKII : MonoBehaviour
                                 selectedObj = (GameObject)Instantiate(obj6);
                                 obj4 = (GameObject)Instantiate(Resources.Load("UI/LabelNameOverHead"));
                                 obj4.name = "RegionLabel";
-                                if (!float.TryParse((string)settings[0x47], out num31))
+                                if (!float.TryParse((string)settings[71], out num31))
                                 {
-                                    settings[0x47] = "1";
+                                    settings[71] = "1";
                                 }
 
                                 if (!float.TryParse((string)settings[70], out num31))
@@ -6034,47 +6035,47 @@ public class FengGameManagerMKII : MonoBehaviour
                                     settings[70] = "1";
                                 }
 
-                                if (!float.TryParse((string)settings[0x48], out num31))
+                                if (!float.TryParse((string)settings[72], out num31))
                                 {
-                                    settings[0x48] = "1";
+                                    settings[72] = "1";
                                 }
 
                                 obj4.transform.parent = selectedObj.transform;
                                 num14 = 1f;
-                                if (Convert.ToSingle((string)settings[0x47]) > 100f)
+                                if (Convert.ToSingle((string)settings[71]) > 100f)
                                 {
                                     num14 = 0.8f;
                                 }
-                                else if (Convert.ToSingle((string)settings[0x47]) > 1000f)
+                                else if (Convert.ToSingle((string)settings[71]) > 1000f)
                                 {
                                     num14 = 0.5f;
                                 }
 
                                 obj4.transform.localPosition = new Vector3(0f, num14, 0f);
                                 obj4.transform.localScale = new Vector3(5f / Convert.ToSingle((string)settings[70]),
-                                    5f / Convert.ToSingle((string)settings[0x47]),
-                                    5f / Convert.ToSingle((string)settings[0x48]));
-                                obj4.GetComponent<UILabel>().text = (string)settings[0xbf];
+                                    5f / Convert.ToSingle((string)settings[71]),
+                                    5f / Convert.ToSingle((string)settings[72]));
+                                obj4.GetComponent<UILabel>().text = (string)settings[191];
                                 selectedObj.AddComponent<RCRegionLabel>();
                                 selectedObj.GetComponent<RCRegionLabel>().myLabel = obj4;
-                                selectedObj.name = "misc,region," + (string)settings[0xbf];
+                                selectedObj.name = "misc,region," + (string)settings[191];
                             }
 
-                            settings[0xbf] = GUI.TextField(new Rect(num11 + 200f, 243f, 75f, 20f), (string)settings[0xbf]);
+                            settings[191] = GUI.TextField(new Rect(num11 + 200f, 243f, 75f, 20f), (string)settings[191]);
                             var flag8 = GUI.Toggle(new Rect(num11 + 240f, 179f, 40f, 20f), flag7, "On");
                             if (flag8 != flag7)
                             {
                                 if (flag8)
                                 {
-                                    settings[0xba] = 1;
+                                    settings[186] = 1;
                                 }
                                 else
                                 {
-                                    settings[0xba] = 0;
+                                    settings[186] = 0;
                                 }
                             }
                         }
-                        else if ((int)settings[0x40] == 0x69)
+                        else if ((int)settings[64] == 105)
                         {
                             float num32;
                             GameObject obj7;
@@ -6087,97 +6088,97 @@ public class FengGameManagerMKII : MonoBehaviour
                             GUI.DrawTexture(new Rect(num11 + 79.6f, 224f, 64f, 64f), RCLoadTexture("pannie"));
                             if (GUI.Button(new Rect(num11 + 7.8f, 179f, 64f, 30f), "Titan"))
                             {
-                                if (!float.TryParse((string)settings[0x53], out num32))
+                                if (!float.TryParse((string)settings[83], out num32))
                                 {
-                                    settings[0x53] = "30";
+                                    settings[83] = "30";
                                 }
 
                                 flag2 = true;
                                 flag3 = true;
                                 obj7 = (GameObject)ResourcesCache.RCLoadGO("spawnTitan");
                                 selectedObj = (GameObject)Instantiate(obj7);
-                                num30 = (int)settings[0x54];
-                                selectedObj.name = "photon,spawnTitan," + (string)settings[0x53] + "," + num30;
+                                num30 = (int)settings[84];
+                                selectedObj.name = "photon,spawnTitan," + (string)settings[83] + "," + num30;
                             }
                             else if (GUI.Button(new Rect(num11 + 79.6f, 179f, 64f, 30f), "Aberrant"))
                             {
-                                if (!float.TryParse((string)settings[0x53], out num32))
+                                if (!float.TryParse((string)settings[83], out num32))
                                 {
-                                    settings[0x53] = "30";
+                                    settings[83] = "30";
                                 }
 
                                 flag2 = true;
                                 flag3 = true;
                                 obj7 = (GameObject)ResourcesCache.RCLoadGO("spawnAbnormal");
                                 selectedObj = (GameObject)Instantiate(obj7);
-                                num30 = (int)settings[0x54];
-                                selectedObj.name = "photon,spawnAbnormal," + (string)settings[0x53] + "," + num30;
+                                num30 = (int)settings[84];
+                                selectedObj.name = "photon,spawnAbnormal," + (string)settings[83] + "," + num30;
                             }
                             else if (GUI.Button(new Rect(num11 + 151.4f, 179f, 64f, 30f), "Jumper"))
                             {
-                                if (!float.TryParse((string)settings[0x53], out num32))
+                                if (!float.TryParse((string)settings[83], out num32))
                                 {
-                                    settings[0x53] = "30";
+                                    settings[83] = "30";
                                 }
 
                                 flag2 = true;
                                 flag3 = true;
                                 obj7 = (GameObject)ResourcesCache.RCLoadGO("spawnJumper");
                                 selectedObj = (GameObject)Instantiate(obj7);
-                                num30 = (int)settings[0x54];
-                                selectedObj.name = "photon,spawnJumper," + (string)settings[0x53] + "," + num30;
+                                num30 = (int)settings[84];
+                                selectedObj.name = "photon,spawnJumper," + (string)settings[83] + "," + num30;
                             }
                             else if (GUI.Button(new Rect(num11 + 223.2f, 179f, 64f, 30f), "Crawler"))
                             {
-                                if (!float.TryParse((string)settings[0x53], out num32))
+                                if (!float.TryParse((string)settings[83], out num32))
                                 {
-                                    settings[0x53] = "30";
+                                    settings[83] = "30";
                                 }
 
                                 flag2 = true;
                                 flag3 = true;
                                 obj7 = (GameObject)ResourcesCache.RCLoadGO("spawnCrawler");
                                 selectedObj = (GameObject)Instantiate(obj7);
-                                num30 = (int)settings[0x54];
-                                selectedObj.name = "photon,spawnCrawler," + (string)settings[0x53] + "," + num30;
+                                num30 = (int)settings[84];
+                                selectedObj.name = "photon,spawnCrawler," + (string)settings[83] + "," + num30;
                             }
                             else if (GUI.Button(new Rect(num11 + 7.8f, 293f, 64f, 30f), "Punk"))
                             {
-                                if (!float.TryParse((string)settings[0x53], out num32))
+                                if (!float.TryParse((string)settings[83], out num32))
                                 {
-                                    settings[0x53] = "30";
+                                    settings[83] = "30";
                                 }
 
                                 flag2 = true;
                                 flag3 = true;
                                 obj7 = (GameObject)ResourcesCache.RCLoadGO("spawnPunk");
                                 selectedObj = (GameObject)Instantiate(obj7);
-                                num30 = (int)settings[0x54];
-                                selectedObj.name = "photon,spawnPunk," + (string)settings[0x53] + "," + num30;
+                                num30 = (int)settings[84];
+                                selectedObj.name = "photon,spawnPunk," + (string)settings[83] + "," + num30;
                             }
                             else if (GUI.Button(new Rect(num11 + 79.6f, 293f, 64f, 30f), "Annie"))
                             {
-                                if (!float.TryParse((string)settings[0x53], out num32))
+                                if (!float.TryParse((string)settings[83], out num32))
                                 {
-                                    settings[0x53] = "30";
+                                    settings[83] = "30";
                                 }
 
                                 flag2 = true;
                                 flag3 = true;
                                 obj7 = (GameObject)ResourcesCache.RCLoadGO("spawnAnnie");
                                 selectedObj = (GameObject)Instantiate(obj7);
-                                num30 = (int)settings[0x54];
-                                selectedObj.name = "photon,spawnAnnie," + (string)settings[0x53] + "," + num30;
+                                num30 = (int)settings[84];
+                                selectedObj.name = "photon,spawnAnnie," + (string)settings[83] + "," + num30;
                             }
 
                             GUI.Label(new Rect(num11 + 7f, 379f, 140f, 22f), "Spawn Timer:", "Label");
-                            settings[0x53] = GUI.TextField(new Rect(num11 + 100f, 379f, 50f, 20f), (string)settings[0x53]);
+                            settings[83] = GUI.TextField(new Rect(num11 + 100f, 379f, 50f, 20f), (string)settings[83]);
                             GUI.Label(new Rect(num11 + 7f, 356f, 140f, 22f), "Endless spawn:", "Label");
                             GUI.Label(new Rect(num11 + 7f, 405f, 290f, 80f),
                                 "* The above settings apply only to the next placed spawner. You can have unique spawn times and settings for each individual titan spawner.",
                                 "Label");
                             var flag9 = false;
-                            if ((int)settings[0x54] == 1)
+                            if ((int)settings[84] == 1)
                             {
                                 flag9 = true;
                             }
@@ -6187,18 +6188,18 @@ public class FengGameManagerMKII : MonoBehaviour
                             {
                                 if (flag10)
                                 {
-                                    settings[0x54] = 1;
+                                    settings[84] = 1;
                                 }
                                 else
                                 {
-                                    settings[0x54] = 0;
+                                    settings[84] = 0;
                                 }
                             }
                         }
                         else
                         {
                             string[] strArray14;
-                            if ((int)settings[0x40] == 0x66)
+                            if ((int)settings[64] == 102)
                             {
                                 strArray14 = new[]
                                 {
@@ -6225,7 +6226,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             {
                                 List<string> list4;
                                 GameObject obj8;
-                                if ((int)settings[0x40] == 0x67)
+                                if ((int)settings[64] == 103)
                                 {
                                     list4 = new List<string> { "arch1", "house1" };
                                     strArray14 = new[]
@@ -6268,7 +6269,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                     GUI.EndScrollView();
                                 }
-                                else if ((int)settings[0x40] == 0x68)
+                                else if ((int)settings[64] == 104)
                                 {
                                     list4 = new List<string> { "tree0" };
                                     strArray14 = new[]
@@ -6307,7 +6308,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                     GUI.EndScrollView();
                                 }
-                                else if ((int)settings[0x40] == 0x6c)
+                                else if ((int)settings[64] == 108)
                                 {
                                     string[] strArray15 =
                                     {
@@ -6326,7 +6327,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                     scroll = GUI.BeginScrollView(new Rect(num11, 90f, 303f, 350f), scroll,
                                         new Rect(num11, 90f, 300f, num27), true, true);
                                     GUI.Label(new Rect(num11 + 90f, 90f, 200f, 22f), "Racing Start Barrier");
-                                    var num33 = 0x7d;
+                                    var num33 = 125;
                                     for (num13 = 0; num13 < strArray14.Length; num13++)
                                     {
                                         num29 = num13 % 4;
@@ -6346,9 +6347,9 @@ public class FengGameManagerMKII : MonoBehaviour
                                         }
                                     }
 
-                                    num33 += 0x72 * (strArray14.Length / 4) + 10;
+                                    num33 += 114 * (strArray14.Length / 4) + 10;
                                     GUI.Label(new Rect(num11 + 93f, num33, 200f, 22f), "Racing End Trigger");
-                                    num33 += 0x23;
+                                    num33 += 35;
                                     for (num13 = 0; num13 < strArray14.Length; num13++)
                                     {
                                         strArray14[num13] = "end" + strArray15[num13];
@@ -6373,9 +6374,9 @@ public class FengGameManagerMKII : MonoBehaviour
                                         }
                                     }
 
-                                    num33 += 0x72 * (strArray14.Length / 4) + 10;
+                                    num33 += 114 * (strArray14.Length / 4) + 10;
                                     GUI.Label(new Rect(num11 + 113f, num33, 200f, 22f), "Kill Trigger");
-                                    num33 += 0x23;
+                                    num33 += 35;
                                     for (num13 = 0; num13 < strArray14.Length; num13++)
                                     {
                                         strArray14[num13] = "kill" + strArray15[num13];
@@ -6400,9 +6401,9 @@ public class FengGameManagerMKII : MonoBehaviour
                                         }
                                     }
 
-                                    num33 += 0x72 * (strArray14.Length / 4) + 10;
+                                    num33 += 114 * (strArray14.Length / 4) + 10;
                                     GUI.Label(new Rect(num11 + 95f, num33, 200f, 22f), "Checkpoint Trigger");
-                                    num33 += 0x23;
+                                    num33 += 35;
                                     for (num13 = 0; num13 < strArray14.Length; num13++)
                                     {
                                         strArray14[num13] = "checkpoint" + strArray15[num13];
@@ -6429,7 +6430,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                     GUI.EndScrollView();
                                 }
-                                else if ((int)settings[0x40] == 0x6a)
+                                else if ((int)settings[64] == 106)
                                 {
                                     GUI.Label(new Rect(num11 + 10f, 80f, 200f, 22f), "- Tree 2 designed by Ken P.",
                                         "Label");
@@ -6463,19 +6464,19 @@ public class FengGameManagerMKII : MonoBehaviour
                             settings[70] = "1";
                         }
 
-                        if (!float.TryParse((string)settings[0x47], out num31))
+                        if (!float.TryParse((string)settings[71], out num31))
                         {
-                            settings[0x47] = "1";
+                            settings[71] = "1";
                         }
 
-                        if (!float.TryParse((string)settings[0x48], out num31))
+                        if (!float.TryParse((string)settings[72], out num31))
                         {
-                            settings[0x48] = "1";
+                            settings[72] = "1";
                         }
 
-                        if (!float.TryParse((string)settings[0x4f], out num31))
+                        if (!float.TryParse((string)settings[79], out num31))
                         {
-                            settings[0x4f] = "1";
+                            settings[79] = "1";
                         }
 
                         if (!float.TryParse((string)settings[80], out num31))
@@ -6486,12 +6487,12 @@ public class FengGameManagerMKII : MonoBehaviour
                         if (!flag3)
                         {
                             var a = 1f;
-                            if ((string)settings[0x45] != "default")
+                            if ((string)settings[69] != "default")
                             {
-                                if (((string)settings[0x45]).StartsWith("transparent"))
+                                if (((string)settings[69]).StartsWith("transparent"))
                                 {
                                     float num35;
-                                    if (float.TryParse(((string)settings[0x45]).Substring(11), out num35))
+                                    if (float.TryParse(((string)settings[69]).Substring(11), out num35))
                                     {
                                         a = num35;
                                     }
@@ -6501,7 +6502,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         renderer2.material = (Material)ResourcesCache.RCLoadM("transparent");
                                         renderer2.material.mainTextureScale = new Vector2(
                                             renderer2.material.mainTextureScale.x *
-                                            Convert.ToSingle((string)settings[0x4f]),
+                                            Convert.ToSingle((string)settings[79]),
                                             renderer2.material.mainTextureScale.y *
                                             Convert.ToSingle((string)settings[80]));
                                     }
@@ -6513,10 +6514,10 @@ public class FengGameManagerMKII : MonoBehaviour
                                         if (!(renderer2.name.Contains("Particle System") &&
                                               selectedObj.name.Contains("aot_supply")))
                                         {
-                                            renderer2.material = (Material)ResourcesCache.RCLoadM((string)settings[0x45]);
+                                            renderer2.material = (Material)ResourcesCache.RCLoadM((string)settings[69]);
                                             renderer2.material.mainTextureScale = new Vector2(
                                                 renderer2.material.mainTextureScale.x *
-                                                Convert.ToSingle((string)settings[0x4f]),
+                                                Convert.ToSingle((string)settings[79]),
                                                 renderer2.material.mainTextureScale.y *
                                                 Convert.ToSingle((string)settings[80]));
                                         }
@@ -6542,12 +6543,12 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             num37 = selectedObj.transform.localScale.x * Convert.ToSingle((string)settings[70]);
                             num37 -= 0.001f;
-                            num38 = selectedObj.transform.localScale.y * Convert.ToSingle((string)settings[0x47]);
-                            num39 = selectedObj.transform.localScale.z * Convert.ToSingle((string)settings[0x48]);
+                            num38 = selectedObj.transform.localScale.y * Convert.ToSingle((string)settings[71]);
+                            num39 = selectedObj.transform.localScale.z * Convert.ToSingle((string)settings[72]);
                             selectedObj.transform.localScale = new Vector3(num37, num38, num39);
-                            if ((int)settings[0x4c] == 1)
+                            if ((int)settings[76] == 1)
                             {
-                                color = new Color((float)settings[0x49], (float)settings[0x4a], (float)settings[0x4b],
+                                color = new Color((float)settings[73], (float)settings[74], (float)settings[75],
                                     a);
                                 foreach (var filter in selectedObj.GetComponentsInChildren<MeshFilter>())
                                 {
@@ -6579,29 +6580,29 @@ public class FengGameManagerMKII : MonoBehaviour
                             selectedObj.transform.rotation =
                                 Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f);
                             name = selectedObj.name;
-                            var strArray3 = new string[0x15];
+                            var strArray3 = new string[21];
                             strArray3[0] = name;
                             strArray3[1] = ",";
-                            strArray3[2] = (string)settings[0x45];
+                            strArray3[2] = (string)settings[69];
                             strArray3[3] = ",";
                             strArray3[4] = (string)settings[70];
                             strArray3[5] = ",";
-                            strArray3[6] = (string)settings[0x47];
+                            strArray3[6] = (string)settings[71];
                             strArray3[7] = ",";
-                            strArray3[8] = (string)settings[0x48];
+                            strArray3[8] = (string)settings[72];
                             strArray3[9] = ",";
-                            strArray3[10] = settings[0x4c].ToString();
+                            strArray3[10] = settings[76].ToString();
                             strArray3[11] = ",";
-                            var num42 = (float)settings[0x49];
+                            var num42 = (float)settings[73];
                             strArray3[12] = num42.ToString();
                             strArray3[13] = ",";
-                            num42 = (float)settings[0x4a];
+                            num42 = (float)settings[74];
                             strArray3[14] = num42.ToString();
                             strArray3[15] = ",";
-                            strArray3[0x10] = ((float)settings[0x4b]).ToString();
-                            strArray3[0x11] = ",";
-                            strArray3[0x12] = (string)settings[0x4f];
-                            strArray3[0x13] = ",";
+                            strArray3[16] = ((float)settings[75]).ToString();
+                            strArray3[17] = ",";
+                            strArray3[18] = (string)settings[79];
+                            strArray3[19] = ",";
                             strArray3[20] = (string)settings[80];
                             selectedObj.name = string.Concat(strArray3);
                             unloadAssetsEditor();
@@ -6614,8 +6615,8 @@ public class FengGameManagerMKII : MonoBehaviour
                                 y = 1f;
                                 num37 = selectedObj.transform.localScale.x * Convert.ToSingle((string)settings[70]);
                                 num37 -= 0.001f;
-                                num38 = selectedObj.transform.localScale.y * Convert.ToSingle((string)settings[0x47]);
-                                num39 = selectedObj.transform.localScale.z * Convert.ToSingle((string)settings[0x48]);
+                                num38 = selectedObj.transform.localScale.y * Convert.ToSingle((string)settings[71]);
+                                num39 = selectedObj.transform.localScale.z * Convert.ToSingle((string)settings[72]);
                                 selectedObj.transform.localScale = new Vector3(num37, num38, num39);
                                 z = selectedObj.transform.localScale.z;
                                 num41 = 10f + z * y * 1.2f / 2f;
@@ -6630,8 +6631,8 @@ public class FengGameManagerMKII : MonoBehaviour
                                 }
 
                                 name = selectedObj.name;
-                                selectedObj.name = name + "," + (string)settings[70] + "," + (string)settings[0x47] +
-                                                   "," + (string)settings[0x48];
+                                selectedObj.name = name + "," + (string)settings[70] + "," + (string)settings[71] +
+                                                   "," + (string)settings[72];
                             }
                         }
                         else if (selectedObj.name.StartsWith("racing"))
@@ -6639,8 +6640,8 @@ public class FengGameManagerMKII : MonoBehaviour
                             y = 1f;
                             num37 = selectedObj.transform.localScale.x * Convert.ToSingle((string)settings[70]);
                             num37 -= 0.001f;
-                            num38 = selectedObj.transform.localScale.y * Convert.ToSingle((string)settings[0x47]);
-                            num39 = selectedObj.transform.localScale.z * Convert.ToSingle((string)settings[0x48]);
+                            num38 = selectedObj.transform.localScale.y * Convert.ToSingle((string)settings[71]);
+                            num39 = selectedObj.transform.localScale.z * Convert.ToSingle((string)settings[72]);
                             selectedObj.transform.localScale = new Vector3(num37, num38, num39);
                             z = selectedObj.transform.localScale.z;
                             num41 = 10f + z * y * 1.2f / 2f;
@@ -6651,8 +6652,8 @@ public class FengGameManagerMKII : MonoBehaviour
                             selectedObj.transform.rotation =
                                 Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f);
                             name = selectedObj.name;
-                            selectedObj.name = name + "," + (string)settings[70] + "," + (string)settings[0x47] + "," +
-                                               (string)settings[0x48];
+                            selectedObj.name = name + "," + (string)settings[70] + "," + (string)settings[71] + "," +
+                                               (string)settings[72];
                         }
                         else
                         {
@@ -6675,8 +6676,10 @@ public class FengGameManagerMKII : MonoBehaviour
 
                 }
                 break;
-
-            case "Menu" when (inputManager != null && inputManager.menuOn):
+            case "test":
+                GGM.GUI.Pages.PauseMenu();
+                break;
+            case "Menu":
                 {
                     bool flag2;
                     int num13;
@@ -6693,7 +6696,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     bool flag10;
                     Screen.showCursor = true;
                     Screen.lockCursor = false;
-                    if ((int)settings[0x40] != 6)
+                    if ((int)settings[64] != 6)
                     {
                         var num7 = Screen.width / 2f - 350f;
                         var num8 = Screen.height / 2f - 250f;
@@ -6702,42 +6705,42 @@ public class FengGameManagerMKII : MonoBehaviour
                         GUI.Box(new Rect(num7, num8, 700f, 500f), string.Empty);
                         if (GUI.Button(new Rect(num7 + 7f, num8 + 7f, 59f, 25f), "General", "box"))
                         {
-                            settings[0x40] = 0;
+                            settings[64] = 0;
                         }
                         else if (GUI.Button(new Rect(num7 + 71f, num8 + 7f, 60f, 25f), "Rebinds", "box"))
                         {
-                            settings[0x40] = 1;
+                            settings[64] = 1;
                         }
                         else if (GUI.Button(new Rect(num7 + 136f, num8 + 7f, 85f, 25f), "Human Skins", "box"))
                         {
-                            settings[0x40] = 2;
+                            settings[64] = 2;
                         }
                         else if (GUI.Button(new Rect(num7 + 226f, num8 + 7f, 85f, 25f), "Titan Skins", "box"))
                         {
-                            settings[0x40] = 3;
+                            settings[64] = 3;
                         }
                         else if (GUI.Button(new Rect(num7 + 316f, num8 + 7f, 85f, 25f), "Level Skins", "box"))
                         {
-                            settings[0x40] = 7;
+                            settings[64] = 7;
                         }
                         else if (GUI.Button(new Rect(num7 + 406f, num8 + 7f, 85f, 25f), "Custom Map", "box"))
                         {
-                            settings[0x40] = 8;
+                            settings[64] = 8;
                         }
                         else if (GUI.Button(new Rect(num7 + 496f, num8 + 7f, 88f, 25f), "Custom Logic", "box"))
                         {
-                            settings[0x40] = 9;
+                            settings[64] = 9;
                         }
                         else if (GUI.Button(new Rect(num7 + 589f, num8 + 7f, 95f, 25f), "Game Settings", "box"))
                         {
-                            settings[0x40] = 10;
+                            settings[64] = 10;
                         }
                         else if (GUI.Button(new Rect(num7 + 7f, num8 + 37f, 70f, 25f), "Abilities", "box"))
                         {
-                            settings[0x40] = 11;
+                            settings[64] = 11;
                         }
 
-                        if ((int)settings[0x40] == 9)
+                        if ((int)settings[64] == 9)
                         {
                             currentScriptLogic = GUI.TextField(new Rect(num7 + 50f, num8 + 82f, 600f, 270f),
                                 currentScriptLogic);
@@ -6755,14 +6758,14 @@ public class FengGameManagerMKII : MonoBehaviour
                                 currentScriptLogic = string.Empty;
                             }
                         }
-                        else if ((int)settings[0x40] == 11)
+                        else if ((int)settings[64] == 11)
                         {
                             GUI.Label(new Rect(num7 + 150f, num8 + 80f, 185f, 22f), "Bomb Mode", "Label");
                             GUI.Label(new Rect(num7 + 80f, num8 + 110f, 80f, 22f), "Color:", "Label");
                             textured = new Texture2D(1, 1, TextureFormat.ARGB32, false);
                             textured.SetPixel(0, 0,
-                                new Color((float)settings[0xf6], (float)settings[0xf7], (float)settings[0xf8],
-                                    (float)settings[0xf9]));
+                                new Color((float)settings[246], (float)settings[247], (float)settings[248],
+                                    (float)settings[249]));
                             textured.Apply();
                             GUI.DrawTexture(new Rect(num7 + 120f, num8 + 113f, 40f, 15f), textured,
                                 ScaleMode.StretchToFill);
@@ -6771,14 +6774,14 @@ public class FengGameManagerMKII : MonoBehaviour
                             GUI.Label(new Rect(num7 + 72f, num8 + 160f, 20f, 22f), "G:", "Label");
                             GUI.Label(new Rect(num7 + 72f, num8 + 185f, 20f, 22f), "B:", "Label");
                             GUI.Label(new Rect(num7 + 72f, num8 + 210f, 20f, 22f), "A:", "Label");
-                            settings[0xf6] = GUI.HorizontalSlider(new Rect(num7 + 92f, num8 + 138f, 100f, 20f),
-                                (float)settings[0xf6], 0f, 1f);
-                            settings[0xf7] = GUI.HorizontalSlider(new Rect(num7 + 92f, num8 + 163f, 100f, 20f),
-                                (float)settings[0xf7], 0f, 1f);
-                            settings[0xf8] = GUI.HorizontalSlider(new Rect(num7 + 92f, num8 + 188f, 100f, 20f),
-                                (float)settings[0xf8], 0f, 1f);
-                            settings[0xf9] = GUI.HorizontalSlider(new Rect(num7 + 92f, num8 + 213f, 100f, 20f),
-                                (float)settings[0xf9], 0.5f, 1f);
+                            settings[246] = GUI.HorizontalSlider(new Rect(num7 + 92f, num8 + 138f, 100f, 20f),
+                                (float)settings[246], 0f, 1f);
+                            settings[247] = GUI.HorizontalSlider(new Rect(num7 + 92f, num8 + 163f, 100f, 20f),
+                                (float)settings[247], 0f, 1f);
+                            settings[248] = GUI.HorizontalSlider(new Rect(num7 + 92f, num8 + 188f, 100f, 20f),
+                                (float)settings[248], 0f, 1f);
+                            settings[249] = GUI.HorizontalSlider(new Rect(num7 + 92f, num8 + 213f, 100f, 20f),
+                                (float)settings[249], 0.5f, 1f);
                             GUI.Label(new Rect(num7 + 72f, num8 + 235f, 95f, 22f), "Bomb Radius:", "Label");
                             GUI.Label(new Rect(num7 + 72f, num8 + 260f, 95f, 22f), "Bomb Range:", "Label");
                             GUI.Label(new Rect(num7 + 72f, num8 + 285f, 95f, 22f), "Bomb Speed:", "Label");
@@ -6786,14 +6789,14 @@ public class FengGameManagerMKII : MonoBehaviour
                             GUI.Label(new Rect(num7 + 72f, num8 + 335f, 95f, 22f), "Unused Points:", "Label");
                             num30 = (int)settings[250];
                             GUI.Label(new Rect(num7 + 168f, num8 + 235f, 20f, 22f), num30.ToString(), "Label");
-                            num30 = (int)settings[0xfb];
+                            num30 = (int)settings[251];
                             GUI.Label(new Rect(num7 + 168f, num8 + 260f, 20f, 22f), num30.ToString(), "Label");
-                            num30 = (int)settings[0xfc];
+                            num30 = (int)settings[252];
                             GUI.Label(new Rect(num7 + 168f, num8 + 285f, 20f, 22f), num30.ToString(), "Label");
-                            GUI.Label(new Rect(num7 + 168f, num8 + 310f, 20f, 22f), ((int)settings[0xfd]).ToString(),
+                            GUI.Label(new Rect(num7 + 168f, num8 + 310f, 20f, 22f), ((int)settings[253]).ToString(),
                                 "Label");
-                            var num43 = 20 - (int)settings[250] - (int)settings[0xfb] - (int)settings[0xfc] -
-                                        (int)settings[0xfd];
+                            var num43 = 20 - (int)settings[250] - (int)settings[251] - (int)settings[252] -
+                                        (int)settings[253];
                             GUI.Label(new Rect(num7 + 168f, num8 + 335f, 20f, 22f), num43.ToString(), "Label");
                             if (GUI.Button(new Rect(num7 + 190f, num8 + 235f, 20f, 20f), "-"))
                             {
@@ -6810,47 +6813,47 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             if (GUI.Button(new Rect(num7 + 190f, num8 + 260f, 20f, 20f), "-"))
                             {
-                                if ((int)settings[0xfb] > 0)
+                                if ((int)settings[251] > 0)
                                 {
-                                    settings[0xfb] = (int)settings[0xfb] - 1;
+                                    settings[251] = (int)settings[251] - 1;
                                 }
                             }
                             else if (GUI.Button(new Rect(num7 + 215f, num8 + 260f, 20f, 20f), "+") &&
-                                     (int)settings[0xfb] < 10 && num43 > 0)
+                                     (int)settings[251] < 10 && num43 > 0)
                             {
-                                settings[0xfb] = (int)settings[0xfb] + 1;
+                                settings[251] = (int)settings[251] + 1;
                             }
 
                             if (GUI.Button(new Rect(num7 + 190f, num8 + 285f, 20f, 20f), "-"))
                             {
-                                if ((int)settings[0xfc] > 0)
+                                if ((int)settings[252] > 0)
                                 {
-                                    settings[0xfc] = (int)settings[0xfc] - 1;
+                                    settings[252] = (int)settings[252] - 1;
                                 }
                             }
                             else if (GUI.Button(new Rect(num7 + 215f, num8 + 285f, 20f, 20f), "+") &&
-                                     (int)settings[0xfc] < 10 && num43 > 0)
+                                     (int)settings[252] < 10 && num43 > 0)
                             {
-                                settings[0xfc] = (int)settings[0xfc] + 1;
+                                settings[252] = (int)settings[252] + 1;
                             }
 
                             if (GUI.Button(new Rect(num7 + 190f, num8 + 310f, 20f, 20f), "-"))
                             {
-                                if ((int)settings[0xfd] > 0)
+                                if ((int)settings[253] > 0)
                                 {
-                                    settings[0xfd] = (int)settings[0xfd] - 1;
+                                    settings[253] = (int)settings[253] - 1;
                                 }
                             }
                             else if (GUI.Button(new Rect(num7 + 215f, num8 + 310f, 20f, 20f), "+") &&
-                                     (int)settings[0xfd] < 10 && num43 > 0)
+                                     (int)settings[253] < 10 && num43 > 0)
                             {
-                                settings[0xfd] = (int)settings[0xfd] + 1;
+                                settings[253] = (int)settings[253] + 1;
                             }
                         }
                         else
                         {
                             float num44;
-                            if ((int)settings[0x40] == 2)
+                            if ((int)settings[64] == 2)
                             {
                                 GUI.Label(new Rect(num7 + 205f, num8 + 52f, 120f, 30f), "Human Skin Mode:", "Label");
                                 flag2 = false;
@@ -6873,11 +6876,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                 }
 
                                 num44 = 44f;
-                                if ((int)settings[0x85] == 0)
+                                if ((int)settings[133] == 0)
                                 {
                                     if (GUI.Button(new Rect(num7 + 375f, num8 + 51f, 120f, 22f), "Human Set 1"))
                                     {
-                                        settings[0x85] = 1;
+                                        settings[133] = 1;
                                     }
 
                                     settings[3] = GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 0f, 230f, 20f),
@@ -6904,102 +6907,102 @@ public class FengGameManagerMKII : MonoBehaviour
                                         (string)settings[12]);
                                     settings[13] = GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 4f, 230f, 20f),
                                         (string)settings[13]);
-                                    settings[0x5e] =
+                                    settings[94] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 5f, 230f, 20f),
-                                            (string)settings[0x5e]);
+                                            (string)settings[94]);
                                 }
-                                else if ((int)settings[0x85] == 1)
+                                else if ((int)settings[133] == 1)
                                 {
                                     if (GUI.Button(new Rect(num7 + 375f, num8 + 51f, 120f, 22f), "Human Set 2"))
                                     {
-                                        settings[0x85] = 2;
+                                        settings[133] = 2;
                                     }
 
-                                    settings[0x86] =
+                                    settings[134] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 0f, 230f, 20f),
-                                            (string)settings[0x86]);
-                                    settings[0x87] =
+                                            (string)settings[134]);
+                                    settings[135] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 1f, 230f, 20f),
-                                            (string)settings[0x87]);
-                                    settings[0x88] =
+                                            (string)settings[135]);
+                                    settings[136] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 2f, 230f, 20f),
-                                            (string)settings[0x88]);
-                                    settings[0x89] =
+                                            (string)settings[136]);
+                                    settings[137] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 3f, 230f, 20f),
-                                            (string)settings[0x89]);
-                                    settings[0x8a] =
+                                            (string)settings[137]);
+                                    settings[138] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 4f, 230f, 20f),
-                                            (string)settings[0x8a]);
-                                    settings[0x8b] =
+                                            (string)settings[138]);
+                                    settings[139] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 5f, 230f, 20f),
-                                            (string)settings[0x8b]);
-                                    settings[0x91] =
+                                            (string)settings[139]);
+                                    settings[145] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 6f, 230f, 20f),
-                                            (string)settings[0x91]);
+                                            (string)settings[145]);
                                     settings[140] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 0f, 230f, 20f),
                                             (string)settings[140]);
-                                    settings[0x8d] =
+                                    settings[141] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 1f, 230f, 20f),
-                                            (string)settings[0x8d]);
-                                    settings[0x8e] =
+                                            (string)settings[141]);
+                                    settings[142] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 2f, 230f, 20f),
-                                            (string)settings[0x8e]);
-                                    settings[0x8f] =
+                                            (string)settings[142]);
+                                    settings[143] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 3f, 230f, 20f),
-                                            (string)settings[0x8f]);
-                                    settings[0x90] =
+                                            (string)settings[143]);
+                                    settings[144] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 4f, 230f, 20f),
-                                            (string)settings[0x90]);
-                                    settings[0x92] =
+                                            (string)settings[144]);
+                                    settings[146] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 5f, 230f, 20f),
-                                            (string)settings[0x92]);
+                                            (string)settings[146]);
                                 }
-                                else if ((int)settings[0x85] == 2)
+                                else if ((int)settings[133] == 2)
                                 {
                                     if (GUI.Button(new Rect(num7 + 375f, num8 + 51f, 120f, 22f), "Human Set 3"))
                                     {
-                                        settings[0x85] = 0;
+                                        settings[133] = 0;
                                     }
 
-                                    settings[0x93] =
+                                    settings[147] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 0f, 230f, 20f),
-                                            (string)settings[0x93]);
-                                    settings[0x94] =
+                                            (string)settings[147]);
+                                    settings[148] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 1f, 230f, 20f),
-                                            (string)settings[0x94]);
-                                    settings[0x95] =
+                                            (string)settings[148]);
+                                    settings[149] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 2f, 230f, 20f),
-                                            (string)settings[0x95]);
+                                            (string)settings[149]);
                                     settings[150] = GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 3f, 230f, 20f),
                                         (string)settings[150]);
-                                    settings[0x97] =
+                                    settings[151] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 4f, 230f, 20f),
-                                            (string)settings[0x97]);
-                                    settings[0x98] =
+                                            (string)settings[151]);
+                                    settings[152] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 5f, 230f, 20f),
-                                            (string)settings[0x98]);
-                                    settings[0x9e] =
+                                            (string)settings[152]);
+                                    settings[158] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 114f + num44 * 6f, 230f, 20f),
-                                            (string)settings[0x9e]);
-                                    settings[0x99] =
+                                            (string)settings[158]);
+                                    settings[153] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 0f, 230f, 20f),
-                                            (string)settings[0x99]);
-                                    settings[0x9a] =
+                                            (string)settings[153]);
+                                    settings[154] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 1f, 230f, 20f),
-                                            (string)settings[0x9a]);
-                                    settings[0x9b] =
+                                            (string)settings[154]);
+                                    settings[155] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 2f, 230f, 20f),
-                                            (string)settings[0x9b]);
-                                    settings[0x9c] =
+                                            (string)settings[155]);
+                                    settings[156] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 3f, 230f, 20f),
-                                            (string)settings[0x9c]);
-                                    settings[0x9d] =
+                                            (string)settings[156]);
+                                    settings[157] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 4f, 230f, 20f),
-                                            (string)settings[0x9d]);
-                                    settings[0x9f] =
+                                            (string)settings[157]);
+                                    settings[159] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 114f + num44 * 5f, 230f, 20f),
-                                            (string)settings[0x9f]);
+                                            (string)settings[159]);
                                 }
 
                                 GUI.Label(new Rect(num7 + 80f, num8 + 92f + num44 * 0f, 150f, 20f), "Horse:", "Label");
@@ -7024,7 +7027,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 GUI.Label(new Rect(num7 + 390f, num8 + 92f + num44 * 5f, 150f, 20f), "Weapon Trail:",
                                     "Label");
                             }
-                            else if ((int)settings[0x40] == 3)
+                            else if ((int)settings[64] == 3)
                             {
                                 int num45;
                                 int num46;
@@ -7050,7 +7053,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                 GUI.Label(new Rect(num7 + 270f, num8 + 77f, 120f, 30f), "Randomized Pairs:", "Label");
                                 flag6 = false;
-                                if ((int)settings[0x20] == 1)
+                                if ((int)settings[32] == 1)
                                 {
                                     flag6 = true;
                                 }
@@ -7060,29 +7063,29 @@ public class FengGameManagerMKII : MonoBehaviour
                                 {
                                     if (flag11)
                                     {
-                                        settings[0x20] = 1;
+                                        settings[32] = 1;
                                     }
                                     else
                                     {
-                                        settings[0x20] = 0;
+                                        settings[32] = 0;
                                     }
                                 }
 
                                 GUI.Label(new Rect(num7 + 158f, num8 + 112f, 150f, 20f), "Titan Hair:", "Label");
-                                settings[0x15] = GUI.TextField(new Rect(num7 + 80f, num8 + 134f, 165f, 20f),
-                                    (string)settings[0x15]);
-                                settings[0x16] = GUI.TextField(new Rect(num7 + 80f, num8 + 156f, 165f, 20f),
-                                    (string)settings[0x16]);
-                                settings[0x17] = GUI.TextField(new Rect(num7 + 80f, num8 + 178f, 165f, 20f),
-                                    (string)settings[0x17]);
-                                settings[0x18] = GUI.TextField(new Rect(num7 + 80f, num8 + 200f, 165f, 20f),
-                                    (string)settings[0x18]);
-                                settings[0x19] = GUI.TextField(new Rect(num7 + 80f, num8 + 222f, 165f, 20f),
-                                    (string)settings[0x19]);
+                                settings[21] = GUI.TextField(new Rect(num7 + 80f, num8 + 134f, 165f, 20f),
+                                    (string)settings[21]);
+                                settings[22] = GUI.TextField(new Rect(num7 + 80f, num8 + 156f, 165f, 20f),
+                                    (string)settings[22]);
+                                settings[23] = GUI.TextField(new Rect(num7 + 80f, num8 + 178f, 165f, 20f),
+                                    (string)settings[23]);
+                                settings[24] = GUI.TextField(new Rect(num7 + 80f, num8 + 200f, 165f, 20f),
+                                    (string)settings[24]);
+                                settings[25] = GUI.TextField(new Rect(num7 + 80f, num8 + 222f, 165f, 20f),
+                                    (string)settings[25]);
                                 if (GUI.Button(new Rect(num7 + 250f, num8 + 134f, 60f, 20f),
-                                    hairtype((int)settings[0x10])))
+                                    hairtype((int)settings[16])))
                                 {
-                                    num45 = 0x10;
+                                    num45 = 16;
                                     num46 = (int)settings[num45];
                                     if (num46 >= 9)
                                     {
@@ -7096,9 +7099,9 @@ public class FengGameManagerMKII : MonoBehaviour
                                     settings[num45] = num46;
                                 }
                                 else if (GUI.Button(new Rect(num7 + 250f, num8 + 156f, 60f, 20f),
-                                    hairtype((int)settings[0x11])))
+                                    hairtype((int)settings[17])))
                                 {
-                                    num45 = 0x11;
+                                    num45 = 17;
                                     num46 = (int)settings[num45];
                                     if (num46 >= 9)
                                     {
@@ -7112,9 +7115,9 @@ public class FengGameManagerMKII : MonoBehaviour
                                     settings[num45] = num46;
                                 }
                                 else if (GUI.Button(new Rect(num7 + 250f, num8 + 178f, 60f, 20f),
-                                    hairtype((int)settings[0x12])))
+                                    hairtype((int)settings[18])))
                                 {
-                                    num45 = 0x12;
+                                    num45 = 18;
                                     num46 = (int)settings[num45];
                                     if (num46 >= 9)
                                     {
@@ -7128,9 +7131,9 @@ public class FengGameManagerMKII : MonoBehaviour
                                     settings[num45] = num46;
                                 }
                                 else if (GUI.Button(new Rect(num7 + 250f, num8 + 200f, 60f, 20f),
-                                    hairtype((int)settings[0x13])))
+                                    hairtype((int)settings[19])))
                                 {
-                                    num45 = 0x13;
+                                    num45 = 19;
                                     num46 = (int)settings[num45];
                                     if (num46 >= 9)
                                     {
@@ -7161,38 +7164,38 @@ public class FengGameManagerMKII : MonoBehaviour
                                 }
 
                                 GUI.Label(new Rect(num7 + 158f, num8 + 252f, 150f, 20f), "Titan Eye:", "Label");
-                                settings[0x1a] = GUI.TextField(new Rect(num7 + 80f, num8 + 274f, 230f, 20f),
-                                    (string)settings[0x1a]);
-                                settings[0x1b] = GUI.TextField(new Rect(num7 + 80f, num8 + 296f, 230f, 20f),
-                                    (string)settings[0x1b]);
-                                settings[0x1c] = GUI.TextField(new Rect(num7 + 80f, num8 + 318f, 230f, 20f),
-                                    (string)settings[0x1c]);
-                                settings[0x1d] = GUI.TextField(new Rect(num7 + 80f, num8 + 340f, 230f, 20f),
-                                    (string)settings[0x1d]);
+                                settings[26] = GUI.TextField(new Rect(num7 + 80f, num8 + 274f, 230f, 20f),
+                                    (string)settings[26]);
+                                settings[27] = GUI.TextField(new Rect(num7 + 80f, num8 + 296f, 230f, 20f),
+                                    (string)settings[27]);
+                                settings[28] = GUI.TextField(new Rect(num7 + 80f, num8 + 318f, 230f, 20f),
+                                    (string)settings[28]);
+                                settings[29] = GUI.TextField(new Rect(num7 + 80f, num8 + 340f, 230f, 20f),
+                                    (string)settings[29]);
                                 settings[30] = GUI.TextField(new Rect(num7 + 80f, num8 + 362f, 230f, 20f),
                                     (string)settings[30]);
                                 GUI.Label(new Rect(num7 + 455f, num8 + 112f, 150f, 20f), "Titan Body:", "Label");
-                                settings[0x56] = GUI.TextField(new Rect(num7 + 390f, num8 + 134f, 230f, 20f),
-                                    (string)settings[0x56]);
-                                settings[0x57] = GUI.TextField(new Rect(num7 + 390f, num8 + 156f, 230f, 20f),
-                                    (string)settings[0x57]);
-                                settings[0x58] = GUI.TextField(new Rect(num7 + 390f, num8 + 178f, 230f, 20f),
-                                    (string)settings[0x58]);
-                                settings[0x59] = GUI.TextField(new Rect(num7 + 390f, num8 + 200f, 230f, 20f),
-                                    (string)settings[0x59]);
+                                settings[86] = GUI.TextField(new Rect(num7 + 390f, num8 + 134f, 230f, 20f),
+                                    (string)settings[86]);
+                                settings[87] = GUI.TextField(new Rect(num7 + 390f, num8 + 156f, 230f, 20f),
+                                    (string)settings[87]);
+                                settings[88] = GUI.TextField(new Rect(num7 + 390f, num8 + 178f, 230f, 20f),
+                                    (string)settings[88]);
+                                settings[89] = GUI.TextField(new Rect(num7 + 390f, num8 + 200f, 230f, 20f),
+                                    (string)settings[89]);
                                 settings[90] = GUI.TextField(new Rect(num7 + 390f, num8 + 222f, 230f, 20f),
                                     (string)settings[90]);
                                 GUI.Label(new Rect(num7 + 472f, num8 + 252f, 150f, 20f), "Eren:", "Label");
-                                settings[0x41] = GUI.TextField(new Rect(num7 + 390f, num8 + 274f, 230f, 20f),
-                                    (string)settings[0x41]);
+                                settings[65] = GUI.TextField(new Rect(num7 + 390f, num8 + 274f, 230f, 20f),
+                                    (string)settings[65]);
                                 GUI.Label(new Rect(num7 + 470f, num8 + 296f, 150f, 20f), "Annie:", "Label");
-                                settings[0x42] = GUI.TextField(new Rect(num7 + 390f, num8 + 318f, 230f, 20f),
-                                    (string)settings[0x42]);
+                                settings[66] = GUI.TextField(new Rect(num7 + 390f, num8 + 318f, 230f, 20f),
+                                    (string)settings[66]);
                                 GUI.Label(new Rect(num7 + 465f, num8 + 340f, 150f, 20f), "Colossal:", "Label");
-                                settings[0x43] = GUI.TextField(new Rect(num7 + 390f, num8 + 362f, 230f, 20f),
-                                    (string)settings[0x43]);
+                                settings[67] = GUI.TextField(new Rect(num7 + 390f, num8 + 362f, 230f, 20f),
+                                    (string)settings[67]);
                             }
-                            else if ((int)settings[0x40] == 7)
+                            else if ((int)settings[64] == 7)
                             {
                                 num44 = 22f;
                                 GUI.Label(new Rect(num7 + 205f, num8 + 52f, 145f, 30f), "Level Skin Mode:", "Label");
@@ -7215,11 +7218,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                     }
                                 }
 
-                                if ((int)settings[0xbc] == 0)
+                                if ((int)settings[188] == 0)
                                 {
                                     if (GUI.Button(new Rect(num7 + 375f, num8 + 51f, 120f, 22f), "Forest Skins"))
                                     {
-                                        settings[0xbc] = 1;
+                                        settings[188] = 1;
                                     }
 
                                     GUI.Label(new Rect(num7 + 205f, num8 + 77f, 145f, 30f), "Randomized Pairs:", "Label");
@@ -7246,167 +7249,167 @@ public class FengGameManagerMKII : MonoBehaviour
                                         new Rect(num7, num8 + 115f, 700f, 475f), true, true);
                                     GUI.Label(new Rect(num7 + 79f, num8 + 117f + num44 * 0f, 150f, 20f), "Ground:",
                                         "Label");
-                                    settings[0x31] =
+                                    settings[49] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 1f, 227f, 20f),
-                                            (string)settings[0x31]);
+                                            (string)settings[49]);
                                     GUI.Label(new Rect(num7 + 79f, num8 + 117f + num44 * 2f, 150f, 20f), "Forest Trunks",
                                         "Label");
-                                    settings[0x21] =
+                                    settings[33] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 3f, 227f, 20f),
-                                            (string)settings[0x21]);
-                                    settings[0x22] =
+                                            (string)settings[33]);
+                                    settings[34] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 4f, 227f, 20f),
-                                            (string)settings[0x22]);
-                                    settings[0x23] =
+                                            (string)settings[34]);
+                                    settings[35] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 5f, 227f, 20f),
-                                            (string)settings[0x23]);
-                                    settings[0x24] =
+                                            (string)settings[35]);
+                                    settings[36] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 6f, 227f, 20f),
-                                            (string)settings[0x24]);
-                                    settings[0x25] =
+                                            (string)settings[36]);
+                                    settings[37] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 7f, 227f, 20f),
-                                            (string)settings[0x25]);
-                                    settings[0x26] =
+                                            (string)settings[37]);
+                                    settings[38] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 8f, 227f, 20f),
-                                            (string)settings[0x26]);
-                                    settings[0x27] =
+                                            (string)settings[38]);
+                                    settings[39] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 9f, 227f, 20f),
-                                            (string)settings[0x27]);
+                                            (string)settings[39]);
                                     settings[40] = GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 10f, 227f, 20f),
                                         (string)settings[40]);
                                     GUI.Label(new Rect(num7 + 79f, num8 + 117f + num44 * 11f, 150f, 20f), "Forest Leaves:",
                                         "Label");
-                                    settings[0x29] =
+                                    settings[41] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 12f, 227f, 20f),
-                                            (string)settings[0x29]);
-                                    settings[0x2a] =
+                                            (string)settings[41]);
+                                    settings[42] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 13f, 227f, 20f),
-                                            (string)settings[0x2a]);
-                                    settings[0x2b] =
+                                            (string)settings[42]);
+                                    settings[43] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 14f, 227f, 20f),
-                                            (string)settings[0x2b]);
-                                    settings[0x2c] =
+                                            (string)settings[43]);
+                                    settings[44] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 15f, 227f, 20f),
-                                            (string)settings[0x2c]);
-                                    settings[0x2d] =
+                                            (string)settings[44]);
+                                    settings[45] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 16f, 227f, 20f),
-                                            (string)settings[0x2d]);
-                                    settings[0x2e] =
+                                            (string)settings[45]);
+                                    settings[46] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 17f, 227f, 20f),
-                                            (string)settings[0x2e]);
-                                    settings[0x2f] =
+                                            (string)settings[46]);
+                                    settings[47] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 18f, 227f, 20f),
-                                            (string)settings[0x2f]);
-                                    settings[0x30] =
+                                            (string)settings[47]);
+                                    settings[48] =
                                         GUI.TextField(new Rect(num7 + 79f, num8 + 117f + num44 * 19f, 227f, 20f),
-                                            (string)settings[0x30]);
+                                            (string)settings[48]);
                                     GUI.Label(new Rect(num7 + 379f, num8 + 117f + num44 * 0f, 150f, 20f), "Skybox Front:",
                                         "Label");
-                                    settings[0xa3] =
+                                    settings[163] =
                                         GUI.TextField(new Rect(num7 + 379f, num8 + 117f + num44 * 1f, 227f, 20f),
-                                            (string)settings[0xa3]);
+                                            (string)settings[163]);
                                     GUI.Label(new Rect(num7 + 379f, num8 + 117f + num44 * 2f, 150f, 20f), "Skybox Back:",
                                         "Label");
-                                    settings[0xa4] =
+                                    settings[164] =
                                         GUI.TextField(new Rect(num7 + 379f, num8 + 117f + num44 * 3f, 227f, 20f),
-                                            (string)settings[0xa4]);
+                                            (string)settings[164]);
                                     GUI.Label(new Rect(num7 + 379f, num8 + 117f + num44 * 4f, 150f, 20f), "Skybox Left:",
                                         "Label");
-                                    settings[0xa5] =
+                                    settings[165] =
                                         GUI.TextField(new Rect(num7 + 379f, num8 + 117f + num44 * 5f, 227f, 20f),
-                                            (string)settings[0xa5]);
+                                            (string)settings[165]);
                                     GUI.Label(new Rect(num7 + 379f, num8 + 117f + num44 * 6f, 150f, 20f), "Skybox Right:",
                                         "Label");
-                                    settings[0xa6] =
+                                    settings[166] =
                                         GUI.TextField(new Rect(num7 + 379f, num8 + 117f + num44 * 7f, 227f, 20f),
-                                            (string)settings[0xa6]);
+                                            (string)settings[166]);
                                     GUI.Label(new Rect(num7 + 379f, num8 + 117f + num44 * 8f, 150f, 20f), "Skybox Up:",
                                         "Label");
-                                    settings[0xa7] =
+                                    settings[167] =
                                         GUI.TextField(new Rect(num7 + 379f, num8 + 117f + num44 * 9f, 227f, 20f),
-                                            (string)settings[0xa7]);
+                                            (string)settings[167]);
                                     GUI.Label(new Rect(num7 + 379f, num8 + 117f + num44 * 10f, 150f, 20f), "Skybox Down:",
                                         "Label");
-                                    settings[0xa8] =
+                                    settings[168] =
                                         GUI.TextField(new Rect(num7 + 379f, num8 + 117f + num44 * 11f, 227f, 20f),
-                                            (string)settings[0xa8]);
+                                            (string)settings[168]);
                                     GUI.EndScrollView();
                                 }
-                                else if ((int)settings[0xbc] == 1)
+                                else if ((int)settings[188] == 1)
                                 {
                                     if (GUI.Button(new Rect(num7 + 375f, num8 + 51f, 120f, 22f), "City Skins"))
                                     {
-                                        settings[0xbc] = 0;
+                                        settings[188] = 0;
                                     }
 
                                     GUI.Label(new Rect(num7 + 80f, num8 + 92f + num44 * 0f, 150f, 20f), "Ground:", "Label");
-                                    settings[0x3b] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 1f, 230f, 20f),
-                                        (string)settings[0x3b]);
+                                    settings[59] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 1f, 230f, 20f),
+                                        (string)settings[59]);
                                     GUI.Label(new Rect(num7 + 80f, num8 + 92f + num44 * 2f, 150f, 20f), "Wall:", "Label");
                                     settings[60] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 3f, 230f, 20f),
                                         (string)settings[60]);
                                     GUI.Label(new Rect(num7 + 80f, num8 + 92f + num44 * 4f, 150f, 20f), "Gate:", "Label");
-                                    settings[0x3d] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 5f, 230f, 20f),
-                                        (string)settings[0x3d]);
+                                    settings[61] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 5f, 230f, 20f),
+                                        (string)settings[61]);
                                     GUI.Label(new Rect(num7 + 80f, num8 + 92f + num44 * 6f, 150f, 20f), "Houses:", "Label");
-                                    settings[0x33] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 7f, 230f, 20f),
-                                        (string)settings[0x33]);
-                                    settings[0x34] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 8f, 230f, 20f),
-                                        (string)settings[0x34]);
-                                    settings[0x35] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 9f, 230f, 20f),
-                                        (string)settings[0x35]);
-                                    settings[0x36] =
+                                    settings[51] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 7f, 230f, 20f),
+                                        (string)settings[51]);
+                                    settings[52] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 8f, 230f, 20f),
+                                        (string)settings[52]);
+                                    settings[53] = GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 9f, 230f, 20f),
+                                        (string)settings[53]);
+                                    settings[54] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 10f, 230f, 20f),
-                                            (string)settings[0x36]);
-                                    settings[0x37] =
+                                            (string)settings[54]);
+                                    settings[55] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 11f, 230f, 20f),
-                                            (string)settings[0x37]);
-                                    settings[0x38] =
+                                            (string)settings[55]);
+                                    settings[56] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 12f, 230f, 20f),
-                                            (string)settings[0x38]);
-                                    settings[0x39] =
+                                            (string)settings[56]);
+                                    settings[57] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 13f, 230f, 20f),
-                                            (string)settings[0x39]);
-                                    settings[0x3a] =
+                                            (string)settings[57]);
+                                    settings[58] =
                                         GUI.TextField(new Rect(num7 + 80f, num8 + 92f + num44 * 14f, 230f, 20f),
-                                            (string)settings[0x3a]);
+                                            (string)settings[58]);
                                     GUI.Label(new Rect(num7 + 390f, num8 + 92f + num44 * 0f, 150f, 20f), "Skybox Front:",
                                         "Label");
-                                    settings[0xa9] =
+                                    settings[169] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 92f + num44 * 1f, 230f, 20f),
-                                            (string)settings[0xa9]);
+                                            (string)settings[169]);
                                     GUI.Label(new Rect(num7 + 390f, num8 + 92f + num44 * 2f, 150f, 20f), "Skybox Back:",
                                         "Label");
                                     settings[170] = GUI.TextField(new Rect(num7 + 390f, num8 + 92f + num44 * 3f, 230f, 20f),
                                         (string)settings[170]);
                                     GUI.Label(new Rect(num7 + 390f, num8 + 92f + num44 * 4f, 150f, 20f), "Skybox Left:",
                                         "Label");
-                                    settings[0xab] =
+                                    settings[171] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 92f + num44 * 5f, 230f, 20f),
-                                            (string)settings[0xab]);
+                                            (string)settings[171]);
                                     GUI.Label(new Rect(num7 + 390f, num8 + 92f + num44 * 6f, 150f, 20f), "Skybox Right:",
                                         "Label");
-                                    settings[0xac] =
+                                    settings[172] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 92f + num44 * 7f, 230f, 20f),
-                                            (string)settings[0xac]);
+                                            (string)settings[172]);
                                     GUI.Label(new Rect(num7 + 390f, num8 + 92f + num44 * 8f, 150f, 20f), "Skybox Up:",
                                         "Label");
-                                    settings[0xad] =
+                                    settings[173] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 92f + num44 * 9f, 230f, 20f),
-                                            (string)settings[0xad]);
+                                            (string)settings[173]);
                                     GUI.Label(new Rect(num7 + 390f, num8 + 92f + num44 * 10f, 150f, 20f), "Skybox Down:",
                                         "Label");
-                                    settings[0xae] =
+                                    settings[174] =
                                         GUI.TextField(new Rect(num7 + 390f, num8 + 92f + num44 * 11f, 230f, 20f),
-                                            (string)settings[0xae]);
+                                            (string)settings[174]);
                                 }
                             }
-                            else if ((int)settings[0x40] == 4)
+                            else if ((int)settings[64] == 4)
                             {
                                 GUI.TextArea(new Rect(num7 + 80f, num8 + 52f, 270f, 30f), "Settings saved to playerprefs!",
                                     100, "Label");
                             }
-                            else if ((int)settings[0x40] == 5)
+                            else if ((int)settings[64] == 5)
                             {
                                 GUI.TextArea(new Rect(num7 + 80f, num8 + 52f, 270f, 30f),
                                     "Settings reloaded from playerprefs!", 100, "Label");
@@ -7414,7 +7417,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             else
                             {
                                 string[] strArray16;
-                                if ((int)settings[0x40] == 0)
+                                if ((int)settings[64] == 0)
                                 {
                                     int num47;
                                     GUI.Label(new Rect(num7 + 150f, num8 + 51f, 185f, 22f), "Graphics", "Label");
@@ -7480,22 +7483,22 @@ public class FengGameManagerMKII : MonoBehaviour
                                         flag14 = true;
                                     }
 
-                                    if ((int)settings[0x5c] == 1)
+                                    if ((int)settings[92] == 1)
                                     {
                                         flag15 = true;
                                     }
 
-                                    if ((int)settings[0x5d] == 1)
+                                    if ((int)settings[93] == 1)
                                     {
                                         flag16 = true;
                                     }
 
-                                    if ((int)settings[0x3f] == 1)
+                                    if ((int)settings[63] == 1)
                                     {
                                         flag17 = true;
                                     }
 
-                                    if ((int)settings[0xb7] == 1)
+                                    if ((int)settings[183] == 1)
                                     {
                                         flag18 = true;
                                     }
@@ -7518,11 +7521,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         if (flag10)
                                         {
-                                            settings[0x5c] = 1;
+                                            settings[92] = 1;
                                         }
                                         else
                                         {
-                                            settings[0x5c] = 0;
+                                            settings[92] = 0;
                                         }
                                     }
 
@@ -7531,11 +7534,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         if (flag20)
                                         {
-                                            settings[0x5d] = 1;
+                                            settings[93] = 1;
                                         }
                                         else
                                         {
-                                            settings[0x5d] = 0;
+                                            settings[93] = 0;
                                         }
                                     }
 
@@ -7544,12 +7547,12 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         if (flag21)
                                         {
-                                            settings[0xb7] = 1;
+                                            settings[183] = 1;
                                             QualitySettings.vSyncCount = 1;
                                         }
                                         else
                                         {
-                                            settings[0xb7] = 0;
+                                            settings[183] = 0;
                                             QualitySettings.vSyncCount = 0;
                                         }
 
@@ -7561,11 +7564,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         if (flag22)
                                         {
-                                            settings[0x3f] = 1;
+                                            settings[63] = 1;
                                         }
                                         else
                                         {
-                                            settings[0x3f] = 0;
+                                            settings[63] = 0;
                                         }
 
                                         linkHash[0].Clear();
@@ -7590,10 +7593,10 @@ public class FengGameManagerMKII : MonoBehaviour
                                         linkHash[2].Clear();
                                     }
 
-                                    settings[0xb8] = GUI.TextField(new Rect(num7 + 234f, num8 + 184f, 80f, 20f),
-                                        (string)settings[0xb8]);
+                                    settings[184] = GUI.TextField(new Rect(num7 + 234f, num8 + 184f, 80f, 20f),
+                                        (string)settings[184]);
                                     Application.targetFrameRate = -1;
-                                    if (int.TryParse((string)settings[0xb8], out num47) && num47 >= 60)
+                                    if (int.TryParse((string)settings[184], out num47) && num47 >= 60)
                                     {
                                         Application.targetFrameRate = num47;
                                     }
@@ -7603,8 +7606,8 @@ public class FengGameManagerMKII : MonoBehaviour
                                     GUI.Label(new Rect(num7 + 386f, num8 + 106f, 185f, 22f), "Show In Game:", "Label");
                                     GUI.Label(new Rect(num7 + 386f, num8 + 131f, 227f, 22f), "Snapshot Minimum Damage:",
                                         "Label");
-                                    settings[0x5f] = GUI.TextField(new Rect(num7 + 563f, num8 + 131f, 65f, 20f),
-                                        (string)settings[0x5f]);
+                                    settings[95] = GUI.TextField(new Rect(num7 + 563f, num8 + 131f, 65f, 20f),
+                                        (string)settings[95]);
                                     var flag23 = false;
                                     var flag24 = false;
                                     if (PlayerPrefs.GetInt("EnableSS", 0) == 1)
@@ -7653,8 +7656,8 @@ public class FengGameManagerMKII : MonoBehaviour
                                     GUI.Label(new Rect(num7 + 386f, num8 + 375f, 80f, 20f), "Minimap:", "Label");
                                     GUI.Label(new Rect(num7 + 386f, num8 + 397f, 100f, 20f), "Game Feed:", "Label");
                                     strArray16 = new[] { "Off", "Speed", "Damage" };
-                                    settings[0xbd] = GUI.SelectionGrid(new Rect(num7 + 480f, num8 + 305f, 140f, 60f),
-                                        (int)settings[0xbd], strArray16, 1, GUI.skin.toggle);
+                                    settings[189] = GUI.SelectionGrid(new Rect(num7 + 480f, num8 + 305f, 140f, 60f),
+                                        (int)settings[189], strArray16, 1, GUI.skin.toggle);
                                     AudioListener.volume = GUI.HorizontalSlider(
                                         new Rect(num7 + 478f, num8 + 191f, 150f, 20f), AudioListener.volume, 0f, 1f);
                                     mouseSlider = GUI.HorizontalSlider(new Rect(num7 + 478f, num8 + 216f, 150f, 20f),
@@ -7669,12 +7672,12 @@ public class FengGameManagerMKII : MonoBehaviour
                                     var flag28 = false;
                                     var flag29 = false;
                                     var flag30 = false;
-                                    if ((int)settings[0xe7] == 1)
+                                    if ((int)settings[231] == 1)
                                     {
                                         flag29 = true;
                                     }
 
-                                    if ((int)settings[0xf4] == 1)
+                                    if ((int)settings[244] == 1)
                                     {
                                         flag30 = true;
                                     }
@@ -7734,11 +7737,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         if (flag33)
                                         {
-                                            settings[0xe7] = 1;
+                                            settings[231] = 1;
                                         }
                                         else
                                         {
-                                            settings[0xe7] = 0;
+                                            settings[231] = 0;
                                         }
                                     }
 
@@ -7747,18 +7750,18 @@ public class FengGameManagerMKII : MonoBehaviour
                                     {
                                         if (flag34)
                                         {
-                                            settings[0xf4] = 1;
+                                            settings[244] = 1;
                                         }
                                         else
                                         {
-                                            settings[0xf4] = 0;
+                                            settings[244] = 0;
                                         }
                                     }
 
                                     IN_GAME_MAIN_CAMERA.cameraTilt = PlayerPrefs.GetInt("cameraTilt");
                                     IN_GAME_MAIN_CAMERA.invertY = PlayerPrefs.GetInt("invertMouseY");
                                 }
-                                else if ((int)settings[0x40] == 10)
+                                else if ((int)settings[64] == 10)
                                 {
                                     bool flag35;
                                     bool flag36;
@@ -7778,45 +7781,45 @@ public class FengGameManagerMKII : MonoBehaviour
                                     }
                                     else if (GUI.Button(new Rect(num7 + 320f, num8 + 415f, 60f, 30f), "Reset"))
                                     {
-                                        settings[0xc0] = 0;
-                                        settings[0xc1] = 0;
-                                        settings[0xc2] = 0;
-                                        settings[0xc3] = 0;
-                                        settings[0xc4] = "30";
-                                        settings[0xc5] = 0;
-                                        settings[0xc6] = "100";
-                                        settings[0xc7] = "200";
+                                        settings[192] = 0;
+                                        settings[193] = 0;
+                                        settings[194] = 0;
+                                        settings[195] = 0;
+                                        settings[196] = "30";
+                                        settings[197] = 0;
+                                        settings[198] = "100";
+                                        settings[199] = "200";
                                         settings[200] = 0;
-                                        settings[0xc9] = "1";
-                                        settings[0xca] = 0;
-                                        settings[0xcb] = 0;
-                                        settings[0xcc] = "1";
-                                        settings[0xcd] = 0;
-                                        settings[0xce] = "1000";
-                                        settings[0xcf] = 0;
-                                        settings[0xd0] = "1.0";
-                                        settings[0xd1] = "3.0";
+                                        settings[201] = "1";
+                                        settings[202] = 0;
+                                        settings[203] = 0;
+                                        settings[204] = "1";
+                                        settings[205] = 0;
+                                        settings[206] = "1000";
+                                        settings[207] = 0;
+                                        settings[208] = "1.0";
+                                        settings[209] = "3.0";
                                         settings[210] = 0;
-                                        settings[0xd3] = "20.0";
-                                        settings[0xd4] = "20.0";
-                                        settings[0xd5] = "20.0";
-                                        settings[0xd6] = "20.0";
-                                        settings[0xd7] = "20.0";
-                                        settings[0xd8] = 0;
-                                        settings[0xd9] = 0;
-                                        settings[0xda] = "1";
-                                        settings[0xdb] = 0;
+                                        settings[211] = "20.0";
+                                        settings[212] = "20.0";
+                                        settings[213] = "20.0";
+                                        settings[214] = "20.0";
+                                        settings[215] = "20.0";
+                                        settings[216] = 0;
+                                        settings[217] = 0;
+                                        settings[218] = "1";
+                                        settings[219] = 0;
                                         settings[220] = 0;
-                                        settings[0xdd] = 0;
-                                        settings[0xde] = "20";
-                                        settings[0xdf] = 0;
-                                        settings[0xe0] = "10";
-                                        settings[0xe1] = string.Empty;
-                                        settings[0xe2] = 0;
-                                        settings[0xe3] = "50";
-                                        settings[0xe4] = 0;
-                                        settings[0xe5] = 0;
-                                        settings[0xeb] = 0;
+                                        settings[221] = 0;
+                                        settings[222] = "20";
+                                        settings[223] = 0;
+                                        settings[224] = "10";
+                                        settings[225] = string.Empty;
+                                        settings[226] = 0;
+                                        settings[227] = "50";
+                                        settings[228] = 0;
+                                        settings[229] = 0;
+                                        settings[235] = 0;
                                     }
 
                                     if ((int)settings[230] == 0)
@@ -7825,10 +7828,10 @@ public class FengGameManagerMKII : MonoBehaviour
                                             "Label");
                                         GUI.Label(new Rect(num7 + 100f, num8 + 112f, 200f, 22f), "Amount (Integer):",
                                             "Label");
-                                        settings[0xcc] = GUI.TextField(new Rect(num7 + 250f, num8 + 112f, 50f, 22f),
-                                            (string)settings[0xcc]);
+                                        settings[204] = GUI.TextField(new Rect(num7 + 250f, num8 + 112f, 50f, 22f),
+                                            (string)settings[204]);
                                         flag35 = false;
-                                        if ((int)settings[0xcb] == 1)
+                                        if ((int)settings[203] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -7838,11 +7841,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xcb] = 1;
+                                                settings[203] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xcb] = 0;
+                                                settings[203] = 0;
                                             }
                                         }
 
@@ -7877,28 +7880,28 @@ public class FengGameManagerMKII : MonoBehaviour
                                             "Label");
                                         GUI.Label(new Rect(num7 + 100f, num8 + 262f, 150f, 22f), "Punk (Decimal):",
                                             "Label");
-                                        settings[0xd3] = GUI.TextField(new Rect(num7 + 250f, num8 + 174f, 50f, 22f),
-                                            (string)settings[0xd3]);
-                                        settings[0xd4] = GUI.TextField(new Rect(num7 + 250f, num8 + 196f, 50f, 22f),
-                                            (string)settings[0xd4]);
-                                        settings[0xd5] = GUI.TextField(new Rect(num7 + 250f, num8 + 218f, 50f, 22f),
-                                            (string)settings[0xd5]);
-                                        settings[0xd6] = GUI.TextField(new Rect(num7 + 250f, num8 + 240f, 50f, 22f),
-                                            (string)settings[0xd6]);
-                                        settings[0xd7] = GUI.TextField(new Rect(num7 + 250f, num8 + 262f, 50f, 22f),
-                                            (string)settings[0xd7]);
+                                        settings[211] = GUI.TextField(new Rect(num7 + 250f, num8 + 174f, 50f, 22f),
+                                            (string)settings[211]);
+                                        settings[212] = GUI.TextField(new Rect(num7 + 250f, num8 + 196f, 50f, 22f),
+                                            (string)settings[212]);
+                                        settings[213] = GUI.TextField(new Rect(num7 + 250f, num8 + 218f, 50f, 22f),
+                                            (string)settings[213]);
+                                        settings[214] = GUI.TextField(new Rect(num7 + 250f, num8 + 240f, 50f, 22f),
+                                            (string)settings[214]);
+                                        settings[215] = GUI.TextField(new Rect(num7 + 250f, num8 + 262f, 50f, 22f),
+                                            (string)settings[215]);
                                         GUI.Label(new Rect(num7 + 100f, num8 + 302f, 160f, 22f), "Titan Size Mode:",
                                             "Label");
                                         GUI.Label(new Rect(num7 + 100f, num8 + 324f, 150f, 22f), "Minimum (Decimal):",
                                             "Label");
                                         GUI.Label(new Rect(num7 + 100f, num8 + 346f, 150f, 22f), "Maximum (Decimal):",
                                             "Label");
-                                        settings[0xd0] = GUI.TextField(new Rect(num7 + 250f, num8 + 324f, 50f, 22f),
-                                            (string)settings[0xd0]);
-                                        settings[0xd1] = GUI.TextField(new Rect(num7 + 250f, num8 + 346f, 50f, 22f),
-                                            (string)settings[0xd1]);
+                                        settings[208] = GUI.TextField(new Rect(num7 + 250f, num8 + 324f, 50f, 22f),
+                                            (string)settings[208]);
+                                        settings[209] = GUI.TextField(new Rect(num7 + 250f, num8 + 346f, 50f, 22f),
+                                            (string)settings[209]);
                                         flag35 = false;
-                                        if ((int)settings[0xcf] == 1)
+                                        if ((int)settings[207] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -7908,11 +7911,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xcf] = 1;
+                                                settings[207] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xcf] = 0;
+                                                settings[207] = 0;
                                             }
                                         }
 
@@ -7922,21 +7925,21 @@ public class FengGameManagerMKII : MonoBehaviour
                                             "Label");
                                         GUI.Label(new Rect(num7 + 400f, num8 + 183f, 150f, 22f), "Maximum (Integer):",
                                             "Label");
-                                        settings[0xc6] = GUI.TextField(new Rect(num7 + 550f, num8 + 161f, 50f, 22f),
-                                            (string)settings[0xc6]);
-                                        settings[0xc7] = GUI.TextField(new Rect(num7 + 550f, num8 + 183f, 50f, 22f),
-                                            (string)settings[0xc7]);
+                                        settings[198] = GUI.TextField(new Rect(num7 + 550f, num8 + 161f, 50f, 22f),
+                                            (string)settings[198]);
+                                        settings[199] = GUI.TextField(new Rect(num7 + 550f, num8 + 183f, 50f, 22f),
+                                            (string)settings[199]);
                                         strArray16 = new[] { "Off", "Fixed", "Scaled" };
-                                        settings[0xc5] = GUI.SelectionGrid(new Rect(num7 + 550f, num8 + 90f, 100f, 66f),
-                                            (int)settings[0xc5], strArray16, 1, GUI.skin.toggle);
+                                        settings[197] = GUI.SelectionGrid(new Rect(num7 + 550f, num8 + 90f, 100f, 66f),
+                                            (int)settings[197], strArray16, 1, GUI.skin.toggle);
                                         GUI.Label(new Rect(num7 + 400f, num8 + 223f, 160f, 22f), "Titan Damage Mode:",
                                             "Label");
                                         GUI.Label(new Rect(num7 + 400f, num8 + 245f, 150f, 22f), "Damage (Integer):",
                                             "Label");
-                                        settings[0xce] = GUI.TextField(new Rect(num7 + 550f, num8 + 245f, 50f, 22f),
-                                            (string)settings[0xce]);
+                                        settings[206] = GUI.TextField(new Rect(num7 + 550f, num8 + 245f, 50f, 22f),
+                                            (string)settings[206]);
                                         flag35 = false;
-                                        if ((int)settings[0xcd] == 1)
+                                        if ((int)settings[205] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -7946,11 +7949,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xcd] = 1;
+                                                settings[205] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xcd] = 0;
+                                                settings[205] = 0;
                                             }
                                         }
 
@@ -7958,10 +7961,10 @@ public class FengGameManagerMKII : MonoBehaviour
                                             "Label");
                                         GUI.Label(new Rect(num7 + 400f, num8 + 307f, 160f, 22f), "Radius (Integer):",
                                             "Label");
-                                        settings[0xc4] = GUI.TextField(new Rect(num7 + 550f, num8 + 307f, 50f, 22f),
-                                            (string)settings[0xc4]);
+                                        settings[196] = GUI.TextField(new Rect(num7 + 550f, num8 + 307f, 50f, 22f),
+                                            (string)settings[196]);
                                         flag35 = false;
-                                        if ((int)settings[0xc3] == 1)
+                                        if ((int)settings[195] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -7971,18 +7974,18 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xc3] = 1;
+                                                settings[195] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xc3] = 0;
+                                                settings[195] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 400f, num8 + 347f, 160f, 22f), "Disable Rock Throwing:",
                                             "Label");
                                         flag35 = false;
-                                        if ((int)settings[0xc2] == 1)
+                                        if ((int)settings[194] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -7992,11 +7995,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xc2] = 1;
+                                                settings[194] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xc2] = 0;
+                                                settings[194] = 0;
                                             }
                                         }
                                     }
@@ -8005,10 +8008,10 @@ public class FengGameManagerMKII : MonoBehaviour
                                         GUI.Label(new Rect(num7 + 100f, num8 + 90f, 160f, 22f), "Point Mode:", "Label");
                                         GUI.Label(new Rect(num7 + 100f, num8 + 112f, 160f, 22f), "Max Points (Integer):",
                                             "Label");
-                                        settings[0xe3] = GUI.TextField(new Rect(num7 + 250f, num8 + 112f, 50f, 22f),
-                                            (string)settings[0xe3]);
+                                        settings[227] = GUI.TextField(new Rect(num7 + 250f, num8 + 112f, 50f, 22f),
+                                            (string)settings[227]);
                                         flag35 = false;
-                                        if ((int)settings[0xe2] == 1)
+                                        if ((int)settings[226] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8018,17 +8021,17 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xe2] = 1;
+                                                settings[226] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xe2] = 0;
+                                                settings[226] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 100f, num8 + 152f, 160f, 22f), "PVP Bomb Mode:", "Label");
                                         flag35 = false;
-                                        if ((int)settings[0xc0] == 1)
+                                        if ((int)settings[192] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8038,24 +8041,24 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xc0] = 1;
+                                                settings[192] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xc0] = 0;
+                                                settings[192] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 100f, num8 + 182f, 100f, 66f), "Team Mode:", "Label");
                                         strArray16 = new[] { "Off", "No Sort", "Size-Lock", "Skill-Lock" };
-                                        settings[0xc1] = GUI.SelectionGrid(new Rect(num7 + 250f, num8 + 182f, 120f, 88f),
-                                            (int)settings[0xc1], strArray16, 1, GUI.skin.toggle);
+                                        settings[193] = GUI.SelectionGrid(new Rect(num7 + 250f, num8 + 182f, 120f, 88f),
+                                            (int)settings[193], strArray16, 1, GUI.skin.toggle);
                                         GUI.Label(new Rect(num7 + 100f, num8 + 278f, 160f, 22f), "Infection Mode:",
                                             "Label");
                                         GUI.Label(new Rect(num7 + 100f, num8 + 300f, 160f, 22f),
                                             "Starting Titans (Integer):", "Label");
-                                        settings[0xc9] = GUI.TextField(new Rect(num7 + 250f, num8 + 300f, 50f, 22f),
-                                            (string)settings[0xc9]);
+                                        settings[201] = GUI.TextField(new Rect(num7 + 250f, num8 + 300f, 50f, 22f),
+                                            (string)settings[201]);
                                         flag35 = false;
                                         if ((int)settings[200] == 1)
                                         {
@@ -8077,7 +8080,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                         GUI.Label(new Rect(num7 + 100f, num8 + 330f, 160f, 22f), "Friendly Mode:", "Label");
                                         flag35 = false;
-                                        if ((int)settings[0xdb] == 1)
+                                        if ((int)settings[219] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8087,11 +8090,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xdb] = 1;
+                                                settings[219] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xdb] = 0;
+                                                settings[219] = 0;
                                             }
                                         }
 
@@ -8102,7 +8105,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                         GUI.Label(new Rect(num7 + 400f, num8 + 164f, 160f, 22f), "No AHSS Air-Reloading:",
                                             "Label");
                                         flag35 = false;
-                                        if ((int)settings[0xe4] == 1)
+                                        if ((int)settings[228] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8112,18 +8115,18 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xe4] = 1;
+                                                settings[228] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xe4] = 0;
+                                                settings[228] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 400f, num8 + 194f, 160f, 22f), "Cannons kill humans:",
                                             "Label");
                                         flag35 = false;
-                                        if ((int)settings[0x105] == 1)
+                                        if ((int)settings[261] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8133,11 +8136,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0x105] = 1;
+                                                settings[261] = 1;
                                             }
                                             else
                                             {
-                                                settings[0x105] = 0;
+                                                settings[261] = 0;
                                             }
                                         }
                                     }
@@ -8147,10 +8150,10 @@ public class FengGameManagerMKII : MonoBehaviour
                                             "Label");
                                         GUI.Label(new Rect(num7 + 100f, num8 + 112f, 160f, 22f), "Amount (Integer):",
                                             "Label");
-                                        settings[0xda] = GUI.TextField(new Rect(num7 + 250f, num8 + 112f, 50f, 22f),
-                                            (string)settings[0xda]);
+                                        settings[218] = GUI.TextField(new Rect(num7 + 250f, num8 + 112f, 50f, 22f),
+                                            (string)settings[218]);
                                         flag35 = false;
-                                        if ((int)settings[0xd9] == 1)
+                                        if ((int)settings[217] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8160,21 +8163,21 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xd9] = 1;
+                                                settings[217] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xd9] = 0;
+                                                settings[217] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 100f, num8 + 152f, 160f, 22f), "Maximum Waves:", "Label");
                                         GUI.Label(new Rect(num7 + 100f, num8 + 174f, 160f, 22f), "Amount (Integer):",
                                             "Label");
-                                        settings[0xde] = GUI.TextField(new Rect(num7 + 250f, num8 + 174f, 50f, 22f),
-                                            (string)settings[0xde]);
+                                        settings[222] = GUI.TextField(new Rect(num7 + 250f, num8 + 174f, 50f, 22f),
+                                            (string)settings[222]);
                                         flag35 = false;
-                                        if ((int)settings[0xdd] == 1)
+                                        if ((int)settings[221] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8184,18 +8187,18 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xdd] = 1;
+                                                settings[221] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xdd] = 0;
+                                                settings[221] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 100f, num8 + 214f, 160f, 22f), "Punks every 5 waves:",
                                             "Label");
                                         flag35 = false;
-                                        if ((int)settings[0xe5] == 1)
+                                        if ((int)settings[229] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8205,18 +8208,18 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xe5] = 1;
+                                                settings[229] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xe5] = 0;
+                                                settings[229] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 100f, num8 + 244f, 160f, 22f), "Global Minimap Disable:",
                                             "Label");
                                         flag35 = false;
-                                        if ((int)settings[0xeb] == 1)
+                                        if ((int)settings[235] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8226,11 +8229,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xeb] = 1;
+                                                settings[235] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xeb] = 0;
+                                                settings[235] = 0;
                                             }
                                         }
 
@@ -8243,10 +8246,10 @@ public class FengGameManagerMKII : MonoBehaviour
                                             "Label");
                                         GUI.Label(new Rect(num7 + 400f, num8 + 112f, 160f, 22f), "Respawn Time (Integer):",
                                             "Label");
-                                        settings[0xe0] = GUI.TextField(new Rect(num7 + 550f, num8 + 112f, 50f, 22f),
-                                            (string)settings[0xe0]);
+                                        settings[224] = GUI.TextField(new Rect(num7 + 550f, num8 + 112f, 50f, 22f),
+                                            (string)settings[224]);
                                         flag35 = false;
-                                        if ((int)settings[0xdf] == 1)
+                                        if ((int)settings[223] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8256,18 +8259,18 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xdf] = 1;
+                                                settings[223] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xdf] = 0;
+                                                settings[223] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 400f, num8 + 152f, 160f, 22f), "Kick Eren Titan:",
                                             "Label");
                                         flag35 = false;
-                                        if ((int)settings[0xca] == 1)
+                                        if ((int)settings[202] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8277,17 +8280,17 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xca] = 1;
+                                                settings[202] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xca] = 0;
+                                                settings[202] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 400f, num8 + 182f, 160f, 22f), "Allow Horses:", "Label");
                                         flag35 = false;
-                                        if ((int)settings[0xd8] == 1)
+                                        if ((int)settings[216] == 1)
                                         {
                                             flag35 = true;
                                         }
@@ -8297,21 +8300,21 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag36)
                                             {
-                                                settings[0xd8] = 1;
+                                                settings[216] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xd8] = 0;
+                                                settings[216] = 0;
                                             }
                                         }
 
                                         GUI.Label(new Rect(num7 + 400f, num8 + 212f, 180f, 22f), "Message of the day:",
                                             "Label");
-                                        settings[0xe1] = GUI.TextField(new Rect(num7 + 400f, num8 + 234f, 200f, 22f),
-                                            (string)settings[0xe1]);
+                                        settings[225] = GUI.TextField(new Rect(num7 + 400f, num8 + 234f, 200f, 22f),
+                                            (string)settings[225]);
                                     }
                                 }
-                                else if ((int)settings[0x40] == 1)
+                                else if ((int)settings[64] == 1)
                                 {
                                     List<string> list7;
                                     float num48;
@@ -8359,19 +8362,19 @@ public class FengGameManagerMKII : MonoBehaviour
                                         }
 
                                         var flag37 = false;
-                                        if ((int)settings[0x61] == 1)
+                                        if ((int)settings[97] == 1)
                                         {
                                             flag37 = true;
                                         }
 
                                         var flag38 = false;
-                                        if ((int)settings[0x74] == 1)
+                                        if ((int)settings[116] == 1)
                                         {
                                             flag38 = true;
                                         }
 
                                         var flag39 = false;
-                                        if ((int)settings[0xb5] == 1)
+                                        if ((int)settings[181] == 1)
                                         {
                                             flag39 = true;
                                         }
@@ -8381,11 +8384,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag40)
                                             {
-                                                settings[0x61] = 1;
+                                                settings[97] = 1;
                                             }
                                             else
                                             {
-                                                settings[0x61] = 0;
+                                                settings[97] = 0;
                                             }
                                         }
 
@@ -8394,11 +8397,11 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag41)
                                             {
-                                                settings[0x74] = 1;
+                                                settings[116] = 1;
                                             }
                                             else
                                             {
-                                                settings[0x74] = 0;
+                                                settings[116] = 0;
                                             }
                                         }
 
@@ -8407,15 +8410,15 @@ public class FengGameManagerMKII : MonoBehaviour
                                         {
                                             if (flag42)
                                             {
-                                                settings[0xb5] = 1;
+                                                settings[181] = 1;
                                             }
                                             else
                                             {
-                                                settings[0xb5] = 0;
+                                                settings[181] = 0;
                                             }
                                         }
 
-                                        for (num13 = 0; num13 < 0x16; num13++)
+                                        for (num13 = 0; num13 < 22; num13++)
                                         {
                                             num18 = num13;
                                             num48 = 190f;
@@ -8434,52 +8437,52 @@ public class FengGameManagerMKII : MonoBehaviour
                                         }
 
                                         if (GUI.Button(new Rect(num7 + 500f, num8 + 261f, 120f, 20f),
-                                            (string)settings[0x62], "box"))
+                                            (string)settings[98], "box"))
                                         {
-                                            settings[0x62] = "waiting...";
-                                            settings[100] = 0x62;
+                                            settings[98] = "waiting...";
+                                            settings[100] = 98;
                                         }
                                         else if (GUI.Button(new Rect(num7 + 500f, num8 + 286f, 120f, 20f),
-                                            (string)settings[0x63], "box"))
+                                            (string)settings[99], "box"))
                                         {
-                                            settings[0x63] = "waiting...";
-                                            settings[100] = 0x63;
+                                            settings[99] = "waiting...";
+                                            settings[100] = 99;
                                         }
                                         else if (GUI.Button(new Rect(num7 + 500f, num8 + 311f, 120f, 20f),
-                                            (string)settings[0xb6], "box"))
+                                            (string)settings[182], "box"))
                                         {
-                                            settings[0xb6] = "waiting...";
-                                            settings[100] = 0xb6;
+                                            settings[182] = "waiting...";
+                                            settings[100] = 182;
                                         }
                                         else if (GUI.Button(new Rect(num7 + 500f, num8 + 336f, 120f, 20f),
-                                            (string)settings[0xe8], "box"))
+                                            (string)settings[232], "box"))
                                         {
-                                            settings[0xe8] = "waiting...";
-                                            settings[100] = 0xe8;
+                                            settings[232] = "waiting...";
+                                            settings[100] = 232;
                                         }
                                         else if (GUI.Button(new Rect(num7 + 500f, num8 + 361f, 120f, 20f),
-                                            (string)settings[0xe9], "box"))
+                                            (string)settings[233], "box"))
                                         {
-                                            settings[0xe9] = "waiting...";
-                                            settings[100] = 0xe9;
+                                            settings[233] = "waiting...";
+                                            settings[100] = 233;
                                         }
                                         else if (GUI.Button(new Rect(num7 + 500f, num8 + 386f, 120f, 20f),
-                                            (string)settings[0xea], "box"))
+                                            (string)settings[234], "box"))
                                         {
-                                            settings[0xea] = "waiting...";
-                                            settings[100] = 0xea;
+                                            settings[234] = "waiting...";
+                                            settings[100] = 234;
                                         }
                                         else if (GUI.Button(new Rect(num7 + 500f, num8 + 411f, 120f, 20f),
-                                            (string)settings[0xec], "box"))
+                                            (string)settings[236], "box"))
                                         {
-                                            settings[0xec] = "waiting...";
-                                            settings[100] = 0xec;
+                                            settings[236] = "waiting...";
+                                            settings[100] = 236;
                                         }
                                         else if (GUI.Button(new Rect(num7 + 500f, num8 + 436f, 120f, 20f),
-                                            (string)settings[0x106], "box"))
+                                            (string)settings[262], "box"))
                                         {
-                                            settings[0x106] = "waiting...";
-                                            settings[100] = 0x106;
+                                            settings[262] = "waiting...";
+                                            settings[100] = 262;
                                         }
 
                                         if ((int)settings[100] != 0)
@@ -8520,7 +8523,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                                 num13 = 0;
                                                 while (num13 < 7)
                                                 {
-                                                    if (Input.GetKeyDown((KeyCode)(0x143 + num13)))
+                                                    if (Input.GetKeyDown((KeyCode)(323 + num13)))
                                                     {
                                                         flag4 = true;
                                                         str4 = "Mouse" + Convert.ToString(num13);
@@ -8532,57 +8535,57 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                             if (flag4)
                                             {
-                                                if ((int)settings[100] == 0x62)
+                                                if ((int)settings[100] == 98)
                                                 {
-                                                    settings[0x62] = str4;
+                                                    settings[98] = str4;
                                                     settings[100] = 0;
                                                     inputRC.setInputHuman(InputCodeRC.reelin, str4);
                                                 }
-                                                else if ((int)settings[100] == 0x63)
+                                                else if ((int)settings[100] == 99)
                                                 {
-                                                    settings[0x63] = str4;
+                                                    settings[99] = str4;
                                                     settings[100] = 0;
                                                     inputRC.setInputHuman(InputCodeRC.reelout, str4);
                                                 }
-                                                else if ((int)settings[100] == 0xb6)
+                                                else if ((int)settings[100] == 182)
                                                 {
-                                                    settings[0xb6] = str4;
+                                                    settings[182] = str4;
                                                     settings[100] = 0;
                                                     inputRC.setInputHuman(InputCodeRC.dash, str4);
                                                 }
-                                                else if ((int)settings[100] == 0xe8)
+                                                else if ((int)settings[100] == 232)
                                                 {
-                                                    settings[0xe8] = str4;
+                                                    settings[232] = str4;
                                                     settings[100] = 0;
                                                     inputRC.setInputHuman(InputCodeRC.mapMaximize, str4);
                                                 }
-                                                else if ((int)settings[100] == 0xe9)
+                                                else if ((int)settings[100] == 233)
                                                 {
-                                                    settings[0xe9] = str4;
+                                                    settings[233] = str4;
                                                     settings[100] = 0;
                                                     inputRC.setInputHuman(InputCodeRC.mapToggle, str4);
                                                 }
-                                                else if ((int)settings[100] == 0xea)
+                                                else if ((int)settings[100] == 234)
                                                 {
-                                                    settings[0xea] = str4;
+                                                    settings[234] = str4;
                                                     settings[100] = 0;
                                                     inputRC.setInputHuman(InputCodeRC.mapReset, str4);
                                                 }
-                                                else if ((int)settings[100] == 0xec)
+                                                else if ((int)settings[100] == 236)
                                                 {
-                                                    settings[0xec] = str4;
+                                                    settings[236] = str4;
                                                     settings[100] = 0;
                                                     inputRC.setInputHuman(InputCodeRC.chat, str4);
                                                 }
-                                                else if ((int)settings[100] == 0x106)
+                                                else if ((int)settings[100] == 262)
                                                 {
-                                                    settings[0x106] = str4;
+                                                    settings[262] = str4;
                                                     settings[100] = 0;
                                                     inputRC.setInputHuman(InputCodeRC.liveCam, str4);
                                                 }
                                                 else
                                                 {
-                                                    for (num13 = 0; num13 < 0x16; num13++)
+                                                    for (num13 = 0; num13 < 22; num13++)
                                                     {
                                                         num23 = num13 + 1;
                                                         if ((int)settings[100] == num23)
@@ -8618,7 +8621,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                         for (num13 = 0; num13 < 14; num13++)
                                         {
-                                            num23 = 0x65 + num13;
+                                            num23 = 101 + num13;
                                             num18 = num13;
                                             num48 = 190f;
                                             if (num18 > 6)
@@ -8673,7 +8676,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                                 num13 = 0;
                                                 while (num13 < 7)
                                                 {
-                                                    if (Input.GetKeyDown((KeyCode)(0x143 + num13)))
+                                                    if (Input.GetKeyDown((KeyCode)(323 + num13)))
                                                     {
                                                         flag4 = true;
                                                         str4 = "Mouse" + Convert.ToString(num13);
@@ -8687,7 +8690,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                             {
                                                 for (num13 = 0; num13 < 14; num13++)
                                                 {
-                                                    num23 = 0x65 + num13;
+                                                    num23 = 101 + num13;
                                                     if ((int)settings[100] == num23)
                                                     {
                                                         settings[num23] = str4;
@@ -8718,7 +8721,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                         for (num13 = 0; num13 < 7; num13++)
                                         {
-                                            num23 = 0xed + num13;
+                                            num23 = 237 + num13;
                                             num18 = num13;
                                             num48 = 190f;
                                             if (num18 > 3)
@@ -8773,7 +8776,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                                 num13 = 0;
                                                 while (num13 < 7)
                                                 {
-                                                    if (Input.GetKeyDown((KeyCode)(0x143 + num13)))
+                                                    if (Input.GetKeyDown((KeyCode)(323 + num13)))
                                                     {
                                                         flag4 = true;
                                                         str4 = "Mouse" + Convert.ToString(num13);
@@ -8787,7 +8790,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                             {
                                                 for (num13 = 0; num13 < 7; num13++)
                                                 {
-                                                    num23 = 0xed + num13;
+                                                    num23 = 237 + num13;
                                                     if ((int)settings[100] == num23)
                                                     {
                                                         settings[num23] = str4;
@@ -8821,7 +8824,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                         for (num13 = 0; num13 < 7; num13++)
                                         {
-                                            num23 = 0xfe + num13;
+                                            num23 = 254 + num13;
                                             num18 = num13;
                                             num48 = 190f;
                                             if (num18 > 3)
@@ -8876,7 +8879,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                                 num13 = 0;
                                                 while (num13 < 6)
                                                 {
-                                                    if (Input.GetKeyDown((KeyCode)(0x143 + num13)))
+                                                    if (Input.GetKeyDown((KeyCode)(323 + num13)))
                                                     {
                                                         flag4 = true;
                                                         str4 = "Mouse" + Convert.ToString(num13);
@@ -8890,7 +8893,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                             {
                                                 for (num13 = 0; num13 < 7; num13++)
                                                 {
-                                                    num23 = 0xfe + num13;
+                                                    num23 = 254 + num13;
                                                     if ((int)settings[100] == num23)
                                                     {
                                                         settings[num23] = str4;
@@ -8902,12 +8905,12 @@ public class FengGameManagerMKII : MonoBehaviour
                                         }
                                     }
                                 }
-                                else if ((int)settings[0x40] == 8)
+                                else if ((int)settings[64] == 8)
                                 {
                                     GUI.Label(new Rect(num7 + 150f, num8 + 51f, 120f, 22f), "Map Settings", "Label");
                                     GUI.Label(new Rect(num7 + 50f, num8 + 81f, 140f, 20f), "Titan Spawn Cap:", "Label");
-                                    settings[0x55] = GUI.TextField(new Rect(num7 + 155f, num8 + 81f, 30f, 20f),
-                                        (string)settings[0x55]);
+                                    settings[85] = GUI.TextField(new Rect(num7 + 155f, num8 + 81f, 30f, 20f),
+                                        (string)settings[85]);
                                     strArray16 = new[] { "1 Round", "Waves", "PVP", "Racing", "Custom" };
                                     RCSettings.gameType = GUI.SelectionGrid(new Rect(num7 + 190f, num8 + 80f, 140f, 60f),
                                         RCSettings.gameType, strArray16, 2, GUI.skin.toggle);
@@ -8930,23 +8933,23 @@ public class FengGameManagerMKII : MonoBehaviour
 
                                     GUI.Label(new Rect(num7 + 455f, num8 + 51f, 180f, 20f), "Custom Textures", "Label");
                                     GUI.Label(new Rect(num7 + 375f, num8 + 81f, 180f, 20f), "Ground Skin:", "Label");
-                                    settings[0xa2] = GUI.TextField(new Rect(num7 + 375f, num8 + 103f, 275f, 20f),
-                                        (string)settings[0xa2]);
+                                    settings[162] = GUI.TextField(new Rect(num7 + 375f, num8 + 103f, 275f, 20f),
+                                        (string)settings[162]);
                                     GUI.Label(new Rect(num7 + 375f, num8 + 125f, 150f, 20f), "Skybox Front:", "Label");
-                                    settings[0xaf] = GUI.TextField(new Rect(num7 + 375f, num8 + 147f, 275f, 20f),
-                                        (string)settings[0xaf]);
+                                    settings[175] = GUI.TextField(new Rect(num7 + 375f, num8 + 147f, 275f, 20f),
+                                        (string)settings[175]);
                                     GUI.Label(new Rect(num7 + 375f, num8 + 169f, 150f, 20f), "Skybox Back:", "Label");
-                                    settings[0xb0] = GUI.TextField(new Rect(num7 + 375f, num8 + 191f, 275f, 20f),
-                                        (string)settings[0xb0]);
+                                    settings[176] = GUI.TextField(new Rect(num7 + 375f, num8 + 191f, 275f, 20f),
+                                        (string)settings[176]);
                                     GUI.Label(new Rect(num7 + 375f, num8 + 213f, 150f, 20f), "Skybox Left:", "Label");
-                                    settings[0xb1] = GUI.TextField(new Rect(num7 + 375f, num8 + 235f, 275f, 20f),
-                                        (string)settings[0xb1]);
+                                    settings[177] = GUI.TextField(new Rect(num7 + 375f, num8 + 235f, 275f, 20f),
+                                        (string)settings[177]);
                                     GUI.Label(new Rect(num7 + 375f, num8 + 257f, 150f, 20f), "Skybox Right:", "Label");
-                                    settings[0xb2] = GUI.TextField(new Rect(num7 + 375f, num8 + 279f, 275f, 20f),
-                                        (string)settings[0xb2]);
+                                    settings[178] = GUI.TextField(new Rect(num7 + 375f, num8 + 279f, 275f, 20f),
+                                        (string)settings[178]);
                                     GUI.Label(new Rect(num7 + 375f, num8 + 301f, 150f, 20f), "Skybox Up:", "Label");
-                                    settings[0xb3] = GUI.TextField(new Rect(num7 + 375f, num8 + 323f, 275f, 20f),
-                                        (string)settings[0xb3]);
+                                    settings[179] = GUI.TextField(new Rect(num7 + 375f, num8 + 323f, 275f, 20f),
+                                        (string)settings[179]);
                                     GUI.Label(new Rect(num7 + 375f, num8 + 345f, 150f, 20f), "Skybox Down:", "Label");
                                     settings[180] = GUI.TextField(new Rect(num7 + 375f, num8 + 367f, 275f, 20f),
                                         (string)settings[180]);
@@ -8972,216 +8975,216 @@ public class FengGameManagerMKII : MonoBehaviour
                             PlayerPrefs.SetString("gas", (string)settings[13]);
                             PlayerPrefs.SetString("haircolor", (string)settings[14]);
                             PlayerPrefs.SetInt("gasenable", (int)settings[15]);
-                            PlayerPrefs.SetInt("titantype1", (int)settings[0x10]);
-                            PlayerPrefs.SetInt("titantype2", (int)settings[0x11]);
-                            PlayerPrefs.SetInt("titantype3", (int)settings[0x12]);
-                            PlayerPrefs.SetInt("titantype4", (int)settings[0x13]);
+                            PlayerPrefs.SetInt("titantype1", (int)settings[16]);
+                            PlayerPrefs.SetInt("titantype2", (int)settings[17]);
+                            PlayerPrefs.SetInt("titantype3", (int)settings[18]);
+                            PlayerPrefs.SetInt("titantype4", (int)settings[19]);
                             PlayerPrefs.SetInt("titantype5", (int)settings[20]);
-                            PlayerPrefs.SetString("titanhair1", (string)settings[0x15]);
-                            PlayerPrefs.SetString("titanhair2", (string)settings[0x16]);
-                            PlayerPrefs.SetString("titanhair3", (string)settings[0x17]);
-                            PlayerPrefs.SetString("titanhair4", (string)settings[0x18]);
-                            PlayerPrefs.SetString("titanhair5", (string)settings[0x19]);
-                            PlayerPrefs.SetString("titaneye1", (string)settings[0x1a]);
-                            PlayerPrefs.SetString("titaneye2", (string)settings[0x1b]);
-                            PlayerPrefs.SetString("titaneye3", (string)settings[0x1c]);
-                            PlayerPrefs.SetString("titaneye4", (string)settings[0x1d]);
+                            PlayerPrefs.SetString("titanhair1", (string)settings[21]);
+                            PlayerPrefs.SetString("titanhair2", (string)settings[22]);
+                            PlayerPrefs.SetString("titanhair3", (string)settings[23]);
+                            PlayerPrefs.SetString("titanhair4", (string)settings[24]);
+                            PlayerPrefs.SetString("titanhair5", (string)settings[25]);
+                            PlayerPrefs.SetString("titaneye1", (string)settings[26]);
+                            PlayerPrefs.SetString("titaneye2", (string)settings[27]);
+                            PlayerPrefs.SetString("titaneye3", (string)settings[28]);
+                            PlayerPrefs.SetString("titaneye4", (string)settings[29]);
                             PlayerPrefs.SetString("titaneye5", (string)settings[30]);
-                            PlayerPrefs.SetInt("titanR", (int)settings[0x20]);
-                            PlayerPrefs.SetString("tree1", (string)settings[0x21]);
-                            PlayerPrefs.SetString("tree2", (string)settings[0x22]);
-                            PlayerPrefs.SetString("tree3", (string)settings[0x23]);
-                            PlayerPrefs.SetString("tree4", (string)settings[0x24]);
-                            PlayerPrefs.SetString("tree5", (string)settings[0x25]);
-                            PlayerPrefs.SetString("tree6", (string)settings[0x26]);
-                            PlayerPrefs.SetString("tree7", (string)settings[0x27]);
+                            PlayerPrefs.SetInt("titanR", (int)settings[32]);
+                            PlayerPrefs.SetString("tree1", (string)settings[33]);
+                            PlayerPrefs.SetString("tree2", (string)settings[34]);
+                            PlayerPrefs.SetString("tree3", (string)settings[35]);
+                            PlayerPrefs.SetString("tree4", (string)settings[36]);
+                            PlayerPrefs.SetString("tree5", (string)settings[37]);
+                            PlayerPrefs.SetString("tree6", (string)settings[38]);
+                            PlayerPrefs.SetString("tree7", (string)settings[39]);
                             PlayerPrefs.SetString("tree8", (string)settings[40]);
-                            PlayerPrefs.SetString("leaf1", (string)settings[0x29]);
-                            PlayerPrefs.SetString("leaf2", (string)settings[0x2a]);
-                            PlayerPrefs.SetString("leaf3", (string)settings[0x2b]);
-                            PlayerPrefs.SetString("leaf4", (string)settings[0x2c]);
-                            PlayerPrefs.SetString("leaf5", (string)settings[0x2d]);
-                            PlayerPrefs.SetString("leaf6", (string)settings[0x2e]);
-                            PlayerPrefs.SetString("leaf7", (string)settings[0x2f]);
-                            PlayerPrefs.SetString("leaf8", (string)settings[0x30]);
-                            PlayerPrefs.SetString("forestG", (string)settings[0x31]);
+                            PlayerPrefs.SetString("leaf1", (string)settings[41]);
+                            PlayerPrefs.SetString("leaf2", (string)settings[42]);
+                            PlayerPrefs.SetString("leaf3", (string)settings[43]);
+                            PlayerPrefs.SetString("leaf4", (string)settings[44]);
+                            PlayerPrefs.SetString("leaf5", (string)settings[45]);
+                            PlayerPrefs.SetString("leaf6", (string)settings[46]);
+                            PlayerPrefs.SetString("leaf7", (string)settings[47]);
+                            PlayerPrefs.SetString("leaf8", (string)settings[48]);
+                            PlayerPrefs.SetString("forestG", (string)settings[49]);
                             PlayerPrefs.SetInt("forestR", (int)settings[50]);
-                            PlayerPrefs.SetString("house1", (string)settings[0x33]);
-                            PlayerPrefs.SetString("house2", (string)settings[0x34]);
-                            PlayerPrefs.SetString("house3", (string)settings[0x35]);
-                            PlayerPrefs.SetString("house4", (string)settings[0x36]);
-                            PlayerPrefs.SetString("house5", (string)settings[0x37]);
-                            PlayerPrefs.SetString("house6", (string)settings[0x38]);
-                            PlayerPrefs.SetString("house7", (string)settings[0x39]);
-                            PlayerPrefs.SetString("house8", (string)settings[0x3a]);
-                            PlayerPrefs.SetString("cityG", (string)settings[0x3b]);
+                            PlayerPrefs.SetString("house1", (string)settings[51]);
+                            PlayerPrefs.SetString("house2", (string)settings[52]);
+                            PlayerPrefs.SetString("house3", (string)settings[53]);
+                            PlayerPrefs.SetString("house4", (string)settings[54]);
+                            PlayerPrefs.SetString("house5", (string)settings[55]);
+                            PlayerPrefs.SetString("house6", (string)settings[56]);
+                            PlayerPrefs.SetString("house7", (string)settings[57]);
+                            PlayerPrefs.SetString("house8", (string)settings[58]);
+                            PlayerPrefs.SetString("cityG", (string)settings[59]);
                             PlayerPrefs.SetString("cityW", (string)settings[60]);
-                            PlayerPrefs.SetString("cityH", (string)settings[0x3d]);
+                            PlayerPrefs.SetString("cityH", (string)settings[61]);
                             PlayerPrefs.SetInt("skinQ", QualitySettings.masterTextureLimit);
-                            PlayerPrefs.SetInt("skinQL", (int)settings[0x3f]);
-                            PlayerPrefs.SetString("eren", (string)settings[0x41]);
-                            PlayerPrefs.SetString("annie", (string)settings[0x42]);
-                            PlayerPrefs.SetString("colossal", (string)settings[0x43]);
+                            PlayerPrefs.SetInt("skinQL", (int)settings[63]);
+                            PlayerPrefs.SetString("eren", (string)settings[65]);
+                            PlayerPrefs.SetString("annie", (string)settings[66]);
+                            PlayerPrefs.SetString("colossal", (string)settings[67]);
                             PlayerPrefs.SetString("hoodie", (string)settings[14]);
-                            PlayerPrefs.SetString("cnumber", (string)settings[0x52]);
-                            PlayerPrefs.SetString("cmax", (string)settings[0x55]);
-                            PlayerPrefs.SetString("titanbody1", (string)settings[0x56]);
-                            PlayerPrefs.SetString("titanbody2", (string)settings[0x57]);
-                            PlayerPrefs.SetString("titanbody3", (string)settings[0x58]);
-                            PlayerPrefs.SetString("titanbody4", (string)settings[0x59]);
+                            PlayerPrefs.SetString("cnumber", (string)settings[82]);
+                            PlayerPrefs.SetString("cmax", (string)settings[85]);
+                            PlayerPrefs.SetString("titanbody1", (string)settings[86]);
+                            PlayerPrefs.SetString("titanbody2", (string)settings[87]);
+                            PlayerPrefs.SetString("titanbody3", (string)settings[88]);
+                            PlayerPrefs.SetString("titanbody4", (string)settings[89]);
                             PlayerPrefs.SetString("titanbody5", (string)settings[90]);
-                            PlayerPrefs.SetInt("customlevel", (int)settings[0x5b]);
-                            PlayerPrefs.SetInt("traildisable", (int)settings[0x5c]);
-                            PlayerPrefs.SetInt("wind", (int)settings[0x5d]);
-                            PlayerPrefs.SetString("trailskin", (string)settings[0x5e]);
-                            PlayerPrefs.SetString("snapshot", (string)settings[0x5f]);
-                            PlayerPrefs.SetString("trailskin2", (string)settings[0x60]);
-                            PlayerPrefs.SetInt("reel", (int)settings[0x61]);
-                            PlayerPrefs.SetString("reelin", (string)settings[0x62]);
-                            PlayerPrefs.SetString("reelout", (string)settings[0x63]);
+                            PlayerPrefs.SetInt("customlevel", (int)settings[91]);
+                            PlayerPrefs.SetInt("traildisable", (int)settings[92]);
+                            PlayerPrefs.SetInt("wind", (int)settings[93]);
+                            PlayerPrefs.SetString("trailskin", (string)settings[94]);
+                            PlayerPrefs.SetString("snapshot", (string)settings[95]);
+                            PlayerPrefs.SetString("trailskin2", (string)settings[96]);
+                            PlayerPrefs.SetInt("reel", (int)settings[97]);
+                            PlayerPrefs.SetString("reelin", (string)settings[98]);
+                            PlayerPrefs.SetString("reelout", (string)settings[99]);
                             PlayerPrefs.SetFloat("vol", AudioListener.volume);
-                            PlayerPrefs.SetString("tforward", (string)settings[0x65]);
-                            PlayerPrefs.SetString("tback", (string)settings[0x66]);
-                            PlayerPrefs.SetString("tleft", (string)settings[0x67]);
-                            PlayerPrefs.SetString("tright", (string)settings[0x68]);
-                            PlayerPrefs.SetString("twalk", (string)settings[0x69]);
-                            PlayerPrefs.SetString("tjump", (string)settings[0x6a]);
-                            PlayerPrefs.SetString("tpunch", (string)settings[0x6b]);
-                            PlayerPrefs.SetString("tslam", (string)settings[0x6c]);
-                            PlayerPrefs.SetString("tgrabfront", (string)settings[0x6d]);
+                            PlayerPrefs.SetString("tforward", (string)settings[101]);
+                            PlayerPrefs.SetString("tback", (string)settings[102]);
+                            PlayerPrefs.SetString("tleft", (string)settings[103]);
+                            PlayerPrefs.SetString("tright", (string)settings[104]);
+                            PlayerPrefs.SetString("twalk", (string)settings[105]);
+                            PlayerPrefs.SetString("tjump", (string)settings[106]);
+                            PlayerPrefs.SetString("tpunch", (string)settings[107]);
+                            PlayerPrefs.SetString("tslam", (string)settings[108]);
+                            PlayerPrefs.SetString("tgrabfront", (string)settings[109]);
                             PlayerPrefs.SetString("tgrabback", (string)settings[110]);
-                            PlayerPrefs.SetString("tgrabnape", (string)settings[0x6f]);
-                            PlayerPrefs.SetString("tantiae", (string)settings[0x70]);
-                            PlayerPrefs.SetString("tbite", (string)settings[0x71]);
-                            PlayerPrefs.SetString("tcover", (string)settings[0x72]);
-                            PlayerPrefs.SetString("tsit", (string)settings[0x73]);
-                            PlayerPrefs.SetInt("reel2", (int)settings[0x74]);
-                            PlayerPrefs.SetInt("humangui", (int)settings[0x85]);
-                            PlayerPrefs.SetString("horse2", (string)settings[0x86]);
-                            PlayerPrefs.SetString("hair2", (string)settings[0x87]);
-                            PlayerPrefs.SetString("eye2", (string)settings[0x88]);
-                            PlayerPrefs.SetString("glass2", (string)settings[0x89]);
-                            PlayerPrefs.SetString("face2", (string)settings[0x8a]);
-                            PlayerPrefs.SetString("skin2", (string)settings[0x8b]);
+                            PlayerPrefs.SetString("tgrabnape", (string)settings[111]);
+                            PlayerPrefs.SetString("tantiae", (string)settings[112]);
+                            PlayerPrefs.SetString("tbite", (string)settings[113]);
+                            PlayerPrefs.SetString("tcover", (string)settings[114]);
+                            PlayerPrefs.SetString("tsit", (string)settings[115]);
+                            PlayerPrefs.SetInt("reel2", (int)settings[116]);
+                            PlayerPrefs.SetInt("humangui", (int)settings[133]);
+                            PlayerPrefs.SetString("horse2", (string)settings[134]);
+                            PlayerPrefs.SetString("hair2", (string)settings[135]);
+                            PlayerPrefs.SetString("eye2", (string)settings[136]);
+                            PlayerPrefs.SetString("glass2", (string)settings[137]);
+                            PlayerPrefs.SetString("face2", (string)settings[138]);
+                            PlayerPrefs.SetString("skin2", (string)settings[139]);
                             PlayerPrefs.SetString("costume2", (string)settings[140]);
-                            PlayerPrefs.SetString("logo2", (string)settings[0x8d]);
-                            PlayerPrefs.SetString("bladel2", (string)settings[0x8e]);
-                            PlayerPrefs.SetString("blader2", (string)settings[0x8f]);
-                            PlayerPrefs.SetString("gas2", (string)settings[0x90]);
-                            PlayerPrefs.SetString("hoodie2", (string)settings[0x91]);
-                            PlayerPrefs.SetString("trail2", (string)settings[0x92]);
-                            PlayerPrefs.SetString("horse3", (string)settings[0x93]);
-                            PlayerPrefs.SetString("hair3", (string)settings[0x94]);
-                            PlayerPrefs.SetString("eye3", (string)settings[0x95]);
+                            PlayerPrefs.SetString("logo2", (string)settings[141]);
+                            PlayerPrefs.SetString("bladel2", (string)settings[142]);
+                            PlayerPrefs.SetString("blader2", (string)settings[143]);
+                            PlayerPrefs.SetString("gas2", (string)settings[144]);
+                            PlayerPrefs.SetString("hoodie2", (string)settings[145]);
+                            PlayerPrefs.SetString("trail2", (string)settings[146]);
+                            PlayerPrefs.SetString("horse3", (string)settings[147]);
+                            PlayerPrefs.SetString("hair3", (string)settings[148]);
+                            PlayerPrefs.SetString("eye3", (string)settings[149]);
                             PlayerPrefs.SetString("glass3", (string)settings[150]);
-                            PlayerPrefs.SetString("face3", (string)settings[0x97]);
-                            PlayerPrefs.SetString("skin3", (string)settings[0x98]);
-                            PlayerPrefs.SetString("costume3", (string)settings[0x99]);
-                            PlayerPrefs.SetString("logo3", (string)settings[0x9a]);
-                            PlayerPrefs.SetString("bladel3", (string)settings[0x9b]);
-                            PlayerPrefs.SetString("blader3", (string)settings[0x9c]);
-                            PlayerPrefs.SetString("gas3", (string)settings[0x9d]);
-                            PlayerPrefs.SetString("hoodie3", (string)settings[0x9e]);
-                            PlayerPrefs.SetString("trail3", (string)settings[0x9f]);
-                            PlayerPrefs.SetString("customGround", (string)settings[0xa2]);
-                            PlayerPrefs.SetString("forestskyfront", (string)settings[0xa3]);
-                            PlayerPrefs.SetString("forestskyback", (string)settings[0xa4]);
-                            PlayerPrefs.SetString("forestskyleft", (string)settings[0xa5]);
-                            PlayerPrefs.SetString("forestskyright", (string)settings[0xa6]);
-                            PlayerPrefs.SetString("forestskyup", (string)settings[0xa7]);
-                            PlayerPrefs.SetString("forestskydown", (string)settings[0xa8]);
-                            PlayerPrefs.SetString("cityskyfront", (string)settings[0xa9]);
+                            PlayerPrefs.SetString("face3", (string)settings[151]);
+                            PlayerPrefs.SetString("skin3", (string)settings[152]);
+                            PlayerPrefs.SetString("costume3", (string)settings[153]);
+                            PlayerPrefs.SetString("logo3", (string)settings[154]);
+                            PlayerPrefs.SetString("bladel3", (string)settings[155]);
+                            PlayerPrefs.SetString("blader3", (string)settings[156]);
+                            PlayerPrefs.SetString("gas3", (string)settings[157]);
+                            PlayerPrefs.SetString("hoodie3", (string)settings[158]);
+                            PlayerPrefs.SetString("trail3", (string)settings[159]);
+                            PlayerPrefs.SetString("customGround", (string)settings[162]);
+                            PlayerPrefs.SetString("forestskyfront", (string)settings[163]);
+                            PlayerPrefs.SetString("forestskyback", (string)settings[164]);
+                            PlayerPrefs.SetString("forestskyleft", (string)settings[165]);
+                            PlayerPrefs.SetString("forestskyright", (string)settings[166]);
+                            PlayerPrefs.SetString("forestskyup", (string)settings[167]);
+                            PlayerPrefs.SetString("forestskydown", (string)settings[168]);
+                            PlayerPrefs.SetString("cityskyfront", (string)settings[169]);
                             PlayerPrefs.SetString("cityskyback", (string)settings[170]);
-                            PlayerPrefs.SetString("cityskyleft", (string)settings[0xab]);
-                            PlayerPrefs.SetString("cityskyright", (string)settings[0xac]);
-                            PlayerPrefs.SetString("cityskyup", (string)settings[0xad]);
-                            PlayerPrefs.SetString("cityskydown", (string)settings[0xae]);
-                            PlayerPrefs.SetString("customskyfront", (string)settings[0xaf]);
-                            PlayerPrefs.SetString("customskyback", (string)settings[0xb0]);
-                            PlayerPrefs.SetString("customskyleft", (string)settings[0xb1]);
-                            PlayerPrefs.SetString("customskyright", (string)settings[0xb2]);
-                            PlayerPrefs.SetString("customskyup", (string)settings[0xb3]);
+                            PlayerPrefs.SetString("cityskyleft", (string)settings[171]);
+                            PlayerPrefs.SetString("cityskyright", (string)settings[172]);
+                            PlayerPrefs.SetString("cityskyup", (string)settings[173]);
+                            PlayerPrefs.SetString("cityskydown", (string)settings[174]);
+                            PlayerPrefs.SetString("customskyfront", (string)settings[175]);
+                            PlayerPrefs.SetString("customskyback", (string)settings[176]);
+                            PlayerPrefs.SetString("customskyleft", (string)settings[177]);
+                            PlayerPrefs.SetString("customskyright", (string)settings[178]);
+                            PlayerPrefs.SetString("customskyup", (string)settings[179]);
                             PlayerPrefs.SetString("customskydown", (string)settings[180]);
-                            PlayerPrefs.SetInt("dashenable", (int)settings[0xb5]);
-                            PlayerPrefs.SetString("dashkey", (string)settings[0xb6]);
-                            PlayerPrefs.SetInt("vsync", (int)settings[0xb7]);
-                            PlayerPrefs.SetString("fpscap", (string)settings[0xb8]);
-                            PlayerPrefs.SetInt("speedometer", (int)settings[0xbd]);
-                            PlayerPrefs.SetInt("bombMode", (int)settings[0xc0]);
-                            PlayerPrefs.SetInt("teamMode", (int)settings[0xc1]);
-                            PlayerPrefs.SetInt("rockThrow", (int)settings[0xc2]);
-                            PlayerPrefs.SetInt("explodeModeOn", (int)settings[0xc3]);
-                            PlayerPrefs.SetString("explodeModeNum", (string)settings[0xc4]);
-                            PlayerPrefs.SetInt("healthMode", (int)settings[0xc5]);
-                            PlayerPrefs.SetString("healthLower", (string)settings[0xc6]);
-                            PlayerPrefs.SetString("healthUpper", (string)settings[0xc7]);
+                            PlayerPrefs.SetInt("dashenable", (int)settings[181]);
+                            PlayerPrefs.SetString("dashkey", (string)settings[182]);
+                            PlayerPrefs.SetInt("vsync", (int)settings[183]);
+                            PlayerPrefs.SetString("fpscap", (string)settings[184]);
+                            PlayerPrefs.SetInt("speedometer", (int)settings[189]);
+                            PlayerPrefs.SetInt("bombMode", (int)settings[192]);
+                            PlayerPrefs.SetInt("teamMode", (int)settings[193]);
+                            PlayerPrefs.SetInt("rockThrow", (int)settings[194]);
+                            PlayerPrefs.SetInt("explodeModeOn", (int)settings[195]);
+                            PlayerPrefs.SetString("explodeModeNum", (string)settings[196]);
+                            PlayerPrefs.SetInt("healthMode", (int)settings[197]);
+                            PlayerPrefs.SetString("healthLower", (string)settings[198]);
+                            PlayerPrefs.SetString("healthUpper", (string)settings[199]);
                             PlayerPrefs.SetInt("infectionModeOn", (int)settings[200]);
-                            PlayerPrefs.SetString("infectionModeNum", (string)settings[0xc9]);
-                            PlayerPrefs.SetInt("banEren", (int)settings[0xca]);
-                            PlayerPrefs.SetInt("moreTitanOn", (int)settings[0xcb]);
-                            PlayerPrefs.SetString("moreTitanNum", (string)settings[0xcc]);
-                            PlayerPrefs.SetInt("damageModeOn", (int)settings[0xcd]);
-                            PlayerPrefs.SetString("damageModeNum", (string)settings[0xce]);
-                            PlayerPrefs.SetInt("sizeMode", (int)settings[0xcf]);
-                            PlayerPrefs.SetString("sizeLower", (string)settings[0xd0]);
-                            PlayerPrefs.SetString("sizeUpper", (string)settings[0xd1]);
+                            PlayerPrefs.SetString("infectionModeNum", (string)settings[201]);
+                            PlayerPrefs.SetInt("banEren", (int)settings[202]);
+                            PlayerPrefs.SetInt("moreTitanOn", (int)settings[203]);
+                            PlayerPrefs.SetString("moreTitanNum", (string)settings[204]);
+                            PlayerPrefs.SetInt("damageModeOn", (int)settings[205]);
+                            PlayerPrefs.SetString("damageModeNum", (string)settings[206]);
+                            PlayerPrefs.SetInt("sizeMode", (int)settings[207]);
+                            PlayerPrefs.SetString("sizeLower", (string)settings[208]);
+                            PlayerPrefs.SetString("sizeUpper", (string)settings[209]);
                             PlayerPrefs.SetInt("spawnModeOn", (int)settings[210]);
-                            PlayerPrefs.SetString("nRate", (string)settings[0xd3]);
-                            PlayerPrefs.SetString("aRate", (string)settings[0xd4]);
-                            PlayerPrefs.SetString("jRate", (string)settings[0xd5]);
-                            PlayerPrefs.SetString("cRate", (string)settings[0xd6]);
-                            PlayerPrefs.SetString("pRate", (string)settings[0xd7]);
-                            PlayerPrefs.SetInt("horseMode", (int)settings[0xd8]);
-                            PlayerPrefs.SetInt("waveModeOn", (int)settings[0xd9]);
-                            PlayerPrefs.SetString("waveModeNum", (string)settings[0xda]);
-                            PlayerPrefs.SetInt("friendlyMode", (int)settings[0xdb]);
+                            PlayerPrefs.SetString("nRate", (string)settings[211]);
+                            PlayerPrefs.SetString("aRate", (string)settings[212]);
+                            PlayerPrefs.SetString("jRate", (string)settings[213]);
+                            PlayerPrefs.SetString("cRate", (string)settings[214]);
+                            PlayerPrefs.SetString("pRate", (string)settings[215]);
+                            PlayerPrefs.SetInt("horseMode", (int)settings[216]);
+                            PlayerPrefs.SetInt("waveModeOn", (int)settings[217]);
+                            PlayerPrefs.SetString("waveModeNum", (string)settings[218]);
+                            PlayerPrefs.SetInt("friendlyMode", (int)settings[219]);
                             PlayerPrefs.SetInt("pvpMode", (int)settings[220]);
-                            PlayerPrefs.SetInt("maxWaveOn", (int)settings[0xdd]);
-                            PlayerPrefs.SetString("maxWaveNum", (string)settings[0xde]);
-                            PlayerPrefs.SetInt("endlessModeOn", (int)settings[0xdf]);
-                            PlayerPrefs.SetString("endlessModeNum", (string)settings[0xe0]);
-                            PlayerPrefs.SetString("motd", (string)settings[0xe1]);
-                            PlayerPrefs.SetInt("pointModeOn", (int)settings[0xe2]);
-                            PlayerPrefs.SetString("pointModeNum", (string)settings[0xe3]);
-                            PlayerPrefs.SetInt("ahssReload", (int)settings[0xe4]);
-                            PlayerPrefs.SetInt("punkWaves", (int)settings[0xe5]);
-                            PlayerPrefs.SetInt("mapOn", (int)settings[0xe7]);
-                            PlayerPrefs.SetString("mapMaximize", (string)settings[0xe8]);
-                            PlayerPrefs.SetString("mapToggle", (string)settings[0xe9]);
-                            PlayerPrefs.SetString("mapReset", (string)settings[0xea]);
-                            PlayerPrefs.SetInt("globalDisableMinimap", (int)settings[0xeb]);
-                            PlayerPrefs.SetString("chatRebind", (string)settings[0xec]);
-                            PlayerPrefs.SetString("hforward", (string)settings[0xed]);
-                            PlayerPrefs.SetString("hback", (string)settings[0xee]);
-                            PlayerPrefs.SetString("hleft", (string)settings[0xef]);
+                            PlayerPrefs.SetInt("maxWaveOn", (int)settings[221]);
+                            PlayerPrefs.SetString("maxWaveNum", (string)settings[222]);
+                            PlayerPrefs.SetInt("endlessModeOn", (int)settings[223]);
+                            PlayerPrefs.SetString("endlessModeNum", (string)settings[224]);
+                            PlayerPrefs.SetString("motd", (string)settings[225]);
+                            PlayerPrefs.SetInt("pointModeOn", (int)settings[226]);
+                            PlayerPrefs.SetString("pointModeNum", (string)settings[227]);
+                            PlayerPrefs.SetInt("ahssReload", (int)settings[228]);
+                            PlayerPrefs.SetInt("punkWaves", (int)settings[229]);
+                            PlayerPrefs.SetInt("mapOn", (int)settings[231]);
+                            PlayerPrefs.SetString("mapMaximize", (string)settings[232]);
+                            PlayerPrefs.SetString("mapToggle", (string)settings[233]);
+                            PlayerPrefs.SetString("mapReset", (string)settings[234]);
+                            PlayerPrefs.SetInt("globalDisableMinimap", (int)settings[235]);
+                            PlayerPrefs.SetString("chatRebind", (string)settings[236]);
+                            PlayerPrefs.SetString("hforward", (string)settings[237]);
+                            PlayerPrefs.SetString("hback", (string)settings[238]);
+                            PlayerPrefs.SetString("hleft", (string)settings[239]);
                             PlayerPrefs.SetString("hright", (string)settings[240]);
-                            PlayerPrefs.SetString("hwalk", (string)settings[0xf1]);
-                            PlayerPrefs.SetString("hjump", (string)settings[0xf2]);
-                            PlayerPrefs.SetString("hmount", (string)settings[0xf3]);
-                            PlayerPrefs.SetInt("chatfeed", (int)settings[0xf4]);
-                            PlayerPrefs.SetFloat("bombR", (float)settings[0xf6]);
-                            PlayerPrefs.SetFloat("bombG", (float)settings[0xf7]);
-                            PlayerPrefs.SetFloat("bombB", (float)settings[0xf8]);
-                            PlayerPrefs.SetFloat("bombA", (float)settings[0xf9]);
+                            PlayerPrefs.SetString("hwalk", (string)settings[241]);
+                            PlayerPrefs.SetString("hjump", (string)settings[242]);
+                            PlayerPrefs.SetString("hmount", (string)settings[243]);
+                            PlayerPrefs.SetInt("chatfeed", (int)settings[244]);
+                            PlayerPrefs.SetFloat("bombR", (float)settings[246]);
+                            PlayerPrefs.SetFloat("bombG", (float)settings[247]);
+                            PlayerPrefs.SetFloat("bombB", (float)settings[248]);
+                            PlayerPrefs.SetFloat("bombA", (float)settings[249]);
                             PlayerPrefs.SetInt("bombRadius", (int)settings[250]);
-                            PlayerPrefs.SetInt("bombRange", (int)settings[0xfb]);
-                            PlayerPrefs.SetInt("bombSpeed", (int)settings[0xfc]);
-                            PlayerPrefs.SetInt("bombCD", (int)settings[0xfd]);
-                            PlayerPrefs.SetString("cannonUp", (string)settings[0xfe]);
-                            PlayerPrefs.SetString("cannonDown", (string)settings[0xff]);
-                            PlayerPrefs.SetString("cannonLeft", (string)settings[0x100]);
-                            PlayerPrefs.SetString("cannonRight", (string)settings[0x101]);
-                            PlayerPrefs.SetString("cannonFire", (string)settings[0x102]);
-                            PlayerPrefs.SetString("cannonMount", (string)settings[0x103]);
+                            PlayerPrefs.SetInt("bombRange", (int)settings[251]);
+                            PlayerPrefs.SetInt("bombSpeed", (int)settings[252]);
+                            PlayerPrefs.SetInt("bombCD", (int)settings[253]);
+                            PlayerPrefs.SetString("cannonUp", (string)settings[254]);
+                            PlayerPrefs.SetString("cannonDown", (string)settings[255]);
+                            PlayerPrefs.SetString("cannonLeft", (string)settings[256]);
+                            PlayerPrefs.SetString("cannonRight", (string)settings[257]);
+                            PlayerPrefs.SetString("cannonFire", (string)settings[258]);
+                            PlayerPrefs.SetString("cannonMount", (string)settings[259]);
                             PlayerPrefs.SetString("cannonSlow", (string)settings[260]);
-                            PlayerPrefs.SetInt("deadlyCannon", (int)settings[0x105]);
-                            PlayerPrefs.SetString("liveCam", (string)settings[0x106]);
-                            settings[0x40] = 4;
+                            PlayerPrefs.SetInt("deadlyCannon", (int)settings[261]);
+                            PlayerPrefs.SetString("liveCam", (string)settings[262]);
+                            settings[64] = 4;
                         }
                         else if (GUI.Button(new Rect(num7 + 455f, num8 + 465f, 40f, 25f), "Load"))
                         {
                             loadconfig();
-                            settings[0x40] = 5;
+                            settings[64] = 5;
                         }
                         else if (GUI.Button(new Rect(num7 + 500f, num8 + 465f, 60f, 25f), "Default"))
                         {
@@ -9189,6 +9192,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         }
                         else if (GUI.Button(new Rect(num7 + 565f, num8 + 465f, 75f, 25f), "Continue"))
                         {
+                            GGM.GUI.Pages.Page = string.Empty;
                             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                             {
                                 Time.timeScale = 1f;
@@ -9522,7 +9526,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     ShowHUDInfoTopCenterADD("\n\nPRESS 1 TO ENTER GAME");
                 }
-                else if ((int)settings[0xf5] == 0)
+                else if ((int)settings[245] == 0)
                 {
                     if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
                     {
@@ -9656,7 +9660,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         GameObjectCache.Find("aot_supply_lava_position").transform.rotation;
                 }
 
-                if ((int)settings[0xf5] == 1)
+                if ((int)settings[245] == 1)
                 {
                     EnterSpecMode(true);
                 }
@@ -9771,7 +9775,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 var num2 = RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.statBLA]);
                 var num3 = RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.statGAS]);
                 var num4 = RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.statSPD]);
-                if (num > 150 || num2 > 0x7d || num3 > 150 || num4 > 140)
+                if (num > 150 || num2 > 125 || num3 > 150 || num4 > 140)
                 {
                     kickPlayerRC(player, true, "excessive stats.");
                     return;
@@ -9930,14 +9934,14 @@ public class FengGameManagerMKII : MonoBehaviour
                     photonView.RPC("pauseRPC", player, true);
                     object[] parameters = { InRoomChat.ChatFormatting(
                         "MasterClient ",
-                        Settings.ChatMinorColor,
-                        Settings.ChatMinorBold,
-                        Settings.ChatMinorItalic) +
+                        Settings.ChatMinorColorSetting,
+                        Settings.ChatMinorBoldSetting,
+                        Settings.ChatMinorItalicSetting) +
                             InRoomChat.ChatFormatting(
                                 "has paused the game.",
-                                Settings.ChatMajorColor,
-                                Settings.ChatMajorBold,
-                                Settings.ChatMajorItalic), ""};
+                                Settings.ChatMajorColorSetting,
+                                Settings.ChatMajorBoldSetting,
+                                Settings.ChatMajorItalicSetting), ""};
                     photonView.RPC("Chat", player, parameters);
                 }
             }
@@ -10019,7 +10023,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     num = 100;
                 }
 
-                if (num2 > 0x7d)
+                if (num2 > 125)
                 {
                     hashtable2 = new Hashtable();
                     hashtable2.Add(PhotonPlayerProperty.statBLA, 100);
@@ -11310,21 +11314,21 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 var msg = InRoomChat.ChatFormatting(
                     "MasterClient ",
-                    Settings.ChatMinorColor,
-                    Settings.ChatMinorBold,
-                    Settings.ChatMinorItalic) +
+                    Settings.ChatMinorColorSetting,
+                    Settings.ChatMinorBoldSetting,
+                    Settings.ChatMinorItalicSetting) +
                     InRoomChat.ChatFormatting(
                         "has switched to ",
-                        Settings.ChatMajorColor,
-                        Settings.ChatMajorBold,
-                        Settings.ChatMajorItalic) +
+                        Settings.ChatMajorColorSetting,
+                        Settings.ChatMajorBoldSetting,
+                        Settings.ChatMajorItalicSetting) +
                         InRoomChat.ChatFormatting(
                             $"[{PhotonNetwork.player.ID}] ",
-                    Settings.ChatMinorColor,
-                    Settings.ChatMinorBold,
-                    Settings.ChatMinorItalic) +
+                    Settings.ChatMinorColorSetting,
+                    Settings.ChatMinorBoldSetting,
+                    Settings.ChatMinorItalicSetting) +
                     PhotonNetwork.player.Name.hexColor();
-                InRoomChat.AddLine($"<size={Settings.ChatSize}>{msg}</size>");
+                InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
             }
         }
     }
@@ -11628,7 +11632,7 @@ public class FengGameManagerMKII : MonoBehaviour
             }
             else if (str2.StartsWith("GetPositionZ()"))
             {
-                helper = new RCActionHelper(2, 0x10, null);
+                helper = new RCActionHelper(2, 16, null);
                 list.Add(helper);
                 sentType = 3;
             }
@@ -11646,7 +11650,7 @@ public class FengGameManagerMKII : MonoBehaviour
             }
             else if (str2.StartsWith("GetSpeed()"))
             {
-                helper = new RCActionHelper(2, 0x11, null);
+                helper = new RCActionHelper(2, 17, null);
                 list.Add(helper);
                 sentType = 3;
             }
@@ -11822,11 +11826,11 @@ public class FengGameManagerMKII : MonoBehaviour
                 eventContent[(byte)1] = inGameName;
             }
 
-            PhotonNetwork.RaiseEvent(0xcb, eventContent, true, options);
+            PhotonNetwork.RaiseEvent(203, eventContent, true, options);
         }
         else
         {
-            PhotonNetwork.RaiseEvent(0xcb, null, true, options);
+            PhotonNetwork.RaiseEvent(203, null, true, options);
         }
     }
 
@@ -11836,7 +11840,7 @@ public class FengGameManagerMKII : MonoBehaviour
         {
             var eventContent = new Hashtable();
             eventContent[(byte)0] = authPassword;
-            PhotonNetwork.RaiseEvent(0xc6, eventContent, true, new RaiseEventOptions());
+            PhotonNetwork.RaiseEvent(198, eventContent, true, new RaiseEventOptions());
         }
     }
 
@@ -11846,7 +11850,7 @@ public class FengGameManagerMKII : MonoBehaviour
         {
             var eventContent = new Hashtable();
             eventContent[(byte)0] = bannedAddress;
-            PhotonNetwork.RaiseEvent(0xc7, eventContent, true, new RaiseEventOptions());
+            PhotonNetwork.RaiseEvent(199, eventContent, true, new RaiseEventOptions());
         }
     }
 
@@ -13633,7 +13637,6 @@ public class FengGameManagerMKII : MonoBehaviour
         }
         StartCoroutine(LoadBackground());
         ChangeQuality.setCurrentQuality();
-        gameObject.AddComponent<HotKeys>();
     }
 
     [RPC]
@@ -13770,38 +13773,38 @@ public class FengGameManagerMKII : MonoBehaviour
         obj3.transform.parent = obj2.GetComponent<UIReferArray>().panels[0].transform;
         obj3.GetComponent<KillInfoComponent>().show(t1, killer, t2, victim, dmg);
         killInfoGO.Add(obj3);
-        if ((int)settings[0xf4] == 1)
+        if ((int)settings[244] == 1)
         {
             var msg = InRoomChat.ChatFormatting(
                 $"[{roundTime.ToString("F2")}] ",
-                Settings.ChatMinorColor,
-                Settings.ChatMinorBold,
-                Settings.ChatMinorItalic) +
+                Settings.ChatMinorColorSetting,
+                Settings.ChatMinorBoldSetting,
+                Settings.ChatMinorItalicSetting) +
                 killer.hexColor() +
                 InRoomChat.ChatFormatting(
                     " killed ",
-                    Settings.ChatMajorColor,
-                    Settings.ChatMajorBold,
-                    Settings.ChatMajorItalic) +
+                    Settings.ChatMajorColorSetting,
+                    Settings.ChatMajorBoldSetting,
+                    Settings.ChatMajorItalicSetting) +
                 (victim.Contains("[") ? victim.hexColor() : InRoomChat.ChatFormatting(
                     victim,
-                    Settings.ChatMinorColor,
-                    Settings.ChatMinorBold,
-                    Settings.ChatMinorItalic)) +
+                    Settings.ChatMinorColorSetting,
+                    Settings.ChatMinorBoldSetting,
+                    Settings.ChatMinorItalicSetting)) +
                 InRoomChat.ChatFormatting(
                     " for ",
-                    Settings.ChatMajorColor,
-                    Settings.ChatMajorBold,
-                    Settings.ChatMajorItalic) +
+                    Settings.ChatMajorColorSetting,
+                    Settings.ChatMajorBoldSetting,
+                    Settings.ChatMajorItalicSetting) +
                 InRoomChat.ChatFormatting(dmg.ToString(),
-                Settings.ChatMinorColor,
-                Settings.ChatMinorBold,
-                Settings.ChatMinorItalic) +
+                Settings.ChatMinorColorSetting,
+                Settings.ChatMinorBoldSetting,
+                Settings.ChatMinorItalicSetting) +
                 InRoomChat.ChatFormatting(" damage.",
-                Settings.ChatMajorColor,
-                Settings.ChatMajorBold,
-                Settings.ChatMajorItalic);
-            InRoomChat.AddLine($"<size={Settings.ChatSize}>{msg}</size>");
+                Settings.ChatMajorColorSetting,
+                Settings.ChatMajorBoldSetting,
+                Settings.ChatMajorItalicSetting);
+            InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
         }
     }
 
