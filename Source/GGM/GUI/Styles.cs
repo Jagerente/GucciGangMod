@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Reflection.Emit;
+using UnityEngine;
 
 namespace GGM.GUI
 {
@@ -222,7 +223,8 @@ namespace GGM.GUI
             UnityEngine.GUI.skin.button.onNormal.background = ButtonON;
             UnityEngine.GUI.skin.button.onActive.background = ButtonOA;
             UnityEngine.GUI.skin.button.onHover.background = ButtonOH;
-            //UnityEngine.GUI.skin.button.fontStyle = FontStyle.Bold;
+            UnityEngine.GUI.skin.button.fontStyle = FontStyle.Bold;
+
 
             UnityEngine.GUI.skin.textField.normal.background = TextN;
             UnityEngine.GUI.skin.textField.hover.background = TextH;
@@ -292,5 +294,6 @@ namespace GGM.GUI
             UnityEngine.GUI.skin.window.onActive.background = Window;
             Inited = true;
         }
+
     }
 }
