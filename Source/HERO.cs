@@ -4648,13 +4648,40 @@ public class HERO : MonoBehaviour
                 var magnitude = vector.magnitude;
                 var obj11 = LabelDistance;
                 var str = (magnitude <= Settings.DrawDistanceSetting) ? ((int) magnitude).ToString() : "???";
+                var hitDamage = currentSpeed;
+                var singleShotDamage = currentSpeed * 0.4f;
+                var doubleShotDamage = currentSpeed * 0.6f;
                 switch ((int) FengGameManagerMKII.settings[0xbd])
                 {
                     case 1:
-                        str = str + "\n" + currentSpeed.ToString("F1") + " U/S";
+                        str = str + "\n" + 
+                              currentSpeed.ToString("F1") + " U/S";
                         break;
                     case 2:
-                        str = str + "\n" + ((currentSpeed / 100f)).ToString("F1") + "K";
+                        if (!useGun)
+                        {
+                            str = str + "\n" + 
+                                  (hitDamage / 100).ToString("F1") + "K";
+                        }
+                        else
+                        {
+                            switch (Settings.SpeedometerAHSSSetting)
+                            {
+                                case 0:
+                                    str = str + "\n" +
+                                          (singleShotDamage / 100).ToString("F1") + "K";
+                                    break;
+                                case 1:
+                                    str = str + "\n" +
+                                          (doubleShotDamage / 100f).ToString("F1") + "K";
+                                    break;
+                                case 2:
+                                    str = str + "\n" +
+                                          (singleShotDamage / 100).ToString("F1") + "K\n" +
+                                          (doubleShotDamage / 100f).ToString("F1") + "K";
+                                    break;
+                            }
+                        }
                         break;
                 }
 
