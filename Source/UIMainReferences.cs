@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Threading;
 using UnityEngine;
 
 public class UIMainReferences : MonoBehaviour
@@ -62,6 +61,8 @@ public class UIMainReferences : MonoBehaviour
     private void Start()
     {
         gameObject.AddComponent<GGM.GUI.Styles>();
+        gameObject.AddComponent<GGM.HotKeys>();
+
         NGUITools.SetActive(panelMain, true);
         GGM.Labels.Version = Version;
         if (isGAMEFirstLaunch)
