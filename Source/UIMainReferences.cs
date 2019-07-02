@@ -61,7 +61,6 @@ public class UIMainReferences : MonoBehaviour
     private void Start()
     {
         gameObject.AddComponent<GGM.GUI.Styles>();
-        gameObject.AddComponent<GGM.HotKeys>();
 
         NGUITools.SetActive(panelMain, true);
         GGM.Labels.Version = Version;
