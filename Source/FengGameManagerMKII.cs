@@ -49,7 +49,7 @@ public class FengGameManagerMKII : MonoBehaviour
     private int humanScore;
     public static List<int> ignoreList;
     public static Hashtable imatitan;
-    public FengCustomInputs inputManager;
+    public static FengCustomInputs inputManager;
     public static InputManagerRC inputRC;
     public static FengGameManagerMKII FGM;
     public static FPSCounter FPS = new FPSCounter();
@@ -259,8 +259,8 @@ public class FengGameManagerMKII : MonoBehaviour
         content = InRoomChat.ChatFormatting(
             $"[{Convert.ToString(info.sender.ID)}]",
             Settings.ChatMinorColorSetting,
-            Settings.ChatMinorBoldSetting,
-            Settings.ChatMinorItalicSetting) +
+            Settings.ChatMinorFormatSetting[0],
+            Settings.ChatMinorFormatSetting[1]) +
             content;
         InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
     }
@@ -271,13 +271,13 @@ public class FengGameManagerMKII : MonoBehaviour
         content = InRoomChat.ChatFormatting(
             "Message from ",
             Settings.ChatMajorColorSetting,
-            Settings.ChatMajorBoldSetting,
-            Settings.ChatMajorItalicSetting) +
+            Settings.ChatMajorFormatSetting[0],
+            Settings.ChatMajorFormatSetting[1]) +
             InRoomChat.ChatFormatting(
                 $"[{Convert.ToString(info.sender.ID)}]",
                 Settings.ChatMinorColorSetting,
-                Settings.ChatMinorBoldSetting,
-                Settings.ChatMinorItalicSetting) +
+                Settings.ChatMinorFormatSetting[0],
+                Settings.ChatMinorFormatSetting[1]) +
                 info.sender.Name.hexColor() +
                 content;
         InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
@@ -9935,13 +9935,13 @@ public class FengGameManagerMKII : MonoBehaviour
                     object[] parameters = { InRoomChat.ChatFormatting(
                         "MasterClient ",
                         Settings.ChatMinorColorSetting,
-                        Settings.ChatMinorBoldSetting,
-                        Settings.ChatMinorItalicSetting) +
+                        Settings.ChatMinorFormatSetting[0],
+                        Settings.ChatMinorFormatSetting[1]) +
                             InRoomChat.ChatFormatting(
                                 "has paused the game.",
                                 Settings.ChatMajorColorSetting,
-                                Settings.ChatMajorBoldSetting,
-                                Settings.ChatMajorItalicSetting), ""};
+                                Settings.ChatMajorFormatSetting[0],
+                                Settings.ChatMajorFormatSetting[1]), ""};
                     photonView.RPC("Chat", player, parameters);
                 }
             }
@@ -11315,18 +11315,18 @@ public class FengGameManagerMKII : MonoBehaviour
                 var msg = InRoomChat.ChatFormatting(
                     "MasterClient ",
                     Settings.ChatMinorColorSetting,
-                    Settings.ChatMinorBoldSetting,
-                    Settings.ChatMinorItalicSetting) +
+                    Settings.ChatMinorFormatSetting[0],
+                    Settings.ChatMinorFormatSetting[1]) +
                     InRoomChat.ChatFormatting(
                         "has switched to ",
                         Settings.ChatMajorColorSetting,
-                        Settings.ChatMajorBoldSetting,
-                        Settings.ChatMajorItalicSetting) +
+                        Settings.ChatMajorFormatSetting[0],
+                        Settings.ChatMajorFormatSetting[1]) +
                         InRoomChat.ChatFormatting(
                             $"[{PhotonNetwork.player.ID}] ",
                     Settings.ChatMinorColorSetting,
-                    Settings.ChatMinorBoldSetting,
-                    Settings.ChatMinorItalicSetting) +
+                    Settings.ChatMinorFormatSetting[0],
+                    Settings.ChatMinorFormatSetting[1]) +
                     PhotonNetwork.player.Name.hexColor();
                 InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
             }
@@ -13637,6 +13637,7 @@ public class FengGameManagerMKII : MonoBehaviour
         }
         StartCoroutine(LoadBackground());
         ChangeQuality.setCurrentQuality();
+        gameObject.AddComponent<GGM.HotKeys>();
     }
 
     [RPC]
@@ -13778,32 +13779,32 @@ public class FengGameManagerMKII : MonoBehaviour
             var msg = InRoomChat.ChatFormatting(
                 $"[{roundTime.ToString("F2")}] ",
                 Settings.ChatMinorColorSetting,
-                Settings.ChatMinorBoldSetting,
-                Settings.ChatMinorItalicSetting) +
+                Settings.ChatMinorFormatSetting[0],
+                Settings.ChatMinorFormatSetting[1]) +
                 killer.hexColor() +
                 InRoomChat.ChatFormatting(
                     " killed ",
                     Settings.ChatMajorColorSetting,
-                    Settings.ChatMajorBoldSetting,
-                    Settings.ChatMajorItalicSetting) +
+                    Settings.ChatMajorFormatSetting[0],
+                    Settings.ChatMajorFormatSetting[1]) +
                 (victim.Contains("[") ? victim.hexColor() : InRoomChat.ChatFormatting(
                     victim,
                     Settings.ChatMinorColorSetting,
-                    Settings.ChatMinorBoldSetting,
-                    Settings.ChatMinorItalicSetting)) +
+                    Settings.ChatMinorFormatSetting[0],
+                    Settings.ChatMinorFormatSetting[1])) +
                 InRoomChat.ChatFormatting(
                     " for ",
                     Settings.ChatMajorColorSetting,
-                    Settings.ChatMajorBoldSetting,
-                    Settings.ChatMajorItalicSetting) +
+                    Settings.ChatMajorFormatSetting[0],
+                    Settings.ChatMajorFormatSetting[1]) +
                 InRoomChat.ChatFormatting(dmg.ToString(),
                 Settings.ChatMinorColorSetting,
-                Settings.ChatMinorBoldSetting,
-                Settings.ChatMinorItalicSetting) +
+                Settings.ChatMinorFormatSetting[0],
+                Settings.ChatMinorFormatSetting[1]) +
                 InRoomChat.ChatFormatting(" damage.",
                 Settings.ChatMajorColorSetting,
-                Settings.ChatMajorBoldSetting,
-                Settings.ChatMajorItalicSetting);
+                Settings.ChatMajorFormatSetting[0],
+                Settings.ChatMajorFormatSetting[1]);
             InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
         }
     }
