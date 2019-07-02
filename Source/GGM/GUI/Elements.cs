@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using GGM.Config;
+using UnityEngine;
 using static GGM.GUI.GUIHelpers;
 
 namespace GGM.GUI
