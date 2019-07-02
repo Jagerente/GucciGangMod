@@ -64,6 +64,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public static bool triggerAutoLock;
     public static bool usingTitan;
     private Vector3 verticalHeightOffset = Vector3.zero;
+    private float rotationY;
 
     private void Awake()
     {
@@ -96,53 +97,78 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         transform.position += Vector3.up * heightMulti;
         var transform2 = this.transform;
         transform2.position -= Vector3.up * (0.6f - cameraDistance) * 2f;
-        if (cameraMode == CAMERA_TYPE.WOW)
+        switch (cameraMode)
         {
-            if (Input.GetKey(KeyCode.Mouse1))
+            case CAMERA_TYPE.WOW:
             {
-                var angle = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
-                var num2 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
-                this.transform.RotateAround(this.transform.position, Vector3.up, angle);
-                this.transform.RotateAround(this.transform.position, this.transform.right, num2);
+                if (Input.GetKey(KeyCode.Mouse1))
+                {
+                    var angle = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
+                    var num2 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
+                    this.transform.RotateAround(this.transform.position, Vector3.up, angle);
+                    this.transform.RotateAround(this.transform.position, this.transform.right, num2);
+                }
+                var transform3 = this.transform;
+                transform3.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
+                break;
             }
-            var transform3 = this.transform;
-            transform3.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
-        }
-        else if (cameraMode == CAMERA_TYPE.ORIGINAL)
-        {
-            var num3 = 0f;
-            if (Input.mousePosition.x < Screen.width * 0.4f)
+
+            case CAMERA_TYPE.ORIGINAL:
             {
-                num3 = -((Screen.width * 0.4f - Input.mousePosition.x) / Screen.width * 0.4f) * getSensitivityMultiWithDeltaTime() * 150f;
-                this.transform.RotateAround(this.transform.position, Vector3.up, num3);
+                var num3 = 0f;
+                if (Input.mousePosition.x < Screen.width * 0.4f)
+                {
+                    num3 = -((Screen.width * 0.4f - Input.mousePosition.x) / Screen.width * 0.4f) * getSensitivityMultiWithDeltaTime() * 150f;
+                    this.transform.RotateAround(this.transform.position, Vector3.up, num3);
+                }
+                else if (Input.mousePosition.x > Screen.width * 0.6f)
+                {
+                    num3 = (Input.mousePosition.x - Screen.width * 0.6f) / Screen.width * 0.4f * getSensitivityMultiWithDeltaTime() * 150f;
+                    this.transform.RotateAround(this.transform.position, Vector3.up, num3);
+                }
+                var x = 140f * (Screen.height * 0.6f - Input.mousePosition.y) / Screen.height * 0.5f;
+                this.transform.rotation = Quaternion.Euler(x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
+                var transform4 = this.transform;
+                transform4.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
+                break;
             }
-            else if (Input.mousePosition.x > Screen.width * 0.6f)
+
+            case CAMERA_TYPE.TPS:
             {
-                num3 = (Input.mousePosition.x - Screen.width * 0.6f) / Screen.width * 0.4f * getSensitivityMultiWithDeltaTime() * 150f;
-                this.transform.RotateAround(this.transform.position, Vector3.up, num3);
+                if (!inputManager.menuOn)
+                {
+                    Screen.lockCursor = true;
+                }
+                var num5 = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
+                var num6 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
+                this.transform.RotateAround(this.transform.position, Vector3.up, num5);
+                var num7 = this.transform.rotation.eulerAngles.x % 360f;
+                var num8 = num7 + num6;
+                if ((num6 <= 0f || (num7 >= 260f || num8 <= 260f) && (num7 >= 80f || num8 <= 80f)) && (num6 >= 0f || (num7 <= 280f || num8 >= 280f) && (num7 <= 100f || num8 >= 100f)))
+                {
+                    this.transform.RotateAround(this.transform.position, this.transform.right, num6);
+                }
+                var transform5 = this.transform;
+                transform5.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
+                break;
             }
-            var x = 140f * (Screen.height * 0.6f - Input.mousePosition.y) / Screen.height * 0.5f;
-            this.transform.rotation = Quaternion.Euler(x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
-            var transform4 = this.transform;
-            transform4.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
-        }
-        else if (cameraMode == CAMERA_TYPE.TPS)
-        {
-            if (!inputManager.menuOn)
+
+            case CAMERA_TYPE.OLDTPS:
             {
-                Screen.lockCursor = true;
+                Quaternion quaternion = Quaternion.Euler(0f, this.transform.eulerAngles.y, 0f);
+                this.transform.position = head.position + Vector3.up * 3f;
+                this.rotationY += ((Input.GetAxis("Mouse Y") * 2.5f) * (sensitivityMulti * 2f)) * invertY;
+                this.rotationY = Mathf.Clamp(this.rotationY, -60f, 60f);
+                this.rotationY = Mathf.Max(this.rotationY, -999f + (this.heightMulti * 2f));
+                this.rotationY = Mathf.Min(this.rotationY, 999f);
+                this.transform.localEulerAngles = new Vector3(-this.rotationY, this.transform.localEulerAngles.y + ((Input.GetAxis("Mouse X") * 2.5f) * (sensitivityMulti * 2f)), this.transform.eulerAngles.z);
+                quaternion = Quaternion.Euler(0f, this.transform.eulerAngles.y, 0f);
+                this.transform.position -= quaternion * Vector3.forward * 10f * distanceMulti * distanceOffsetMulti;
+                this.transform.position += -Vector3.up * rotationY * 0.1f * (float)System.Math.Pow((double)heightMulti, 1.1) * distanceOffsetMulti;
+                if (cameraDistance >= 0.65f) return;
+                this.transform.position += (this.transform.right * Mathf.Max(((0.6f - cameraDistance) * 2f), 0.65f));
+                return;
             }
-            var num5 = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
-            var num6 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
-            this.transform.RotateAround(this.transform.position, Vector3.up, num5);
-            var num7 = this.transform.rotation.eulerAngles.x % 360f;
-            var num8 = num7 + num6;
-            if ((num6 <= 0f || (num7 >= 260f || num8 <= 260f) && (num7 >= 80f || num8 <= 80f)) && (num6 >= 0f || (num7 <= 280f || num8 >= 280f) && (num7 <= 100f || num8 >= 100f)))
-            {
-                this.transform.RotateAround(this.transform.position, this.transform.right, num6);
-            }
-            var transform5 = this.transform;
-            transform5.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
         }
         if (cameraDistance < 0.65f)
         {
@@ -783,6 +809,11 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         Screen.lockCursor = true;
                     }
                     else if (cameraMode == CAMERA_TYPE.TPS)
+                    {
+                        cameraMode = CAMERA_TYPE.OLDTPS;
+                        Screen.lockCursor = true;
+                    }
+                    else if (cameraMode == CAMERA_TYPE.OLDTPS)
                     {
                         cameraMode = CAMERA_TYPE.ORIGINAL;
                         Screen.lockCursor = false;

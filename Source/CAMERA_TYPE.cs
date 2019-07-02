@@ -2,6 +2,7 @@
 {
     ORIGINAL,
     WOW,
-    TPS
+    TPS,
+    OLDTPS
 }
 
