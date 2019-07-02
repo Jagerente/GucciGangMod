@@ -74,15 +74,53 @@ namespace GGM.GUI
             GUILayout.EndHorizontal();
         }
 
-        public static void Slider(string text, ref float value, float left, float right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "", string valueTextFormat = ".###", bool round = false, float multiplier = 1)
+        public static void TextField(string text, ref int value, float width = TextFieldWidth, float labelWidth = LabelWidth)
+        {
+            var v = value.ToString();
+            GUILayout.BeginHorizontal();
+            Label(text, 0, width: labelWidth);
+            v = GUILayout.TextField(v, GUILayout.Width(width));
+            value = v != string.Empty ? Convert.ToInt32(v) : 0;
+            GUILayout.EndHorizontal();
+        }
+
+        public static void TextField(string text, ref float value, float width = TextFieldWidth, float labelWidth = LabelWidth)
+        {
+            var v = value.ToString();
+            GUILayout.BeginHorizontal();
+            Label(text, 0, width: labelWidth);
+            v = GUILayout.TextField(v, GUILayout.Width(width));
+            value = v != string.Empty ? Convert.ToSingle(v) : 0f;
+            GUILayout.EndHorizontal();
+        }
+
+        public static void Slider(string text, ref float value, float left, float right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "", string valueTextFormat = "0.###", bool round = false, float multiplier = 1)
         {
             GUILayout.BeginHorizontal();
             Label(text);
             value = GUILayout.HorizontalSlider(value, left, right, GUILayout.Width(sliderWidth));
             if (!customValueText)
+            {
                 Label(round ? Mathf.Round(value * multiplier).ToString(valueTextFormat) : (value * multiplier).ToString(valueTextFormat), LabelType.SliderStatus, width: valueWidth);
+            }
             else
             {
+                Label(valueText, LabelType.SliderStatus, width: valueWidth);
+            }
+            GUILayout.EndHorizontal();
+        }
+
+        public static void Slider(string text, ref float value, float left, ref float right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "", string valueTextFormat = "0.###", bool round = false, float multiplier = 1)
+        {
+            GUILayout.BeginHorizontal();
+            Label(text);
+            value = GUILayout.HorizontalSlider(value, left, right, GUILayout.Width(sliderWidth));
+            if (!customValueText)
+            {
+                Label(round ? Mathf.Round(value * multiplier).ToString(valueTextFormat) : (value * multiplier).ToString(valueTextFormat), LabelType.SliderStatus, width: valueWidth);
+            }
+            else
+            {   
                 Label(valueText, LabelType.SliderStatus, width: valueWidth);
             }
             GUILayout.EndHorizontal();
@@ -93,6 +131,34 @@ namespace GGM.GUI
             GUILayout.BeginHorizontal();
             Label(text);
             INT = GUILayout.SelectionGrid(INT, str, sameCount ? str.Length : count, GUILayout.Width(width), GUILayout.Height(height));
+            GUILayout.EndHorizontal();
+        }
+
+        public static void Grid(string text, ref bool value, bool horizontal = true, float width = GridWidth, float height = GridHeight)
+        {
+            var i = value ? 1 : 0;
+            GUILayout.BeginHorizontal();
+            Label(text);
+            i = GUILayout.SelectionGrid(i, new []{ "Off", "On" }, horizontal ? 2 : 1, GUILayout.Width(width), GUILayout.Height(height));
+            value = i != 0;
+            GUILayout.EndHorizontal();
+        }
+
+        public static void ButtonToggle(string text, string[] buttonsText, BoolSetting[] bools, float width = GridWidth)
+        {
+            var style = new GUIStyle(UnityEngine.GUI.skin.button);
+
+            GUILayout.BeginHorizontal();
+            Label(text);
+            for (var i = 0; i < bools.Length; i++)
+            {
+                style.normal = bools[i] ? UnityEngine.GUI.skin.button.onNormal : UnityEngine.GUI.skin.button.normal;
+                style.hover = bools[i] ? UnityEngine.GUI.skin.button.onHover : UnityEngine.GUI.skin.button.hover;
+                if (GUILayout.Button(buttonsText[i], style, GUILayout.Width((width - 5 * (bools.Length - 1)) / bools.Length)))
+                {
+                    bools[i].Value = !bools[i];
+                }
+            }
             GUILayout.EndHorizontal();
         }
     }
