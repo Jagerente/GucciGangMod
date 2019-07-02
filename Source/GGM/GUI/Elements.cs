@@ -15,7 +15,7 @@ namespace GGM.GUI
         /// <param name="align">LEFT;CENTER,RIGHT. Label only.</param>
         /// <param name="width">Label type only.</param>
         /// <param name="height">Label & Slider Value types only.</param>
-        public static void Label(string text, LabelType type = LabelType.Label, Alignment align = Alignment.LEFT, float width = LabelWidth, float height = LabelHeight)
+        public static void Label(string text = "", LabelType type = LabelType.Label, Alignment align = Alignment.LEFT, float width = LabelWidth, float height = LabelHeight)
         {
             switch (type)
             {
