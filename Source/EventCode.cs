@@ -2,18 +2,18 @@
 
 public class EventCode
 {
-    public const byte AppStats = 0xe2;
+    public const byte AppStats = 226;
     [Obsolete("TCP routing was removed after becoming obsolete.")]
     public const byte AzureNodeInfo = 210;
     public const byte GameList = 230;
-    public const byte GameListUpdate = 0xe5;
-    public const byte Join = 0xff;
-    public const byte Leave = 0xfe;
-    public const byte Match = 0xe3;
-    public const byte PropertiesChanged = 0xfd;
-    public const byte QueueState = 0xe4;
+    public const byte GameListUpdate = 229;
+    public const byte Join = 255;
+    public const byte Leave = 254;
+    public const byte Match = 227;
+    public const byte PropertiesChanged = 253;
+    public const byte QueueState = 228;
     [Obsolete("Use PropertiesChanged now.")]
-    public const byte SetProperties = 0xfd;
-    public const byte TypedLobbyStats = 0xe0;
+    public const byte SetProperties = 253;
+    public const byte TypedLobbyStats = 224;
 }
 

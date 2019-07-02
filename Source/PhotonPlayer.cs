@@ -78,7 +78,7 @@ public class PhotonPlayer
             return null;
         }
         var mActors = PhotonNetwork.networkingPeer.mActors;
-        var num = 0x7fffffff;
+        var num = 2147483647;
         var num2 = currentPlayerId;
         foreach (var num3 in mActors.Keys)
         {
@@ -91,16 +91,16 @@ public class PhotonPlayer
                 num = num3;
             }
         }
-        return num == 0x7fffffff ? mActors[num2] : mActors[num];
+        return num == 2147483647 ? mActors[num2] : mActors[num];
     }
 
     internal void InternalCacheProperties(Hashtable properties)
     {
         if (properties != null && properties.Count != 0 && !customProperties.Equals(properties))
         {
-            if (properties.ContainsKey((byte) 0xff))
+            if (properties.ContainsKey((byte) 255))
             {
-                nameField = (string) properties[(byte) 0xff];
+                nameField = (string) properties[(byte) 255];
             }
             customProperties.MergeStringKeys(properties);
             customProperties.StripKeysWithNullValues();
@@ -155,7 +155,7 @@ public class PhotonPlayer
         {
             var target = new Hashtable();
             target.Merge(customProperties);
-            target[(byte) 0xff] = name;
+            target[(byte) 255] = name;
             return target;
         }
     }

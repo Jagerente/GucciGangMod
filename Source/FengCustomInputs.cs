@@ -99,7 +99,7 @@ public class FengCustomInputs : MonoBehaviour
             }
             if (mouseButtonsOn)
             {
-                var num2 = 0x143;
+                var num2 = 323;
                 for (var k = 0; k < 6; k++)
                 {
                     if (Input.GetMouseButton(k) && inputBool[i])
@@ -115,7 +115,7 @@ public class FengCustomInputs : MonoBehaviour
                     }
                 }
             }
-            for (var j = 350; j < 0x199; j++)
+            for (var j = 350; j < 409; j++)
             {
                 if (Input.GetKey((KeyCode) j) && inputBool[i])
                 {

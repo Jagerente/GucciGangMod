@@ -187,8 +187,8 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 Minimap.instance.myCam.farClipPlane = 1000f;
                 Minimap.instance.myCam.enabled = false;
             }
-            minimap.CreateMinimap(Minimap.instance.myCam, 0x200, 0.3f, info.minimapPreset);
-            if ((int) FengGameManagerMKII.settings[0xe7] == 0 || RCSettings.globalDisableMinimap == 1)
+            minimap.CreateMinimap(Minimap.instance.myCam, 512, 0.3f, info.minimapPreset);
+            if ((int) FengGameManagerMKII.settings[231] == 0 || RCSettings.globalDisableMinimap == 1)
             {
                 minimap.SetEnabled(false);
             }
@@ -203,12 +203,12 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         }
         if (QualitySettings.GetQualityLevel() > 3)
         {
-            snapshotRT = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 0x18);
+            snapshotRT = new RenderTexture((int) (Screen.width * 0.8f), (int) (Screen.height * 0.8f), 24);
             snapShotCamera.GetComponent<Camera>().targetTexture = snapshotRT;
         }
         else
         {
-            snapshotRT = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 0x18);
+            snapshotRT = new RenderTexture((int) (Screen.width * 0.4f), (int) (Screen.height * 0.4f), 24);
             snapShotCamera.GetComponent<Camera>().targetTexture = snapshotRT;
         }
     }
@@ -619,7 +619,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public void startSnapShot(Vector3 p, int dmg, GameObject target, float startTime)
     {
         int num;
-        if (int.TryParse((string) FengGameManagerMKII.settings[0x5f], out num))
+        if (int.TryParse((string) FengGameManagerMKII.settings[95], out num))
         {
             if (dmg >= num)
             {
@@ -739,6 +739,8 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     Screen.showCursor = true;
                     Screen.lockCursor = false;
                 }
+
+                GGM.GUI.Pages.Page = isPausing ? "Menu" : string.Empty;
             }
             if (needSetHUD)
             {
@@ -785,7 +787,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         cameraMode = CAMERA_TYPE.ORIGINAL;
                         Screen.lockCursor = false;
                     }
-                    if ((int) FengGameManagerMKII.settings[0xf5] == 1 || main_object.GetComponent<HERO>() == null)
+                    if ((int) FengGameManagerMKII.settings[245] == 1 || main_object.GetComponent<HERO>() == null)
                     {
                         Screen.showCursor = false;
                     }
@@ -811,17 +813,17 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 {
                     if (FengGameManagerMKII.inputRC.isInputHumanDown(InputCodeRC.liveCam))
                     {
-                        if ((int) FengGameManagerMKII.settings[0x107] == 0)
+                        if ((int) FengGameManagerMKII.settings[263] == 0)
                         {
-                            FengGameManagerMKII.settings[0x107] = 1;
+                            FengGameManagerMKII.settings[263] = 1;
                         }
                         else
                         {
-                            FengGameManagerMKII.settings[0x107] = 0;
+                            FengGameManagerMKII.settings[263] = 0;
                         }
                     }
                     var component = main_object.GetComponent<HERO>();
-                    if (component != null && (int) FengGameManagerMKII.settings[0x107] == 1 && component.GetComponent<SmoothSyncMovement>().enabled && component.isPhotonCamera)
+                    if (component != null && (int) FengGameManagerMKII.settings[263] == 1 && component.GetComponent<SmoothSyncMovement>().enabled && component.isPhotonCamera)
                     {
                         CameraMovementLive(component);
                     }

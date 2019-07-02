@@ -16,7 +16,7 @@ public static class PhotonNetwork
     private static bool m_autoCleanUpPlayerObjects = true;
     private static bool m_isMessageQueueRunning = true;
     internal static List<int> manuallyAllocatedViewIds = new List<int>();
-    public static readonly int MAX_VIEW_IDS = 0x3e8;
+    public static readonly int MAX_VIEW_IDS = 1000;
     internal static NetworkingPeer networkingPeer;
     private static Room offlineModeRoom;
     public static EventCallback OnEventCall;
@@ -121,7 +121,7 @@ public static class PhotonNetwork
         var options = new RaiseEventOptions();
         options.TargetActors = new[] { kickPlayer.ID };
         var raiseEventOptions = options;
-        return networkingPeer.OpRaiseEvent(0xcb, null, true, raiseEventOptions);
+        return networkingPeer.OpRaiseEvent(203, null, true, raiseEventOptions);
     }
 
     public static bool ConnectToBestCloudServer(string gameVersion)
@@ -540,7 +540,7 @@ public static class PhotonNetwork
         target.MergeStringKeys(expectedCustomRoomProperties);
         if (expectedMaxPlayers > 0)
         {
-            target[(byte) 0xff] = expectedMaxPlayers;
+            target[(byte) 255] = expectedMaxPlayers;
         }
         return networkingPeer.OpJoinRandomRoom(target, 0, null, matchingType, typedLobby, sqlLobbyFilter);
     }
@@ -656,7 +656,7 @@ public static class PhotonNetwork
 
     public static bool RaiseEvent(byte eventCode, object eventContent, bool sendReliable, RaiseEventOptions options)
     {
-        if (inRoom && eventCode < 0xff)
+        if (inRoom && eventCode < 255)
         {
             return networkingPeer.OpRaiseEvent(eventCode, eventContent, sendReliable, options);
         }
@@ -1328,11 +1328,11 @@ public static class PhotonNetwork
     {
         get
         {
-            return 0x3e8 / sendInterval;
+            return 1000 / sendInterval;
         }
         set
         {
-            sendInterval = 0x3e8 / value;
+            sendInterval = 1000 / value;
             if (photonMono != null)
             {
                 photonMono.updateInterval = sendInterval;
@@ -1348,7 +1348,7 @@ public static class PhotonNetwork
     {
         get
         {
-            return 0x3e8 / sendIntervalOnSerialize;
+            return 1000 / sendIntervalOnSerialize;
         }
         set
         {
@@ -1357,7 +1357,7 @@ public static class PhotonNetwork
                 Debug.LogError("Error, can not set the OnSerialize SendRate more often then the overall SendRate");
                 value = sendRate;
             }
-            sendIntervalOnSerialize = 0x3e8 / value;
+            sendIntervalOnSerialize = 1000 / value;
             if (photonMono != null)
             {
                 photonMono.updateIntervalOnSerialize = sendIntervalOnSerialize;

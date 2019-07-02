@@ -333,9 +333,9 @@ public class HERO : MonoBehaviour
         if (RCSettings.bombMode == 1)
         {
             var num = (int) FengGameManagerMKII.settings[250];
-            var num2 = (int) FengGameManagerMKII.settings[0xfb];
-            var num3 = (int) FengGameManagerMKII.settings[0xfc];
-            var num4 = (int) FengGameManagerMKII.settings[0xfd];
+            var num2 = (int) FengGameManagerMKII.settings[251];
+            var num3 = (int) FengGameManagerMKII.settings[252];
+            var num4 = (int) FengGameManagerMKII.settings[253];
             if ((num < 0) || (num > 10))
             {
                 num = 5;
@@ -345,19 +345,19 @@ public class HERO : MonoBehaviour
             if ((num2 < 0) || (num2 > 10))
             {
                 num2 = 5;
-                FengGameManagerMKII.settings[0xfb] = 5;
+                FengGameManagerMKII.settings[251] = 5;
             }
 
             if ((num3 < 0) || (num3 > 10))
             {
                 num3 = 5;
-                FengGameManagerMKII.settings[0xfc] = 5;
+                FengGameManagerMKII.settings[252] = 5;
             }
 
             if ((num4 < 0) || (num4 > 10))
             {
                 num4 = 5;
-                FengGameManagerMKII.settings[0xfd] = 5;
+                FengGameManagerMKII.settings[253] = 5;
             }
 
             if ((((num + num2) + num3) + num4) > 20)
@@ -367,9 +367,9 @@ public class HERO : MonoBehaviour
                 num3 = 5;
                 num4 = 5;
                 FengGameManagerMKII.settings[250] = 5;
-                FengGameManagerMKII.settings[0xfb] = 5;
-                FengGameManagerMKII.settings[0xfc] = 5;
-                FengGameManagerMKII.settings[0xfd] = 5;
+                FengGameManagerMKII.settings[251] = 5;
+                FengGameManagerMKII.settings[252] = 5;
+                FengGameManagerMKII.settings[253] = 5;
             }
 
             bombTimeMax = ((num2 * 60f) + 200f) / ((num3 * 60f) + 200f);
@@ -377,10 +377,10 @@ public class HERO : MonoBehaviour
             bombCD = (num4 * -0.4f) + 5f;
             bombSpeed = (num3 * 60f) + 200f;
             var propertiesToSet = new Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombR, (float) FengGameManagerMKII.settings[0xf6]);
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombG, (float) FengGameManagerMKII.settings[0xf7]);
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombB, (float) FengGameManagerMKII.settings[0xf8]);
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombA, (float) FengGameManagerMKII.settings[0xf9]);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombR, (float) FengGameManagerMKII.settings[246]);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombG, (float) FengGameManagerMKII.settings[247]);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombB, (float) FengGameManagerMKII.settings[248]);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombA, (float) FengGameManagerMKII.settings[249]);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, bombRadius);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             skillId = "bomb";
@@ -791,7 +791,7 @@ public class HERO : MonoBehaviour
         {
             var hit2 = list[count];
             var gameObject = hit2.collider.gameObject;
-            if (gameObject.layer == 0x10)
+            if (gameObject.layer == 16)
             {
                 if (gameObject.name.Contains("PlayerDetectorRC") && ((hit2 = list[count]).distance < num2))
                 {
@@ -1874,12 +1874,12 @@ public class HERO : MonoBehaviour
                         var vector13 = (bulletRight.transform.position + bulletLeft.transform.position) * 0.5f -
                                            baseTransform.position;
                         var num15 = 0f;
-                        if ((((int) FengGameManagerMKII.settings[0x61]) == 1) &&
+                        if ((((int) FengGameManagerMKII.settings[97]) == 1) &&
                             FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
                             num15 = -1f;
                         }
-                        else if ((((int) FengGameManagerMKII.settings[0x74]) == 1) &&
+                        else if ((((int) FengGameManagerMKII.settings[116]) == 1) &&
                                  FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelout))
                         {
                             num15 = 1f;
@@ -1902,12 +1902,12 @@ public class HERO : MonoBehaviour
                         baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
                         var vector15 = bulletLeft.transform.position - baseTransform.position;
                         var num18 = 0f;
-                        if ((((int) FengGameManagerMKII.settings[0x61]) == 1) &&
+                        if ((((int) FengGameManagerMKII.settings[97]) == 1) &&
                             FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
                             num18 = -1f;
                         }
-                        else if ((((int) FengGameManagerMKII.settings[0x74]) == 1) &&
+                        else if ((((int) FengGameManagerMKII.settings[116]) == 1) &&
                                  FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelout))
                         {
                             num18 = 1f;
@@ -1930,12 +1930,12 @@ public class HERO : MonoBehaviour
                         baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
                         var vector17 = bulletRight.transform.position - baseTransform.position;
                         var num21 = 0f;
-                        if ((((int) FengGameManagerMKII.settings[0x61]) == 1) &&
+                        if ((((int) FengGameManagerMKII.settings[97]) == 1) &&
                             FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
                             num21 = -1f;
                         }
-                        else if ((((int) FengGameManagerMKII.settings[0x74]) == 1) &&
+                        else if ((((int) FengGameManagerMKII.settings[116]) == 1) &&
                                  FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelout))
                         {
                             num21 = 1f;
@@ -2691,7 +2691,7 @@ public class HERO : MonoBehaviour
     {
         if ((IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE) || photonView.isMine)
         {
-            if (((int) FengGameManagerMKII.settings[0x5d]) == 1)
+            if (((int) FengGameManagerMKII.settings[93]) == 1)
             {
                 foreach (var renderer in GetComponentsInChildren<Renderer>())
                 {
@@ -2716,38 +2716,38 @@ public class HERO : MonoBehaviour
                 var num11 = 12;
                 var num12 = 13;
                 var num13 = 3;
-                var num14 = 0x5e;
-                if (((int) FengGameManagerMKII.settings[0x85]) == 1)
+                var num14 = 94;
+                if (((int) FengGameManagerMKII.settings[133]) == 1)
                 {
-                    num13 = 0x86;
-                    num3 = 0x87;
-                    num4 = 0x88;
-                    num5 = 0x89;
-                    num6 = 0x8a;
-                    num7 = 0x8b;
+                    num13 = 134;
+                    num3 = 135;
+                    num4 = 136;
+                    num5 = 137;
+                    num6 = 138;
+                    num7 = 139;
                     num8 = 140;
-                    num9 = 0x8d;
-                    num10 = 0x8e;
-                    num11 = 0x8f;
-                    num12 = 0x90;
-                    index = 0x91;
-                    num14 = 0x92;
+                    num9 = 141;
+                    num10 = 142;
+                    num11 = 143;
+                    num12 = 144;
+                    index = 145;
+                    num14 = 146;
                 }
-                else if (((int) FengGameManagerMKII.settings[0x85]) == 2)
+                else if (((int) FengGameManagerMKII.settings[133]) == 2)
                 {
-                    num13 = 0x93;
-                    num3 = 0x94;
-                    num4 = 0x95;
+                    num13 = 147;
+                    num3 = 148;
+                    num4 = 149;
                     num5 = 150;
-                    num6 = 0x97;
-                    num7 = 0x98;
-                    num8 = 0x99;
-                    num9 = 0x9a;
-                    num10 = 0x9b;
-                    num11 = 0x9c;
-                    num12 = 0x9d;
-                    index = 0x9e;
-                    num14 = 0x9f;
+                    num6 = 151;
+                    num7 = 152;
+                    num8 = 153;
+                    num9 = 154;
+                    num10 = 155;
+                    num11 = 156;
+                    num12 = 157;
+                    index = 158;
+                    num14 = 159;
                 }
 
                 var str = (string) FengGameManagerMKII.settings[index];
@@ -2790,7 +2790,7 @@ public class HERO : MonoBehaviour
             yield return null;
         }
 
-        var mipmap = (int)FengGameManagerMKII.settings[0x3f] == 1 ? false : true;
+        var mipmap = (int)FengGameManagerMKII.settings[63] == 1 ? false : true;
 
         var unloadAssets = false;
 
@@ -4651,7 +4651,7 @@ public class HERO : MonoBehaviour
                 var hitDamage = currentSpeed;
                 var singleShotDamage = currentSpeed * 0.4f;
                 var doubleShotDamage = currentSpeed * 0.6f;
-                switch ((int) FengGameManagerMKII.settings[0xbd])
+                switch ((int) FengGameManagerMKII.settings[189])
                 {
                     case 1:
                         str = str + "\n" + 
@@ -4669,17 +4669,18 @@ public class HERO : MonoBehaviour
                             {
                                 case 0:
                                     str = str + "\n" +
-                                          (singleShotDamage / 100).ToString("F1") + "K";
-                                    break;
-                                case 1:
-                                    str = str + "\n" +
-                                          (doubleShotDamage / 100f).ToString("F1") + "K";
-                                    break;
-                                case 2:
-                                    str = str + "\n" +
                                           (singleShotDamage / 100).ToString("F1") + "K\n" +
                                           (doubleShotDamage / 100f).ToString("F1") + "K";
                                     break;
+                                case 1:
+                                    str = str + "\n" +
+                                          (singleShotDamage / 100).ToString("F1") + "K";
+                                    break;
+                                case 2:
+                                    str = str + "\n" +
+                                          (doubleShotDamage / 100f).ToString("F1") + "K";
+                                    break;
+                                
                             }
                         }
                         break;
@@ -4960,8 +4961,8 @@ public class HERO : MonoBehaviour
                 myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1],
                     new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]),
                         Convert.ToSingle(strArray[14])),
-                    new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[0x10]),
-                        Convert.ToSingle(strArray[0x11]), Convert.ToSingle(strArray[0x12])), 0);
+                    new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[16]),
+                        Convert.ToSingle(strArray[17]), Convert.ToSingle(strArray[18])), 0);
             }
             else
             {
@@ -5344,7 +5345,7 @@ public class HERO : MonoBehaviour
                         updateExt();
                         if (!grounded && (state != HERO_STATE.AirDodge))
                         {
-                            if (((int) FengGameManagerMKII.settings[0xb5]) == 1)
+                            if (((int) FengGameManagerMKII.settings[181]) == 1)
                             {
                                 checkDashRebind();
                             }
@@ -5909,7 +5910,7 @@ public class HERO : MonoBehaviour
                                         if (!checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
                                         {
                                             checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
-                                            if (((int) FengGameManagerMKII.settings[0x5c]) == 0)
+                                            if (((int) FengGameManagerMKII.settings[92]) == 0)
                                             {
                                                 leftbladetrail2.Activate();
                                                 rightbladetrail2.Activate();
@@ -5983,7 +5984,7 @@ public class HERO : MonoBehaviour
                                         {
                                             checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me = true;
                                             slash.Play();
-                                            if (((int) FengGameManagerMKII.settings[0x5c]) == 0)
+                                            if (((int) FengGameManagerMKII.settings[92]) == 0)
                                             {
                                                 leftbladetrail2.Activate();
                                                 rightbladetrail2.Activate();
