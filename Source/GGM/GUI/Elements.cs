@@ -56,6 +56,14 @@ namespace GGM.GUI
             return GUILayout.Button(text, ButtonStyle, GUILayout.Width(width), GUILayout.Height(height));
         }
 
+        public static void TextArea(string text, ref string value, float width = TextFieldWidth, float labelWidth = LabelWidth)
+        {
+            GUILayout.BeginHorizontal();
+            Label(text, 0, width: labelWidth);
+            value = GUILayout.TextArea(value, GUILayout.Width(width));
+            GUILayout.EndHorizontal();
+        }
+
         public static void TextField(string text, ref string value, float width = TextFieldWidth, float labelWidth = LabelWidth)
         {
             GUILayout.BeginHorizontal();
