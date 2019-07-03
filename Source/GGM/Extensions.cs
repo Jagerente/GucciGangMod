@@ -25,7 +25,7 @@ namespace GGM
         /// <returns></returns>
         public static Color ToColor(this string hex, byte a = 255)
         {
-            if (hex.Length != 6) return Caching.Colors.white;
+            if (hex.Length != 6) return Caching.ColorCache.white;
             var r = byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
             var g = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
             var b = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
