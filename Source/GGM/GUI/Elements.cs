@@ -126,6 +126,18 @@ namespace GGM.GUI
             GUILayout.EndHorizontal();
         }
 
+        public static void Slider(string text, ref int value, int left, int right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "")
+        {
+            var l = Convert.ToSingle(left);
+            var r = Convert.ToSingle(right);
+            var v = Convert.ToSingle(value);
+            GUILayout.BeginHorizontal();
+            Label(text);
+            value = Convert.ToInt32(GUILayout.HorizontalSlider(v, l, r, GUILayout.Width(sliderWidth)));
+            Label(!customValueText ? Mathf.Round(value).ToString() : valueText, LabelType.SliderStatus, width: valueWidth);
+            GUILayout.EndHorizontal();
+        }
+
         public static void Grid(string text, ref int INT, string[] str, bool sameCount = true, int count = 0, float width = GridWidth, float height = GridHeight)
         {
             GUILayout.BeginHorizontal();
