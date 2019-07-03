@@ -1180,10 +1180,10 @@ namespace GGM.GUI
             //    Styles.ColorWheel.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
             //}
 
-            if (GUILayout.Button(string.Empty, Styles.ButtonColor, GUILayout.Width(25f), GUILayout.Height(25f)))
-            {
+            //if (GUILayout.Button(string.Empty, Styles.ButtonColor, GUILayout.Width(25f), GUILayout.Height(25f)))
+            //{
 
-            }
+            //}
             //foreach (var color in Colors.colors)
             //{
             //    Texture2D txt = new Texture2D(100, 100, TextureFormat.ARGB32, false);

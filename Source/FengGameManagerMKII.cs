@@ -13638,7 +13638,6 @@ public class FengGameManagerMKII : MonoBehaviour
         StartCoroutine(LoadBackground());
         ChangeQuality.setCurrentQuality();
         gameObject.AddComponent<GGM.HotKeys>();
-        Colors.Init();
     }
 
     [RPC]

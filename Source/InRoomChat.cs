@@ -61,8 +61,8 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 str,
                 major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting,
-                major ? Settings.ChatMajorFormatSetting[0] : Settings.ChatMinorFormatSetting[0],
-                major ? Settings.ChatMajorFormatSetting[1] : Settings.ChatMinorFormatSetting[1],
+                major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0],
+                major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1],
                 Settings.ChatSizeSetting.ToString()));
     }
 
@@ -76,8 +76,8 @@ public class InRoomChat : MonoBehaviour
                 msg.Append(ChatFormatting(
                 str[i],
                 parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting,
-                parity ? Settings.ChatMajorFormatSetting[0] : Settings.ChatMinorFormatSetting[0],
-                parity ? Settings.ChatMajorFormatSetting[1] : Settings.ChatMinorFormatSetting[1],
+                parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0],
+                parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1],
                 Settings.ChatSizeSetting.ToString()));
             }
             else
@@ -85,8 +85,8 @@ public class InRoomChat : MonoBehaviour
                 msg.Append(ChatFormatting(
                 str[i],
                 parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting,
-                parity ? Settings.ChatMinorFormatSetting[0] : Settings.ChatMajorFormatSetting[0],
-                parity ? Settings.ChatMinorFormatSetting[1]: Settings.ChatMajorFormatSetting[1],
+                parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0],
+                parity ? Settings.ChatMinorFormatSettings[1]: Settings.ChatMajorFormatSettings[1],
                 Settings.ChatSizeSetting.ToString()));
             }
         }
@@ -100,20 +100,20 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 str, 
                 Settings.ChatMajorColorSetting, 
-                Settings.ChatMajorFormatSetting[0], 
-                Settings.ChatMajorFormatSetting[1], 
+                Settings.ChatMajorFormatSettings[0], 
+                Settings.ChatMajorFormatSettings[1], 
                 Settings.ChatSizeSetting.ToString()) +
             ChatFormatting(
                 $" [{player.ID}] {player.Name.hexColor()}", 
                 Settings.ChatMinorColorSetting, 
-                Settings.ChatMinorFormatSetting[0], 
-                Settings.ChatMinorFormatSetting[1], 
+                Settings.ChatMinorFormatSettings[0], 
+                Settings.ChatMinorFormatSettings[1], 
                 Settings.ChatSizeSetting.ToString()) +
             ChatFormatting(
                 ".", 
                 Settings.ChatMajorColorSetting, 
-                Settings.ChatMajorFormatSetting[0], 
-                Settings.ChatMajorFormatSetting[1], 
+                Settings.ChatMajorFormatSettings[0], 
+                Settings.ChatMajorFormatSettings[1], 
                 Settings.ChatSizeSetting.ToString()));
     }
 
@@ -123,14 +123,14 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 $"[{player.ID}] {player.Name.hexColor()} ", 
                 Settings.ChatMinorColorSetting, 
-                Settings.ChatMinorFormatSetting[0], 
-                Settings.ChatMinorFormatSetting[1], 
+                Settings.ChatMinorFormatSettings[0], 
+                Settings.ChatMinorFormatSettings[1], 
                 Settings.ChatSizeSetting.ToString()) +
             ChatFormatting(
                 str, 
                 Settings.ChatMajorColorSetting, 
-                Settings.ChatMajorFormatSetting[0], 
-                Settings.ChatMajorFormatSetting[1], 
+                Settings.ChatMajorFormatSettings[0], 
+                Settings.ChatMajorFormatSettings[1], 
                 Settings.ChatSizeSetting.ToString()));
 
     }
@@ -141,19 +141,19 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 str, 
                 Settings.ChatMajorColorSetting, 
-                Settings.ChatMajorFormatSetting[0], 
-                Settings.ChatMajorFormatSetting[1], 
+                Settings.ChatMajorFormatSettings[0], 
+                Settings.ChatMajorFormatSettings[1], 
                 Settings.ChatSizeSetting.ToString()) +
             ChatFormatting(
                 $" [{player.ID}] {player.Name.hexColor()} ", 
-                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSetting[0], 
-                Settings.ChatMinorFormatSetting[1], 
+                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], 
+                Settings.ChatMinorFormatSettings[1], 
                 Settings.ChatSizeSetting.ToString()) +
             ChatFormatting(
                 str2, 
                 Settings.ChatMajorColorSetting, 
-                Settings.ChatMajorFormatSetting[0], 
-                Settings.ChatMajorFormatSetting[1], 
+                Settings.ChatMajorFormatSettings[0], 
+                Settings.ChatMajorFormatSettings[1], 
                 Settings.ChatSizeSetting.ToString()));
     }
 
@@ -165,8 +165,8 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 str,
                 major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting,
-                major ? Settings.ChatMajorFormatSetting[0] : Settings.ChatMinorFormatSetting[0],
-                major ? Settings.ChatMajorFormatSetting[1] : Settings.ChatMinorFormatSetting[1]),
+                major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0],
+                major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]),
             string.Empty);
     }
 
@@ -180,16 +180,16 @@ public class InRoomChat : MonoBehaviour
                 msg.Append(ChatFormatting(
                 str[i],
                 parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting,
-                parity ? Settings.ChatMajorFormatSetting[0] : Settings.ChatMinorFormatSetting[0],
-                parity ? Settings.ChatMajorFormatSetting[1] : Settings.ChatMinorFormatSetting[1]));
+                parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0],
+                parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]));
             }
             else
             {
                 msg.Append(ChatFormatting(
                 str[i],
                 parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting,
-                parity ? Settings.ChatMinorFormatSetting[0] : Settings.ChatMajorFormatSetting[0],
-                parity ? Settings.ChatMinorFormatSetting[1] : Settings.ChatMajorFormatSetting[1]));
+                parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0],
+                parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1]));
             }
         }
 
@@ -205,19 +205,19 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 str, 
                 Settings.ChatMajorColorSetting, 
-                Settings.ChatMajorFormatSetting[0], 
-                Settings.ChatMajorFormatSetting[1]
+                Settings.ChatMajorFormatSettings[0], 
+                Settings.ChatMajorFormatSettings[1]
                 ) +
                 ChatFormatting(
                     $" [{player.ID}] {player.Name.hexColor()}", 
                     Settings.ChatMinorColorSetting, 
-                    Settings.ChatMinorFormatSetting[0], 
-                    Settings.ChatMinorFormatSetting[1]) +
+                    Settings.ChatMinorFormatSettings[0], 
+                    Settings.ChatMinorFormatSettings[1]) +
                 ChatFormatting(
                     ".",
                     Settings.ChatMajorColorSetting,
-                    Settings.ChatMajorFormatSetting[0], 
-                    Settings.ChatMajorFormatSetting[1]), 
+                    Settings.ChatMajorFormatSettings[0], 
+                    Settings.ChatMajorFormatSettings[1]), 
             string.Empty);
     }
 
@@ -229,13 +229,13 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 $"[{player.ID}] {player.Name.hexColor()} ",
                 Settings.ChatMinorColorSetting,
-                Settings.ChatMinorFormatSetting[0],
-                Settings.ChatMinorFormatSetting[1]) +
+                Settings.ChatMinorFormatSettings[0],
+                Settings.ChatMinorFormatSettings[1]) +
             ChatFormatting(
                 str,
                 Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSetting[0],
-                Settings.ChatMajorFormatSetting[1]), 
+                Settings.ChatMajorFormatSettings[0],
+                Settings.ChatMajorFormatSettings[1]), 
             string.Empty);
     }
 
@@ -247,17 +247,17 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 str,
                 Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSetting[0],
-                Settings.ChatMajorFormatSetting[1]) +
+                Settings.ChatMajorFormatSettings[0],
+                Settings.ChatMajorFormatSettings[1]) +
             ChatFormatting(
                 $" [{player.ID}] {player.Name.hexColor()} ",
-                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSetting[0],
-                Settings.ChatMinorFormatSetting[1]) +
+                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0],
+                Settings.ChatMinorFormatSettings[1]) +
             ChatFormatting(
                 str2,
                 Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSetting[0],
-                Settings.ChatMajorFormatSetting[1]), 
+                Settings.ChatMajorFormatSettings[0],
+                Settings.ChatMajorFormatSettings[1]), 
             string.Empty);
     }
 
@@ -461,19 +461,19 @@ public class InRoomChat : MonoBehaviour
             ChatFormatting(
                 "PM to",
                 Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSetting[0],
-                Settings.ChatMajorFormatSetting[1],
+                Settings.ChatMajorFormatSettings[0],
+                Settings.ChatMajorFormatSettings[1],
                 Settings.ChatSizeSetting.ToString()) +
             ChatFormatting(
                 $" [{player.ID}] {player.Name.hexColor()}",
-                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSetting[0],
-                Settings.ChatMinorFormatSetting[1],
+                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0],
+                Settings.ChatMinorFormatSettings[1],
                 Settings.ChatSizeSetting.ToString()) +
             ChatFormatting(
                 $": {msg}",
                 Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSetting[0],
-                Settings.ChatMajorFormatSetting[1],
+                Settings.ChatMajorFormatSettings[0],
+                Settings.ChatMajorFormatSettings[1],
                 Settings.ChatSizeSetting.ToString()));
                 }
                 break;

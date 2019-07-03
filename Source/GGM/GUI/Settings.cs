@@ -74,8 +74,8 @@ namespace GGM.GUI
         protected const float ButtonWidth = 100f;
         protected const float ButtonHeight = 50f;
 
-        protected static readonly Color ColorMajor = ColorCache.melon;
-        protected static readonly Color ColorMinor = ColorCache.froly;
+        protected static readonly Color ColorMajor = ColorCache.Melon;
+        protected static readonly Color ColorMinor = ColorCache.Froly;
 
         protected static readonly GUIStyle[] LabelStyle =
         {

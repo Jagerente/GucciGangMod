@@ -5,8 +5,8 @@ namespace GGM.GUI
 {
     class Styles : MonoBehaviour
     {
-        private static bool Inited;
-        private static string StylePath = "Gucci/";
+        private static bool isInited;
+        private const string StylePath = "GGM/";
         public static Texture2D Box;
         private static Texture2D Window;
         private static Texture2D ButtonN;
@@ -210,89 +210,76 @@ namespace GGM.GUI
 
         public static void Init()
         {
-            if (Inited) return;
-            UnityEngine.GUI.skin.button.normal.textColor = Color.white;
-            UnityEngine.GUI.skin.button.active.textColor = Color.white;
-            UnityEngine.GUI.skin.button.hover.textColor = Color.white;
-            UnityEngine.GUI.skin.button.onNormal.textColor = Color.white;
-            UnityEngine.GUI.skin.button.onActive.textColor = Color.white;
-            UnityEngine.GUI.skin.button.onHover.textColor = Color.white;
-            UnityEngine.GUI.skin.button.normal.background = ButtonN;
-            UnityEngine.GUI.skin.button.active.background = ButtonA;
-            UnityEngine.GUI.skin.button.hover.background = ButtonH;
-            UnityEngine.GUI.skin.button.onNormal.background = ButtonON;
-            UnityEngine.GUI.skin.button.onActive.background = ButtonOA;
-            UnityEngine.GUI.skin.button.onHover.background = ButtonOH;
-            UnityEngine.GUI.skin.button.fontStyle = FontStyle.Bold;
-
-
+            if (isInited) return;
+            //Button
+            //UnityEngine.GUI.skin.button.normal.textColor = Caching.Colors.white;
+            //UnityEngine.GUI.skin.button.active.textColor = Caching.Colors.white;
+            //UnityEngine.GUI.skin.button.hover.textColor = Caching.Colors.white;
+            //UnityEngine.GUI.skin.button.onNormal.textColor = Caching.Colors.white;
+            //UnityEngine.GUI.skin.button.onActive.textColor = Caching.Colors.white;
+            //UnityEngine.GUI.skin.button.onHover.textColor = Caching.Colors.white;
+            //UnityEngine.GUI.skin.button.normal.background = ButtonN;
+            //UnityEngine.GUI.skin.button.active.background = ButtonA;
+            //UnityEngine.GUI.skin.button.hover.background = ButtonH;
+            //UnityEngine.GUI.skin.button.onNormal.background = ButtonON;
+            //UnityEngine.GUI.skin.button.onActive.background = ButtonOA;
+            //UnityEngine.GUI.skin.button.onHover.background = ButtonOH;
+            //UnityEngine.GUI.skin.button.fontStyle = FontStyle.Bold;
+            //TextField
             UnityEngine.GUI.skin.textField.normal.background = TextN;
             UnityEngine.GUI.skin.textField.hover.background = TextH;
             UnityEngine.GUI.skin.textField.focused.background = TextF;
             UnityEngine.GUI.skin.textField.onNormal.background = TextON;
-
+            UnityEngine.GUI.skin.textField.focused.textColor = Caching.ColorCache.White;
+            //TextArea
             UnityEngine.GUI.skin.textArea.normal.background = TextN;
             UnityEngine.GUI.skin.textArea.hover.background = TextH;
             UnityEngine.GUI.skin.textArea.focused.background = TextF;
             UnityEngine.GUI.skin.textArea.onNormal.background = TextON;
-            UnityEngine.GUI.skin.textArea.focused.textColor = Color.white;
-
+            UnityEngine.GUI.skin.textArea.focused.textColor = Caching.ColorCache.White;
+            //VerticalSlider
             UnityEngine.GUI.skin.verticalSlider.normal.background = Slider;
             UnityEngine.GUI.skin.verticalSliderThumb.normal.background = ThumbN;
             UnityEngine.GUI.skin.verticalSliderThumb.active.background = ThumbA;
             UnityEngine.GUI.skin.verticalSliderThumb.hover.background = ThumbH;
-
+            //HorizontalSlider
             UnityEngine.GUI.skin.horizontalSlider.normal.background = Slider;
-
             UnityEngine.GUI.skin.horizontalSliderThumb.normal.background = ThumbN;
             UnityEngine.GUI.skin.horizontalSliderThumb.active.background = ThumbA;
             UnityEngine.GUI.skin.horizontalSliderThumb.hover.background = ThumbH;
-
-            UnityEngine.GUI.skin.horizontalScrollbar.normal.background = HorizontalScrollBar;
+            //VerticalScrollBar
             UnityEngine.GUI.skin.verticalScrollbar.normal.background = VerticalScrollBar;
-
-            //UnityEngine.GUI.skin.verticalScrollbarThumb.normal.background = ScrollBarThumbN;
-            //UnityEngine.GUI.skin.verticalScrollbarThumb.active.background = ScrollBarThumbA;
-            //UnityEngine.GUI.skin.verticalScrollbarThumb.hover.background = ScrollBarThumbH;
-            //UnityEngine.GUI.skin.horizontalScrollbarThumb.normal.background = ScrollBarThumbN;
-            //UnityEngine.GUI.skin.horizontalScrollbarThumb.active.background = ScrollBarThumbA;
-            //UnityEngine.GUI.skin.horizontalScrollbarThumb.hover.background = ScrollBarThumbH;
-
             UnityEngine.GUI.skin.verticalScrollbarThumb.normal.background = HorizontalScrollBar;
             UnityEngine.GUI.skin.verticalScrollbarThumb.active.background = HorizontalScrollBar;
             UnityEngine.GUI.skin.verticalScrollbarThumb.hover.background = HorizontalScrollBar;
+            //HorizontalScrollBar
+            UnityEngine.GUI.skin.horizontalScrollbar.normal.background = HorizontalScrollBar;
             UnityEngine.GUI.skin.horizontalScrollbarThumb.normal.background = HorizontalScrollBar;
             UnityEngine.GUI.skin.horizontalScrollbarThumb.active.background = HorizontalScrollBar;
             UnityEngine.GUI.skin.horizontalScrollbarThumb.hover.background = HorizontalScrollBar;
-
-            //UnityEngine.GUI.skin.horizontalScrollbarLeftButton.normal.background = Slider;
-            //UnityEngine.GUI.skin.horizontalScrollbarLeftButton.active.background = Slider;
-            //UnityEngine.GUI.skin.horizontalScrollbarLeftButton.hover.background = Slider;
-            //UnityEngine.GUI.skin.horizontalScrollbarRightButton.normal.background = Slider;
-            //UnityEngine.GUI.skin.horizontalScrollbarRightButton.active.background = Slider;
-            //UnityEngine.GUI.skin.horizontalScrollbarRightButton.hover.background = Slider;
-
-            UnityEngine.GUI.skin.toggle.normal.textColor = Color.white;
-            UnityEngine.GUI.skin.toggle.active.textColor = Color.white;
-            UnityEngine.GUI.skin.toggle.hover.textColor = Color.white;
-            UnityEngine.GUI.skin.toggle.onNormal.textColor = Color.white;
-            UnityEngine.GUI.skin.toggle.onActive.textColor = Color.white;
-            UnityEngine.GUI.skin.toggle.onHover.textColor = Color.white;
+            //Toggle
+            UnityEngine.GUI.skin.toggle.normal.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.toggle.active.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.toggle.hover.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.toggle.onNormal.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.toggle.onActive.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.toggle.onHover.textColor = Caching.ColorCache.White;
             UnityEngine.GUI.skin.toggle.normal.background = ToggleN;
             UnityEngine.GUI.skin.toggle.active.background = ToggleA;
             UnityEngine.GUI.skin.toggle.hover.background = ToggleH;
             UnityEngine.GUI.skin.toggle.onNormal.background = ToggleON;
             UnityEngine.GUI.skin.toggle.onActive.background = ToggleOA;
             UnityEngine.GUI.skin.toggle.onHover.background = ToggleOH;
-
-            UnityEngine.GUI.skin.box.normal.textColor = Color.white;
+            //Box
+            UnityEngine.GUI.skin.box.normal.textColor = Caching.ColorCache.White;
             UnityEngine.GUI.skin.box.normal.background = Box;
-
+            //Window
             UnityEngine.GUI.skin.window.normal.background = Window;
             UnityEngine.GUI.skin.window.active.background = Window;
             UnityEngine.GUI.skin.window.onNormal.background = Window;
             UnityEngine.GUI.skin.window.onActive.background = Window;
-            Inited = true;
+
+            isInited = true;
         }
 
     }

@@ -52,7 +52,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="GGM\Caching\Colors.cs" />
+    <Compile Include="GGM\Caching\ColorCache.cs" />
     <Compile Include="GGM\Caching\GameObjectCache.cs" />
     <Compile Include="GGM\Caching\ResourcesCache.cs" />
     <Compile Include="GGM\Extensions.cs" />
