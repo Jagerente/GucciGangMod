@@ -1,26 +1,10 @@
 ﻿using System.Collections.Generic;
-using GGM.Config;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngineInternal;
 
 namespace GGM.Caching
 {
     public class ColorCache
     {
-        public static Dictionary<Color, Texture2D> colors = null;
-
-        public Color Value { get; }
-
-        public Texture2D Texture;
-
-        public ColorCache(Color color)
-        {
-            Value = color;
-            Cache(color);
-            Texture = GetTexture2D(color);
-        }
-
         public static readonly ColorCache Black = new ColorCache(Color.black);
         public static readonly ColorCache Blue = new ColorCache(Color.blue);
         public static readonly ColorCache Clear = new ColorCache(Color.clear);
@@ -38,23 +22,41 @@ namespace GGM.Caching
         public static readonly ColorCache White = new ColorCache(Color.white);
         public static readonly ColorCache Yellow = new ColorCache(Color.yellow);
 
-        private static void Cache(Color color)
+        public static Dictionary<Color, Texture2D> textures = null;
+
+        public readonly Color Value;
+        public readonly Texture2D Texture;
+
+        public ColorCache(Color color)
         {
-            if (colors == null) colors = new Dictionary<Color, Texture2D>();
-            colors.Add(color, new Texture2D(1, 1, TextureFormat.ARGB32, false));
+            Value = color;
+            Texture = GetTexture(color);
         }
 
-        private static Texture2D GetTexture2D(Color color)
+        public static Texture2D GetTexture(Color color)
         {
-            if (colors == null) return null;
-            colors[color].SetPixel(0, 0, color);
-            colors[color].Apply();
-            return colors[color];
+            if (textures == null)
+                textures = new Dictionary<Color, Texture2D>();
+            Texture2D result = null;
+            if (textures.TryGetValue(color, out result))
+            {
+                return result;
+            }
+            result = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            result.SetPixel(0, 0, color);
+            result.Apply();
+            textures.Add(color, result);
+            return result;
         }
 
         public static implicit operator Color(ColorCache color)
         {
             return color.Value;
+        }
+
+        public static implicit operator Texture2D(ColorCache color)
+        {
+            return color.Texture;
         }
     }
 }
