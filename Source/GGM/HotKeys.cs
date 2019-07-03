@@ -44,6 +44,12 @@ namespace GGM
                 }
             }
 
+
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                GGM.GUI.Pages.Page = "test";
+            }
+
             //Captures a screenshoot
             if (Input.GetKeyDown(KeyCode.F5))
             {
