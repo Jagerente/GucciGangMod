@@ -61,7 +61,7 @@ namespace GGM.GUI
         public static void TextArea(string text, ref string value, float width = TextFieldWidth, float labelWidth = LabelWidth)
         {
             GUILayout.BeginHorizontal();
-            Label(text, 0, width: labelWidth);
+            if (text != string.Empty) Label(text, 0, width: labelWidth);
             value = GUILayout.TextArea(value, GUILayout.Width(width));
             GUILayout.EndHorizontal();
         }
@@ -69,7 +69,7 @@ namespace GGM.GUI
         public static void TextField(string text, ref string value, float width = TextFieldWidth, float labelWidth = LabelWidth)
         {
             GUILayout.BeginHorizontal();
-            Label(text, 0, width: labelWidth);
+            if (text != string.Empty) Label(text, 0, width: labelWidth);
             value = GUILayout.TextField(value, GUILayout.Width(width));
             GUILayout.EndHorizontal();
         }
@@ -78,7 +78,7 @@ namespace GGM.GUI
         {
             var v = value.ToString();
             GUILayout.BeginHorizontal();
-            Label(text, 0, width: labelWidth);
+            if (text != string.Empty) Label(text, 0, width: labelWidth);
             v = GUILayout.TextField(v, GUILayout.Width(width));
             value = v != string.Empty ? Convert.ToInt32(v) : 0;
             GUILayout.EndHorizontal();
@@ -88,7 +88,7 @@ namespace GGM.GUI
         {
             var v = value.ToString();
             GUILayout.BeginHorizontal();
-            Label(text, 0, width: labelWidth);
+            if (text != string.Empty) Label(text, 0, width: labelWidth);
             v = GUILayout.TextField(v, GUILayout.Width(width));
             value = v != string.Empty ? Convert.ToSingle(v) : 0f;
             GUILayout.EndHorizontal();
@@ -97,7 +97,7 @@ namespace GGM.GUI
         public static void Slider(string text, ref float value, float left, float right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "", string valueTextFormat = "0.###", bool round = false, float multiplier = 1)
         {
             GUILayout.BeginHorizontal();
-            Label(text);
+            if (text != string.Empty) Label(text);
             value = GUILayout.HorizontalSlider(value, left, right, GUILayout.Width(sliderWidth));
             if (!customValueText)
             {
@@ -113,7 +113,7 @@ namespace GGM.GUI
         public static void Slider(string text, ref float value, float left, ref float right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "", string valueTextFormat = "0.###", bool round = false, float multiplier = 1)
         {
             GUILayout.BeginHorizontal();
-            Label(text);
+            if (text != string.Empty) Label(text);
             value = GUILayout.HorizontalSlider(value, left, right, GUILayout.Width(sliderWidth));
             if (!customValueText)
             {
@@ -132,7 +132,7 @@ namespace GGM.GUI
             var r = Convert.ToSingle(right);
             var v = Convert.ToSingle(value);
             GUILayout.BeginHorizontal();
-            Label(text);
+            if (text != string.Empty) Label(text);
             value = Convert.ToInt32(GUILayout.HorizontalSlider(v, l, r, GUILayout.Width(sliderWidth)));
             Label(!customValueText ? Mathf.Round(value).ToString() : valueText, LabelType.SliderStatus, width: valueWidth);
             GUILayout.EndHorizontal();
@@ -141,7 +141,7 @@ namespace GGM.GUI
         public static void Grid(string text, ref int INT, string[] str, bool sameCount = true, int count = 0, float width = GridWidth, float height = GridHeight)
         {
             GUILayout.BeginHorizontal();
-            Label(text);
+            if (text != string.Empty) Label(text);
             INT = GUILayout.SelectionGrid(INT, str, sameCount ? str.Length : count, GUILayout.Width(width), GUILayout.Height(height));
             GUILayout.EndHorizontal();
         }
@@ -150,7 +150,7 @@ namespace GGM.GUI
         {
             var i = value ? 1 : 0;
             GUILayout.BeginHorizontal();
-            Label(text);
+            if (text != string.Empty) Label(text);
             i = GUILayout.SelectionGrid(i, SwitcherStr, horizontal ? 2 : 1, GUILayout.Width(width), GUILayout.Height(height));
             value = i != 0;
             GUILayout.EndHorizontal();
@@ -159,18 +159,20 @@ namespace GGM.GUI
         public static void ButtonToggle(string text, string[] buttonsText, BoolSetting[] bools, float width = GridWidth)
         {
             var style = new GUIStyle(UnityEngine.GUI.skin.button);
-
+            var w = text != string.Empty ? width : leftElementWidth + rightElementWidth - 75f;
             GUILayout.BeginHorizontal();
-            Label(text);
+            if (text != string.Empty) Label(text);
+            if (text == string.Empty) GUILayout.FlexibleSpace();
             for (var i = 0; i < bools.Length; i++)
             {
                 style.normal = bools[i] ? UnityEngine.GUI.skin.button.onNormal : UnityEngine.GUI.skin.button.normal;
                 style.hover = bools[i] ? UnityEngine.GUI.skin.button.onHover : UnityEngine.GUI.skin.button.hover;
-                if (GUILayout.Button(buttonsText[i], style, GUILayout.Width((width - 5 * (bools.Length - 1)) / bools.Length)))
+                if (GUILayout.Button(buttonsText[i], style, GUILayout.Width((w - 5 * (bools.Length - 1)) / bools.Length)))
                 {
                     bools[i].Value = !bools[i];
                 }
             }
+            if (text == string.Empty) GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
         }
     }

@@ -350,7 +350,6 @@ namespace GGM.Config
             LocationSkinsForestFogSettingsList = new List<float[]>();
             LocationSkinsForestParticlesList = new List<int>();
             LocationSkinsForestParticlesSettingsList = new List<float[]>();
-
             for (var i = 0; i < LocationSkinsForestCountSetting; i++)
             {
                 //Skin Fields
