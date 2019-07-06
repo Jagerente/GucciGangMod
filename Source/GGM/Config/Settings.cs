@@ -296,8 +296,8 @@ namespace GGM.Config
         //HumanSkins
         public static StringSetting HumanSkinsTitlesSetting = new StringSetting("HumanSkinsSetTitles","Set 1`Set 2`Set 3`Set 4`Set 5");
         //LevelSkins
-        public static StringSetting LocationSkinsForestSetTitlesSetting = new StringSetting("LocationSkinsForestSetTitles", "Sakura Forest`Set 2`Set 3");
-        public static StringSetting LocationSkinsCitySetTitlesSetting = new StringSetting("LocationSkinsCitySetTitles", "Set 1`Set 2`Set 3");
+        public static StringSetting LocationSkinsForestSetTitlesSetting = new StringSetting("LocationSkinsForestSetTitles", "Sakura Forest");
+        public static StringSetting LocationSkinsCitySetTitlesSetting = new StringSetting("LocationSkinsCitySetTitles", "Set 1");
         #endregion
 
         static Settings()
@@ -308,12 +308,13 @@ namespace GGM.Config
         public static void LoadHumanSkins()
         {
             HumanSkinsList = new List<string[]>();
+            HumanSkinsTitlesList = new List<string>();
+
             for (var i = 0; i < HumanSkinsCountSetting; i++)
             {
                 HumanSkinsList.Add(PlayerPrefs.GetString("HumanSkin_" + i, "````````````").Split('`'));
             }
 
-            HumanSkinsTitlesList = new List<string>();
             foreach (var str in HumanSkinsTitlesSetting.Value.Split('`'))
             {
                 HumanSkinsTitlesList.Add(str);
@@ -342,6 +343,7 @@ namespace GGM.Config
         public static void LoadForestSkins()
         {
             LocationSkinsForestList = new List<string[]>();
+            LocationSkinsForestTitlesList = new List<string>();
             LocationSkinsForestAmbientList = new List<int>();
             LocationSkinsForestAmbientSettingsList = new List<float[]>();
             LocationSkinsForestFogList = new List<int>();
@@ -399,7 +401,6 @@ namespace GGM.Config
                     PlayerPrefs.GetFloat("ForestParticlesColorA_" + i, 1f),
                 });
             }
-            LocationSkinsForestTitlesList = new List<string>();
             foreach (var str in LocationSkinsForestSetTitlesSetting.Value.Split('`'))
             {
                 LocationSkinsForestTitlesList.Add(str);

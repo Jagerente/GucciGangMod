@@ -1360,6 +1360,7 @@ namespace GGM.GUI
                         LocationSkinsForestFogSettingsList.Add(new float[]{0.066f, 0.066f, 0.066f, 0f, 1000f});
                         LocationSkinsForestParticlesList.Add(0);
                         LocationSkinsForestParticlesSettingsList.Add(new float[]{1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f});
+                        LocationSkinsForestCountSetting.Value++;
                         scrollLocationSkinsLeft.y = 9999f;
                     }
                     if (GUILayout.Button("Remove"))
@@ -1367,17 +1368,13 @@ namespace GGM.GUI
                         if (LocationSkinsForestCountSetting == 1)
                         {
                             LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting] = "Set 1";
-                            LocationSkinsForestList[LocationSkinsForestCurrentSetSetting] =
-                                ("````````````````").Split('`');
+                            LocationSkinsForestList[LocationSkinsForestCurrentSetSetting] = ("````````````````").Split('`');
                             LocationSkinsForestAmbientList[LocationSkinsForestCountSetting] = 0;
-                            LocationSkinsForestAmbientSettingsList[LocationSkinsForestCountSetting] = new float[]
-                                {AmbientColorSetting[0][0], AmbientColorSetting[0][1], AmbientColorSetting[0][2]};
+                            LocationSkinsForestAmbientSettingsList[LocationSkinsForestCountSetting] = new float[] {AmbientColorSetting[0][0], AmbientColorSetting[0][1], AmbientColorSetting[0][2]};
                             LocationSkinsForestFogList[LocationSkinsForestCountSetting] = 0;
-                            LocationSkinsForestFogSettingsList[LocationSkinsForestCountSetting] =
-                                new float[] {0.066f, 0.066f, 0.066f, 0f, 1000f};
+                            LocationSkinsForestFogSettingsList[LocationSkinsForestCountSetting] = new float[] {0.066f, 0.066f, 0.066f, 0f, 1000f};
                             LocationSkinsForestParticlesList[LocationSkinsForestCountSetting] = 0;
-                            LocationSkinsForestParticlesSettingsList[LocationSkinsForestCountSetting] = new float[]
-                                {1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f};
+                            LocationSkinsForestParticlesSettingsList[LocationSkinsForestCountSetting] = new float[] {1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f};
                         }
                         else
                         {
@@ -1391,7 +1388,7 @@ namespace GGM.GUI
                             LocationSkinsForestFogSettingsList.RemoveAt(setToRemove);
                             LocationSkinsForestParticlesList.RemoveAt(setToRemove);
                             LocationSkinsForestParticlesSettingsList.RemoveAt(setToRemove);
-                            HumanSkinsCountSetting.Value--;
+                            LocationSkinsForestCountSetting.Value--;
                         }
                     }
                     GUILayout.EndHorizontal();
@@ -1525,9 +1522,10 @@ namespace GGM.GUI
                         LocationSkinsCityFogSettingsList.Add(new float[] {0.066f, 0.066f, 0.066f, 0f, 1000f});
                         LocationSkinsCityParticlesList.Add(0);
                         LocationSkinsCityParticlesSettingsList.Add(new float[] {1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f});
+                        LocationSkinsCityCountSetting.Value++;
                         scrollLocationSkinsLeft.y = 9999f;
                     }
-                    if (GUILayout.Button("Remove"))
+                        if (GUILayout.Button("Remove"))
                     {
                         if (LocationSkinsCityCountSetting == 1)
                         {
@@ -1552,7 +1550,7 @@ namespace GGM.GUI
                             LocationSkinsCityFogSettingsList.RemoveAt(setToRemove);
                             LocationSkinsCityParticlesList.RemoveAt(setToRemove);
                             LocationSkinsCityParticlesSettingsList.RemoveAt(setToRemove);
-                            HumanSkinsCountSetting.Value--;
+                            LocationSkinsCityCountSetting.Value--;
                         }
                     }
                     GUILayout.EndHorizontal();
