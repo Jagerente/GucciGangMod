@@ -151,7 +151,7 @@ namespace GGM.GUI
             var i = value ? 1 : 0;
             GUILayout.BeginHorizontal();
             Label(text);
-            i = GUILayout.SelectionGrid(i, new []{ "Off", "On" }, horizontal ? 2 : 1, GUILayout.Width(width), GUILayout.Height(height));
+            i = GUILayout.SelectionGrid(i, SwitcherStr, horizontal ? 2 : 1, GUILayout.Width(width), GUILayout.Height(height));
             value = i != 0;
             GUILayout.EndHorizontal();
         }
