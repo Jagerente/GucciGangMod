@@ -240,9 +240,8 @@ namespace GGM
 
         public static System.Collections.IEnumerator LoadFonts()
         {
-            if (tahoma != null)
-                yield break;
-            AssetBundleCreateRequest bundle = AssetBundle.CreateFromMemory(System.IO.File.ReadAllBytes(Application.dataPath + "/Resources/Fonts.unity3d"));
+            if (tahoma != null) yield break;
+            var bundle = AssetBundle.CreateFromMemory(System.IO.File.ReadAllBytes(Application.dataPath + "/Resources/cyan.unity3d"));
             yield return bundle;
             tahoma = (Font)(bundle.assetBundle.Load("tahoma"));
         }

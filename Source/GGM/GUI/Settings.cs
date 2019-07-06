@@ -5,17 +5,18 @@ namespace GGM.GUI
 {
     internal class Settings
     {
-        internal const float width = 800f;
-        internal const float height = 550f;
+        internal static string[] SwitcherStr = {"Off", "On"};
+        internal const float width = 775f;
+        internal const float height = 575f;
         internal static readonly float leftPos = Screen.width / 2f - width / 2f;
         internal static readonly float topPos = Screen.height / 2f - height / 2f;
         internal const float fullAreaWidth = width - 40f;
-        internal const float fullAreaHeight = height - 80f;
+        internal const float fullAreaHeight = height - 80f - 25f;
         internal const float topAreaHeight = 35f;
-        internal const float bottomAreaHeight = height - 115f;
-        internal const float halfAreaWidth = width / 2f - 30f;
-        internal const float leftElementWidth = halfAreaWidth * 0.4f ;
-        internal const float rightElementWidth = halfAreaWidth * 0.6f - 5f - 15f;
+        internal const float bottomAreaHeight = height - 115f - 25f;
+        internal const float halfAreaWidth = width / 2f - 20f;
+        internal const float leftElementWidth = halfAreaWidth * 0.4f;
+        internal const float rightElementWidth = halfAreaWidth * 0.6f - 25f;
 
         /// <summary>
         /// 0 - full,
@@ -64,7 +65,7 @@ namespace GGM.GUI
         protected const float LabelHeight = 25f;
 
         protected const float GridWidth = rightElementWidth;
-        protected const float GridHeight = 20f;
+        protected const float GridHeight = 21f;
 
         protected const float TextFieldWidth = rightElementWidth;
 
@@ -107,7 +108,8 @@ namespace GGM.GUI
                 active =
                 {
                     textColor = activeColor
-                }
+                },
+                font = Labels.tahoma
             };
         }
 
