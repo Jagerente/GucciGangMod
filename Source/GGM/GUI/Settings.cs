@@ -5,6 +5,7 @@ namespace GGM.GUI
 {
     internal class Settings
     {
+        internal static string[] SwitcherStr = {"Off", "On"};
         internal const float width = 800f;
         internal const float height = 550f;
         internal static readonly float leftPos = Screen.width / 2f - width / 2f;
