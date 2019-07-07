@@ -12,12 +12,12 @@ public class PanelMain : MonoBehaviour
 
     private void OnEnable()
     {
-        gameObject.AddComponent<MainMenu>();
+        MainMenu.Instance.Enable();
     }
 
     private void OnDisable()
     {
-        Destroy(GameObjectCache.Find("MainMenu"));
+        MainMenu.Instance.Disable();
     }
 
     private void showTxt()

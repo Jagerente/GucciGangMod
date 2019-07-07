@@ -3,12 +3,8 @@ using UnityEngine;
 
 namespace GGM.GUI.Pages
 {
-    internal class MainMenu : MonoBehaviour
+    internal class MainMenu : Page<MonoBehaviour>
     {
-        private bool isVisible;
-
-        public static MainMenu Instance;
-
         #region Settings
         private static int loginSwitchInt;
 
@@ -28,21 +24,6 @@ namespace GGM.GUI.Pages
         private static Rect quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
         #endregion
 
-        private void Awake()
-        {
-            Instance = this;
-        }
-
-        public void OnEnable()
-        {
-            isVisible = true;
-        }
-
-        public void OnDisable()
-        {
-            isVisible = false;
-        }
-
         private void OnGUI()
         {
             #region Single
@@ -52,6 +33,7 @@ namespace GGM.GUI.Pages
                 NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelSingleSet,
                     true);
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
+                Instance.gameObject.SetActive(false);
             }
 
             singleButton = single.Contains(GUIHelpers.mousePos)
@@ -67,6 +49,7 @@ namespace GGM.GUI.Pages
                 NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart,
                     true);
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
+                Instance.gameObject.SetActive(false);
             }
 
             multiplayerButton = multiplayer.Contains(GUIHelpers.mousePos)
