@@ -763,7 +763,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         Time.timeScale = 0f;
                     }
                     GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = true;
-                    PauseMenu.Instance.gameObject.SetActive(true);
+                    PauseMenu.GetInstance<PauseMenu>().gameObject.SetActive(true);
                     Screen.showCursor = true;
                     Screen.lockCursor = false;
                 }

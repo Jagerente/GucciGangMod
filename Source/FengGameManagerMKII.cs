@@ -1178,7 +1178,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     Camera.main.GetComponent<SpectatorMovement>().disable = true;
                     Camera.main.GetComponent<MouseLook>().disable = true;
                     inputManager.menuOn = true;
-                    PauseMenu.Instance.gameObject.SetActive(true);
+                    PauseMenu.GetInstance<PauseMenu>().gameObject.SetActive(true);
                 }
             }
 

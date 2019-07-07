@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GGM.GUI.Pages
 {
-    internal class MainMenu : Page<MonoBehaviour>
+    internal class MainMenu : Page
     {
         #region Settings
         private static int loginSwitchInt;
