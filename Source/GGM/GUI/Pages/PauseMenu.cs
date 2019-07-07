@@ -7,7 +7,7 @@ using static GGM.GUI.Settings;
 
 namespace GGM.GUI.Pages
 {
-    internal class PauseMenu : Page<MonoBehaviour>
+    internal class PauseMenu : Page
     {
         #region Switchers
         private static int pauseMenuSwitchInt;

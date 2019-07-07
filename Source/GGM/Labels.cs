@@ -81,11 +81,14 @@ namespace GGM
             {
                 if (networkStatus == null)
                 {
+                    if (Fonts == null)
+                        return;
                     networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, White, Fonts[Font], TextAlignment.Left);
                     if (networkStatus == null)
                         return;
                 }
-                networkStatus.text = value;
+                if(networkStatus)
+                    networkStatus.text = value;
             }
         }
 

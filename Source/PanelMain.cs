@@ -12,12 +12,12 @@ public class PanelMain : MonoBehaviour
 
     private void OnEnable()
     {
-        MainMenu.Instance.Enable();
+        Page.GetInstance<MainMenu>().Enable();
     }
 
     private void OnDisable()
     {
-        MainMenu.Instance.Disable();
+        Page.GetInstance<MainMenu>().Disable();
     }
 
     private void showTxt()
