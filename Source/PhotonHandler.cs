@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using ExitGames.Client.Photon;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
@@ -10,7 +9,6 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
     internal static CloudRegionCode BestRegionCodeCurrently = CloudRegionCode.none;
     private int nextSendTickCount;
     private int nextSendTickCountOnSerialize;
-    public static Type PingImplementation;
     private const string PlayerPrefsKey = "PUNCloudBestRegion";
     private static bool sendThreadShouldRun;
     public static PhotonHandler SP;
@@ -102,50 +100,7 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
     
     internal IEnumerator PingAvailableRegionsCoroutine(bool connectToBest)
     {
-        BestRegionCodeCurrently = CloudRegionCode.none;
-        while (PhotonNetwork.networkingPeer.AvailableRegions == null)
-        {
-            if (PhotonNetwork.connectionStateDetailed != PeerStates.ConnectingToNameServer && PhotonNetwork.connectionStateDetailed != PeerStates.ConnectedToNameServer)
-            {
-                Debug.LogError("Call ConnectToNameServer to ping available regions.");
-                yield break;
-            }
-            Debug.Log("Waiting for AvailableRegions. State: " + PhotonNetwork.connectionStateDetailed + " Server: " + PhotonNetwork.Server + " PhotonNetwork.networkingPeer.AvailableRegions " + (PhotonNetwork.networkingPeer.AvailableRegions != null));
-            yield return new WaitForSeconds(0.25f);
-        }
-        if (PhotonNetwork.networkingPeer.AvailableRegions == null || PhotonNetwork.networkingPeer.AvailableRegions.Count == 0)
-        {
-            Debug.LogError("No regions available. Are you sure your appid is valid and setup?");
-        }
-        else
-        {
-            var pingManager = new PhotonPingManager();
-            var enumerator = PhotonNetwork.networkingPeer.AvailableRegions.GetEnumerator();
-            try
-            {
-                while (enumerator.MoveNext())
-                {
-                    var region = enumerator.Current;
-                    SP.StartCoroutine(pingManager.PingSocket(region));
-                }
-            }
-            finally
-            {
-                ((IDisposable)enumerator).Dispose();
-            }
-            while (!pingManager.Done)
-            {
-                yield return new WaitForSeconds(0.1f);
-            }
-            var best = pingManager.BestRegion;
-            BestRegionCodeCurrently = best.Code;
-            BestRegionCodeInPreferences = best.Code;
-            Debug.Log("Found best region: " + best.Code + " ping: " + best.Ping + ". Calling ConnectToRegionMaster() is: " + connectToBest);
-            if (connectToBest)
-            {
-                PhotonNetwork.networkingPeer.ConnectToRegionMaster(best.Code);
-            }
-        }
+        yield break;
     }
 
     public static void StartFallbackSendAckThread()
@@ -153,7 +108,7 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
         if (!sendThreadShouldRun)
         {
             sendThreadShouldRun = true;
-            SupportClass.CallInBackground(FallbackSendAckThread);
+            SupportClass.StartBackgroundCalls(FallbackSendAckThread);
         }
     }
 

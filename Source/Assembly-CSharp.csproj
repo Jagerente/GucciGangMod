@@ -45,16 +45,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Assemblies\Assembly-UnityScript-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="Photon3Unity3D, Version=4.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Photon3Unity3D">
       <HintPath>..\Assemblies\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ExitGames\Client\Photon\Lite\EventCaching.cs" />
+    <Compile Include="ExitGames\Client\Photon\Lite\ReceiverGroup.cs" />
     <Compile Include="GGM\Caching\ColorCache.cs" />
     <Compile Include="GGM\Caching\GameObjectCache.cs" />
     <Compile Include="GGM\Caching\ResourcesCache.cs" />
+    <Compile Include="GGM\Config\AssetsManager.cs" />
     <Compile Include="GGM\Extensions.cs" />
     <Compile Include="GGM\Config\BoolSetting.cs" />
     <Compile Include="GGM\Config\FloatSetting.cs" />
@@ -66,7 +68,16 @@
     <Compile Include="GGM\FPSCounter.cs" />
     <Compile Include="GGM\GUI\GUIHelpers.cs" />
     <Compile Include="GGM\GUI\Elements.cs" />
-    <Compile Include="GGM\GUI\Pages.cs" />
+    <Compile Include="GGM\GUI\Pages\CustomCharacters.cs" />
+    <Compile Include="GGM\GUI\Pages\LevelEditor.cs" />
+    <Compile Include="GGM\GUI\Pages\LoadingScreen.cs" />
+    <Compile Include="GGM\GUI\Pages\MainMenu.cs" />
+    <Compile Include="GGM\GUI\Pages\Multiplayer.cs" />
+    <Compile Include="GGM\GUI\Pages\Page.cs" />
+    <Compile Include="GGM\GUI\Pages\PagesManager.cs" />
+    <Compile Include="GGM\GUI\Pages\Pause.cs" />
+    <Compile Include="GGM\GUI\Pages\PauseMenu.cs" />
+    <Compile Include="GGM\GUI\Pages\Single.cs" />
     <Compile Include="GGM\GUI\Settings.cs" />
     <Compile Include="GGM\HotKeys.cs" />
     <Compile Include="GGM\Labels.cs" />
@@ -218,7 +229,6 @@
     <Compile Include="FengMath.cs" />
     <Compile Include="IComparerPVPchkPtID.cs" />
     <Compile Include="PanelLoginGroupManager.cs" />
-    <Compile Include="PhotonPingManager.cs" />
     <Compile Include="CustomAuthenticationType.cs" />
     <Compile Include="LobbyType.cs" />
     <Compile Include="IgnoreTimeScale.cs" />
@@ -430,8 +440,6 @@
     <Compile Include="PhotonLagSimulationGui.cs" />
     <Compile Include="PhotonStatsGui.cs" />
     <Compile Include="IPunObservable.cs" />
-    <Compile Include="PingMonoEditor.cs" />
-    <Compile Include="ExitGames\Client\Photon\SocketUdp.cs" />
     <Compile Include="ConnectAndJoinRandom.cs" />
     <Compile Include="InRoomRoundTimer.cs" />
     <Compile Include="InputToEvent.cs" />
@@ -545,6 +553,9 @@
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Assemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>..\Assemblies\websocket-sharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />

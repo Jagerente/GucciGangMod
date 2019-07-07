@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GGM.GUI.Pages;
+using UnityEngine;
 
 public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 {
@@ -155,7 +156,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
             case CAMERA_TYPE.OLDTPS:
             {
-                Quaternion quaternion = Quaternion.Euler(0f, this.transform.eulerAngles.y, 0f);
+                var quaternion = Quaternion.Euler(0f, this.transform.eulerAngles.y, 0f);
                 this.transform.position = head.position + Vector3.up * 3f;
                 this.rotationY += ((Input.GetAxis("Mouse Y") * 2.5f) * (sensitivityMulti * 2f)) * invertY;
                 this.rotationY = Mathf.Clamp(this.rotationY, -60f, 60f);
@@ -762,11 +763,10 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         Time.timeScale = 0f;
                     }
                     GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = true;
+                    PauseMenu.Instance.gameObject.SetActive(true);
                     Screen.showCursor = true;
                     Screen.lockCursor = false;
                 }
-
-                GGM.GUI.Pages.Page = isPausing ? "Menu" : string.Empty;
             }
             if (needSetHUD)
             {

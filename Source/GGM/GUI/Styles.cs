@@ -1,12 +1,12 @@
-﻿using System.Reflection.Emit;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GGM.GUI
 {
-    class Styles : MonoBehaviour
+    internal class Styles : MonoBehaviour
     {
         private static bool isInited;
         private const string StylePath = "GGM/";
+        internal static Font[] Fonts;
         public static Texture2D Box;
         private static Texture2D Window;
         private static Texture2D ButtonN;
