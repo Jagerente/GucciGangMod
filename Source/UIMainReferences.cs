@@ -77,6 +77,5 @@ public class UIMainReferences : MonoBehaviour
             FengGameManagerMKII.loginstate = 0;
         }
     }
-
 }
 

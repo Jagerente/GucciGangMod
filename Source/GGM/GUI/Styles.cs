@@ -212,19 +212,19 @@ namespace GGM.GUI
         {
             if (isInited) return;
             //Button
-            //UnityEngine.GUI.skin.button.normal.textColor = Caching.Colors.white;
-            //UnityEngine.GUI.skin.button.active.textColor = Caching.Colors.white;
-            //UnityEngine.GUI.skin.button.hover.textColor = Caching.Colors.white;
-            //UnityEngine.GUI.skin.button.onNormal.textColor = Caching.Colors.white;
-            //UnityEngine.GUI.skin.button.onActive.textColor = Caching.Colors.white;
-            //UnityEngine.GUI.skin.button.onHover.textColor = Caching.Colors.white;
-            //UnityEngine.GUI.skin.button.normal.background = ButtonN;
-            //UnityEngine.GUI.skin.button.active.background = ButtonA;
-            //UnityEngine.GUI.skin.button.hover.background = ButtonH;
-            //UnityEngine.GUI.skin.button.onNormal.background = ButtonON;
-            //UnityEngine.GUI.skin.button.onActive.background = ButtonOA;
-            //UnityEngine.GUI.skin.button.onHover.background = ButtonOH;
-            //UnityEngine.GUI.skin.button.fontStyle = FontStyle.Bold;
+            UnityEngine.GUI.skin.button.normal.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.button.active.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.button.hover.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.button.onNormal.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.button.onActive.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.button.onHover.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.button.normal.background = ButtonN;
+            UnityEngine.GUI.skin.button.active.background = ButtonA;
+            UnityEngine.GUI.skin.button.hover.background = ButtonH;
+            UnityEngine.GUI.skin.button.onNormal.background = ButtonON;
+            UnityEngine.GUI.skin.button.onActive.background = ButtonOA;
+            UnityEngine.GUI.skin.button.onHover.background = ButtonOH;
+            UnityEngine.GUI.skin.button.fontStyle = FontStyle.Bold;
             //TextField
             UnityEngine.GUI.skin.textField.normal.background = TextN;
             UnityEngine.GUI.skin.textField.hover.background = TextH;
