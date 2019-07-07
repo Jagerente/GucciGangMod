@@ -121,6 +121,7 @@ public class PhotonPlayer
 
     public void SetCustomProperties(Hashtable propertiesToSet)
     {
+        
         if (propertiesToSet != null)
         {
             customProperties.MergeStringKeys(propertiesToSet);

@@ -42,7 +42,7 @@ public static class PhotonNetwork
         photonMono = obj2.AddComponent<PhotonHandler>();
         obj2.name = "PhotonMono";
         obj2.hideFlags = HideFlags.HideInHierarchy;
-        networkingPeer = new NetworkingPeer(photonMono, string.Empty, ConnectionProtocol.Udp);
+        networkingPeer = new NetworkingPeer(photonMono, string.Empty, ConnectionProtocol.Tcp);
         CustomTypes.Register();
     }
 
@@ -148,6 +148,14 @@ public static class PhotonNetwork
 
     public static bool ConnectToMaster(string masterServerAddress, int port, string appID, string gameVersion)
     {
+        if(networkingPeer.UsedProtocol == ConnectionProtocol.WebSocket)
+        {
+            masterServerAddress = "ws://" + masterServerAddress;
+        }
+        else if(networkingPeer.UsedProtocol == ConnectionProtocol.WebSocketSecure)
+        {
+            masterServerAddress = "wss://" + masterServerAddress;
+        }
         if (networkingPeer.PeerState != PeerStateValue.Disconnected)
         {
             Debug.LogWarning("ConnectToMaster() failed. Can only connect while in state 'Disconnected'. Current state: " + networkingPeer.PeerState);
@@ -1390,18 +1398,6 @@ public static class PhotonNetwork
                 return Time.time;
             }
             return networkingPeer.ServerTimeInMilliSeconds / 1000.0;
-        }
-    }
-
-    public static int unreliableCommandsLimit
-    {
-        get
-        {
-            return networkingPeer.LimitOfUnreliableCommands;
-        }
-        set
-        {
-            networkingPeer.LimitOfUnreliableCommands = value;
         }
     }
 

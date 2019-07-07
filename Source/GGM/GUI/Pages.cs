@@ -70,9 +70,16 @@ namespace GGM.GUI
         private static int videoAndAudioSwitch;
         private static int ambientDayTimeSwitch;
         private static int rebindsSwitch;
+        private static int locationSkinsSwitch;
         #endregion
 
         #region Strings
+
+        private static readonly string[] pauseMenuPages =
+        {
+            "Game", "Server", "Video & Audio", "Rebinds", "Bombs", "Human Skins", "Titan Skins", "Location Skins",
+            "Custom Map", "Custom Logic"
+        };
         private static readonly string[] cameraTypes = {"Original", "TPS", "WOW", "OldTPS"};
         private static readonly string[] speedometerTypes = {"Off", "Speed", "Damage"};
         private static readonly string[] ahssSpeedometerTypes = {"Both", "Single", "Double"};
@@ -111,12 +118,42 @@ namespace GGM.GUI
             "Rotate Up:", "Rotate Down:", "Rotate Left:", "Rotate Right:", "Fire:", "Mount:", "Slow Rotate:"
         };
         private static readonly string[] bombStats = {"Radius", "Range", "Speed", "Cooldown"};
+        private static readonly string[] skinsAppearanceType = {"Off", "Local", "Global"};
+        private static readonly string[] bladeTrailsAppearance = {"Legacy", "Liquid"};
+        private static readonly string[] humanSkinFields =
+        {
+            "Horse", "Hair", "Eyes", "Glass", "Face", "Skin", "Costume", "Hoodie", "Left 3DMG", "Right 3DMG",
+            "Gas", "Logo & Cape", "Weapon Trail"
+        };
+
+        private static readonly string[] locationSkinsLocation = {"Forest", "City"};
+
+        private static readonly string[] locationSkinForestFields =
+            {
+                "Ground", "Forest Trunk #1", "Forest Trunk #2", "Forest Trunk #3", "Forest Trunk #4",
+                "Forest Trunk #5", "Forest Trunk #6", "Forest Trunk #7", "Forest Trunk #8", "Forest Leave #1",
+                "Forest Leave #2", "Forest Leave #3", "Forest Leave #4", "Forest Leave #5", "Forest Leave #6",
+                "Forest Leave #7", "Forest Leave #8", "Skybox Front", "Skybox Back", "Skybox Left", "Skybox Right",
+                "Skybox Up", "Skybox Down"
+            };
+
+        private static readonly string[] locationSkinCityFields =
+        {
+            "Ground", "Wall", "Gate", "Houses #1", "Houses #2", "Houses #3", "Houses #4", "Houses #5",
+            "Houses #6", "Houses #7", "Houses #8", "Skybox Front", "Skybox Back", "Skybox Left", "Skybox Right",
+            "Skybox Up", "Skybox Down", 
+        };
         #endregion
 
         #region Scrolls
         private static Vector2 scrollGameLeft = Vector2.zero;
         private static Vector2 scrollServerTitansLeft = Vector2.zero;
         private static Vector2 scrollServerMiscLeft = Vector2.zero;
+        private static Vector2 scrollHumanSkins = Vector2.zero;
+        private static Vector2 scrollLocationSkinsForestLeft = Vector2.zero;
+        private static Vector2 scrollLocationSkinsForestRight = Vector2.zero;
+        private static Vector2 scrollLocationSkinsCityLeft = Vector2.zero;
+        private static Vector2 scrollLocationSkinsCityRight = Vector2.zero;
         #endregion
 
 
@@ -387,7 +424,7 @@ namespace GGM.GUI
         {
             UnityEngine.GUI.Box(new Rect(leftPos, topPos, width, height), string.Empty);
 
-            pauseMenuSwitchInt = UnityEngine.GUI.SelectionGrid(new Rect(leftPos + 5f, topPos + 5f, width - 10f, 50f), pauseMenuSwitchInt, new []{ "Game", "Server", "Video & Audio", "Rebinds", "Bombs", "Human Skins", "Titan Skins", "Level Skins", "Custom Map", "Custom Logic" }, 5);
+            pauseMenuSwitchInt = UnityEngine.GUI.SelectionGrid(new Rect(leftPos + 5f, topPos + 5f, width - 10f, 50f), pauseMenuSwitchInt, pauseMenuPages, 5);
 
             switch (pauseMenuSwitchInt)
             {
@@ -413,7 +450,7 @@ namespace GGM.GUI
                     TitanSkins();
                     break;
                 case 7:
-                    LevelSkins();
+                    LocationSkins();
                     break;
                 case 8:
                     CustomMap();
@@ -432,18 +469,16 @@ namespace GGM.GUI
 
         private static void Game()
         {
-            GUILayout.BeginArea(center[1]);
-            Label(UIMainReferences.Version, LabelType.Header);
-            GUILayout.EndArea();
+            GUILayout.BeginArea(left[0]);
+            GUILayout.Space(15f);
+            scrollGameLeft = GUILayout.BeginScrollView(scrollGameLeft);
 
-            GUILayout.BeginArea(left[2]);
-            scrollGameLeft = GUILayout.BeginScrollView(scrollGameLeft, false, false);
             Label("Mouse", LabelType.Header);
             Slider("Sensitivity", ref MouseSensitivitySetting.Value, 10f, 100f, round: true);
             Grid("Invert Y", ref MouseInvertYSetting.Value);
             Label("Camera", LabelType.Header);
+            ButtonToggle(string.Empty, cameraTypes, CameraTypeSettings);
             Slider("Distance", ref CameraDistanceSetting.Value, 0f, 100f, round: true);
-            ButtonToggle("Camera Types", cameraTypes, CameraTypeSettings);
             Grid("Tilt", ref CameraTiltSetting.Value);
             Grid("Static FOV", ref CameraStaticFOVSetting.Value);
             if (CameraStaticFOVSetting) Slider("• FOV", ref CameraFOVSetting.Value, 60f, 120f, round: true);
@@ -458,10 +493,13 @@ namespace GGM.GUI
             Grid("Infinite Blades", ref InfiniteBladesSetting.Value);
             Grid("Infinite Bullets", ref InfiniteBulletsSetting.Value);
             Grid("Infinite Gas", ref InfiniteGasSetting.Value);
+
             GUILayout.EndScrollView();
             GUILayout.EndArea();
 
-            GUILayout.BeginArea(right[2]);
+            GUILayout.BeginArea(right[0]);
+            GUILayout.Space(15f);
+
             Label("User Interface", LabelType.Header);
             Grid("Hide Everything", ref UserInterfaceSetting.Value);
             if (!UserInterfaceSetting)
@@ -477,7 +515,8 @@ namespace GGM.GUI
             Grid("Chat Feed", ref ChatFeedSetting.Value);
             Grid("Minimap", ref MinimapSetting.Value);
             Grid("Speedometer", ref SpeedometerSetting.Value, speedometerTypes);
-            if (SpeedometerSetting == 2) Grid("• AHSS Speedometer Type", ref SpeedometerAHSSSetting.Value, ahssSpeedometerTypes);
+            if (SpeedometerSetting == 2) Grid("• AHSS Damage", ref SpeedometerAHSSSetting.Value, ahssSpeedometerTypes);
+
             GUILayout.EndArea();
         }
 
@@ -571,10 +610,10 @@ namespace GGM.GUI
                     GUILayout.BeginArea(right[2]);
                     Label("Other", LabelType.Header);
                     Grid("Auto Revive", ref AutoReviveSetting.Value);
-                    if (AutoReviveSetting) TextField("Seconds", ref AutoReviveTimeSetting.Value);
+                    if (AutoReviveSetting) TextField("• Seconds", ref AutoReviveTimeSetting.Value);
                     Grid("Horses", ref HorsesSetting.Value);
                     Grid("Disable Minimaps", ref DisableMinimapsSetting.Value);
-                    Grid("Disable AHSS Air-Reloading", ref DisableAHSSAirReloadingSetting.Value);
+                    Grid("No AHSS Air-Reloading", ref DisableAHSSAirReloadingSetting.Value);
                     Grid("Deadly Cannons Mode", ref DeadlyCannonsModeSetting.Value);
                     GUILayout.EndArea();
                     break;
@@ -592,15 +631,15 @@ namespace GGM.GUI
                     GUILayout.FlexibleSpace();
                     if (GUILayout.Button("Bold", GUILayout.Width(75f)))
                     {
-                        WelcomeMessage.Value += "<b></b>";
+                        WelcomeMessageSetting.Value += "<b></b>";
                     }
                     if (GUILayout.Button("Italic", GUILayout.Width(75f)))
                     {
-                        WelcomeMessage.Value += "<i></i>";
+                        WelcomeMessageSetting.Value += "<i></i>";
                     }
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
-                    WelcomeMessage.Value = GUILayout.TextArea(WelcomeMessage, GUILayout.Width(halfAreaWidth - 20f));
+                    WelcomeMessageSetting.Value = GUILayout.TextArea(WelcomeMessageSetting, GUILayout.Width(halfAreaWidth - 20f));
                     GUILayout.EndScrollView();
                     GUILayout.EndArea();
 
@@ -657,28 +696,28 @@ namespace GGM.GUI
                         switch (ambientDayTimeSwitch)
                         {
                             case 0:
-                                Slider("Color R:", ref AmbientColorSetting[0][0].Value, 0f, 1f, 160f, 25f);
-                                Slider("Color G:", ref AmbientColorSetting[0][1].Value, 0f, 1f, 160f, 25f);
-                                Slider("Color B:", ref AmbientColorSetting[0][2].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color R", ref AmbientColorSetting[0][0].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color G", ref AmbientColorSetting[0][1].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color B", ref AmbientColorSetting[0][2].Value, 0f, 1f, 160f, 25f);
                                 break;
                             case 1:
-                                Slider("Color R:", ref AmbientColorSetting[1][0].Value, 0f, 1f, 160f, 25f);
-                                Slider("Color G:", ref AmbientColorSetting[1][1].Value, 0f, 1f, 160f, 25f);
-                                Slider("Color B:", ref AmbientColorSetting[1][2].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color R", ref AmbientColorSetting[1][0].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color G", ref AmbientColorSetting[1][1].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color B", ref AmbientColorSetting[1][2].Value, 0f, 1f, 160f, 25f);
                                 break;
                             case 2:
-                                Slider("Color R:", ref AmbientColorSetting[2][0].Value, 0f, 1f, 160f, 25f);
-                                Slider("Color G:", ref AmbientColorSetting[2][1].Value, 0f, 1f, 160f, 25f);
-                                Slider("Color B:", ref AmbientColorSetting[2][2].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color R", ref AmbientColorSetting[2][0].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color G", ref AmbientColorSetting[2][1].Value, 0f, 1f, 160f, 25f);
+                                Slider("Color B", ref AmbientColorSetting[2][2].Value, 0f, 1f, 160f, 25f);
                                 break;
                         }
                     }
                     Grid("Fog", ref FogSetting.Value);
                     if (FogSetting)
                     {
-                        Slider("Color R:", ref FogColorSettings[0].Value, 0f, 1f, 160f, 25f);
-                        Slider("Color G:", ref FogColorSettings[1].Value, 0f, 1f, 160f, 25f);
-                        Slider("Color B:", ref FogColorSettings[2].Value, 0f, 1f, 160f, 25f);
+                        Slider("Color R", ref FogColorSettings[0].Value, 0f, 1f, 160f, 25f);
+                        Slider("Color G", ref FogColorSettings[1].Value, 0f, 1f, 160f, 25f);
+                        Slider("Color B", ref FogColorSettings[2].Value, 0f, 1f, 160f, 25f);
                         if (FogDistanceSettings[0] > FogDistanceSettings[1] && FogDistanceSettings[0] != 0f)
                             FogDistanceSettings[0].Value = FogDistanceSettings[1] - 0.1f;
                         if (FogDistanceSettings[0] < 0)
@@ -719,6 +758,8 @@ namespace GGM.GUI
 
         private static void Rebinds()
         {
+            if (FengGameManagerMKII.inputManager == null) return;
+
             GUILayout.BeginArea(center[1]);
             GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
@@ -731,6 +772,7 @@ namespace GGM.GUI
 
             Event current;
             bool isPressed;
+
             switch (rebindsSwitch)
             {
                 case 0:
@@ -1158,7 +1200,8 @@ namespace GGM.GUI
 
         private static void Bombs()
         {
-            GUILayout.BeginArea(left[2]);
+            GUILayout.BeginArea(left[0]);
+            GUILayout.Space(15f);
             Label("Stats", LabelType.Header);
             int[] freePoints =
             {
@@ -1175,34 +1218,114 @@ namespace GGM.GUI
             }
 
             Label("Color", LabelType.Header);
-            //if (GUILayout.Button(Styles.ColorWheel, GUILayout.Width(200f), GUILayout.Height(200f)))
-            //{
-            //    Styles.ColorWheel.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-            //}
-
-            //if (GUILayout.Button(string.Empty, Styles.ButtonColor, GUILayout.Width(25f), GUILayout.Height(25f)))
-            //{
-
-            //}
-            //foreach (var color in Colors.colors)
-            //{
-            //    Texture2D txt = new Texture2D(100, 100, TextureFormat.ARGB32, false);
-            //    txt.SetPixel(0, 0, Color.green);
-            //    txt.Apply();
-            //    if (GUILayout.Button(txt, GUILayout.Width(25f), GUILayout.Height(25f)))
-            //    {
-
-            //    }
-            //}
+            Slider("R", ref BombColorSetting[0].Value, 0f, 1f);
+            Slider("G", ref BombColorSetting[1].Value, 0f, 1f);
+            Slider("B", ref BombColorSetting[2].Value, 0f, 1f);
+            //Slider("A", ref BombColorSetting[3].Value, 0f, 1f);
+            Texture2D txt = new Texture2D(1, 1);
+            txt.SetPixel(0,0, new Color(BombColorSetting[0], BombColorSetting[1], BombColorSetting[2]/*, BombColorSetting[3]*/));
+            txt.Apply();
+            UnityEngine.GUI.DrawTexture(new Rect(50f, 175f, 70f, 70f), txt, ScaleMode.StretchToFill);
             GUILayout.EndArea();
 
-            GUILayout.BeginArea(right[2]);
+            GUILayout.BeginArea(right[0]);
+            GUILayout.Space(15f);
+            GUILayout.Label("Color Presets", HeaderStyle);
+            foreach (var texture in ColorCache.Textures)
+            {
+                GUILayout.Button(texture.Value);
+            }
             GUILayout.EndArea();
         }
 
         private static void HumanSkins()
         {
-            throw new NotImplementedException();
+            GUILayout.BeginArea(left[0]);
+            GUILayout.Space(15f);
+
+            Label("Settings", LabelType.Header);
+            Label("General", LabelType.SubHeader);
+            Grid("Skins Appearance", ref HumanSkinsSetting.Value, skinsAppearanceType);
+            Grid("Blade Trails", ref BladeTrailsSetting.Value);
+            Grid("Custom Gas", ref CustomGasSetting.Value);
+
+            Label("Blade Trails", LabelType.SubHeader);
+            Grid("Appearance", ref BladeTrailsAppearanceSetting.Value, bladeTrailsAppearance);
+            Slider("Frame Rate", ref BladeTrailsFrameRateSetting.Value, 60, 240);
+            Grid("Infinite Lifetime", ref BladeTrailsInfiniteLifetimeSetting.Value);
+
+            Label("Presets", LabelType.SubHeader);
+            scrollHumanSkins = GUILayout.BeginScrollView(scrollHumanSkins);
+            GUILayout.BeginHorizontal(GUILayout.Width(leftElementWidth + rightElementWidth + 15f));
+            GUILayout.FlexibleSpace();
+            HumanSkinsCurrentSetSetting.Value = GUILayout.SelectionGrid(HumanSkinsCurrentSetSetting, HumanSkinsTitlesList.ToArray(), 1, GUILayout.Width(175f));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.EndScrollView();
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Add"))
+            {
+                HumanSkinsTitlesList.Add("Set " + (HumanSkinsTitlesList.Count + 1));
+                HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
+                HumanSkinsList.Add(("````````````").Split('`'));
+                HumanSkinsCountSetting.Value++;
+                scrollHumanSkins.y = 9999f;
+            }
+            if (GUILayout.Button("Remove"))
+            {
+                if (HumanSkinsCountSetting == 1)
+                {
+                    HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] = "Set 1";
+                    HumanSkinsList[HumanSkinsCurrentSetSetting] = ("````````````").Split('`');
+                }
+                else
+                {
+                    int setToRemove = HumanSkinsCurrentSetSetting;
+                    if (setToRemove != 0) HumanSkinsCurrentSetSetting.Value--;
+                    HumanSkinsList.RemoveAt(setToRemove);
+                    HumanSkinsTitlesList.RemoveAt(setToRemove);
+                    HumanSkinsCountSetting.Value--;
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.EndArea();
+
+            GUILayout.BeginArea(right[0]);
+            GUILayout.Space(15f);
+
+            Label("Skins", LabelType.Header);
+            Label(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], LabelType.SubHeader);
+            GUILayout.BeginHorizontal();
+            Label("Title");
+            HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] = GUILayout.TextField(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], GUILayout.Width(TextFieldWidth));
+            GUILayout.EndHorizontal();
+            for (int i = 0; i < humanSkinFields.Length; i++)
+            {
+                TextField(humanSkinFields[i], ref HumanSkinsList[HumanSkinsCurrentSetSetting][i]);
+            }
+            GUILayout.Space(15f);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button("Copy"))
+            {
+                CopiedHumanSkins = HumanSkinsList[HumanSkinsCurrentSetSetting];
+            }
+            if (GUILayout.Button("Paste"))
+            {
+                if (CopiedHumanSkins != null) HumanSkinsList[HumanSkinsCurrentSetSetting] = CopiedHumanSkins;
+            }
+            if (GUILayout.Button("Reset"))
+            {
+                HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] = "Set " + (HumanSkinsCurrentSetSetting + 1);
+                HumanSkinsList[HumanSkinsCurrentSetSetting] = ("````````````").Split('`');
+            }
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.EndArea();
         }
 
         private static void TitanSkins()
@@ -1210,9 +1333,323 @@ namespace GGM.GUI
             throw new NotImplementedException();
         }
 
-        private static void LevelSkins()
+        private static void LocationSkins()
         {
-            throw new NotImplementedException();
+            switch (locationSkinsSwitch)
+            {
+                case 0:
+                {
+                    GUILayout.BeginArea(left[0]);
+                    GUILayout.Space(15f);
+
+                    Label("Forest", LabelType.Header);
+                    Label("Settings", LabelType.SubHeader);
+                    Grid("Skins Appearance", ref LocationSkinsSetting.Value, skinsAppearanceType);
+                    Grid("Location", ref locationSkinsSwitch, locationSkinsLocation);
+                    Grid("Randomized Pairs", ref LocationSkinsRandomizedPairsSetting.Value);
+
+                    Label("Presets", LabelType.SubHeader);
+                    scrollLocationSkinsForestLeft = GUILayout.BeginScrollView(scrollLocationSkinsForestLeft);
+                    GUILayout.BeginHorizontal(GUILayout.Width(leftElementWidth + rightElementWidth + 15f));
+                    GUILayout.FlexibleSpace();
+                    LocationSkinsForestCurrentSetSetting.Value = GUILayout.SelectionGrid(LocationSkinsForestCurrentSetSetting, LocationSkinsForestTitlesList.ToArray(), 1, GUILayout.Width(175f));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+                    GUILayout.EndScrollView();
+
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Add"))
+                    {
+                        LocationSkinsForestList.Add(("``````````````````````").Split('`'));
+                        LocationSkinsForestTitlesList.Add("Set " + (LocationSkinsForestTitlesList.Count + 1));
+                        LocationSkinsForestCurrentSetSetting.Value = LocationSkinsForestTitlesList.Count - 1;
+                        LocationSkinsForestAmbientList.Add(0);
+                        LocationSkinsForestAmbientSettingsList.Add(new float[] {AmbientColorSetting[0][0], AmbientColorSetting[0][1], AmbientColorSetting[0][2]});
+                        LocationSkinsForestFogList.Add(0);
+                        LocationSkinsForestFogSettingsList.Add(new float[]{0.066f, 0.066f, 0.066f, 0f, 1000f});
+                        LocationSkinsForestParticlesList.Add(0);
+                        LocationSkinsForestParticlesSettingsList.Add(new float[]{1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f});
+                        LocationSkinsForestCountSetting.Value++;
+                        scrollLocationSkinsForestLeft.y = 9999f;
+                    }
+                    if (GUILayout.Button("Remove"))
+                    {
+                        if (LocationSkinsForestCountSetting == 1)
+                        {
+                            LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting] = "Set 1";
+                            LocationSkinsForestList[LocationSkinsForestCurrentSetSetting] = ("``````````````````````").Split('`');
+                            LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] = 0;
+                            LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting] = new float[] {AmbientColorSetting[0][0], AmbientColorSetting[0][1], AmbientColorSetting[0][2]};
+                            LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting] = 0;
+                            LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting] = new float[] {0.066f, 0.066f, 0.066f, 0f, 1000f};
+                            LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting] = 0;
+                            LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting] = new float[] {1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f};
+                        }
+                        else
+                        {
+                            int setToRemove = LocationSkinsForestCurrentSetSetting;
+                            if (setToRemove != 0) LocationSkinsForestCurrentSetSetting.Value--;
+                            LocationSkinsForestList.RemoveAt(setToRemove);
+                            LocationSkinsForestTitlesList.RemoveAt(setToRemove);
+                            LocationSkinsForestAmbientList.RemoveAt(setToRemove);
+                            LocationSkinsForestAmbientSettingsList.RemoveAt(setToRemove);
+                            LocationSkinsForestFogList.RemoveAt(setToRemove);
+                            LocationSkinsForestFogSettingsList.RemoveAt(setToRemove);
+                            LocationSkinsForestParticlesList.RemoveAt(setToRemove);
+                            LocationSkinsForestParticlesSettingsList.RemoveAt(setToRemove);
+                            LocationSkinsForestCountSetting.Value--;
+                        }
+                    }
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.EndArea();
+
+                    GUILayout.BeginArea(right[0]);
+                    GUILayout.Space(15f);
+
+                    Label(LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting], LabelType.Header);
+                    scrollLocationSkinsForestRight = GUILayout.BeginScrollView(scrollLocationSkinsForestRight);
+
+                    GUILayout.BeginHorizontal();
+                    Label("Title");
+                    LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting] = GUILayout.TextField(LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting], GUILayout.Width(TextFieldWidth));
+                    GUILayout.EndHorizontal();
+                    for (int i = 0; i < locationSkinForestFields.Length; i++)
+                    {
+                        TextField(locationSkinForestFields[i], ref LocationSkinsForestList[LocationSkinsForestCurrentSetSetting][i]);
+                    }
+
+                    GUILayout.BeginHorizontal();
+                    Label("Ambient");
+                    LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(GridWidth));
+                    GUILayout.EndHorizontal();
+                    if (LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] == 1)
+                    {
+                        Slider("R", ref LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][0], 0f, 1f);
+                        Slider("G", ref LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][1], 0f, 1f);
+                        Slider("B", ref LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][2], 0f, 1f);
+                    }
+
+                    GUILayout.BeginHorizontal();
+                    Label("Fog");
+                    LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting] =GUILayout.SelectionGrid(LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(GridWidth));
+                    GUILayout.EndHorizontal();
+                    if (LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting] == 1)
+                    {
+                        Slider("R", ref LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][0], 0f,1f);
+                        Slider("G", ref LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][1], 0f,1f);
+                        Slider("B", ref LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][2], 0f,1f);
+                        if (LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3] > LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][4] && LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3] != 0f) LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3] = LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][4] - 0.1f;
+                        if (LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3] < 0) LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3] = 0;
+                        Slider("Start Distance", ref LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3], 0f, 1000f);
+                        Slider("End Distance", ref LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][4], 0f, 1000f);
+                    }
+
+                    GUILayout.BeginHorizontal();
+                    Label("Particles");
+                    LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(GridWidth));
+                    GUILayout.EndHorizontal();
+                    if (LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting] == 1)
+                    {
+                        Slider("Count", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][0], 100f, 15000f);
+                        Slider("Height", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][1], 0F, 1000f);
+                        if (LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][2] > LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][3] && LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][2] != 0f) LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][2] = LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][3] - 0.1f;
+                        if (LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][2] < 0) LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][2] = 0;
+                        Slider("Lifetime Minimum", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][2], 0f, 600f);
+                        Slider("Lifetime Maximum", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][3], 0f, 600f);
+                        Slider("Gravity", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][4], 0f, 5f);
+                        Slider("R", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][5], 0f, 1f);
+                        Slider("G", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][6], 0f, 1f);
+                        Slider("B", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][7], 0f, 1f);
+                        Slider("A", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][8], 0f, 1f);
+                    }
+
+                    GUILayout.EndScrollView();
+
+                    GUILayout.Space(15f);
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Copy"))
+                    {
+                        LocationSkinsForestCopiedSet = LocationSkinsForestList[LocationSkinsForestCurrentSetSetting];
+                    }
+                    if (GUILayout.Button("Paste"))
+                    {
+                        if (LocationSkinsForestCopiedSet != null)
+                            LocationSkinsForestList[LocationSkinsForestCurrentSetSetting] = LocationSkinsForestCopiedSet;
+                    }
+                    if (GUILayout.Button("Reset"))
+                    {
+                        LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting] = "Set " + (LocationSkinsForestCurrentSetSetting + 1);
+                        LocationSkinsForestList[LocationSkinsForestCurrentSetSetting] = ("``````````````````````").Split('`');
+                        LocationSkinsForestAmbientList[LocationSkinsForestCountSetting] = 0;
+                        LocationSkinsForestAmbientSettingsList[LocationSkinsForestCountSetting] = new float[] {AmbientColorSetting[0][0], AmbientColorSetting[0][1], AmbientColorSetting[0][2]};
+                        LocationSkinsForestFogList[LocationSkinsForestCountSetting] = 0;
+                        LocationSkinsForestFogSettingsList[LocationSkinsForestCountSetting] = new float[] {0.066f, 0.066f, 0.066f, 0f, 1000f};
+                        LocationSkinsForestParticlesList[LocationSkinsForestCountSetting] = 0;
+                        LocationSkinsForestParticlesSettingsList[LocationSkinsForestCountSetting] = new float[] {1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f};
+                    }
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.EndArea();
+                }
+                    break;
+                case 1:
+                {
+                    GUILayout.BeginArea(left[0]);
+                    GUILayout.Space(15f);
+
+                    Label("City", LabelType.Header);
+                    Label("Settings", LabelType.SubHeader);
+                    Grid("Skins Appearance", ref LocationSkinsSetting.Value, skinsAppearanceType);
+                    Grid("Location", ref locationSkinsSwitch, locationSkinsLocation);
+
+                    Label("Presets", LabelType.SubHeader);
+                    scrollLocationSkinsCityLeft = GUILayout.BeginScrollView(scrollLocationSkinsCityLeft, GUILayout.Width(0f));
+                    GUILayout.BeginHorizontal(GUILayout.Width(leftElementWidth + rightElementWidth + 15f));
+                    GUILayout.FlexibleSpace();
+                    LocationSkinsCityCurrentSetSetting.Value = GUILayout.SelectionGrid(LocationSkinsCityCurrentSetSetting, LocationSkinsCityTitlesList.ToArray(), 1, GUILayout.Width(175f));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+                    GUILayout.EndScrollView();
+
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Add"))
+                    {
+                        LocationSkinsCityTitlesList.Add("Set " + (LocationSkinsCityTitlesList.Count + 1));
+                        LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
+                        LocationSkinsCityList.Add(("````````````````").Split('`'));
+                        LocationSkinsCityAmbientList.Add(0);
+                        LocationSkinsCityAmbientSettingsList.Add(new float[] {AmbientColorSetting[0][0], AmbientColorSetting[0][1], AmbientColorSetting[0][2]});
+                        LocationSkinsCityFogList.Add(0);
+                        LocationSkinsCityFogSettingsList.Add(new float[] {0.066f, 0.066f, 0.066f, 0f, 1000f});
+                        LocationSkinsCityParticlesList.Add(0);
+                        LocationSkinsCityParticlesSettingsList.Add(new float[] {1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f});
+                        LocationSkinsCityCountSetting.Value++;
+                        scrollLocationSkinsCityLeft.y = 9999f;
+                    }
+                    if (GUILayout.Button("Remove"))
+                    {
+                        if (LocationSkinsCityCountSetting == 1)
+                        {
+                            LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting] = "Set 1";
+                            LocationSkinsCityList[LocationSkinsCityCurrentSetSetting] = ("````````````````").Split('`');
+                            LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] = 0;
+                            LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting] = new float[] {AmbientColorSetting[0][0], AmbientColorSetting[0][1], AmbientColorSetting[0][2]};
+                            LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting] = 0;
+                            LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting] = new float[] {0.066f, 0.066f, 0.066f, 0f, 1000f};
+                            LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting] = 0;
+                            LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting] = new float[] {1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f};
+                        }
+                        else
+                        {
+                            int setToRemove = LocationSkinsCityCurrentSetSetting;
+                            if (setToRemove != 0) LocationSkinsCityCurrentSetSetting.Value--;
+                            LocationSkinsCityList.RemoveAt(setToRemove);
+                            LocationSkinsCityTitlesList.RemoveAt(setToRemove);
+                            LocationSkinsCityAmbientList.RemoveAt(setToRemove);
+                            LocationSkinsCityAmbientSettingsList.RemoveAt(setToRemove);
+                            LocationSkinsCityFogList.RemoveAt(setToRemove);
+                            LocationSkinsCityFogSettingsList.RemoveAt(setToRemove);
+                            LocationSkinsCityParticlesList.RemoveAt(setToRemove);
+                            LocationSkinsCityParticlesSettingsList.RemoveAt(setToRemove);
+                            LocationSkinsCityCountSetting.Value--;
+                        }
+                    }
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.EndArea();
+
+                    GUILayout.BeginArea(right[0]);
+                    GUILayout.Space(15f);
+
+                    Label(LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting], LabelType.Header);
+                    scrollLocationSkinsCityRight = GUILayout.BeginScrollView(scrollLocationSkinsCityRight, GUILayout.Width(0f));
+
+                    GUILayout.BeginHorizontal();
+                    Label("Title");
+                    LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting] = GUILayout.TextField(LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting], GUILayout.Width(TextFieldWidth));
+                    GUILayout.EndHorizontal();
+                    for (int i = 0; i < locationSkinCityFields.Length; i++)
+                    {
+                        TextField(locationSkinCityFields[i], ref LocationSkinsCityList[LocationSkinsCityCurrentSetSetting][i]);
+                    }
+
+                    GUILayout.BeginHorizontal();
+                    Label("Ambient");
+                    LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(GridWidth));
+                    GUILayout.EndHorizontal();
+                    if (LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] == 1)
+                    {
+                        Slider("R", ref LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][0], 0f, 1f);
+                        Slider("G", ref LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][1], 0f, 1f);
+                        Slider("B", ref LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][2], 0f, 1f);
+                    }
+
+                    GUILayout.BeginHorizontal();
+                    Label("Fog");
+                    LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(GridWidth));
+                    GUILayout.EndHorizontal();
+                    if (LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting] == 1)
+                    {
+                        Slider("R", ref LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][0], 0f, 1f);
+                        Slider("G", ref LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][1], 0f, 1f);
+                        Slider("B", ref LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][2], 0f, 1f);
+                        if (LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3] > LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4] && LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3] != 0f) LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3] = LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4] - 0.1f;
+                        if (LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3] < 0) LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3] = 0;
+                        Slider("Start Distance", ref LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3], 0f, 1000f);
+                        Slider("End Distance", ref LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4], 0f, 1000f);
+                    }
+
+                    GUILayout.BeginHorizontal();
+                    Label("Particles");
+                    LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(GridWidth));
+                    GUILayout.EndHorizontal();
+                    if (LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting] == 1)
+                    {
+                        Slider("Count", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][0], 100f, 15000f);
+                        Slider("Height", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][1], 0F, 1000f);
+                        if (LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][2] > LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][3] && LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][2] != 0f) LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][2] = LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][3] - 0.1f;
+                        if (LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][2] < 0) LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][2] = 0;
+                        Slider("Lifetime Minimum", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][2], 0f, 600f);
+                        Slider("Lifetime Maximum", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][3], 0f, 600f);
+                        Slider("Gravity", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][4], 0f, 5f);
+                        Slider("R", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][5], 0f, 1f);
+                        Slider("G", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][6], 0f, 1f);
+                        Slider("B", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][7], 0f, 1f);
+                        Slider("A", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][8], 0f, 1f);
+                    }
+
+                    GUILayout.EndScrollView();
+
+                    GUILayout.Space(15f);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("Copy"))
+                    {
+                        LocationSkinsCityCopiedSet = LocationSkinsCityList[LocationSkinsCityCurrentSetSetting];
+                    }
+                    if (GUILayout.Button("Paste"))
+                    {
+                        if (LocationSkinsCityCopiedSet != null) LocationSkinsCityList[LocationSkinsCityCurrentSetSetting] = LocationSkinsCityCopiedSet;
+                    }
+                    if (GUILayout.Button("Reset"))
+                    {
+                        LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting] = "Set " + (LocationSkinsCityCurrentSetSetting + 1);
+                        LocationSkinsCityList[LocationSkinsCityCurrentSetSetting] = ("````````````````").Split('`');
+                        LocationSkinsCityAmbientList[LocationSkinsCityCountSetting] = 0;
+                        LocationSkinsCityAmbientSettingsList[LocationSkinsCityCountSetting] = new float[] {AmbientColorSetting[0][0], AmbientColorSetting[0][1], AmbientColorSetting[0][2]};
+                        LocationSkinsCityFogList[LocationSkinsCityCountSetting] = 0;
+                        LocationSkinsCityFogSettingsList[LocationSkinsCityCountSetting] = new float[] {0.066f, 0.066f, 0.066f, 0f, 1000f};
+                        LocationSkinsCityParticlesList[LocationSkinsCityCountSetting] = 0;
+                        LocationSkinsCityParticlesSettingsList[LocationSkinsCityCountSetting] = new float[] {1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f};
+                    }
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.EndArea();
+                }
+                    break;
+            }
         }
 
         private static void CustomMap()

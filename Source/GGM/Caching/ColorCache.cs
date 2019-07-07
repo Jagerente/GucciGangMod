@@ -22,7 +22,7 @@ namespace GGM.Caching
         public static readonly ColorCache White = new ColorCache(Color.white);
         public static readonly ColorCache Yellow = new ColorCache(Color.yellow);
 
-        public static Dictionary<Color, Texture2D> textures = null;
+        public static Dictionary<Color, Texture2D> Textures = null;
 
         public readonly Color Value;
         public readonly Texture2D Texture;
@@ -35,17 +35,17 @@ namespace GGM.Caching
 
         public static Texture2D GetTexture(Color color)
         {
-            if (textures == null)
-                textures = new Dictionary<Color, Texture2D>();
+            if (Textures == null)
+                Textures = new Dictionary<Color, Texture2D>();
             Texture2D result = null;
-            if (textures.TryGetValue(color, out result))
+            if (Textures.TryGetValue(color, out result))
             {
                 return result;
             }
             result = new Texture2D(1, 1, TextureFormat.ARGB32, false);
             result.SetPixel(0, 0, color);
             result.Apply();
-            textures.Add(color, result);
+            Textures.Add(color, result);
             return result;
         }
 
