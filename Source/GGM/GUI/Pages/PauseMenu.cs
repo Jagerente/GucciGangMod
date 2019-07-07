@@ -782,7 +782,7 @@ namespace GGM.GUI.Pages
                         for (var i = humanRebinds.Length / 2; i < humanRebinds.Length; i++)
                         {
                             GUILayout.BeginHorizontal();
-                            float width = 225f;
+                            var width = 225f;
                             if (i == 22 || i == 23 || i == 24) width = 170f;
                             Label(humanRebinds[i], width: width);
                             if (i < 22)
@@ -1192,7 +1192,7 @@ namespace GGM.GUI.Pages
                 20 - (BombSettings[0] + BombSettings[1] + BombSettings[3]),
                 20 - (BombSettings[0] + BombSettings[1] + BombSettings[2])
             };
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 GUILayout.BeginHorizontal();
                 Slider(bombStats[i], ref BombSettings[i].Value, 0, freePoints[i] > 10 ? 10 : freePoints[i]);
@@ -1204,7 +1204,7 @@ namespace GGM.GUI.Pages
             Slider("G", ref BombColorSetting[1].Value, 0f, 1f);
             Slider("B", ref BombColorSetting[2].Value, 0f, 1f);
             //Slider("A", ref BombColorSetting[3].Value, 0f, 1f);
-            Texture2D txt = new Texture2D(1, 1);
+            var txt = new Texture2D(1, 1);
             txt.SetPixel(0, 0, new Color(BombColorSetting[0], BombColorSetting[1], BombColorSetting[2]/*, BombColorSetting[3]*/));
             txt.Apply();
             UnityEngine.GUI.DrawTexture(new Rect(50f, 175f, 70f, 70f), txt, ScaleMode.StretchToFill);
@@ -1213,7 +1213,7 @@ namespace GGM.GUI.Pages
             GUILayout.BeginArea(right[0]);
             GUILayout.Space(15f);
             GUILayout.Label("Color Presets", HeaderStyle);
-            GUIStyle style = new GUIStyle();
+            var style = new GUIStyle();
             foreach (var texture in ColorCache.Textures)
             {
                 style.normal.background = style.hover.background = style.active.background = texture.Value;
@@ -1291,7 +1291,7 @@ namespace GGM.GUI.Pages
             Label("Title");
             HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] = GUILayout.TextField(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], GUILayout.Width(TextFieldWidth));
             GUILayout.EndHorizontal();
-            for (int i = 0; i < humanSkinFields.Length; i++)
+            for (var i = 0; i < humanSkinFields.Length; i++)
             {
                 TextField(humanSkinFields[i], ref HumanSkinsList[HumanSkinsCurrentSetSetting][i]);
             }
@@ -1568,7 +1568,7 @@ namespace GGM.GUI.Pages
                         Label("Title");
                         LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting] = GUILayout.TextField(LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting], GUILayout.Width(TextFieldWidth));
                         GUILayout.EndHorizontal();
-                        for (int i = 0; i < locationSkinForestFields.Length; i++)
+                        for (var i = 0; i < locationSkinForestFields.Length; i++)
                         {
                             TextField(locationSkinForestFields[i], ref LocationSkinsForestList[LocationSkinsForestCurrentSetSetting][i]);
                         }
@@ -1723,7 +1723,7 @@ namespace GGM.GUI.Pages
                         Label("Title");
                         LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting] = GUILayout.TextField(LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting], GUILayout.Width(TextFieldWidth));
                         GUILayout.EndHorizontal();
-                        for (int i = 0; i < locationSkinCityFields.Length; i++)
+                        for (var i = 0; i < locationSkinCityFields.Length; i++)
                         {
                             TextField(locationSkinCityFields[i], ref LocationSkinsCityList[LocationSkinsCityCurrentSetSetting][i]);
                         }

@@ -48,7 +48,7 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginVertical(GUILayout.Width(120));
             Label("Camera Type", LabelType.Header);
-            int ss = (int)IN_GAME_MAIN_CAMERA.cameraMode;
+            var ss = (int)IN_GAME_MAIN_CAMERA.cameraMode;
             ss = GUILayout.SelectionGrid(ss, new[] { "ORIGINAL", "WOW", "TPS" }, 1);
             IN_GAME_MAIN_CAMERA.cameraMode = (CAMERA_TYPE)ss;
 

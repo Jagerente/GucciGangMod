@@ -156,7 +156,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
             case CAMERA_TYPE.OLDTPS:
             {
-                Quaternion quaternion = Quaternion.Euler(0f, this.transform.eulerAngles.y, 0f);
+                var quaternion = Quaternion.Euler(0f, this.transform.eulerAngles.y, 0f);
                 this.transform.position = head.position + Vector3.up * 3f;
                 this.rotationY += ((Input.GetAxis("Mouse Y") * 2.5f) * (sensitivityMulti * 2f)) * invertY;
                 this.rotationY = Mathf.Clamp(this.rotationY, -60f, 60f);

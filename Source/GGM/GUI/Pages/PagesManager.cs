@@ -6,11 +6,11 @@ namespace GGM.GUI.Pages
     {
         private void Awake()
         {
-            PauseMenu pauseMenu = new GameObject("PauseMenu").AddComponent<PauseMenu>();
+            var pauseMenu = new GameObject("PauseMenu").AddComponent<PauseMenu>();
             pauseMenu.gameObject.SetActive(false);
             DontDestroyOnLoad(pauseMenu);
 
-            MainMenu mainMenu = new GameObject("MainMenu").AddComponent<MainMenu>();
+            var mainMenu = new GameObject("MainMenu").AddComponent<MainMenu>();
             mainMenu.gameObject.SetActive(false);
             DontDestroyOnLoad(mainMenu);
         }
