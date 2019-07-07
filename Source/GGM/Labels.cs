@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using static GGM.Caching.ColorCache;
+using static GGM.GUI.Styles;
 
 namespace GGM
 {
     internal class Labels
     {
-        internal static Font tahoma;
         private static TextMesh bottomRight;
         private static TextMesh center;
         private static TextMesh topCenter;
@@ -19,6 +15,8 @@ namespace GGM
         private static TextMesh version;
         private static TextMesh crosshair;
 
+        private static readonly int font = 1;
+
         public static string BottomRight
         {
             get
@@ -27,14 +25,14 @@ namespace GGM
                 {
                     return bottomRight.text;
                 }
-                bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, White, tahoma, TextAlignment.Right);
+                bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, White, Fonts[font], TextAlignment.Right);
                 return bottomRight == null ? string.Empty : bottomRight.text;
             }
             set
             {
                 if (bottomRight == null)
                 {
-                    bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, White, tahoma, TextAlignment.Right);
+                    bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, White, Fonts[font], TextAlignment.Right);
                     if (bottomRight == null)
                     {
                         return;
@@ -53,14 +51,14 @@ namespace GGM
                 {
                     return center.text;
                 }
-                center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, White, tahoma, TextAlignment.Center);
+                center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, White, Fonts[font], TextAlignment.Center);
                 return center == null ? string.Empty : center.text;
             }
             set
             {
                 if (center == null)
                 {
-                    center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, White, tahoma, TextAlignment.Center);
+                    center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, White, Fonts[font], TextAlignment.Center);
                     if (center == null)
                         return;
                 }
@@ -76,14 +74,14 @@ namespace GGM
                 {
                     return networkStatus.text;
                 }
-                networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, White, tahoma, TextAlignment.Left);
+                networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, White, Fonts[font], TextAlignment.Left);
                 return networkStatus == null ? string.Empty : networkStatus.text;
             }
             set
             {
                 if (networkStatus == null)
                 {
-                    networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, White, tahoma, TextAlignment.Left);
+                    networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, White, Fonts[font], TextAlignment.Left);
                     if (networkStatus == null)
                         return;
                 }
@@ -99,14 +97,14 @@ namespace GGM
                 {
                     return topCenter.text;
                 }
-                topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, White, tahoma, TextAlignment.Center);
+                topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, White, Fonts[font], TextAlignment.Center);
                 return topCenter == null ? string.Empty : topCenter.text;
             }
             set
             {
                 if (topCenter == null)
                 {
-                    topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, White, tahoma, TextAlignment.Center);
+                    topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, White, Fonts[font], TextAlignment.Center);
                     if (topCenter == null)
                         return;
                 }
@@ -122,14 +120,14 @@ namespace GGM
                 {
                     return topLeft.text;
                 }
-                topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, White, tahoma, TextAlignment.Left);
+                topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, White, Fonts[font], TextAlignment.Left);
                 return topLeft == null ? string.Empty : topLeft.text;
             }
             set
             {
                 if (topLeft == null)
                 {
-                    topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, White, tahoma, TextAlignment.Left);
+                    topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, White, Fonts[font], TextAlignment.Left);
                     if (topLeft == null)
                         return;
                 }
@@ -145,14 +143,14 @@ namespace GGM
                 {
                     return topRight.text;
                 }
-                topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, White, tahoma, TextAlignment.Right);
+                topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, White, Fonts[font], TextAlignment.Right);
                 return topRight == null ? string.Empty : topRight.text;
             }
             set
             {
                 if (topRight == null)
                 {
-                    topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, White, tahoma, TextAlignment.Right);
+                    topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, White, Fonts[font], TextAlignment.Right);
                     if (topRight == null)
                         return;
                 }
@@ -168,14 +166,14 @@ namespace GGM
                 {
                     return version.text;
                 }
-                version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, White, tahoma, TextAlignment.Center);
+                version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, White, Fonts[font], TextAlignment.Center);
                 return version == null ? string.Empty : version.text;
             }
             set
             {
                 if (version == null)
                 {
-                    version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, White, tahoma, TextAlignment.Center);
+                    version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, White, Fonts[font], TextAlignment.Center);
                     if (version == null)
                         return;
                 }
@@ -191,14 +189,14 @@ namespace GGM
                 {
                     return crosshair.text;
                 }
-                crosshair = CreateLabel("LabelDistance", 26, TextAnchor.MiddleCenter, White, tahoma, TextAlignment.Center);
+                crosshair = CreateLabel("LabelDistance", 26, TextAnchor.MiddleCenter, White, Fonts[font], TextAlignment.Center);
                 return crosshair == null ? string.Empty : crosshair.text;
             }
             set
             {
                 if (crosshair == null)
                 {
-                    crosshair = CreateLabel("LabelDistance", 26, TextAnchor.MiddleCenter, White, tahoma, TextAlignment.Center);
+                    crosshair = CreateLabel("LabelDistance", 26, TextAnchor.MiddleCenter, White, Fonts[font], TextAlignment.Center);
                     if (crosshair == null)
                         return;
                 }
@@ -236,14 +234,6 @@ namespace GGM
             }
             text.richText = true;
             return text;
-        }
-
-        public static System.Collections.IEnumerator LoadFonts()
-        {
-            if (tahoma != null) yield break;
-            var bundle = AssetBundle.CreateFromMemory(System.IO.File.ReadAllBytes(Application.dataPath + "/Resources/cyan.unity3d"));
-            yield return bundle;
-            tahoma = (Font)(bundle.assetBundle.Load("tahoma"));
         }
     }
 }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GGM.Caching;
+﻿using GGM.Caching;
 using UnityEngine;
 
 namespace GGM.GUI.Pages
 {
-    class MainMenu : MonoBehaviour
+    internal class MainMenu : MonoBehaviour
     {
         private bool isVisible;
 
@@ -47,7 +43,7 @@ namespace GGM.GUI.Pages
             isVisible = false;
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             #region Single
 
