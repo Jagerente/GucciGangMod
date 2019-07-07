@@ -765,8 +765,6 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     Screen.showCursor = true;
                     Screen.lockCursor = false;
                 }
-
-                GGM.GUI.Pages.Page = isPausing ? "Menu" : string.Empty;
             }
             if (needSetHUD)
             {
