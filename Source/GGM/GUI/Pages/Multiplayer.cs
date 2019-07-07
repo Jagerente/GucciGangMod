@@ -1,6 +1,8 @@
-﻿namespace GGM.GUI.Pages
+﻿using UnityEngine;
+
+namespace GGM.GUI.Pages
 {
-    internal class Multiplayer
+    internal class Multiplayer : MonoBehaviour
     {
     }
 }

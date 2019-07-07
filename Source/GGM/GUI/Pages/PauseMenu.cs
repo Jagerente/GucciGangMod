@@ -7,11 +7,8 @@ using static GGM.GUI.Settings;
 
 namespace GGM.GUI.Pages
 {
-    internal class PauseMenu : MonoBehaviour
+    internal class PauseMenu : Page<MonoBehaviour>
     {
-        public static PauseMenu Instance;
-        private bool isVisible;
-
         #region Switchers
         private static int pauseMenuSwitchInt;
         private static int serverSwitch;
@@ -102,25 +99,9 @@ namespace GGM.GUI.Pages
         private static Vector2 scrollLocationSkinsCityLeft = Vector2.zero;
         private static Vector2 scrollLocationSkinsCityRight = Vector2.zero;
         #endregion
-        
-        private void Awake()
-        {
-            Instance = this;
-        }
-
-        public void OnEnable()
-        {
-            isVisible = true;
-        }
-
-        public void OnDisable()
-        {
-            isVisible = false;
-        }
 
         private void OnGUI()
         {
-            if (!isVisible) return;
             UnityEngine.GUI.Box(new Rect(leftPos, topPos, width, height), string.Empty);
 
             pauseMenuSwitchInt = UnityEngine.GUI.SelectionGrid(new Rect(leftPos + 5f, topPos + 5f, width - 10f, 50f), pauseMenuSwitchInt, pauseMenuPages, 5);
