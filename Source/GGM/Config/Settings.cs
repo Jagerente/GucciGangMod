@@ -552,9 +552,6 @@ namespace GGM.Config
                 case 0:
                     Storage = new PrefStorage();
                     break;
-
-                default:
-                    break;
             }
         }
 
