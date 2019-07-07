@@ -10,7 +10,7 @@ namespace GGM.GUI.Pages
 {
     public class LevelEditor : MonoBehaviour
     {
-        void OnGUI()
+        private void OnGUI()
         {
             bool flag2;
             int num13;

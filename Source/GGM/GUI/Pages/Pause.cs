@@ -5,7 +5,7 @@ namespace GGM.GUI.Pages
 {
     public class Pause : MonoBehaviour
     {
-        void OnGUI()
+        private void OnGUI()
         {
             float num7, num8;
             if (Time.timeScale <= 0.1f)

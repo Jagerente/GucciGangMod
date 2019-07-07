@@ -5,7 +5,7 @@ namespace GGM.GUI.Pages
 {
     internal class LoadingScreen : MonoBehaviour
     {
-        void OnGUI()
+        private void OnGUI()
         {
             UnityEngine.GUI.backgroundColor = ColorCache.Black;
             UnityEngine.GUI.Box(new Rect(0, 0, Screen.width, Screen.height), string.Empty);
