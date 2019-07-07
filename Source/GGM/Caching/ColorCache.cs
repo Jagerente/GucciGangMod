@@ -5,6 +5,8 @@ namespace GGM.Caching
 {
     public class ColorCache
     {
+        public static Dictionary<Color, Texture2D> Textures;
+
         public static readonly ColorCache Black = new ColorCache(Color.black);
         public static readonly ColorCache Blue = new ColorCache(Color.blue);
         public static readonly ColorCache Clear = new ColorCache(Color.clear);
@@ -22,7 +24,6 @@ namespace GGM.Caching
         public static readonly ColorCache White = new ColorCache(Color.white);
         public static readonly ColorCache Yellow = new ColorCache(Color.yellow);
 
-        public static Dictionary<Color, Texture2D> Textures = null;
 
         public readonly Color Value;
         public readonly Texture2D Texture;
