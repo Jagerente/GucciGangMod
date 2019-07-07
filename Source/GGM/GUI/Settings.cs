@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GGM.GUI
 {
-    internal class Settings
+    internal class Settings : MonoBehaviour
     {
         internal static string[] SwitcherStr = {"Off", "On"};
         internal const float width = 775f;
@@ -78,7 +78,7 @@ namespace GGM.GUI
         protected static readonly Color ColorMajor = ColorCache.Melon;
         protected static readonly Color ColorMinor = ColorCache.Froly;
 
-        protected static readonly GUIStyle[] LabelStyle =
+        internal static readonly GUIStyle[] LabelStyle =
         {
             TextStyle(TextAnchor.MiddleLeft, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor),
             TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor),
@@ -108,8 +108,7 @@ namespace GGM.GUI
                 active =
                 {
                     textColor = activeColor
-                },
-                font = Labels.tahoma
+                }
             };
         }
 
