@@ -18,7 +18,7 @@ internal class LoadbalancingPeer : PhotonPeer
         if (authValues != null && authValues.Secret != null)
         {
             customOpParameters[221] = authValues.Secret;
-            return OpCustom(230, customOpParameters, true, 0, false);
+            return SendOperation(230, customOpParameters, SendOptions.SendReliable);
         }
         customOpParameters[220] = appVersion;
         customOpParameters[224] = appId;
@@ -51,7 +51,7 @@ internal class LoadbalancingPeer : PhotonPeer
                 customOpParameters[214] = authValues.AuthPostData;
             }
         }
-        var flag = OpCustom(230, customOpParameters, true, 0, IsEncryptionAvailable);
+        var flag = SendOperation(230, customOpParameters, new SendOptions() { Channel = 0, DeliveryMode = DeliveryMode.Reliable, Encrypt = IsEncryptionAvailable });
         if (!flag)
         {
             Listener.DebugReturn(DebugLevel.ERROR, "Error calling OpAuthenticate! Did not work. Check log output, CustomAuthenticationValues and if you're connected.");
@@ -74,7 +74,7 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             customOpParameters[238] = groupsToAdd;
         }
-        return OpCustom(248, customOpParameters, true, 0);
+        return SendOperation(248, customOpParameters, SendOptions.SendReliable);
     }
 
     public virtual bool OpCreateRoom(string roomName, RoomOptions roomOptions, TypedLobby lobby, Hashtable playerProperties, bool onGameServer)
@@ -120,7 +120,7 @@ internal class LoadbalancingPeer : PhotonPeer
                 target[(byte) 249] = true;
             }
         }
-        return OpCustom(227, customOpParameters, true);
+        return SendOperation(227, customOpParameters, SendOptions.SendReliable);
     }
 
     public virtual bool OpFindFriends(string[] friendsToFind)
@@ -130,14 +130,14 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             customOpParameters[1] = friendsToFind;
         }
-        return OpCustom(222, customOpParameters, true);
+        return SendOperation(222, customOpParameters, SendOptions.SendReliable);
     }
 
     public virtual bool OpGetRegions(string appId)
     {
         var customOpParameters = new Dictionary<byte, object>();
         customOpParameters[224] = appId;
-        return OpCustom(220, customOpParameters, true, 0, true);
+        return SendOperation(220, customOpParameters, new SendOptions() { Encrypt = true, DeliveryMode = DeliveryMode.Reliable });
     }
 
     public virtual bool OpJoinLobby(TypedLobby lobby)
@@ -153,7 +153,7 @@ internal class LoadbalancingPeer : PhotonPeer
             customOpParameters[213] = lobby.Name;
             customOpParameters[212] = (byte) lobby.Type;
         }
-        return OpCustom(229, customOpParameters, true);
+        return SendOperation(229, customOpParameters, SendOptions.SendReliable);
     }
 
     public virtual bool OpJoinRandomRoom(Hashtable expectedCustomRoomProperties, byte expectedMaxPlayers, Hashtable playerProperties, MatchmakingMode matchingType, TypedLobby typedLobby, string sqlLobbyFilter)
@@ -190,7 +190,7 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             customOpParameters[245] = sqlLobbyFilter;
         }
-        return OpCustom(225, customOpParameters, true);
+        return SendOperation(225, customOpParameters, SendOptions.SendReliable);
     }
 
     public virtual bool OpJoinRoom(string roomName, RoomOptions roomOptions, TypedLobby lobby, bool createIfNotExists, Hashtable playerProperties, bool onGameServer)
@@ -239,7 +239,7 @@ internal class LoadbalancingPeer : PhotonPeer
                 }
             }
         }
-        return OpCustom(226, customOpParameters, true);
+        return SendOperation(226, customOpParameters, SendOptions.SendReliable);
     }
 
     public virtual bool OpLeaveLobby()
@@ -248,7 +248,7 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             Listener.DebugReturn(DebugLevel.INFO, "OpLeaveLobby()");
         }
-        return OpCustom(228, null, true);
+        return SendOperation(228, null, SendOptions.SendReliable);
     }
 
     public virtual bool OpRaiseEvent(byte eventCode, object customEventContent, bool sendReliable, RaiseEventOptions raiseEventOptions)
@@ -286,7 +286,7 @@ internal class LoadbalancingPeer : PhotonPeer
                 customOpParameters[234] = true;
             }
         }
-        return OpCustom(253, customOpParameters, sendReliable, raiseEventOptions.SequenceChannel, false);
+        return SendOperation(253, customOpParameters, new SendOptions() { DeliveryMode = sendReliable ? DeliveryMode.Reliable : DeliveryMode.Unreliable, Channel = raiseEventOptions.SequenceChannel });
     }
 
     public bool OpSetCustomPropertiesOfActor(int actorNr, Hashtable actorProperties, bool broadcast, byte channelId)
@@ -320,7 +320,7 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             customOpParameters.Add(250, broadcast);
         }
-        return OpCustom(252, customOpParameters, broadcast, channelId);
+        return SendOperation(252, customOpParameters, new SendOptions() { Reliability = broadcast, Channel = channelId });
     }
 
     public bool OpSetPropertiesOfRoom(Hashtable gameProperties, bool broadcast, byte channelId)
@@ -335,7 +335,7 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             customOpParameters.Add(250, true);
         }
-        return OpCustom(252, customOpParameters, broadcast, channelId);
+        return SendOperation(252, customOpParameters, new SendOptions() { Reliability = broadcast, Channel = channelId });
     }
 
     protected void OpSetPropertyOfRoom(byte propCode, object value)
