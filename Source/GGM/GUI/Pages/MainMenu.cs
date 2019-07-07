@@ -7,8 +7,13 @@ using UnityEngine;
 
 namespace GGM.GUI.Pages
 {
-    class MainMenu : Elements
+    class MainMenu : MonoBehaviour
     {
+        private bool isVisible;
+
+        public static MainMenu Instance;
+
+        #region Settings
         private static int loginSwitchInt;
 
         private const string Size = "72";
@@ -25,6 +30,22 @@ namespace GGM.GUI.Pages
 
         private static string quitButton = string.Empty;
         private static Rect quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
+        #endregion
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+        public void OnEnable()
+        {
+            isVisible = true;
+        }
+
+        public void OnDisable()
+        {
+            isVisible = false;
+        }
 
         void OnGUI()
         {

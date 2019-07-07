@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using static GGM.GUI.Elements;
+using static GGM.GUI.Settings;
 
 namespace GGM.GUI.Pages
 {
-    internal class Single : Elements
+    internal class Single
     {
         private static readonly string[] mapStr =
         {
@@ -40,29 +42,29 @@ namespace GGM.GUI.Pages
             GUILayout.BeginArea(new Rect(Screen.width / 2 - 440, Screen.height / 2 - 250, 880, 500));
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical(GUILayout.Width(250f));
-            Label("Map", Settings.LabelType.Header);
+            Label("Map", LabelType.Header);
             map = GUILayout.SelectionGrid(map, mapStr, 1);
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical(GUILayout.Width(120));
-            Label("Camera Type", Settings.LabelType.Header);
+            Label("Camera Type", LabelType.Header);
             int ss = (int)IN_GAME_MAIN_CAMERA.cameraMode;
             ss = GUILayout.SelectionGrid(ss, new[] { "ORIGINAL", "WOW", "TPS" }, 1);
             IN_GAME_MAIN_CAMERA.cameraMode = (CAMERA_TYPE)ss;
 
-            Label("Daytime", Settings.LabelType.Header);
+            Label("Daytime", LabelType.Header);
             daytime = GUILayout.SelectionGrid(daytime, new[] { "Day", "Dawn", "Night" }, 1);
             IN_GAME_MAIN_CAMERA.dayLight = (DayLight)daytime;
 
 
-            Label("Difficulty", Settings.LabelType.Header);
+            Label("Difficulty", LabelType.Header);
             IN_GAME_MAIN_CAMERA.difficulty = GUILayout.SelectionGrid(IN_GAME_MAIN_CAMERA.difficulty,
                 new[] { "Normal", "Hard", "Abnormal" }, 1);
             GUILayout.EndVertical();
 
             GUILayout.Label("", GUILayout.Width(100f));
             GUILayout.BeginVertical();
-            Label("Character", Settings.LabelType.Header);
+            Label("Character", LabelType.Header);
             costume = GUILayout.SelectionGrid(costume, new[] { "Cos 1", "Cos 2", "Cos 3" }, 3);
             CheckBoxCostume.costumeSet = costume + 1;
             chars = GUILayout.SelectionGrid(chars, charsStr, 1);

@@ -2,10 +2,11 @@
 using GGM.Config;
 using UnityEngine;
 using static GGM.GUI.GUIHelpers;
+using static GGM.GUI.Settings;
 
 namespace GGM.GUI
 {
-    internal class Elements : Settings
+    internal class Elements
     {
         /// <summary>
         /// GUILayout.Label

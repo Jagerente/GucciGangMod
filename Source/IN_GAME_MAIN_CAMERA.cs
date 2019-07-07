@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GGM.GUI.Pages;
+using UnityEngine;
 
 public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 {
@@ -762,6 +763,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         Time.timeScale = 0f;
                     }
                     GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = true;
+                    PauseMenu.Instance.gameObject.SetActive(true);
                     Screen.showCursor = true;
                     Screen.lockCursor = false;
                 }

@@ -1179,6 +1179,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     Camera.main.GetComponent<SpectatorMovement>().disable = true;
                     Camera.main.GetComponent<MouseLook>().disable = true;
                     inputManager.menuOn = true;
+                    PauseMenu.Instance.gameObject.SetActive(true);
                 }
             }
 
@@ -2738,7 +2739,7 @@ public class FengGameManagerMKII : MonoBehaviour
         return titans;
     }
 
-    private string hairtype(int lol)
+    public string hairtype(int lol)
     {
         if (lol < 0)
         {
@@ -3616,7 +3617,7 @@ public class FengGameManagerMKII : MonoBehaviour
     }
 
 
-    private void loadconfig()
+    public void loadconfig()
     {
         int num;
         int num2;
