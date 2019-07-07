@@ -39,7 +39,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     protected internal Dictionary<int, PhotonView> photonViewList;
     private string playername;
     public static Dictionary<string, GameObject> PrefabCache = new Dictionary<string, GameObject>();
-    private static readonly Dictionary<ConnectionProtocol, int> ProtocolToNameServerPort;
+    public static readonly Dictionary<ConnectionProtocol, int> ProtocolToNameServerPort;
     public bool requestSecurity;
     private readonly Dictionary<string, int> rpcShortcuts;
     private Dictionary<int, object[]> tempInstantiationData;
@@ -48,8 +48,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     static NetworkingPeer()
     {
         var dictionary = new Dictionary<ConnectionProtocol, int>();
-        dictionary.Add(ConnectionProtocol.Udp, 5058);
-        dictionary.Add(ConnectionProtocol.Tcp, 4533);
+        dictionary.Add(ConnectionProtocol.Udp, 5055);
+        dictionary.Add(ConnectionProtocol.Tcp, 4530);
+        dictionary.Add(ConnectionProtocol.WebSocket, 9090);
+        dictionary.Add(ConnectionProtocol.WebSocketSecure, 19090);
         ProtocolToNameServerPort = dictionary;
     }
 
@@ -69,13 +71,8 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         photonViewList = new Dictionary<int, PhotonView>();
         NameServerAddress = "ns.exitgamescloud.com";
         tempInstantiationData = new Dictionary<int, object[]>();
-        if (PhotonHandler.PingImplementation == null)
-        {
-            PhotonHandler.PingImplementation = typeof(PingMono);
-        }
         Listener = this;
         lobby = TypedLobby.Default;
-        LimitOfUnreliableCommands = 40;
         externalListener = listener;
         PlayerName = playername;
         mLocalActor = new PhotonPlayer(true, -1, this.playername);
@@ -2162,21 +2159,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 SendMonoMessage(PhotonNetworkingMessage.OnFailedToConnectToPhoton, objArray2);
                 break;
             }
-            case StatusCode.QueueOutgoingReliableWarning:
-            case StatusCode.QueueOutgoingUnreliableWarning:
-            case StatusCode.QueueOutgoingAcksWarning:
-            case StatusCode.QueueSentWarning:
-            case StatusCode.SendError:
-                goto Label_055E;
 
-            case StatusCode.QueueIncomingReliableWarning:
-            case StatusCode.QueueIncomingUnreliableWarning:
-                Debug.Log(statusCode + ". This client buffers many incoming messages. This is OK temporarily. With lots of these warnings, check if you send too much or execute messages too slow. " + (!PhotonNetwork.isMessageQueueRunning ? "Your isMessageQueueRunning is false. This can cause the issue temporarily." : string.Empty));
+            case StatusCode.SendError:
                 goto Label_055E;
 
             case StatusCode.ExceptionOnReceive:
             case StatusCode.TimeoutDisconnect:
-            case StatusCode.DisconnectByServer:
+            case StatusCode.DisconnectByServerTimeout:
             case StatusCode.DisconnectByServerUserLimit:
             case StatusCode.DisconnectByServerLogic:
                 if (!IsInitialConnect)
@@ -2314,7 +2303,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             Debug.LogWarning("Not sending leave operation. State is not 'Joined': " + State);
             return false;
         }
-        return OpCustom(254, null, true, 0);
+        return SendOperation(254, null, SendOptions.SendReliable);
     }
 
     public override bool OpRaiseEvent(byte eventCode, object customEventContent, bool sendReliable, RaiseEventOptions raiseEventOptions)
@@ -2464,7 +2453,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         var customOpParameters = new Dictionary<byte, object>();
         customOpParameters[244] = (byte) 0;
         customOpParameters[247] = (byte) 7;
-        OpCustom(253, customOpParameters, true, 0);
+        SendOperation(253, customOpParameters, SendOptions.SendReliable);
     }
 
     public void RemoveInstantiatedGO(GameObject go, bool localOnly)
@@ -3100,7 +3089,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         var customOpParameters = new Dictionary<byte, object>();
         customOpParameters.Add(209, uriPath);
         customOpParameters.Add(208, parameters);
-        return OpCustom(219, customOpParameters, true);
+        return SendOperation(219, customOpParameters, SendOptions.SendReliable);
     }
 
     public List<Region> AvailableRegions { get; protected internal set; }
