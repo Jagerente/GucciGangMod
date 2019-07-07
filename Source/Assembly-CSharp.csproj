@@ -73,6 +73,7 @@
     <Compile Include="GGM\GUI\Pages\LoadingScreen.cs" />
     <Compile Include="GGM\GUI\Pages\MainMenu.cs" />
     <Compile Include="GGM\GUI\Pages\Multiplayer.cs" />
+    <Compile Include="GGM\GUI\Pages\Page.cs" />
     <Compile Include="GGM\GUI\Pages\PagesManager.cs" />
     <Compile Include="GGM\GUI\Pages\Pause.cs" />
     <Compile Include="GGM\GUI\Pages\PauseMenu.cs" />
