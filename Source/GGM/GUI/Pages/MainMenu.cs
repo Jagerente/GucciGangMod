@@ -33,7 +33,6 @@ namespace GGM.GUI.Pages
                 NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelSingleSet,
                     true);
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
-                Instance.gameObject.SetActive(false);
             }
 
             singleButton = single.Contains(GUIHelpers.mousePos)
@@ -49,7 +48,6 @@ namespace GGM.GUI.Pages
                 NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart,
                     true);
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
-                Instance.gameObject.SetActive(false);
             }
 
             multiplayerButton = multiplayer.Contains(GUIHelpers.mousePos)
