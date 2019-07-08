@@ -1178,7 +1178,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     Camera.main.GetComponent<SpectatorMovement>().disable = true;
                     Camera.main.GetComponent<MouseLook>().disable = true;
                     inputManager.menuOn = true;
-                    PauseMenu.GetInstance<PauseMenu>().gameObject.SetActive(true);
+                    Page.GetInstance<PauseMenu>().Enable();
                 }
             }
 
@@ -7873,10 +7873,12 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        if (Application.loadedLevelName == "characterCreation") gameObject.AddComponent<CustomCharacters>();
-        else if (Application.loadedLevel == 2) gameObject.AddComponent<LevelEditor>();
-        else Destroy(GameObjectCache.Find("CustomCharacters") != null ? GameObjectCache.Find("CustomCharacters") : GameObjectCache.Find("LevelEditor"));
-        if (level == 0) Destroy(gameObject.AddComponent<LoadingScreen>(), 0.5f);
+        if (Application.loadedLevelName == "characterCreation") Page.GetInstance<CustomCharacters>().Enable();
+        else
+        {
+            Page.GetInstance<CustomCharacters>().Disable();
+        }
+        //if (level == 0) Destroy(Page.GetInstance<LoadingScreen>(), 1);
         GameObjectCache.Clear();
         if (level != 0 && Application.loadedLevelName != "characterCreation" && Application.loadedLevelName != "SnapShot")
         {
