@@ -175,14 +175,7 @@ namespace GGM.GUI.Pages
             #endregion
 
             #region Top Right Navigation Panel
-
-            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 15f),
-                "Level Editor")) //15,128,25
-            {
-                FengGameManagerMKII.settings[64] = 101;
-                Application.LoadLevel(2);
-            }
-            else if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 45f),
+            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 45f),
                 "Custom Characters")) //45f, 128,25f
             {
                 Application.LoadLevel("characterCreation");
@@ -195,6 +188,5 @@ namespace GGM.GUI.Pages
 
             #endregion
         }
-
     }
 }

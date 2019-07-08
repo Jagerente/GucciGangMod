@@ -69,7 +69,6 @@
     <Compile Include="GGM\GUI\GUIHelpers.cs" />
     <Compile Include="GGM\GUI\Elements.cs" />
     <Compile Include="GGM\GUI\Pages\CustomCharacters.cs" />
-    <Compile Include="GGM\GUI\Pages\LevelEditor.cs" />
     <Compile Include="GGM\GUI\Pages\LoadingScreen.cs" />
     <Compile Include="GGM\GUI\Pages\MainMenu.cs" />
     <Compile Include="GGM\GUI\Pages\Multiplayer.cs" />
