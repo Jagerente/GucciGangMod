@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GGM.Caching;
 using UnityEngine;
 using static GGM.Config.Settings;
@@ -140,7 +141,7 @@ namespace GGM.GUI.Pages
                     break;
             }
 
-            if (UnityEngine.GUI.Button(new Rect(leftPos + 408f, topPos + 465f, 42f, 25f), "Save"))
+            if (UnityEngine.GUI.Button(new Rect(leftPos + 408f + 70f, topPos + height / 1.07f, 42f, 25f), "Save"))
             {
                 PlayerPrefs.SetInt("human", (int)FengGameManagerMKII.settings[0]);
                 PlayerPrefs.SetInt("titan", (int)FengGameManagerMKII.settings[1]);
@@ -364,18 +365,18 @@ namespace GGM.GUI.Pages
                 PlayerPrefs.SetString("liveCam", (string)FengGameManagerMKII.settings[262]);
                 FengGameManagerMKII.settings[64] = 4;
             }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 455f, topPos + 465f, 40f, 25f), "Load"))
+            else if (UnityEngine.GUI.Button(new Rect(leftPos + 455f + 70f, topPos + height / 1.07f, 40f, 25f), "Load"))
             {
                 FengGameManagerMKII.FGM.loadconfig();
                 FengGameManagerMKII.settings[64] = 5;
             }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 500f, topPos + 465f, 60f, 25f), "Default"))
+            else if (UnityEngine.GUI.Button(new Rect(leftPos + 500f + 70f, topPos + height / 1.07f, 60f, 25f), "Default"))
             {
                 GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
             }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 565f, topPos + 465f, 75f, 25f), "Continue"))
+            else if (UnityEngine.GUI.Button(new Rect(leftPos + 565f + 70f, topPos + height / 1.07f, 75f, 25f), "Continue"))
             {
-                Instance.gameObject.SetActive(false);
+                GetInstance<PauseMenu>().Disable();
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                 {
                     Time.timeScale = 1f;
@@ -407,8 +408,9 @@ namespace GGM.GUI.Pages
                     GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
                 }
             }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 645f, topPos + 465f, 40f, 25f), "Quit"))
+            else if (UnityEngine.GUI.Button(new Rect(leftPos + 645f + 70f, topPos + height / 1.07f, 40f, 25f), "Quit"))
             {
+                GetInstance<PauseMenu>().Disable();
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                 {
                     Time.timeScale = 1f;
@@ -1163,7 +1165,7 @@ namespace GGM.GUI.Pages
 
         private static void Bombs()
         {
-            GUILayout.BeginArea(left[0]);
+            GUILayout.BeginArea(left[3]);
             GUILayout.Space(15f);
             Label("Stats", LabelType.Header);
             int[] freePoints =
@@ -1179,7 +1181,9 @@ namespace GGM.GUI.Pages
                 Slider(bombStats[i], ref BombSettings[i].Value, 0, freePoints[i] > 10 ? 10 : freePoints[i]);
                 GUILayout.EndHorizontal();
             }
-
+            GUILayout.EndArea();
+            GUILayout.BeginArea(right[3]);
+            GUILayout.Space(15f);
             Label("Color", LabelType.Header);
             Slider("R", ref BombColorSetting[0].Value, 0f, 1f);
             Slider("G", ref BombColorSetting[1].Value, 0f, 1f);
@@ -1188,24 +1192,66 @@ namespace GGM.GUI.Pages
             var txt = new Texture2D(1, 1);
             txt.SetPixel(0, 0, new Color(BombColorSetting[0], BombColorSetting[1], BombColorSetting[2]/*, BombColorSetting[3]*/));
             txt.Apply();
-            UnityEngine.GUI.DrawTexture(new Rect(50f, 175f, 70f, 70f), txt, ScaleMode.StretchToFill);
+            UnityEngine.GUI.DrawTexture(new Rect(50f, 35, 70f, 70f), txt, ScaleMode.StretchToFill);
             GUILayout.EndArea();
 
-            GUILayout.BeginArea(right[0]);
+            GUILayout.BeginArea(center[3]);
             GUILayout.Space(15f);
             GUILayout.Label("Color Presets", HeaderStyle);
             var style = new GUIStyle();
-            foreach (var texture in ColorCache.Textures)
+            var size = 13f;
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            for (var i = 0; i < 35; i++)
             {
-                style.normal.background = style.hover.background = style.active.background = texture.Value;
-                if (GUILayout.Button("", style, GUILayout.Height(15f), GUILayout.Width(40f)))
+                style.normal.background = style.hover.background =
+                    style.active.background = ColorCache.Textures[ColorCache.White];
+                if (GUILayout.Button("", style, GUILayout.Height(size), GUILayout.Width(size)))
                 {
-                    BombColorSetting[0].Value = texture.Key.r;
-                    BombColorSetting[1].Value = texture.Key.g;
-                    BombColorSetting[2].Value = texture.Key.b;
+                    BombColorSetting[0].Value = ColorCache.Textures.First().Key.r;
+                    BombColorSetting[1].Value = ColorCache.Textures.First().Key.g;
+                    BombColorSetting[2].Value = ColorCache.Textures.First().Key.b;
                 }
-                GUILayout.Space(5f);
             }
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            for (var i = 1; i < ColorCache.Textures.Count - 36; i++)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.FlexibleSpace();
+                for (var j = 0; j < 35; j++, i++)
+                {
+                    Texture2D texture;
+                    if (i == ColorCache.Textures.Count) break;
+
+                    texture = ColorCache.Textures.ElementAt(i).Value;
+                    style.normal.background = style.hover.background = style.active.background = texture;
+                    if (GUILayout.Button("", style, GUILayout.Height(size), GUILayout.Width(size)))
+                    {
+                        BombColorSetting[0].Value = ColorCache.Textures.ElementAt(i).Key.r;
+                        BombColorSetting[1].Value = ColorCache.Textures.ElementAt(i).Key.g;
+                        BombColorSetting[2].Value = ColorCache.Textures.ElementAt(i).Key.b;
+
+                    }
+                }
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            for (var i = 0; i < 35; i++)
+            {
+                style.normal.background = style.hover.background =
+                    style.active.background = ColorCache.Textures[ColorCache.Black];
+                if (GUILayout.Button("", style, GUILayout.Height(size), GUILayout.Width(size)))
+                {
+                    BombColorSetting[0].Value = ColorCache.Textures.Last().Key.r;
+                    BombColorSetting[1].Value = ColorCache.Textures.Last().Key.g;
+                    BombColorSetting[2].Value = ColorCache.Textures.Last().Key.b;
+                }
+            }
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
 
