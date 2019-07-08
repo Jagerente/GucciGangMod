@@ -1,9 +1,10 @@
-﻿using GGM.Caching;
+﻿using System.Threading;
+using GGM.Caching;
 using UnityEngine;
 
 namespace GGM.GUI.Pages
 {
-    internal class LoadingScreen : MonoBehaviour
+    internal class LoadingScreen : Page
     {
         private void OnGUI()
         {
