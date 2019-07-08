@@ -37,10 +37,10 @@ public class UIMainReferences : MonoBehaviour
     private void Start()
     {
         gameObject.AddComponent<GGM.GUI.Styles>();
+        gameObject.AddComponent<PagesManager>();
         StartCoroutine(OnOpen());
         if (isFirstLaunch)
         {
-            gameObject.AddComponent<PagesManager>();
             isFirstLaunch = false;
             ServerKey = PublicKey;
             var target = (GameObject) Instantiate(Resources.Load("InputManagerController"));
