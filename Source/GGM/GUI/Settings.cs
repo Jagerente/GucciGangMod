@@ -27,7 +27,8 @@ namespace GGM.GUI
         {
             new Rect(leftPos + 20f, topPos + 60f, fullAreaWidth, fullAreaHeight),
             new Rect(leftPos + 20f, topPos + 60f, fullAreaWidth, topAreaHeight),
-            new Rect(leftPos + 20f, topPos + 100f, fullAreaWidth, bottomAreaHeight)
+            new Rect(leftPos + 20f, topPos + 100f, fullAreaWidth, bottomAreaHeight),
+            new Rect(leftPos + 20f, topPos + height / 2.7f, fullAreaWidth, height / 1.7f)
         };
         /// <summary>
         /// 0 - full,
@@ -38,7 +39,8 @@ namespace GGM.GUI
         {
             new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, fullAreaHeight),
             new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, topAreaHeight),
-            new Rect(leftPos + 20f, topPos + 100f, halfAreaWidth, bottomAreaHeight)
+            new Rect(leftPos + 20f, topPos + 100f, halfAreaWidth, bottomAreaHeight),
+            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f), 
         };
         /// <summary>
         /// 0 - full,
@@ -49,7 +51,9 @@ namespace GGM.GUI
         {
             new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, fullAreaHeight),
             new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, topAreaHeight),
-            new Rect(leftPos + halfAreaWidth + 40f, topPos + 100f, halfAreaWidth, bottomAreaHeight)
+            new Rect(leftPos + halfAreaWidth + 40f, topPos + 100f, halfAreaWidth, bottomAreaHeight),
+            new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f)
+
         };
 
         internal const int HeaderFontSize = 20;
@@ -76,7 +80,7 @@ namespace GGM.GUI
         internal const float ButtonHeight = 50f;
 
         internal static readonly Color ColorMajor = ColorCache.Melon;
-        internal static readonly Color ColorMinor = ColorCache.Froly;
+        internal static readonly Color ColorMinor = new Color(0.941f, 0.502f, 0.502f);
 
         internal static readonly GUIStyle[] LabelStyle =
         {
