@@ -2,7 +2,7 @@
 
 namespace GGM.GUI.Pages
 {
-    public class CustomCharacters : MonoBehaviour
+    public class CustomCharacters : Page
     {
         
     }
