@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using static GGM.GUI.Elements;
 using static GGM.GUI.Settings;
 
 namespace GGM.GUI.Pages
 {
-    internal class Single
+    internal class Single : Page
     {
         private static readonly string[] mapStr =
         {
@@ -12,8 +13,8 @@ namespace GGM.GUI.Pages
             "[S]Battle training",
             "[S]City",
             "[S]Forest",
-            "[S]Forest survive(no crawler)",
-            "[S]Forest survive(no crawler no punk)",
+            "[S]Forest Survive(no crawler)",
+            "[S]Forest Survive(no crawler no punk)",
             "[S]Racing - Akina"
         };
 
@@ -35,34 +36,34 @@ namespace GGM.GUI.Pages
         private static int costume;
 
         private static int chars;
-        private static readonly string[] charsStr = { "LEVI", "MIKASA" };
+        private static readonly string[] charsStr = { "LEVI", "MIKASA", "ARMIN", "MARCO", "JEAN", "EREN", "TITAN_EREN", "PETRA", "SASHA", "Set 1", "Set 2", "Set 3" };
+
+        private static string[] daytimeStr = { "Day", "Dawn", "Night" };
+        private static string[] difficulties = {"Normal", "Hard", "Abnormal"};
+        private static string[] camera = {"ORIGINAL", "WOW", "TPS"};
 
         private void OnGUI()
         {
             GUILayout.BeginArea(new Rect(Screen.width / 2 - 440, Screen.height / 2 - 250, 880, 500));
-            GUILayout.BeginHorizontal();
-            GUILayout.BeginVertical(GUILayout.Width(250f));
-            Label("Map", LabelType.Header);
+            GUILayout.BeginHorizontal(GUILayout.Width(275f));
+
+            GUILayout.BeginVertical();
+            Label("Map", LabelType.Header, width: 310f);
             map = GUILayout.SelectionGrid(map, mapStr, 1);
             GUILayout.EndVertical();
 
-            GUILayout.BeginVertical(GUILayout.Width(120));
-            Label("Camera Type", LabelType.Header);
+            GUILayout.BeginVertical(GUILayout.Width(120f));
+            Label("Camera Type", LabelType.Header, width: 120f);
             var ss = (int)IN_GAME_MAIN_CAMERA.cameraMode;
-            ss = GUILayout.SelectionGrid(ss, new[] { "ORIGINAL", "WOW", "TPS" }, 1);
+            Grid(string.Empty, ref ss, camera, false, 1, height: GridHeight * 3);
             IN_GAME_MAIN_CAMERA.cameraMode = (CAMERA_TYPE)ss;
-
-            Label("Daytime", LabelType.Header);
-            daytime = GUILayout.SelectionGrid(daytime, new[] { "Day", "Dawn", "Night" }, 1);
+            Label("Daytime", LabelType.Header, width: 120f);
+            Grid(string.Empty, ref daytime, daytimeStr, false, 1, height: GridHeight * 3);
             IN_GAME_MAIN_CAMERA.dayLight = (DayLight)daytime;
-
-
-            Label("Difficulty", LabelType.Header);
-            IN_GAME_MAIN_CAMERA.difficulty = GUILayout.SelectionGrid(IN_GAME_MAIN_CAMERA.difficulty,
-                new[] { "Normal", "Hard", "Abnormal" }, 1);
+            Label("Difficulty", LabelType.Header, width: 120f);
+            Grid(string.Empty, ref IN_GAME_MAIN_CAMERA.difficulty, difficulties, false, 1, height: GridHeight * 3);
             GUILayout.EndVertical();
 
-            GUILayout.Label("", GUILayout.Width(100f));
             GUILayout.BeginVertical();
             Label("Character", LabelType.Header);
             costume = GUILayout.SelectionGrid(costume, new[] { "Cos 1", "Cos 2", "Cos 3" }, 3);
@@ -74,7 +75,6 @@ namespace GGM.GUI.Pages
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-
             if (GUILayout.Button("Start", GUILayout.Width(120f), GUILayout.Height(35f)))
             {
                 if (IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("SET") ||
@@ -92,15 +92,16 @@ namespace GGM.GUI.Pages
                 Screen.showCursor = false;
                 FengGameManagerMKII.level = mapStr[map];
                 Application.LoadLevel(mapNameStr[map]);
+                GetInstance<Single>().Disable();
             }
-
-            GUILayout.Label("");
+            GUILayout.FlexibleSpace();
             if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
             {
+                GetInstance<Single>().Disable();
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, true);
             }
-
             GUILayout.EndHorizontal();
+
             GUILayout.EndArea();
         }
 

@@ -31,8 +31,9 @@ namespace GGM.GUI.Pages
             if (UnityEngine.GUI.Button(single, singleButton, "label"))
             {
                 NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelSingleSet,
-                    true);
+                    false);
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
+                GetInstance<Single>().Enable();
             }
 
             singleButton = single.Contains(GUIHelpers.mousePos)

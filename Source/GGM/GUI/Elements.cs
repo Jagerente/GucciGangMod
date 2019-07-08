@@ -47,7 +47,7 @@ namespace GGM.GUI
                 case LabelType.Header:
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    GUILayout.Label(text, HeaderStyle, GUILayout.Width(HeaderWidth), GUILayout.Height(HeaderHeight));
+                    GUILayout.Label(text, HeaderStyle, GUILayout.Width(width == LabelWidth ? HeaderWidth : width), GUILayout.Height(HeaderHeight));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
                     return;
