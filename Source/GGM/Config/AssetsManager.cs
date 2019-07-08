@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using GGM.Caching;
+using GGM.GUI.Pages;
 using UnityEngine;
 
 namespace GGM.Config
@@ -26,6 +27,7 @@ namespace GGM.Config
         public static IEnumerator LoadRCAssets()
         {
             if (FengGameManagerMKII.isAssetLoaded) yield break;
+            Page.GetInstance<LoadingScreen>().Enable();
             var url = Application.dataPath + "/RCAssets.unity3d";
             if (!Application.isWebPlayer)
             {
@@ -46,7 +48,7 @@ namespace GGM.Config
                 FengGameManagerMKII.RCassets = iteratorVariable2.assetBundle;
                 FengGameManagerMKII.isAssetLoaded = true;
             }
-            Destroy(GameObjectCache.Find("MainMenu"));
+            Page.GetInstance<LoadingScreen>().Disable();
         }
     }
 }
