@@ -26,8 +26,7 @@ namespace GGM.GUI.Pages
 
         internal static T GetInstance<T>() where T : Page
         {
-            Page result;
-            if(pageCache.TryGetValue(typeof(T), out result))
+            if(pageCache.TryGetValue(typeof(T), out var result))
             {
                 return result as T;
             }
@@ -36,18 +35,20 @@ namespace GGM.GUI.Pages
             {
                 throw new Exception($"Instance of class {typeof(T).Name} is not only one!");
             }
-            if(gos.Length == 0)
+            switch (gos.Length)
             {
-                result = new GameObject(typeof(T).Name + "Instance").AddComponent<T>();
-                DontDestroyOnLoad(result);
-                pageCache.Add(typeof(T), result);
+                case 0:
+                    result = new GameObject(typeof(T).Name + "Instance").AddComponent<T>();
+                    DontDestroyOnLoad(result);
+                    pageCache.Add(typeof(T), result);
+                    break;
+                case 1:
+                    result = gos[0];
+                    pageCache.Add(typeof(T), result);
+                    break;
             }
-            if (gos.Length == 1)
-            {
-                result = gos[0] as Page;
-                pageCache.Add(typeof(T), result);
-            }
-            return result as T;
+
+            return (T) result;
         }
     }
 }
