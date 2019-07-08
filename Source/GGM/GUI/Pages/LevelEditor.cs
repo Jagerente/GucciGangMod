@@ -8,7 +8,7 @@ using static FengGameManagerMKII;
 
 namespace GGM.GUI.Pages
 {
-    public class LevelEditor : MonoBehaviour
+    public class LevelEditor : Page
     {
         private void OnGUI()
         {
