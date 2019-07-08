@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ExitGames.Client.Photon.Lite
+﻿namespace ExitGames.Client.Photon.Lite
 {
     public enum ReceiverGroup : byte
     {

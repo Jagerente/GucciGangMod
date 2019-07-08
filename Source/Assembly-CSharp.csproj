@@ -56,6 +56,7 @@
     <Compile Include="GGM\Caching\ColorCache.cs" />
     <Compile Include="GGM\Caching\GameObjectCache.cs" />
     <Compile Include="GGM\Caching\ResourcesCache.cs" />
+    <Compile Include="GGM\Config\AssetsManager.cs" />
     <Compile Include="GGM\Extensions.cs" />
     <Compile Include="GGM\Config\BoolSetting.cs" />
     <Compile Include="GGM\Config\FloatSetting.cs" />
@@ -67,7 +68,15 @@
     <Compile Include="GGM\FPSCounter.cs" />
     <Compile Include="GGM\GUI\GUIHelpers.cs" />
     <Compile Include="GGM\GUI\Elements.cs" />
-    <Compile Include="GGM\GUI\Pages.cs" />
+    <Compile Include="GGM\GUI\Pages\CustomCharacters.cs" />
+    <Compile Include="GGM\GUI\Pages\LoadingScreen.cs" />
+    <Compile Include="GGM\GUI\Pages\MainMenu.cs" />
+    <Compile Include="GGM\GUI\Pages\Multiplayer.cs" />
+    <Compile Include="GGM\GUI\Pages\Page.cs" />
+    <Compile Include="GGM\GUI\Pages\PagesManager.cs" />
+    <Compile Include="GGM\GUI\Pages\Pause.cs" />
+    <Compile Include="GGM\GUI\Pages\PauseMenu.cs" />
+    <Compile Include="GGM\GUI\Pages\Single.cs" />
     <Compile Include="GGM\GUI\Settings.cs" />
     <Compile Include="GGM\HotKeys.cs" />
     <Compile Include="GGM\Labels.cs" />

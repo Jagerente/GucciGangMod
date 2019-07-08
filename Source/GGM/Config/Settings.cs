@@ -1,5 +1,4 @@
-﻿using System;
-using GGM.Storage;
+﻿using GGM.Storage;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -551,9 +550,6 @@ namespace GGM.Config
             {
                 case 0:
                     Storage = new PrefStorage();
-                    break;
-
-                default:
                     break;
             }
         }

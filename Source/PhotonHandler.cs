@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using ExitGames.Client.Photon;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
