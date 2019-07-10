@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using GGM.Config;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -42,7 +43,7 @@ public static class PhotonNetwork
         photonMono = obj2.AddComponent<PhotonHandler>();
         obj2.name = "PhotonMono";
         obj2.hideFlags = HideFlags.HideInHierarchy;
-        networkingPeer = new NetworkingPeer(photonMono, string.Empty, ConnectionProtocol.Tcp);
+        networkingPeer = new NetworkingPeer(photonMono, string.Empty, Settings.ConnectionProtocolSettings == 0 ? ConnectionProtocol.Udp : Settings.ConnectionProtocolSettings == 1 ? ConnectionProtocol.Tcp : ConnectionProtocol.WebSocket);
         CustomTypes.Register();
     }
 

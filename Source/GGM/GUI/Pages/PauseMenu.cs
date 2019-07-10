@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using GGM.Caching;
 using UnityEngine;
@@ -99,10 +100,15 @@ namespace GGM.GUI.Pages
             "Skybox Up", "Skybox Down",
         };
 
+        private static readonly string[] connectionProtocols =
+        {
+            "UDP",
+            "TCP",
+            "WS"
+        };
         #endregion
 
         #region Scrolls
-
         private static Vector2 scrollGameLeft = Vector2.zero;
         private static Vector2 scrollServerTitansLeft = Vector2.zero;
         private static Vector2 scrollServerMiscLeft = Vector2.zero;
@@ -112,7 +118,6 @@ namespace GGM.GUI.Pages
         private static Vector2 scrollLocationSkinsForestRight = Vector2.zero;
         private static Vector2 scrollLocationSkinsCityLeft = Vector2.zero;
         private static Vector2 scrollLocationSkinsCityRight = Vector2.zero;
-
         #endregion
 
         private void OnGUI()
@@ -385,6 +390,7 @@ namespace GGM.GUI.Pages
             switch (serverSwitch)
             {
                 case 0:
+                {
                     GUILayout.BeginArea(left[2]);
                     scrollServerTitansLeft = GUILayout.BeginScrollView(scrollServerTitansLeft);
                     Label("General", LabelType.Header);
@@ -447,7 +453,10 @@ namespace GGM.GUI.Pages
                     if (ExplodeModeSetting) TextField("• Radius", ref ExplodeRadiusSetting.Value);
                     GUILayout.EndArea();
                     break;
+                }
+
                 case 1:
+                {
                     GUILayout.BeginArea(left[2]);
                     Label("PVP", LabelType.Header);
                     Grid("PVP Mode", ref PVPModeSetting.Value);
@@ -477,7 +486,10 @@ namespace GGM.GUI.Pages
                     Grid("Deadly Cannons Mode", ref DeadlyCannonsModeSetting.Value);
                     GUILayout.EndArea();
                     break;
+                }
+
                 case 2:
+                {
                     GUILayout.BeginArea(left[2]);
                     scrollServerMiscLeft = GUILayout.BeginScrollView(scrollServerMiscLeft);
                     Label("Chat", LabelType.Header);
@@ -511,9 +523,11 @@ namespace GGM.GUI.Pages
 
                     GUILayout.BeginArea(right[2]);
                     Label("Protection", LabelType.Header);
+                    Grid("Connection Protocol", ref ConnectionProtocolSettings.Value, connectionProtocols);
                     Grid("Anti Titan Eren", ref AntiTitanErenSetting.Value);
                     GUILayout.EndArea();
                     break;
+                }
             }
         }
 
