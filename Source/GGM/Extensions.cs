@@ -125,5 +125,46 @@ namespace GGM
             }
             return str;
         }
+
+        public static string GetDayLight()
+        {
+            var dayLight = "Day";
+            switch (IN_GAME_MAIN_CAMERA.dayLight)
+            {
+                case DayLight.Day:
+                    return dayLight = "Day";
+                case DayLight.Dawn:
+                    return dayLight = "Dawn";
+                case DayLight.Night:
+                    return dayLight = "Night";
+            }
+            return dayLight;
+        }
+
+        public static string GetDifficulty()
+        {
+            var difficulty = "Training";
+            switch (IN_GAME_MAIN_CAMERA.difficulty)
+            {
+                case 0:
+                    return difficulty = "Normal";
+                case 1:
+                    return difficulty = "Hard";
+                case 2:
+                    return difficulty = "Abnormal";
+            }
+            return difficulty;
+        }
+
+        public static string GetLobbyName()
+        {
+            return Regex.Replace(PhotonNetwork.ServerAddress, "app\\-|\\.exitgamescloud\\.com|\\:\\d+", "").ToUpper();
+        }
+
+        public static string GetRoomName()
+        {
+            return PhotonNetwork.room.name.Split(new char[] { '`' })[0].Trim().StripHEX();
+        }
+
     }
 }

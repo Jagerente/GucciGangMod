@@ -57,6 +57,8 @@
     <Compile Include="GGM\Caching\GameObjectCache.cs" />
     <Compile Include="GGM\Caching\ResourcesCache.cs" />
     <Compile Include="GGM\Config\AssetsManager.cs" />
+    <Compile Include="GGM\Discord\DiscordAPI.cs" />
+    <Compile Include="GGM\Discord\RichPresence.cs" />
     <Compile Include="GGM\Extensions.cs" />
     <Compile Include="GGM\Config\BoolSetting.cs" />
     <Compile Include="GGM\Config\FloatSetting.cs" />

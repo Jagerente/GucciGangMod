@@ -124,9 +124,9 @@ public class FengGameManagerMKII : MonoBehaviour
     public static Vector2 scroll2;
     public GameObject selectedObj;
     public static object[] settings;
-    private int single_kills;
-    private int single_maxDamage;
-    private int single_totalDamage;
+    public static int single_kills;
+    public static int single_maxDamage;
+    public static int single_totalDamage;
     public static Material skyMaterial;
     public List<GameObject> spectateSprites;
     private bool startRacing;
@@ -5331,6 +5331,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     EnterSpecMode(true);
                 }
             }
+            GGM.Discord.RichPresence.UpdateStatus();
         }
 
         if ((Application.loadedLevelName.Contains("Forest") || Application.loadedLevelName.Contains("City")) &&
@@ -5682,6 +5683,7 @@ public class FengGameManagerMKII : MonoBehaviour
         }
 
         RecompilePlayerList(0.1f);
+        GGM.Discord.RichPresence.UpdateStatus();
     }
 
     public void OnPhotonPlayerDisconnected(PhotonPlayer player)
@@ -5722,6 +5724,7 @@ public class FengGameManagerMKII : MonoBehaviour
         }
 
         RecompilePlayerList(0.1f);
+        GGM.Discord.RichPresence.UpdateStatus();
     }
 
     public void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
@@ -5796,6 +5799,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnReceivedRoomListUpdate()
     {
+        GGM.Discord.RichPresence.UpdateStatus();
     }
 
     public void OnUpdate()
@@ -6701,6 +6705,7 @@ public class FengGameManagerMKII : MonoBehaviour
         single_kills++;
         single_maxDamage = Mathf.Max(dmg, single_maxDamage);
         single_totalDamage += dmg;
+        GGM.Discord.RichPresence.UpdateStatus();
     }
 
     public void playerKillInfoUpdate(PhotonPlayer player, int dmg)
