@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GGM.Config;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
@@ -1193,12 +1194,9 @@ public class FEMALE_TITAN : MonoBehaviour
         {
             yield return null;
         }
-        var mipmap = true;
+        var mipmap = Settings.MipMappingSetting;
         var iteratorVariable1 = false;
-        if ((int) FengGameManagerMKII.settings[63] == 1)
-        {
-            mipmap = false;
-        }
+
         foreach (var iteratorVariable4 in GetComponentsInChildren<Renderer>())
         {
             if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))

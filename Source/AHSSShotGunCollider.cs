@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GGM.Config;
 using UnityEngine;
 
 public class AHSSShotGunCollider : MonoBehaviour
@@ -106,7 +107,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                             if (num2 > item.transform.root.GetComponent<TITAN>().myLevel * 100f)
                             {
                                 item.transform.root.GetComponent<TITAN>().die();
-                                if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
+                                if (Settings.SnapshotsSetting)
                                 {
                                     GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                         .startSnapShot(item.transform.position, num2, item.transform.root.gameObject,
@@ -131,7 +132,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                                 num3 = Mathf.Max(10, num3);
                                 if (num3 > item.transform.root.GetComponent<TITAN>().myLevel * 100f)
                                 {
-                                    if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
+                                    if (Settings.SnapshotsSetting)
                                     {
                                         GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                             .startSnapShot(item.transform.position, num3,
@@ -183,7 +184,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                             num6 = Mathf.Max(10, num6);
                             if (num6 > item.transform.root.GetComponent<TITAN>().myLevel * 100f)
                             {
-                                if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
+                                if (Settings.SnapshotsSetting)
                                 {
                                     GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                         .startSnapShot(item.transform.position, num6, item.transform.root.gameObject,
@@ -204,7 +205,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                                 item.transform.root.rigidbody.velocity;
                             var num7 = (int) (vector8.magnitude * 10f * scoreMulti);
                             num7 = Mathf.Max(10, num7);
-                            if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
+                            if (Settings.SnapshotsSetting)
                             {
                                 GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                     .startSnapShot(item.transform.position, num7, null, 0.02f);
@@ -221,7 +222,7 @@ public class AHSSShotGunCollider : MonoBehaviour
                                       item.transform.root.rigidbody.velocity;
                         var num8 = (int) (vector9.magnitude * 10f * scoreMulti);
                         num8 = Mathf.Max(10, num8);
-                        if (PlayerPrefs.HasKey("EnableSS") && PlayerPrefs.GetInt("EnableSS") == 1)
+                        if (Settings.SnapshotsSetting)
                         {
                             GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>()
                                 .startSnapShot(item.transform.position, num8, null, 0.02f);

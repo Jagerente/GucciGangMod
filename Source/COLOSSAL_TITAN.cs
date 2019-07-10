@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using GGM.Config;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
@@ -389,12 +390,9 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             yield return null;
         }
-        var mipmap = true;
+        var mipmap = Settings.MipMappingSetting;
         var iteratorVariable1 = false;
-        if ((int) FengGameManagerMKII.settings[63] == 1)
-        {
-            mipmap = false;
-        }
+
         foreach (var iteratorVariable2 in GetComponentsInChildren<Renderer>())
         {
             if (iteratorVariable2.name.Contains("hair"))

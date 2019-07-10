@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GGM.Config;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 
@@ -445,12 +446,9 @@ public class TITAN_EREN : MonoBehaviour
         {
             yield return null;
         }
-        var mipmap = true;
+        var mipmap = Settings.MipMappingSetting;
         var iteratorVariable1 = false;
-        if ((int) FengGameManagerMKII.settings[63] == 1)
-        {
-            mipmap = false;
-        }
+
         foreach (var iteratorVariable4 in GetComponentsInChildren<Renderer>())
         {
             if (!FengGameManagerMKII.linkHash[2].ContainsKey(url))

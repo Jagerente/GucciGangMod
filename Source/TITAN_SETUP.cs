@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GGM.Config;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 
@@ -41,11 +42,8 @@ public class TITAN_SETUP : MonoBehaviour
             iteratorVariable1.transform.rotation = hair_go_ref.transform.rotation;
             iteratorVariable1.transform.localScale = hair_go_ref.transform.localScale;
             iteratorVariable1.renderer.material = CharacterMaterials.materials[this.hair.texture];
-            var mipmap = true;
-            if ((int) FengGameManagerMKII.settings[63] == 1)
-            {
-                mipmap = false;
-            }
+            var mipmap = Settings.MipMappingSetting;
+
             if (!hairlink.EndsWith(".jpg") && !hairlink.EndsWith(".png") && !hairlink.EndsWith(".jpeg"))
             {
                 if (hairlink.ToLower() == "transparent")

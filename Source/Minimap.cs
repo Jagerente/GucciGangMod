@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GGM.Config;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -131,7 +132,7 @@ public class Minimap : MonoBehaviour
 
     private void CheckUserInput()
     {
-        if ((int) FengGameManagerMKII.settings[231] == 1 && RCSettings.globalDisableMinimap == 0)
+        if (Settings.MinimapSetting && RCSettings.globalDisableMinimap == 0)
         {
             if (minimapIsCreated)
             {
