@@ -1281,7 +1281,7 @@ namespace GGM.GUI.Pages
                 TextField(humanSkinFields[i], ref HumanSkinsList[HumanSkinsCurrentSetSetting][i]);
             }
 
-            GUILayout.Space(15f);
+            GUILayout.Space(10f);
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -1709,8 +1709,9 @@ namespace GGM.GUI.Pages
 
                     GUILayout.EndScrollView();
 
-                    GUILayout.Space(15f);
+                    GUILayout.Space(10f);
                     GUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
                     if (GUILayout.Button("Copy"))
                     {
                         LocationSkinsForestCopiedSet = LocationSkinsForestList[LocationSkinsForestCurrentSetSetting];
@@ -1742,7 +1743,7 @@ namespace GGM.GUI.Pages
                         LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting] = new[]
                             {1f, 1f, 1f};
                     }
-
+                    GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
 
                     GUILayout.EndArea();
@@ -1806,7 +1807,7 @@ namespace GGM.GUI.Pages
                             LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting] = 0;
                             LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting] = new[]
                                 {1f, 1f, 1f};
-                            }
+                        }
                         else
                         {
                             int setToRemove = LocationSkinsCityCurrentSetSetting;
@@ -1889,6 +1890,7 @@ namespace GGM.GUI.Pages
                             ref LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4], 0f, 1000f, round: true);
                     }
 
+                    GUILayout.BeginHorizontal();
                     Label("Light");
                     LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(
                         LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2,
@@ -1945,7 +1947,7 @@ namespace GGM.GUI.Pages
 
                     GUILayout.EndScrollView();
 
-                    GUILayout.Space(15f);
+                    GUILayout.Space(10f);
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
                     if (GUILayout.Button("Copy"))
