@@ -59,28 +59,28 @@ namespace GGM.GUI
             return GUILayout.Button(text, ButtonStyle, GUILayout.Width(width), GUILayout.Height(height));
         }
 
-        public static void TextArea(string text, ref string value, float width = TextFieldWidth, float labelWidth = LabelWidth)
+        public static void TextArea(string text, ref string value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
         {
             GUILayout.BeginHorizontal();
-            if (text != string.Empty) Label(text, 0, width: labelWidth);
-            value = GUILayout.TextArea(value, GUILayout.Width(width));
+            if (text != string.Empty) Label(text, 0, width: labelWidth, height: labelHeight);
+            value = GUILayout.TextArea(value, GUILayout.Width(width), GUILayout.Height(height));
             GUILayout.EndHorizontal();
         }
 
-        public static void TextField(string text, ref string value, float width = TextFieldWidth, float labelWidth = LabelWidth)
+        public static void TextField(string text, ref string value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
         {
             GUILayout.BeginHorizontal();
-            if (text != string.Empty) Label(text, 0, width: labelWidth);
-            value = GUILayout.TextField(value, GUILayout.Width(width));
+            if (text != string.Empty) Label(text, 0, width: labelWidth, height: labelHeight);
+            value = GUILayout.TextField(value, GUILayout.Width(width), GUILayout.Height(height));
             GUILayout.EndHorizontal();
         }
 
-        public static void TextField(string text, ref int value, float width = TextFieldWidth, float labelWidth = LabelWidth)
+        public static void TextField(string text, ref int value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
         {
             var v = value.ToString();
             GUILayout.BeginHorizontal();
-            if (text != string.Empty) Label(text, 0, width: labelWidth);
-            v = GUILayout.TextField(v, GUILayout.Width(width));
+            if (text != string.Empty) Label(text, 0, width: labelWidth, height: labelHeight);
+            v = GUILayout.TextField(v, GUILayout.Width(width), GUILayout.Height(height));
             value = v != string.Empty ? Convert.ToInt32(v) : 0;
             GUILayout.EndHorizontal();
         }
