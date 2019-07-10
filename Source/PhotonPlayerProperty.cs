@@ -36,6 +36,9 @@
     public static string RCBombG = "RCBombG";
     public static string RCBombR = "RCBombR";
     public static string RCBombRadius = "RCBombRadius";
+    public static string RCBombRange= "RCBombRange";
+    public static string RCBombSpeed = "RCBombSpeed";
+    public static string RCBombCooldown = "RCBombCooldown";
     public static string RCteam = "RCteam";
     public static string sex = "sex";
     public static string skin_color = "skin_color";

@@ -382,6 +382,10 @@ public class HERO : MonoBehaviour
             propertiesToSet.Add(PhotonPlayerProperty.RCBombB, (float) FengGameManagerMKII.settings[248]);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombA, (float) FengGameManagerMKII.settings[249]);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, bombRadius);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, Settings.BombSettings[0]);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, Settings.BombSettings[1]);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, Settings.BombSettings[2]);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, Settings.BombSettings[3]);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             skillId = "bomb";
             skillIDHUD = "armin";
