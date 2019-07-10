@@ -1142,7 +1142,7 @@ namespace GGM.GUI.Pages
             var txt = new Texture2D(1, 1);
             txt.SetPixel(0, 0, new Color(BombColorSetting[0], BombColorSetting[1], BombColorSetting[2]));
             txt.Apply();
-            UnityEngine.GUI.DrawTexture(new Rect(35f, 55f, 95f, 95f), txt, ScaleMode.StretchToFill);
+            UnityEngine.GUI.DrawTexture(new Rect(45f, 55f, 70f, 70f), txt, ScaleMode.StretchToFill);
             GUILayout.EndArea();
 
             GUILayout.BeginArea(center[3]);
