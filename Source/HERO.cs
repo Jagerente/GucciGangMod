@@ -3266,7 +3266,7 @@ public class HERO : MonoBehaviour
                     FengGameManagerMKII.linkHash[0].Add(skins[12], leftbladetrail.MyMaterial);
                     leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
-                    if (XWeaponTrail.AppearanceType == 0)
+                    if (Settings.BladeTrailsAppearanceSetting == 0)
                     {
                         leftbladetrail2.MyMaterial = leftbladetrail.MyMaterial;
                         rightbladetrail2.MyMaterial = leftbladetrail.MyMaterial;
@@ -3274,7 +3274,7 @@ public class HERO : MonoBehaviour
                 }
                 else
                 {
-                    if (XWeaponTrail.AppearanceType == 0)
+                    if (Settings.BladeTrailsAppearanceSetting == 0)
                     {
                         leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                         rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
@@ -3285,7 +3285,7 @@ public class HERO : MonoBehaviour
             }
             else
             {
-                if (XWeaponTrail.AppearanceType == 0)
+                if (Settings.BladeTrailsAppearanceSetting == 0)
                 {
                     leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
