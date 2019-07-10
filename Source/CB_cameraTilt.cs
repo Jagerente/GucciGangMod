@@ -22,7 +22,6 @@ public class CB_cameraTilt : MonoBehaviour
         {
             PlayerPrefs.SetInt("cameraTilt", !result ? 0 : 1);
         }
-        IN_GAME_MAIN_CAMERA.cameraTilt = PlayerPrefs.GetInt("cameraTilt");
     }
 }
 

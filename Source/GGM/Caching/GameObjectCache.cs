@@ -53,7 +53,7 @@ namespace GGM.Caching
                         goCache.Add(name, go);
                         return go;
                     }
-                    return (goCache[name] = go);
+                    return goCache[name] = go;
             }
         }
 
