@@ -70,7 +70,6 @@ public class FengGameManagerMKII : MonoBehaviour
     public static Hashtable[] linkHash;
     private string localRacingResult;
     public static bool logicLoaded;
-    public static int loginstate;
     public int magentaKills;
     private IN_GAME_MAIN_CAMERA mainCamera;
     public static bool masterRC;
@@ -5055,12 +5054,8 @@ public class FengGameManagerMKII : MonoBehaviour
 
         assetCacheTextures = new Dictionary<string, Texture2D>();
         isFirstLoad = true;
-        name = LoginFengKAI.player.name;
-        if (loginstate != 3)
-        {
-            name = nameField.Replace("[-]", "");
-            LoginFengKAI.player.name = name;
-        }
+        name = nameField.Replace("[-]", "");
+        LoginFengKAI.player.name = name;
 
         var hashtable3 = new Hashtable();
         hashtable3.Add(PhotonPlayerProperty.name, name);
