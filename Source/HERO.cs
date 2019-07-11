@@ -1326,6 +1326,13 @@ public class HERO : MonoBehaviour
                                     baseRigidBody.AddForce(-baseRigidBody.velocity * 2f, ForceMode.Acceleration);
                                 }
                             }
+                            if (!Settings.BodyLean && !useGun)
+                            {
+                                facingDirection = Mathf.Atan2(to.x, to.z) * 57.29578f;
+                                var rotation = Quaternion.Euler(0f, facingDirection, 0f);
+                                baseTransform.rotation = rotation;
+                                baseTransform.rotation = rotation;
+                            }
                         }
 
                         launchElapsedTimeL += Time.deltaTime;
@@ -1373,6 +1380,13 @@ public class HERO : MonoBehaviour
                                 {
                                     baseRigidBody.AddForce(-baseRigidBody.velocity * 2f, ForceMode.Acceleration);
                                 }
+                            }
+                            if (!Settings.BodyLean && !useGun)
+                            {
+                                facingDirection = Mathf.Atan2(vector5.x, vector5.z) * 57.29578f;
+                                var rotation = Quaternion.Euler(0f, facingDirection, 0f);
+                                baseTransform.rotation = rotation;
+                                baseTransform.rotation = rotation;
                             }
                         }
 
@@ -2421,7 +2435,7 @@ public class HERO : MonoBehaviour
             }
 
             setHookedPplDirection();
-            bodyLean();
+            if (Settings.BodyLean || useGun) bodyLean();
         }
     }
 
@@ -2467,25 +2481,28 @@ public class HERO : MonoBehaviour
         {
             falseAttack();
             idle();
+
             if (useGun)
             {
                 crossFade("AHSS_hook_forward_both", 0.1f);
             }
-            else if (left && !isRightHandHooked)
+            else if (Settings.BodyLean)
             {
-                crossFade("air_hook_l_just", 0.1f);
-            }
-            else if (!left && !isLeftHandHooked)
-            {
-                crossFade("air_hook_r_just", 0.1f);
-            }
-            else
-            {
-                crossFade("dash", 0.1f);
-                animation["dash"].time = 0f;
+                if (left && !isRightHandHooked)
+                {
+                    crossFade("air_hook_l_just", 0.1f);
+                }
+                else if (!left && !isLeftHandHooked)
+                {
+                    crossFade("air_hook_r_just", 0.1f);
+                }
+                else
+                {
+                    crossFade("dash", 0.1f);
+                    animation["dash"].time = 0f;
+                }
             }
         }
-
         if (left)
         {
             isLaunchLeft = true;

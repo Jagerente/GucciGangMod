@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using GGM.Caching;
@@ -366,6 +366,7 @@ namespace GGM.GUI.Pages
             }
 
             Label("Misc", LabelType.Header);
+            Grid("Body Lean", ref BodyLean.Value);
             Grid("Chat Feed", ref ChatFeedSetting.Value);
             Grid("Minimap", ref MinimapSetting.Value);
             Grid("Speedometer", ref SpeedometerSetting.Value, speedometerTypes);

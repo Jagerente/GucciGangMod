@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using GGM.Storage;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,7 +69,7 @@ namespace GGM.Config
         public static BoolSetting SpritesUISetting = new BoolSetting("GGM_SpritesUI", true);
         public static BoolSetting DamageFeedUISetting = new BoolSetting("GGM_GameFeedUI", true);
         public static BoolSetting CrosshairUISetting = new BoolSetting("GGM_CrosshairUI", true);
-        //Misc
+        public static BoolSetting BodyLean = new BoolSetting("GGM_BodyLean", true);
         public static BoolSetting ChatFeedSetting = new BoolSetting("GGM_ChatFeed");
         public static BoolSetting MinimapSetting = new BoolSetting("GGM_Minimap");
         //Server
