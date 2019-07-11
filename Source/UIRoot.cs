@@ -6,7 +6,7 @@ public class UIRoot : MonoBehaviour
 {
     [HideInInspector] public bool automatic;
     public int manualHeight = 720;
-    public int maximumHeight = 0x600;
+    public int maximumHeight = 1536;
     public int minimumHeight = 320;
     private static List<UIRoot> mRoots = new List<UIRoot>();
     private Transform mTrans;

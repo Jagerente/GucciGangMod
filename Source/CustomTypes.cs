@@ -47,9 +47,9 @@ internal static class CustomTypes
 
     internal static void Register()
     {
-        PhotonPeer.RegisterType(typeof(Vector2), 0x57, SerializeVector2, DeserializeVector2);
-        PhotonPeer.RegisterType(typeof(Vector3), 0x56, SerializeVector3, DeserializeVector3);
-        PhotonPeer.RegisterType(typeof(Quaternion), 0x51, SerializeQuaternion, DeserializeQuaternion);
+        PhotonPeer.RegisterType(typeof(Vector2), 87, SerializeVector2, DeserializeVector2);
+        PhotonPeer.RegisterType(typeof(Vector3), 86, SerializeVector3, DeserializeVector3);
+        PhotonPeer.RegisterType(typeof(Quaternion), 81, SerializeQuaternion, DeserializeQuaternion);
         PhotonPeer.RegisterType(typeof(PhotonPlayer), 80, SerializePhotonPlayer, DeserializePhotonPlayer);
     }
 
@@ -65,7 +65,7 @@ internal static class CustomTypes
     private static byte[] SerializeQuaternion(object obj)
     {
         var quaternion = (Quaternion) obj;
-        var target = new byte[0x10];
+        var target = new byte[16];
         var targetOffset = 0;
         Protocol.Serialize(quaternion.w, target, ref targetOffset);
         Protocol.Serialize(quaternion.x, target, ref targetOffset);

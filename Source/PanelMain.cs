@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using GGM.Caching;
+using GGM.GUI.Pages;
+using UnityEngine;
 
 public class PanelMain : MonoBehaviour
 {
@@ -10,6 +12,13 @@ public class PanelMain : MonoBehaviour
 
     private void OnEnable()
     {
+        Page.GetInstance<MainMenu>().Enable();
+        GGM.Discord.RichPresence.UpdateStatus();
+    }
+
+    private void OnDisable()
+    {
+        Page.GetInstance<MainMenu>().Disable();
     }
 
     private void showTxt()

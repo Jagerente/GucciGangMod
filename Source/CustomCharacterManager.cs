@@ -389,10 +389,10 @@ public class CustomCharacterManager : MonoBehaviour
                 setup.myCostume.stat.ACL += pt;
                 break;
         }
-        setup.myCostume.stat.SPD = Mathf.Clamp(setup.myCostume.stat.SPD, 0x4b, 0x7d);
-        setup.myCostume.stat.GAS = Mathf.Clamp(setup.myCostume.stat.GAS, 0x4b, 0x7d);
-        setup.myCostume.stat.BLA = Mathf.Clamp(setup.myCostume.stat.BLA, 0x4b, 0x7d);
-        setup.myCostume.stat.ACL = Mathf.Clamp(setup.myCostume.stat.ACL, 0x4b, 0x7d);
+        setup.myCostume.stat.SPD = Mathf.Clamp(setup.myCostume.stat.SPD, 75, 125);
+        setup.myCostume.stat.GAS = Mathf.Clamp(setup.myCostume.stat.GAS, 75, 125);
+        setup.myCostume.stat.BLA = Mathf.Clamp(setup.myCostume.stat.BLA, 75, 125);
+        setup.myCostume.stat.ACL = Mathf.Clamp(setup.myCostume.stat.ACL, 75, 125);
         freshLabel();
     }
 
@@ -410,20 +410,20 @@ public class CustomCharacterManager : MonoBehaviour
         var sexArray1 = new SEX[2];
         sexArray1[1] = SEX.FEMALE;
         sexOption = sexArray1;
-        eyeOption = new int[0x1c];
-        for (num = 0; num < 0x1c; num++)
+        eyeOption = new int[28];
+        for (num = 0; num < 28; num++)
         {
             eyeOption[num] = num;
         }
         faceOption = new int[14];
         for (num = 0; num < 14; num++)
         {
-            faceOption[num] = num + 0x20;
+            faceOption[num] = num + 32;
         }
         glassOption = new int[10];
         for (num = 0; num < 10; num++)
         {
-            glassOption[num] = num + 0x30;
+            glassOption[num] = num + 48;
         }
         hairOption = new int[11];
         for (num = 0; num < 11; num++)
@@ -538,7 +538,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     if (sexId == 0)
                     {
-                        costumeId = !next ? toPrev(costumeId, 0x18, 10) : toNext(costumeId, 0x18, 10);
+                        costumeId = !next ? toPrev(costumeId, 24, 10) : toNext(costumeId, 24, 10);
                     }
                     else
                     {
@@ -547,7 +547,7 @@ public class CustomCharacterManager : MonoBehaviour
                 }
                 else
                 {
-                    costumeId = 0x19;
+                    costumeId = 25;
                 }
                 copyBodyCostume(costumeOption[costumeId], setup.myCostume);
                 setup.myCostume.setMesh2();
@@ -667,11 +667,11 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     if (setup.myCostume.sex == SEX.FEMALE)
                     {
-                        costumeId = 0x1a;
+                        costumeId = 26;
                     }
                     else if (setup.myCostume.sex == SEX.MALE)
                     {
-                        costumeId = 0x19;
+                        costumeId = 25;
                     }
                 }
                 else if (sexId != 0)
@@ -680,7 +680,7 @@ public class CustomCharacterManager : MonoBehaviour
                 }
                 else
                 {
-                    costumeId = !next ? toPrev(costumeId, 0x18, 10) : toNext(costumeId, 0x18, 10);
+                    costumeId = !next ? toPrev(costumeId, 24, 10) : toNext(costumeId, 24, 10);
                 }
                 copyBodyCostume(costumeOption[costumeId], setup.myCostume);
                 setup.myCostume.setMesh2();

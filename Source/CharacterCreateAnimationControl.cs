@@ -100,11 +100,11 @@ public class CharacterCreateAnimationControl : MonoBehaviour
             if (timeElapsed > interval)
             {
                 timeElapsed = 0f;
-                if (Random.Range(1, 0x3e8) < 350)
+                if (Random.Range(1, 1000) < 350)
                 {
                     play("salute");
                 }
-                else if (Random.Range(1, 0x3e8) < 350)
+                else if (Random.Range(1, 1000) < 350)
                 {
                     play("supply");
                 }

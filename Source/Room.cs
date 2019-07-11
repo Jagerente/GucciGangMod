@@ -73,15 +73,15 @@ public class Room : RoomInfo
             {
                 Debug.LogWarning("Can't set maxPlayers when not in that room.");
             }
-            if (value > 0xff)
+            if (value > 255)
             {
                 Debug.LogWarning("Can't set Room.maxPlayers to: " + value + ". Using max value: 255.");
-                value = 0xff;
+                value = 255;
             }
             if (value != maxPlayersField && !PhotonNetwork.offlineMode)
             {
                 var gameProperties = new Hashtable();
-                gameProperties.Add((byte) 0xff, (byte) value);
+                gameProperties.Add((byte) 255, (byte) value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
             maxPlayersField = (byte) value;
@@ -115,7 +115,7 @@ public class Room : RoomInfo
             if (value != openField && !PhotonNetwork.offlineMode)
             {
                 var gameProperties = new Hashtable();
-                gameProperties.Add((byte) 0xfd, value);
+                gameProperties.Add((byte) 253, value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
             openField = value;
@@ -151,7 +151,7 @@ public class Room : RoomInfo
             if (value != visibleField && !PhotonNetwork.offlineMode)
             {
                 var gameProperties = new Hashtable();
-                gameProperties.Add((byte) 0xfe, value);
+                gameProperties.Add((byte) 254, value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
             visibleField = value;

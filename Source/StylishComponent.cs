@@ -32,8 +32,8 @@ public class StylishComponent : MonoBehaviour
         string[,] textArray1 = { { "D", "eja Vu" }, { "C", "asual" }, { "B", "oppin!" }, { "A", "mazing!" }, { "S", "ensational!" }, { "S", "pectacular!!" }, { "S", "tylish!!!" }, { "X", "TREEME!!!" } };
         styleRankText = textArray1;
         chainRankMultiplier = new[] { 1f, 1.1f, 1.2f, 1.3f, 1.5f, 1.7f, 2f, 2.3f, 2.5f };
-        styleRankPoints = new[] { 350, 950, 0x992, 0x11c6, 0x1b58, 0x3a98, 0x186a0 };
-        styleRankDepletions = new[] { 1, 2, 5, 10, 15, 20, 0x19, 0x19 };
+        styleRankPoints = new[] { 350, 950, 2450, 4550, 7000, 15000, 100000 };
+        styleRankDepletions = new[] { 1, 2, 5, 10, 15, 20, 25, 25 };
     }
 
     private int GetRankPercentage()

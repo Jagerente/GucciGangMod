@@ -215,7 +215,7 @@ public static class NGUITools
 
     public static string EncodeColor(Color c)
     {
-        var num = 0xffffff & (NGUIMath.ColorToInt(c) >> 8);
+        var num = 16777215 & (NGUIMath.ColorToInt(c) >> 8);
         return NGUIMath.DecimalToHex(num);
     }
 

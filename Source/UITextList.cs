@@ -110,7 +110,7 @@ public class UITextList : MonoBehaviour
         if (textLabel != null && textLabel.font != null)
         {
             var num = 0;
-            var num2 = maxHeight <= 0f ? 0x186a0 : Mathf.FloorToInt(maxHeight / textLabel.cachedTransform.localScale.y);
+            var num2 = maxHeight <= 0f ? 100000 : Mathf.FloorToInt(maxHeight / textLabel.cachedTransform.localScale.y);
             var num3 = Mathf.RoundToInt(mScroll);
             if (num2 + num3 > mTotalLines)
             {

@@ -1,5 +1,5 @@
 ﻿public class ActorProperties
 {
-    public const byte IsInactive = 0xfe;
-    public const byte PlayerName = 0xff;
+    public const byte IsInactive = 254;
+    public const byte PlayerName = 255;
 }

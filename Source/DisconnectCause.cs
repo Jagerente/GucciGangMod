@@ -2,21 +2,21 @@
 
 public enum DisconnectCause
 {
-    AuthenticationTicketExpired = 0x7ff1,
-    DisconnectByClientTimeout = 0x410,
+    AuthenticationTicketExpired = 32753,
+    DisconnectByClientTimeout = 1040,
     [Obsolete("Replaced by clearer: DisconnectByServerTimeout")]
-    DisconnectByServer = 0x411,
-    DisconnectByServerLogic = 0x413,
-    DisconnectByServerTimeout = 0x411,
-    DisconnectByServerUserLimit = 0x412,
-    Exception = 0x402,
-    ExceptionOnConnect = 0x3ff,
-    InternalReceiveException = 0x40f,
-    InvalidAuthentication = 0x7fff,
-    InvalidRegion = 0x7ff4,
-    MaxCcuReached = 0x7ff5,
-    SecurityExceptionOnConnect = 0x3fe,
+    DisconnectByServer = 1041,
+    DisconnectByServerLogic = 1043,
+    DisconnectByServerTimeout = 1041,
+    DisconnectByServerUserLimit = 1042,
+    Exception = 1026,
+    ExceptionOnConnect = 1023,
+    InternalReceiveException = 1039,
+    InvalidAuthentication = 32767,
+    InvalidRegion = 32756,
+    MaxCcuReached = 32757,
+    SecurityExceptionOnConnect = 1022,
     [Obsolete("Replaced by clearer: DisconnectByClientTimeout")]
-    TimeoutDisconnect = 0x410
+    TimeoutDisconnect = 1040
 }
 

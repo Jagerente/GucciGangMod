@@ -5,7 +5,7 @@ namespace Xft
 {
     public class VertexPool
     {
-        public const int BlockSize = 0x6c;
+        public const int BlockSize = 108;
         public float BoundsScheduleTime = 1f;
         public bool ColorChanged;
         public Color[] Colors;
@@ -80,12 +80,12 @@ namespace Xft
             var num2 = 0;
             if (VertexUsed + vcount >= VertexTotal)
             {
-                count = (vcount / 0x6c + 1) * 0x6c;
+                count = (vcount / 108 + 1) * 108;
             }
 
             if (IndexUsed + icount >= IndexTotal)
             {
-                num2 = (icount / 0x6c + 1) * 0x6c;
+                num2 = (icount / 108 + 1) * 108;
             }
 
             VertexUsed += vcount;

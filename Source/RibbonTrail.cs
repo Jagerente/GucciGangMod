@@ -2,7 +2,7 @@
 
 public class RibbonTrail
 {
-    public const int CHAIN_EMPTY = 0x1869f;
+    public const int CHAIN_EMPTY = 99999;
     protected Color Color = Color.white;
     protected float ElapsedTime;
     public int ElemCount;
@@ -31,7 +31,7 @@ public class RibbonTrail
         MaxElements = maxelemnt;
         Vertexsegment = segment;
         ElementArray = new Element[MaxElements];
-        Head = Tail = 0x1869f;
+        Head = Tail = 99999;
         SetTrailLen(len);
         UnitWidth = width;
         HeadPosition = pos;
@@ -46,7 +46,7 @@ public class RibbonTrail
 
     public void AddElememt(Element dtls)
     {
-        if (Head == 0x1869f)
+        if (Head == 99999)
         {
             Tail = MaxElements - 1;
             Head = Tail;
@@ -90,7 +90,7 @@ public class RibbonTrail
 
     public void ResetElementsPos()
     {
-        if (Head != 0x1869f && Head != Tail)
+        if (Head != 99999 && Head != Tail)
         {
             var head = Head;
             while (true)
@@ -233,7 +233,7 @@ public class RibbonTrail
         if (IndexDirty)
         {
             var pool = Vertexsegment.Pool;
-            if (Head != 0x1869f && Head != Tail)
+            if (Head != 99999 && Head != Tail)
             {
                 var head = Head;
                 var num2 = 0;
@@ -244,7 +244,7 @@ public class RibbonTrail
                     {
                         num3 = 0;
                     }
-                    if (num3 * 2 >= 0x10000)
+                    if (num3 * 2 >= 65536)
                     {
                         Debug.LogError("Too many elements!");
                     }
@@ -276,7 +276,7 @@ public class RibbonTrail
         var num = 0f;
         var num2 = 0f;
         var num3 = ElemLength * (MaxElements - 2);
-        if (Head == 0x1869f || Head == Tail)
+        if (Head == 99999 || Head == Tail)
         {
             return;
         }
@@ -288,7 +288,7 @@ public class RibbonTrail
             index = 0;
         }
         var element = ElementArray[index];
-        if (index * 2 >= 0x10000)
+        if (index * 2 >= 65536)
         {
             Debug.LogError("Too many elements!");
         }

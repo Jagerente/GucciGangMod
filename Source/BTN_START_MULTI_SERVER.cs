@@ -23,7 +23,7 @@ public class BTN_START_MULTI_SERVER : MonoBehaviour
             str4 = "night";
         }
         var unencrypted = GGM.Caching.GameObjectCache.Find("InputStartServerPWD").GetComponent<UIInput>().label.text;
-        PhotonNetwork.CreateRoom(string.Concat(text, "`", selection, "`", str3, "`", num2, "`", str4, "`", unencrypted.Length > 0 ? new SimpleAES().Encrypt(unencrypted) : "", "`", Random.Range(0, 0xc350)), new RoomOptions { isOpen = true, isVisible = true, maxPlayers = maxPlayers }, null);
+        PhotonNetwork.CreateRoom(string.Concat(text, "`", selection, "`", str3, "`", num2, "`", str4, "`", unencrypted.Length > 0 ? new SimpleAES().Encrypt(unencrypted) : "", "`", Random.Range(0, 50000)), new RoomOptions { isOpen = true, isVisible = true, maxPlayers = maxPlayers }, null);
     }
 }
 

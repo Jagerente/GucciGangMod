@@ -5,84 +5,96 @@ namespace GGM.GUI
 {
     internal class Settings
     {
-        protected static readonly string[] Switcher = { "Off", "On" };
+        internal static string[] SwitcherStr = {"Off", "On"};
+        internal const float width = 775f;
+        internal const float height = 575f;
+        internal static readonly float leftPos = Screen.width / 2f - width / 2f;
+        internal static readonly float topPos = Screen.height / 2f - height / 2f;
+        internal const float fullAreaWidth = width - 40f;
+        internal const float fullAreaHeight = height - 80f - 15f;
+        internal const float topAreaHeight = 35f;
+        internal const float bottomAreaHeight = height - 115f - 15f;
+        internal const float halfAreaWidth = width / 2f - 20f;
+        internal const float leftElementWidth = halfAreaWidth * 0.4f;
+        internal const float rightElementWidth = halfAreaWidth * 0.6f - 30f;
 
-        internal static readonly float leftPos = Screen.width / 2f - 350f;
-        internal static readonly float topPos = Screen.height / 2f - 250f;
-        private const float width = 730f;
-        private const float height = 550f;
         /// <summary>
         /// 0 - full,
         /// 1 - top,
         /// 2 - bottom,
         /// </summary>
-        protected static readonly Rect[] center =
+        internal static readonly Rect[] center =
         {
-            new Rect(leftPos + 20f, topPos + 35f, width - 20f, 445f),
-            new Rect(leftPos + 20f, topPos + 35f, width - 20f, 35f),
-            new Rect(leftPos + 20f, topPos + 70f, width - 20f, 410f)
+            new Rect(leftPos + 20f, topPos + 60f, fullAreaWidth, fullAreaHeight),
+            new Rect(leftPos + 20f, topPos + 60f, fullAreaWidth, topAreaHeight),
+            new Rect(leftPos + 20f, topPos + 100f, fullAreaWidth, bottomAreaHeight),
+            new Rect(leftPos + 20f, topPos + height / 2.7f, fullAreaWidth, height / 1.7f)
         };
         /// <summary>
         /// 0 - full,
         /// 1 - top,
         /// 2 - bottom,
         /// </summary>
-        protected static readonly Rect[] left =
+        internal static readonly Rect[] left =
         {
-            new Rect(leftPos + 20f, topPos + 35f, (width - 20f) / 2, 445f),
-            new Rect(leftPos + 20f, topPos + 35f, (width - 20f) / 2, 35f),
-            new Rect(leftPos + 20f, topPos + 70f, (width - 20f) / 2, 410f)
+            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, fullAreaHeight),
+            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, topAreaHeight),
+            new Rect(leftPos + 20f, topPos + 100f, halfAreaWidth, bottomAreaHeight),
+            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f), 
         };
         /// <summary>
         /// 0 - full,
         /// 1 - top,
         /// 2 - bottom,
         /// </summary>
-        protected static readonly Rect[] right =
+        internal static readonly Rect[] right =
         {
-            new Rect(leftPos + 380f, topPos + 35f, (width - 20f) / 2, 445f),
-            new Rect(leftPos + 380f, topPos + 35f, (width - 20f) / 2, 35f),
-            new Rect(leftPos + 380f, topPos + 70f, (width - 20f) / 2, 410f)
+            new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, fullAreaHeight),
+            new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, topAreaHeight),
+            new Rect(leftPos + halfAreaWidth + 40f, topPos + 100f, halfAreaWidth, bottomAreaHeight),
+            new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f)
+
         };
 
-        protected const int HeaderFontSize = 20;
-        protected const float HeaderWidth = 70f;
-        protected const float HeaderHeight = 30f;
+        internal const int HeaderFontSize = 20;
+        internal const float HeaderWidth = halfAreaWidth;
+        internal const float HeaderHeight = 35f;
 
-        protected const int SubHeaderFontSize = 16;
-        protected const float SubHeaderWidth = 90f;
-        protected const float SubHeaderHeight = 25f;
+        internal const int SubHeaderFontSize = 16;
+        internal const float SubHeaderWidth = halfAreaWidth;
+        internal const float SubHeaderHeight = 30f;
 
-        protected const int LabelFontSize = 13;
-        protected const float LabelWidth = 135f;
-        protected const float LabelHeight = 25f;
+        internal const int LabelFontSize = 14;
+        internal const float LabelWidth = leftElementWidth;
+        internal const float LabelHeight = 26f;
 
-        protected const float GridWidth = 190f;
-        protected const float GridHeight = 20f;
+        internal const float GridWidth = rightElementWidth;
+        internal const float GridHeight = 21f;
 
-        protected const float TextFieldWidth = 190f;
+        internal const float TextFieldWidth = rightElementWidth;
+        internal const float TextFieldHeight= 21f;
 
-        protected const float SliderWidth = 170f;
-        protected const float SliderValueWidth = 15f;
+        internal const float SliderWidth = rightElementWidth - 40f;
+        internal const float SliderValueWidth = 21f;
 
-        protected const float ButtonWidth = 100f;
-        protected const float ButtonHeight = 50f;
+        internal const float ButtonWidth = 100f;
+        internal const float ButtonHeight = 50f;
 
-        protected static readonly Color ColorMajor = Colors.melon;
-        protected static readonly Color ColorMinor = Colors.froly;
+        internal static readonly Color ColorMajor = ColorCache.Melon;
+        internal static readonly Color ColorMinor = new Color(0.941f, 0.502f, 0.502f);
 
-        protected static readonly GUIStyle[] LabelStyle =
+        internal static readonly GUIStyle[] LabelStyle =
         {
             TextStyle(TextAnchor.MiddleLeft, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor),
             TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor),
             TextStyle(TextAnchor.MiddleRight, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor)
         };
-        protected static readonly GUIStyle HeaderStyle = TextStyle(TextAnchor.UpperCenter, FontStyle.Bold, HeaderFontSize, false, ColorMajor, ColorMajor, ColorMajor);
-        protected static readonly GUIStyle SubHeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, SubHeaderFontSize, false, ColorMajor, ColorMajor, ColorMajor);
-        protected static readonly GUIStyle SliderStatusStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, LabelFontSize, false, ColorMinor, ColorMinor, ColorMinor);
-        protected static readonly GUIStyle ButtonStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, 24, false, ColorMinor, ColorMinor, ColorMinor);
+        internal static readonly GUIStyle HeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, HeaderFontSize, false, ColorMajor, ColorMajor, ColorMajor);
+        internal static readonly GUIStyle SubHeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, SubHeaderFontSize, false, ColorMajor, ColorMajor, ColorMajor);
+        internal static readonly GUIStyle SliderStatusStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, LabelFontSize, false, ColorMinor, ColorMinor, ColorMinor);
+        internal static readonly GUIStyle ButtonStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, 24, false, ColorMinor, ColorMinor, ColorMinor);
 
-        protected static GUIStyle TextStyle(TextAnchor alignment, FontStyle fontStyle, int fontSize, bool wordWrap, Color normalColor, Color hoverColor, Color activeColor)
+        internal static GUIStyle TextStyle(TextAnchor alignment, FontStyle fontStyle, int fontSize, bool wordWrap, Color normalColor, Color hoverColor, Color activeColor)
         {
             return new GUIStyle
             {

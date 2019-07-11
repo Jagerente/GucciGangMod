@@ -1,4 +1,6 @@
-﻿namespace Xft
+﻿using GGM.Config;
+
+namespace Xft
 {
     using System.Collections.Generic;
     using UnityEngine;
@@ -7,7 +9,7 @@
     {
         private static float fps;
         private float deltaTime;
-        public static float FadeTime = 0.3f;
+        public static float FadeTime;
         public int Granularity = 60;
         public int MaxFrame;
         protected float mElapsedTime;
@@ -27,12 +29,12 @@
         public Material MyMaterial;
         public Transform PointEnd;
         public Transform PointStart;
-        public static int AppearanceType = 1;
         public static string Version = "1.0.1";
 
         public void Activate()
         {
-            MaxFrame = 60;
+            FadeTime = Settings.BladeTrailsInfiniteLifetimeSetting ? -1f : 0.3f;
+            MaxFrame = Settings.BladeTrailsFrameRateSetting;
             Init();
             if (mMeshObj == null)
             {

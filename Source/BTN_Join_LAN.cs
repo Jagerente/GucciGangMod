@@ -9,7 +9,7 @@ public class BTN_Join_LAN : MonoBehaviour
         var s = transform.parent.Find("InputPort").GetComponent<UIInput>().text;
         var str3 = transform.parent.Find("InputAuthPass").GetComponent<UIInput>().text;
         PhotonNetwork.Disconnect();
-        if (int.TryParse(s, out num) && PhotonNetwork.ConnectToMaster(text, num, FengGameManagerMKII.applicationId, UIMainReferences.ServerKey))
+        if (int.TryParse(s, out num) && PhotonNetwork.ConnectToMaster(text, NetworkingPeer.ProtocolToNameServerPort[PhotonNetwork.networkingPeer.UsedProtocol], FengGameManagerMKII.applicationId, UIMainReferences.ServerKey))
         {
             PlayerPrefs.SetString("lastIP", text);
             PlayerPrefs.SetString("lastPort", s);

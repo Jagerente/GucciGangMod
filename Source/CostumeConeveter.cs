@@ -108,9 +108,9 @@ public class CostumeConeveter
         player.SetCustomProperties(propertiesToSet);
         propertiesToSet = new Hashtable();
         var costumeId = costume.costumeId;
-        if (costumeId == 0x1a)
+        if (costumeId == 26)
         {
-            costumeId = 0x19;
+            costumeId = 25;
         }
         propertiesToSet.Add(PhotonPlayerProperty.costumeId, costumeId);
         player.SetCustomProperties(propertiesToSet);
@@ -302,9 +302,9 @@ public class CostumeConeveter
         costume.stat.BLA = (int) player.customProperties[PhotonPlayerProperty.statBLA];
         costume.stat.ACL = (int) player.customProperties[PhotonPlayerProperty.statACL];
         costume.stat.skillId = (string) player.customProperties[PhotonPlayerProperty.statSKILL];
-        if (costume.costumeId == 0x19 && costume.sex == SEX.FEMALE)
+        if (costume.costumeId == 25 && costume.sex == SEX.FEMALE)
         {
-            costume.costumeId = 0x1a;
+            costume.costumeId = 26;
         }
         costume.setBodyByCostumeId();
         costume.setMesh2();
