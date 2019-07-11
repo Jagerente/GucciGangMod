@@ -36,11 +36,11 @@ namespace GGM.GUI.Pages
         private static int costume;
 
         private static int chars;
-        private static readonly string[] charsStr = { "LEVI", "MIKASA", "ARMIN", "MARCO", "JEAN", "EREN", "TITAN_EREN", "PETRA", "SASHA", "Set 1", "Set 2", "Set 3" };
+        private static readonly string[] charsStr = { "Levi", "Mikasa", "Armin", "Marco", "Jean", "Eren", "Titan_Eren", "Petra", "Sasha", "Set 1", "Set 2", "Set 3" };
 
         private static string[] daytimeStr = { "Day", "Dawn", "Night" };
         private static string[] difficulties = {"Normal", "Hard", "Abnormal"};
-        private static string[] camera = {"ORIGINAL", "WOW", "TPS"};
+        private static string[] camera = {"ORIGINAL", "WOW", "TPS", "OldTPS"};
 
         private void OnGUI()
         {
@@ -69,7 +69,7 @@ namespace GGM.GUI.Pages
             costume = GUILayout.SelectionGrid(costume, new[] { "Cos 1", "Cos 2", "Cos 3" }, 3);
             CheckBoxCostume.costumeSet = costume + 1;
             chars = GUILayout.SelectionGrid(chars, charsStr, 1);
-            IN_GAME_MAIN_CAMERA.singleCharacter = charsStr[chars];
+            IN_GAME_MAIN_CAMERA.singleCharacter = charsStr[chars].ToUpper();
             GUILayout.EndVertical();
 
             GUILayout.EndHorizontal();
