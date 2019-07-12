@@ -65,9 +65,11 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public static bool usingTitan;
     private Vector3 verticalHeightOffset = Vector3.zero;
     private float rotationY;
+    public static IN_GAME_MAIN_CAMERA Instance;
 
     private void Awake()
     {
+        Instance = this;
         isTyping = false;
         isPausing = false;
         name = "MainCamera";
@@ -327,7 +329,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         GGM.Caching.GameObjectCache.Find("Flare").transform.localPosition = new Vector3((int) (-Screen.width * 0.5f) + 14, (int) (-Screen.height * 0.5f), 0f);
         var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoBottomRight");
         obj2.transform.localPosition = new Vector3((int) (Screen.width * 0.5f), (int) (-Screen.height * 0.5f), 0f);
-        GGM.Labels.BottomRight = "Pause : " + GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.pause] + " ";
+        GGM.Labels.BottomRight = "Pause : " + GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.pause];
         GGM.Caching.GameObjectCache.Find("LabelInfoTopCenter").transform.localPosition = new Vector3(0f, (int) (Screen.height * 0.5f), 0f);
         GGM.Caching.GameObjectCache.Find("LabelInfoTopRight").transform.localPosition = new Vector3((int) (Screen.width * 0.5f), (int) (Screen.height * 0.5f), 0f);
         GGM.Caching.GameObjectCache.Find("LabelNetworkStatus").transform.localPosition = new Vector3((int) (-Screen.width * 0.5f), (int) (Screen.height * 0.5f), 0f);
