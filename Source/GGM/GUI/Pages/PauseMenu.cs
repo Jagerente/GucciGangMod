@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using GGM.Caching;
@@ -320,7 +320,6 @@ namespace GGM.GUI.Pages
 
         private static void Game()
         {
-
             GUILayout.BeginArea(left[0]);
             GUILayout.Space(15f);
             scrollGameLeft = GUILayout.BeginScrollView(scrollGameLeft);
@@ -381,8 +380,7 @@ namespace GGM.GUI.Pages
             GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            serverSwitch = GUILayout.SelectionGrid(serverSwitch, serverPages, 3, GUILayout.Width(225f),
-                GUILayout.Height(25f));
+            Grid(string.Empty, ref serverSwitch, serverPages, width: 225f, height: 25f);
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
             GUILayout.FlexibleSpace();
@@ -1150,13 +1148,12 @@ namespace GGM.GUI.Pages
             GUILayout.Space(15f);
             GUILayout.Label("Color Presets", HeaderStyle);
             var style = new GUIStyle();
-            var size = 13f;
+            const float size = 13f;
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             for (var i = 0; i < 35; i++)
             {
-                style.normal.background = style.hover.background =
-                    style.active.background = ColorCache.Textures[ColorCache.White];
+                style.normal.background = style.hover.background = style.active.background = ColorCache.Textures[ColorCache.White];
                 if (GUILayout.Button("", style, GUILayout.Height(size), GUILayout.Width(size)))
                 {
                     BombColorSetting[0].Value = ColorCache.Textures.First().Key.r;
@@ -1173,10 +1170,9 @@ namespace GGM.GUI.Pages
                 GUILayout.FlexibleSpace();
                 for (var j = 0; j < 35; j++, i++)
                 {
-                    Texture2D texture;
                     if (i == ColorCache.Textures.Count) break;
 
-                    texture = ColorCache.Textures.ElementAt(i).Value;
+                    var texture = ColorCache.Textures.ElementAt(i).Value;
                     style.normal.background = style.hover.background = style.active.background = texture;
                     if (GUILayout.Button("", style, GUILayout.Height(size), GUILayout.Width(size)))
                     {
@@ -1195,8 +1191,7 @@ namespace GGM.GUI.Pages
             GUILayout.FlexibleSpace();
             for (var i = 0; i < 35; i++)
             {
-                style.normal.background = style.hover.background =
-                    style.active.background = ColorCache.Textures[ColorCache.Black];
+                style.normal.background = style.hover.background = style.active.background = ColorCache.Textures[ColorCache.Black];
                 if (GUILayout.Button("", style, GUILayout.Height(size), GUILayout.Width(size)))
                 {
                     BombColorSetting[0].Value = ColorCache.Textures.Last().Key.r;
@@ -1274,8 +1269,7 @@ namespace GGM.GUI.Pages
             Label(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], LabelType.SubHeader);
             GUILayout.BeginHorizontal();
             Label("Title");
-            HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] =
-                GUILayout.TextField(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], GUILayout.Width(TextFieldWidth));
+            HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] = GUILayout.TextField(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], GUILayout.Width(TextFieldWidth));
             GUILayout.EndHorizontal();
             for (var i = 0; i < humanSkinFields.Length; i++)
             {
