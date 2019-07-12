@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using GGM.Caching;
 using UnityEngine;
 
 namespace GGM
@@ -166,5 +167,20 @@ namespace GGM
             return PhotonNetwork.room.name.Split(new char[] { '`' })[0].Trim().StripHEX();
         }
 
+        public static void DisableObject(string str)
+        {
+            if (GameObjectCache.Find(str))
+            {
+                GameObjectCache.Find(str).SetActive(false);
+            }
+        }
+
+        public static void EnableObject(string str)
+        {
+            if (GameObjectCache.Find(str))
+            {
+                GameObjectCache.Find(str).SetActive(true);
+            }
+        }
     }
 }
