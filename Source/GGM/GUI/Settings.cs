@@ -11,12 +11,12 @@ namespace GGM.GUI
         internal static readonly float leftPos = Screen.width / 2f - width / 2f;
         internal static readonly float topPos = Screen.height / 2f - height / 2f;
         internal const float fullAreaWidth = width - 40f;
-        internal const float fullAreaHeight = height - 80f - 25f;
+        internal const float fullAreaHeight = height - 80f - 15f;
         internal const float topAreaHeight = 35f;
-        internal const float bottomAreaHeight = height - 115f - 25f;
+        internal const float bottomAreaHeight = height - 115f - 15f;
         internal const float halfAreaWidth = width / 2f - 20f;
         internal const float leftElementWidth = halfAreaWidth * 0.4f;
-        internal const float rightElementWidth = halfAreaWidth * 0.6f - 25f;
+        internal const float rightElementWidth = halfAreaWidth * 0.6f - 30f;
 
         /// <summary>
         /// 0 - full,
@@ -62,19 +62,20 @@ namespace GGM.GUI
 
         internal const int SubHeaderFontSize = 16;
         internal const float SubHeaderWidth = halfAreaWidth;
-        internal const float SubHeaderHeight = 25f;
+        internal const float SubHeaderHeight = 30f;
 
         internal const int LabelFontSize = 14;
         internal const float LabelWidth = leftElementWidth;
-        internal const float LabelHeight = 25f;
+        internal const float LabelHeight = 26f;
 
         internal const float GridWidth = rightElementWidth;
         internal const float GridHeight = 21f;
 
         internal const float TextFieldWidth = rightElementWidth;
+        internal const float TextFieldHeight= 21f;
 
         internal const float SliderWidth = rightElementWidth - 40f;
-        internal const float SliderValueWidth = 35f;
+        internal const float SliderValueWidth = 21f;
 
         internal const float ButtonWidth = 100f;
         internal const float ButtonHeight = 50f;

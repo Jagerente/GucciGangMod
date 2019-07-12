@@ -1,11 +1,11 @@
-﻿using GGM.GUI.Pages;
+﻿using GGM.Config;
+using GGM.GUI.Pages;
 using UnityEngine;
 
 public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 {
     public static float cameraDistance = 0.6f;
     public static CAMERA_TYPE cameraMode;
-    public static int cameraTilt = 1;
     private float closestDistance;
     private int currentPeekPlayerIndex;
     public static DayLight dayLight = DayLight.Dawn;
@@ -24,7 +24,6 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     private Transform head;
     private float heightMulti;
     public FengCustomInputs inputManager;
-    public static int invertY = 1;
     public static bool isPausing;
     public static bool isTyping;
     public static int level;
@@ -66,27 +65,14 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public static bool usingTitan;
     private Vector3 verticalHeightOffset = Vector3.zero;
     private float rotationY;
+    public static IN_GAME_MAIN_CAMERA Instance;
 
     private void Awake()
     {
+        Instance = this;
         isTyping = false;
         isPausing = false;
         name = "MainCamera";
-        if (PlayerPrefs.HasKey("GameQuality"))
-        {
-            if (PlayerPrefs.GetFloat("GameQuality") >= 0.9f)
-            {
-                GetComponent<TiltShift>().enabled = true;
-            }
-            else
-            {
-                GetComponent<TiltShift>().enabled = false;
-            }
-        }
-        else
-        {
-            GetComponent<TiltShift>().enabled = true;
-        }
         CreateMinimap();
     }
 
@@ -105,7 +91,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 if (Input.GetKey(KeyCode.Mouse1))
                 {
                     var angle = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
-                    var num2 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
+                    var num2 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * (Settings.MouseInvertYSetting ? -1 : 1);
                     this.transform.RotateAround(this.transform.position, Vector3.up, angle);
                     this.transform.RotateAround(this.transform.position, this.transform.right, num2);
                 }
@@ -141,7 +127,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     Screen.lockCursor = true;
                 }
                 var num5 = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
-                var num6 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * getReverse();
+                var num6 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * (Settings.MouseInvertYSetting ? -1 : 1);
                 this.transform.RotateAround(this.transform.position, Vector3.up, num5);
                 var num7 = this.transform.rotation.eulerAngles.x % 360f;
                 var num8 = num7 + num6;
@@ -158,16 +144,16 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             {
                 var quaternion = Quaternion.Euler(0f, this.transform.eulerAngles.y, 0f);
                 this.transform.position = head.position + Vector3.up * 3f;
-                this.rotationY += ((Input.GetAxis("Mouse Y") * 2.5f) * (sensitivityMulti * 2f)) * invertY;
+                this.rotationY += Input.GetAxis("Mouse Y") * 2.5f * (sensitivityMulti * 2f) * (Settings.MouseInvertYSetting ? -1 : 1);
                 this.rotationY = Mathf.Clamp(this.rotationY, -60f, 60f);
-                this.rotationY = Mathf.Max(this.rotationY, -999f + (this.heightMulti * 2f));
+                this.rotationY = Mathf.Max(this.rotationY, -999f + this.heightMulti * 2f);
                 this.rotationY = Mathf.Min(this.rotationY, 999f);
-                this.transform.localEulerAngles = new Vector3(-this.rotationY, this.transform.localEulerAngles.y + ((Input.GetAxis("Mouse X") * 2.5f) * (sensitivityMulti * 2f)), this.transform.eulerAngles.z);
+                this.transform.localEulerAngles = new Vector3(-this.rotationY, this.transform.localEulerAngles.y + Input.GetAxis("Mouse X") * 2.5f * (sensitivityMulti * 2f), this.transform.eulerAngles.z);
                 quaternion = Quaternion.Euler(0f, this.transform.eulerAngles.y, 0f);
                 this.transform.position -= quaternion * Vector3.forward * 10f * distanceMulti * distanceOffsetMulti;
                 this.transform.position += -Vector3.up * rotationY * 0.1f * (float)System.Math.Pow((double)heightMulti, 1.1) * distanceOffsetMulti;
                 if (cameraDistance >= 0.65f) return;
-                this.transform.position += (this.transform.right * Mathf.Max(((0.6f - cameraDistance) * 2f), 0.65f));
+                this.transform.position += this.transform.right * Mathf.Max((0.6f - cameraDistance) * 2f, 0.65f);
                 return;
             }
         }
@@ -215,7 +201,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 Minimap.instance.myCam.enabled = false;
             }
             minimap.CreateMinimap(Minimap.instance.myCam, 512, 0.3f, info.minimapPreset);
-            if ((int) FengGameManagerMKII.settings[231] == 0 || RCSettings.globalDisableMinimap == 1)
+            if (Settings.MinimapSetting || RCSettings.globalDisableMinimap == 1)
             {
                 minimap.SetEnabled(false);
             }
@@ -266,11 +252,6 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         flashDuration = 2f;
     }
 
-    private int getReverse()
-    {
-        return invertY;
-    }
-
     private float getSensitivityMulti()
     {
         return sensitivityMulti;
@@ -316,28 +297,30 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public void setDayLight(DayLight val)
     {
         dayLight = val;
-        if (dayLight == DayLight.Night)
+        bool custom = Settings.CustomAmbientSetting;
+        switch (dayLight)
         {
-            var obj2 = (GameObject) Instantiate(Resources.Load("flashlight"));
-            obj2.transform.parent = transform;
-            obj2.transform.position = transform.position;
-            obj2.transform.rotation = Quaternion.Euler(353f, 0f, 0f);
-            RenderSettings.ambientLight = FengColor.nightAmbientLight;
-            GGM.Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = FengColor.nightLight;
-            gameObject.GetComponent<Skybox>().material = skyBoxNIGHT;
+            case DayLight.Night:
+                var obj2 = (GameObject) Instantiate(Resources.Load("flashlight"));
+                obj2.transform.parent = transform;
+                obj2.transform.position = transform.position;
+                obj2.transform.rotation = Quaternion.Euler(353f, 0f, 0f);
+                RenderSettings.ambientLight = custom ? new Color(Settings.CustomAmbientColorSetting[2][0], Settings.CustomAmbientColorSetting[2][1], Settings.CustomAmbientColorSetting[2][2]) : FengColor.nightAmbientLight;
+                GGM.Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = FengColor.nightLight;
+                gameObject.GetComponent<Skybox>().material = skyBoxNIGHT;
+                break;
+            case DayLight.Day:
+                RenderSettings.ambientLight = custom ? new Color(Settings.CustomAmbientColorSetting[0][0], Settings.CustomAmbientColorSetting[0][1], Settings.CustomAmbientColorSetting[0][2]) : FengColor.dayLight;
+                GGM.Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = FengColor.dayLight;
+                gameObject.GetComponent<Skybox>().material = skyBoxDAY;
+                break;
+            case DayLight.Dawn:
+                RenderSettings.ambientLight = custom ? new Color(Settings.CustomAmbientColorSetting[1][0], Settings.CustomAmbientColorSetting[1][1], Settings.CustomAmbientColorSetting[1][2]) : FengColor.dawnAmbientLight;
+                GGM.Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = FengColor.dawnAmbientLight;
+                gameObject.GetComponent<Skybox>().material = skyBoxDAWN;
+                break;
         }
-        if (dayLight == DayLight.Day)
-        {
-            RenderSettings.ambientLight = FengColor.dayAmbientLight;
-            GGM.Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = FengColor.dayLight;
-            gameObject.GetComponent<Skybox>().material = skyBoxDAY;
-        }
-        if (dayLight == DayLight.Dawn)
-        {
-            RenderSettings.ambientLight = FengColor.dawnAmbientLight;
-            GGM.Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = FengColor.dawnAmbientLight;
-            gameObject.GetComponent<Skybox>().material = skyBoxDAWN;
-        }
+
         snapShotCamera.gameObject.GetComponent<Skybox>().material = gameObject.GetComponent<Skybox>().material;
     }
 
@@ -346,7 +329,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         GGM.Caching.GameObjectCache.Find("Flare").transform.localPosition = new Vector3((int) (-Screen.width * 0.5f) + 14, (int) (-Screen.height * 0.5f), 0f);
         var obj2 = GGM.Caching.GameObjectCache.Find("LabelInfoBottomRight");
         obj2.transform.localPosition = new Vector3((int) (Screen.width * 0.5f), (int) (-Screen.height * 0.5f), 0f);
-        GGM.Labels.BottomRight = "Pause : " + GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.pause] + " ";
+        GGM.Labels.BottomRight = "Pause : " + GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().inputString[InputCode.pause];
         GGM.Caching.GameObjectCache.Find("LabelInfoTopCenter").transform.localPosition = new Vector3(0f, (int) (Screen.height * 0.5f), 0f);
         GGM.Caching.GameObjectCache.Find("LabelInfoTopRight").transform.localPosition = new Vector3((int) (Screen.width * 0.5f), (int) (Screen.height * 0.5f), 0f);
         GGM.Caching.GameObjectCache.Find("LabelNetworkStatus").transform.localPosition = new Vector3((int) (-Screen.width * 0.5f), (int) (Screen.height * 0.5f), 0f);
@@ -557,7 +540,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localScale = new Vector3(Screen.width * 0.4f, Screen.height * 0.4f, 1f);
             GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.localPosition = new Vector3(-Screen.width * 0.225f, Screen.height * 0.225f, 0f);
             GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().transform.rotation = Quaternion.Euler(0f, 0f, 10f);
-            if (PlayerPrefs.HasKey("showSSInGame") && PlayerPrefs.GetInt("showSSInGame") == 1)
+            if (Settings.SnapshotsShowInGameSetting)
             {
                 GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().enabled = true;
             }
@@ -613,23 +596,9 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     {
         GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addCamera(this);
         isPausing = false;
-        sensitivityMulti = PlayerPrefs.GetFloat("MouseSensitivity");
-        invertY = PlayerPrefs.GetInt("invertMouseY");
         inputManager = GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>();
         setDayLight(dayLight);
         locker = GGM.Caching.GameObjectCache.Find("locker");
-        if (PlayerPrefs.HasKey("cameraTilt"))
-        {
-            cameraTilt = PlayerPrefs.GetInt("cameraTilt");
-        }
-        else
-        {
-            cameraTilt = 1;
-        }
-        if (PlayerPrefs.HasKey("cameraDistance"))
-        {
-            cameraDistance = PlayerPrefs.GetFloat("cameraDistance") + 0.3f;
-        }
         createSnapShotRT();
     }
 
@@ -645,21 +614,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
     public void startSnapShot(Vector3 p, int dmg, GameObject target, float startTime)
     {
-        int num;
-        if (int.TryParse((string) FengGameManagerMKII.settings[95], out num))
-        {
-            if (dmg >= num)
-            {
-                snapShotCount = 1;
-                startSnapShotFrameCount = true;
-                snapShotTargetPosition = p;
-                snapShotTarget = target;
-                snapShotStartCountDownTime = startTime;
-                snapShotInterval = 0.05f + Random.Range(0f, 0.03f);
-                snapShotDmg = dmg;
-            }
-        }
-        else
+        if (dmg >= Settings.SnapshotsMinimumDamageSetting)
         {
             snapShotCount = 1;
             startSnapShotFrameCount = true;
@@ -671,7 +626,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         }
     }
 
-   
+
     public void update()
     {
         if (flashDuration > 0f)
@@ -798,26 +753,78 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 RaycastHit hit;
                 if (inputManager.isInputDown[InputCode.camera])
                 {
-                    if (cameraMode == CAMERA_TYPE.ORIGINAL)
+                    switch (cameraMode)
                     {
-                        cameraMode = CAMERA_TYPE.WOW;
-                        Screen.lockCursor = false;
+                        case CAMERA_TYPE.ORIGINAL:
+                            if (Settings.CameraTypeSettings[2])
+                            {
+                                cameraMode = CAMERA_TYPE.WOW;
+                                Screen.lockCursor = false;
+                            }
+                            else if (Settings.CameraTypeSettings[1])
+                            {
+                                cameraMode = CAMERA_TYPE.TPS;
+                                Screen.lockCursor = true;
+                            }
+                            else if (Settings.CameraTypeSettings[3])
+                            {
+                                cameraMode = CAMERA_TYPE.OLDTPS;
+                                Screen.lockCursor = true;
+                            }
+                            break;
+                        case CAMERA_TYPE.WOW:
+                            if (Settings.CameraTypeSettings[1])
+                            {
+                                cameraMode = CAMERA_TYPE.TPS;
+                                Screen.lockCursor = true;
+                            }
+                            else if (Settings.CameraTypeSettings[3])
+                            {
+                                cameraMode = CAMERA_TYPE.OLDTPS;
+                                Screen.lockCursor = true;
+                            }
+                            else if (Settings.CameraTypeSettings[0])
+                            {
+                                cameraMode = CAMERA_TYPE.ORIGINAL;
+                                Screen.lockCursor = false;
+                            }
+                            break;
+                        case CAMERA_TYPE.TPS:
+                            if (Settings.CameraTypeSettings[3])
+                            {
+                                cameraMode = CAMERA_TYPE.OLDTPS;
+                                Screen.lockCursor = true;
+                            }
+                            else if (Settings.CameraTypeSettings[0])
+                            {
+                                cameraMode = CAMERA_TYPE.ORIGINAL;
+                                Screen.lockCursor = false;
+                            }
+                            else if (Settings.CameraTypeSettings[2])
+                            {
+                                cameraMode = CAMERA_TYPE.WOW;
+                                Screen.lockCursor = false;
+                            }
+                            break;
+                        case CAMERA_TYPE.OLDTPS:
+                            if (Settings.CameraTypeSettings[0])
+                            {
+                                cameraMode = CAMERA_TYPE.ORIGINAL;
+                                Screen.lockCursor = false;
+                            }
+                            else if (Settings.CameraTypeSettings[2])
+                            {
+                                cameraMode = CAMERA_TYPE.WOW;
+                                Screen.lockCursor = false;
+                            }
+                            else if (Settings.CameraTypeSettings[1])
+                            {
+                                cameraMode = CAMERA_TYPE.TPS;
+                                Screen.lockCursor = true;
+                            }
+                            break;
                     }
-                    else if (cameraMode == CAMERA_TYPE.WOW)
-                    {
-                        cameraMode = CAMERA_TYPE.TPS;
-                        Screen.lockCursor = true;
-                    }
-                    else if (cameraMode == CAMERA_TYPE.TPS)
-                    {
-                        cameraMode = CAMERA_TYPE.OLDTPS;
-                        Screen.lockCursor = true;
-                    }
-                    else if (cameraMode == CAMERA_TYPE.OLDTPS)
-                    {
-                        cameraMode = CAMERA_TYPE.ORIGINAL;
-                        Screen.lockCursor = false;
-                    }
+
                     if ((int) FengGameManagerMKII.settings[245] == 1 || main_object.GetComponent<HERO>() == null)
                     {
                         Screen.showCursor = false;

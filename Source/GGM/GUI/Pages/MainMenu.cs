@@ -30,9 +30,8 @@ namespace GGM.GUI.Pages
 
             if (UnityEngine.GUI.Button(single, singleButton, "label"))
             {
-                NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelSingleSet,
-                    true);
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
+                GetInstance<Single>().Enable();
             }
 
             singleButton = single.Contains(GUIHelpers.mousePos)
@@ -45,8 +44,7 @@ namespace GGM.GUI.Pages
 
             if (UnityEngine.GUI.Button(multiplayer, multiplayerButton, "label"))
             {
-                NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart,
-                    true);
+                NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, true);
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
             }
 
@@ -175,12 +173,12 @@ namespace GGM.GUI.Pages
             #endregion
 
             #region Top Right Navigation Panel
-            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 45f),
+            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(135f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 5f),
                 "Custom Characters")) //45f, 128,25f
             {
                 Application.LoadLevel("characterCreation");
             }
-            else if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(128f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 75f),
+            else if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(135f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 35f),
                 "Snapshot Reviewer")) //75
             {
                 Application.LoadLevel("SnapShot");

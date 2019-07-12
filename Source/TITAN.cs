@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GGM.Config;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using MonoBehaviour = Photon.MonoBehaviour;
@@ -2214,12 +2215,9 @@ public class TITAN : MonoBehaviour
         {
             yield return null;
         }
-        var mipmap = true;
+        var mipmap = Settings.MipMappingSetting;
         var iteratorVariable1 = false;
-        if ((int) FengGameManagerMKII.settings[63] == 1)
-        {
-            mipmap = false;
-        }
+
         foreach (var iteratorVariable2 in GetComponentsInChildren<Renderer>())
         {
             if (iteratorVariable2.name.Contains("eye"))

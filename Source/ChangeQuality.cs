@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using GGM.Config;
+using UnityEngine;
 
 public class ChangeQuality : MonoBehaviour
 {
@@ -23,69 +25,10 @@ public class ChangeQuality : MonoBehaviour
         {
             PlayerPrefs.SetFloat("GameQuality", gameObject.GetComponent<UISlider>().sliderValue);
         }
-        setQuality(gameObject.GetComponent<UISlider>().sliderValue);
     }
 
     public static void setCurrentQuality()
     {
-        if (PlayerPrefs.HasKey("GameQuality"))
-        {
-            setQuality(PlayerPrefs.GetFloat("GameQuality"));
-        }
-    }
-
-    private static void setQuality(float val)
-    {
-        if (val < 0.167f)
-        {
-            QualitySettings.SetQualityLevel(0, true);
-        }
-        else if (val < 0.33f)
-        {
-            QualitySettings.SetQualityLevel(1, true);
-        }
-        else if (val < 0.5f)
-        {
-            QualitySettings.SetQualityLevel(2, true);
-        }
-        else if (val < 0.67f)
-        {
-            QualitySettings.SetQualityLevel(3, true);
-        }
-        else if (val < 0.83f)
-        {
-            QualitySettings.SetQualityLevel(4, true);
-        }
-        else if (val <= 1f)
-        {
-            QualitySettings.SetQualityLevel(5, true);
-        }
-        if (val < 0.9f)
-        {
-            turnOffTiltShift();
-        }
-        else
-        {
-            turnOnTiltShift();
-        }
-    }
-
-    public static void turnOffTiltShift()
-    {
-        isTiltShiftOn = false;
-        if (GGM.Caching.GameObjectCache.Find("MainCamera") != null)
-        {
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<TiltShift>().enabled = false;
-        }
-    }
-
-    public static void turnOnTiltShift()
-    {
-        isTiltShiftOn = true;
-        if (GGM.Caching.GameObjectCache.Find("MainCamera") != null)
-        {
-            GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<TiltShift>().enabled = true;
-        }
     }
 }
 

@@ -13,6 +13,7 @@ public class PanelMain : MonoBehaviour
     private void OnEnable()
     {
         Page.GetInstance<MainMenu>().Enable();
+        GGM.Discord.RichPresence.UpdateStatus();
     }
 
     private void OnDisable()

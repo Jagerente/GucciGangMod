@@ -21,7 +21,7 @@ namespace GGM.Config
                 (Font)bundle.assetBundle.Load("bienetresocial"),
                 (Font)bundle.assetBundle.Load("mandatory")
             };
-            Labels.Version = UIMainReferences.Version;
+            Labels.Version = $"GucciGangMod {UIMainReferences.Version}";
         }
 
         public static IEnumerator LoadRCAssets()

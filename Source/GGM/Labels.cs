@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GGM.Config;
+using UnityEngine;
 using static GGM.Caching.ColorCache;
 using static GGM.GUI.Styles;
 
@@ -39,7 +40,7 @@ namespace GGM
                     }
 
                 }
-                bottomRight.text = value;
+                bottomRight.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
 
@@ -62,7 +63,7 @@ namespace GGM
                     if (center == null)
                         return;
                 }
-                center.text = value;
+                center.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
 
@@ -87,8 +88,7 @@ namespace GGM
                     if (networkStatus == null)
                         return;
                 }
-                if(networkStatus)
-                    networkStatus.text = value;
+                networkStatus.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
 
@@ -111,7 +111,7 @@ namespace GGM
                     if (topCenter == null)
                         return;
                 }
-                topCenter.text = value;
+                topCenter.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
 
@@ -134,7 +134,7 @@ namespace GGM
                     if (topLeft == null)
                         return;
                 }
-                topLeft.text = value;
+                topLeft.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
 
@@ -157,7 +157,7 @@ namespace GGM
                     if (topRight == null)
                         return;
                 }
-                topRight.text = value;
+                topRight.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
 

@@ -18,7 +18,7 @@ public class PanelCredits : MonoBehaviour
 
     private void Update()
     {
-        showTxt();
+        //showTxt();
     }
 }
 
