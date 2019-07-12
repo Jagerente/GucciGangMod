@@ -1,16 +1,16 @@
-﻿using System;
+﻿using GGM;
+using GGM.Caching;
+using GGM.Config;
+using GGM.GUI.Pages;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using GGM;
 using UnityEngine;
+using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
-using GGM.Config;
-using GGM.Caching;
-using GGM.GUI.Pages;
-using UnityEngine.UI;
 
 public class FengGameManagerMKII : MonoBehaviour
 {
@@ -3780,7 +3780,7 @@ public class FengGameManagerMKII : MonoBehaviour
         }
         else
         {
-            GameObject obj4;
+            GameObject obj;
             string[] SkyBoxArray;
             int num2;
             InstantiateTracker.instance.Dispose();
@@ -3821,12 +3821,12 @@ public class FengGameManagerMKII : MonoBehaviour
             racingSpawnPointSet = false;
             racingDoors = new List<GameObject>();
             allowedToCannon = new Dictionary<int, CannonValues>();
-            if (!level.StartsWith("Custom") && Settings.LocationSkinsSetting > 0 && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || PhotonNetwork.isMasterClient))
+            if (!level.StartsWith("Custom") && Settings.LocationSkinsSetting > 0)
             {
-                obj4 = GameObjectCache.Find("aot_supply");
-                if (obj4 != null && Minimap.instance != null)
+                obj = GameObjectCache.Find("aot_supply");
+                if (obj != null && Minimap.instance != null)
                 {
-                    Minimap.instance.TrackGameObjectOnMinimap(obj4, Color.white, false, true, Minimap.IconStyle.SUPPLY);
+                    Minimap.instance.TrackGameObjectOnMinimap(obj, Color.white, false, true, Minimap.IconStyle.SUPPLY);
                 }
 
                 var url = string.Empty;
@@ -3843,7 +3843,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     num2 = 0;
                     while (num2 < 250)
                     {
-                        n = n + Convert.ToString((int)UnityEngine.Random.Range(0f, 8f));
+                        n += Convert.ToString((int)UnityEngine.Random.Range(0f, 8f));
                         num2++;
                     }
                     //Ground Wall Gates
@@ -3877,14 +3877,14 @@ public class FengGameManagerMKII : MonoBehaviour
                     for (var k = 0; k < 150; k++)
                     {
                         var str5 = Convert.ToString((int)UnityEngine.Random.Range(0f, 8f));
-                        n = n + str5;
+                        n += str5;
                         if (!Settings.LocationSkinsRandomizedPairsSetting)
                         {
-                            n = n + str5;
+                            n += str5;
                         }
                         else
                         {
-                            n = n + Convert.ToString((int)UnityEngine.Random.Range(0f, 8f));
+                            n += Convert.ToString((int)UnityEngine.Random.Range(0f, 8f));
                         }
                     }
                     //Skybox
@@ -3895,12 +3895,11 @@ public class FengGameManagerMKII : MonoBehaviour
                         skyboxpart++;
                     }
                 }
-
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || Settings.LocationSkinsSetting == 1)
                 {
                     StartCoroutine(loadskinE(n, url, str3, SkyBoxArray));
                 }
-                else if (PhotonNetwork.isMasterClient && Settings.LocationSkinsSetting == 2)
+                if (PhotonNetwork.isMasterClient && Settings.LocationSkinsSetting == 2)
                 {
                     photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, n, url, str3, SkyBoxArray);
                 }
@@ -3910,8 +3909,8 @@ public class FengGameManagerMKII : MonoBehaviour
                 var objArray3 = GameObject.FindGameObjectsWithTag("playerRespawn");
                 for (num = 0; num < objArray3.Length; num++)
                 {
-                    obj4 = objArray3[num];
-                    obj4.transform.position = new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f));
+                    obj = objArray3[num];
+                    obj.transform.position = new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f));
                 }
 
                 objArray = (GameObject[])FindObjectsOfType(typeof(GameObject));
@@ -5144,7 +5143,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 Camera.main.GetComponent<MouseLook>().disable = true;
                 IN_GAME_MAIN_CAMERA.gamemode = LevelInfo.getInfo(FengGameManagerMKII.level).type;
                 SpawnPlayer(IN_GAME_MAIN_CAMERA.singleCharacter.ToUpper());
-                if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
+                if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS || IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.OLDTPS)
                 {
                     Screen.lockCursor = true;
                 }
@@ -5189,7 +5188,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
                 else if ((int)settings[245] == 0)
                 {
-                    if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
+                    if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS || IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.OLDTPS)
                     {
                         Screen.lockCursor = true;
                     }
@@ -5327,6 +5326,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
             GGM.Discord.RichPresence.UpdateStatus();
+            StartCoroutine(reloadSky());
         }
 
         if ((Application.loadedLevelName.Contains("Forest") || Application.loadedLevelName.Contains("City")) &&
@@ -5334,8 +5334,7 @@ public class FengGameManagerMKII : MonoBehaviour
              Settings.LocationSkinsCityParticlesList[Settings.LocationSkinsCityCurrentSetSetting] == 1) &&
             Settings.LocationSkinsSetting > 0)
         {
-            var gg = GameObjectCache.Find("aot_supply");
-            var material = gg.GetComponentInChildren<ParticleSystem>().renderer.material;
+            var material = GameObjectCache.Find("aot_supply").GetComponentInChildren<ParticleSystem>().renderer.material;
             for (var i = 0;
                 i < Convert.ToInt32(Application.loadedLevelName.Contains("Forest")
                     ? Settings.LocationSkinsForestParticlesSettingsList[Settings.LocationSkinsForestCurrentSetSetting]
