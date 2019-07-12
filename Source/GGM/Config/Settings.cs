@@ -41,12 +41,9 @@ namespace GGM.Config
 
         #region Booleans
         //Game
-        //Mouse
         public static BoolSetting MouseInvertYSetting = new BoolSetting("GGM_MouseInvertY");
-        //Camera
         public static BoolSetting CameraTiltSetting = new BoolSetting("GGM_CameraTilt");
         public static BoolSetting CameraStaticFOVSetting = new BoolSetting("GGM_StaticFOV");
-
         public static BoolSetting[] CameraTypeSettings =
         {
             new BoolSetting("GGM_OriginalCamera", true), 
@@ -54,14 +51,11 @@ namespace GGM.Config
             new BoolSetting("GGM_WOWCamera"),
             new BoolSetting("GGM_OldTPS"), 
         };
-        //Snapshots
         public static BoolSetting SnapshotsSetting = new BoolSetting("GGM_Snapshots");
         public static BoolSetting SnapshotsShowInGameSetting = new BoolSetting("GGM_SnapshotsShowInGame");
-        //Resources
         public static BoolSetting InfiniteBladesSetting = new BoolSetting("GGM_InfiniteBlades");
         public static BoolSetting InfiniteBulletsSetting = new BoolSetting("GGM_InfiniteBullets");
         public static BoolSetting InfiniteGasSetting = new BoolSetting("GGM_InfiniteGas");
-        //User Interface
         public static BoolSetting UserInterfaceSetting = new BoolSetting("GGM_UserInterface");
         public static BoolSetting PlayerListUISetting = new BoolSetting("GGM_PlayerListUI", true);
         public static BoolSetting GameInfoUISetting = new BoolSetting("GGM_GameInfoUI", true);
@@ -641,6 +635,8 @@ namespace GGM.Config
             SaveCitySkins();
         }
 
+        private static bool updateHUD;
+
         public static void Update()
         {
             if (Application.loadedLevel == 0 || Application.loadedLevelName == "characterCreation" || Application.loadedLevelName == "SnapShot" || FengGameManagerMKII.inputManager.menuOn)
@@ -648,6 +644,42 @@ namespace GGM.Config
                 Application.targetFrameRate = 60;
                 return;
             }
+
+            if (UserInterfaceSetting)
+            {
+                Extensions.DisableObject("UIflare1");
+                Extensions.DisableObject("UIflare2");
+                Extensions.DisableObject("UIflare3");
+                Extensions.DisableObject("flareg1");
+                Extensions.DisableObject("UIflare1");
+                Extensions.DisableObject("flareg2");
+                Extensions.DisableObject("flareg3");
+                Extensions.DisableObject("bar");
+                Extensions.DisableObject("locker");
+                Extensions.DisableObject("stamina_titan");
+                Extensions.DisableObject("stamina_titan_bottom");
+                Extensions.DisableObject("flash");
+                Extensions.DisableObject("skill_cd_bottom");
+                Extensions.DisableObject("skill_cd_armin");
+                Extensions.DisableObject("skill_cd_mikasa");
+                Extensions.DisableObject("skill_cd_sasha");
+                Extensions.DisableObject("skill_cd_petra");
+                Extensions.DisableObject("skill_cd_levi");
+                Extensions.DisableObject("skill_cd_jean");
+                Extensions.DisableObject("skill_cd_marco");
+                Extensions.DisableObject("skill_cd_eren");
+                Extensions.DisableObject("GasUI");
+                updateHUD = true;
+            }
+            else
+            {
+                if (updateHUD)
+                {
+                    updateHUD = false;
+                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setHUDposition();
+                }
+            }
+
             IN_GAME_MAIN_CAMERA.sensitivityMulti = MouseSensitivitySetting;
             IN_GAME_MAIN_CAMERA.cameraDistance = CameraDistanceSetting + 0.3f;
             Caching.GameObjectCache.Find("MainCamera").GetComponent<TiltShift>().enabled = BlurSetting;
