@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using GGM.Storage;
 using System.Collections.Generic;
 using UnityEngine;
@@ -736,7 +736,7 @@ namespace GGM.Config
                 RenderSettings.fogStartDistance = CustomFogSetting ? FogDistanceSettings[0] : 0f;
                 RenderSettings.fogEndDistance = CustomFogSetting ? FogDistanceSettings[1] : 1000f;
             }
-            else if (LocationSkinsSetting == 1 || LocationSkinsSetting == 2 && PhotonNetwork.isMasterClient)
+            else if (LocationSkinsSetting == 1 || LocationSkinsSetting == 2 && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
             {
                 if (Application.loadedLevelName.Contains("Forest"))
                 {
