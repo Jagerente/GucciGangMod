@@ -102,8 +102,8 @@ namespace GGM.GUI.Pages
             Label("Map", LabelType.Header, width: BoxWidth * Proportion[0] - 15f);
             Grid(string.Empty, ref map, MapStr, false, 1, BoxWidth * Proportion[0] - 15f, GridHeight * MapStr.Length + 5 * (MapStr.Length - 1));
 
-            UnityEngine.GUI.DrawTexture(new Rect(5f, GridHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight, BoxWidth * Proportion[0] - 15f, 145f), ColorCache.Textures[ColorCache.Black]);
-            UnityEngine.GUI.DrawTexture(new Rect(5f + 3f, GridHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight + 3f, BoxWidth * Proportion[0] - 15f - 6f, 145f - 6f), GetImage());
+            UnityEngine.GUI.DrawTexture(new Rect(4f, GridHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight, BoxWidth * Proportion[0] - 15f, 148f), ColorCache.Textures[ColorCache.Black]);
+            UnityEngine.GUI.DrawTexture(new Rect(4f + 1f, GridHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight + 1f, BoxWidth * Proportion[0] - 15f - 2f, 148f - 2f), GetImage());
 
             GUILayout.EndVertical();
 
