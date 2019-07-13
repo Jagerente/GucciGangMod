@@ -1,7 +1,6 @@
-﻿using System;
+﻿using GGM.GUI.Pages;
+using System;
 using System.Collections;
-using GGM.Caching;
-using GGM.GUI.Pages;
 using UnityEngine;
 
 namespace GGM.Config

@@ -7,4 +7,3 @@ public class BTN_Server_List_PgDn : MonoBehaviour
         GGM.Caching.GameObjectCache.Find("PanelMultiROOM").GetComponent<PanelMultiJoin>().pageDown();
     }
 }
-

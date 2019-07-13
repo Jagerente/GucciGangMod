@@ -289,9 +289,9 @@ public static class NGUIMath
         }
         if (num < 10)
         {
-            return (char) (48 + num);
+            return (char)(48 + num);
         }
-        return (char) (65 + num - 10);
+        return (char)(65 + num - 10);
     }
 
     private static float DistancePointToLineSegment(Vector2 point, Vector2 a, Vector2 b)
@@ -351,7 +351,6 @@ public static class NGUIMath
         return 0f;
     }
 
-
     public static float DistanceToRectangle(Vector3[] worldPoints, Vector2 mousePos, Camera cam)
     {
         var screenPoints = new Vector2[4];
@@ -364,7 +363,7 @@ public static class NGUIMath
 
     public static Color HexToColor(uint val)
     {
-        return IntToColor((int) val);
+        return IntToColor((int)val);
     }
 
     public static int HexToDecimal(char ch)
@@ -447,15 +446,15 @@ public static class NGUIMath
                 break;
         }
         return 10;
-    Label_00A5:
+        Label_00A5:
         return 11;
-    Label_00A8:
+        Label_00A8:
         return 12;
-    Label_00AB:
+        Label_00AB:
         return 13;
-    Label_00AE:
+        Label_00AE:
         return 14;
-    Label_00B1:
+        Label_00B1:
         return 15;
     }
 
@@ -638,4 +637,3 @@ public static class NGUIMath
         return angle;
     }
 }
-

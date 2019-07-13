@@ -222,7 +222,7 @@ public class Language
     public static void init()
     {
         char[] separator = { "\n"[0] };
-        var strArray = ((TextAsset) Resources.Load("lang")).text.Split(separator);
+        var strArray = ((TextAsset)Resources.Load("lang")).text.Split(separator);
         var txt = string.Empty;
         var index = 0;
         var str3 = string.Empty;
@@ -443,4 +443,3 @@ public class Language
         }
     }
 }
-

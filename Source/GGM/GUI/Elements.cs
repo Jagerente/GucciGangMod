@@ -1,5 +1,5 @@
-﻿using System;
-using GGM.Config;
+﻿using GGM.Config;
+using System;
 using UnityEngine;
 using static GGM.GUI.GUIHelpers;
 using static GGM.GUI.Settings;
@@ -26,17 +26,21 @@ namespace GGM.GUI
                         case Alignment.LEFT:
                             GUILayout.Label(text, LabelStyle[0], GUILayout.Width(width), GUILayout.Height(height));
                             return;
+
                         case Alignment.CENTER:
                             GUILayout.Label(text, LabelStyle[1], GUILayout.Width(width), GUILayout.Height(height));
                             return;
+
                         case Alignment.RIGHT:
                             GUILayout.Label(text, LabelStyle[2], GUILayout.Width(width), GUILayout.Height(height));
                             return;
                     }
                     return;
+
                 case LabelType.SliderStatus:
                     GUILayout.Label(text, SliderStatusStyle, GUILayout.Width(SliderValueWidth), GUILayout.Height(height));
                     return;
+
                 case LabelType.SubHeader:
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -44,6 +48,7 @@ namespace GGM.GUI
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
                     return;
+
                 case LabelType.Header:
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
@@ -56,7 +61,7 @@ namespace GGM.GUI
 
         public static bool Button(string text, float width = ButtonWidth, float height = ButtonHeight)
         {
-            return GUILayout.Button(text, ButtonStyle,  GUILayout.Width(width), GUILayout.Height(height));
+            return GUILayout.Button(text, ButtonStyle, GUILayout.Width(width), GUILayout.Height(height));
         }
 
         public static void TextArea(string text, ref string value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
@@ -74,7 +79,6 @@ namespace GGM.GUI
             value = GUILayout.TextField(value, GUILayout.Width(width), GUILayout.Width(height));
             GUILayout.EndHorizontal();
         }
-
 
         public static void TextField(string text, ref int value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
         {
@@ -122,7 +126,7 @@ namespace GGM.GUI
                 Label(round ? Mathf.Round(value * multiplier).ToString(valueTextFormat) : (value * multiplier).ToString(valueTextFormat), LabelType.SliderStatus, width: valueWidth);
             }
             else
-            {   
+            {
                 Label(valueText, LabelType.SliderStatus, width: valueWidth);
             }
             GUILayout.EndHorizontal();

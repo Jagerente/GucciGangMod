@@ -2,7 +2,9 @@
 {
     public class FloatSetting : Setting<float>
     {
-        public FloatSetting(string key, float def = 0f) : base(key, def) { }
+        public FloatSetting(string key, float def = 0f) : base(key, def)
+        {
+        }
 
         public override void Load()
         {

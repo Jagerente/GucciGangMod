@@ -10,4 +10,3 @@ public class DragDropRoot : MonoBehaviour
         root = transform;
     }
 }
-

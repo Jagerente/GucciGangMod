@@ -38,4 +38,3 @@
     public static int waveModeNum;
     public static int waveModeOn;
 }
-

@@ -71,4 +71,3 @@ public class SpringPanel : IgnoreTimeScale
 
     public delegate void OnFinished();
 }
-

@@ -11,7 +11,7 @@ public class UITextList : MonoBehaviour
     protected List<Paragraph> mParagraphs = new List<Paragraph>();
     protected float mScroll;
     protected bool mSelected;
-    protected char[] mSeparator = {'\n'};
+    protected char[] mSeparator = { '\n' };
     protected int mTotalLines;
     public Style style;
     public bool supportScrollWheel = true;

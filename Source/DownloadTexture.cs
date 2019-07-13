@@ -22,13 +22,11 @@ public class DownloadTexture : MonoBehaviour
         }
     }
 
-    
     private IEnumerator Start()
     {
         return new Startc__Iterator7 { f__this = this };
     }
 
-    
     private sealed class Startc__Iterator7 : IEnumerator, IDisposable, IEnumerator<object>
     {
         internal object current;
@@ -37,7 +35,6 @@ public class DownloadTexture : MonoBehaviour
         internal UITexture ut__1;
         internal WWW www__0;
 
-        
         public void Dispose()
         {
             PC = -1;
@@ -45,7 +42,7 @@ public class DownloadTexture : MonoBehaviour
 
         public bool MoveNext()
         {
-            var num = (uint) PC;
+            var num = (uint)PC;
             PC = -1;
             switch (num)
             {
@@ -76,14 +73,13 @@ public class DownloadTexture : MonoBehaviour
             ut__1.material = f__this.mMat;
             f__this.mMat.mainTexture = f__this.mTex;
             ut__1.MakePixelPerfect();
-        Label_0118:
+            Label_0118:
             www__0.Dispose();
             PC = -1;
-        Label_012A:
+            Label_012A:
             return false;
         }
 
-        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -91,7 +87,6 @@ public class DownloadTexture : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            
             get
             {
                 return current;
@@ -100,7 +95,6 @@ public class DownloadTexture : MonoBehaviour
 
         object IEnumerator.Current
         {
-            
             get
             {
                 return current;
@@ -108,4 +102,3 @@ public class DownloadTexture : MonoBehaviour
         }
     }
 }
-

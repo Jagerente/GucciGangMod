@@ -1,5 +1,4 @@
-﻿using System;
-using GGM.Caching;
+﻿using GGM.Caching;
 using UnityEngine;
 using static GGM.GUI.Elements;
 using static GGM.GUI.Settings;
@@ -52,15 +51,15 @@ namespace GGM.GUI.Pages
 
         private static int difficulty;
 
-        private static readonly string[] difficultyStr = {"Normal", "Hard", "Abnormal"};
+        private static readonly string[] difficultyStr = { "Normal", "Hard", "Abnormal" };
 
         private static int camera;
 
-        private static readonly string[] CameraStr = {"Original", "WOW", "TPS", "Old TPS"};
+        private static readonly string[] CameraStr = { "Original", "WOW", "TPS", "Old TPS" };
 
         private static GUIStyle box;
 
-        private void OnEnable()
+        private void OnEnable() 
         {
             if (PlayerPrefs.HasKey("GGM_SingleMap"))
                 map = PlayerPrefs.GetInt("GGM_SingleMap");
@@ -88,12 +87,12 @@ namespace GGM.GUI.Pages
 
         private void OnGUI()
         {
-            var txt = new Texture2D(1,1, TextureFormat.ARGB32, false);
-            txt.SetPixel(0,0, new Color(ColorCache.DarkScarlet.Value.r, ColorCache.DarkScarlet.Value.g, ColorCache.DarkScarlet.Value.b, 0.5f));
+            var txt = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            txt.SetPixel(0, 0, new Color(ColorCache.DarkScarlet.Value.r, ColorCache.DarkScarlet.Value.g, ColorCache.DarkScarlet.Value.b, 0.5f));
             txt.Apply();
-            box = new GUIStyle {normal = {background = txt}};
+            box = new GUIStyle { normal = { background = txt } };
 
-            UnityEngine.GUI.Box(new Rect(Screen.width / 2f - (BoxWidth + 10f)/ 2f, Screen.height / 2f - (BoxHeight + 10f) / 2f, BoxWidth + 10f, BoxHeight + 10f), ColorCache.Textures[ColorCache.PurpleMunsell], box);
+            UnityEngine.GUI.Box(new Rect(Screen.width / 2f - (BoxWidth + 10f) / 2f, Screen.height / 2f - (BoxHeight + 10f) / 2f, BoxWidth + 10f, BoxHeight + 10f), ColorCache.Textures[ColorCache.PurpleMunsell], box);
             GUILayout.BeginArea(new Rect(Screen.width / 2f - BoxWidth / 2f, Screen.height / 2f - BoxHeight / 2f, BoxWidth, BoxHeight));
 
             GUILayout.BeginHorizontal();
@@ -176,16 +175,19 @@ namespace GGM.GUI.Pages
                 case 0:
                 case 1:
                     return Styles.Tutorial;
+
                 case 2:
                     Texture2D city;
                     switch (daytime)
                     {
                         case 0:
                             return Styles.CityDay;
+
                         case 1:
                             return Styles.CityDawn;
                     }
                     return Styles.CityNight;
+
                 case 3:
                 case 4:
                 case 5:
@@ -193,10 +195,12 @@ namespace GGM.GUI.Pages
                     {
                         case 0:
                             return Styles.ForestDay;
+
                         case 1:
                             return Styles.ForestDawn;
                     }
                     return Styles.ForestNight;
+
                 default:
                     return Styles.Akina;
             }

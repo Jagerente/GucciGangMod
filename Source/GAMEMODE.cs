@@ -12,4 +12,3 @@
     PVP_CAPTURE,
     None
 }
-

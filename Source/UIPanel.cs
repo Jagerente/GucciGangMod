@@ -6,21 +6,29 @@ public class UIPanel : MonoBehaviour
     public bool cullWhileDragging;
     public bool depthPass;
     public bool generateNormals;
+
     [SerializeField, HideInInspector]
     private float mAlpha = 1f;
+
     private Camera mCam;
     private BetterList<Material> mChanged = new BetterList<Material>();
     private UIPanel[] mChildPanels;
+
     [SerializeField, HideInInspector]
     private UIDrawCall.Clipping mClipping;
+
     [HideInInspector, SerializeField]
     private Vector4 mClipRange = Vector4.zero;
+
     [HideInInspector, SerializeField]
     private Vector2 mClipSoftness = new Vector2(40f, 40f);
+
     private BetterList<Color32> mCols = new BetterList<Color32>();
     private float mCullTime;
+
     [SerializeField, HideInInspector]
     private DebugInfo mDebugInfo = DebugInfo.Gizmos;
+
     private bool mDepthChanged;
     private BetterList<UIDrawCall> mDrawCalls = new BetterList<UIDrawCall>();
     private GameObject mGo;
@@ -39,6 +47,7 @@ public class UIPanel : MonoBehaviour
     public OnChangeDelegate onChange;
     public bool showInPanelTool = true;
     public bool widgetsAreStatic;
+
     [HideInInspector]
     public Matrix4x4 worldToLocal = Matrix4x4.identity;
 
@@ -701,4 +710,3 @@ public class UIPanel : MonoBehaviour
 
     public delegate void OnChangeDelegate();
 }
-

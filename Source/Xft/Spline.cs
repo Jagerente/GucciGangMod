@@ -43,9 +43,9 @@ namespace Xft
             var num19 = T0.z + num5 * P0.z + num6 * P1.z + num7 * T1.z;
             var num20 = num8 * T0.z + num9 * P1.z;
             double z = P0.z;
-            var num22 = (float) (((num10 * f + num11) * f + num12) * f + x);
-            var num23 = (float) (((num14 * f + num15) * f + num16) * f + y);
-            return new Vector3(num22, num23, (float) (((num18 * f + num19) * f + num20) * f + z));
+            var num22 = (float)(((num10 * f + num11) * f + num12) * f + x);
+            var num23 = (float)(((num14 * f + num15) * f + num16) * f + y);
+            return new Vector3(num22, num23, (float)(((num18 * f + num19) * f + num20) * f + z));
         }
 
         public void Clear()

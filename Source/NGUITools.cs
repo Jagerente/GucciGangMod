@@ -48,7 +48,7 @@ public static class NGUITools
         return obj2;
     }
 
-    public static T AddChild<T>(GameObject parent) where T: Component
+    public static T AddChild<T>(GameObject parent) where T : Component
     {
         var obj2 = AddChild(parent);
         obj2.name = GetName<T>();
@@ -80,7 +80,7 @@ public static class NGUITools
         return sprite2;
     }
 
-    public static T AddWidget<T>(GameObject go) where T: UIWidget
+    public static T AddWidget<T>(GameObject go) where T : UIWidget
     {
         var num = CalculateNextDepth(go);
         var local = AddChild<T>(go);
@@ -219,7 +219,7 @@ public static class NGUITools
         return NGUIMath.DecimalToHex(num);
     }
 
-    public static T[] FindActive<T>() where T: Component
+    public static T[] FindActive<T>() where T : Component
     {
         return Object.FindObjectsOfType(typeof(T)) as T[];
     }
@@ -242,7 +242,7 @@ public static class NGUITools
         return null;
     }
 
-    public static T FindInParents<T>(GameObject go) where T: Component
+    public static T FindInParents<T>(GameObject go) where T : Component
     {
         if (go == null)
         {
@@ -256,7 +256,7 @@ public static class NGUITools
                 component = transform.gameObject.GetComponent<T>();
             }
         }
-        return (T) component;
+        return (T)component;
     }
 
     public static bool GetActive(GameObject go)
@@ -275,7 +275,7 @@ public static class NGUITools
         return "\"" + name + "\"";
     }
 
-    public static string GetName<T>() where T: Component
+    public static string GetName<T>() where T : Component
     {
         var str = typeof(T).ToString();
         if (str.StartsWith("UI"))
@@ -626,4 +626,3 @@ public static class NGUITools
         }
     }
 }
-

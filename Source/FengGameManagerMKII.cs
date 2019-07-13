@@ -3579,7 +3579,6 @@ public class FengGameManagerMKII : MonoBehaviour
         }
     }
 
-
     public void loadconfig()
     {
         int num;
@@ -3870,7 +3869,6 @@ public class FengGameManagerMKII : MonoBehaviour
                     for (var j = 9; j < 17; j++)
                     {
                         str3 += Settings.LocationSkinsForestList[Settings.LocationSkinsForestCurrentSetSetting][j] + ",";
-
                     }
                     //Ground
                     str3 += Settings.LocationSkinsForestList[Settings.LocationSkinsForestCurrentSetSetting][0];
@@ -7589,6 +7587,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public GameObject cameraObject;
     public GameObject canvasObject;
+
     public IEnumerator LoadBackground()
     {
         using (var www = new WWW("file:///" + Application.dataPath + "/Background.png"))
@@ -7764,7 +7763,6 @@ public class FengGameManagerMKII : MonoBehaviour
                 RCSettings.pointMode = (int)hash["point"];
                 string[] msg = { "Points ", "limit is ", $"[{Convert.ToString(RCSettings.pointMode)}]", "." };
                 InRoomChat.SystemMessageLocal(msg, false);
-
             }
         }
         else if (RCSettings.pointMode != 0)
@@ -7889,7 +7887,6 @@ public class FengGameManagerMKII : MonoBehaviour
                 RCSettings.moreTitans = (int)hash["titanc"];
                 string[] msg = { "Custom Titans Amount ", "is ", $"[{Convert.ToString(RCSettings.moreTitans)}]", "." };
                 InRoomChat.SystemMessageLocal(msg, false);
-
             }
         }
         else if (RCSettings.moreTitans != 0)
@@ -8274,6 +8271,7 @@ public class FengGameManagerMKII : MonoBehaviour
     }
 
     #region UILabels
+
     public void ShowHUDInfoCenter(string content)
     {
         Labels.Center = content.ToHTML();
@@ -8308,7 +8306,8 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         Labels.TopRight += content.ToHTML();
     }
-    #endregion
+
+    #endregion UILabels
 
     [RPC]
     private void showResult(string text0, string text1, string text2, string text3, string text4, string text6,
@@ -9275,7 +9274,6 @@ public class FengGameManagerMKII : MonoBehaviour
         FengGameManagerMKII.nameField = PlayerPrefs.GetString("Name", string.Empty);
         LoginFengKAI.player.guildname = PlayerPrefs.GetString("Guild", string.Empty);
 
-
         if (privateServerField == null)
         {
             privateServerField = string.Empty;
@@ -9479,7 +9477,6 @@ public class FengGameManagerMKII : MonoBehaviour
             }
         }
     }
-
 
     [RPC]
     private void updateKillInfo(bool t1, string killer, bool t2, string victim, int dmg)
@@ -10228,7 +10225,6 @@ public class FengGameManagerMKII : MonoBehaviour
         yield return new WaitForSeconds(time);
         SpawnPlayerAt(myLastHero, pos);
     }
-
 
     private enum LoginStates
     {

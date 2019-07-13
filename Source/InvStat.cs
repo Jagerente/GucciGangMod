@@ -9,8 +9,8 @@ public class InvStat
 
     public static int CompareArmor(InvStat a, InvStat b)
     {
-        var id = (int) a.id;
-        var num2 = (int) b.id;
+        var id = (int)a.id;
+        var num2 = (int)b.id;
         if (a.id == Identifier.Armor)
         {
             id -= 10000;
@@ -56,8 +56,8 @@ public class InvStat
 
     public static int CompareWeapon(InvStat a, InvStat b)
     {
-        var id = (int) a.id;
-        var num2 = (int) b.id;
+        var id = (int)a.id;
+        var num2 = (int)b.id;
         if (a.id == Identifier.Damage)
         {
             id -= 10000;
@@ -160,4 +160,3 @@ public class InvStat
         Percent
     }
 }
-

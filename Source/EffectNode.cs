@@ -93,7 +93,6 @@ public class EffectNode
         Owner.RemoveActiveNode(this);
     }
 
-   
     public void Reset()
     {
         Position = Vector3.up * 9999f;
@@ -122,7 +121,6 @@ public class EffectNode
         }
     }
 
-
     public void SetAffectorList(ArrayList afts)
     {
         AffectorList = afts;
@@ -145,7 +143,6 @@ public class EffectNode
         Sprite = Owner.GetVertexPool().AddSprite(width, height, type, orip, Camera.main, uvStretch, maxFps);
     }
 
-   
     public void Update()
     {
         ElapsedTime += Time.deltaTime;
@@ -181,7 +178,6 @@ public class EffectNode
             Remove();
         }
     }
-
 
     public void UpdateRibbonTrail()
     {
@@ -227,4 +223,3 @@ public class EffectNode
         Sprite.Update(false);
     }
 }
-

@@ -26,4 +26,3 @@ public class LookAtTarget : MonoBehaviour
         mTrans = transform;
     }
 }
-

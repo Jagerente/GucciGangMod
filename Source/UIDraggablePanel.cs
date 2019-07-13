@@ -37,7 +37,7 @@ public class UIDraggablePanel : IgnoreTimeScale
     {
         mTrans = transform;
         mPanel = GetComponent<UIPanel>();
-        mPanel.onChange = (UIPanel.OnChangeDelegate) Delegate.Combine(mPanel.onChange, new UIPanel.OnChangeDelegate(OnPanelChange));
+        mPanel.onChange = (UIPanel.OnChangeDelegate)Delegate.Combine(mPanel.onChange, new UIPanel.OnChangeDelegate(OnPanelChange));
     }
 
     public void DisableSpring()
@@ -187,7 +187,7 @@ public class UIDraggablePanel : IgnoreTimeScale
     {
         if (mPanel != null)
         {
-            mPanel.onChange = (UIPanel.OnChangeDelegate) Delegate.Remove(mPanel.onChange, new UIPanel.OnChangeDelegate(OnPanelChange));
+            mPanel.onChange = (UIPanel.OnChangeDelegate)Delegate.Remove(mPanel.onChange, new UIPanel.OnChangeDelegate(OnPanelChange));
         }
     }
 
@@ -346,12 +346,12 @@ public class UIDraggablePanel : IgnoreTimeScale
         UpdateScrollbars(true);
         if (horizontalScrollBar != null)
         {
-            horizontalScrollBar.onChange = (UIScrollBar.OnScrollBarChange) Delegate.Combine(horizontalScrollBar.onChange, new UIScrollBar.OnScrollBarChange(OnHorizontalBar));
+            horizontalScrollBar.onChange = (UIScrollBar.OnScrollBarChange)Delegate.Combine(horizontalScrollBar.onChange, new UIScrollBar.OnScrollBarChange(OnHorizontalBar));
             horizontalScrollBar.alpha = showScrollBars != ShowCondition.Always && !shouldMoveHorizontally ? 0f : 1f;
         }
         if (verticalScrollBar != null)
         {
-            verticalScrollBar.onChange = (UIScrollBar.OnScrollBarChange) Delegate.Combine(verticalScrollBar.onChange, new UIScrollBar.OnScrollBarChange(OnVerticalBar));
+            verticalScrollBar.onChange = (UIScrollBar.OnScrollBarChange)Delegate.Combine(verticalScrollBar.onChange, new UIScrollBar.OnScrollBarChange(OnVerticalBar));
             verticalScrollBar.alpha = showScrollBars != ShowCondition.Always && !shouldMoveVertically ? 0f : 1f;
         }
     }
@@ -532,4 +532,3 @@ public class UIDraggablePanel : IgnoreTimeScale
         WhenDragging
     }
 }
-

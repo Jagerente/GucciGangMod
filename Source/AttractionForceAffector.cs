@@ -46,4 +46,3 @@ public class AttractionForceAffector : Affector
         Node.Velocity += vector.normalized * num3 * Time.deltaTime;
     }
 }
-

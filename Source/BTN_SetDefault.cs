@@ -8,4 +8,3 @@ public class BTN_SetDefault : MonoBehaviour
         GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().showKeyMap();
     }
 }
-

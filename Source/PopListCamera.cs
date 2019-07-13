@@ -27,4 +27,3 @@ public class PopListCamera : MonoBehaviour
         PlayerPrefs.SetString("cameraType", GetComponent<UIPopupList>().selection);
     }
 }
-

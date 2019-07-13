@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using GGM.Config;
+﻿using GGM.Config;
+using System.Collections;
 using UnityEngine;
 
 public class TriggerColliderWeapon : MonoBehaviour
@@ -28,7 +28,7 @@ public class TriggerColliderWeapon : MonoBehaviour
     private void napeMeat(Vector3 vkill, Transform titan)
     {
         var transform = titan.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
-        var obj2 = (GameObject) Instantiate(Resources.Load("titanNapeMeat"), transform.position, transform.rotation);
+        var obj2 = (GameObject)Instantiate(Resources.Load("titanNapeMeat"), transform.position, transform.rotation);
         obj2.transform.localScale = titan.localScale;
         obj2.rigidbody.AddForce(vkill.normalized * 15f, ForceMode.Impulse);
         obj2.rigidbody.AddForce(-titan.forward * 10f, ForceMode.Impulse);
@@ -55,7 +55,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                     }
                     else
                     {
-                        obj2 = (GameObject) Instantiate(Resources.Load("hitMeat"));
+                        obj2 = (GameObject)Instantiate(Resources.Load("hitMeat"));
                     }
 
                     obj2.transform.position = transform.position;
@@ -118,7 +118,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             var vector3 =
                                 currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                 item.transform.root.rigidbody.velocity;
-                            var num2 = (int) (vector3.magnitude * 10f * scoreMulti);
+                            var num2 = (int)(vector3.magnitude * 10f * scoreMulti);
                             num2 = Mathf.Max(10, num2);
                             if (Settings.SnapshotsSetting)
                             {
@@ -145,7 +145,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                                 var vector4 =
                                     currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                     item.transform.root.rigidbody.velocity;
-                                var num3 = (int) (vector4.magnitude * 10f * scoreMulti);
+                                var num3 = (int)(vector4.magnitude * 10f * scoreMulti);
                                 num3 = Mathf.Max(10, num3);
                                 if (Settings.SnapshotsSetting)
                                 {
@@ -155,7 +155,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                                     item.transform.root.GetComponent<TITAN>().asClientLookTarget = false;
                                 }
 
-                                object[] objArray2 = {transform.root.gameObject.GetPhotonView().viewID, num3};
+                                object[] objArray2 = { transform.root.gameObject.GetPhotonView().viewID, num3 };
                                 item.transform.root.GetComponent<TITAN>().photonView.RPC("titanGetHit",
                                     item.transform.root.GetComponent<TITAN>().photonView.owner, objArray2);
                             }
@@ -166,11 +166,11 @@ public class TriggerColliderWeapon : MonoBehaviour
                             var vector5 =
                                 currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                 item.transform.root.rigidbody.velocity;
-                            var num4 = (int) (vector5.magnitude * 10f * scoreMulti);
+                            var num4 = (int)(vector5.magnitude * 10f * scoreMulti);
                             num4 = Mathf.Max(10, num4);
                             if (!item.transform.root.GetComponent<FEMALE_TITAN>().hasDie)
                             {
-                                object[] objArray3 = {transform.root.gameObject.GetPhotonView().viewID, num4};
+                                object[] objArray3 = { transform.root.gameObject.GetPhotonView().viewID, num4 };
                                 item.transform.root.GetComponent<FEMALE_TITAN>().photonView.RPC("titanGetHit",
                                     item.transform.root.GetComponent<FEMALE_TITAN>().photonView.owner, objArray3);
                             }
@@ -183,9 +183,9 @@ public class TriggerColliderWeapon : MonoBehaviour
                                 var vector6 =
                                     currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                     item.transform.root.rigidbody.velocity;
-                                var num5 = (int) (vector6.magnitude * 10f * scoreMulti);
+                                var num5 = (int)(vector6.magnitude * 10f * scoreMulti);
                                 num5 = Mathf.Max(10, num5);
-                                object[] objArray4 = {transform.root.gameObject.GetPhotonView().viewID, num5};
+                                object[] objArray4 = { transform.root.gameObject.GetPhotonView().viewID, num5 };
                                 item.transform.root.GetComponent<COLOSSAL_TITAN>().photonView.RPC("titanGetHit",
                                     item.transform.root.GetComponent<COLOSSAL_TITAN>().photonView.owner, objArray4);
                             }
@@ -198,7 +198,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             var vector7 =
                                 currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                 item.transform.root.rigidbody.velocity;
-                            var num6 = (int) (vector7.magnitude * 10f * scoreMulti);
+                            var num6 = (int)(vector7.magnitude * 10f * scoreMulti);
                             num6 = Mathf.Max(10, num6);
                             if (Settings.SnapshotsSetting)
                             {
@@ -219,7 +219,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             var vector8 =
                                 currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                 item.transform.root.rigidbody.velocity;
-                            var num7 = (int) (vector8.magnitude * 10f * scoreMulti);
+                            var num7 = (int)(vector8.magnitude * 10f * scoreMulti);
                             num7 = Mathf.Max(10, num7);
                             if (Settings.SnapshotsSetting)
                             {
@@ -239,7 +239,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                             var vector9 =
                                 currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                 item.transform.root.rigidbody.velocity;
-                            var num8 = (int) (vector9.magnitude * 10f * scoreMulti);
+                            var num8 = (int)(vector9.magnitude * 10f * scoreMulti);
                             num8 = Mathf.Max(10, num8);
                             if (Settings.SnapshotsSetting)
                             {
@@ -274,7 +274,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                         {
                             if (!gameObject.GetComponent<FEMALE_TITAN>().hasDie)
                             {
-                                object[] objArray5 = {transform.root.gameObject.GetPhotonView().viewID};
+                                object[] objArray5 = { transform.root.gameObject.GetPhotonView().viewID };
                                 gameObject.GetComponent<FEMALE_TITAN>().photonView.RPC("hitEyeRPC",
                                     PhotonTargets.MasterClient, objArray5);
                             }
@@ -298,7 +298,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                         {
                             if (!gameObject.GetComponent<TITAN>().hasDie)
                             {
-                                object[] objArray6 = {transform.root.gameObject.GetPhotonView().viewID};
+                                object[] objArray6 = { transform.root.gameObject.GetPhotonView().viewID };
                                 gameObject.GetComponent<TITAN>().photonView
                                     .RPC("hitEyeRPC", PhotonTargets.MasterClient, objArray6);
                             }
@@ -319,7 +319,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                 var obj4 = other.gameObject.transform.root.gameObject;
                 var vector10 = currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().main_object.rigidbody.velocity -
                                obj4.rigidbody.velocity;
-                var num9 = (int) (vector10.magnitude * 10f * scoreMulti);
+                var num9 = (int)(vector10.magnitude * 10f * scoreMulti);
                 num9 = Mathf.Max(10, num9);
                 if (obj4.GetComponent<TITAN>() != null &&
                     obj4.GetComponent<TITAN>().abnormalType != AbnormalType.TYPE_CRAWLER)
@@ -337,7 +337,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                         {
                             if (!obj4.GetComponent<TITAN>().hasDie)
                             {
-                                object[] objArray7 = {transform.root.gameObject.GetPhotonView().viewID};
+                                object[] objArray7 = { transform.root.gameObject.GetPhotonView().viewID };
                                 obj4.GetComponent<TITAN>().photonView
                                     .RPC("hitAnkleRPC", PhotonTargets.MasterClient, objArray7);
                             }
@@ -372,7 +372,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                         {
                             if (!obj4.GetComponent<FEMALE_TITAN>().hasDie)
                             {
-                                object[] objArray8 = {transform.root.gameObject.GetPhotonView().viewID, num9};
+                                object[] objArray8 = { transform.root.gameObject.GetPhotonView().viewID, num9 };
                                 obj4.GetComponent<FEMALE_TITAN>().photonView.RPC("hitAnkleRRPC",
                                     PhotonTargets.MasterClient, objArray8);
                             }
@@ -387,7 +387,7 @@ public class TriggerColliderWeapon : MonoBehaviour
                     {
                         if (!obj4.GetComponent<FEMALE_TITAN>().hasDie)
                         {
-                            object[] objArray9 = {transform.root.gameObject.GetPhotonView().viewID, num9};
+                            object[] objArray9 = { transform.root.gameObject.GetPhotonView().viewID, num9 };
                             obj4.GetComponent<FEMALE_TITAN>().photonView
                                 .RPC("hitAnkleLRPC", PhotonTargets.MasterClient, objArray9);
                         }
@@ -414,7 +414,7 @@ public class TriggerColliderWeapon : MonoBehaviour
         }
         else
         {
-            obj2 = (GameObject) Instantiate(Resources.Load("redCross"));
+            obj2 = (GameObject)Instantiate(Resources.Load("redCross"));
         }
 
         obj2.transform.position = transform.position;

@@ -72,4 +72,3 @@ public class InputToEvent : MonoBehaviour
 
     public static GameObject goPointedAt { get; private set; }
 }
-

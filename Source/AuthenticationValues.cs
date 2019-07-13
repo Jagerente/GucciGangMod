@@ -28,4 +28,3 @@ public class AuthenticationValues
 
     public object AuthPostData { get; private set; }
 }
-

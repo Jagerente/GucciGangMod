@@ -5,8 +5,8 @@ public class IComparerPVPchkPtID : IComparer
 {
     int IComparer.Compare(object x, object y)
     {
-        float id = ((PVPcheckPoint) x).id;
-        float num2 = ((PVPcheckPoint) y).id;
+        float id = ((PVPcheckPoint)x).id;
+        float num2 = ((PVPcheckPoint)y).id;
         if (id == num2 || Math.Abs(id - num2) < float.Epsilon)
         {
             return 0;
@@ -18,4 +18,3 @@ public class IComparerPVPchkPtID : IComparer
         return 1;
     }
 }
-

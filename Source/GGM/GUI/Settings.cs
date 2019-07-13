@@ -5,7 +5,7 @@ namespace GGM.GUI
 {
     internal class Settings
     {
-        internal static string[] SwitcherStr = {"Off", "On"};
+        internal static string[] SwitcherStr = { "Off", "On" };
         internal const float width = 775f;
         internal const float height = 575f;
         internal static readonly float leftPos = Screen.width / 2f - width / 2f;
@@ -30,6 +30,7 @@ namespace GGM.GUI
             new Rect(leftPos + 20f, topPos + 100f, fullAreaWidth, bottomAreaHeight),
             new Rect(leftPos + 20f, topPos + height / 2.7f, fullAreaWidth, height / 1.7f)
         };
+
         /// <summary>
         /// 0 - full,
         /// 1 - top,
@@ -40,8 +41,9 @@ namespace GGM.GUI
             new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, fullAreaHeight),
             new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, topAreaHeight),
             new Rect(leftPos + 20f, topPos + 100f, halfAreaWidth, bottomAreaHeight),
-            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f), 
+            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f),
         };
+
         /// <summary>
         /// 0 - full,
         /// 1 - top,
@@ -53,7 +55,6 @@ namespace GGM.GUI
             new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, topAreaHeight),
             new Rect(leftPos + halfAreaWidth + 40f, topPos + 100f, halfAreaWidth, bottomAreaHeight),
             new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f)
-
         };
 
         internal const int HeaderFontSize = 20;
@@ -72,7 +73,7 @@ namespace GGM.GUI
         internal const float GridHeight = 21f;
 
         internal const float TextFieldWidth = rightElementWidth;
-        internal const float TextFieldHeight= 21f;
+        internal const float TextFieldHeight = 21f;
 
         internal const float SliderWidth = rightElementWidth - 40f;
         internal const float SliderValueWidth = 21f;
@@ -89,6 +90,7 @@ namespace GGM.GUI
             TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor),
             TextStyle(TextAnchor.MiddleRight, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor)
         };
+
         internal static readonly GUIStyle HeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, HeaderFontSize, false, ColorMajor, ColorMajor, ColorMajor);
         internal static readonly GUIStyle SubHeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, SubHeaderFontSize, false, ColorMajor, ColorMajor, ColorMajor);
         internal static readonly GUIStyle SliderStatusStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, LabelFontSize, false, ColorMinor, ColorMinor, ColorMinor);

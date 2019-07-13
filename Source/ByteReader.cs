@@ -67,7 +67,7 @@ public class ByteReader
             }
         }
         mOffset++;
-    Label_007E:
+        Label_007E:
         str = ReadLine(mBuffer, this.mOffset, mOffset - this.mOffset - 1);
         this.mOffset = mOffset;
         return str;
@@ -86,4 +86,3 @@ public class ByteReader
         }
     }
 }
-

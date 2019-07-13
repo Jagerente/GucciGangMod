@@ -140,18 +140,18 @@ public class UIScrollBar : MonoBehaviour
         if (background != null && background.collider != null)
         {
             var listener = UIEventListener.Get(background.gameObject);
-            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress,
+            listener.onPress = (UIEventListener.BoolDelegate)Delegate.Combine(listener.onPress,
                 new UIEventListener.BoolDelegate(OnPressBackground));
-            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag,
+            listener.onDrag = (UIEventListener.VectorDelegate)Delegate.Combine(listener.onDrag,
                 new UIEventListener.VectorDelegate(OnDragBackground));
         }
 
         if (foreground != null && foreground.collider != null)
         {
             var listener2 = UIEventListener.Get(foreground.gameObject);
-            listener2.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener2.onPress,
+            listener2.onPress = (UIEventListener.BoolDelegate)Delegate.Combine(listener2.onPress,
                 new UIEventListener.BoolDelegate(OnPressForeground));
-            listener2.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener2.onDrag,
+            listener2.onDrag = (UIEventListener.VectorDelegate)Delegate.Combine(listener2.onDrag,
                 new UIEventListener.VectorDelegate(OnDragForeground));
         }
 

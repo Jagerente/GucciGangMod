@@ -345,4 +345,3 @@ public class UIDrawCall : MonoBehaviour
         SoftClip
     }
 }
-

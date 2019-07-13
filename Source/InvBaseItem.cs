@@ -30,4 +30,3 @@ public class InvBaseItem
         _LastDoNotUse
     }
 }
-

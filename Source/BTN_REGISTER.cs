@@ -68,4 +68,3 @@ public class BTN_REGISTER : MonoBehaviour
         }
     }
 }
-

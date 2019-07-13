@@ -19,4 +19,3 @@
 
     public string Room { get; protected internal set; }
 }
-

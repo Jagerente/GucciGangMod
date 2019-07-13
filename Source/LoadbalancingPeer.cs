@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using ExitGames.Client.Photon.Lite;
+using System.Collections.Generic;
 
 internal class LoadbalancingPeer : PhotonPeer
 {
@@ -37,7 +37,7 @@ internal class LoadbalancingPeer : PhotonPeer
                 Listener.DebugReturn(DebugLevel.ERROR, "OpAuthenticate() failed. When you want Custom Authentication encryption is mandatory.");
                 return false;
             }
-            customOpParameters[217] = (byte) authValues.AuthType;
+            customOpParameters[217] = (byte)authValues.AuthType;
             if (!string.IsNullOrEmpty(authValues.Secret))
             {
                 customOpParameters[221] = authValues.Secret;
@@ -91,7 +91,7 @@ internal class LoadbalancingPeer : PhotonPeer
         if (lobby != null)
         {
             customOpParameters[213] = lobby.Name;
-            customOpParameters[212] = (byte) lobby.Type;
+            customOpParameters[212] = (byte)lobby.Type;
         }
         if (onGameServer)
         {
@@ -107,17 +107,17 @@ internal class LoadbalancingPeer : PhotonPeer
             var target = new Hashtable();
             customOpParameters[248] = target;
             target.MergeStringKeys(roomOptions.customRoomProperties);
-            target[(byte) 253] = roomOptions.isOpen;
-            target[(byte) 254] = roomOptions.isVisible;
-            target[(byte) 250] = roomOptions.customRoomPropertiesForLobby;
+            target[(byte)253] = roomOptions.isOpen;
+            target[(byte)254] = roomOptions.isVisible;
+            target[(byte)250] = roomOptions.customRoomPropertiesForLobby;
             if (roomOptions.maxPlayers > 0)
             {
-                target[(byte) 255] = roomOptions.maxPlayers;
+                target[(byte)255] = roomOptions.maxPlayers;
             }
             if (roomOptions.cleanupCacheOnLeave)
             {
                 customOpParameters[241] = true;
-                target[(byte) 249] = true;
+                target[(byte)249] = true;
             }
         }
         return SendOperation(227, customOpParameters, SendOptions.SendReliable);
@@ -151,7 +151,7 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             customOpParameters = new Dictionary<byte, object>();
             customOpParameters[213] = lobby.Name;
-            customOpParameters[212] = (byte) lobby.Type;
+            customOpParameters[212] = (byte)lobby.Type;
         }
         return SendOperation(229, customOpParameters, SendOptions.SendReliable);
     }
@@ -166,7 +166,7 @@ internal class LoadbalancingPeer : PhotonPeer
         target.MergeStringKeys(expectedCustomRoomProperties);
         if (expectedMaxPlayers > 0)
         {
-            target[(byte) 255] = expectedMaxPlayers;
+            target[(byte)255] = expectedMaxPlayers;
         }
         var customOpParameters = new Dictionary<byte, object>();
         if (target.Count > 0)
@@ -179,12 +179,12 @@ internal class LoadbalancingPeer : PhotonPeer
         }
         if (matchingType != MatchmakingMode.FillRoom)
         {
-            customOpParameters[223] = (byte) matchingType;
+            customOpParameters[223] = (byte)matchingType;
         }
         if (typedLobby != null)
         {
             customOpParameters[213] = typedLobby.Name;
-            customOpParameters[212] = (byte) typedLobby.Type;
+            customOpParameters[212] = (byte)typedLobby.Type;
         }
         if (!string.IsNullOrEmpty(sqlLobbyFilter))
         {
@@ -206,7 +206,7 @@ internal class LoadbalancingPeer : PhotonPeer
             if (lobby != null)
             {
                 customOpParameters[213] = lobby.Name;
-                customOpParameters[212] = (byte) lobby.Type;
+                customOpParameters[212] = (byte)lobby.Type;
             }
         }
         if (onGameServer)
@@ -225,17 +225,17 @@ internal class LoadbalancingPeer : PhotonPeer
                 var target = new Hashtable();
                 customOpParameters[248] = target;
                 target.MergeStringKeys(roomOptions.customRoomProperties);
-                target[(byte) 253] = roomOptions.isOpen;
-                target[(byte) 254] = roomOptions.isVisible;
-                target[(byte) 250] = roomOptions.customRoomPropertiesForLobby;
+                target[(byte)253] = roomOptions.isOpen;
+                target[(byte)254] = roomOptions.isVisible;
+                target[(byte)250] = roomOptions.customRoomPropertiesForLobby;
                 if (roomOptions.maxPlayers > 0)
                 {
-                    target[(byte) 255] = roomOptions.maxPlayers;
+                    target[(byte)255] = roomOptions.maxPlayers;
                 }
                 if (roomOptions.cleanupCacheOnLeave)
                 {
                     customOpParameters[241] = true;
-                    target[(byte) 249] = true;
+                    target[(byte)249] = true;
                 }
             }
         }
@@ -267,11 +267,11 @@ internal class LoadbalancingPeer : PhotonPeer
         {
             if (raiseEventOptions.CachingOption != EventCaching.DoNotCache)
             {
-                customOpParameters[247] = (byte) raiseEventOptions.CachingOption;
+                customOpParameters[247] = (byte)raiseEventOptions.CachingOption;
             }
             if (raiseEventOptions.Receivers != ReceiverGroup.Others)
             {
-                customOpParameters[246] = (byte) raiseEventOptions.Receivers;
+                customOpParameters[246] = (byte)raiseEventOptions.Receivers;
             }
             if (raiseEventOptions.InterestGroup != 0)
             {
@@ -345,4 +345,3 @@ internal class LoadbalancingPeer : PhotonPeer
         OpSetPropertiesOfRoom(gameProperties, true, 0);
     }
 }
-

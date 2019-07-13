@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using GGM.Caching;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GGM.GUI
 {
@@ -47,7 +43,6 @@ namespace GGM.GUI
         public static Texture2D CityDawn;
         public static Texture2D CityNight;
         public static Texture2D Akina;
-
 
         private void Start()
         {
@@ -345,6 +340,5 @@ namespace GGM.GUI
 
             isInited = true;
         }
-
     }
 }

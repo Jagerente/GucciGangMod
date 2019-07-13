@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using GGM.Config;
+﻿using GGM.Config;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -112,7 +112,8 @@ public class Minimap : MonoBehaviour
         var active = RenderTexture.active;
         RenderTexture.active = cam.targetTexture;
         cam.Render();
-        var textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height, TextureFormat.RGB24, false) {
+        var textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height, TextureFormat.RGB24, false)
+        {
             filterMode = FilterMode.Bilinear
         };
         textured.ReadPixels(new Rect(0f, 0f, cam.targetTexture.width, cam.targetTexture.height), 0, 0);
@@ -406,16 +407,16 @@ public class Minimap : MonoBehaviour
     private void Initialize()
     {
         var pivot = new Vector3(0.5f, 0.5f);
-        var texture = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D("icon");
+        var texture = (Texture2D)GGM.Caching.ResourcesCache.RCLoadT2D("icon");
         var rect = new Rect(0f, 0f, texture.width, texture.height);
         whiteIconSprite = UnityEngine.Sprite.Create(texture, rect, pivot);
-        texture = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D("iconpointer");
+        texture = (Texture2D)GGM.Caching.ResourcesCache.RCLoadT2D("iconpointer");
         rect = new Rect(0f, 0f, texture.width, texture.height);
         pointerSprite = UnityEngine.Sprite.Create(texture, rect, pivot);
-        texture = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D("supplyicon");
+        texture = (Texture2D)GGM.Caching.ResourcesCache.RCLoadT2D("supplyicon");
         rect = new Rect(0f, 0f, texture.width, texture.height);
         supplySprite = UnityEngine.Sprite.Create(texture, rect, pivot);
-        texture = (Texture2D) GGM.Caching.ResourcesCache.RCLoadT2D("mapborder");
+        texture = (Texture2D)GGM.Caching.ResourcesCache.RCLoadT2D("mapborder");
         rect = new Rect(0f, 0f, texture.width, texture.height);
         var border = new Vector4(5f, 5f, 5f, 5f);
         borderSprite = UnityEngine.Sprite.Create(texture, rect, pivot, 100f, 1, SpriteMeshType.FullRect, border);
@@ -699,9 +700,6 @@ public class Minimap : MonoBehaviour
         instance.StartCoroutine(instance.TryRecaptureInstanceE(time));
     }
 
-
-
-
     public enum IconStyle
     {
         CIRCLE,
@@ -881,4 +879,3 @@ public class Minimap : MonoBehaviour
         }
     }
 }
-

@@ -4,4 +4,3 @@
     Human,
     Titan
 }
-

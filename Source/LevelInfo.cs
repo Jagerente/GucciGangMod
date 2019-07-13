@@ -32,14 +32,14 @@ public class LevelInfo
         }
         return null;
     }
-   
+
     private static void initData()
     {
         if (!init)
         {
             init = true;
-            levels = new[] { 
-                new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), 
+            levels = new[] {
+                new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(),
                 new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo()
              };
             levels[0].name = "The City";
@@ -272,4 +272,3 @@ public class LevelInfo
         }
     }
 }
-

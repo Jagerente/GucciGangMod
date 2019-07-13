@@ -47,10 +47,9 @@ public class BetterList<T>
         return false;
     }
 
-    
     public IEnumerator<T> GetEnumerator()
     {
-        return new GetEnumeratorc__Iterator9 {f__this = this };
+        return new GetEnumeratorc__Iterator9 { f__this = this };
     }
 
     public void Insert(int index, T item)
@@ -183,7 +182,6 @@ public class BetterList<T>
         }
     }
 
-    
     private sealed class GetEnumeratorc__Iterator9 : IEnumerator, IDisposable, IEnumerator<T>
     {
         internal T current;
@@ -191,7 +189,6 @@ public class BetterList<T>
         internal BetterList<T> f__this;
         internal int __0;
 
-        
         public void Dispose()
         {
             PC = -1;
@@ -199,7 +196,7 @@ public class BetterList<T>
 
         public bool MoveNext()
         {
-            var num = (uint) PC;
+            var num = (uint)PC;
             PC = -1;
             switch (num)
             {
@@ -224,13 +221,12 @@ public class BetterList<T>
                 PC = 1;
                 return true;
             }
-        Label_0086:
+            Label_0086:
             PC = -1;
-        Label_008D:
+            Label_008D:
             return false;
         }
 
-        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -238,7 +234,6 @@ public class BetterList<T>
 
         T IEnumerator<T>.Current
         {
-            
             get
             {
                 return current;
@@ -247,7 +242,6 @@ public class BetterList<T>
 
         object IEnumerator.Current
         {
-            
             get
             {
                 return current;
@@ -255,4 +249,3 @@ public class BetterList<T>
         }
     }
 }
-

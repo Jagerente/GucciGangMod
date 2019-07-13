@@ -8,4 +8,3 @@
     public const byte PropsListedInLobby = 250;
     public const byte Removed = 251;
 }
-

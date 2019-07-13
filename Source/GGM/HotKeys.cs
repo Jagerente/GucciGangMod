@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ExitGames.Client.Photon;
+using System;
 using System.IO;
 using UnityEngine;
-using ExitGames.Client.Photon;
 
 namespace GGM
 {
@@ -29,7 +29,7 @@ namespace GGM
                         }
 
                         FengGameManagerMKII.FGM.restartRC();
-                        string[] msg = { "MasterClient ", "has restarted the game."};
+                        string[] msg = { "MasterClient ", "has restarted the game." };
                         InRoomChat.SystemMessageGlobal(msg, false);
                     }
                     else
@@ -50,6 +50,24 @@ namespace GGM
                 var path = Application.dataPath + "/Screenshoots";
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                 Application.CaptureScreenshot(Application.dataPath + "/Screenshoots/Screenshot_" + DateTime.Now.ToString("yyyy:mm:dd:hh:mm:ss").Replace(":", "-") + ".png");
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                IN_GAME_MAIN_CAMERA.dayLight = DayLight.Day;
+                Camera.main.GetComponent<Skybox>().material = IN_GAME_MAIN_CAMERA.Instance.skyBoxDAY;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                IN_GAME_MAIN_CAMERA.dayLight = DayLight.Dawn;
+                Camera.main.GetComponent<Skybox>().material = IN_GAME_MAIN_CAMERA.Instance.skyBoxDAWN;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                IN_GAME_MAIN_CAMERA.dayLight = DayLight.Night;
+                Camera.main.GetComponent<Skybox>().material = IN_GAME_MAIN_CAMERA.Instance.skyBoxNIGHT;
             }
         }
     }

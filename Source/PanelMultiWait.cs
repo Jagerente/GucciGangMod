@@ -37,4 +37,3 @@ public class PanelMultiWait : MonoBehaviour
         showTxt();
     }
 }
-

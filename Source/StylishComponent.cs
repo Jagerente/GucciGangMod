@@ -40,11 +40,11 @@ public class StylishComponent : MonoBehaviour
     {
         if (styleRank > 0 && styleRank < styleRankPoints.Length)
         {
-            return (int) ((stylePoints - styleRankPoints[styleRank - 1]) * 100f / (styleRankPoints[styleRank] - styleRankPoints[styleRank - 1]));
+            return (int)((stylePoints - styleRankPoints[styleRank - 1]) * 100f / (styleRankPoints[styleRank] - styleRankPoints[styleRank - 1]));
         }
         if (styleRank == 0)
         {
-            return (int) (stylePoints * 100f) / styleRankPoints[styleRank];
+            return (int)(stylePoints * 100f) / styleRankPoints[styleRank];
         }
         return 100;
     }
@@ -66,7 +66,7 @@ public class StylishComponent : MonoBehaviour
 
     private void setPosition()
     {
-        originalPosition = new Vector3((int) (Screen.width * 0.5f - 2f), (int) (Screen.height * 0.5f - 150f), 0f);
+        originalPosition = new Vector3((int)(Screen.width * 0.5f - 2f), (int)(Screen.height * 0.5f - 150f), 0f);
         exitPosition = new Vector3(Screen.width, originalPosition.y, originalPosition.z);
     }
 
@@ -201,7 +201,7 @@ public class StylishComponent : MonoBehaviour
     {
         if (damage != -1)
         {
-            stylePoints += (int) ((damage + 200) * chainRankMultiplier[chainKillRank]);
+            stylePoints += (int)((damage + 200) * chainRankMultiplier[chainKillRank]);
             styleTotalDamage += damage;
             chainKillRank = chainKillRank >= chainRankMultiplier.Length - 1 ? chainKillRank : chainKillRank + 1;
             chainTime = 5f;
@@ -215,7 +215,7 @@ public class StylishComponent : MonoBehaviour
         }
         startShake(5, 0.3f);
         setPosition();
-        labelTotal.GetComponent<UILabel>().text = ((int) stylePoints).ToString();
+        labelTotal.GetComponent<UILabel>().text = ((int)stylePoints).ToString();
         labelHits.GetComponent<UILabel>().text = styleHits + (styleHits <= 1 ? "Hit" : "Hits");
         if (chainKillRank == 0)
         {
@@ -255,4 +255,3 @@ public class StylishComponent : MonoBehaviour
         }
     }
 }
-

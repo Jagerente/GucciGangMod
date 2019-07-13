@@ -373,4 +373,3 @@ public class Horse : MonoBehaviour
         gameObject.GetComponent<TITAN_CONTROLLER>().enabled = false;
     }
 }
-

@@ -4,4 +4,3 @@
     RandomMatching = 2,
     SerialMatching = 1
 }
-

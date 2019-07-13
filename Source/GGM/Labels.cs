@@ -38,7 +38,6 @@ namespace GGM
                     {
                         return;
                     }
-
                 }
                 bottomRight.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }

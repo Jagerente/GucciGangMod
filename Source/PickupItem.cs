@@ -38,7 +38,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
         }
         else
         {
-            var vector = (Vector3) stream.ReceiveNext();
+            var vector = (Vector3)stream.ReceiveNext();
             gameObject.transform.position = vector;
         }
     }
@@ -101,7 +101,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
                 var num2 = SecondsBeforeRespawn - num;
                 if (num2 > 0.0)
                 {
-                    PickedUp((float) num2);
+                    PickedUp((float)num2);
                 }
             }
         }
@@ -135,4 +135,3 @@ public class PickupItem : MonoBehaviour, IPunObservable
         }
     }
 }
-

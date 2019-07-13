@@ -97,7 +97,8 @@ public class HERO_SETUP : MonoBehaviour
         var renderer2 = go2.GetComponent<SkinnedMeshRenderer>();
         for (var i = 0; i < renderer2.sharedMesh.subMeshCount; i++)
         {
-            var item = new CombineInstance {
+            var item = new CombineInstance
+            {
                 mesh = renderer2.sharedMesh,
                 transform = renderer2.transform.localToWorldMatrix,
                 subMeshIndex = i
@@ -139,7 +140,7 @@ public class HERO_SETUP : MonoBehaviour
         Destroy(part_blade_r);
         if (myCostume.mesh_3dmg.Length > 0)
         {
-            part_3dmg = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.mesh_3dmg));
+            part_3dmg = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.mesh_3dmg));
             part_3dmg.transform.position = mount_3dmg.transform.position;
             part_3dmg.transform.rotation = mount_3dmg.transform.rotation;
             part_3dmg.transform.parent = mount_3dmg.transform.parent;
@@ -152,7 +153,7 @@ public class HERO_SETUP : MonoBehaviour
         }
         if (myCostume.mesh_3dmg_gas_l.Length > 0)
         {
-            part_3dmg_gas_l = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.mesh_3dmg_gas_l));
+            part_3dmg_gas_l = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.mesh_3dmg_gas_l));
             if (myCostume.uniform_type != UNIFORM_TYPE.CasualAHSS)
             {
                 part_3dmg_gas_l.transform.position = mount_3dmg_gas_l.transform.position;
@@ -169,7 +170,7 @@ public class HERO_SETUP : MonoBehaviour
         }
         if (myCostume.mesh_3dmg_gas_r.Length > 0)
         {
-            part_3dmg_gas_r = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.mesh_3dmg_gas_r));
+            part_3dmg_gas_r = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.mesh_3dmg_gas_r));
             if (myCostume.uniform_type != UNIFORM_TYPE.CasualAHSS)
             {
                 part_3dmg_gas_r.transform.position = mount_3dmg_gas_r.transform.position;
@@ -186,7 +187,7 @@ public class HERO_SETUP : MonoBehaviour
         }
         if (myCostume.weapon_l_mesh.Length > 0)
         {
-            part_blade_l = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.weapon_l_mesh));
+            part_blade_l = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.weapon_l_mesh));
             part_blade_l.transform.position = mount_weapon_l.transform.position;
             part_blade_l.transform.rotation = mount_weapon_l.transform.rotation;
             part_blade_l.transform.parent = mount_weapon_l.transform.parent;
@@ -204,7 +205,7 @@ public class HERO_SETUP : MonoBehaviour
         }
         if (myCostume.weapon_r_mesh.Length > 0)
         {
-            part_blade_r = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.weapon_r_mesh));
+            part_blade_r = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.weapon_r_mesh));
             part_blade_r.transform.position = mount_weapon_r.transform.position;
             part_blade_r.transform.rotation = mount_weapon_r.transform.rotation;
             part_blade_r.transform.parent = mount_weapon_r.transform.parent;
@@ -246,7 +247,7 @@ public class HERO_SETUP : MonoBehaviour
 
     public void createFace()
     {
-        part_face = (GameObject) Instantiate(Resources.Load("Character/character_face"));
+        part_face = (GameObject)Instantiate(Resources.Load("Character/character_face"));
         part_face.transform.position = part_head.transform.position;
         part_face.transform.rotation = part_head.transform.rotation;
         part_face.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head").transform;
@@ -254,7 +255,7 @@ public class HERO_SETUP : MonoBehaviour
 
     public void createGlass()
     {
-        part_glass = (GameObject) Instantiate(Resources.Load("Character/glass"));
+        part_glass = (GameObject)Instantiate(Resources.Load("Character/glass"));
         part_glass.transform.position = part_head.transform.position;
         part_glass.transform.rotation = part_head.transform.rotation;
         part_glass.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head").transform;
@@ -266,7 +267,7 @@ public class HERO_SETUP : MonoBehaviour
         Destroy(part_hair_1);
         if (myCostume.hair_mesh != string.Empty)
         {
-            part_hair = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.hair_mesh));
+            part_hair = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.hair_mesh));
             part_hair.transform.position = part_head.transform.position;
             part_hair.transform.rotation = part_head.transform.rotation;
             part_hair.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head").transform;
@@ -290,7 +291,7 @@ public class HERO_SETUP : MonoBehaviour
         }
         if (myCostume.hair_mesh != string.Empty)
         {
-            part_hair = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.hair_mesh));
+            part_hair = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.hair_mesh));
             part_hair.transform.position = part_head.transform.position;
             part_hair.transform.rotation = part_head.transform.rotation;
             part_hair.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head").transform;
@@ -315,7 +316,7 @@ public class HERO_SETUP : MonoBehaviour
         createHair2();
         if (myCostume.eye_mesh.Length > 0)
         {
-            part_eye = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.eye_mesh));
+            part_eye = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.eye_mesh));
             part_eye.transform.position = part_head.transform.position;
             part_eye.transform.rotation = part_head.transform.rotation;
             part_eye.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head").transform;
@@ -348,7 +349,7 @@ public class HERO_SETUP : MonoBehaviour
         createHair2();
         if (myCostume.eye_mesh.Length > 0)
         {
-            part_eye = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.eye_mesh));
+            part_eye = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.eye_mesh));
             part_eye.transform.position = part_head.transform.position;
             part_eye.transform.rotation = part_head.transform.rotation;
             part_eye.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head").transform;
@@ -418,7 +419,7 @@ public class HERO_SETUP : MonoBehaviour
         createCape2();
         if (myCostume.part_chest_object_mesh.Length > 0)
         {
-            part_chest_1 = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.part_chest_object_mesh));
+            part_chest_1 = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.part_chest_object_mesh));
             part_chest_1.transform.position = chest_info.transform.position;
             part_chest_1.transform.rotation = chest_info.transform.rotation;
             part_chest_1.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest").transform;
@@ -426,7 +427,7 @@ public class HERO_SETUP : MonoBehaviour
         }
         if (myCostume.part_chest_1_object_mesh.Length > 0)
         {
-            part_chest_2 = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.part_chest_1_object_mesh));
+            part_chest_2 = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.part_chest_1_object_mesh));
             part_chest_2.transform.position = chest_info.transform.position;
             part_chest_2.transform.rotation = chest_info.transform.rotation;
             part_chest_2.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest").transform;
@@ -483,7 +484,7 @@ public class HERO_SETUP : MonoBehaviour
         createCape2();
         if (myCostume.part_chest_object_mesh.Length > 0)
         {
-            part_chest_1 = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.part_chest_object_mesh));
+            part_chest_1 = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.part_chest_object_mesh));
             part_chest_1.transform.position = chest_info.transform.position;
             part_chest_1.transform.rotation = chest_info.transform.rotation;
             part_chest_1.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest").transform;
@@ -491,7 +492,7 @@ public class HERO_SETUP : MonoBehaviour
         }
         if (myCostume.part_chest_1_object_mesh.Length > 0)
         {
-            part_chest_2 = (GameObject) Instantiate(Resources.Load("Character/" + myCostume.part_chest_1_object_mesh));
+            part_chest_2 = (GameObject)Instantiate(Resources.Load("Character/" + myCostume.part_chest_1_object_mesh));
             part_chest_2.transform.position = chest_info.transform.position;
             part_chest_2.transform.rotation = chest_info.transform.rotation;
             part_chest_2.transform.parent = transform.Find("Amarture/Controller_Body/hip/spine/chest").transform;
@@ -599,7 +600,7 @@ public class HERO_SETUP : MonoBehaviour
         }
         var component = go.GetComponent<SkinnedMeshRenderer>();
         var bones = component.bones;
-        var renderer2 = ((GameObject) Instantiate(Resources.Load(res))).GetComponent<SkinnedMeshRenderer>();
+        var renderer2 = ((GameObject)Instantiate(Resources.Load(res))).GetComponent<SkinnedMeshRenderer>();
         renderer2.gameObject.transform.parent = component.gameObject.transform.parent;
         renderer2.transform.localPosition = Vector3.zero;
         renderer2.transform.localScale = Vector3.one;
@@ -634,7 +635,7 @@ public class HERO_SETUP : MonoBehaviour
         {
             go.renderer.material = CharacterMaterials.materials[myCostume.face_texture];
             var num = 0.125f;
-            var x = num * (int) (id / 8f);
+            var x = num * (int)(id / 8f);
             var y = -num * (id % 8);
             go.renderer.material.mainTextureOffset = new Vector2(x, y);
         }
@@ -652,4 +653,3 @@ public class HERO_SETUP : MonoBehaviour
     {
     }
 }
-

@@ -55,7 +55,7 @@ internal static class CustomTypes
 
     private static byte[] SerializePhotonPlayer(object customobject)
     {
-        var iD = ((PhotonPlayer) customobject).ID;
+        var iD = ((PhotonPlayer)customobject).ID;
         var target = new byte[4];
         var targetOffset = 0;
         Protocol.Serialize(iD, target, ref targetOffset);
@@ -64,7 +64,7 @@ internal static class CustomTypes
 
     private static byte[] SerializeQuaternion(object obj)
     {
-        var quaternion = (Quaternion) obj;
+        var quaternion = (Quaternion)obj;
         var target = new byte[16];
         var targetOffset = 0;
         Protocol.Serialize(quaternion.w, target, ref targetOffset);
@@ -76,7 +76,7 @@ internal static class CustomTypes
 
     private static byte[] SerializeVector2(object customobject)
     {
-        var vector = (Vector2) customobject;
+        var vector = (Vector2)customobject;
         var target = new byte[8];
         var targetOffset = 0;
         Protocol.Serialize(vector.x, target, ref targetOffset);
@@ -86,7 +86,7 @@ internal static class CustomTypes
 
     private static byte[] SerializeVector3(object customobject)
     {
-        var vector = (Vector3) customobject;
+        var vector = (Vector3)customobject;
         var targetOffset = 0;
         var target = new byte[12];
         Protocol.Serialize(vector.x, target, ref targetOffset);
@@ -95,4 +95,3 @@ internal static class CustomTypes
         return target;
     }
 }
-

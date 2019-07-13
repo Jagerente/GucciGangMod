@@ -15,8 +15,9 @@ public class EquipRandomItem : MonoBehaviour
                 var max = 12;
                 var id = Random.Range(0, items.Count);
                 var bi = items[id];
-                var item = new InvGameItem(id, bi) {
-                    quality = (InvGameItem.Quality) Random.Range(0, max),
+                var item = new InvGameItem(id, bi)
+                {
+                    quality = (InvGameItem.Quality)Random.Range(0, max),
                     itemLevel = NGUITools.RandomRange(bi.minItemLevel, bi.maxItemLevel)
                 };
                 equipment.Equip(item);
@@ -24,4 +25,3 @@ public class EquipRandomItem : MonoBehaviour
         }
     }
 }
-

@@ -16,18 +16,18 @@ public class PopuplistCharacterSelection : MonoBehaviour
             case "Set 1":
             case "Set 2":
             case "Set 3":
-            {
-                var costume = CostumeConeveter.LocalDataToHeroCostume(selection.ToUpper());
-                if (costume == null)
                 {
-                    stat = new HeroStat();
+                    var costume = CostumeConeveter.LocalDataToHeroCostume(selection.ToUpper());
+                    if (costume == null)
+                    {
+                        stat = new HeroStat();
+                    }
+                    else
+                    {
+                        stat = costume.stat;
+                    }
+                    break;
                 }
-                else
-                {
-                    stat = costume.stat;
-                }
-                break;
-            }
             default:
                 stat = HeroStat.getInfo(GetComponent<UIPopupList>().selection);
                 break;
@@ -38,4 +38,3 @@ public class PopuplistCharacterSelection : MonoBehaviour
         ACL.transform.localScale = new Vector3(stat.ACL, 20f, 0f);
     }
 }
-

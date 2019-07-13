@@ -6,6 +6,7 @@ namespace GGM.GUI.Pages
     internal class MainMenu : Page
     {
         #region Settings
+
         private static int loginSwitchInt;
 
         private const string Size = "72";
@@ -22,7 +23,8 @@ namespace GGM.GUI.Pages
 
         private static string quitButton = string.Empty;
         private static Rect quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
-        #endregion
+
+        #endregion Settings
 
         private void OnGUI()
         {
@@ -38,7 +40,7 @@ namespace GGM.GUI.Pages
                 ? $"<color=#{Color1}><size={Size}><b><i>S I N G L E</i></b></size></color>"
                 : $"<color=#{Color2}><size={Size}><b><i>S I N G L E</i></b></size></color>";
 
-            #endregion
+            #endregion Single
 
             #region Multiplayer
 
@@ -52,7 +54,7 @@ namespace GGM.GUI.Pages
                 ? $"<color=#{Color1}><size={Size}><b><i>M U L T I P L A Y E R</i></b></size></color>"
                 : $"<color=#{Color2}><size={Size}><b><i>M U L T I P L A Y E R</i></b></size></color>";
 
-            #endregion
+            #endregion Multiplayer
 
             #region Quit
 
@@ -65,7 +67,7 @@ namespace GGM.GUI.Pages
                 ? $"<color=#{Color1}><size={Size}><b><i>Q U I T</i></b></size></color>"
                 : $"<color=#{Color2}><size={Size}><b><i>Q U I T</i></b></size></color>";
 
-            #endregion
+            #endregion Quit
 
             #region Top Left Navigation Panel
 
@@ -107,7 +109,7 @@ namespace GGM.GUI.Pages
                     GUILayout.EndHorizontal();
                     break;
 
-                #endregion
+                #endregion Custom Name
 
                 case 1:
 
@@ -165,14 +167,15 @@ namespace GGM.GUI.Pages
                     GUILayout.EndHorizontal();
                     break;
 
-                    #endregion
+                    #endregion Server Type
             }
 
             GUILayout.EndArea();
 
-            #endregion
+            #endregion Top Left Navigation Panel
 
             #region Top Right Navigation Panel
+
             if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(135f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 5f),
                 "Custom Characters")) //45f, 128,25f
             {
@@ -184,7 +187,7 @@ namespace GGM.GUI.Pages
                 Application.LoadLevel("SnapShot");
             }
 
-            #endregion
+            #endregion Top Right Navigation Panel
         }
     }
 }

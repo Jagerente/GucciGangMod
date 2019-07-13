@@ -57,7 +57,7 @@ namespace GGM.Caching
             var name = _name.StartsWith("RCAsset/") ? _name.Remove(0, 8) : _name;
             if (!cacheRC_T2D.ContainsKey(name))
             {
-                return cacheRC_T2D[name] = (Texture2D) FengGameManagerMKII.RCassets.Load(name);
+                return cacheRC_T2D[name] = (Texture2D)FengGameManagerMKII.RCassets.Load(name);
             }
             return cacheRC_T2D[name];
         }
@@ -71,6 +71,5 @@ namespace GGM.Caching
             }
             return cacheRC_M[name];
         }
-
     }
 }

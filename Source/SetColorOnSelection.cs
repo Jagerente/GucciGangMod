@@ -4,7 +4,6 @@ using UnityEngine;
 [AddComponentMenu("NGUI/Examples/Set Color on Selection"), ExecuteInEditMode, RequireComponent(typeof(UIWidget))]
 public class SetColorOnSelection : MonoBehaviour
 {
-    
     private static Dictionary<string, int> f__switchmap4;
     private UIWidget mWidget;
 
@@ -66,4 +65,3 @@ public class SetColorOnSelection : MonoBehaviour
         }
     }
 }
-

@@ -39,7 +39,6 @@ public class LoginFengKAI : MonoBehaviour
         }
     }
 
-    
     private IEnumerator changeGuild(string name)
     {
         var form = new WWWForm();
@@ -64,7 +63,6 @@ public class LoginFengKAI : MonoBehaviour
         }
     }
 
-    
     private IEnumerator changePassword(string oldpassword, string password, string password2)
     {
         var form = new WWWForm();
@@ -111,7 +109,6 @@ public class LoginFengKAI : MonoBehaviour
         }
     }
 
-    
     private IEnumerator ForgetPassword(string email)
     {
         var form = new WWWForm();
@@ -132,7 +129,6 @@ public class LoginFengKAI : MonoBehaviour
         clearCOOKIE();
     }
 
-    
     private IEnumerator getInfo()
     {
         var form = new WWWForm();
@@ -171,10 +167,8 @@ public class LoginFengKAI : MonoBehaviour
         StartCoroutine(Login(name, password));
     }
 
-    
     private IEnumerator Login(string name, string password)
     {
-
         var form = new WWWForm();
         form.AddField("userid", name);
         form.AddField("password", password);
@@ -210,7 +204,6 @@ public class LoginFengKAI : MonoBehaviour
         output.GetComponent<UILabel>().text = "Welcome," + player.name;
     }
 
-    
     private IEnumerator Register(string name, string password, string password2, string email)
     {
         var form = new WWWForm();
@@ -266,4 +259,3 @@ public class LoginFengKAI : MonoBehaviour
         }
     }
 }
-

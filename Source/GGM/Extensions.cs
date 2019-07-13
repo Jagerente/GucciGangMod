@@ -1,7 +1,7 @@
-﻿using System.Globalization;
+﻿using GGM.Caching;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using GGM.Caching;
 using UnityEngine;
 
 namespace GGM
@@ -134,8 +134,10 @@ namespace GGM
             {
                 case DayLight.Day:
                     return dayLight = "Day";
+
                 case DayLight.Dawn:
                     return dayLight = "Dawn";
+
                 case DayLight.Night:
                     return dayLight = "Night";
             }
@@ -149,8 +151,10 @@ namespace GGM
             {
                 case 0:
                     return difficulty = "Normal";
+
                 case 1:
                     return difficulty = "Hard";
+
                 case 2:
                     return difficulty = "Abnormal";
             }
