@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using System.IO;
+using System.Net;
+using GGM.Caching;
+using UnityEngine;
 
 namespace GGM.GUI
 {
@@ -35,9 +39,69 @@ namespace GGM.GUI
         private static Texture2D ScrollBarThumbA;
         private static Texture2D ScrollBarThumbH;
         public static Texture2D Logo;
+        public static Texture2D Tutorial;
+        public static Texture2D ForestDay;
+        public static Texture2D ForestDawn;
+        public static Texture2D ForestNight;
+        public static Texture2D CityDay;
+        public static Texture2D CityDawn;
+        public static Texture2D CityNight;
+        public static Texture2D Akina;
+
 
         private void Start()
         {
+            var tutorial = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/tutorial.png");
+            if (Tutorial == null && tutorial != null)
+            {
+                Tutorial = tutorial.texture;
+                Tutorial.Apply();
+            }
+
+            var forestDay = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/forest_day.png");
+            if (ForestDay == null && forestDay != null)
+            {
+                ForestDay = forestDay.texture;
+                ForestDay.Apply();
+            }
+            var forestDawn = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/forest_dawn.png");
+            if (ForestDawn == null && forestDawn != null)
+            {
+                ForestDawn = forestDawn.texture;
+                ForestDawn.Apply();
+            }
+            var forestNight = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/forest_night.png");
+            if (ForestNight == null && forestNight != null)
+            {
+                ForestNight = forestNight.texture;
+                ForestNight.Apply();
+            }
+            var cityDay = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/city_day.png");
+            if (CityDay == null && cityDay != null)
+            {
+                CityDay = cityDay.texture;
+                CityDay.Apply();
+            }
+            var cityDawn = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/city_dawn.png");
+            if (CityDawn == null && cityDawn != null)
+            {
+                CityDawn = cityDawn.texture;
+                CityDawn.Apply();
+            }
+            var cityNight = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/city_night.png");
+            if (CityNight == null && cityNight != null)
+            {
+                CityNight = cityNight.texture;
+                CityNight.Apply();
+            }
+
+            var akina = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/akina.png");
+            if (Akina == null && akina != null)
+            {
+                Akina = akina.texture;
+                Akina.Apply();
+            }
+
             var logo = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}Logo.png");
             if (Logo == null && logo != null)
             {
