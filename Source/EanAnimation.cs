@@ -40,4 +40,3 @@ public class EanAnimation
         fs.Seek(position, SeekOrigin.Begin);
     }
 }
-

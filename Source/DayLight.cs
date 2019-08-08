@@ -4,4 +4,3 @@
     Dawn,
     Night
 }
-

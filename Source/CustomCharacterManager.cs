@@ -77,7 +77,7 @@ public class CustomCharacterManager : MonoBehaviour
         to.costumeId = from.costumeId;
     }
 
-    private void copyCostume(HeroCostume from, HeroCostume to,  bool init = false)
+    private void copyCostume(HeroCostume from, HeroCostume to, bool init = false)
     {
         copyBodyCostume(from, to);
         to.sex = from.sex;
@@ -582,7 +582,7 @@ public class CustomCharacterManager : MonoBehaviour
         CostumeDataToMyID();
         setup.deleteCharacterComponent2();
         setup.setCharacterComponent();
-    Label_06AE:
+        Label_06AE:
         freshLabel();
     }
 
@@ -711,7 +711,7 @@ public class CustomCharacterManager : MonoBehaviour
         }
         setup.createHair2();
         setHairColor();
-    Label_0750:
+        Label_0750:
         freshLabel();
     }
 
@@ -726,4 +726,3 @@ public class CustomCharacterManager : MonoBehaviour
         return id;
     }
 }
-

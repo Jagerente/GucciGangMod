@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CharacterCreateAnimationControl : MonoBehaviour
 {
-    
     private static Dictionary<string, int> f__switchmap0;
     private string currentAnimation;
     private float interval = 10f;
@@ -131,4 +130,3 @@ public class CharacterCreateAnimationControl : MonoBehaviour
         }
     }
 }
-

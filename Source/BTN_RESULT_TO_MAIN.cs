@@ -18,4 +18,3 @@ public class BTN_RESULT_TO_MAIN : MonoBehaviour
         Application.LoadLevel("menu");
     }
 }
-

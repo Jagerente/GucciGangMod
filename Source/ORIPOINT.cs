@@ -10,4 +10,3 @@
     LEFT_CENTER,
     RIGHT_CENTER
 }
-

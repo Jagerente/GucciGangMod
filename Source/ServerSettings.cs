@@ -1,14 +1,16 @@
-﻿using System;
+﻿using ExitGames.Client.Photon;
+using System;
 using System.Collections.Generic;
-using ExitGames.Client.Photon;
 using UnityEngine;
 
 [Serializable]
 public class ServerSettings : ScriptableObject
 {
     public string AppID = string.Empty;
+
     [HideInInspector]
     public bool DisableAutoOpenWizard;
+
     public HostingOption HostType;
     public bool PingCloudServersOnAwake;
     public CloudRegionCode PreferredRegion;
@@ -59,4 +61,3 @@ public class ServerSettings : ScriptableObject
         BestRegion
     }
 }
-

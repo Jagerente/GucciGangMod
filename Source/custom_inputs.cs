@@ -6,18 +6,26 @@ public class custom_inputs : MonoBehaviour
     public KeyCode[] alt_default_inputKeys;
     private float AltInputBox_X = 120f;
     private bool altInputson;
+
     [HideInInspector]
     public float analogFeel_down;
+
     public float analogFeel_gravity = 0.2f;
+
     [HideInInspector]
     public float analogFeel_jump;
+
     [HideInInspector]
     public float analogFeel_left;
+
     [HideInInspector]
     public float analogFeel_right;
+
     public float analogFeel_sensitivity = 0.8f;
+
     [HideInInspector]
     public float analogFeel_up;
+
     public float Boxes_Y = 300f;
     public float BoxesMargin_Y = 30f;
     private float buttonHeight = 20f;
@@ -36,20 +44,28 @@ public class custom_inputs : MonoBehaviour
     private KeyCode[] inputKey2;
     private string[] inputString;
     private string[] inputString2;
+
     [HideInInspector]
     public bool[] isInput;
+
     [HideInInspector]
     public bool[] isInputDown;
+
     [HideInInspector]
     public bool[] isInputUp;
+
     [HideInInspector]
     public bool[] joystickActive;
+
     [HideInInspector]
     public bool[] joystickActive2;
+
     [HideInInspector]
     public string[] joystickString;
+
     [HideInInspector]
     public string[] joystickString2;
+
     private float lastInterval;
     public bool menuOn;
     public bool mouseAxisOn;
@@ -178,7 +194,7 @@ public class custom_inputs : MonoBehaviour
                     if (Input.GetMouseButton(k) && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
                     {
                         num5 += k;
-                        inputKey[i] = (KeyCode) num5;
+                        inputKey[i] = (KeyCode)num5;
                         inputBool[i] = false;
                         inputString[i] = inputKey[i].ToString();
                         joystickActive[i] = false;
@@ -190,9 +206,9 @@ public class custom_inputs : MonoBehaviour
             }
             for (var j = 350; j < 409; j++)
             {
-                if (Input.GetKey((KeyCode) j) && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
+                if (Input.GetKey((KeyCode)j) && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
                 {
-                    inputKey[i] = (KeyCode) j;
+                    inputKey[i] = (KeyCode)j;
                     inputBool[i] = false;
                     inputString[i] = inputKey[i].ToString();
                     tempbool = false;
@@ -479,7 +495,7 @@ public class custom_inputs : MonoBehaviour
                     if (Input.GetMouseButton(k) && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
                     {
                         num5 += k;
-                        inputKey2[i] = (KeyCode) num5;
+                        inputKey2[i] = (KeyCode)num5;
                         inputBool2[i] = false;
                         inputString2[i] = inputKey2[i].ToString();
                         joystickActive2[i] = false;
@@ -491,9 +507,9 @@ public class custom_inputs : MonoBehaviour
             }
             for (var j = 350; j < 409; j++)
             {
-                if (Input.GetKey((KeyCode) j) && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
+                if (Input.GetKey((KeyCode)j) && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
                 {
-                    inputKey2[i] = (KeyCode) j;
+                    inputKey2[i] = (KeyCode)j;
                     inputBool2[i] = false;
                     inputString2[i] = inputKey2[i].ToString();
                     tempbool = false;
@@ -846,9 +862,9 @@ public class custom_inputs : MonoBehaviour
             int num2;
             int num3;
             int.TryParse(strArray[i], out num2);
-            inputKey[i] = (KeyCode) num2;
+            inputKey[i] = (KeyCode)num2;
             int.TryParse(strArray2[i], out num3);
-            inputKey2[i] = (KeyCode) num3;
+            inputKey2[i] = (KeyCode)num3;
             if (joystickString[i] == "#")
             {
                 joystickActive[i] = false;
@@ -902,13 +918,13 @@ public class custom_inputs : MonoBehaviour
         var str6 = string.Empty;
         for (var i = DescriptionString.Length - 1; i > -1; i--)
         {
-            str = (int) default_inputKeys[i] + "*" + str;
+            str = (int)default_inputKeys[i] + "*" + str;
             str2 = str2 + "#*";
             str3 = default_inputKeys[i] + "*" + str3;
             PlayerPrefs.SetString("KeyCodes", str);
             PlayerPrefs.SetString("Joystick_input", str2);
             PlayerPrefs.SetString("Names_input", str3);
-            str4 = (int) alt_default_inputKeys[i] + "*" + str4;
+            str4 = (int)alt_default_inputKeys[i] + "*" + str4;
             str5 = str5 + "#*";
             str6 = alt_default_inputKeys[i] + "*" + str6;
             PlayerPrefs.SetString("KeyCodes2", str4);
@@ -928,10 +944,10 @@ public class custom_inputs : MonoBehaviour
         var str6 = string.Empty;
         for (var i = DescriptionString.Length - 1; i > -1; i--)
         {
-            str = (int) inputKey[i] + "*" + str;
+            str = (int)inputKey[i] + "*" + str;
             str2 = joystickString[i] + "*" + str2;
             str3 = inputString[i] + "*" + str3;
-            str4 = (int) inputKey2[i] + "*" + str4;
+            str4 = (int)inputKey2[i] + "*" + str4;
             str5 = joystickString2[i] + "*" + str5;
             str6 = inputString2[i] + "*" + str6;
         }
@@ -1021,4 +1037,3 @@ public class custom_inputs : MonoBehaviour
         }
     }
 }
-

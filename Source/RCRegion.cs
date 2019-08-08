@@ -31,4 +31,3 @@ public class RCRegion
         return location.z + Random.Range(-dimZ / 2f, dimZ / 2f);
     }
 }
-

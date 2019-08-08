@@ -35,7 +35,7 @@ public class CameraShake : MonoBehaviour
     {
     }
 
-    public void startShake(float R, float duration,  float decay = 0.95f)
+    public void startShake(float R, float duration, float decay = 0.95f)
     {
         if (this.duration < duration)
         {
@@ -49,4 +49,3 @@ public class CameraShake : MonoBehaviour
     {
     }
 }
-

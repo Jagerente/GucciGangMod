@@ -9,4 +9,3 @@ public class BTN_SSR_Down : MonoBehaviour
         panel.GetComponent<SnapShotReview>().ShowNextIMG();
     }
 }
-

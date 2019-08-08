@@ -13,4 +13,3 @@ public class BTN_LOGIN : MonoBehaviour
         output.GetComponent<UILabel>().text = "please wait...";
     }
 }
-

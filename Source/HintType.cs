@@ -11,4 +11,3 @@
     DODGE,
     ATTACK
 }
-

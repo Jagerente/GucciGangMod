@@ -5,14 +5,19 @@ public class UILabel : UIWidget
 {
     [HideInInspector, SerializeField]
     private Color mEffectColor = Color.black;
+
     [HideInInspector, SerializeField]
     private Vector2 mEffectDistance = Vector2.one;
+
     [HideInInspector, SerializeField]
     private Effect mEffectStyle;
+
     [HideInInspector, SerializeField]
     private bool mEncoding = true;
+
     [HideInInspector, SerializeField]
     private UIFont mFont;
+
     private int mLastCount;
     private Effect mLastEffect;
     private bool mLastEncoding = true;
@@ -21,26 +26,37 @@ public class UILabel : UIWidget
     private bool mLastShow;
     private string mLastText = string.Empty;
     private int mLastWidth;
+
     [HideInInspector, SerializeField]
     private float mLineWidth;
+
     [HideInInspector, SerializeField]
     private int mMaxLineCount;
+
     [SerializeField, HideInInspector]
     private int mMaxLineWidth;
+
     [HideInInspector, SerializeField]
     private bool mMultiline = true;
+
     [HideInInspector, SerializeField]
     private bool mPassword;
+
     private bool mPremultiply;
     private string mProcessedText;
     private bool mShouldBeProcessed = true;
+
     [HideInInspector, SerializeField]
     private bool mShowLastChar;
+
     [HideInInspector, SerializeField]
     private bool mShrinkToFit;
+
     private Vector2 mSize = Vector2.zero;
+
     [SerializeField, HideInInspector]
     private UIFont.SymbolStyle mSymbols = UIFont.SymbolStyle.Uncolored;
+
     [SerializeField, HideInInspector]
     private string mText = string.Empty;
 
@@ -179,7 +195,7 @@ public class UILabel : UIWidget
             mProcessedText = string.Empty;
             goto Label_037C;
         }
-    Label_0057:
+        Label_0057:
         if (mPassword)
         {
             mProcessedText = string.Empty;
@@ -242,7 +258,7 @@ public class UILabel : UIWidget
             cachedTransform.localScale = new Vector3(b, b, 1f);
         }
         mSize.x = Mathf.Max(mSize.x, b <= 0f ? 1f : lineWidth / b);
-    Label_037C:
+        Label_037C:
         mSize.y = Mathf.Max(mSize.y, 1f);
     }
 
@@ -574,4 +590,3 @@ public class UILabel : UIWidget
         Outline
     }
 }
-

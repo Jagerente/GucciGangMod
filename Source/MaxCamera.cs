@@ -41,7 +41,8 @@ public class MaxCamera : MonoBehaviour
     {
         if (target == null)
         {
-            var obj2 = new GameObject("Cam Target") {
+            var obj2 = new GameObject("Cam Target")
+            {
                 transform = { position = transform.position + transform.forward * distance }
             };
             target = obj2.transform;
@@ -90,4 +91,3 @@ public class MaxCamera : MonoBehaviour
         Init();
     }
 }
-

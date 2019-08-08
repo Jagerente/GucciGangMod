@@ -28,4 +28,3 @@ public class ManualPhotonViewAllocator : MonoBehaviour
         go.GetComponent<OnClickDestroy>().DestroyByRpc = true;
     }
 }
-

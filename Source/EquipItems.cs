@@ -23,8 +23,9 @@ public class EquipItems : MonoBehaviour
                 var bi = InvDatabase.FindByID(num4);
                 if (bi != null)
                 {
-                    var item = new InvGameItem(num4, bi) {
-                        quality = (InvGameItem.Quality) Random.Range(0, max),
+                    var item = new InvGameItem(num4, bi)
+                    {
+                        quality = (InvGameItem.Quality)Random.Range(0, max),
                         itemLevel = NGUITools.RandomRange(bi.minItemLevel, bi.maxItemLevel)
                     };
                     component.Equip(item);
@@ -39,4 +40,3 @@ public class EquipItems : MonoBehaviour
         Destroy(this);
     }
 }
-

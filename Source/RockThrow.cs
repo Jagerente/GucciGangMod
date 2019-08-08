@@ -24,7 +24,7 @@ public class RockThrow : MonoBehaviour
         }
         else
         {
-            obj2 = (GameObject) Instantiate(Resources.Load("FX/boom6"), transform.position, transform.rotation);
+            obj2 = (GameObject)Instantiate(Resources.Load("FX/boom6"), transform.position, transform.rotation);
         }
 
         obj2.transform.localScale = transform.localScale;
@@ -66,7 +66,7 @@ public class RockThrow : MonoBehaviour
                 }
 
                 Debug.Log("rock hit player " + titanName);
-                object[] parameters = {v.normalized * 1000f + Vector3.up * 50f, false, myOwnerViewID, titanName, true};
+                object[] parameters = { v.normalized * 1000f + Vector3.up * 50f, false, myOwnerViewID, titanName, true };
                 hero.GetComponent<HERO>().photonView.RPC("netDie", PhotonTargets.All, parameters);
             }
         }
@@ -90,7 +90,7 @@ public class RockThrow : MonoBehaviour
         v = v1;
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
         {
-            object[] parameters = {v, oldP};
+            object[] parameters = { v, oldP };
             photonView.RPC("launchRPC", PhotonTargets.Others, parameters);
         }
     }

@@ -27,7 +27,6 @@ public class PunTeams : MonoBehaviour
         }
     }
 
-
     public void UpdateTeams()
     {
         var values = Enum.GetValues(typeof(Team));
@@ -43,7 +42,6 @@ public class PunTeams : MonoBehaviour
         }
     }
 
-
     public enum Team : byte
     {
         blue = 2,
@@ -51,4 +49,3 @@ public class PunTeams : MonoBehaviour
         red = 1
     }
 }
-

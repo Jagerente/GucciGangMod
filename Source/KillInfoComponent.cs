@@ -145,7 +145,7 @@ public class KillInfoComponent : MonoBehaviour
             }
             else
             {
-                float num = (int) (100f - Screen.height * 0.5f) + col * offset;
+                float num = (int)(100f - Screen.height * 0.5f) + col * offset;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0f, -num, 0f), Time.deltaTime * 10f);
             }
             if (timeElapsed > lifeTime + 0.5f)
@@ -155,4 +155,3 @@ public class KillInfoComponent : MonoBehaviour
         }
     }
 }
-

@@ -2,7 +2,9 @@
 {
     public class IntSetting : Setting<int>
     {
-        public IntSetting(string key, int defVal = 0) : base(key, defVal) { }
+        public IntSetting(string key, int defVal = 0) : base(key, defVal)
+        {
+        }
 
         public override void Load()
         {

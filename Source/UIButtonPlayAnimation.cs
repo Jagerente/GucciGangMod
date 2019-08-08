@@ -91,7 +91,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
                 UICamera.selectedObject = null;
             }
             var num = -(int)this.playDirection;
-            var playDirection = !forward ? (Direction) num : this.playDirection;
+            var playDirection = !forward ? (Direction)num : this.playDirection;
             var animation = ActiveAnimation.Play(target, clipName, playDirection, ifDisabledOnPlay, disableWhenFinished);
             if (animation != null)
             {
@@ -118,4 +118,3 @@ public class UIButtonPlayAnimation : MonoBehaviour
         mStarted = true;
     }
 }
-

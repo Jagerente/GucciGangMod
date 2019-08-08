@@ -12,4 +12,3 @@ public class BTN_SIGNOUT : MonoBehaviour
         logincomponent.GetComponent<LoginFengKAI>().logout();
     }
 }
-

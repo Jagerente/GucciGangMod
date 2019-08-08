@@ -18,4 +18,3 @@ public class CameraForLeftEye : MonoBehaviour
         cameraRightEye = rightEye.GetComponent<Camera>();
     }
 }
-

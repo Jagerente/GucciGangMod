@@ -104,10 +104,9 @@ public class UpdateManager : MonoBehaviour
         return 0;
     }
 
-
     private IEnumerator CoroutineFunction()
     {
-        return new CoroutineFunctionc__Iterator8 {f__this = this};
+        return new CoroutineFunctionc__Iterator8 { f__this = this };
     }
 
     private bool CoroutineUpdate()
@@ -218,13 +217,11 @@ public class UpdateManager : MonoBehaviour
         }
     }
 
-
     private sealed class CoroutineFunctionc__Iterator8 : IEnumerator, IDisposable, IEnumerator<object>
     {
         internal object current;
         internal int PC;
         internal UpdateManager f__this;
-
 
         public void Dispose()
         {
@@ -233,7 +230,7 @@ public class UpdateManager : MonoBehaviour
 
         public bool MoveNext()
         {
-            var num = (uint) PC;
+            var num = (uint)PC;
             PC = -1;
             switch (num)
             {
@@ -261,7 +258,6 @@ public class UpdateManager : MonoBehaviour
             Label_0061:
             return false;
         }
-
 
         public void Reset()
         {

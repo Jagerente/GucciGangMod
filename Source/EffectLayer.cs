@@ -182,7 +182,7 @@ public class EffectLayer : MonoBehaviour
             node.SetAffectorList(afts);
             if (RenderType == 0)
             {
-                node.SetType(SpriteWidth, SpriteHeight, (STYPE) SpriteType, (ORIPOINT) OriPoint, SpriteUVStretch, MaxFps);
+                node.SetType(SpriteWidth, SpriteHeight, (STYPE)SpriteType, (ORIPOINT)OriPoint, SpriteUVStretch, MaxFps);
             }
             else
             {
@@ -356,4 +356,3 @@ public class EffectLayer : MonoBehaviour
         LastClientPos = ClientTransform.position;
     }
 }
-

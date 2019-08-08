@@ -9,4 +9,3 @@ public class RoomOptions
     public bool isVisible = true;
     public int maxPlayers;
 }
-

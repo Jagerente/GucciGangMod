@@ -102,11 +102,11 @@ public class Bullet : MonoBehaviour
             var flag3 = false;
             if (nodes.Count > 1)
             {
-                flag3 = Physics.Linecast((Vector3) nodes[nodes.Count - 2], gameObject.transform.position, out hit, mask4.value);
+                flag3 = Physics.Linecast((Vector3)nodes[nodes.Count - 2], gameObject.transform.position, out hit, mask4.value);
             }
             else
             {
-                flag3 = Physics.Linecast((Vector3) nodes[nodes.Count - 1], gameObject.transform.position, out hit, mask4.value);
+                flag3 = Physics.Linecast((Vector3)nodes[nodes.Count - 1], gameObject.transform.position, out hit, mask4.value);
             }
             if (flag3)
             {
@@ -310,20 +310,20 @@ public class Bullet : MonoBehaviour
         phase = 2;
         leviMode = true;
         getSpiral(masterPosition, masterrotation);
-        var vector = masterPosition - (Vector3) spiralNodes[0];
-        lineRenderer.SetVertexCount(spiralNodes.Count - (int) (spiralcount * 0.5f));
+        var vector = masterPosition - (Vector3)spiralNodes[0];
+        lineRenderer.SetVertexCount(spiralNodes.Count - (int)(spiralcount * 0.5f));
         for (var i = 0; i <= spiralNodes.Count - 1 - spiralcount * 0.5f; i++)
         {
             if (spiralcount < 5)
             {
-                var position = (Vector3) spiralNodes[i] + vector;
+                var position = (Vector3)spiralNodes[i] + vector;
                 var num2 = spiralNodes.Count - 1 - spiralcount * 0.5f;
                 position = new Vector3(position.x, position.y * ((num2 - i) / num2) + newPosition.y * (i / num2), position.z);
                 lineRenderer.SetPosition(i, position);
             }
             else
             {
-                lineRenderer.SetPosition(i, (Vector3) spiralNodes[i] + vector);
+                lineRenderer.SetPosition(i, (Vector3)spiralNodes[i] + vector);
             }
         }
     }
@@ -374,11 +374,11 @@ public class Bullet : MonoBehaviour
         }
         else if (nodes.Count > 0)
         {
-            var vector = myRef.transform.position - (Vector3) nodes[0];
+            var vector = myRef.transform.position - (Vector3)nodes[0];
             lineRenderer.SetVertexCount(nodes.Count);
             for (var i = 0; i <= nodes.Count - 1; i++)
             {
-                lineRenderer.SetPosition(i, (Vector3) nodes[i] + vector * Mathf.Pow(0.75f, i));
+                lineRenderer.SetPosition(i, (Vector3)nodes[i] + vector * Mathf.Pow(0.75f, i));
             }
             if (nodes.Count > 1)
             {
@@ -404,7 +404,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        rope = (GameObject) Instantiate(Resources.Load("rope"));
+        rope = (GameObject)Instantiate(Resources.Load("rope"));
         lineRenderer = rope.GetComponent<LineRenderer>();
         GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addHook(this);
     }
@@ -449,7 +449,7 @@ public class Bullet : MonoBehaviour
                 var velocity = master.rigidbody.velocity;
                 var magnitude = velocity.magnitude;
                 var f = vector.magnitude;
-                var num3 = (int) ((f + magnitude) / 5f);
+                var num3 = (int)((f + magnitude) / 5f);
                 num3 = Mathf.Clamp(num3, 2, 6);
                 lineRenderer.SetVertexCount(num3);
                 lineRenderer.SetPosition(0, myRef.transform.position);
@@ -462,7 +462,7 @@ public class Bullet : MonoBehaviour
                     var num8 = (num6 - num7) / num6;
                     num8 = Mathf.Pow(num8, 0.5f);
                     var max = (num5 + magnitude) * 0.0015f * num8;
-                    lineRenderer.SetPosition(index, new Vector3(Random.Range(-max, max), Random.Range(-max, max), Random.Range(-max, max)) + myRef.transform.position + vector * (index / (float) num3) - Vector3.up * num5 * 0.05f * num8 - velocity * 0.001f * num8 * num5);
+                    lineRenderer.SetPosition(index, new Vector3(Random.Range(-max, max), Random.Range(-max, max), Random.Range(-max, max)) + myRef.transform.position + vector * (index / (float)num3) - Vector3.up * num5 * 0.05f * num8 - velocity * 0.001f * num8 * num5);
                     index++;
                 }
                 lineRenderer.SetPosition(num3 - 1, transform.position);
@@ -484,20 +484,20 @@ public class Bullet : MonoBehaviour
                 else
                 {
                     getSpiral(master.transform.position, master.transform.rotation.eulerAngles);
-                    var vector4 = myRef.transform.position - (Vector3) spiralNodes[0];
-                    lineRenderer.SetVertexCount(spiralNodes.Count - (int) (spiralcount * 0.5f));
+                    var vector4 = myRef.transform.position - (Vector3)spiralNodes[0];
+                    lineRenderer.SetVertexCount(spiralNodes.Count - (int)(spiralcount * 0.5f));
                     for (var i = 0; i <= spiralNodes.Count - 1 - spiralcount * 0.5f; i++)
                     {
                         if (spiralcount < 5)
                         {
-                            var position = (Vector3) spiralNodes[i] + vector4;
+                            var position = (Vector3)spiralNodes[i] + vector4;
                             var num11 = spiralNodes.Count - 1 - spiralcount * 0.5f;
                             position = new Vector3(position.x, position.y * ((num11 - i) / num11) + gameObject.transform.position.y * (i / num11), position.z);
                             lineRenderer.SetPosition(i, position);
                         }
                         else
                         {
-                            lineRenderer.SetPosition(i, (Vector3) spiralNodes[i] + vector4);
+                            lineRenderer.SetPosition(i, (Vector3)spiralNodes[i] + vector4);
                         }
                     }
                 }
@@ -507,11 +507,11 @@ public class Bullet : MonoBehaviour
                 var transform = gameObject.transform;
                 transform.position += velocity + velocity2 * Time.deltaTime;
                 nodes.Add(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z));
-                var vector10 = myRef.transform.position - (Vector3) nodes[0];
+                var vector10 = myRef.transform.position - (Vector3)nodes[0];
                 for (var j = 0; j <= nodes.Count - 1; j++)
                 {
                     lineRenderer.SetVertexCount(nodes.Count);
-                    lineRenderer.SetPosition(j, (Vector3) nodes[j] + vector10 * Mathf.Pow(0.5f, j));
+                    lineRenderer.SetPosition(j, (Vector3)nodes[j] + vector10 * Mathf.Pow(0.5f, j));
                 }
                 killTime2 += Time.deltaTime;
                 if (killTime2 > 0.8f)
@@ -527,4 +527,3 @@ public class Bullet : MonoBehaviour
         }
     }
 }
-

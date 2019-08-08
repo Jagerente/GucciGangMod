@@ -12,7 +12,7 @@ public class Region
         var none = CloudRegionCode.none;
         if (Enum.IsDefined(typeof(CloudRegionCode), codeAsString))
         {
-            none = (CloudRegionCode) (int) Enum.Parse(typeof(CloudRegionCode), codeAsString);
+            none = (CloudRegionCode)(int)Enum.Parse(typeof(CloudRegionCode), codeAsString);
         }
         return none;
     }
@@ -22,4 +22,3 @@ public class Region
         return string.Format("'{0}' \t{1}ms \t{2}", Code, Ping, HostAndPort);
     }
 }
-

@@ -50,7 +50,7 @@ public class PBitStream
     {
         var num = bitIndex / 8;
         var num2 = 7 - bitIndex % 8;
-        return (streamBytes[num] & (byte) (1 << num2)) > 0;
+        return (streamBytes[num] & (byte)(1 << num2)) > 0;
     }
 
     public bool GetNext()
@@ -98,4 +98,3 @@ public class PBitStream
 
     public int Position { get; set; }
 }
-

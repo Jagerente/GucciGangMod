@@ -7,15 +7,21 @@ public class BMFont
 {
     [HideInInspector, SerializeField]
     private int mBase;
+
     private Dictionary<int, BMGlyph> mDict = new Dictionary<int, BMGlyph>();
+
     [HideInInspector, SerializeField]
     private int mHeight;
+
     [HideInInspector, SerializeField]
     private List<BMGlyph> mSaved = new List<BMGlyph>();
+
     [HideInInspector, SerializeField]
     private int mSize;
+
     [HideInInspector, SerializeField]
     private string mSpriteName;
+
     [HideInInspector, SerializeField]
     private int mWidth;
 
@@ -46,7 +52,8 @@ public class BMFont
         }
         if (!mDict.TryGetValue(index, out glyph) && createIfMissing)
         {
-            glyph = new BMGlyph {
+            glyph = new BMGlyph
+            {
                 index = index
             };
             mSaved.Add(glyph);
@@ -146,4 +153,3 @@ public class BMFont
         }
     }
 }
-

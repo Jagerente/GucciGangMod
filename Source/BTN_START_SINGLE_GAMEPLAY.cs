@@ -23,4 +23,3 @@ public class BTN_START_SINGLE_GAMEPLAY : MonoBehaviour
         Application.LoadLevel(LevelInfo.getInfo(selection).mapName);
     }
 }
-

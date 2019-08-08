@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GGM.Config;
+using System;
 using System.Collections;
-using GGM.Config;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
@@ -41,7 +41,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
     public GameObject sweepSmokeObject;
     private float waitTime = 2f;
 
-    private void attack_sweep( string type = "")
+    private void attack_sweep(string type = "")
     {
         callTitanHAHA();
         state = "attack_sweep";
@@ -96,7 +96,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         }
     }
 
-    private void callTitan( bool special = false)
+    private void callTitan(bool special = false)
     {
         if (special || GameObject.FindGameObjectsWithTag("titan").Length <= 6)
         {
@@ -110,11 +110,11 @@ public class COLOSSAL_TITAN : MonoBehaviour
                     list.Add(obj2);
                 }
             }
-            var obj3 = (GameObject) list[Random.Range(0, list.Count)];
+            var obj3 = (GameObject)list[Random.Range(0, list.Count)];
             string[] strArray = { "TITAN_VER3.1" };
             if (FengGameManagerMKII.LAN)
             {
-                obj4 = (GameObject) Network.Instantiate(Resources.Load(strArray[Random.Range(0, strArray.Length)]), obj3.transform.position, obj3.transform.rotation, 0);
+                obj4 = (GameObject)Network.Instantiate(Resources.Load(strArray[Random.Range(0, strArray.Length)]), obj3.transform.position, obj3.transform.rotation, 0);
             }
             else
             {
@@ -131,7 +131,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 obj4.GetComponent<TITAN>().setRoute(route);
                 obj4.GetComponent<TITAN>().setAbnormalType(AbnormalType.TYPE_I, false);
                 obj4.GetComponent<TITAN>().activeRad = 0;
-                obj4.GetComponent<TITAN>().toCheckPoint((Vector3) obj4.GetComponent<TITAN>().checkPoints[0], 10f);
+                obj4.GetComponent<TITAN>().toCheckPoint((Vector3)obj4.GetComponent<TITAN>().checkPoints[0], 10f);
             }
             else
             {
@@ -169,7 +169,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
             }
             if (FengGameManagerMKII.LAN)
             {
-                var obj6 = (GameObject) Network.Instantiate(Resources.Load("FX/FXtitanSpawn"), obj4.transform.position, Quaternion.Euler(-90f, 0f, 0f), 0);
+                var obj6 = (GameObject)Network.Instantiate(Resources.Load("FX/FXtitanSpawn"), obj4.transform.position, Quaternion.Euler(-90f, 0f, 0f), 0);
                 obj6.transform.localScale = obj4.transform.localScale;
             }
             else
@@ -203,7 +203,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         }
         if (NapeArmor < NapeArmorTotal * 0.3)
         {
-            if (attackCount % (int) (num2 * 0.5f) == 0)
+            if (attackCount % (int)(num2 * 0.5f) == 0)
             {
                 callTitan(true);
             }
@@ -346,7 +346,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             if (healthLabel == null)
             {
-                healthLabel = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
+                healthLabel = (GameObject)Instantiate(Resources.Load("UI/LabelNameOverHead"));
                 healthLabel.name = "LabelNameOverHead";
                 healthLabel.transform.parent = transform;
                 healthLabel.transform.localPosition = new Vector3(0f, 430f, 0f);
@@ -359,7 +359,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 healthLabel.transform.localScale = new Vector3(a, a, a);
             }
             var str = "[7FFF00]";
-            var num2 = health / (float) maxHealth;
+            var num2 = health / (float)maxHealth;
             if (num2 < 0.75f && num2 >= 0.5f)
             {
                 str = "[f2b50f]";
@@ -378,9 +378,9 @@ public class COLOSSAL_TITAN : MonoBehaviour
 
     public void loadskin()
     {
-        if (PhotonNetwork.isMasterClient && (int) FengGameManagerMKII.settings[1] == 1)
+        if (PhotonNetwork.isMasterClient && (int)FengGameManagerMKII.settings[1] == 1)
         {
-            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[67]);
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string)FengGameManagerMKII.settings[67]);
         }
     }
 
@@ -408,16 +408,16 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         iteratorVariable1 = true;
                         iteratorVariable2.material.mainTexture = iteratorVariable4;
                         FengGameManagerMKII.linkHash[2].Add(url, iteratorVariable2.material);
-                        iteratorVariable2.material = (Material) FengGameManagerMKII.linkHash[2][url];
+                        iteratorVariable2.material = (Material)FengGameManagerMKII.linkHash[2][url];
                     }
                     else
                     {
-                        iteratorVariable2.material = (Material) FengGameManagerMKII.linkHash[2][url];
+                        iteratorVariable2.material = (Material)FengGameManagerMKII.linkHash[2][url];
                     }
                 }
                 else
                 {
-                    iteratorVariable2.material = (Material) FengGameManagerMKII.linkHash[2][url];
+                    iteratorVariable2.material = (Material)FengGameManagerMKII.linkHash[2][url];
                 }
             }
         }
@@ -430,7 +430,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
     [RPC]
     public void loadskinRPC(string url)
     {
-        if ((int) FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
+        if ((int)FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
         {
             StartCoroutine(loadskinE(url));
         }
@@ -671,7 +671,6 @@ public class COLOSSAL_TITAN : MonoBehaviour
         door_closed.SetActive(true);
     }
 
-
     [RPC]
     private void startNeckSteam()
     {
@@ -741,7 +740,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 }
                 else
                 {
-                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Colossal Titan's neck", speed);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string)view.owner.customProperties[PhotonPlayerProperty.name], true, "Colossal Titan's neck", speed);
                     object[] parameters = { speed };
                     GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
@@ -749,7 +748,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
             }
         }
     }
-    
+
     public void update()
     {
         healthTime -= Time.deltaTime;
@@ -870,7 +869,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         {
                             if (FengGameManagerMKII.LAN)
                             {
-                                obj4 = (GameObject) Network.Instantiate(Resources.Load("FX/boom1"), checkHitCapsuleStart.position, Quaternion.Euler(270f, 0f, 0f), 0);
+                                obj4 = (GameObject)Network.Instantiate(Resources.Load("FX/boom1"), checkHitCapsuleStart.position, Quaternion.Euler(270f, 0f, 0f), 0);
                             }
                             else
                             {
@@ -883,7 +882,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         }
                         else
                         {
-                            obj4 = (GameObject) Instantiate(Resources.Load("FX/boom1"), checkHitCapsuleStart.position, Quaternion.Euler(270f, 0f, 0f));
+                            obj4 = (GameObject)Instantiate(Resources.Load("FX/boom1"), checkHitCapsuleStart.position, Quaternion.Euler(270f, 0f, 0f));
                         }
                         obj4.transform.localScale = new Vector3(5f, 5f, 5f);
                     }
@@ -1102,6 +1101,4 @@ public class COLOSSAL_TITAN : MonoBehaviour
             healthLabel.transform.LookAt(2f * healthLabel.transform.position - Camera.main.transform.position);
         }
     }
-
 }
-

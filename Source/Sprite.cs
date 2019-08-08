@@ -359,4 +359,3 @@ public class Sprite
         Vertexsegment.Pool.UVChanged = true;
     }
 }
-

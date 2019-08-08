@@ -8,7 +8,7 @@ internal static class TeamExtensions
         object obj2;
         if (player.customProperties.TryGetValue("team", out obj2))
         {
-            return (PunTeams.Team) (byte) obj2;
+            return (PunTeams.Team)(byte)obj2;
         }
 
         return PunTeams.Team.none;
@@ -25,7 +25,7 @@ internal static class TeamExtensions
         if (PhotonNetwork.player.GetTeam() != team)
         {
             var propertiesToSet = new Hashtable();
-            propertiesToSet.Add("team", (byte) team);
+            propertiesToSet.Add("team", (byte)team);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
         }
     }

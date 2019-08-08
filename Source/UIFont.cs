@@ -7,33 +7,48 @@ public class UIFont : MonoBehaviour
 {
     [HideInInspector, SerializeField]
     private UIAtlas mAtlas;
+
     private static CharacterInfo mChar;
     private List<Color> mColors = new List<Color>();
+
     [HideInInspector, SerializeField]
     private Font mDynamicFont;
+
     [HideInInspector, SerializeField]
     private float mDynamicFontOffset;
+
     [SerializeField, HideInInspector]
     private int mDynamicFontSize = 16;
+
     [SerializeField, HideInInspector]
     private FontStyle mDynamicFontStyle;
+
     [SerializeField, HideInInspector]
     private BMFont mFont = new BMFont();
+
     [SerializeField, HideInInspector]
     private Material mMat;
+
     [SerializeField, HideInInspector]
     private float mPixelSize = 1f;
+
     private int mPMA = -1;
+
     [HideInInspector, SerializeField]
     private UIFont mReplacement;
+
     [HideInInspector, SerializeField]
     private int mSpacingX;
+
     [SerializeField, HideInInspector]
     private int mSpacingY;
+
     private UIAtlas.Sprite mSprite;
     private bool mSpriteSet;
+
     [SerializeField, HideInInspector]
     private List<BMSymbol> mSymbols = new List<BMSymbol>();
+
     [HideInInspector, SerializeField]
     private Rect mUVRect = new Rect(0f, 0f, 1f, 1f);
 
@@ -149,7 +164,7 @@ public class UIFont : MonoBehaviour
                 }
                 else if (mDynamicFont.GetCharacterInfo(index, out mChar, mDynamicFontSize, mDynamicFontStyle))
                 {
-                    num3 += mSpacingX + (int) mChar.width;
+                    num3 += mSpacingX + (int)mChar.width;
                 }
             }
             var num9 = size <= 0 ? 1f : 1f / size;
@@ -228,9 +243,9 @@ public class UIFont : MonoBehaviour
             }
             if (mDynamicFont.GetCharacterInfo(index, out mChar, mDynamicFontSize, mDynamicFontStyle))
             {
-                mSpacingX += (int) mChar.width;
+                mSpacingX += (int)mChar.width;
             }
-        Label_017F:
+            Label_017F:
             num3 -= mSpacingX;
         }
         if (num3 < 0)
@@ -255,7 +270,8 @@ public class UIFont : MonoBehaviour
         }
         if (createIfMissing)
         {
-            var item = new BMSymbol {
+            var item = new BMSymbol
+            {
                 sequence = sequence
             };
             mSymbols.Add(item);
@@ -520,7 +536,7 @@ public class UIFont : MonoBehaviour
                         vector4.y = mChar.uv.yMin;
                         vector5.x = mChar.uv.xMax;
                         vector5.y = mChar.uv.yMax;
-                        x += mSpacingX + (int) mChar.width;
+                        x += mSpacingX + (int)mChar.width;
                         for (var num18 = 0; num18 < 4; num18++)
                         {
                             cols.Add(color);
@@ -786,13 +802,13 @@ public class UIFont : MonoBehaviour
                 goto Label_03E7;
             }
             previousChar = ch;
-        Label_03C8:
+            Label_03C8:
             if (!isDynamic && symbol != null)
             {
                 offset += symbol.length - 1;
                 previousChar = 0;
             }
-        Label_03E7:
+            Label_03E7:
             offset++;
         }
         if (startIndex < offset)
@@ -1283,4 +1299,3 @@ public class UIFont : MonoBehaviour
         Colored
     }
 }
-

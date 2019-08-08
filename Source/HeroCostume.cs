@@ -651,8 +651,8 @@ public class HeroCostume
                 costume[i].setMesh2();
                 costume[i].setTexture();
             }
-            costumeOption = new[] { 
-                costume[0], costume[2], costume[3], costume[4], costume[5], costume[11], costume[13], costume[14], costume[15], costume[16], costume[17], costume[6], costume[7], costume[8], costume[10], costume[18], 
+            costumeOption = new[] {
+                costume[0], costume[2], costume[3], costume[4], costume[5], costume[11], costume[13], costume[14], costume[15], costume[16], costume[17], costume[6], costume[7], costume[8], costume[10], costume[18],
                 costume[19], costume[21], costume[22], costume[23], costume[24], costume[25], costume[27], costume[28], costume[30], costume[37]
              };
         }
@@ -1248,8 +1248,8 @@ public class HeroCostume
                 costume[i].setMesh2();
                 costume[i].setTexture();
             }
-            costumeOption = new[] { 
-                costume[0], costume[2], costume[3], costume[4], costume[5], costume[11], costume[13], costume[14], costume[15], costume[16], costume[17], costume[6], costume[7], costume[8], costume[10], costume[18], 
+            costumeOption = new[] {
+                costume[0], costume[2], costume[3], costume[4], costume[5], costume[11], costume[13], costume[14], costume[15], costume[16], costume[17], costume[6], costume[7], costume[8], costume[10], costume[18],
                 costume[19], costume[21], costume[22], costume[23], costume[24], costume[25], costume[27], costume[28], costume[30], costume[37], costume[38]
              };
         }
@@ -1581,4 +1581,3 @@ public class HeroCostume
         }
     }
 }
-

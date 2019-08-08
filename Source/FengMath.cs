@@ -15,4 +15,3 @@ public class FengMath
         return Quaternion.Euler(0f, y, 0f);
     }
 }
-

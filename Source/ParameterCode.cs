@@ -51,4 +51,3 @@
     public const byte WebRpcReturnCode = 207;
     public const byte WebRpcReturnMessage = 206;
 }
-

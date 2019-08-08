@@ -28,4 +28,3 @@ public class CheckHitGround : MonoBehaviour
         }
     }
 }
-

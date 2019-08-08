@@ -1,6 +1,7 @@
 ﻿using GGM.Caching;
 using UnityEngine;
 using static FengGameManagerMKII;
+
 namespace GGM.GUI.Pages
 {
     public class Pause : MonoBehaviour
@@ -58,7 +59,6 @@ namespace GGM.GUI.Pages
                     Application.LoadLevel("menu");
                 }
             }
-
         }
     }
 }

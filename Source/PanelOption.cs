@@ -50,4 +50,3 @@ public class PanelOption : MonoBehaviour
         showTxt();
     }
 }
-

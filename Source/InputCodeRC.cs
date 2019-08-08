@@ -55,4 +55,3 @@
     public static int titanSlam = 7;
     public static int titanWalk = 4;
 }
-

@@ -30,7 +30,7 @@ public class ShowInfoOfPlayer : MonoBehaviour
     {
         if (font == null)
         {
-            font = (Font) Resources.FindObjectsOfTypeAll(typeof(Font))[0];
+            font = (Font)Resources.FindObjectsOfTypeAll(typeof(Font))[0];
             Debug.LogWarning("No font defined. Found font: " + font);
         }
 

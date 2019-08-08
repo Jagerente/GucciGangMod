@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
+using System.Collections;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -64,7 +64,6 @@ public static class Extensions
         }
     }
 
-
     // Extensions
     public static void MergeStringKeys(this IDictionary target, IDictionary addHash)
     {
@@ -80,7 +79,6 @@ public static class Extensions
             }
         }
     }
-
 
     public static void StripKeysWithNullValues(this IDictionary original)
     {
@@ -113,10 +111,8 @@ public static class Extensions
         return hashtable;
     }
 
-
     public static string ToStringFull(this IDictionary origin)
     {
         return SupportClass.DictionaryToString(origin, false);
     }
 }
-

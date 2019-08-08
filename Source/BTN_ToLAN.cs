@@ -8,4 +8,3 @@ public class BTN_ToLAN : MonoBehaviour
         NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, true);
     }
 }
-

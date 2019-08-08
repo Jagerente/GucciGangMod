@@ -144,7 +144,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            cannonKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
+            cannonKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
         }
     }
 
@@ -162,7 +162,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            horseKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
+            horseKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
         }
     }
 
@@ -180,7 +180,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            humanKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
+            humanKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
         }
     }
 
@@ -198,7 +198,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            levelKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
+            levelKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
         }
     }
 
@@ -216,8 +216,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            titanKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
+            titanKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
         }
     }
 }
-

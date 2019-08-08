@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
+using System.Collections;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 
@@ -97,7 +97,6 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
         SP.StartCoroutine(SP.PingAvailableRegionsCoroutine(true));
     }
 
-    
     internal IEnumerator PingAvailableRegionsCoroutine(bool connectToBest)
     {
         yield break;
@@ -128,14 +127,14 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
             for (var flag = true; PhotonNetwork.isMessageQueueRunning && flag; flag = PhotonNetwork.networkingPeer.DispatchIncomingCommands())
             {
             }
-            var num = (int) (Time.realtimeSinceStartup * 1000f);
+            var num = (int)(Time.realtimeSinceStartup * 1000f);
             if (PhotonNetwork.isMessageQueueRunning && num > nextSendTickCountOnSerialize)
             {
                 PhotonNetwork.networkingPeer.RunViewUpdate();
                 nextSendTickCountOnSerialize = num + updateIntervalOnSerialize;
                 nextSendTickCount = 0;
             }
-            num = (int) (Time.realtimeSinceStartup * 1000f);
+            num = (int)(Time.realtimeSinceStartup * 1000f);
             if (num > nextSendTickCount)
             {
                 for (var flag2 = true; PhotonNetwork.isMessageQueueRunning && flag2; flag2 = PhotonNetwork.networkingPeer.SendOutgoingCommands())
@@ -170,4 +169,3 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
         }
     }
 }
-

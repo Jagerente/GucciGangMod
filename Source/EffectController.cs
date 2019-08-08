@@ -96,4 +96,3 @@ public class EffectController : MonoBehaviour
         EffectCache = ObjectCache.GetComponent<XffectCache>();
     }
 }
-

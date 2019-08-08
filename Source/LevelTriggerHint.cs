@@ -26,9 +26,9 @@ public class LevelTriggerHint : MonoBehaviour
             switch (myhint)
             {
                 case HintType.MOVE:
-                {
-                    string[] textArray2 =
                     {
+                        string[] textArray2 =
+                        {
                         "Hello soldier!\nWelcome to Attack On Titan Tribute Game!\n Press [F7D358]",
                         GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.up],
@@ -40,18 +40,18 @@ public class LevelTriggerHint : MonoBehaviour
                             .inputString[InputCode.right],
                         "[-] to Move."
                     };
-                    content = string.Concat(textArray2);
-                    break;
-                }
+                        content = string.Concat(textArray2);
+                        break;
+                    }
 
                 case HintType.TELE:
                     content = "Move to [82FA58]green warp point[-] to proceed.";
                     break;
 
                 case HintType.CAMA:
-                {
-                    string[] textArray3 =
                     {
+                        string[] textArray3 =
+                        {
                         "Press [F7D358]",
                         GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.camera],
@@ -60,9 +60,9 @@ public class LevelTriggerHint : MonoBehaviour
                             .inputString[InputCode.hideCursor],
                         "[-] to hide or show the cursor."
                     };
-                    content = string.Concat(textArray3);
-                    break;
-                }
+                        content = string.Concat(textArray3);
+                        break;
+                    }
 
                 case HintType.JUMP:
                     content = "Press [F7D358]" +
@@ -77,9 +77,9 @@ public class LevelTriggerHint : MonoBehaviour
                     break;
 
                 case HintType.HOOK:
-                {
-                    string[] textArray4 =
                     {
+                        string[] textArray4 =
+                        {
                         "Press and Hold[F7D358] ",
                         GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.leftRope],
@@ -88,14 +88,14 @@ public class LevelTriggerHint : MonoBehaviour
                             .inputString[InputCode.rightRope],
                         "[-] to launch your grapple.\nNow Try hooking to the [>3<] box. "
                     };
-                    content = string.Concat(textArray4);
-                    break;
-                }
+                        content = string.Concat(textArray4);
+                        break;
+                    }
 
                 case HintType.HOOK2:
-                {
-                    string[] textArray5 =
                     {
+                        string[] textArray5 =
+                        {
                         "Press and Hold[F7D358] ",
                         GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.bothRope],
@@ -104,9 +104,9 @@ public class LevelTriggerHint : MonoBehaviour
                             .inputString[InputCode.bothRope],
                         " to hook the blocks."
                     };
-                    content = string.Concat(textArray5);
-                    break;
-                }
+                        content = string.Concat(textArray5);
+                        break;
+                    }
 
                 case HintType.SUPPLY:
                     content = "Press [F7D358]" +
@@ -122,9 +122,9 @@ public class LevelTriggerHint : MonoBehaviour
                     break;
 
                 case HintType.ATTACK:
-                {
-                    string[] textArray1 =
                     {
+                        string[] textArray1 =
+                        {
                         "Press [F7D358]",
                         GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>()
                             .inputString[InputCode.attack0],
@@ -133,9 +133,9 @@ public class LevelTriggerHint : MonoBehaviour
                             .inputString[InputCode.attack1],
                         "[-] to use special attack.\n***You can only kill a titan by slashing his [FA5858]NAPE[-].***\n\n"
                     };
-                    content = string.Concat(textArray1);
-                    break;
-                }
+                        content = string.Concat(textArray1);
+                        break;
+                    }
             }
         }
     }

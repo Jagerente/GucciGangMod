@@ -38,10 +38,10 @@ public class UVAnimation
                 for (var j = 0; j < tileCount && num3 < animation.TotalCount; j++)
                 {
                     var zero = Vector2.zero;
-                    zero.x = animation.Frames[num3].Width / (float) width;
-                    zero.y = animation.Frames[num3].Height / (float) height;
-                    frames[num3].x = animation.Frames[num3].X / (float) width;
-                    frames[num3].y = 1f - animation.Frames[num3].Y / (float) height;
+                    zero.x = animation.Frames[num3].Width / (float)width;
+                    zero.y = animation.Frames[num3].Height / (float)height;
+                    frames[num3].x = animation.Frames[num3].X / (float)width;
+                    frames[num3].y = 1f - animation.Frames[num3].Y / (float)height;
                     UVDimensions[num3] = zero;
                     UVDimensions[num3].y = -UVDimensions[num3].y;
                     num3++;

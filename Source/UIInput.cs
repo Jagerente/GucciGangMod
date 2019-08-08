@@ -390,4 +390,3 @@ public class UIInput : MonoBehaviour
 
     public delegate char Validator(string currentText, char nextChar);
 }
-

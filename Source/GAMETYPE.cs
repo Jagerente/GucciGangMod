@@ -9,4 +9,3 @@ public enum GAMETYPE
     STOP,
     MULTIPLAYER
 }
-

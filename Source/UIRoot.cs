@@ -68,17 +68,17 @@ public class UIRoot : MonoBehaviour
         height = Mathf.Max(2, height);
         if (scalingStyle == Scaling.FixedSize)
         {
-            return manualHeight / (float) height;
+            return manualHeight / (float)height;
         }
 
         if (height < minimumHeight)
         {
-            return minimumHeight / (float) height;
+            return minimumHeight / (float)height;
         }
 
         if (height > maximumHeight)
         {
-            return maximumHeight / (float) height;
+            return maximumHeight / (float)height;
         }
 
         return 1f;

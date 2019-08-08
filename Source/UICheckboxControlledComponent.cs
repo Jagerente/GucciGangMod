@@ -30,7 +30,7 @@ public class UICheckboxControlledComponent : MonoBehaviour
         if (component != null)
         {
             mUsingDelegates = true;
-            component.onStateChange = (UICheckbox.OnStateChange) Delegate.Combine(component.onStateChange,
+            component.onStateChange = (UICheckbox.OnStateChange)Delegate.Combine(component.onStateChange,
                 new UICheckbox.OnStateChange(OnActivateDelegate));
         }
     }

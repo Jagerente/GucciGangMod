@@ -42,7 +42,6 @@ public class PlayIdleAnimations : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
         if (mNextBreak < Time.time)

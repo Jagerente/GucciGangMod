@@ -79,7 +79,7 @@ public class UIAtlas : MonoBehaviour
             num++;
         }
 
-        char[] separator = {' '};
+        char[] separator = { ' ' };
         var strArray = match.Split(separator, StringSplitOptions.RemoveEmptyEntries);
         for (var i = 0; i < strArray.Length; i++)
         {

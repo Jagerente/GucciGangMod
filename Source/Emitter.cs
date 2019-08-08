@@ -58,7 +58,7 @@ public class Emitter
         {
             return 0;
         }
-        var num2 = (int) (EmitterElapsedTime * Layer.EmitRate) - (Layer.ActiveENodes.Length - Layer.AvailableNodeCount);
+        var num2 = (int)(EmitterElapsedTime * Layer.EmitRate) - (Layer.ActiveENodes.Length - Layer.AvailableNodeCount);
         var availableNodeCount = 0;
         if (num2 > Layer.AvailableNodeCount)
         {
@@ -166,7 +166,7 @@ public class Emitter
             var vector4 = Layer.EmitPoint + Layer.ClientTransform.localRotation * Vector3.forward * Layer.LineLengthLeft;
             var vector5 = Layer.EmitPoint + Layer.ClientTransform.localRotation * Vector3.forward * Layer.LineLengthRight;
             var vector6 = vector5 - vector4;
-            var num4 = (node.Index + 1) / (float) Layer.MaxENodes;
+            var num4 = (node.Index + 1) / (float)Layer.MaxENodes;
             var num5 = vector6.magnitude * num4;
             zero = vector4 + vector6.normalized * num5;
             if (!Layer.SyncClient)
@@ -176,7 +176,7 @@ public class Emitter
         }
         else if (Layer.EmitType == 3)
         {
-            var num6 = (node.Index + 1) / (float) Layer.MaxENodes;
+            var num6 = (node.Index + 1) / (float)Layer.MaxENodes;
             var y = 360f * num6;
             var vector7 = Quaternion.Euler(0f, y, 0f) * (Vector3.right * Layer.Radius);
             zero = Quaternion.FromToRotation(Vector3.up, Layer.CircleDir) * vector7;
@@ -192,4 +192,3 @@ public class Emitter
         node.SetLocalPosition(zero);
     }
 }
-

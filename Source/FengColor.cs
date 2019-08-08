@@ -15,4 +15,3 @@ public class FengColor
     public static Color titanSkin2 = new Color(0.91f, 0.89f, 0.82f);
     public static Color titanSkin3 = new Color(0.89f, 0.81f, 0.76f);
 }
-

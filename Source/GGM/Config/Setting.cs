@@ -15,6 +15,7 @@
         }
 
         public abstract void Load();
+
         public abstract void Save();
 
         public void SetValue(T val)

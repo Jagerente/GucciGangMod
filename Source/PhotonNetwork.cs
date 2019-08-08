@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using GGM.Config;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -22,7 +22,7 @@ public static class PhotonNetwork
     private static Room offlineModeRoom;
     public static EventCallback OnEventCall;
     internal static readonly PhotonHandler photonMono;
-    public static ServerSettings PhotonServerSettings = (ServerSettings) Resources.Load("PhotonServerSettings", typeof(ServerSettings));
+    public static ServerSettings PhotonServerSettings = (ServerSettings)Resources.Load("PhotonServerSettings", typeof(ServerSettings));
     public static float precisionForFloatSynchronization = 0.01f;
     public static float precisionForQuaternionSynchronization = 1f;
     public static float precisionForVectorSynchronization = 9.9E-05f;
@@ -149,11 +149,11 @@ public static class PhotonNetwork
 
     public static bool ConnectToMaster(string masterServerAddress, int port, string appID, string gameVersion)
     {
-        if(networkingPeer.UsedProtocol == ConnectionProtocol.WebSocket)
+        if (networkingPeer.UsedProtocol == ConnectionProtocol.WebSocket)
         {
             masterServerAddress = "ws://" + masterServerAddress;
         }
-        else if(networkingPeer.UsedProtocol == ConnectionProtocol.WebSocketSecure)
+        else if (networkingPeer.UsedProtocol == ConnectionProtocol.WebSocketSecure)
         {
             masterServerAddress = "wss://" + masterServerAddress;
         }
@@ -243,7 +243,8 @@ public static class PhotonNetwork
     [Obsolete("Use overload with RoomOptions and TypedLobby parameters.")]
     public static bool CreateRoom(string roomName, bool isVisible, bool isOpen, int maxPlayers)
     {
-        var roomOptions = new RoomOptions {
+        var roomOptions = new RoomOptions
+        {
             isVisible = isVisible,
             isOpen = isOpen,
             maxPlayers = maxPlayers
@@ -254,7 +255,8 @@ public static class PhotonNetwork
     [Obsolete("Use overload with RoomOptions and TypedLobby parameters.")]
     public static bool CreateRoom(string roomName, bool isVisible, bool isOpen, int maxPlayers, Hashtable customRoomProperties, string[] propsToListInLobby)
     {
-        var roomOptions = new RoomOptions {
+        var roomOptions = new RoomOptions
+        {
             isVisible = isVisible,
             isOpen = isOpen,
             maxPlayers = maxPlayers,
@@ -382,7 +384,7 @@ public static class PhotonNetwork
             }
             else
             {
-                obj2 = (GameObject) Resources.Load(prefabName, typeof(GameObject));
+                obj2 = (GameObject)Resources.Load(prefabName, typeof(GameObject));
             }
             if (UsePrefabCache)
             {
@@ -423,7 +425,7 @@ public static class PhotonNetwork
         }
         if (!UsePrefabCache || !PrefabCache.TryGetValue(prefabName, out obj2))
         {
-            obj2 = (GameObject) Resources.Load(prefabName, typeof(GameObject));
+            obj2 = (GameObject)Resources.Load(prefabName, typeof(GameObject));
             if (UsePrefabCache)
             {
                 PrefabCache.Add(prefabName, obj2);
@@ -549,7 +551,7 @@ public static class PhotonNetwork
         target.MergeStringKeys(expectedCustomRoomProperties);
         if (expectedMaxPlayers > 0)
         {
-            target[(byte) 255] = expectedMaxPlayers;
+            target[(byte)255] = expectedMaxPlayers;
         }
         return networkingPeer.OpJoinRandomRoom(target, 0, null, matchingType, typedLobby, sqlLobbyFilter);
     }
@@ -784,7 +786,7 @@ public static class PhotonNetwork
             customProperties = new Hashtable();
             foreach (var obj2 in player.customProperties.Keys)
             {
-                customProperties[(string) obj2] = null;
+                customProperties[(string)obj2] = null;
             }
         }
         if (room != null && room.isLocalClientInside)
@@ -1404,4 +1406,3 @@ public static class PhotonNetwork
 
     public delegate void EventCallback(byte eventCode, object content, int senderId);
 }
-

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using GGM;
+﻿using GGM;
 using GGM.Config;
 using GGM.GUI.Pages;
+using System.Collections;
 using UnityEngine;
 
 public class UIMainReferences : MonoBehaviour

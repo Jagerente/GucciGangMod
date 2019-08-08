@@ -98,9 +98,9 @@ public class PhotonPlayer
     {
         if (properties != null && properties.Count != 0 && !customProperties.Equals(properties))
         {
-            if (properties.ContainsKey((byte) 255))
+            if (properties.ContainsKey((byte)255))
             {
-                nameField = (string) properties[(byte) 255];
+                nameField = (string)properties[(byte)255];
             }
             customProperties.MergeStringKeys(properties);
             customProperties.StripKeysWithNullValues();
@@ -121,7 +121,6 @@ public class PhotonPlayer
 
     public void SetCustomProperties(Hashtable propertiesToSet)
     {
-        
         if (propertiesToSet != null)
         {
             customProperties.MergeStringKeys(propertiesToSet);
@@ -156,7 +155,7 @@ public class PhotonPlayer
         {
             var target = new Hashtable();
             target.Merge(customProperties);
-            target[(byte) 255] = name;
+            target[(byte)255] = name;
             return target;
         }
     }
@@ -213,4 +212,3 @@ public class PhotonPlayer
         }
     }
 }
-

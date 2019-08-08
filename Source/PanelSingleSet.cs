@@ -45,4 +45,3 @@ public class PanelSingleSet : MonoBehaviour
         showTxt();
     }
 }
-

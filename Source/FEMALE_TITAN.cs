@@ -1,18 +1,17 @@
-﻿using System;
+﻿using GGM.Config;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using GGM.Config;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 
 public class FEMALE_TITAN : MonoBehaviour
 {
-    
     private static Dictionary<string, int> f__switchmap1;
-    
+
     private static Dictionary<string, int> f__switchmap2;
-    
+
     private static Dictionary<string, int> f__switchmap3;
     private Vector3 abnorma_jump_bite_horizon_v;
     public int AnkleLHP = 200;
@@ -434,7 +433,7 @@ public class FEMALE_TITAN : MonoBehaviour
         }
         if (list.Count > 0)
         {
-            str = (string) list[Random.Range(0, list.Count)];
+            str = (string)list[Random.Range(0, list.Count)];
         }
         else if (Random.Range(0, 100) < 10)
         {
@@ -976,7 +975,7 @@ public class FEMALE_TITAN : MonoBehaviour
                     {
                         getDown();
                     }
-                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string)view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
                     object[] parameters = { dmg };
                     GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
@@ -1016,7 +1015,7 @@ public class FEMALE_TITAN : MonoBehaviour
                     {
                         getDown();
                     }
-                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string)view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's ankle", dmg);
                     object[] parameters = { dmg };
                     GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
@@ -1054,7 +1053,7 @@ public class FEMALE_TITAN : MonoBehaviour
         }
     }
 
-    private void idle( float sbtime = 0f)
+    private void idle(float sbtime = 0f)
     {
         this.sbtime = sbtime;
         this.sbtime = Mathf.Max(0.5f, this.sbtime);
@@ -1124,7 +1123,7 @@ public class FEMALE_TITAN : MonoBehaviour
         {
             if (healthLabel == null)
             {
-                healthLabel = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
+                healthLabel = (GameObject)Instantiate(Resources.Load("UI/LabelNameOverHead"));
                 healthLabel.name = "LabelNameOverHead";
                 healthLabel.transform.parent = transform;
                 healthLabel.transform.localPosition = new Vector3(0f, 52f, 0f);
@@ -1137,7 +1136,7 @@ public class FEMALE_TITAN : MonoBehaviour
                 healthLabel.transform.localScale = new Vector3(a, a, a);
             }
             var str = "[7FFF00]";
-            var num2 = health / (float) maxHealth;
+            var num2 = health / (float)maxHealth;
             if (num2 < 0.75f && num2 >= 0.5f)
             {
                 str = "[f2b50f]";
@@ -1153,7 +1152,7 @@ public class FEMALE_TITAN : MonoBehaviour
             healthLabel.GetComponent<UILabel>().text = str + Convert.ToString(health);
         }
     }
-   
+
     public void lateUpdate()
     {
         if (!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
@@ -1182,9 +1181,9 @@ public class FEMALE_TITAN : MonoBehaviour
 
     public void loadskin()
     {
-        if ((int) FengGameManagerMKII.settings[1] == 1)
+        if ((int)FengGameManagerMKII.settings[1] == 1)
         {
-            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[66]);
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string)FengGameManagerMKII.settings[66]);
         }
     }
 
@@ -1210,16 +1209,16 @@ public class FEMALE_TITAN : MonoBehaviour
                     iteratorVariable1 = true;
                     iteratorVariable4.material.mainTexture = iteratorVariable6;
                     FengGameManagerMKII.linkHash[2].Add(url, iteratorVariable4.material);
-                    iteratorVariable4.material = (Material) FengGameManagerMKII.linkHash[2][url];
+                    iteratorVariable4.material = (Material)FengGameManagerMKII.linkHash[2][url];
                 }
                 else
                 {
-                    iteratorVariable4.material = (Material) FengGameManagerMKII.linkHash[2][url];
+                    iteratorVariable4.material = (Material)FengGameManagerMKII.linkHash[2][url];
                 }
             }
             else
             {
-                iteratorVariable4.material = (Material) FengGameManagerMKII.linkHash[2][url];
+                iteratorVariable4.material = (Material)FengGameManagerMKII.linkHash[2][url];
             }
         }
         if (iteratorVariable1)
@@ -1231,7 +1230,7 @@ public class FEMALE_TITAN : MonoBehaviour
     [RPC]
     public void loadskinRPC(string url)
     {
-        if ((int) FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
+        if ((int)FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
         {
             StartCoroutine(loadskinE(url));
         }
@@ -1355,6 +1354,7 @@ public class FEMALE_TITAN : MonoBehaviour
         }
         hasspawn = true;
     }
+
     private void startMain()
     {
         GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addFT(this);
@@ -1419,7 +1419,6 @@ public class FEMALE_TITAN : MonoBehaviour
         animation["legHurt_getup"].speed = 1f;
     }
 
-
     [RPC]
     public void titanGetHit(int viewID, int speed)
     {
@@ -1454,7 +1453,7 @@ public class FEMALE_TITAN : MonoBehaviour
                 }
                 else
                 {
-                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string) view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's neck", speed);
+                    GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().sendKillInfo(false, (string)view.owner.customProperties[PhotonPlayerProperty.name], true, "Female Titan's neck", speed);
                     object[] parameters = { speed };
                     GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
@@ -1513,7 +1512,7 @@ public class FEMALE_TITAN : MonoBehaviour
                     hasDieSteam = true;
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                     {
-                        var obj3 = (GameObject) Instantiate(Resources.Load("FX/FXtitanDie1"));
+                        var obj3 = (GameObject)Instantiate(Resources.Load("FX/FXtitanDie1"));
                         obj3.transform.position = transform.Find("Amarture/Core/Controller_Body/hip").position;
                         obj3.transform.localScale = transform.localScale;
                     }
@@ -1526,7 +1525,7 @@ public class FEMALE_TITAN : MonoBehaviour
                 {
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                     {
-                        var obj5 = (GameObject) Instantiate(Resources.Load("FX/FXtitanDie"));
+                        var obj5 = (GameObject)Instantiate(Resources.Load("FX/FXtitanDie"));
                         obj5.transform.position = transform.Find("Amarture/Core/Controller_Body/hip").position;
                         obj5.transform.localScale = transform.localScale;
                         Destroy(gameObject);
@@ -1634,7 +1633,7 @@ public class FEMALE_TITAN : MonoBehaviour
                         }
                         else
                         {
-                            obj7 = (GameObject) Instantiate(Resources.Load("FX/" + fxName), fxPosition, fxRotation);
+                            obj7 = (GameObject)Instantiate(Resources.Load("FX/" + fxName), fxPosition, fxRotation);
                         }
                         obj7.transform.localScale = transform.localScale;
                         var b = 1f - Vector3.Distance(currentCamera.transform.position, obj7.transform.position) * 0.05f;
@@ -1829,6 +1828,4 @@ public class FEMALE_TITAN : MonoBehaviour
             healthLabel.transform.LookAt(2f * healthLabel.transform.position - Camera.main.transform.position);
         }
     }
-
 }
-

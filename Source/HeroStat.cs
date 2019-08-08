@@ -92,7 +92,8 @@ public class HeroStat
         SASHA.GAS = 100;
         SASHA.BLA = 100;
         SASHA.ACL = 115;
-        var stat = new HeroStat {
+        var stat = new HeroStat
+        {
             skillId = "petra",
             SPD = 100,
             GAS = 100,
@@ -119,4 +120,3 @@ public class HeroStat
         stats.Add("AHSS", stat2);
     }
 }
-

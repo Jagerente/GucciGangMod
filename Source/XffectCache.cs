@@ -43,7 +43,6 @@ public class XffectCache : MonoBehaviour
         }
     }
 
-
     public Transform GetObject(string name)
     {
         var arrayList = ObjectDic[name];
@@ -64,7 +63,6 @@ public class XffectCache : MonoBehaviour
 
         return AddObject(name);
     }
-
 
     public ArrayList GetObjectCache(string name)
     {

@@ -14,4 +14,3 @@ public class Btn_to_Main_from_CC : MonoBehaviour
         Application.LoadLevel("menu");
     }
 }
-

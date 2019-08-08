@@ -1,6 +1,4 @@
-﻿using System;
-using GGM.Config;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChangeQuality : MonoBehaviour
 {
@@ -31,4 +29,3 @@ public class ChangeQuality : MonoBehaviour
     {
     }
 }
-

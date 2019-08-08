@@ -56,7 +56,7 @@ public class ColorAffector : Affector
             }
             else
             {
-                var index = (int) ((ColorArr.Length - 1) * (ElapsedTime / GradualLen));
+                var index = (int)((ColorArr.Length - 1) * (ElapsedTime / GradualLen));
                 if (index == ColorArr.Length - 1)
                 {
                     index--;
@@ -69,4 +69,3 @@ public class ColorAffector : Affector
         }
     }
 }
-

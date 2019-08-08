@@ -9,4 +9,3 @@ public class BTN_LOAD_CC : MonoBehaviour
         manager.GetComponent<CustomCharacterManager>().LoadData();
     }
 }
-
