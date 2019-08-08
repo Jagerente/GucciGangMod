@@ -67,10 +67,10 @@ namespace GGM.GUI
 
         internal const int LabelFontSize = 14;
         internal const float LabelWidth = leftElementWidth;
-        internal const float LabelHeight = 21f;
+        internal const float LabelHeight = 25f;
 
         internal const float ButtonWidth = rightElementWidth;
-        internal const float ButtonHeight = 24f;
+        internal const float ButtonHeight = 22f;
 
         internal const float TextFieldWidth = rightElementWidth;
         internal const float TextFieldHeight = 21f;

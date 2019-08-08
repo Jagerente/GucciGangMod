@@ -147,6 +147,12 @@ public class FengGameManagerMKII : MonoBehaviour
     public float updateTime;
     public int wave = 1;
 
+    public static bool is_feed = false;
+    public static int feed_number = 0;
+    public static float deltaTimer2 = 0f;
+    public static float deltaTimer = 8f;
+    public static int highest_feed = 0;
+
     public void addCamera(IN_GAME_MAIN_CAMERA c)
     {
         mainCamera = c;
@@ -255,7 +261,7 @@ public class FengGameManagerMKII : MonoBehaviour
         }
 
         content = InRoomChat.ChatFormatting(
-            $"[{Convert.ToString(info.sender.ID)}]",
+            $"[{Convert.ToString(info.sender.ID)}] ",
             Settings.ChatMinorColorSetting,
             Settings.ChatMinorFormatSettings[0],
             Settings.ChatMinorFormatSettings[1]) +
@@ -1550,10 +1556,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     }
 
                     ShowHUDInfoTopRight(content);
-                    var str4 = IN_GAME_MAIN_CAMERA.difficulty >= 0
-                        ? IN_GAME_MAIN_CAMERA.difficulty != 0 ? IN_GAME_MAIN_CAMERA.difficulty != 1 ? "Abnormal" :
-                        "Hard" : "Normal"
-                        : "Trainning";
+                    var str4 = IN_GAME_MAIN_CAMERA.difficulty >= 0 ? IN_GAME_MAIN_CAMERA.difficulty != 0 ? IN_GAME_MAIN_CAMERA.difficulty != 1 ? "Abnormal" : "Hard" : "Normal" : "Trainning";
                     if (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.CAGE_FIGHT)
                     {
                         ShowHUDInfoTopRightMAPNAME(string.Concat((int)roundTime, "s\n", level, " : ", str4));
@@ -1561,6 +1564,11 @@ public class FengGameManagerMKII : MonoBehaviour
                     else
                     {
                         ShowHUDInfoTopRightMAPNAME("\n" + level + " : " + str4);
+                    }
+
+                    if (Settings.DamageFeedUISetting)
+                    {
+                        ShowHUDInfoTopCenterADD(string.Concat("\nDamage Feed: ", FengGameManagerMKII.feed_number, "  Highest Feed: ", FengGameManagerMKII.highest_feed));
                     }
                     ShowHUDInfoTopRightMAPNAME($"\nFPS [{Settings.ChatMinorColorSetting}]{FPS.FPS}[-]");
 
@@ -5324,7 +5332,6 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
             GGM.Discord.RichPresence.UpdateStatus();
-            StartCoroutine(reloadSky());
         }
 
         if ((Application.loadedLevelName.Contains("Forest") || Application.loadedLevelName.Contains("City")) &&
@@ -8289,7 +8296,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void ShowHUDInfoTopCenterADD(string content)
     {
-        Labels.TopCenter = content.ToHTML();
+        Labels.TopCenter += content.ToHTML();
     }
 
     public void ShowHUDInfoTopLeft(string content)
@@ -9433,49 +9440,74 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         FPS.Update();
         Settings.Update();
-        Labels.NetworkStatus = PhotonNetwork.connectionState != ConnectionState.Disconnected ? PhotonNetwork.connectionState.ToString() + (PhotonNetwork.connected ? " ping: " + PhotonNetwork.GetPing() : "") : string.Empty;
-        if (gameStart)
+        Labels.NetworkStatus = PhotonNetwork.connectionState != ConnectionState.Disconnected
+            ? PhotonNetwork.connectionState.ToString() +
+              (PhotonNetwork.connected ? " ping: " + PhotonNetwork.GetPing() : "")
+            : string.Empty;
+        if (Settings.DamageFeedUISetting)
         {
-            foreach (HERO hERO in heroes)
+            deltaTimer2 += Time.deltaTime;
+            if (deltaTimer2 > deltaTimer)
             {
-                hERO.update();
+                bool flag7 = feed_number > highest_feed && (double)RCSettings.sizeUpper <= 3.0;
+                if (flag7)
+                {
+                    highest_feed = feed_number;
+                }
+
+                feed_number = 0;
+                FengGameManagerMKII.deltaTimer2 = 0f;
+                is_feed = false;
             }
 
-            foreach (Bullet bullet in hooks)
+            if (gameStart)
             {
-                bullet.update();
-            }
+                foreach (HERO hERO in heroes)
+                {
+                    hERO.update();
+                }
 
-            if (mainCamera != null)
-            {
-                mainCamera.snapShotUpdate();
-            }
+                foreach (Bullet bullet in hooks)
+                {
+                    bullet.update();
+                }
 
-            foreach (TITAN_EREN tITAN_EREN in eT)
-            {
-                tITAN_EREN.update();
-            }
+                if (mainCamera != null)
+                {
+                    mainCamera.snapShotUpdate();
+                }
 
-            foreach (TITAN tITAN in titans)
-            {
-                tITAN.update();
-            }
+                foreach (TITAN_EREN tITAN_EREN in eT)
+                {
+                    tITAN_EREN.update();
+                }
 
-            foreach (FEMALE_TITAN fEMALE_TITAN in fT)
-            {
-                fEMALE_TITAN.update();
-            }
+                foreach (TITAN tITAN in titans)
+                {
+                    tITAN.update();
+                }
 
-            foreach (COLOSSAL_TITAN cOLOSSAL_TITAN in cT)
-            {
-                cOLOSSAL_TITAN.update();
-            }
+                foreach (FEMALE_TITAN fEMALE_TITAN in fT)
+                {
+                    fEMALE_TITAN.update();
+                }
 
-            if (mainCamera != null)
-            {
-                mainCamera.update();
+                foreach (COLOSSAL_TITAN cOLOSSAL_TITAN in cT)
+                {
+                    cOLOSSAL_TITAN.update();
+                }
+
+                if (mainCamera != null)
+                {
+                    mainCamera.update();
+                }
             }
         }
+    }
+
+    private int add_number(int dmg)
+    {
+        return FengGameManagerMKII.feed_number += dmg;
     }
 
     [RPC]
@@ -9539,6 +9571,14 @@ public class FengGameManagerMKII : MonoBehaviour
                 Settings.ChatMajorFormatSettings[0],
                 Settings.ChatMajorFormatSettings[1]);
             InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
+        }
+        if (killer.Equals(RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name])))
+        {
+            if (!is_feed && Settings.DamageFeedUISetting)
+            {
+                is_feed = true;
+            }
+            this.add_number(dmg);
         }
     }
 

@@ -89,77 +89,85 @@ namespace GGM.GUI.Pages
         {
             UnityEngine.GUI.Box(new Rect(Screen.width / 2f - (BoxWidth + 10f) / 2f, Screen.height / 2f - (BoxHeight + 10f) / 2f, BoxWidth + 10f, BoxHeight + 10f), ColorCache.Textures[ColorCache.PurpleMunsell]);
             GUILayout.BeginArea(new Rect(Screen.width / 2f - BoxWidth / 2f, Screen.height / 2f - BoxHeight / 2f, BoxWidth, BoxHeight));
-
-            GUILayout.BeginHorizontal();
-            GUILayout.BeginVertical();
-
-            Label("Map", LabelType.Header, width: BoxWidth * Proportion[0] - 15f);
-            Grid(string.Empty, ref map, MapStr, false, 1, BoxWidth * Proportion[0] - 15f);
-
-            UnityEngine.GUI.DrawTexture(new Rect(4f, ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight, BoxWidth * Proportion[0] - 15f, 158f), ColorCache.Textures[ColorCache.Black]);
-            UnityEngine.GUI.DrawTexture(new Rect(4f + 1f, ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight + 1f, BoxWidth * Proportion[0] - 15f - 2f, 158f - 2f), GetImage());
-
-            GUILayout.EndVertical();
-
-            GUILayout.BeginVertical();
-
-            Label("Camera Type", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
-            Grid(string.Empty, ref camera, CameraStr, false, 1, BoxWidth * Proportion[1] - 5f);
-            Label("Daytime", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
-            Grid(string.Empty, ref daytime, DaytimeStr, false, 1, BoxWidth * Proportion[1] - 5f);
-            Label("Difficulty", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
-            Grid(string.Empty, ref difficulty, difficultyStr, false, 1, BoxWidth * Proportion[1] - 5f);
-
-            GUILayout.EndVertical();
-
-            GUILayout.BeginVertical();
-
-            Label("Character", LabelType.Header, width: BoxWidth * Proportion[2] - 12.5f);
-            Grid(string.Empty, ref costume, CostumeStr, width: BoxWidth * Proportion[2] - 12.5f);
-            Grid(string.Empty, ref character, CharacterStr, false, 1, BoxWidth * Proportion[2] - 12.5f);
-
-            GUILayout.EndVertical();
-
-            GUILayout.EndHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Start", GUILayout.Width(120f), GUILayout.Height(35f)))
             {
-                Save();
-                IN_GAME_MAIN_CAMERA.cameraMode = (CAMERA_TYPE)camera;
-                CheckBoxCostume.costumeSet = costume + 1;
-                IN_GAME_MAIN_CAMERA.difficulty = difficulty;
-                IN_GAME_MAIN_CAMERA.dayLight = (DayLight)daytime;
-
-                IN_GAME_MAIN_CAMERA.singleCharacter = CharacterStr[character].ToUpper();
-                if (IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("SET") ||
-                    IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("AHSS"))
+                GUILayout.BeginHorizontal();
                 {
-                    CheckBoxCostume.costumeSet = 1;
-                }
+                    GUILayout.BeginVertical();
+                    {
+                        Label("Map", LabelType.Header, width: BoxWidth * Proportion[0] - 15f);
+                        Grid(string.Empty, ref map, MapStr, false, 1, BoxWidth * Proportion[0] - 15f);
 
-                IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.SINGLE;
-                if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
+                        UnityEngine.GUI.DrawTexture(
+                            new Rect(4f, ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight,
+                                BoxWidth * Proportion[0] - 15f, 158f), ColorCache.Textures[ColorCache.Black]);
+                        UnityEngine.GUI.DrawTexture(
+                            new Rect(4f + 1f,
+                                ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight + 1f,
+                                BoxWidth * Proportion[0] - 15f - 2f, 158f - 2f), GetImage());
+                    }
+                    GUILayout.EndVertical();
+
+                    GUILayout.BeginVertical();
+                    {
+                        Label("Camera Type", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
+                        Grid(string.Empty, ref camera, CameraStr, false, 1, BoxWidth * Proportion[1] - 5f);
+                        Label("Daytime", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
+                        Grid(string.Empty, ref daytime, DaytimeStr, false, 1, BoxWidth * Proportion[1] - 5f);
+                        Label("Difficulty", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
+                        Grid(string.Empty, ref difficulty, difficultyStr, false, 1, BoxWidth * Proportion[1] - 5f);
+                    }
+                    GUILayout.EndVertical();
+
+                    GUILayout.BeginVertical();
+                    {
+                        Label("Character", LabelType.Header, width: BoxWidth * Proportion[2] - 12.5f);
+                        Grid(string.Empty, ref costume, CostumeStr, width: BoxWidth * Proportion[2] - 12.5f);
+                        Grid(string.Empty, ref character, CharacterStr, false, 1, BoxWidth * Proportion[2] - 12.5f);
+                    }
+                    GUILayout.EndVertical();
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.FlexibleSpace();
+
+                GUILayout.BeginHorizontal();
                 {
-                    Screen.lockCursor = true;
+                    if (GUILayout.Button("Start", GUILayout.Width(120f), GUILayout.Height(35f)))
+                    {
+                        Save();
+                        IN_GAME_MAIN_CAMERA.cameraMode = (CAMERA_TYPE)camera;
+                        CheckBoxCostume.costumeSet = costume + 1;
+                        IN_GAME_MAIN_CAMERA.difficulty = difficulty;
+                        IN_GAME_MAIN_CAMERA.dayLight = (DayLight)daytime;
+
+                        IN_GAME_MAIN_CAMERA.singleCharacter = CharacterStr[character].ToUpper();
+                        if (IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("SET") ||
+                            IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("AHSS"))
+                        {
+                            CheckBoxCostume.costumeSet = 1;
+                        }
+
+                        IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.SINGLE;
+                        if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
+                        {
+                            Screen.lockCursor = true;
+                        }
+
+                        Screen.showCursor = false;
+                        FengGameManagerMKII.level = MapStr[map];
+                        Application.LoadLevel(MapNameStr[map]);
+                        GetInstance<Single>().Disable();
+                    }
+
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
+                    {
+                        Save();
+                        GetInstance<Single>().Disable();
+                        NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, true);
+                    }
                 }
-
-                Screen.showCursor = false;
-                FengGameManagerMKII.level = MapStr[map];
-                Application.LoadLevel(MapNameStr[map]);
-                GetInstance<Single>().Disable();
+                GUILayout.EndHorizontal();
             }
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
-            {
-                Save();
-                GetInstance<Single>().Disable();
-                NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, true);
-            }
-
-            GUILayout.EndHorizontal();
-
             GUILayout.EndArea();
         }
 
