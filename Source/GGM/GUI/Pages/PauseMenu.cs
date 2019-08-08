@@ -1615,7 +1615,7 @@ namespace GGM.GUI.Pages
                         Label("Ambient");
                         LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(
                             LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2,
-                            GUILayout.Width(GridWidth));
+                            GUILayout.Width(ButtonWidth));
                         GUILayout.EndHorizontal();
                         if (LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] == 1)
                         {
@@ -1631,7 +1631,7 @@ namespace GGM.GUI.Pages
                         Label("Fog");
                         LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(
                             LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2,
-                            GUILayout.Width(GridWidth));
+                            GUILayout.Width(ButtonWidth));
                         GUILayout.EndHorizontal();
                         if (LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting] == 1)
                         {
@@ -1659,7 +1659,7 @@ namespace GGM.GUI.Pages
                         Label("Light");
                         LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(
                             LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2,
-                            GUILayout.Width(GridWidth));
+                            GUILayout.Width(ButtonWidth));
                         GUILayout.EndHorizontal();
                         if (LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting] == 1)
                         {
@@ -1675,7 +1675,7 @@ namespace GGM.GUI.Pages
                         Label("Particles");
                         LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(
                             LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2,
-                            GUILayout.Width(GridWidth));
+                            GUILayout.Width(ButtonWidth));
                         GUILayout.EndHorizontal();
                         if (LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting] == 1)
                         {
@@ -1861,7 +1861,7 @@ namespace GGM.GUI.Pages
                         Label("Ambient");
                         LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(
                             LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2,
-                            GUILayout.Width(GridWidth));
+                            GUILayout.Width(ButtonWidth));
                         GUILayout.EndHorizontal();
                         if (LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] == 1)
                         {
@@ -1877,7 +1877,7 @@ namespace GGM.GUI.Pages
                         Label("Fog");
                         LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(
                             LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2,
-                            GUILayout.Width(GridWidth));
+                            GUILayout.Width(ButtonWidth));
                         GUILayout.EndHorizontal();
                         if (LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting] == 1)
                         {
@@ -1904,7 +1904,7 @@ namespace GGM.GUI.Pages
                         Label("Light");
                         LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(
                             LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2,
-                            GUILayout.Width(GridWidth));
+                            GUILayout.Width(ButtonWidth));
                         GUILayout.EndHorizontal();
                         if (LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting] == 1)
                         {
@@ -1920,7 +1920,7 @@ namespace GGM.GUI.Pages
                         Label("Particles");
                         LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(
                             LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2,
-                            GUILayout.Width(GridWidth));
+                            GUILayout.Width(ButtonWidth));
                         GUILayout.EndHorizontal();
                         if (LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting] == 1)
                         {
