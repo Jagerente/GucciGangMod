@@ -9,7 +9,7 @@ namespace GGM.GUI.Pages
     {
         private const float BoxWidth = 880;
 
-        private const float BoxHeight = 425;
+        private const float BoxHeight = 450;
 
         private static readonly float[] Proportion = new[] { 0.4f, 0.25f, 0.35f };
 
@@ -59,7 +59,7 @@ namespace GGM.GUI.Pages
 
         private static GUIStyle box;
 
-        private void OnEnable() 
+        private void OnEnable()
         {
             if (PlayerPrefs.HasKey("GGM_SingleMap"))
                 map = PlayerPrefs.GetInt("GGM_SingleMap");
@@ -87,33 +87,28 @@ namespace GGM.GUI.Pages
 
         private void OnGUI()
         {
-            var txt = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-            txt.SetPixel(0, 0, new Color(ColorCache.DarkScarlet.Value.r, ColorCache.DarkScarlet.Value.g, ColorCache.DarkScarlet.Value.b, 0.5f));
-            txt.Apply();
-            box = new GUIStyle { normal = { background = txt } };
-
-            UnityEngine.GUI.Box(new Rect(Screen.width / 2f - (BoxWidth + 10f) / 2f, Screen.height / 2f - (BoxHeight + 10f) / 2f, BoxWidth + 10f, BoxHeight + 10f), ColorCache.Textures[ColorCache.PurpleMunsell], box);
+            UnityEngine.GUI.Box(new Rect(Screen.width / 2f - (BoxWidth + 10f) / 2f, Screen.height / 2f - (BoxHeight + 10f) / 2f, BoxWidth + 10f, BoxHeight + 10f), ColorCache.Textures[ColorCache.PurpleMunsell]);
             GUILayout.BeginArea(new Rect(Screen.width / 2f - BoxWidth / 2f, Screen.height / 2f - BoxHeight / 2f, BoxWidth, BoxHeight));
 
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical();
 
             Label("Map", LabelType.Header, width: BoxWidth * Proportion[0] - 15f);
-            Grid(string.Empty, ref map, MapStr, false, 1, BoxWidth * Proportion[0] - 15f, GridHeight * MapStr.Length + 5 * (MapStr.Length - 1));
+            Grid(string.Empty, ref map, MapStr, false, 1, BoxWidth * Proportion[0] - 15f);
 
-            UnityEngine.GUI.DrawTexture(new Rect(4f, GridHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight, BoxWidth * Proportion[0] - 15f, 148f), ColorCache.Textures[ColorCache.Black]);
-            UnityEngine.GUI.DrawTexture(new Rect(4f + 1f, GridHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight + 1f, BoxWidth * Proportion[0] - 15f - 2f, 148f - 2f), GetImage());
+            UnityEngine.GUI.DrawTexture(new Rect(4f, ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight, BoxWidth * Proportion[0] - 15f, 158f), ColorCache.Textures[ColorCache.Black]);
+            UnityEngine.GUI.DrawTexture(new Rect(4f + 1f, ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight + 1f, BoxWidth * Proportion[0] - 15f - 2f, 158f - 2f), GetImage());
 
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
 
             Label("Camera Type", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
-            Grid(string.Empty, ref camera, CameraStr, false, 1, BoxWidth * Proportion[1] - 5f, GridHeight * CameraStr.Length + 5 * (CameraStr.Length - 1));
+            Grid(string.Empty, ref camera, CameraStr, false, 1, BoxWidth * Proportion[1] - 5f);
             Label("Daytime", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
-            Grid(string.Empty, ref daytime, DaytimeStr, false, 1, BoxWidth * Proportion[1] - 5f, GridHeight * DaytimeStr.Length + 5 * (DaytimeStr.Length - 1));
+            Grid(string.Empty, ref daytime, DaytimeStr, false, 1, BoxWidth * Proportion[1] - 5f);
             Label("Difficulty", LabelType.Header, width: BoxWidth * Proportion[1] - 5f);
-            Grid(string.Empty, ref difficulty, difficultyStr, false, 1, BoxWidth * Proportion[1] - 5f, GridHeight * difficultyStr.Length + 5 * (difficultyStr.Length - 1));
+            Grid(string.Empty, ref difficulty, difficultyStr, false, 1, BoxWidth * Proportion[1] - 5f);
 
             GUILayout.EndVertical();
 
@@ -121,7 +116,7 @@ namespace GGM.GUI.Pages
 
             Label("Character", LabelType.Header, width: BoxWidth * Proportion[2] - 12.5f);
             Grid(string.Empty, ref costume, CostumeStr, width: BoxWidth * Proportion[2] - 12.5f);
-            Grid(string.Empty, ref character, CharacterStr, false, 1, BoxWidth * Proportion[2] - 12.5f, GridHeight * CharacterStr.Length + 5 * (CharacterStr.Length - 1));
+            Grid(string.Empty, ref character, CharacterStr, false, 1, BoxWidth * Proportion[2] - 12.5f);
 
             GUILayout.EndVertical();
 
