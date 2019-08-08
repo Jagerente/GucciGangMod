@@ -4973,7 +4973,7 @@ public class FengGameManagerMKII : MonoBehaviour
     public void OnJoinedLobby()
     {
         NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, false);
-        NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
+        //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
         NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiJoinPrivate, false);
     }
 
