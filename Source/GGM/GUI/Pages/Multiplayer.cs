@@ -24,8 +24,6 @@ namespace GGM.GUI.Pages
 
         private static readonly string[] Servers = { "Europe", "US", "Asia", "Japan" };
 
-        private static bool Filtered;
-
         private static string KeyWords;
 
         private static bool[] Map;
@@ -40,45 +38,36 @@ namespace GGM.GUI.Pages
 
         private static readonly string[] DayTimes = { "Day", "Dawn", "Night" };
 
-        private static bool HideFullRooms;
+        private static bool[] ExtendedSetting;
 
-        private static bool HidePasswordedRooms;
+        private static readonly string[] ExtendedSettings = { "Hide Passworded Rooms", "Hide Full Rooms" };
 
         private void Start()
         {
             KeyWords = string.Empty;
+
             Map = new bool[Maps.Length];
             for (var i = 0; i < Maps.Length; i++)
             {
                 Map[i] = false;
             }
+
             Difficulty = new bool[Difficulties.Length];
             for (var i = 0; i < Difficulties.Length; i++)
             {
                 Difficulty[i] = false;
             }
+
             DayTime = new bool[DayTimes.Length];
             for (var i = 0; i < DayTimes.Length; i++)
             {
                 DayTime[i] = false;
             }
-        }
 
-        private void Update()
-        {
-            if (KeyWords != string.Empty)
+            ExtendedSetting = new bool[ExtendedSettings.Length];
+            for (var i = 0; i < ExtendedSettings.Length; i++)
             {
-                Filtered = true;
-            }
-            else
-            {
-                foreach (var map in Map)
-                {
-                    if (map)
-                    {
-                        Filtered = true;
-                    }
-                }
+                ExtendedSetting[i] = false;
             }
         }
 
@@ -116,6 +105,8 @@ namespace GGM.GUI.Pages
             ButtonToggle(string.Empty, Difficulties, Difficulty, false, BoxWidth * Proportion[0] - 10f);
             Label("Day Time", LabelType.SubHeader, width: BoxWidth * Proportion[0] - 10f);
             ButtonToggle(string.Empty, DayTimes, DayTime, false, width: BoxWidth * Proportion[0] - 10f);
+            Label("Extended", LabelType.SubHeader, width: BoxWidth * Proportion[0] - 10f);
+            ButtonToggle(string.Empty, ExtendedSettings, ExtendedSetting, false, width: BoxWidth * Proportion[0] - 10f);
             GUILayout.Space(1f);
             GUILayout.EndScrollView();
 
@@ -129,7 +120,7 @@ namespace GGM.GUI.Pages
             {
                 var server = (RoomInfo)GetServers()[i];
                 var data = server.name.Split('`');
-                if (GUILayout.Button((data[5] != string.Empty ? "[PWD]" : string.Empty) + data[0] + "/" + data[1] + "/" + data[2] + "/" + data[4] + "    " + server.playerCount + "/" + server.maxPlayers)
+                if (GUILayout.Button((data[5] != string.Empty ? "[PWD]" : string.Empty) + (data[0].Length > 40 ? data[0].Remove(40, data[0].Length - 40).ToHTML() : data[0].ToHTML()) + "/" + data[1] + "/" + data[2] + "/" + data[4] + "    " + server.playerCount + "/" + server.maxPlayers))
                 {
                     Debug.Log("Connection");
                 }
@@ -195,6 +186,16 @@ namespace GGM.GUI.Pages
                             break;
                         }
                     }
+                }
+
+                if (ExtendedSetting[0] && info.name.Split('`')[5] != string.Empty)
+                {
+                    skip = true;
+                }
+
+                if (ExtendedSetting[1] && info.playerCount >= info.maxPlayers)
+                {
+                    skip = true;
                 }
 
                 if (!skip)
