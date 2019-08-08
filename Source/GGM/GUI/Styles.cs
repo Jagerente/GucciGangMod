@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GGM.Caching;
+using UnityEngine;
 
 namespace GGM.GUI
 {
@@ -103,10 +104,10 @@ namespace GGM.GUI
                 Logo = logo.texture;
                 Logo.Apply();
             }
-            var box = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}Box.png");
-            if (Box == null && box != null)
+            if (Box == null)
             {
-                Box = box.texture;
+                Box = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+                Box.SetPixel(0, 0, new Color(ColorCache.DarkScarlet.Value.r, ColorCache.DarkScarlet.Value.g, ColorCache.DarkScarlet.Value.b, 0.5f));
                 Box.Apply();
             }
             var window = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}Window.png");
