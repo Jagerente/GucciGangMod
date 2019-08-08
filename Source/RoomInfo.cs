@@ -19,33 +19,33 @@ public class RoomInfo
     {
         if (propertiesToCache != null && propertiesToCache.Count != 0 && !customPropertiesField.Equals(propertiesToCache))
         {
-            if (propertiesToCache.ContainsKey((byte) 251))
+            if (propertiesToCache.ContainsKey((byte)251))
             {
-                removedFromList = (bool) propertiesToCache[(byte) 251];
+                removedFromList = (bool)propertiesToCache[(byte)251];
                 if (removedFromList)
                 {
                     return;
                 }
             }
-            if (propertiesToCache.ContainsKey((byte) 255))
+            if (propertiesToCache.ContainsKey((byte)255))
             {
-                maxPlayersField = (byte) propertiesToCache[(byte) 255];
+                maxPlayersField = (byte)propertiesToCache[(byte)255];
             }
-            if (propertiesToCache.ContainsKey((byte) 253))
+            if (propertiesToCache.ContainsKey((byte)253))
             {
-                openField = (bool) propertiesToCache[(byte) 253];
+                openField = (bool)propertiesToCache[(byte)253];
             }
-            if (propertiesToCache.ContainsKey((byte) 254))
+            if (propertiesToCache.ContainsKey((byte)254))
             {
-                visibleField = (bool) propertiesToCache[(byte) 254];
+                visibleField = (bool)propertiesToCache[(byte)254];
             }
-            if (propertiesToCache.ContainsKey((byte) 252))
+            if (propertiesToCache.ContainsKey((byte)252))
             {
-                playerCount = (byte) propertiesToCache[(byte) 252];
+                playerCount = (byte)propertiesToCache[(byte)252];
             }
-            if (propertiesToCache.ContainsKey((byte) 249))
+            if (propertiesToCache.ContainsKey((byte)249))
             {
-                autoCleanUpField = (bool) propertiesToCache[(byte) 249];
+                autoCleanUpField = (bool)propertiesToCache[(byte)249];
             }
             customPropertiesField.MergeStringKeys(propertiesToCache);
         }
@@ -120,4 +120,3 @@ public class RoomInfo
         }
     }
 }
-

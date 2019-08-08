@@ -8,4 +8,3 @@ public class BTN_ToServer : MonoBehaviour
         NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiSet, true);
     }
 }
-

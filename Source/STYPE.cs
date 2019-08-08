@@ -4,4 +4,3 @@
     BILLBOARD_SELF,
     XZ
 }
-

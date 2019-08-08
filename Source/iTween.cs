@@ -7,31 +7,31 @@ using Random = UnityEngine.Random;
 public class iTween : MonoBehaviour
 {
     public string _name;
-    
+
     private static Dictionary<string, int> f__switchmap10;
-    
+
     private static Dictionary<string, int> f__switchmap11;
-    
+
     private static Dictionary<string, int> f__switchmap12;
-    
+
     private static Dictionary<string, int> f__switchmap13;
-    
+
     private static Dictionary<string, int> f__switchmap14;
-    
+
     private static Dictionary<string, int> f__switchmap8;
-    
+
     private static Dictionary<string, int> f__switchmap9;
-    
+
     private static Dictionary<string, int> f__switchmapA;
-    
+
     private static Dictionary<string, int> f__switchmapB;
-    
+
     private static Dictionary<string, int> f__switchmapC;
-    
+
     private static Dictionary<string, int> f__switchmapD;
-    
+
     private static Dictionary<string, int> f__switchmapE;
-    
+
     private static Dictionary<string, int> f__switchmapF;
     private ApplyTween apply;
     private AudioSource audioSource;
@@ -216,12 +216,12 @@ public class iTween : MonoBehaviour
         {
             thisTransform.position = path.Interp(Mathf.Clamp(num, 0f, 1f));
         }
-        if (tweenArguments.Contains("orienttopath") && (bool) tweenArguments["orienttopath"])
+        if (tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"])
         {
             float lookAhead;
             if (tweenArguments.Contains("lookahead"))
             {
-                lookAhead = (float) tweenArguments["lookahead"];
+                lookAhead = (float)tweenArguments["lookahead"];
             }
             else
             {
@@ -580,7 +580,7 @@ public class iTween : MonoBehaviour
         args = CleanArgs(args);
         if (args.Contains("audiosource"))
         {
-            audio = (AudioSource) args["audiosource"];
+            audio = (AudioSource)args["audiosource"];
         }
         else if (target.GetComponent<AudioSource>() != null)
         {
@@ -595,11 +595,11 @@ public class iTween : MonoBehaviour
         vector.y = vector2.y = audio.pitch;
         if (args.Contains("volume"))
         {
-            vector2.x = (float) args["volume"];
+            vector2.x = (float)args["volume"];
         }
         if (args.Contains("pitch"))
         {
-            vector2.y = (float) args["pitch"];
+            vector2.y = (float)args["pitch"];
         }
         audio.volume = vector2.x;
         audio.pitch = vector2.y;
@@ -646,7 +646,7 @@ public class iTween : MonoBehaviour
         var vectorArray = new Vector2[4];
         if (args.Contains("time"))
         {
-            updateTime = (float) args["time"];
+            updateTime = (float)args["time"];
             updateTime *= Defaults.updateTimePercentage;
         }
         else
@@ -655,7 +655,7 @@ public class iTween : MonoBehaviour
         }
         if (args.Contains("audiosource"))
         {
-            audio = (AudioSource) args["audiosource"];
+            audio = (AudioSource)args["audiosource"];
         }
         else if (target.GetComponent<AudioSource>() != null)
         {
@@ -669,11 +669,11 @@ public class iTween : MonoBehaviour
         vectorArray[0] = vectorArray[1] = new Vector2(audio.volume, audio.pitch);
         if (args.Contains("volume"))
         {
-            vectorArray[1].x = (float) args["volume"];
+            vectorArray[1].x = (float)args["volume"];
         }
         if (args.Contains("pitch"))
         {
-            vectorArray[1].y = (float) args["pitch"];
+            vectorArray[1].y = (float)args["pitch"];
         }
         vectorArray[3].x = Mathf.SmoothDampAngle(vectorArray[0].x, vectorArray[1].x, ref vectorArray[2].x, updateTime);
         vectorArray[3].y = Mathf.SmoothDampAngle(vectorArray[0].y, vectorArray[1].y, ref vectorArray[2].y, updateTime);
@@ -701,7 +701,7 @@ public class iTween : MonoBehaviour
             GameObject gameObject;
             if (tweenArguments.Contains(callbackType + "target"))
             {
-                gameObject = (GameObject) tweenArguments[callbackType + "target"];
+                gameObject = (GameObject)tweenArguments[callbackType + "target"];
             }
             else
             {
@@ -709,7 +709,7 @@ public class iTween : MonoBehaviour
             }
             if (tweenArguments[callbackType].GetType() == typeof(string))
             {
-                gameObject.SendMessage((string) tweenArguments[callbackType], tweenArguments[callbackType + "params"], SendMessageOptions.DontRequireReceiver);
+                gameObject.SendMessage((string)tweenArguments[callbackType], tweenArguments[callbackType + "params"], SendMessageOptions.DontRequireReceiver);
             }
             else
             {
@@ -879,7 +879,6 @@ public class iTween : MonoBehaviour
         return args;
     }
 
-
     private float clerp(float start, float end, float value)
     {
         var num = 0f;
@@ -988,7 +987,6 @@ public class iTween : MonoBehaviour
         Launch(target, args);
     }
 
-
     public static void ColorFrom(GameObject target, Color color, float time)
     {
         object[] args = { "color", color, "time", time };
@@ -1016,14 +1014,12 @@ public class iTween : MonoBehaviour
         Launch(target, args);
     }
 
-
     public static void ColorTo(GameObject target, Color color, float time)
     {
         object[] args = { "color", color, "time", time };
         ColorTo(target, Hash(args));
     }
 
-  
     public static void ColorUpdate(GameObject target, Hashtable args)
     {
         CleanArgs(args);
@@ -1106,7 +1102,6 @@ public class iTween : MonoBehaviour
         }
     }
 
-
     public static void ColorUpdate(GameObject target, Color color, float time)
     {
         object[] args = { "color", color, "time", time };
@@ -1154,7 +1149,6 @@ public class iTween : MonoBehaviour
         }
     }
 
-
     public static int Count()
     {
         return tweens.Count;
@@ -1166,7 +1160,7 @@ public class iTween : MonoBehaviour
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            if (((string) hashtable["type"] + (string) hashtable["method"]).Substring(0, type.Length).ToLower() == type.ToLower())
+            if (((string)hashtable["type"] + (string)hashtable["method"]).Substring(0, type.Length).ToLower() == type.ToLower())
             {
                 num++;
             }
@@ -1201,7 +1195,7 @@ public class iTween : MonoBehaviour
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            if ((string) hashtable["id"] == id)
+            if ((string)hashtable["id"] == id)
             {
                 tweens.RemoveAt(i);
                 break;
@@ -1486,7 +1480,7 @@ public class iTween : MonoBehaviour
         var num = path.Length * 20;
         for (var i = 1; i <= num; i++)
         {
-            var t = i / (float) num;
+            var t = i / (float)num;
             var from = Interp(pts, t);
             if (method == "gizmos")
             {
@@ -1898,7 +1892,7 @@ public class iTween : MonoBehaviour
         vector2s = new Vector2[3];
         if (tweenArguments.Contains("audiosource"))
         {
-            audioSource = (AudioSource) tweenArguments["audiosource"];
+            audioSource = (AudioSource)tweenArguments["audiosource"];
         }
         else if (GetComponent<AudioSource>() != null)
         {
@@ -1912,19 +1906,19 @@ public class iTween : MonoBehaviour
         vector2s[0] = vector2s[1] = new Vector2(audioSource.volume, audioSource.pitch);
         if (tweenArguments.Contains("volume"))
         {
-            vector2s[1].x = (float) tweenArguments["volume"];
+            vector2s[1].x = (float)tweenArguments["volume"];
         }
         if (tweenArguments.Contains("pitch"))
         {
-            vector2s[1].y = (float) tweenArguments["pitch"];
+            vector2s[1].y = (float)tweenArguments["pitch"];
         }
     }
 
     private void GenerateColorTargets()
     {
         colors = new Color[1, 3];
-        colors[0, 0] = (Color) tweenArguments["from"];
-        colors[0, 1] = (Color) tweenArguments["to"];
+        colors[0, 0] = (Color)tweenArguments["from"];
+        colors[0, 1] = (Color)tweenArguments["to"];
     }
 
     private void GenerateColorToTargets()
@@ -1961,7 +1955,7 @@ public class iTween : MonoBehaviour
         {
             for (var j = 0; j < colors.GetLength(0); j++)
             {
-                colors[j, 1] = (Color) tweenArguments["color"];
+                colors[j, 1] = (Color)tweenArguments["color"];
             }
         }
         else
@@ -1970,28 +1964,28 @@ public class iTween : MonoBehaviour
             {
                 for (var k = 0; k < colors.GetLength(0); k++)
                 {
-                    colors[k, 1].r = (float) tweenArguments["r"];
+                    colors[k, 1].r = (float)tweenArguments["r"];
                 }
             }
             if (tweenArguments.Contains("g"))
             {
                 for (var m = 0; m < colors.GetLength(0); m++)
                 {
-                    colors[m, 1].g = (float) tweenArguments["g"];
+                    colors[m, 1].g = (float)tweenArguments["g"];
                 }
             }
             if (tweenArguments.Contains("b"))
             {
                 for (var n = 0; n < colors.GetLength(0); n++)
                 {
-                    colors[n, 1].b = (float) tweenArguments["b"];
+                    colors[n, 1].b = (float)tweenArguments["b"];
                 }
             }
             if (tweenArguments.Contains("a"))
             {
                 for (var num6 = 0; num6 < colors.GetLength(0); num6++)
                 {
-                    colors[num6, 1].a = (float) tweenArguments["a"];
+                    colors[num6, 1].a = (float)tweenArguments["a"];
                 }
             }
         }
@@ -1999,14 +1993,14 @@ public class iTween : MonoBehaviour
         {
             for (var num7 = 0; num7 < colors.GetLength(0); num7++)
             {
-                colors[num7, 1].a = (float) tweenArguments["amount"];
+                colors[num7, 1].a = (float)tweenArguments["amount"];
             }
         }
         else if (tweenArguments.Contains("alpha"))
         {
             for (var num8 = 0; num8 < colors.GetLength(0); num8++)
             {
-                colors[num8, 1].a = (float) tweenArguments["alpha"];
+                colors[num8, 1].a = (float)tweenArguments["alpha"];
             }
         }
     }
@@ -2014,12 +2008,12 @@ public class iTween : MonoBehaviour
     private void GenerateFloatTargets()
     {
         floats = new float[3];
-        floats[0] = (float) tweenArguments["from"];
-        floats[1] = (float) tweenArguments["to"];
+        floats[0] = (float)tweenArguments["from"];
+        floats[1] = (float)tweenArguments["to"];
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(floats[0] - floats[1]);
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2036,13 +2030,13 @@ public class iTween : MonoBehaviour
         {
             if (tweenArguments["looktarget"].GetType() == typeof(Transform))
             {
-                var nullable = (Vector3?) tweenArguments["up"];
-                thisTransform.LookAt((Transform) tweenArguments["looktarget"], !nullable.HasValue ? Defaults.up : nullable.Value);
+                var nullable = (Vector3?)tweenArguments["up"];
+                thisTransform.LookAt((Transform)tweenArguments["looktarget"], !nullable.HasValue ? Defaults.up : nullable.Value);
             }
             else if (tweenArguments["looktarget"].GetType() == typeof(Vector3))
             {
-                var nullable2 = (Vector3?) tweenArguments["up"];
-                thisTransform.LookAt((Vector3) tweenArguments["looktarget"], !nullable2.HasValue ? Defaults.up : nullable2.Value);
+                var nullable2 = (Vector3?)tweenArguments["up"];
+                thisTransform.LookAt((Vector3)tweenArguments["looktarget"], !nullable2.HasValue ? Defaults.up : nullable2.Value);
             }
         }
         else
@@ -2054,7 +2048,7 @@ public class iTween : MonoBehaviour
         thisTransform.eulerAngles = vector3s[0];
         if (tweenArguments.Contains("axis"))
         {
-            var key = (string) tweenArguments["axis"];
+            var key = (string)tweenArguments["axis"];
             if (key != null)
             {
                 int num;
@@ -2092,7 +2086,7 @@ public class iTween : MonoBehaviour
         if (tweenArguments.Contains("speed"))
         {
             var num2 = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num2 / (float) tweenArguments["speed"];
+            time = num2 / (float)tweenArguments["speed"];
         }
     }
 
@@ -2105,34 +2099,34 @@ public class iTween : MonoBehaviour
         vector3s[0] = vector3s[1] = vector;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] = vector3s[0] + (Vector3) tweenArguments["amount"];
+            vector3s[1] = vector3s[0] + (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = vector3s[0].x + (float) tweenArguments["x"];
+                vector3s[1].x = vector3s[0].x + (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = vector3s[0].y + (float) tweenArguments["y"];
+                vector3s[1].y = vector3s[0].y + (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = vector3s[0].z + (float) tweenArguments["z"];
+                vector3s[1].z = vector3s[0].z + (float)tweenArguments["z"];
             }
         }
         thisTransform.Translate(vector3s[1], space);
         vector3s[5] = thisTransform.position;
         thisTransform.position = vector3s[0];
-        if (tweenArguments.Contains("orienttopath") && (bool) tweenArguments["orienttopath"])
+        if (tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"])
         {
             tweenArguments["looktarget"] = vector3s[1];
         }
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2143,7 +2137,7 @@ public class iTween : MonoBehaviour
         int num2;
         if (tweenArguments["path"].GetType() == typeof(Vector3[]))
         {
-            var sourceArray = (Vector3[]) tweenArguments["path"];
+            var sourceArray = (Vector3[])tweenArguments["path"];
             if (sourceArray.Length == 1)
             {
                 Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
@@ -2154,7 +2148,7 @@ public class iTween : MonoBehaviour
         }
         else
         {
-            var transformArray = (Transform[]) tweenArguments["path"];
+            var transformArray = (Transform[])tweenArguments["path"];
             if (transformArray.Length == 1)
             {
                 Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
@@ -2168,7 +2162,7 @@ public class iTween : MonoBehaviour
         }
         if (thisTransform.position != vectorArray2[0])
         {
-            if (!tweenArguments.Contains("movetopath") || (bool) tweenArguments["movetopath"])
+            if (!tweenArguments.Contains("movetopath") || (bool)tweenArguments["movetopath"])
             {
                 flag = true;
                 num2 = 3;
@@ -2210,7 +2204,7 @@ public class iTween : MonoBehaviour
         if (tweenArguments.Contains("speed"))
         {
             var num3 = PathLength(vector3s);
-            time = num3 / (float) tweenArguments["speed"];
+            time = num3 / (float)tweenArguments["speed"];
         }
     }
 
@@ -2229,37 +2223,37 @@ public class iTween : MonoBehaviour
         {
             if (tweenArguments["position"].GetType() == typeof(Transform))
             {
-                var transform = (Transform) tweenArguments["position"];
+                var transform = (Transform)tweenArguments["position"];
                 vector3s[1] = transform.position;
             }
             else if (tweenArguments["position"].GetType() == typeof(Vector3))
             {
-                vector3s[1] = (Vector3) tweenArguments["position"];
+                vector3s[1] = (Vector3)tweenArguments["position"];
             }
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
-        if (tweenArguments.Contains("orienttopath") && (bool) tweenArguments["orienttopath"])
+        if (tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"])
         {
             tweenArguments["looktarget"] = vector3s[1];
         }
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2271,21 +2265,21 @@ public class iTween : MonoBehaviour
         vector3s[1] = vector3s[3] = Vector3.zero;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] = (Vector3) tweenArguments["amount"];
+            vector3s[1] = (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
     }
@@ -2297,21 +2291,21 @@ public class iTween : MonoBehaviour
         vector3s[1] = vector3s[3] = Vector3.zero;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] = (Vector3) tweenArguments["amount"];
+            vector3s[1] = (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
     }
@@ -2323,21 +2317,21 @@ public class iTween : MonoBehaviour
         vector3s[1] = Vector3.zero;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] = (Vector3) tweenArguments["amount"];
+            vector3s[1] = (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
     }
@@ -2345,8 +2339,8 @@ public class iTween : MonoBehaviour
     private void GenerateRectTargets()
     {
         rects = new Rect[3];
-        rects[0] = (Rect) tweenArguments["from"];
-        rects[1] = (Rect) tweenArguments["to"];
+        rects[0] = (Rect)tweenArguments["from"];
+        rects[1] = (Rect)tweenArguments["to"];
     }
 
     private void GenerateRotateAddTargets()
@@ -2357,27 +2351,27 @@ public class iTween : MonoBehaviour
         vector3s[0] = vector3s[1] = vector;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] += (Vector3) tweenArguments["amount"];
+            vector3s[1] += (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x += (float) tweenArguments["x"];
+                vector3s[1].x += (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y += (float) tweenArguments["y"];
+                vector3s[1].y += (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z += (float) tweenArguments["z"];
+                vector3s[1].z += (float)tweenArguments["z"];
             }
         }
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2389,27 +2383,27 @@ public class iTween : MonoBehaviour
         vector3s[0] = vector3s[1] = vector;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] += Vector3.Scale((Vector3) tweenArguments["amount"], new Vector3(360f, 360f, 360f));
+            vector3s[1] += Vector3.Scale((Vector3)tweenArguments["amount"], new Vector3(360f, 360f, 360f));
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x += 360f * (float) tweenArguments["x"];
+                vector3s[1].x += 360f * (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y += 360f * (float) tweenArguments["y"];
+                vector3s[1].y += 360f * (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z += 360f * (float) tweenArguments["z"];
+                vector3s[1].z += 360f * (float)tweenArguments["z"];
             }
         }
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2428,34 +2422,34 @@ public class iTween : MonoBehaviour
         {
             if (tweenArguments["rotation"].GetType() == typeof(Transform))
             {
-                var transform = (Transform) tweenArguments["rotation"];
+                var transform = (Transform)tweenArguments["rotation"];
                 vector3s[1] = transform.eulerAngles;
             }
             else if (tweenArguments["rotation"].GetType() == typeof(Vector3))
             {
-                vector3s[1] = (Vector3) tweenArguments["rotation"];
+                vector3s[1] = (Vector3)tweenArguments["rotation"];
             }
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
         vector3s[1] = new Vector3(clerp(vector3s[0].x, vector3s[1].x, 1f), clerp(vector3s[0].y, vector3s[1].y, 1f), clerp(vector3s[0].z, vector3s[1].z, 1f));
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2465,27 +2459,27 @@ public class iTween : MonoBehaviour
         vector3s[0] = vector3s[1] = thisTransform.localScale;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] += (Vector3) tweenArguments["amount"];
+            vector3s[1] += (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x += (float) tweenArguments["x"];
+                vector3s[1].x += (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y += (float) tweenArguments["y"];
+                vector3s[1].y += (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z += (float) tweenArguments["z"];
+                vector3s[1].z += (float)tweenArguments["z"];
             }
         }
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2495,27 +2489,27 @@ public class iTween : MonoBehaviour
         vector3s[0] = vector3s[1] = thisTransform.localScale;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] = Vector3.Scale(vector3s[1], (Vector3) tweenArguments["amount"]);
+            vector3s[1] = Vector3.Scale(vector3s[1], (Vector3)tweenArguments["amount"]);
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x *= (float) tweenArguments["x"];
+                vector3s[1].x *= (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y *= (float) tweenArguments["y"];
+                vector3s[1].y *= (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z *= (float) tweenArguments["z"];
+                vector3s[1].z *= (float)tweenArguments["z"];
             }
         }
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2527,33 +2521,33 @@ public class iTween : MonoBehaviour
         {
             if (tweenArguments["scale"].GetType() == typeof(Transform))
             {
-                var transform = (Transform) tweenArguments["scale"];
+                var transform = (Transform)tweenArguments["scale"];
                 vector3s[1] = transform.localScale;
             }
             else if (tweenArguments["scale"].GetType() == typeof(Vector3))
             {
-                vector3s[1] = (Vector3) tweenArguments["scale"];
+                vector3s[1] = (Vector3)tweenArguments["scale"];
             }
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -2564,21 +2558,21 @@ public class iTween : MonoBehaviour
         vector3s[0] = thisTransform.position;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] = (Vector3) tweenArguments["amount"];
+            vector3s[1] = (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
     }
@@ -2589,21 +2583,21 @@ public class iTween : MonoBehaviour
         vector3s[0] = thisTransform.eulerAngles;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] = (Vector3) tweenArguments["amount"];
+            vector3s[1] = (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
     }
@@ -2614,21 +2608,21 @@ public class iTween : MonoBehaviour
         vector3s[0] = thisTransform.localScale;
         if (tweenArguments.Contains("amount"))
         {
-            vector3s[1] = (Vector3) tweenArguments["amount"];
+            vector3s[1] = (Vector3)tweenArguments["amount"];
         }
         else
         {
             if (tweenArguments.Contains("x"))
             {
-                vector3s[1].x = (float) tweenArguments["x"];
+                vector3s[1].x = (float)tweenArguments["x"];
             }
             if (tweenArguments.Contains("y"))
             {
-                vector3s[1].y = (float) tweenArguments["y"];
+                vector3s[1].y = (float)tweenArguments["y"];
             }
             if (tweenArguments.Contains("z"))
             {
-                vector3s[1].z = (float) tweenArguments["z"];
+                vector3s[1].z = (float)tweenArguments["z"];
             }
         }
     }
@@ -2637,7 +2631,7 @@ public class iTween : MonoBehaviour
     {
         if (tweenArguments.Contains("audiosource"))
         {
-            audioSource = (AudioSource) tweenArguments["audiosource"];
+            audioSource = (AudioSource)tweenArguments["audiosource"];
         }
         else if (GetComponent<AudioSource>() != null)
         {
@@ -2649,14 +2643,14 @@ public class iTween : MonoBehaviour
             audioSource = audio;
             audioSource.playOnAwake = false;
         }
-        audioSource.clip = (AudioClip) tweenArguments["audioclip"];
+        audioSource.clip = (AudioClip)tweenArguments["audioclip"];
         if (tweenArguments.Contains("pitch"))
         {
-            audioSource.pitch = (float) tweenArguments["pitch"];
+            audioSource.pitch = (float)tweenArguments["pitch"];
         }
         if (tweenArguments.Contains("volume"))
         {
-            audioSource.volume = (float) tweenArguments["volume"];
+            audioSource.volume = (float)tweenArguments["volume"];
         }
         time = audioSource.clip.length / audioSource.pitch;
     }
@@ -2978,26 +2972,26 @@ public class iTween : MonoBehaviour
     private void GenerateVector2Targets()
     {
         vector2s = new Vector2[3];
-        vector2s[0] = (Vector2) tweenArguments["from"];
-        vector2s[1] = (Vector2) tweenArguments["to"];
+        vector2s[0] = (Vector2)tweenArguments["from"];
+        vector2s[1] = (Vector2)tweenArguments["to"];
         if (tweenArguments.Contains("speed"))
         {
             var a = new Vector3(vector2s[0].x, vector2s[0].y, 0f);
             var b = new Vector3(vector2s[1].x, vector2s[1].y, 0f);
             var num = Math.Abs(Vector3.Distance(a, b));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
     private void GenerateVector3Targets()
     {
         vector3s = new Vector3[3];
-        vector3s[0] = (Vector3) tweenArguments["from"];
-        vector3s[1] = (Vector3) tweenArguments["to"];
+        vector3s[0] = (Vector3)tweenArguments["from"];
+        vector3s[1] = (Vector3)tweenArguments["to"];
         if (tweenArguments.Contains("speed"))
         {
             var num = Math.Abs(Vector3.Distance(vector3s[0], vector3s[1]));
-            time = num / (float) tweenArguments["speed"];
+            time = num / (float)tweenArguments["speed"];
         }
     }
 
@@ -3200,18 +3194,18 @@ public class iTween : MonoBehaviour
         var eulerAngles = target.transform.eulerAngles;
         if (args["looktarget"].GetType() == typeof(Transform))
         {
-            var nullable = (Vector3?) args["up"];
-            target.transform.LookAt((Transform) args["looktarget"], !nullable.HasValue ? Defaults.up : nullable.Value);
+            var nullable = (Vector3?)args["up"];
+            target.transform.LookAt((Transform)args["looktarget"], !nullable.HasValue ? Defaults.up : nullable.Value);
         }
         else if (args["looktarget"].GetType() == typeof(Vector3))
         {
-            var nullable2 = (Vector3?) args["up"];
-            target.transform.LookAt((Vector3) args["looktarget"], !nullable2.HasValue ? Defaults.up : nullable2.Value);
+            var nullable2 = (Vector3?)args["up"];
+            target.transform.LookAt((Vector3)args["looktarget"], !nullable2.HasValue ? Defaults.up : nullable2.Value);
         }
         if (args.Contains("axis"))
         {
             var vector2 = target.transform.eulerAngles;
-            var key = (string) args["axis"];
+            var key = (string)args["axis"];
             if (key != null)
             {
                 int num;
@@ -3263,7 +3257,7 @@ public class iTween : MonoBehaviour
         args = CleanArgs(args);
         if (args.Contains("looktarget") && args["looktarget"].GetType() == typeof(Transform))
         {
-            var transform = (Transform) args["looktarget"];
+            var transform = (Transform)args["looktarget"];
             args["position"] = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             args["rotation"] = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
         }
@@ -3285,12 +3279,12 @@ public class iTween : MonoBehaviour
         var vectorArray = new Vector3[5];
         if (args.Contains("looktime"))
         {
-            updateTime = (float) args["looktime"];
+            updateTime = (float)args["looktime"];
             updateTime *= Defaults.updateTimePercentage;
         }
         else if (args.Contains("time"))
         {
-            updateTime = (float) args["time"] * 0.15f;
+            updateTime = (float)args["time"] * 0.15f;
             updateTime *= Defaults.updateTimePercentage;
         }
         else
@@ -3302,13 +3296,13 @@ public class iTween : MonoBehaviour
         {
             if (args["looktarget"].GetType() == typeof(Transform))
             {
-                var nullable = (Vector3?) args["up"];
-                target.transform.LookAt((Transform) args["looktarget"], !nullable.HasValue ? Defaults.up : nullable.Value);
+                var nullable = (Vector3?)args["up"];
+                target.transform.LookAt((Transform)args["looktarget"], !nullable.HasValue ? Defaults.up : nullable.Value);
             }
             else if (args["looktarget"].GetType() == typeof(Vector3))
             {
-                var nullable2 = (Vector3?) args["up"];
-                target.transform.LookAt((Vector3) args["looktarget"], !nullable2.HasValue ? Defaults.up : nullable2.Value);
+                var nullable2 = (Vector3?)args["up"];
+                target.transform.LookAt((Vector3)args["looktarget"], !nullable2.HasValue ? Defaults.up : nullable2.Value);
             }
         }
         else
@@ -3325,7 +3319,7 @@ public class iTween : MonoBehaviour
         if (args.Contains("axis"))
         {
             vectorArray[4] = target.transform.eulerAngles;
-            var key = (string) args["axis"];
+            var key = (string)args["axis"];
             if (key != null)
             {
                 int num2;
@@ -3402,7 +3396,7 @@ public class iTween : MonoBehaviour
         args = CleanArgs(args);
         if (args.Contains("islocal"))
         {
-            isLocal = (bool) args["islocal"];
+            isLocal = (bool)args["islocal"];
         }
         else
         {
@@ -3413,13 +3407,13 @@ public class iTween : MonoBehaviour
             Vector3[] vectorArray2;
             if (args["path"].GetType() == typeof(Vector3[]))
             {
-                var sourceArray = (Vector3[]) args["path"];
+                var sourceArray = (Vector3[])args["path"];
                 vectorArray2 = new Vector3[sourceArray.Length];
                 Array.Copy(sourceArray, vectorArray2, sourceArray.Length);
             }
             else
             {
-                var transformArray = (Transform[]) args["path"];
+                var transformArray = (Transform[])args["path"];
                 vectorArray2 = new Vector3[transformArray.Length];
                 for (var i = 0; i < transformArray.Length; i++)
                 {
@@ -3471,27 +3465,27 @@ public class iTween : MonoBehaviour
             {
                 if (args["position"].GetType() == typeof(Transform))
                 {
-                    var transform = (Transform) args["position"];
+                    var transform = (Transform)args["position"];
                     position = transform.position;
                 }
                 else if (args["position"].GetType() == typeof(Vector3))
                 {
-                    position = (Vector3) args["position"];
+                    position = (Vector3)args["position"];
                 }
             }
             else
             {
                 if (args.Contains("x"))
                 {
-                    position.x = (float) args["x"];
+                    position.x = (float)args["x"];
                 }
                 if (args.Contains("y"))
                 {
-                    position.y = (float) args["y"];
+                    position.y = (float)args["y"];
                 }
                 if (args.Contains("z"))
                 {
-                    position.z = (float) args["z"];
+                    position.z = (float)args["z"];
                 }
             }
             if (isLocal)
@@ -3520,7 +3514,7 @@ public class iTween : MonoBehaviour
         args = CleanArgs(args);
         if (args.Contains("position") && args["position"].GetType() == typeof(Transform))
         {
-            var transform = (Transform) args["position"];
+            var transform = (Transform)args["position"];
             args["position"] = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             args["rotation"] = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             args["scale"] = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -3545,7 +3539,7 @@ public class iTween : MonoBehaviour
         var position = target.transform.position;
         if (args.Contains("time"))
         {
-            updateTime = (float) args["time"];
+            updateTime = (float)args["time"];
             updateTime *= Defaults.updateTimePercentage;
         }
         else
@@ -3554,7 +3548,7 @@ public class iTween : MonoBehaviour
         }
         if (args.Contains("islocal"))
         {
-            isLocal = (bool) args["islocal"];
+            isLocal = (bool)args["islocal"];
         }
         else
         {
@@ -3572,33 +3566,33 @@ public class iTween : MonoBehaviour
         {
             if (args["position"].GetType() == typeof(Transform))
             {
-                var transform = (Transform) args["position"];
+                var transform = (Transform)args["position"];
                 vectorArray[1] = transform.position;
             }
             else if (args["position"].GetType() == typeof(Vector3))
             {
-                vectorArray[1] = (Vector3) args["position"];
+                vectorArray[1] = (Vector3)args["position"];
             }
         }
         else
         {
             if (args.Contains("x"))
             {
-                vectorArray[1].x = (float) args["x"];
+                vectorArray[1].x = (float)args["x"];
             }
             if (args.Contains("y"))
             {
-                vectorArray[1].y = (float) args["y"];
+                vectorArray[1].y = (float)args["y"];
             }
             if (args.Contains("z"))
             {
-                vectorArray[1].z = (float) args["z"];
+                vectorArray[1].z = (float)args["z"];
             }
         }
         vectorArray[3].x = Mathf.SmoothDamp(vectorArray[0].x, vectorArray[1].x, ref vectorArray[2].x, updateTime);
         vectorArray[3].y = Mathf.SmoothDamp(vectorArray[0].y, vectorArray[1].y, ref vectorArray[2].y, updateTime);
         vectorArray[3].z = Mathf.SmoothDamp(vectorArray[0].z, vectorArray[1].z, ref vectorArray[2].z, updateTime);
-        if (args.Contains("orienttopath") && (bool) args["orienttopath"])
+        if (args.Contains("orienttopath") && (bool)args["orienttopath"])
         {
             args["looktarget"] = vectorArray[3];
         }
@@ -3683,7 +3677,7 @@ public class iTween : MonoBehaviour
         var num3 = path.Length * 20;
         for (var j = 1; j <= num3; j++)
         {
-            var t = j / (float) num3;
+            var t = j / (float)num3;
             var b = Interp(pts, t);
             num += Vector3.Distance(a, b);
             a = b;
@@ -3699,7 +3693,7 @@ public class iTween : MonoBehaviour
         var num2 = path.Length * 20;
         for (var i = 1; i <= num2; i++)
         {
-            var t = i / (float) num2;
+            var t = i / (float)num2;
             var b = Interp(pts, t);
             num += Vector3.Distance(a, b);
             a = b;
@@ -3712,7 +3706,7 @@ public class iTween : MonoBehaviour
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            var target = (GameObject) hashtable["target"];
+            var target = (GameObject)hashtable["target"];
             Pause(target);
         }
     }
@@ -3723,12 +3717,12 @@ public class iTween : MonoBehaviour
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            var obj2 = (GameObject) hashtable["target"];
+            var obj2 = (GameObject)hashtable["target"];
             list.Insert(list.Count, obj2);
         }
         for (var j = 0; j < list.Count; j++)
         {
-            Pause((GameObject) list[j], type);
+            Pause((GameObject)list[j], type);
         }
     }
 
@@ -3758,7 +3752,6 @@ public class iTween : MonoBehaviour
             }
         }
     }
-
 
     public static void Pause(GameObject target, string type)
     {
@@ -3806,7 +3799,6 @@ public class iTween : MonoBehaviour
             }
         }
     }
-
 
     public static Vector3 PointOnPath(Transform[] path, float percent)
     {
@@ -3924,7 +3916,7 @@ public class iTween : MonoBehaviour
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            var target = (GameObject) hashtable["target"];
+            var target = (GameObject)hashtable["target"];
             Resume(target);
         }
     }
@@ -3935,12 +3927,12 @@ public class iTween : MonoBehaviour
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            var obj2 = (GameObject) hashtable["target"];
+            var obj2 = (GameObject)hashtable["target"];
             list.Insert(list.Count, obj2);
         }
         for (var j = 0; j < list.Count; j++)
         {
-            Resume((GameObject) list[j], type);
+            Resume((GameObject)list[j], type);
         }
     }
 
@@ -3963,7 +3955,6 @@ public class iTween : MonoBehaviour
             }
         }
     }
-
 
     public static void Resume(GameObject target, string type)
     {
@@ -4008,19 +3999,19 @@ public class iTween : MonoBehaviour
     {
         foreach (var hashtable in tweens)
         {
-            if ((GameObject) hashtable["target"] == gameObject)
+            if ((GameObject)hashtable["target"] == gameObject)
             {
                 tweenArguments = hashtable;
                 break;
             }
         }
-        id = (string) tweenArguments["id"];
-        type = (string) tweenArguments["type"];
-        _name = (string) tweenArguments["name"];
-        method = (string) tweenArguments["method"];
+        id = (string)tweenArguments["id"];
+        type = (string)tweenArguments["type"];
+        _name = (string)tweenArguments["name"];
+        method = (string)tweenArguments["method"];
         if (tweenArguments.Contains("time"))
         {
-            time = (float) tweenArguments["time"];
+            time = (float)tweenArguments["time"];
         }
         else
         {
@@ -4032,7 +4023,7 @@ public class iTween : MonoBehaviour
         }
         if (tweenArguments.Contains("delay"))
         {
-            delay = (float) tweenArguments["delay"];
+            delay = (float)tweenArguments["delay"];
         }
         else
         {
@@ -4042,13 +4033,13 @@ public class iTween : MonoBehaviour
         {
             if (tweenArguments["namedcolorvalue"].GetType() == typeof(NamedValueColor))
             {
-                namedcolorvalue = (NamedValueColor) (int) tweenArguments["namedcolorvalue"];
+                namedcolorvalue = (NamedValueColor)(int)tweenArguments["namedcolorvalue"];
             }
             else
             {
                 try
                 {
-                    namedcolorvalue = (NamedValueColor) (int) Enum.Parse(typeof(NamedValueColor), (string) tweenArguments["namedcolorvalue"], true);
+                    namedcolorvalue = (NamedValueColor)(int)Enum.Parse(typeof(NamedValueColor), (string)tweenArguments["namedcolorvalue"], true);
                 }
                 catch
                 {
@@ -4065,13 +4056,13 @@ public class iTween : MonoBehaviour
         {
             if (tweenArguments["looptype"].GetType() == typeof(LoopType))
             {
-                loopType = (LoopType) (int) tweenArguments["looptype"];
+                loopType = (LoopType)(int)tweenArguments["looptype"];
             }
             else
             {
                 try
                 {
-                    loopType = (LoopType) (int) Enum.Parse(typeof(LoopType), (string) tweenArguments["looptype"], true);
+                    loopType = (LoopType)(int)Enum.Parse(typeof(LoopType), (string)tweenArguments["looptype"], true);
                 }
                 catch
                 {
@@ -4088,13 +4079,13 @@ public class iTween : MonoBehaviour
         {
             if (tweenArguments["easetype"].GetType() == typeof(EaseType))
             {
-                easeType = (EaseType) (int) tweenArguments["easetype"];
+                easeType = (EaseType)(int)tweenArguments["easetype"];
             }
             else
             {
                 try
                 {
-                    easeType = (EaseType) (int) Enum.Parse(typeof(EaseType), (string) tweenArguments["easetype"], true);
+                    easeType = (EaseType)(int)Enum.Parse(typeof(EaseType), (string)tweenArguments["easetype"], true);
                 }
                 catch
                 {
@@ -4111,13 +4102,13 @@ public class iTween : MonoBehaviour
         {
             if (tweenArguments["space"].GetType() == typeof(Space))
             {
-                space = (Space) (int) tweenArguments["space"];
+                space = (Space)(int)tweenArguments["space"];
             }
             else
             {
                 try
                 {
-                    space = (Space) (int) Enum.Parse(typeof(Space), (string) tweenArguments["space"], true);
+                    space = (Space)(int)Enum.Parse(typeof(Space), (string)tweenArguments["space"], true);
                 }
                 catch
                 {
@@ -4132,7 +4123,7 @@ public class iTween : MonoBehaviour
         }
         if (tweenArguments.Contains("islocal"))
         {
-            isLocal = (bool) tweenArguments["islocal"];
+            isLocal = (bool)tweenArguments["islocal"];
         }
         else
         {
@@ -4140,7 +4131,7 @@ public class iTween : MonoBehaviour
         }
         if (tweenArguments.Contains("ignoretimescale"))
         {
-            useRealTime = (bool) tweenArguments["ignoretimescale"];
+            useRealTime = (bool)tweenArguments["ignoretimescale"];
         }
         else
         {
@@ -4185,7 +4176,7 @@ public class iTween : MonoBehaviour
         args = CleanArgs(args);
         if (args.Contains("islocal"))
         {
-            isLocal = (bool) args["islocal"];
+            isLocal = (bool)args["islocal"];
         }
         else
         {
@@ -4203,27 +4194,27 @@ public class iTween : MonoBehaviour
         {
             if (args["rotation"].GetType() == typeof(Transform))
             {
-                var transform = (Transform) args["rotation"];
+                var transform = (Transform)args["rotation"];
                 eulerAngles = transform.eulerAngles;
             }
             else if (args["rotation"].GetType() == typeof(Vector3))
             {
-                eulerAngles = (Vector3) args["rotation"];
+                eulerAngles = (Vector3)args["rotation"];
             }
         }
         else
         {
             if (args.Contains("x"))
             {
-                eulerAngles.x = (float) args["x"];
+                eulerAngles.x = (float)args["x"];
             }
             if (args.Contains("y"))
             {
-                eulerAngles.y = (float) args["y"];
+                eulerAngles.y = (float)args["y"];
             }
             if (args.Contains("z"))
             {
-                eulerAngles.z = (float) args["z"];
+                eulerAngles.z = (float)args["z"];
             }
         }
         if (isLocal)
@@ -4251,7 +4242,7 @@ public class iTween : MonoBehaviour
         args = CleanArgs(args);
         if (args.Contains("rotation") && args["rotation"].GetType() == typeof(Transform))
         {
-            var transform = (Transform) args["rotation"];
+            var transform = (Transform)args["rotation"];
             args["position"] = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             args["rotation"] = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             args["scale"] = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -4276,7 +4267,7 @@ public class iTween : MonoBehaviour
         var eulerAngles = target.transform.eulerAngles;
         if (args.Contains("time"))
         {
-            updateTime = (float) args["time"];
+            updateTime = (float)args["time"];
             updateTime *= Defaults.updateTimePercentage;
         }
         else
@@ -4285,7 +4276,7 @@ public class iTween : MonoBehaviour
         }
         if (args.Contains("islocal"))
         {
-            isLocal = (bool) args["islocal"];
+            isLocal = (bool)args["islocal"];
         }
         else
         {
@@ -4303,12 +4294,12 @@ public class iTween : MonoBehaviour
         {
             if (args["rotation"].GetType() == typeof(Transform))
             {
-                var transform = (Transform) args["rotation"];
+                var transform = (Transform)args["rotation"];
                 vectorArray[1] = transform.eulerAngles;
             }
             else if (args["rotation"].GetType() == typeof(Vector3))
             {
-                vectorArray[1] = (Vector3) args["rotation"];
+                vectorArray[1] = (Vector3)args["rotation"];
             }
         }
         vectorArray[3].x = Mathf.SmoothDampAngle(vectorArray[0].x, vectorArray[1].x, ref vectorArray[2].x, updateTime);
@@ -4373,27 +4364,27 @@ public class iTween : MonoBehaviour
         {
             if (args["scale"].GetType() == typeof(Transform))
             {
-                var transform = (Transform) args["scale"];
+                var transform = (Transform)args["scale"];
                 localScale = transform.localScale;
             }
             else if (args["scale"].GetType() == typeof(Vector3))
             {
-                localScale = (Vector3) args["scale"];
+                localScale = (Vector3)args["scale"];
             }
         }
         else
         {
             if (args.Contains("x"))
             {
-                localScale.x = (float) args["x"];
+                localScale.x = (float)args["x"];
             }
             if (args.Contains("y"))
             {
-                localScale.y = (float) args["y"];
+                localScale.y = (float)args["y"];
             }
             if (args.Contains("z"))
             {
-                localScale.z = (float) args["z"];
+                localScale.z = (float)args["z"];
             }
         }
         target.transform.localScale = localScale;
@@ -4414,7 +4405,7 @@ public class iTween : MonoBehaviour
         args = CleanArgs(args);
         if (args.Contains("scale") && args["scale"].GetType() == typeof(Transform))
         {
-            var transform = (Transform) args["scale"];
+            var transform = (Transform)args["scale"];
             args["position"] = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             args["rotation"] = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             args["scale"] = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -4437,7 +4428,7 @@ public class iTween : MonoBehaviour
         var vectorArray = new Vector3[4];
         if (args.Contains("time"))
         {
-            updateTime = (float) args["time"];
+            updateTime = (float)args["time"];
             updateTime *= Defaults.updateTimePercentage;
         }
         else
@@ -4449,27 +4440,27 @@ public class iTween : MonoBehaviour
         {
             if (args["scale"].GetType() == typeof(Transform))
             {
-                var transform = (Transform) args["scale"];
+                var transform = (Transform)args["scale"];
                 vectorArray[1] = transform.localScale;
             }
             else if (args["scale"].GetType() == typeof(Vector3))
             {
-                vectorArray[1] = (Vector3) args["scale"];
+                vectorArray[1] = (Vector3)args["scale"];
             }
         }
         else
         {
             if (args.Contains("x"))
             {
-                vectorArray[1].x = (float) args["x"];
+                vectorArray[1].x = (float)args["x"];
             }
             if (args.Contains("y"))
             {
-                vectorArray[1].y = (float) args["y"];
+                vectorArray[1].y = (float)args["y"];
             }
             if (args.Contains("z"))
             {
-                vectorArray[1].z = (float) args["z"];
+                vectorArray[1].z = (float)args["z"];
             }
         }
         vectorArray[3].x = Mathf.SmoothDamp(vectorArray[0].x, vectorArray[1].x, ref vectorArray[2].x, updateTime);
@@ -4546,7 +4537,6 @@ public class iTween : MonoBehaviour
         Stab(target, Hash(args));
     }
 
-    
     private IEnumerator Start()
     {
         return new Startc__IteratorE { f__this = this };
@@ -4557,7 +4547,7 @@ public class iTween : MonoBehaviour
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            var target = (GameObject) hashtable["target"];
+            var target = (GameObject)hashtable["target"];
             Stop(target);
         }
         tweens.Clear();
@@ -4569,12 +4559,12 @@ public class iTween : MonoBehaviour
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            var obj2 = (GameObject) hashtable["target"];
+            var obj2 = (GameObject)hashtable["target"];
             list.Insert(list.Count, obj2);
         }
         for (var j = 0; j < list.Count; j++)
         {
-            Stop((GameObject) list[j], type);
+            Stop((GameObject)list[j], type);
         }
     }
 
@@ -4597,7 +4587,6 @@ public class iTween : MonoBehaviour
             }
         }
     }
-
 
     public static void Stop(GameObject target, string type)
     {
@@ -4633,19 +4622,18 @@ public class iTween : MonoBehaviour
         }
     }
 
-
     public static void StopByName(string name)
     {
         var list = new ArrayList();
         for (var i = 0; i < tweens.Count; i++)
         {
             var hashtable = tweens[i];
-            var obj2 = (GameObject) hashtable["target"];
+            var obj2 = (GameObject)hashtable["target"];
             list.Insert(list.Count, obj2);
         }
         for (var j = 0; j < list.Count; j++)
         {
-            StopByName((GameObject) list[j], name);
+            StopByName((GameObject)list[j], name);
         }
     }
 
@@ -4681,7 +4669,6 @@ public class iTween : MonoBehaviour
         }
     }
 
-
     private void TweenComplete()
     {
         isRunning = false;
@@ -4709,7 +4696,6 @@ public class iTween : MonoBehaviour
         CallBack("oncomplete");
     }
 
-    
     private IEnumerator TweenDelay()
     {
         return new TweenDelayc__IteratorC { f__this = this };
@@ -4735,7 +4721,6 @@ public class iTween : MonoBehaviour
         }
     }
 
-    
     private IEnumerator TweenRestart()
     {
         return new TweenRestartc__IteratorD { f__this = this };
@@ -4884,7 +4869,7 @@ public class iTween : MonoBehaviour
 
         public bool MoveNext()
         {
-            var num = (uint) PC;
+            var num = (uint)PC;
             PC = -1;
             switch (num)
             {
@@ -4905,11 +4890,10 @@ public class iTween : MonoBehaviour
             }
             f__this.TweenStart();
             PC = -1;
-        Label_006A:
+            Label_006A:
             return false;
         }
 
-      
         public void Reset()
         {
             throw new NotSupportedException();
@@ -4917,7 +4901,6 @@ public class iTween : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            
             get
             {
                 return current;
@@ -4926,7 +4909,6 @@ public class iTween : MonoBehaviour
 
         object IEnumerator.Current
         {
-            
             get
             {
                 return current;
@@ -4934,14 +4916,12 @@ public class iTween : MonoBehaviour
         }
     }
 
-  
     private sealed class TweenDelayc__IteratorC : IEnumerator, IDisposable, IEnumerator<object>
     {
         internal object current;
         internal int PC;
         internal iTween f__this;
 
-        
         public void Dispose()
         {
             PC = -1;
@@ -4949,7 +4929,7 @@ public class iTween : MonoBehaviour
 
         public bool MoveNext()
         {
-            var num = (uint) PC;
+            var num = (uint)PC;
             PC = -1;
             switch (num)
             {
@@ -4971,7 +4951,6 @@ public class iTween : MonoBehaviour
             return false;
         }
 
-        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -4979,7 +4958,6 @@ public class iTween : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            
             get
             {
                 return current;
@@ -4988,7 +4966,6 @@ public class iTween : MonoBehaviour
 
         object IEnumerator.Current
         {
-            
             get
             {
                 return current;
@@ -4996,14 +4973,12 @@ public class iTween : MonoBehaviour
         }
     }
 
-    
     private sealed class TweenRestartc__IteratorD : IEnumerator, IDisposable, IEnumerator<object>
     {
         internal object current;
         internal int PC;
         internal iTween f__this;
 
-        
         public void Dispose()
         {
             PC = -1;
@@ -5011,7 +4986,7 @@ public class iTween : MonoBehaviour
 
         public bool MoveNext()
         {
-            var num = (uint) PC;
+            var num = (uint)PC;
             PC = -1;
             switch (num)
             {
@@ -5034,11 +5009,10 @@ public class iTween : MonoBehaviour
             f__this.loop = true;
             f__this.TweenStart();
             PC = -1;
-        Label_0086:
+            Label_0086:
             return false;
         }
 
-        
         public void Reset()
         {
             throw new NotSupportedException();
@@ -5046,7 +5020,6 @@ public class iTween : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            
             get
             {
                 return current;
@@ -5055,7 +5028,6 @@ public class iTween : MonoBehaviour
 
         object IEnumerator.Current
         {
-            
             get
             {
                 return current;
@@ -5162,4 +5134,3 @@ public class iTween : MonoBehaviour
         _ReflectColor
     }
 }
-

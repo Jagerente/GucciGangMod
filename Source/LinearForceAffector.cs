@@ -14,4 +14,3 @@ public class LinearForceAffector : Affector
         Node.Velocity += Force * Time.deltaTime;
     }
 }
-

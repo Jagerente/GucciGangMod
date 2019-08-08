@@ -8,4 +8,3 @@ public struct EanFrame
     public ushort Width;
     public ushort Height;
 }
-

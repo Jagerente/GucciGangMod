@@ -147,7 +147,7 @@ public class PanelMultiJoin : MonoBehaviour
                     var num3 = 10 * (currentPage - 1) + index;
                     if (num3 < filterRoom.Count)
                     {
-                        var room = (RoomInfo) filterRoom[num3];
+                        var room = (RoomInfo)filterRoom[num3];
                         items[index].SetActive(true);
                         items[index].GetComponentInChildren<UILabel>().text = getServerDataString(room);
                         items[index].GetComponentInChildren<BTN_Connect_To_Server_On_List>().roomName = room.name;
@@ -206,4 +206,3 @@ public class PanelMultiJoin : MonoBehaviour
         }
     }
 }
-

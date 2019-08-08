@@ -24,7 +24,7 @@ public class InvEquipment : MonoBehaviour
     {
         if (slot != InvBaseItem.Slot.None)
         {
-            var index = (int) slot - 1;
+            var index = (int)slot - 1;
             if (mItems != null && index < mItems.Length)
             {
                 return mItems[index];
@@ -84,8 +84,8 @@ public class InvEquipment : MonoBehaviour
                 var num = 8;
                 mItems = new InvGameItem[num];
             }
-            var item3 = mItems[(int) slot - 1];
-            mItems[(int) slot - 1] = item;
+            var item3 = mItems[(int)slot - 1];
+            mItems[(int)slot - 1] = item;
             if (mAttachments == null)
             {
                 mAttachments = GetComponentsInChildren<InvAttachmentPoint>();
@@ -141,4 +141,3 @@ public class InvEquipment : MonoBehaviour
         }
     }
 }
-

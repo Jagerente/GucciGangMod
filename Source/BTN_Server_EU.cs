@@ -9,4 +9,3 @@ public class BTN_Server_EU : MonoBehaviour
         FengGameManagerMKII.OnPrivateServer = false;
     }
 }
-

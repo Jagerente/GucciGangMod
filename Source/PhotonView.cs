@@ -205,4 +205,3 @@ public class PhotonView : MonoBehaviour
         }
     }
 }
-

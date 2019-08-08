@@ -9,10 +9,10 @@ public class BTN_choose_human : MonoBehaviour
         var num2 = 0;
         foreach (var player in PhotonNetwork.playerList)
         {
-            if ((int) player.customProperties[PhotonPlayerProperty.isTitan] == 1)
+            if ((int)player.customProperties[PhotonPlayerProperty.isTitan] == 1)
             {
                 num++;
-                if ((bool) player.customProperties[PhotonPlayerProperty.dead])
+                if ((bool)player.customProperties[PhotonPlayerProperty.dead])
                 {
                     num2++;
                 }
@@ -87,4 +87,3 @@ public class BTN_choose_human : MonoBehaviour
         PhotonNetwork.player.SetCustomProperties(propertiesToSet);
     }
 }
-

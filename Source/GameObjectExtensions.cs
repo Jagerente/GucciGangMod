@@ -7,4 +7,3 @@ public static class GameObjectExtensions
         return target.activeInHierarchy;
     }
 }
-

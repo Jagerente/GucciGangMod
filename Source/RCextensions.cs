@@ -157,14 +157,14 @@ public static class RCextensions
 
     public static bool returnBoolFromObject(object obj)
     {
-        return obj != null && obj is bool && (bool) obj;
+        return obj != null && obj is bool && (bool)obj;
     }
 
     public static float returnFloatFromObject(object obj)
     {
         if (obj != null && obj is float)
         {
-            return (float) obj;
+            return (float)obj;
         }
         return 0f;
     }
@@ -173,7 +173,7 @@ public static class RCextensions
     {
         if (obj != null && obj is int)
         {
-            return (int) obj;
+            return (int)obj;
         }
         return 0;
     }
@@ -188,4 +188,3 @@ public static class RCextensions
         return string.Empty;
     }
 }
-

@@ -1,5 +1,4 @@
-﻿using GGM.Caching;
-using GGM.GUI.Pages;
+﻿using GGM.GUI.Pages;
 using UnityEngine;
 
 public class PanelMain : MonoBehaviour

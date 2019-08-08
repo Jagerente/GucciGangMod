@@ -12,4 +12,3 @@ public class BillboardScript : MonoBehaviour
         transform.Rotate(Vector3.left * -90f);
     }
 }
-

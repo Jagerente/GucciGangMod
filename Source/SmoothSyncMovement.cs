@@ -45,16 +45,16 @@ public class SmoothSyncMovement : MonoBehaviour
         }
         else
         {
-            correctPlayerPos = (Vector3) stream.ReceiveNext();
-            correctPlayerRot = (Quaternion) stream.ReceiveNext();
+            correctPlayerPos = (Vector3)stream.ReceiveNext();
+            correctPlayerRot = (Quaternion)stream.ReceiveNext();
             if (!noVelocity)
             {
-                correctPlayerVelocity = (Vector3) stream.ReceiveNext();
+                correctPlayerVelocity = (Vector3)stream.ReceiveNext();
             }
 
             if (PhotonCamera)
             {
-                correctCameraRot = (Quaternion) stream.ReceiveNext();
+                correctCameraRot = (Quaternion)stream.ReceiveNext();
             }
         }
     }

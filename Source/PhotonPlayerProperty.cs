@@ -36,7 +36,7 @@
     public static string RCBombG = "RCBombG";
     public static string RCBombR = "RCBombR";
     public static string RCBombRadius = "RCBombRadius";
-    public static string RCBombRange= "RCBombRange";
+    public static string RCBombRange = "RCBombRange";
     public static string RCBombSpeed = "RCBombSpeed";
     public static string RCBombCooldown = "RCBombCooldown";
     public static string RCteam = "RCteam";
@@ -52,4 +52,3 @@
     public static string uniform_type = "uniform_type";
     public static string current_gas = "current_gas";
 }
-

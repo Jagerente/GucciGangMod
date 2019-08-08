@@ -2,9 +2,7 @@
 
 public class SliderMouseSensitivity : MonoBehaviour
 {
-        private void OnSliderChange()
+    private void OnSliderChange()
     {
-
     }
 }
-

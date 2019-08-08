@@ -21,4 +21,3 @@ public class SynchronizeLights : MonoBehaviour
         }
     }
 }
-

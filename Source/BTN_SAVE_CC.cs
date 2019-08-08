@@ -9,4 +9,3 @@ public class BTN_SAVE_CC : MonoBehaviour
         manager.GetComponent<CustomCharacterManager>().SaveData();
     }
 }
-

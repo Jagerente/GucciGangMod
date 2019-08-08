@@ -67,4 +67,3 @@ public class MovementUpdate : MonoBehaviour
         rigidbody.velocity = veloctiy;
     }
 }
-

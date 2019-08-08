@@ -282,7 +282,7 @@ public class RibbonTrail
         }
         var head = Head;
         var index = Head;
-    Label_0052:
+        Label_0052:
         if (index == MaxElements)
         {
             index = 0;
@@ -377,4 +377,3 @@ public class RibbonTrail
         }
     }
 }
-

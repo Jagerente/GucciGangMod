@@ -9,4 +9,3 @@ public class BTN_SSR_up : MonoBehaviour
         panel.GetComponent<SnapShotReview>().ShowPrevIMG();
     }
 }
-

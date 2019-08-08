@@ -10,4 +10,3 @@ public class BTN_BackToMain : MonoBehaviour
         PhotonNetwork.Disconnect();
     }
 }
-

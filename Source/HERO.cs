@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GGM;
+using GGM.Config;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using GGM;
-using GGM.Config;
 using UnityEngine;
 using Xft;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -365,7 +365,7 @@ public class HERO : MonoBehaviour
         GameObject obj8;
         GameObject obj9;
         GameObject obj10;
-        var obj2 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
+        var obj2 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
             this.transform.position, this.transform.rotation);
         obj2.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
         obj2.GetComponent<HERO_SETUP>().isDeadBody = true;
@@ -373,11 +373,11 @@ public class HERO : MonoBehaviour
             .init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.ARM_R);
         if (!isBite)
         {
-            var gO = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
+            var gO = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
                 this.transform.position, this.transform.rotation);
-            var obj4 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
+            var obj4 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
                 this.transform.position, this.transform.rotation);
-            var obj5 = (GameObject) Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
+            var obj5 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
                 this.transform.position, this.transform.rotation);
             gO.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
             obj4.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
@@ -411,28 +411,28 @@ public class HERO : MonoBehaviour
             .Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R").transform;
         if (useGun)
         {
-            obj6 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position,
+            obj6 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position,
                 transform.rotation);
-            obj7 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_r"), transform2.position,
+            obj7 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_r"), transform2.position,
                 transform2.rotation);
-            obj8 = (GameObject) Instantiate(Resources.Load("Character_parts/character_3dmg_2"), this.transform.position,
+            obj8 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_2"), this.transform.position,
                 this.transform.rotation);
-            obj9 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_mag_l"),
+            obj9 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_mag_l"),
                 this.transform.position, this.transform.rotation);
-            obj10 = (GameObject) Instantiate(Resources.Load("Character_parts/character_gun_mag_r"),
+            obj10 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_mag_r"),
                 this.transform.position, this.transform.rotation);
         }
         else
         {
-            obj6 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position,
+            obj6 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position,
                 transform.rotation);
-            obj7 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position,
+            obj7 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position,
                 transform2.rotation);
-            obj8 = (GameObject) Instantiate(Resources.Load("Character_parts/character_3dmg"), this.transform.position,
+            obj8 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg"), this.transform.position,
                 this.transform.rotation);
-            obj9 = (GameObject) Instantiate(Resources.Load("Character_parts/character_3dmg_gas_l"),
+            obj9 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_gas_l"),
                 this.transform.position, this.transform.rotation);
-            obj10 = (GameObject) Instantiate(Resources.Load("Character_parts/character_3dmg_gas_r"),
+            obj10 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_gas_r"),
                 this.transform.position, this.transform.rotation);
         }
 
@@ -820,14 +820,13 @@ public class HERO : MonoBehaviour
         }
     }
 
-
     public void crossFade(string aniName, float time)
     {
         currentAnimation = aniName;
         animation.CrossFade(aniName, time);
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = {aniName, time};
+            object[] parameters = { aniName, time };
             photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
         }
     }
@@ -844,7 +843,6 @@ public class HERO : MonoBehaviour
 
         return string.Empty;
     }
-
 
     private void customAnimationSpeed()
     {
@@ -963,7 +961,7 @@ public class HERO : MonoBehaviour
             GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
             falseAttack();
             hasDied = true;
-            var obj2 = (GameObject) Instantiate(Resources.Load("hitMeat2"));
+            var obj2 = (GameObject)Instantiate(Resources.Load("hitMeat2"));
             obj2.transform.position = this.transform.position;
             Destroy(gameObject);
         }
@@ -1098,7 +1096,7 @@ public class HERO : MonoBehaviour
 
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
-            eren_titan = (GameObject) Instantiate(Resources.Load("TITAN_EREN"), transform.position, transform.rotation);
+            eren_titan = (GameObject)Instantiate(Resources.Load("TITAN_EREN"), transform.position, transform.rotation);
         }
         else
         {
@@ -1115,13 +1113,13 @@ public class HERO : MonoBehaviour
         titanForm = true;
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
-            object[] parameters = {eren_titan.GetPhotonView().viewID};
+            object[] parameters = { eren_titan.GetPhotonView().viewID };
             photonView.RPC("whoIsMyErenTitan", PhotonTargets.Others, parameters);
         }
 
         if (smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
         {
-            object[] objArray2 = {false};
+            object[] objArray2 = { false };
             photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray2);
         }
 
@@ -1993,7 +1991,7 @@ public class HERO : MonoBehaviour
                         if (!smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE &&
                             photonView.isMine)
                         {
-                            object[] parameters = {true};
+                            object[] parameters = { true };
                             photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
                         }
 
@@ -2004,7 +2002,7 @@ public class HERO : MonoBehaviour
                         if (smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE &&
                             photonView.isMine)
                         {
-                            object[] objArray3 = {false};
+                            object[] objArray3 = { false };
                             photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray3);
                         }
 
@@ -2037,20 +2035,20 @@ public class HERO : MonoBehaviour
         if (isLeftHandHooked && bulletLeft != null)
         {
             var vector = bulletLeft.transform.position - transform.position;
-            str = str + (int) (Mathf.Atan2(vector.x, vector.z) * 57.29578f);
+            str = str + (int)(Mathf.Atan2(vector.x, vector.z) * 57.29578f);
         }
 
         var str2 = str;
-        object[] objArray1 = {str2, "\nRight:", isRightHandHooked, " "};
+        object[] objArray1 = { str2, "\nRight:", isRightHandHooked, " " };
         str = string.Concat(objArray1);
         if (isRightHandHooked && bulletRight != null)
         {
             var vector2 = bulletRight.transform.position - transform.position;
-            str = str + (int) (Mathf.Atan2(vector2.x, vector2.z) * 57.29578f);
+            str = str + (int)(Mathf.Atan2(vector2.x, vector2.z) * 57.29578f);
         }
 
-        str = str + "\nfacingDirection:" + (int) facingDirection + "\nActual facingDirection:" +
-              (int) transform.rotation.eulerAngles.y + "\nState:" + state + "\n\n\n\n\n";
+        str = str + "\nfacingDirection:" + (int)facingDirection + "\nActual facingDirection:" +
+              (int)transform.rotation.eulerAngles.y + "\nState:" + state + "\n\n\n\n\n";
         if (state == HERO_STATE.Attack)
         {
             targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
@@ -2215,7 +2213,7 @@ public class HERO : MonoBehaviour
 
     public void hookedByHuman(int hooker, Vector3 hookPosition)
     {
-        object[] parameters = {hooker, hookPosition};
+        object[] parameters = { hooker, hookPosition };
         photonView.RPC("RPCHookedByHuman", photonView.owner, parameters);
     }
 
@@ -2327,8 +2325,8 @@ public class HERO : MonoBehaviour
             else
             {
                 Vector2 vector2 = this.maincamera.GetComponent<Camera>().WorldToScreenPoint(start);
-                myNetWorkName.transform.localPosition = new Vector3((int) (vector2.x - Screen.width * 0.5f),
-                    (int) (vector2.y - Screen.height * 0.5f), 0f);
+                myNetWorkName.transform.localPosition = new Vector3((int)(vector2.x - Screen.width * 0.5f),
+                    (int)(vector2.y - Screen.height * 0.5f), 0f);
             }
         }
 
@@ -2575,7 +2573,7 @@ public class HERO : MonoBehaviour
             useGas(0f);
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                bulletLeft = (GameObject) Instantiate(Resources.Load("hook"));
+                bulletLeft = (GameObject)Instantiate(Resources.Load("hook"));
             }
             else if (photonView.isMine)
             {
@@ -2609,7 +2607,7 @@ public class HERO : MonoBehaviour
             useGas(0f);
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                bulletRight = (GameObject) Instantiate(Resources.Load("hook"));
+                bulletRight = (GameObject)Instantiate(Resources.Load("hook"));
             }
             else if (photonView.isMine)
             {
@@ -2667,42 +2665,43 @@ public class HERO : MonoBehaviour
             {
                 case 0:
                     return;
-                case 1:
-                {
-                    if (Settings.HumanSkinsCountSetting <= 0) return;
-                    var url = "";
-                    for (var i = 0; i < 13; i++)
-                    {
-                        url += Settings.HumanSkinsList[Settings.HumanSkinsCurrentSetSetting][i] + (i != 12 ? "," : "");
-                    }
-                    StartCoroutine(loadskinE(-1, url));
-                    return;
-                }
-                case 2:
-                {
-                    if (Settings.HumanSkinsCountSetting <= 0) return;
-                    var url = "";
-                    for (var i = 0; i < 13; i++)
-                    {
-                        url += Settings.HumanSkinsList[Settings.HumanSkinsCurrentSetSetting][i] + (i != 12 ? "," : "");
-                    }
 
-                    if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
+                case 1:
                     {
-                        StartCoroutine(loadskinE(-1, url));
-                    }
-                    else
-                    {
-                        var viewID = -1;
-                        if (myHorse != null)
+                        if (Settings.HumanSkinsCountSetting <= 0) return;
+                        var url = "";
+                        for (var i = 0; i < 13; i++)
                         {
-                            viewID = myHorse.GetPhotonView().viewID;
+                            url += Settings.HumanSkinsList[Settings.HumanSkinsCurrentSetSetting][i] + (i != 12 ? "," : "");
+                        }
+                        StartCoroutine(loadskinE(-1, url));
+                        return;
+                    }
+                case 2:
+                    {
+                        if (Settings.HumanSkinsCountSetting <= 0) return;
+                        var url = "";
+                        for (var i = 0; i < 13; i++)
+                        {
+                            url += Settings.HumanSkinsList[Settings.HumanSkinsCurrentSetSetting][i] + (i != 12 ? "," : "");
                         }
 
-                        photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, viewID, url);
+                        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
+                        {
+                            StartCoroutine(loadskinE(-1, url));
+                        }
+                        else
+                        {
+                            var viewID = -1;
+                            if (myHorse != null)
+                            {
+                                viewID = myHorse.GetPhotonView().viewID;
+                            }
+
+                            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, viewID, url);
+                        }
+                        return;
                     }
-                    return;
-                }
             }
         }
     }
@@ -2727,6 +2726,7 @@ public class HERO : MonoBehaviour
         var isLocal = IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine;
 
         #region Hair
+
         if (setup.part_hair_1 != null)
         {
             var hairRenderer = setup.part_hair_1.renderer;
@@ -2764,8 +2764,11 @@ public class HERO : MonoBehaviour
                 hairRenderer.enabled = false;
             }
         }
-        #endregion
+
+        #endregion Hair
+
         #region Cape
+
         if (setup.part_cape != null)
         {
             var capeRenderer = setup.part_cape.renderer;
@@ -2799,8 +2802,11 @@ public class HERO : MonoBehaviour
                 capeRenderer.enabled = false;
             }
         }
-        #endregion
+
+        #endregion Cape
+
         #region Costume
+
         if (setup.part_chest_3 != null)
         {
             var chestRenderer = setup.part_chest_3.renderer;
@@ -2834,10 +2840,13 @@ public class HERO : MonoBehaviour
                 chestRenderer.enabled = false;
             }
         }
-        #endregion
+
+        #endregion Costume
+
         foreach (var otherRenderer in GetComponentsInChildren<Renderer>())
         {
             #region Hair
+
             if (otherRenderer.name.Contains(FengGameManagerMKII.s[1]))
             {
                 if (skins[1].EndsWith(".jpg") || skins[1].EndsWith(".png") || skins[1].EndsWith(".jpeg"))
@@ -2874,8 +2883,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Hair
+
             #region Eyes
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[2]))
             {
                 if (skins[2].EndsWith(".jpg") || skins[2].EndsWith(".png") || skins[2].EndsWith(".jpeg"))
@@ -2910,8 +2922,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Eyes
+
             #region Glasses
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[3]))
             {
                 if (skins[3].EndsWith(".jpg") || skins[3].EndsWith(".png") || skins[3].EndsWith(".jpeg"))
@@ -2946,8 +2961,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Glasses
+
             #region Face
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[4]))
             {
                 if (skins[4].EndsWith(".jpg") || skins[4].EndsWith(".png") || skins[4].EndsWith(".jpeg"))
@@ -2982,8 +3000,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Face
+
             #region Skin
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[5]) || otherRenderer.name.Contains(FengGameManagerMKII.s[6]) || otherRenderer.name.Contains(FengGameManagerMKII.s[10]))
             {
                 if (skins[5].EndsWith(".jpg") || skins[5].EndsWith(".png") || skins[5].EndsWith(".jpeg"))
@@ -3016,8 +3037,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Skin
+
             #region Costume
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[7]) || otherRenderer.name.Contains(FengGameManagerMKII.s[8]) || otherRenderer.name.Contains(FengGameManagerMKII.s[9]) || otherRenderer.name.Contains(FengGameManagerMKII.s[24]))
             {
                 if (skins[6].EndsWith(".jpg") || skins[6].EndsWith(".png") || skins[6].EndsWith(".jpeg"))
@@ -3050,8 +3074,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Costume
+
             #region Logo & Cape
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[11]) || otherRenderer.name.Contains(FengGameManagerMKII.s[12]))
             {
                 if (skins[7].EndsWith(".jpg") || skins[7].EndsWith(".png") || skins[7].EndsWith(".jpeg"))
@@ -3084,8 +3111,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Logo & Cape
+
             #region 3DMG Blade & Gun Left
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[15]) || (otherRenderer.name.Contains(FengGameManagerMKII.s[13]) || otherRenderer.name.Contains(FengGameManagerMKII.s[26])) && !otherRenderer.name.Contains("_r"))
             {
                 if (skins[8].EndsWith(".jpg") || skins[8].EndsWith(".png") || skins[8].EndsWith(".jpeg"))
@@ -3118,8 +3148,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion 3DMG Blade & Gun Left
+
             #region 3DMG Blade & Gun Right
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[17]) || otherRenderer.name.Contains(FengGameManagerMKII.s[16]) || otherRenderer.name.Contains(FengGameManagerMKII.s[26]) && otherRenderer.name.Contains("_r"))
             {
                 if (skins[9].EndsWith(".jpg") || skins[9].EndsWith(".png") || skins[9].EndsWith(".jpeg"))
@@ -3152,8 +3185,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion 3DMG Blade & Gun Right
+
             #region Gas
+
             else if (otherRenderer.name == FengGameManagerMKII.s[18] && customGas)
             {
                 if (skins[10].EndsWith(".jpg") || skins[10].EndsWith(".png") || skins[10].EndsWith(".jpeg"))
@@ -3186,8 +3222,11 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Gas
+
             #region Hoodie
+
             else if (otherRenderer.name.Contains(FengGameManagerMKII.s[25]))
             {
                 if (skins[11].EndsWith(".jpg") || skins[11].EndsWith(".png") || skins[11].EndsWith(".jpeg"))
@@ -3220,9 +3259,12 @@ public class HERO : MonoBehaviour
                     otherRenderer.enabled = false;
                 }
             }
-            #endregion
+
+            #endregion Hoodie
         }
+
         #region Horse
+
         if (customHorse && horse >= 0)
         {
             var horseObj = PhotonView.Find(horse).gameObject;
@@ -3265,8 +3307,11 @@ public class HERO : MonoBehaviour
                 }
             }
         }
-        #endregion
+
+        #endregion Horse
+
         #region Blade Trails
+
         if (isLocal && (skins[12].EndsWith(".jpg") || skins[12].EndsWith(".png") || skins[12].EndsWith(".jpeg")))
         {
             if (!FengGameManagerMKII.linkHash[0].ContainsKey(skins[12]))
@@ -3311,7 +3356,9 @@ public class HERO : MonoBehaviour
                 rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
             }
         }
-        #endregion
+
+        #endregion Blade Trails
+
         if (unloadAssets)
         {
             FengGameManagerMKII.FGM.unloadAssets();
@@ -3367,7 +3414,6 @@ public class HERO : MonoBehaviour
         playAnimation(currentPlayingClipName());
     }
 
-
     [RPC]
     private void netCrossFade(string aniName, float time)
     {
@@ -3392,7 +3438,7 @@ public class HERO : MonoBehaviour
 
             if (!info.sender.isLocal && !info.sender.isMasterClient)
             {
-                if (info.sender.customProperties[PhotonPlayerProperty.name] == null || 
+                if (info.sender.customProperties[PhotonPlayerProperty.name] == null ||
                     info.sender.customProperties[PhotonPlayerProperty.isTitan] == null)
                 {
                     InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
@@ -3506,7 +3552,7 @@ public class HERO : MonoBehaviour
                 RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) +
                 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
-            object[] parameters = {!(titanName == string.Empty) ? 1 : 0};
+            object[] parameters = { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
             {
@@ -3644,7 +3690,7 @@ public class HERO : MonoBehaviour
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.deaths,
-                (int) PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths] + 1);
+                (int)PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths] + 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             if (viewID != -1)
             {
@@ -3671,7 +3717,7 @@ public class HERO : MonoBehaviour
                         PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
 
-            object[] parameters = {!(titanName == string.Empty) ? 1 : 0};
+            object[] parameters = { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
         }
 
@@ -3681,7 +3727,7 @@ public class HERO : MonoBehaviour
         }
         else
         {
-            obj2 = (GameObject) Instantiate(Resources.Load("hitMeat2"));
+            obj2 = (GameObject)Instantiate(Resources.Load("hitMeat2"));
         }
 
         obj2.transform.position = this.transform.position;
@@ -3771,7 +3817,7 @@ public class HERO : MonoBehaviour
                 RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) +
                 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
-            object[] parameters = {!(titanName == string.Empty) ? 1 : 0};
+            object[] parameters = { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
             {
@@ -3899,8 +3945,8 @@ public class HERO : MonoBehaviour
         {
             if (FengGameManagerMKII.RCEvents.ContainsKey("OnPlayerDieByTitan"))
             {
-                event2 = (RCEvent) FengGameManagerMKII.RCEvents["OnPlayerDieByTitan"];
-                strArray = (string[]) FengGameManagerMKII.RCVariableNames["OnPlayerDieByTitan"];
+                event2 = (RCEvent)FengGameManagerMKII.RCEvents["OnPlayerDieByTitan"];
+                strArray = (string[])FengGameManagerMKII.RCVariableNames["OnPlayerDieByTitan"];
                 if (FengGameManagerMKII.playerVariables.ContainsKey(strArray[0]))
                 {
                     FengGameManagerMKII.playerVariables[strArray[0]] = photonView.owner;
@@ -3926,8 +3972,8 @@ public class HERO : MonoBehaviour
         }
         else if (FengGameManagerMKII.RCEvents.ContainsKey("OnPlayerDieByPlayer"))
         {
-            event2 = (RCEvent) FengGameManagerMKII.RCEvents["OnPlayerDieByPlayer"];
-            strArray = (string[]) FengGameManagerMKII.RCVariableNames["OnPlayerDieByPlayer"];
+            event2 = (RCEvent)FengGameManagerMKII.RCEvents["OnPlayerDieByPlayer"];
+            strArray = (string[])FengGameManagerMKII.RCVariableNames["OnPlayerDieByPlayer"];
             if (FengGameManagerMKII.playerVariables.ContainsKey(strArray[0]))
             {
                 FengGameManagerMKII.playerVariables[strArray[0]] = photonView.owner;
@@ -4013,14 +4059,13 @@ public class HERO : MonoBehaviour
         }
     }
 
-
     public void playAnimation(string aniName)
     {
         currentAnimation = aniName;
         animation.Play(aniName);
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = {aniName};
+            object[] parameters = { aniName };
             photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
         }
     }
@@ -4032,7 +4077,7 @@ public class HERO : MonoBehaviour
         animation[aniName].normalizedTime = normalizedTime;
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = {aniName, normalizedTime};
+            object[] parameters = { aniName, normalizedTime };
             photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
         }
     }
@@ -4066,7 +4111,6 @@ public class HERO : MonoBehaviour
 
         customAnimationSpeed();
     }
-
 
     [RPC]
     public void ReturnFromCannon(PhotonMessageInfo info)
@@ -4272,7 +4316,7 @@ public class HERO : MonoBehaviour
             {
                 if (val != 1)
                 {
-                    objArray = new object[] {1};
+                    objArray = new object[] { 1 };
                     photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
                 }
             }
@@ -4287,13 +4331,13 @@ public class HERO : MonoBehaviour
 
                 if (val != num)
                 {
-                    objArray = new object[] {num};
+                    objArray = new object[] { num };
                     photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
                 }
             }
             else if (RCSettings.pvpMode == 2 && val != photonView.owner.ID)
             {
-                objArray = new object[] {photonView.owner.ID};
+                objArray = new object[] { photonView.owner.ID };
                 photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, objArray);
             }
         }
@@ -4473,7 +4517,7 @@ public class HERO : MonoBehaviour
     {
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
         {
-            object[] parameters = {team};
+            object[] parameters = { team };
             photonView.RPC("setMyTeam", PhotonTargets.AllBuffered, parameters);
             var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.team, team);
@@ -4510,7 +4554,7 @@ public class HERO : MonoBehaviour
         {
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                var obj2 = (GameObject) Instantiate(Resources.Load("FX/flareBullet" + type), transform.position,
+                var obj2 = (GameObject)Instantiate(Resources.Load("FX/flareBullet" + type), transform.position,
                     transform.rotation);
                 obj2.GetComponent<FlareMovement>().dontShowHint();
                 Destroy(obj2, 25f);
@@ -4563,20 +4607,21 @@ public class HERO : MonoBehaviour
                 vector = hit.point - baseTransform.position;
                 var magnitude = vector.magnitude;
                 var obj11 = LabelDistance;
-                var str = magnitude <= Settings.DrawDistanceSetting ? ((int) magnitude).ToString() : "???";
+                var str = magnitude <= Settings.DrawDistanceSetting ? ((int)magnitude).ToString() : "???";
                 var hitDamage = currentSpeed;
                 var singleShotDamage = currentSpeed * 0.4f;
                 var doubleShotDamage = currentSpeed * 0.6f;
                 switch (Settings.SpeedometerSetting)
                 {
                     case 1:
-                        str = str + "\n" + 
+                        str = str + "\n" +
                               currentSpeed.ToString("F1") + " U/S";
                         break;
+
                     case 2:
                         if (!useGun)
                         {
-                            str = str + "\n" + 
+                            str = str + "\n" +
                                   (hitDamage / 100).ToString("F1") + "K";
                         }
                         else
@@ -4588,15 +4633,16 @@ public class HERO : MonoBehaviour
                                           (singleShotDamage / 100).ToString("F1") + "K\n" +
                                           (doubleShotDamage / 100f).ToString("F1") + "K";
                                     break;
+
                                 case 1:
                                     str = str + "\n" +
                                           (singleShotDamage / 100).ToString("F1") + "K";
                                     break;
+
                                 case 2:
                                     str = str + "\n" +
                                           (doubleShotDamage / 100f).ToString("F1") + "K";
                                     break;
-                                
                             }
                         }
                         break;
@@ -4822,7 +4868,7 @@ public class HERO : MonoBehaviour
             speed = Mathf.Max(10f, speed);
             target.GetComponent<UILabel>().text = speed.ToString();
             target.transform.localScale = Vector3.zero;
-            speed = (int) (speed * 0.1f);
+            speed = (int)(speed * 0.1f);
             speed = Mathf.Clamp(speed, 40f, 150f);
             iTween.Stop(target);
             object[] args =
@@ -4865,7 +4911,7 @@ public class HERO : MonoBehaviour
 
             if (smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
             {
-                object[] parameters = {false};
+                object[] parameters = { false };
                 photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
             }
 
@@ -4948,7 +4994,7 @@ public class HERO : MonoBehaviour
             }
 
             var obj2 = GGM.Caching.GameObjectCache.Find("UI_IN_GAME");
-            myNetWorkName = (GameObject) Instantiate(Resources.Load("UI/LabelNameOverHead"));
+            myNetWorkName = (GameObject)Instantiate(Resources.Load("UI/LabelNameOverHead"));
             myNetWorkName.name = "LabelNameOverHead";
             myNetWorkName.transform.parent = obj2.GetComponent<UIReferArray>().panels[0].transform;
             myNetWorkName.transform.localScale = new Vector3(14f, 14f, 14f);
@@ -5033,7 +5079,7 @@ public class HERO : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("NetworkObject");
             if (IN_GAME_MAIN_CAMERA.dayLight == DayLight.Night)
             {
-                var obj3 = (GameObject) Instantiate(Resources.Load("flashlight"));
+                var obj3 = (GameObject)Instantiate(Resources.Load("flashlight"));
                 obj3.transform.parent = baseTransform;
                 obj3.transform.position = baseTransform.position + Vector3.up;
                 obj3.transform.rotation = Quaternion.Euler(353f, 0f, 0f);
@@ -5088,9 +5134,9 @@ public class HERO : MonoBehaviour
     {
         var transform = setup.part_blade_l.transform;
         var transform2 = setup.part_blade_r.transform;
-        var obj2 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_l"),
+        var obj2 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_l"),
             transform.position, transform.rotation);
-        var obj3 = (GameObject) Instantiate(Resources.Load("Character_parts/character_blade_r"),
+        var obj3 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_r"),
             transform2.position, transform2.rotation);
         obj2.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
         obj3.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
@@ -5132,7 +5178,6 @@ public class HERO : MonoBehaviour
         myHorse.GetComponent<Horse>().unmounted();
         isMounted = false;
     }
-
 
     public void update()
     {
@@ -5938,7 +5983,7 @@ public class HERO : MonoBehaviour
                                         {
                                             if (!PhotonNetwork.isMasterClient)
                                             {
-                                                object[] parameters = {5f, 100f};
+                                                object[] parameters = { 5f, 100f };
                                                 photonView.RPC("netTauntAttack", PhotonTargets.MasterClient,
                                                     parameters);
                                             }
@@ -6055,7 +6100,7 @@ public class HERO : MonoBehaviour
                                     }
                                     else
                                     {
-                                        obj4 = (GameObject) Instantiate(Resources.Load(prefabName),
+                                        obj4 = (GameObject)Instantiate(Resources.Load(prefabName),
                                             baseTransform.position + baseTransform.up * 0.8f -
                                             baseTransform.right * 0.1f, baseTransform.rotation);
                                     }
@@ -6084,7 +6129,7 @@ public class HERO : MonoBehaviour
                                     {
                                         setup.part_blade_l.SetActive(false);
                                         var transform = setup.part_blade_l.transform;
-                                        var obj5 = (GameObject) Instantiate(
+                                        var obj5 = (GameObject)Instantiate(
                                             Resources.Load("Character_parts/character_gun_l"), transform.position,
                                             transform.rotation);
                                         obj5.renderer.material =
@@ -6101,7 +6146,7 @@ public class HERO : MonoBehaviour
                                     {
                                         setup.part_blade_r.SetActive(false);
                                         var transform5 = setup.part_blade_r.transform;
-                                        var obj6 = (GameObject) Instantiate(
+                                        var obj6 = (GameObject)Instantiate(
                                             Resources.Load("Character_parts/character_gun_r"), transform5.position,
                                             transform5.rotation);
                                         obj6.renderer.material =

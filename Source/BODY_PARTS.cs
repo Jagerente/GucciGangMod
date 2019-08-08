@@ -5,4 +5,3 @@
     ARM_R,
     LOWER
 }
-

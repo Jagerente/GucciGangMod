@@ -23,4 +23,3 @@
     public static int salute = 12;
     public static int up;
 }
-

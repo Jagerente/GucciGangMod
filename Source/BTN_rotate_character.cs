@@ -37,4 +37,3 @@ public class BTN_rotate_character : MonoBehaviour
         transform2.position -= camera.transform.forward * distance;
     }
 }
-

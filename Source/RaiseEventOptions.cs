@@ -11,4 +11,3 @@ public class RaiseEventOptions
     public byte SequenceChannel;
     public int[] TargetActors;
 }
-

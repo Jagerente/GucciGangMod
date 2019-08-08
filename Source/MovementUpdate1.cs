@@ -39,4 +39,3 @@ public class MovementUpdate1 : MonoBehaviour
         transform.localScale = newScale;
     }
 }
-

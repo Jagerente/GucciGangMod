@@ -26,12 +26,12 @@ namespace GGM.GUI.Pages
 
         internal static T GetInstance<T>() where T : Page
         {
-            if(pageCache.TryGetValue(typeof(T), out var result))
+            if (pageCache.TryGetValue(typeof(T), out var result))
             {
                 return result as T;
             }
             var gos = FindObjectsOfType<T>();
-            if(gos.Length > 1)
+            if (gos.Length > 1)
             {
                 throw new Exception($"Instance of class {typeof(T).Name} is not only one!");
             }
@@ -42,13 +42,14 @@ namespace GGM.GUI.Pages
                     DontDestroyOnLoad(result);
                     pageCache.Add(typeof(T), result);
                     break;
+
                 case 1:
                     result = gos[0];
                     pageCache.Add(typeof(T), result);
                     break;
             }
 
-            return (T) result;
+            return (T)result;
         }
     }
 }

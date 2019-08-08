@@ -169,8 +169,8 @@ public class CannonBall : MonoBehaviour
         }
         else
         {
-            correctPos = (Vector3) stream.ReceiveNext();
-            correctVelocity = (Vector3) stream.ReceiveNext();
+            correctPos = (Vector3)stream.ReceiveNext();
+            correctVelocity = (Vector3)stream.ReceiveNext();
         }
     }
 
@@ -188,6 +188,4 @@ public class CannonBall : MonoBehaviour
         yield return new WaitForSeconds(time);
         destroyMe();
     }
-
 }
-

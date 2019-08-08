@@ -14,4 +14,3 @@ public class Btn_CreateLanGame : MonoBehaviour
         Destroy(gameObject);
     }
 }
-

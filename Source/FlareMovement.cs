@@ -20,7 +20,7 @@ public class FlareMovement : MonoBehaviour
         hero = GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object;
         if (!nohint && hero != null)
         {
-            hint = (GameObject) Instantiate(Resources.Load("UI/" + color + "FlareHint"));
+            hint = (GameObject)Instantiate(Resources.Load("UI/" + color + "FlareHint"));
             if (color == "Black")
             {
                 offY = Vector3.up * 0.4f;
@@ -69,4 +69,3 @@ public class FlareMovement : MonoBehaviour
         }
     }
 }
-

@@ -14,8 +14,10 @@ public class UICheckbox : MonoBehaviour
     private bool mStarted;
     private Transform mTrans;
     public OnStateChange onStateChange;
+
     [SerializeField, HideInInspector]
     private bool option;
+
     public bool optionCanBeNone;
     public Transform radioButtonRoot;
     public bool startsChecked = true;
@@ -127,4 +129,3 @@ public class UICheckbox : MonoBehaviour
 
     public delegate void OnStateChange(bool state);
 }
-

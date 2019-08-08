@@ -8,4 +8,3 @@ public class BTN_ToCredit : MonoBehaviour
         NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelCredits, true);
     }
 }
-

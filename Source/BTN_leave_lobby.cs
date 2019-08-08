@@ -9,4 +9,3 @@ public class BTN_leave_lobby : MonoBehaviour
         PhotonNetwork.Disconnect();
     }
 }
-

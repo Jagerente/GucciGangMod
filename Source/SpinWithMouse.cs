@@ -25,4 +25,3 @@ public class SpinWithMouse : MonoBehaviour
         mTrans = transform;
     }
 }
-

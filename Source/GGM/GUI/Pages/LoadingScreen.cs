@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using GGM.Caching;
+﻿using GGM.Caching;
 using UnityEngine;
 
 namespace GGM.GUI.Pages

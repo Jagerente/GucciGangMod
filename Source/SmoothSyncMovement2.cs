@@ -29,8 +29,8 @@ public class SmoothSyncMovement2 : MonoBehaviour
         }
         else
         {
-            correctPlayerPos = (Vector3) stream.ReceiveNext();
-            correctPlayerRot = (Quaternion) stream.ReceiveNext();
+            correctPlayerPos = (Vector3)stream.ReceiveNext();
+            correctPlayerRot = (Quaternion)stream.ReceiveNext();
         }
     }
 

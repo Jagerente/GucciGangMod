@@ -19,11 +19,13 @@ namespace GGM.GUI
 
         public static Rect AlignRect(float width, float height, Alignment alignment)
         { return AlignRect(width, height, new Rect(0, 0, Screen.width, Screen.height), alignment, 0f, 0f); }
+
         public static Rect AlignRect(float width, float height, Alignment alignment, float xOffset, float yOffset)
         { return AlignRect(width, height, new Rect(0, 0, Screen.width, Screen.height), alignment, xOffset, yOffset); }
 
         public static Rect AlignRect(float width, float height, Rect parentRect, Alignment alignment)
         { return AlignRect(width, height, parentRect, alignment, 0f, 0f); }
+
         public static Rect AlignRect(float width, float height, Rect parentRect, Alignment alignment, float xOffset, float yOffset)
         {
             Rect oRect;
@@ -33,30 +35,39 @@ namespace GGM.GUI
                 case Alignment.TOPLEFT:
                     oRect = new Rect(0f, 0f, width, height);
                     break;
+
                 case Alignment.TOPRIGHT:
                     oRect = new Rect(parentRect.width - width, 0f, width, height);
                     break;
+
                 case Alignment.TOPCENTER:
                     oRect = new Rect(parentRect.width * 0.5F - width * 0.5F, 0f, width, height);
                     break;
+
                 case Alignment.CENTER:
                     oRect = new Rect(parentRect.width * 0.5F - width * 0.5F, parentRect.height * 0.5F - height * 0.5F, width, height);
                     break;
+
                 case Alignment.RIGHT:
                     oRect = new Rect(parentRect.width - width, parentRect.height * 0.5F - height * 0.5F, width, height);
                     break;
+
                 case Alignment.BOTTOMRIGHT:
                     oRect = new Rect(parentRect.width - width, parentRect.height - height, width, height);
                     break;
+
                 case Alignment.BOTTOMCENTER:
                     oRect = new Rect(parentRect.width * 0.5F - width * 0.5F, parentRect.height - height, width, height);
                     break;
+
                 case Alignment.BOTTOMLEFT:
                     oRect = new Rect(0f, parentRect.y + parentRect.height - height, width, height);
                     break;
+
                 case Alignment.LEFT:
                     oRect = new Rect(0f, parentRect.height * 0.5F - height * 0.5F, width, height);
                     break;
+
                 default:
                     oRect = new Rect(0f, 0f, width, height);
                     break;
@@ -70,6 +81,7 @@ namespace GGM.GUI
         // Rect extensions
         // Reduce the size of the rect from the center
         public static Rect Shrink(this Rect r, float nbPixels) { return r.Shrink(nbPixels, nbPixels); }
+
         public static Rect Shrink(this Rect r, float nbPixelX, float nbPixelY)
         {
             return new Rect(r.x + nbPixelX, r.y + nbPixelY, r.width - nbPixelX * 2f, r.height - nbPixelY * 2f);
@@ -77,7 +89,11 @@ namespace GGM.GUI
 
         // Enhance the size of the rect from the center
         public static Rect Grow(this Rect r, float nbPixels) { return r.Shrink(-nbPixels, -nbPixels); }
-        public static Rect Grow(this Rect r, float nbPixelX, float nbPixelY) { return r.Shrink(-nbPixelX, -nbPixelY); }
+
+        public static Rect Grow(this Rect r, float nbPixelX, float nbPixelY)
+        {
+            return r.Shrink(-nbPixelX, -nbPixelY);
+        }
 
         // Make sure the rect is contained inside another rect. It's size isn't changed.
         public static Rect ClampPosition(this Rect r, Rect borderRect)
@@ -89,8 +105,17 @@ namespace GGM.GUI
 
         // Translate the rect
         public static Rect MoveX(this Rect r, float xMovement) { return r.Move(xMovement, 0f); }
-        public static Rect MoveY(this Rect r, float yMovement) { return r.Move(0f, yMovement); }
-        public static Rect Move(this Rect r, Vector2 movement) { return r.Move(movement.x, movement.y); }
+
+        public static Rect MoveY(this Rect r, float yMovement)
+        {
+            return r.Move(0f, yMovement);
+        }
+
+        public static Rect Move(this Rect r, Vector2 movement)
+        {
+            return r.Move(movement.x, movement.y);
+        }
+
         public static Rect Move(this Rect r, float xMovement, float yMovement)
         {
             return new Rect(r.x + xMovement, r.y + yMovement, r.width, r.height);
@@ -111,27 +136,41 @@ namespace GGM.GUI
         // Quick access to the screen rect
         public static Rect screenRect { get { return new Rect(0f, 0f, Screen.width, Screen.height); } }
 
-
         // MOUSE FUNCTIONS
         // Easy access to the gui mouse pos
         public static Vector2 mousePos { get { return Event.current.mousePosition; } }
+
         // gui mouse pos with the y inverted
         public static Vector2 mousePosInvertY { get { return FlipY(mousePos); } }
-        public static Vector2 FlipY(Vector2 inPos) { inPos.y = Screen.height - inPos.y; return inPos; }
-        public static Vector2 MouseRelativePos(Rect rect) { return RelativePos(rect, mousePos.x, mousePos.y); }
+
+        public static Vector2 FlipY(Vector2 inPos)
+        {
+            inPos.y = Screen.height - inPos.y; return inPos;
+        }
+
+        public static Vector2 MouseRelativePos(Rect rect)
+        {
+            return RelativePos(rect, mousePos.x, mousePos.y);
+        }
+
         // Give the inPos relative to the input rect
         public static Vector2 RelativePos(Rect rect, Vector2 inPos) { return RelativePos(rect, inPos.x, inPos.y); }
-        public static Vector2 RelativePos(Rect rect, Vector3 inPos) { return RelativePos(rect, inPos.x, inPos.y); }
+
+        public static Vector2 RelativePos(Rect rect, Vector3 inPos)
+        {
+            return RelativePos(rect, inPos.x, inPos.y);
+        }
+
         public static Vector2 RelativePos(Rect rect, float x, float y)
         {
             return new Vector2(x - rect.x, y - rect.y);
         }
+
         // Give the inPos as one group higher
         public static Vector2 InverseTransformPoint(Rect rect, Vector3 inPos)
         {
             return new Vector2(rect.x + inPos.x, rect.y + inPos.y);
         }
-
 
         // Touch extensions
         // returns the given touch in GUI coordinates
@@ -157,6 +196,7 @@ namespace GGM.GUI
         {
             return aEvent.type == EventType.KeyDown && aEvent.keyCode == aKey;
         }
+
         public static bool GetKeyUp(this Event aEvent, KeyCode aKey)
         {
             return aEvent.type == EventType.KeyUp && aEvent.keyCode == aKey;
@@ -167,6 +207,7 @@ namespace GGM.GUI
         {
             return aEvent.type == EventType.MouseDown && aEvent.button == aButton;
         }
+
         public static bool GetMouseUp(this Event aEvent, int aButton)
         {
             return aEvent.type == EventType.MouseUp && aEvent.button == aButton;
@@ -177,6 +218,7 @@ namespace GGM.GUI
         {
             return aEvent.type == EventType.MouseDown && aEvent.button == aButton && aRect.Contains(aEvent.mousePosition);
         }
+
         public static bool GetMouseUp(this Event aEvent, int aButton, Rect aRect)
         {
             return aEvent.type == EventType.MouseUp && aEvent.button == aButton && aRect.Contains(aEvent.mousePosition);

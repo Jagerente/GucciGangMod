@@ -7,8 +7,10 @@ public class InvGameItem
 {
     public int itemLevel;
     private InvBaseItem mBaseItem;
+
     [SerializeField]
     private int mBaseItemID;
+
     public Quality quality;
 
     public InvGameItem(int id)
@@ -57,7 +59,8 @@ public class InvGameItem
                     }
                     if (!flag)
                     {
-                        var item = new InvStat {
+                        var item = new InvStat
+                        {
                             id = stat.id,
                             amount = num4,
                             modifier = stat.modifier
@@ -228,4 +231,3 @@ public class InvGameItem
         _LastDoNotUse
     }
 }
-

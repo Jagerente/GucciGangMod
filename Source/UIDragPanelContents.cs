@@ -4,6 +4,7 @@
 public class UIDragPanelContents : MonoBehaviour
 {
     public UIDraggablePanel draggablePanel;
+
     [HideInInspector, SerializeField]
     private UIPanel panel;
 
@@ -55,4 +56,3 @@ public class UIDragPanelContents : MonoBehaviour
         }
     }
 }
-

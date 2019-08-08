@@ -3,4 +3,3 @@
     Default = 0,
     SqlLobby = 2
 }
-

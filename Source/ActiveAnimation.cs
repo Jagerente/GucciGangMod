@@ -8,7 +8,6 @@ public class ActiveAnimation : IgnoreTimeScale
     public GameObject eventReceiver;
     private Animation mAnim;
 
-
     private Direction mDisableDirection;
     private Direction mLastDirection;
     private bool mNotify;
@@ -43,7 +42,7 @@ public class ActiveAnimation : IgnoreTimeScale
                 if (string.IsNullOrEmpty(clipName) || animationState.name == clipName)
                 {
                     var num = Mathf.Abs(animationState.speed);
-                    animationState.speed = num * (float) playDirection;
+                    animationState.speed = num * (float)playDirection;
                     if (playDirection == Direction.Reverse && animationState.time == 0f)
                     {
                         animationState.time = animationState.length;
@@ -99,7 +98,7 @@ public class ActiveAnimation : IgnoreTimeScale
         }
 
         component.mAnim = anim;
-        component.mDisableDirection = (Direction) disableCondition;
+        component.mDisableDirection = (Direction)disableCondition;
         component.eventReceiver = null;
         component.callWhenFinished = null;
         component.onFinished = null;
@@ -124,7 +123,6 @@ public class ActiveAnimation : IgnoreTimeScale
             }
         }
     }
-
 
     private void Update()
     {
@@ -234,7 +232,6 @@ public class ActiveAnimation : IgnoreTimeScale
             return false;
         }
     }
-
 
     public delegate void OnFinished(ActiveAnimation anim);
 }

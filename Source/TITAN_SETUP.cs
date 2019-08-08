@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using GGM.Config;
+﻿using GGM.Config;
+using System.Collections;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 
@@ -36,7 +36,7 @@ public class TITAN_SETUP : MonoBehaviour
         hairType = hair;
         if (this.hair.hair != string.Empty)
         {
-            var iteratorVariable1 = (GameObject) Instantiate(Resources.Load("Character/" + this.hair.hair));
+            var iteratorVariable1 = (GameObject)Instantiate(Resources.Load("Character/" + this.hair.hair));
             iteratorVariable1.transform.parent = hair_go_ref.transform.parent;
             iteratorVariable1.transform.position = hair_go_ref.transform.position;
             iteratorVariable1.transform.rotation = hair_go_ref.transform.rotation;
@@ -53,7 +53,7 @@ public class TITAN_SETUP : MonoBehaviour
             }
             else if (FengGameManagerMKII.linkHash[0].ContainsKey(hairlink))
             {
-                iteratorVariable1.renderer.material = (Material) FengGameManagerMKII.linkHash[0][hairlink];
+                iteratorVariable1.renderer.material = (Material)FengGameManagerMKII.linkHash[0][hairlink];
             }
             else
             {
@@ -66,11 +66,11 @@ public class TITAN_SETUP : MonoBehaviour
                     iteratorVariable0 = true;
                     iteratorVariable1.renderer.material.mainTexture = iteratorVariable4;
                     FengGameManagerMKII.linkHash[0].Add(hairlink, iteratorVariable1.renderer.material);
-                    iteratorVariable1.renderer.material = (Material) FengGameManagerMKII.linkHash[0][hairlink];
+                    iteratorVariable1.renderer.material = (Material)FengGameManagerMKII.linkHash[0][hairlink];
                 }
                 else
                 {
-                    iteratorVariable1.renderer.material = (Material) FengGameManagerMKII.linkHash[0][hairlink];
+                    iteratorVariable1.renderer.material = (Material)FengGameManagerMKII.linkHash[0][hairlink];
                 }
             }
             part_hair = iteratorVariable1;
@@ -91,7 +91,7 @@ public class TITAN_SETUP : MonoBehaviour
         {
             var num = 0.25f;
             var num2 = 0.125f;
-            var x = num2 * (int) (id / 8f);
+            var x = num2 * (int)(id / 8f);
             var y = -num * (id % 4);
             go.renderer.material.mainTextureOffset = new Vector2(x, y);
         }
@@ -112,7 +112,7 @@ public class TITAN_SETUP : MonoBehaviour
             hair = CostumeHair.hairsM[9];
             hairType = 9;
         }
-        part_hair = (GameObject) Instantiate(Resources.Load("Character/" + hair.hair));
+        part_hair = (GameObject)Instantiate(Resources.Load("Character/" + hair.hair));
         part_hair.transform.parent = hair_go_ref.transform.parent;
         part_hair.transform.position = hair_go_ref.transform.position;
         part_hair.transform.rotation = hair_go_ref.transform.rotation;
@@ -132,7 +132,7 @@ public class TITAN_SETUP : MonoBehaviour
     {
         int num;
         object[] objArray2;
-        if ((int) FengGameManagerMKII.settings[1] == 1 && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine))
+        if ((int)FengGameManagerMKII.settings[1] == 1 && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine))
         {
             Color color;
             num = Random.Range(0, 9);
@@ -141,15 +141,15 @@ public class TITAN_SETUP : MonoBehaviour
                 num = 9;
             }
             var index = skin - 70;
-            if ((int) FengGameManagerMKII.settings[32] == 1)
+            if ((int)FengGameManagerMKII.settings[32] == 1)
             {
                 index = Random.Range(16, 20);
             }
-            if ((int) FengGameManagerMKII.settings[index] >= 0)
+            if ((int)FengGameManagerMKII.settings[index] >= 0)
             {
-                num = (int) FengGameManagerMKII.settings[index];
+                num = (int)FengGameManagerMKII.settings[index];
             }
-            var hairlink = (string) FengGameManagerMKII.settings[index + 5];
+            var hairlink = (string)FengGameManagerMKII.settings[index + 5];
             var eye = Random.Range(1, 8);
             if (haseye)
             {
@@ -202,7 +202,7 @@ public class TITAN_SETUP : MonoBehaviour
                 hair = CostumeHair.hairsM[9];
                 hairType = 9;
             }
-            part_hair = (GameObject) Instantiate(Resources.Load("Character/" + hair.hair));
+            part_hair = (GameObject)Instantiate(Resources.Load("Character/" + hair.hair));
             part_hair.transform.parent = hair_go_ref.transform.parent;
             part_hair.transform.position = hair_go_ref.transform.position;
             part_hair.transform.rotation = hair_go_ref.transform.rotation;
@@ -227,7 +227,7 @@ public class TITAN_SETUP : MonoBehaviour
         hairType = type;
         if (hair.hair != string.Empty)
         {
-            var obj2 = (GameObject) Instantiate(Resources.Load("Character/" + hair.hair));
+            var obj2 = (GameObject)Instantiate(Resources.Load("Character/" + hair.hair));
             obj2.transform.parent = hair_go_ref.transform.parent;
             obj2.transform.position = hair_go_ref.transform.position;
             obj2.transform.rotation = hair_go_ref.transform.rotation;
@@ -242,7 +242,7 @@ public class TITAN_SETUP : MonoBehaviour
     [RPC]
     public void setHairRPC2(int hair, int eye, string hairlink)
     {
-        if ((int) FengGameManagerMKII.settings[1] == 1)
+        if ((int)FengGameManagerMKII.settings[1] == 1)
         {
             StartCoroutine(loadskinE(hair, eye, hairlink));
         }
@@ -253,7 +253,7 @@ public class TITAN_SETUP : MonoBehaviour
         Destroy(part_hair);
         hair = CostumeHair.hairsM[3];
         hairType = 3;
-        var obj2 = (GameObject) Instantiate(Resources.Load("Character/" + hair.hair));
+        var obj2 = (GameObject)Instantiate(Resources.Load("Character/" + hair.hair));
         obj2.transform.parent = hair_go_ref.transform.parent;
         obj2.transform.position = hair_go_ref.transform.position;
         obj2.transform.rotation = hair_go_ref.transform.rotation;
@@ -287,6 +287,4 @@ public class TITAN_SETUP : MonoBehaviour
         this.skin = skin;
         this.haseye = haseye;
     }
-
 }
-

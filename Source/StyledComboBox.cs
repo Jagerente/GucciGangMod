@@ -8,11 +8,15 @@ public class StyledComboBox : StyledItem
     private bool isToggled;
     public StyledItem itemMenuPrefab;
     public StyledItem itemPrefab;
+
     [HideInInspector, SerializeField]
     private List<StyledItem> items = new List<StyledItem>();
+
     public SelectionChangedHandler OnSelectionChanged;
+
     [HideInInspector, SerializeField]
     private StyledComboBoxPrefab root;
+
     [SerializeField]
     private int selectedIndex;
 
@@ -20,7 +24,8 @@ public class StyledComboBox : StyledItem
     {
         if (itemPrefab != null)
         {
-            var yf = new AddItemc__AnonStoreyF {
+            var yf = new AddItemc__AnonStoreyF
+            {
                 f__this = this
             };
             var fourCornersArray = new Vector3[4];
@@ -164,7 +169,6 @@ public class StyledComboBox : StyledItem
         }
     }
 
-    
     private sealed class AddItemc__AnonStoreyF
     {
         internal StyledComboBox f__this;
@@ -179,4 +183,3 @@ public class StyledComboBox : StyledItem
 
     public delegate void SelectionChangedHandler(StyledItem item);
 }
-

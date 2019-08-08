@@ -86,7 +86,7 @@ public class UIDraggableCamera : IgnoreTimeScale
             }
 
             var vector = Vector2.Scale(delta, -scale);
-            mTrans.localPosition += (Vector3) vector;
+            mTrans.localPosition += (Vector3)vector;
             mMomentum = Vector2.Lerp(mMomentum, mMomentum + vector * (0.01f * momentumAmount), 0.67f);
             if (dragEffect != UIDragObject.DragEffect.MomentumAndSpring && ConstrainToBounds(true))
             {
@@ -95,7 +95,6 @@ public class UIDraggableCamera : IgnoreTimeScale
             }
         }
     }
-
 
     public void Press(bool isPressed)
     {
@@ -162,7 +161,7 @@ public class UIDraggableCamera : IgnoreTimeScale
             mScroll = NGUIMath.SpringLerp(mScroll, 0f, 20f, deltaTime);
             if (mMomentum.magnitude > 0.01f)
             {
-                mTrans.localPosition += (Vector3) NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
+                mTrans.localPosition += (Vector3)NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
                 mBounds = NGUIMath.CalculateAbsoluteWidgetBounds(rootForBounds);
                 if (!ConstrainToBounds(dragEffect == UIDragObject.DragEffect.None))
                 {

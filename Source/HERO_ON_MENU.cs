@@ -46,4 +46,3 @@ public class HERO_ON_MENU : MonoBehaviour
         animation["stand_levi"].speed = num;
     }
 }
-

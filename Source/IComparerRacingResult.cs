@@ -5,8 +5,8 @@ public class IComparerRacingResult : IComparer
 {
     int IComparer.Compare(object x, object y)
     {
-        var time = ((RacingResult) x).time;
-        var num2 = ((RacingResult) y).time;
+        var time = ((RacingResult)x).time;
+        var num2 = ((RacingResult)y).time;
         if (time == num2 || Math.Abs(time - num2) < float.Epsilon)
         {
             return 0;
@@ -18,4 +18,3 @@ public class IComparerRacingResult : IComparer
         return 1;
     }
 }
-

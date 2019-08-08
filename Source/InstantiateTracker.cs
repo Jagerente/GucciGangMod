@@ -641,7 +641,7 @@ public class InstantiateTracker
         public GameResource type = GameResource.none;
 
         public abstract bool KickWorthy();
+
         public abstract void reset();
     }
 }
-

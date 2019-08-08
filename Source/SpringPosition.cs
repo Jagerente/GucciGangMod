@@ -83,4 +83,3 @@ public class SpringPosition : IgnoreTimeScale
 
     public delegate void OnFinished(SpringPosition spring);
 }
-

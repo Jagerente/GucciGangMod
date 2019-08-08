@@ -37,4 +37,3 @@ public class PanelMultiStart : MonoBehaviour
         showTxt();
     }
 }
-

@@ -16,4 +16,3 @@
     public static string color_titans = "FA8258";
     public static string color_X = "000000";
 }
-

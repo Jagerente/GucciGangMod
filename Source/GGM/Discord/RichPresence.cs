@@ -2,7 +2,7 @@
 
 namespace GGM.Discord
 {
-    class RichPresence : MonoBehaviour
+    internal class RichPresence : MonoBehaviour
     {
         private static readonly string[] Locations = { "akina", "annie", "cave", "city", "colossal", "forest", "house", "outside", "tutorial" };
 
@@ -14,7 +14,7 @@ namespace GGM.Discord
 
         public static string UserID;
 
-        void Awake()
+        private void Awake()
         {
             var handlers = new DiscordAPI.EventHandlers();
             handlers.readyCallback += () => { };

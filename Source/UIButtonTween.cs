@@ -168,7 +168,7 @@ public class UIButtonTween : MonoBehaviour
                         flag = false;
                         break;
                     }
-                    if (tweener.direction != (Direction) (int) disableWhenFinished)
+                    if (tweener.direction != (Direction)(int)disableWhenFinished)
                     {
                         flag2 = false;
                     }
@@ -186,4 +186,3 @@ public class UIButtonTween : MonoBehaviour
         }
     }
 }
-

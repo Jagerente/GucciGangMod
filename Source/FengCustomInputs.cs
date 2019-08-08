@@ -4,33 +4,47 @@ using UnityEngine;
 public class FengCustomInputs : MonoBehaviour
 {
     public bool allowDuplicates;
+
     [HideInInspector]
     public float analogFeel_down;
+
     public float analogFeel_gravity = 0.2f;
+
     [HideInInspector]
     public float analogFeel_jump;
+
     [HideInInspector]
     public float analogFeel_left;
+
     [HideInInspector]
     public float analogFeel_right;
+
     public float analogFeel_sensitivity = 0.8f;
+
     [HideInInspector]
     public float analogFeel_up;
+
     public KeyCode[] default_inputKeys;
     public string[] DescriptionString;
     private bool[] inputBool;
     public KeyCode[] inputKey;
     public string[] inputString;
+
     [HideInInspector]
     public bool[] isInput;
+
     [HideInInspector]
     public bool[] isInputDown;
+
     [HideInInspector]
     public bool[] isInputUp;
+
     [HideInInspector]
     public bool[] joystickActive;
+
     [HideInInspector]
     public string[] joystickString;
+
     private float lastInterval;
     public bool menuOn = true;
     public bool mouseAxisOn;
@@ -105,7 +119,7 @@ public class FengCustomInputs : MonoBehaviour
                     if (Input.GetMouseButton(k) && inputBool[i])
                     {
                         num2 += k;
-                        inputKey[i] = (KeyCode) num2;
+                        inputKey[i] = (KeyCode)num2;
                         inputBool[i] = false;
                         inputString[i] = inputKey[i].ToString();
                         joystickActive[i] = false;
@@ -117,9 +131,9 @@ public class FengCustomInputs : MonoBehaviour
             }
             for (var j = 350; j < 409; j++)
             {
-                if (Input.GetKey((KeyCode) j) && inputBool[i])
+                if (Input.GetKey((KeyCode)j) && inputBool[i])
                 {
-                    inputKey[i] = (KeyCode) j;
+                    inputKey[i] = (KeyCode)j;
                     inputBool[i] = false;
                     inputString[i] = inputKey[i].ToString();
                     joystickActive[i] = false;
@@ -421,7 +435,7 @@ public class FengCustomInputs : MonoBehaviour
         {
             int num2;
             int.TryParse(strArray[i], out num2);
-            inputKey[i] = (KeyCode) num2;
+            inputKey[i] = (KeyCode)num2;
             if (joystickString[i] == "#")
             {
                 joystickActive[i] = false;
@@ -452,7 +466,7 @@ public class FengCustomInputs : MonoBehaviour
         var str3 = string.Empty;
         for (var i = DescriptionString.Length - 1; i > -1; i--)
         {
-            str = (int) default_inputKeys[i] + "*" + str;
+            str = (int)default_inputKeys[i] + "*" + str;
             str2 = str2 + "#*";
             str3 = default_inputKeys[i] + "*" + str3;
             PlayerPrefs.SetString("KeyCodes", str);
@@ -469,7 +483,7 @@ public class FengCustomInputs : MonoBehaviour
         var str3 = string.Empty;
         for (var i = DescriptionString.Length - 1; i > -1; i--)
         {
-            str = (int) inputKey[i] + "*" + str;
+            str = (int)inputKey[i] + "*" + str;
             str2 = joystickString[i] + "*" + str2;
             str3 = inputString[i] + "*" + str3;
         }
@@ -502,7 +516,7 @@ public class FengCustomInputs : MonoBehaviour
         }
         else
         {
-            inputKey[i] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
+            inputKey[i] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
             inputBool[i] = false;
             inputString[i] = inputKey[i].ToString();
             joystickActive[i] = false;
@@ -604,4 +618,3 @@ public class FengCustomInputs : MonoBehaviour
         }
     }
 }
-

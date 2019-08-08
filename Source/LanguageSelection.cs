@@ -41,4 +41,3 @@ public class LanguageSelection : MonoBehaviour
         }
     }
 }
-

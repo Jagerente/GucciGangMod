@@ -30,7 +30,7 @@ public class UICamera : MonoBehaviour
     private static GameObject mHover;
     private bool mIsEditor;
     private static List<UICamera> mList = new List<UICamera>();
-    private static MouseOrTouch[] mMouse = {new MouseOrTouch(), new MouseOrTouch(), new MouseOrTouch()};
+    private static MouseOrTouch[] mMouse = { new MouseOrTouch(), new MouseOrTouch(), new MouseOrTouch() };
     private static float mNextEvent;
     public float mouseClickThreshold = 10f;
     public float mouseDragThreshold = 4f;
