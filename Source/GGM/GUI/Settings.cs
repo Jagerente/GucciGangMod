@@ -67,10 +67,10 @@ namespace GGM.GUI
 
         internal const int LabelFontSize = 14;
         internal const float LabelWidth = leftElementWidth;
-        internal const float LabelHeight = 26f;
+        internal const float LabelHeight = 21f;
 
-        internal const float GridWidth = rightElementWidth;
-        internal const float GridHeight = 21f;
+        internal const float ButtonWidth = rightElementWidth;
+        internal const float ButtonHeight = 24f;
 
         internal const float TextFieldWidth = rightElementWidth;
         internal const float TextFieldHeight = 21f;
@@ -78,11 +78,8 @@ namespace GGM.GUI
         internal const float SliderWidth = rightElementWidth - 40f;
         internal const float SliderValueWidth = 21f;
 
-        internal const float ButtonWidth = 100f;
-        internal const float ButtonHeight = 50f;
-
-        internal static readonly Color ColorMajor = ColorCache.Melon;
-        internal static readonly Color ColorMinor = new Color(0.941f, 0.502f, 0.502f);
+        internal static readonly Color ColorMajor = ColorCache.White;
+        internal static readonly Color ColorMinor = new Color(1f, 0.702f, 0.8f);
 
         internal static readonly GUIStyle[] LabelStyle =
         {
@@ -91,8 +88,8 @@ namespace GGM.GUI
             TextStyle(TextAnchor.MiddleRight, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor)
         };
 
-        internal static readonly GUIStyle HeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, HeaderFontSize, false, ColorMajor, ColorMajor, ColorMajor);
-        internal static readonly GUIStyle SubHeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, SubHeaderFontSize, false, ColorMajor, ColorMajor, ColorMajor);
+        internal static readonly GUIStyle HeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, HeaderFontSize, false, ColorMinor, ColorMinor, ColorMinor);
+        internal static readonly GUIStyle SubHeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, SubHeaderFontSize, false, ColorMinor, ColorMinor, ColorMinor);
         internal static readonly GUIStyle SliderStatusStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, LabelFontSize, false, ColorMinor, ColorMinor, ColorMinor);
         internal static readonly GUIStyle ButtonStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, 24, false, ColorMinor, ColorMinor, ColorMinor);
 
