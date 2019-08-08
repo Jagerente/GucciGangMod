@@ -46,8 +46,10 @@ namespace GGM.GUI.Pages
 
             if (UnityEngine.GUI.Button(multiplayer, multiplayerButton, "label"))
             {
-                NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, true);
+                //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, true);
+
                 NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
+                GetInstance<Multiplayer>().Enable();
             }
 
             multiplayerButton = multiplayer.Contains(GUIHelpers.mousePos)
