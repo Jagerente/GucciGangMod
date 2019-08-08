@@ -44,7 +44,7 @@ namespace GGM.GUI
                 case LabelType.SubHeader:
                     GUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
-                    GUILayout.Label(text, SubHeaderStyle, GUILayout.Width(SubHeaderWidth), GUILayout.Height(SubHeaderHeight));
+                    GUILayout.Label(text, SubHeaderStyle, GUILayout.Width(width == LabelWidth ? SubHeaderWidth : width), GUILayout.Height(SubHeaderHeight));
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
                     return;
@@ -59,16 +59,11 @@ namespace GGM.GUI
             }
         }
 
-        public static bool Button(string text, float width = ButtonWidth, float height = ButtonHeight)
-        {
-            return GUILayout.Button(text, ButtonStyle, GUILayout.Width(width), GUILayout.Height(height));
-        }
-
         public static void TextArea(string text, ref string value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
         {
             GUILayout.BeginHorizontal();
             if (text != string.Empty) Label(text, 0, width: labelWidth, height: labelHeight);
-            value = GUILayout.TextArea(value, GUILayout.Width(width), GUILayout.Width(height));
+            value = GUILayout.TextArea(value, GUILayout.Width(width), GUILayout.Height(height));
             GUILayout.EndHorizontal();
         }
 
@@ -76,7 +71,7 @@ namespace GGM.GUI
         {
             GUILayout.BeginHorizontal();
             if (text != string.Empty) Label(text, 0, width: labelWidth, height: labelHeight);
-            value = GUILayout.TextField(value, GUILayout.Width(width), GUILayout.Width(height));
+            value = GUILayout.TextField(value, GUILayout.Width(width), GUILayout.Height(height));
             GUILayout.EndHorizontal();
         }
 
@@ -85,7 +80,7 @@ namespace GGM.GUI
             var v = value.ToString();
             GUILayout.BeginHorizontal();
             if (text != string.Empty) Label(text, 0, width: labelWidth, height: labelHeight);
-            v = GUILayout.TextField(v, GUILayout.Width(width), GUILayout.Width(height));
+            v = GUILayout.TextField(v, GUILayout.Width(width), GUILayout.Height(height));
             value = v != string.Empty ? Convert.ToInt32(v) : 0;
             GUILayout.EndHorizontal();
         }
@@ -95,7 +90,7 @@ namespace GGM.GUI
             var v = value.ToString();
             GUILayout.BeginHorizontal();
             if (text != string.Empty) Label(text, 0, width: labelWidth, height: labelHeight);
-            v = GUILayout.TextField(v, GUILayout.Width(width), GUILayout.Width(height));
+            v = GUILayout.TextField(v, GUILayout.Width(width), GUILayout.Height(height));
             value = v != string.Empty ? Convert.ToSingle(v) : 0f;
             GUILayout.EndHorizontal();
         }
@@ -144,44 +139,66 @@ namespace GGM.GUI
             GUILayout.EndHorizontal();
         }
 
-        public static void Grid(string text, ref int INT, string[] str, bool sameCount = true, int count = 1, float width = GridWidth, float height = GridHeight)
+        public static void Grid(string text, ref int INT, string[] str, bool sameCount = true, int count = 1, float width = ButtonWidth, float height = ButtonHeight)
         {
-            GUILayoutOption[] option = { GUILayout.Width(width), GUILayout.Height(height) };
+            GUILayoutOption[] option = { GUILayout.Width(width), GUILayout.Height(sameCount ? height : (height + 5f) * (str.Length / count) - 5f) };
             GUILayout.BeginHorizontal();
             if (text != string.Empty) Label(text);
             INT = GUILayout.SelectionGrid(INT, str, sameCount ? str.Length : count, option);
             GUILayout.EndHorizontal();
         }
 
-        public static void Grid(string text, ref bool value, bool horizontal = true, float width = GridWidth, float height = GridHeight)
+        public static void Grid(string text, ref bool value, bool horizontal = true, float width = ButtonWidth, float height = ButtonHeight)
         {
-            GUILayoutOption[] option = { GUILayout.Width(width), GUILayout.Height(height) };
+            GUILayoutOption[] options = { GUILayout.Width(width), GUILayout.Height(horizontal ? height : height * 2f + 5f) };
             var i = value ? 1 : 0;
             GUILayout.BeginHorizontal();
             if (text != string.Empty) Label(text);
-            i = GUILayout.SelectionGrid(i, SwitcherStr, horizontal ? 2 : 1, option);
+            i = GUILayout.SelectionGrid(i, SwitcherStr, horizontal ? 2 : 1, options);
             value = i != 0;
             GUILayout.EndHorizontal();
         }
 
-        public static void ButtonToggle(string text, string[] buttonsText, BoolSetting[] bools, float width = GridWidth, float height = GridHeight)
+        public static void ButtonToggle(string text, string[] buttonsText, BoolSetting[] bools, bool horizontal = true, float width = ButtonWidth, float height = ButtonHeight)
         {
             var style = new GUIStyle(UnityEngine.GUI.skin.button);
             var w = text != string.Empty ? width : leftElementWidth + rightElementWidth - 75f;
-            GUILayout.BeginHorizontal();
+            GUILayoutOption[] options = { GUILayout.Width(horizontal ? (w - 5 * (bools.Length - 1)) / bools.Length : width), GUILayout.Height(height), GUILayout.Height(height) };
+            if (horizontal) GUILayout.BeginHorizontal();
             if (text != string.Empty) Label(text);
             if (text == string.Empty) GUILayout.FlexibleSpace();
             for (var i = 0; i < bools.Length; i++)
             {
                 style.normal = bools[i] ? UnityEngine.GUI.skin.button.onNormal : UnityEngine.GUI.skin.button.normal;
                 style.hover = bools[i] ? UnityEngine.GUI.skin.button.onHover : UnityEngine.GUI.skin.button.hover;
-                if (GUILayout.Button(buttonsText[i], style, GUILayout.Width((w - 5 * (bools.Length - 1)) / bools.Length), GUILayout.Height(GridHeight)))
+                if (GUILayout.Button(buttonsText[i], style, options))
                 {
                     bools[i].Value = !bools[i];
                 }
             }
             if (text == string.Empty) GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
+            if (horizontal) GUILayout.EndHorizontal();
+        }
+
+        public static void ButtonToggle(string text, string[] buttonsText, bool[] bools, bool horizontal = true, float width = ButtonWidth, float height = ButtonHeight)
+        {
+            var style = new GUIStyle(UnityEngine.GUI.skin.button);
+            var w = text != string.Empty ? width : leftElementWidth + rightElementWidth - 75f;
+            GUILayoutOption[] options = { GUILayout.Width(horizontal ? (w - 5 * (bools.Length - 1)) / bools.Length : width), GUILayout.Height(height), GUILayout.Height(height) };
+            if (horizontal) GUILayout.BeginHorizontal();
+            if (text != string.Empty) Label(text);
+            if (text == string.Empty) GUILayout.FlexibleSpace();
+            for (var i = 0; i < bools.Length; i++)
+            {
+                style.normal = bools[i] ? UnityEngine.GUI.skin.button.onNormal : UnityEngine.GUI.skin.button.normal;
+                style.hover = bools[i] ? UnityEngine.GUI.skin.button.onHover : UnityEngine.GUI.skin.button.hover;
+                if (GUILayout.Button(buttonsText[i], style, options))
+                {
+                    bools[i] = !bools[i];
+                }
+            }
+            if (text == string.Empty) GUILayout.FlexibleSpace();
+            if (horizontal) GUILayout.EndHorizontal();
         }
     }
 }
