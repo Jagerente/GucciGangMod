@@ -278,6 +278,8 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void Chat(string content, string sender, PhotonMessageInfo info)
     {
+        Logger.LogChat(Application.dataPath + "chat.txt", content, info);
+
         if (sender != string.Empty)
         {
             content = sender + ": " + content;
@@ -295,6 +297,7 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void ChatPM(string sender, string content, PhotonMessageInfo info)
     {
+        Logger.LogChat(Application.dataPath + "chat.txt", content, info);
         content = InRoomChat.ChatFormatting(
             "Message from ",
             Settings.ChatMajorColorSetting,
@@ -2519,6 +2522,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void EnterSpecMode(bool enter)
     {
+        Settings.SpecMode = enter;
         if (enter)
         {
             spectateSprites = new List<GameObject>();
@@ -5024,6 +5028,11 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnJoinedRoom()
     {
+        var section = "--------------------------------------------------------------------------------------------------------------------------------------------------------";
+        var info = string.Empty;
+        for (var i = 0; i < 4; i++) info += PhotonNetwork.room.name.Split('`')[i].ToUpper() + (i < 3 ? "/" : string.Empty);
+        Logger.Log(Application.dataPath + "/chat.txt", section + Environment.NewLine + DateTime.Now.ToLongDateString() + Environment.NewLine + info + Environment.NewLine + section + Environment.NewLine);
+
         maxPlayers = PhotonNetwork.room.maxPlayers;
         playerList = string.Empty;
         char[] separator = { "`"[0] };
@@ -9416,6 +9425,12 @@ public class FengGameManagerMKII : MonoBehaviour
         }
         StartCoroutine(LoadBackground());
         gameObject.AddComponent<HotKeys>();
+        if (SpectatorMode.Instance == null)
+        {
+            var gm = new GameObject("SpectatorMode");
+            gm.AddComponent<SpectatorMode>();
+            DontDestroyOnLoad(gm);
+        }
     }
 
     [RPC]
