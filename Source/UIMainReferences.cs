@@ -58,5 +58,6 @@ public class UIMainReferences : MonoBehaviour
             Labels.Version = $"GucciGangMod {Version}";
         }
         NGUITools.SetActive(panelMain, true);
+        FengGameManagerMKII.TryRejoin();
     }
 }
