@@ -5016,7 +5016,7 @@ public class FengGameManagerMKII : MonoBehaviour
             TryRejoinRoom();
             NeedRejoin = false;
         }
-        RejoinRegion = PhotonNetwork.networkingPeer.MasterServerAddress.Split(':')[0];
+        RejoinRegion = PhotonNetwork.networkingPeer.MasterServerAddress.Split(':')[0].Replace("wss://", string.Empty).Replace("ws://", string.Empty);
         //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, false);
         //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
         //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiJoinPrivate, false);
