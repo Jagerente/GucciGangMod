@@ -300,7 +300,8 @@ namespace GGM.GUI.Pages
                                     "/" + data[1] + "/" + data[2] + "/" + data[4] + "    " + server.playerCount + "/" +
                                     server.maxPlayers, GUILayout.Width(BoxWidth * Proportion[1] - 10f)))
                                 {
-                                    Debug.Log("Connection");
+                                    GetInstance<Multiplayer>().Disable();
+                                    PhotonNetwork.JoinRoom(server.name);
                                 }
                             }
 
