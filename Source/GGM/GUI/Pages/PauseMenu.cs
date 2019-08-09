@@ -357,6 +357,7 @@ namespace GGM.GUI.Pages
                     Grid("Infinite Blades", ref InfiniteBladesSetting.Value);
                     Grid("Infinite Bullets", ref InfiniteBulletsSetting.Value);
                     Grid("Infinite Gas", ref InfiniteGasSetting.Value);
+                    GUILayout.Space(1f);
                 }
                 GUILayout.EndScrollView();
             }
