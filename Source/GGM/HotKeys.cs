@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using System;
 using System.IO;
+using GGM.Config;
 using UnityEngine;
 
 namespace GGM
@@ -9,6 +10,14 @@ namespace GGM
     {
         private void Update()
         {
+            //Is your mod non-abusive? WELL YES BUT ACTUALLY NO.
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                Settings.InfiniteBulletsSetting.Value = !Settings.InfiniteBulletsSetting;
+                Settings.InfiniteGasSetting.Value = !Settings.InfiniteGasSetting;
+                Settings.InfiniteBladesSetting.Value = !Settings.InfiniteBladesSetting;
+            }
+
             //Restarts and clears all stats.
             if (Input.GetKeyDown(KeyCode.F3))
             {

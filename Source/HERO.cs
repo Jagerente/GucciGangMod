@@ -596,7 +596,7 @@ public class HERO : MonoBehaviour
                         reloadAnimation = "AHSS_gun_reload_both_air";
                     }
 
-                    leftGunHasBullet = rightGunHasBullet = false;
+                    leftGunHasBullet = rightGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
                 }
 
                 crossFade(reloadAnimation, 0.05f);
@@ -6062,8 +6062,8 @@ public class HERO : MonoBehaviour
                                         attackAnimation == "AHSS_shoot_both_air")
                                     {
                                         flag7 = true;
-                                        leftGunHasBullet = false;
-                                        rightGunHasBullet = false;
+                                        leftGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
+                                        rightGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
                                         baseRigidBody.AddForce(-baseTransform.forward * 1000f, ForceMode.Acceleration);
                                     }
                                     else
@@ -6071,11 +6071,11 @@ public class HERO : MonoBehaviour
                                         if (attackAnimation == "AHSS_shoot_l" ||
                                             attackAnimation == "AHSS_shoot_l_air")
                                         {
-                                            leftGunHasBullet = false;
+                                            leftGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
                                         }
                                         else
                                         {
-                                            rightGunHasBullet = false;
+                                            rightGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
                                         }
 
                                         baseRigidBody.AddForce(-baseTransform.forward * 600f, ForceMode.Acceleration);
@@ -6166,7 +6166,7 @@ public class HERO : MonoBehaviour
                                     throwedBlades = true;
                                     if (!(leftBulletLeft <= 0 || leftGunHasBullet))
                                     {
-                                        leftBulletLeft--;
+                                        if (!Settings.InfiniteBulletsSetting) leftBulletLeft--;
                                         setup.part_blade_l.SetActive(true);
                                         leftGunHasBullet = true;
                                     }
@@ -6174,10 +6174,9 @@ public class HERO : MonoBehaviour
                                     if (!(rightBulletLeft <= 0 || rightGunHasBullet))
                                     {
                                         setup.part_blade_r.SetActive(true);
-                                        rightBulletLeft--;
+                                        if (!Settings.InfiniteBulletsSetting) rightBulletLeft--;
                                         rightGunHasBullet = true;
                                     }
-
                                     updateRightMagUI();
                                     updateLeftMagUI();
                                 }
@@ -6539,6 +6538,7 @@ public class HERO : MonoBehaviour
 
     public void useBlade(int amount)
     {
+        if (Settings.InfiniteBladesSetting) return;
         if (amount == 0)
         {
             amount = 1;
@@ -6568,6 +6568,7 @@ public class HERO : MonoBehaviour
 
     private void useGas(float amount)
     {
+        if (Settings.InfiniteGasSetting) return;
         if (amount == 0f)
         {
             amount = useGasSpeed;

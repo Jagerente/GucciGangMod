@@ -356,6 +356,7 @@ namespace GGM.GUI.Pages
                     Label("Resources", LabelType.Header);
                     Grid("Infinite Blades", ref InfiniteBladesSetting.Value);
                     Grid("Infinite Bullets", ref InfiniteBulletsSetting.Value);
+                    if (InfiniteBulletsSetting) Grid("No Reloading", ref InfiniteBulletsNoReloadingSetting.Value);
                     Grid("Infinite Gas", ref InfiniteGasSetting.Value);
                     GUILayout.Space(1f);
                 }
@@ -455,6 +456,7 @@ namespace GGM.GUI.Pages
                                 Grid("Custom Waves", ref CustomWavesSetting.Value);
                                 if (CustomWavesSetting) TextField("• Waves", ref MaximumWavesSetting.Value);
                                 Grid("Disable Rock-Throwing", ref DisableRockThrowingSetting.Value);
+                                GUILayout.Space(1f);
                             }
                             GUILayout.EndScrollView();
                         }
@@ -552,6 +554,7 @@ namespace GGM.GUI.Pages
                                     GUILayout.FlexibleSpace();
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(1f);
                             }
                             GUILayout.EndScrollView();
                         }
@@ -693,6 +696,7 @@ namespace GGM.GUI.Pages
                                             break;
                                     }
                                 }
+                                GUILayout.Space(1f);
                             }
                             GUILayout.EndScrollView();
                         }
@@ -706,21 +710,21 @@ namespace GGM.GUI.Pages
                     GUILayout.BeginArea(left[2]);
                     {
                         Label("General", LabelType.Header);
-                        Slider("Global Volume", ref GlobalVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Global", ref GlobalVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
                         Label("Human", LabelType.Header);
-                        Slider("AHSS Shot Volume", ref AHSSShotVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Air Slash Volume", ref AirSlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Nape Slash Volume", ref NapeSlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Body Slash Volume", ref BodySlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Hook Volume", ref HookVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("AHSS Shot", ref AHSSShotVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Air Slash", ref AirSlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Nape Slash", ref NapeSlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Body Slash", ref BodySlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Hooks", ref HookVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
                         Label("Titan", LabelType.Header);
-                        Slider("Titan Eren Roar Volume", ref TitanErenRoarVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Swing Volume", ref SwingVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Thunder Volume", ref ThunderVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Head Explosion Volume", ref HeadExplosionVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Head Punch Volume", ref HeadPunchVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Boom Volume", ref BoomVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Step Volume", ref StepVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Titan Eren Roar", ref TitanErenRoarVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Swing", ref SwingVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Thunder", ref ThunderVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Head Explosion", ref HeadExplosionVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Head Punch", ref HeadPunchVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Explosion", ref BoomVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                        Slider("Steps", ref StepVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
                     }
                     GUILayout.EndArea();
                     break;
@@ -1325,6 +1329,7 @@ namespace GGM.GUI.Pages
                         GUILayout.FlexibleSpace();
                     }
                     GUILayout.EndHorizontal();
+                    GUILayout.Space(1f);
                 }
                 GUILayout.EndScrollView();
 
@@ -1630,6 +1635,7 @@ namespace GGM.GUI.Pages
                                     GUILayout.FlexibleSpace();
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(1f);
                             }
                             GUILayout.EndScrollView();
 
@@ -1903,6 +1909,7 @@ namespace GGM.GUI.Pages
                                             8], 0f,
                                         1f);
                                 }
+                                GUILayout.Space(1f);
                             }
                             GUILayout.EndScrollView();
 
@@ -1979,6 +1986,7 @@ namespace GGM.GUI.Pages
                                     GUILayout.FlexibleSpace();
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(1f);
                             }
                             GUILayout.EndScrollView();
 
@@ -2229,6 +2237,7 @@ namespace GGM.GUI.Pages
                                             8],
                                         0f, 1f);
                                 }
+                                GUILayout.Space(1f);
                             }
                             GUILayout.EndScrollView();
 
