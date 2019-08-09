@@ -278,7 +278,7 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void Chat(string content, string sender, PhotonMessageInfo info)
     {
-        Logger.LogChat(Application.dataPath + "chat.txt", content, info);
+        Logger.LogChat(Application.dataPath + "/chat.txt", content, info);
 
         if (sender != string.Empty)
         {
@@ -297,7 +297,7 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void ChatPM(string sender, string content, PhotonMessageInfo info)
     {
-        Logger.LogChat(Application.dataPath + "chat.txt", content, info);
+        Logger.LogChat(Application.dataPath + "/chat.txt", content, info);
         content = InRoomChat.ChatFormatting(
             "Message from ",
             Settings.ChatMajorColorSetting,
@@ -333,7 +333,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 Settings.InfectedTitansSetting.Value = 1;
             }
 
-            hashtable.Add("infection", Settings.InfectedTitansSetting);
+            hashtable.Add("infection", Settings.InfectedTitansSetting.Value);
 
             if (RCSettings.infectionMode != Settings.InfectedTitansSetting)
             {
@@ -377,7 +377,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
         if (Settings.TeamModeSetting)
         {
-            hashtable.Add("team", Settings.TeamSortSetting + 1);
+            hashtable.Add("team", Settings.TeamSortSetting.Value + 1);
             if (RCSettings.teamMode != Settings.TeamSortSetting + 1)
             {
                 num4 = 1;
@@ -407,7 +407,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 Settings.PointsLimitSetting.Value = 50;
             }
 
-            hashtable.Add("point", Settings.PointsLimitSetting);
+            hashtable.Add("point", Settings.PointsLimitSetting.Value);
         }
 
         if (Settings.DisableRockThrowingSetting)
@@ -422,7 +422,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 Settings.ExplodeRadiusSetting.Value = 30;
             }
 
-            hashtable.Add("explode", Settings.ExplodeRadiusSetting);
+            hashtable.Add("explode", Settings.ExplodeRadiusSetting.Value);
         }
 
         if (Settings.HealthModeSetting)
@@ -437,9 +437,9 @@ public class FengGameManagerMKII : MonoBehaviour
                 settings[199] = "200";
             }
 
-            hashtable.Add("healthMode", Settings.HealthSettings[0] + 1);
-            hashtable.Add("healthLower", Settings.HealthSettings[1]);
-            hashtable.Add("healthUpper", Settings.HealthSettings[2]);
+            hashtable.Add("healthMode", Settings.HealthSettings[0].Value + 1);
+            hashtable.Add("healthLower", Settings.HealthSettings[1].Value);
+            hashtable.Add("healthUpper", Settings.HealthSettings[2].Value);
         }
 
         if (Settings.AntiTitanErenSetting)
@@ -454,7 +454,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 Settings.StarterAmountSetting.Value = 1;
             }
 
-            hashtable.Add("titanc", Settings.StarterAmountSetting);
+            hashtable.Add("titanc", Settings.StarterAmountSetting.Value);
         }
 
         if (Settings.ArmorModeSetting)
@@ -464,7 +464,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 Settings.ArmorSetting.Value = 1000;
             }
 
-            hashtable.Add("damage", Settings.ArmorSetting);
+            hashtable.Add("damage", Settings.ArmorSetting.Value);
         }
 
         if (Settings.CustomSizeSetting)
@@ -480,43 +480,18 @@ public class FengGameManagerMKII : MonoBehaviour
             }
 
             hashtable.Add("sizeMode", 1);
-            hashtable.Add("sizeLower", Settings.SizeSettings[0]);
-            hashtable.Add("sizeUpper", Settings.SizeSettings[1]);
+            hashtable.Add("sizeLower", Settings.SizeSettings[0].Value);
+            hashtable.Add("sizeUpper", Settings.SizeSettings[1].Value);
         }
 
         if (Settings.CustomSpawnRateSetting)
         {
-            if (Settings.SpawnRateSettings[0] >= 0f)
-            {
-                Settings.SpawnRateSettings[0].Value = 20f;
-            }
-
-            if (Settings.SpawnRateSettings[1] >= 0f)
-            {
-                Settings.SpawnRateSettings[1].Value = 20f;
-            }
-
-            if (Settings.SpawnRateSettings[2] >= 0f)
-            {
-                Settings.SpawnRateSettings[2].Value = 20f;
-            }
-
-            if (Settings.SpawnRateSettings[3] >= 0f)
-            {
-                Settings.SpawnRateSettings[3].Value = 20f;
-            }
-
-            if (Settings.SpawnRateSettings[4] >= 0f)
-            {
-                Settings.SpawnRateSettings[4].Value = 20f;
-            }
-
             hashtable.Add("spawnMode", 1);
-            hashtable.Add("nRate", Settings.SpawnRateSettings[0]);
-            hashtable.Add("aRate", Settings.SpawnRateSettings[1]);
-            hashtable.Add("jRate", Settings.SpawnRateSettings[2]);
-            hashtable.Add("cRate", Settings.SpawnRateSettings[3]);
-            hashtable.Add("pRate", Settings.SpawnRateSettings[4]);
+            hashtable.Add("nRate", Settings.SpawnRateSettings[0].Value);
+            hashtable.Add("aRate", Settings.SpawnRateSettings[1].Value);
+            hashtable.Add("jRate", Settings.SpawnRateSettings[2].Value);
+            hashtable.Add("cRate", Settings.SpawnRateSettings[3].Value);
+            hashtable.Add("pRate", Settings.SpawnRateSettings[4].Value);
         }
 
         if (Settings.HorsesSetting)
@@ -532,7 +507,7 @@ public class FengGameManagerMKII : MonoBehaviour
             }
 
             hashtable.Add("waveModeOn", 1);
-            hashtable.Add("waveModeNum", Settings.TitansPerWaveSetting);
+            hashtable.Add("waveModeNum", Settings.TitansPerWaveSetting.Value);
         }
 
         if (Settings.FriendlyModeSetting)
@@ -542,7 +517,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
         if (Settings.PVPModeSetting)
         {
-            hashtable.Add("pvp", Settings.PVPTypeSetting + 1);
+            hashtable.Add("pvp", Settings.PVPTypeSetting.Value + 1);
         }
 
         if (Settings.CustomWavesSetting)
@@ -552,7 +527,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 Settings.MaximumWavesSetting.Value = 20;
             }
 
-            hashtable.Add("maxwave", Settings.MaximumWavesSetting);
+            hashtable.Add("maxwave", Settings.MaximumWavesSetting.Value);
         }
 
         if (Settings.AutoReviveSetting)
@@ -562,12 +537,12 @@ public class FengGameManagerMKII : MonoBehaviour
                 Settings.AutoReviveTimeSetting.Value = 5;
             }
 
-            hashtable.Add("endless", Settings.AutoReviveTimeSetting);
+            hashtable.Add("endless", Settings.AutoReviveTimeSetting.Value);
         }
 
         if (Settings.WelcomeMessageSetting != string.Empty)
         {
-            hashtable.Add("motd", Settings.WelcomeMessageSetting);
+            hashtable.Add("motd", Settings.WelcomeMessageSetting.Value);
         }
 
         if (Settings.DisableAHSSAirReloadingSetting)
@@ -2522,7 +2497,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void EnterSpecMode(bool enter)
     {
-        Settings.SpecMode = enter;
+        SpectatorMode.SpecMode = enter;
         if (enter)
         {
             spectateSprites = new List<GameObject>();

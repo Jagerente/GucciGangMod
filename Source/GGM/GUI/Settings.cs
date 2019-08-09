@@ -75,8 +75,8 @@ namespace GGM.GUI
         internal const float TextFieldWidth = rightElementWidth;
         internal const float TextFieldHeight = 21f;
 
-        internal const float SliderWidth = rightElementWidth - 40f;
-        internal const float SliderValueWidth = 21f;
+        internal const float SliderWidth = rightElementWidth - 50f;
+        internal const float SliderValueWidth = 31f;
 
         internal static readonly Color ColorMajor = ColorCache.White;
         internal static readonly Color ColorMinor = new Color(1f, 0.702f, 0.8f);
