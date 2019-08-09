@@ -411,6 +411,7 @@ namespace GGM.GUI.Pages
                                     MaxPlayersPresets.Add(PlayerPrefs.GetInt("GGM_MaxPlayersPresets_" + CurrentPreset, 10));
                                     DayTimePresets.Add(PlayerPrefs.GetInt("GGM_DayTimePresets_" + CurrentPreset, 0));
                                     DifficultyPresets.Add(PlayerPrefs.GetInt("GGM_DifficultyPresets_" + CurrentPreset, 0));
+                                    Save();
                                 }
                                 if (GUILayout.Button("Save"))
                                 {
@@ -422,20 +423,24 @@ namespace GGM.GUI.Pages
                                     MaxPlayersPresets[CurrentPreset] = MaxPlayersToCreate;
                                     DayTimePresets[CurrentPreset] = DayTimeToCreate;
                                     DifficultyPresets[CurrentPreset] = DifficultyToCreate;
+                                    Save();
                                 }
                                 if (GUILayout.Button("Remove"))
                                 {
-                                    if (PresetsCount == 1) return;
-                                    CurrentPreset--;
-                                    PresetsCount--;
-                                    PresetsTitles.RemoveAt(CurrentPreset);
-                                    MapPresets.RemoveAt(CurrentPreset);
-                                    ServerNamePresets.RemoveAt(CurrentPreset);
-                                    PasswordPresets.RemoveAt(CurrentPreset);
-                                    ServerTimePresets.RemoveAt(CurrentPreset);
-                                    MaxPlayersPresets.RemoveAt(CurrentPreset);
-                                    DayTimePresets.RemoveAt(CurrentPreset);
-                                    DifficultyPresets.RemoveAt(CurrentPreset);
+                                    if (PresetsCount > 1)
+                                    {
+                                        PresetsTitles.RemoveAt(CurrentPreset);
+                                        MapPresets.RemoveAt(CurrentPreset);
+                                        ServerNamePresets.RemoveAt(CurrentPreset);
+                                        PasswordPresets.RemoveAt(CurrentPreset);
+                                        ServerTimePresets.RemoveAt(CurrentPreset);
+                                        MaxPlayersPresets.RemoveAt(CurrentPreset);
+                                        DayTimePresets.RemoveAt(CurrentPreset);
+                                        DifficultyPresets.RemoveAt(CurrentPreset);
+                                        CurrentPreset--;
+                                        PresetsCount--;
+                                        Save();
+                                    }
                                 }
                             }
                             GUILayout.EndHorizontal();
@@ -448,19 +453,17 @@ namespace GGM.GUI.Pages
                             {
                                 if (GUILayout.Button("Start", GUILayout.Width(120f), GUILayout.Height(35f)))
                                 {
-                                    if (connected)
-                                    {
-                                        PhotonNetwork.CreateRoom(
-                                            string.Concat(ServerNameToCreate, "`", Maps[MapToCreate], "`",
-                                                Difficulties[DifficultyToCreate], "`", ServerTimeToCreate, "`",
-                                                DayTimes[DayTimeToCreate], "`",
-                                                PasswordToCreate.Length > 0
-                                                    ? new SimpleAES().Encrypt(PasswordToCreate)
-                                                    : string.Empty, "`", Random.Range(0, 50000)),
-                                            new RoomOptions
-                                            { isOpen = true, isVisible = true, maxPlayers = MaxPlayersToCreate },
-                                            null);
-                                    }
+                                    PhotonNetwork.offlineMode = Server == 0;
+                                    PhotonNetwork.CreateRoom(
+                                        string.Concat(ServerNameToCreate, "`", Maps[MapToCreate], "`",
+                                            Difficulties[DifficultyToCreate], "`", ServerTimeToCreate, "`",
+                                            DayTimes[DayTimeToCreate], "`",
+                                            PasswordToCreate.Length > 0
+                                                ? new SimpleAES().Encrypt(PasswordToCreate)
+                                                : string.Empty, "`", Random.Range(0, 50000)),
+                                        new RoomOptions
+                                        { isOpen = true, isVisible = true, maxPlayers = MaxPlayersToCreate },
+                                        null);
                                     GetInstance<Multiplayer>().Disable();
                                 }
 

@@ -153,6 +153,29 @@ public class FengGameManagerMKII : MonoBehaviour
     public static float deltaTimer = 8f;
     public static int highest_feed = 0;
 
+    public static bool NeedRejoin = false;
+    public static Room RejoinRoom;
+    public static string RejoinRegion = "";
+
+    public static bool TryRejoin()
+    {
+        if (RejoinRoom == null)
+            return false;
+        bool result = PhotonNetwork.ConnectToMaster(RejoinRegion, NetworkingPeer.ProtocolToNameServerPort[PhotonNetwork.networkingPeer.TransportProtocol], applicationId, UIMainReferences.ServerKey);
+        return result;
+    }
+
+    public static bool TryRejoinRoom()
+    {
+        if (RejoinRoom == null)
+        {
+            return false;
+        }
+        if (RejoinRoom.maxPlayers <= RejoinRoom.playerCount)
+            return false;
+        return PhotonNetwork.JoinRoom(RejoinRoom.name);
+    }
+
     public void addCamera(IN_GAME_MAIN_CAMERA c)
     {
         mainCamera = c;
@@ -4792,6 +4815,14 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnConnectionFail(DisconnectCause cause)
     {
+        switch (cause)
+        {
+            case DisconnectCause.DisconnectByServerTimeout:
+            case DisconnectCause.DisconnectByServerLogic:
+            case DisconnectCause.DisconnectByClientTimeout:
+                NeedRejoin = true;
+                break;
+        }
         print("OnConnectionFail : " + cause);
         Screen.lockCursor = false;
         Screen.showCursor = true;
@@ -4980,9 +5011,15 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnJoinedLobby()
     {
-        NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, false);
+        if (NeedRejoin)
+        {
+            TryRejoinRoom();
+            NeedRejoin = false;
+        }
+        RejoinRegion = PhotonNetwork.networkingPeer.MasterServerAddress.Split(':')[0].Replace("wss://", string.Empty).Replace("ws://", string.Empty);
+        //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, false);
         //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
-        NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiJoinPrivate, false);
+        //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiJoinPrivate, false);
     }
 
     public void OnJoinedRoom()
@@ -4992,6 +5029,7 @@ public class FengGameManagerMKII : MonoBehaviour
         char[] separator = { "`"[0] };
         print("OnJoinedRoom " + PhotonNetwork.room.name + "    >>>>   " +
               LevelInfo.getInfo(PhotonNetwork.room.name.Split(separator)[1]).mapName);
+        RejoinRoom = PhotonNetwork.networkingPeer.mRoomToGetInto;
         gameTimesUp = false;
         char[] chArray3 = { "`"[0] };
         var strArray = PhotonNetwork.room.name.Split(chArray3);
