@@ -371,6 +371,26 @@ public class InRoomChat : MonoBehaviour
                 }
                 break;
 
+            case "clean":
+            case "clear":
+                {
+                    for (var i = 0; i < 15; i++)
+                    {
+                        SystemMessageLocal(string.Empty);
+                    }
+                }
+                break;
+
+            case "/clean":
+            case "/clear":
+                {
+                    for (var i = 0; i < 15; i++)
+                    {
+                        SystemMessageGlobal(string.Empty);
+                    }
+                }
+                break;
+
             case "pause":
             case "unpause":
                 {
@@ -431,6 +451,13 @@ public class InRoomChat : MonoBehaviour
 
                     SystemMessageLocal("Teleported to ", player, ".");
                     obj2.transform.position = obj.transform.position;
+                }
+                break;
+
+            case "reconnect":
+                {
+                    FengGameManagerMKII.NeedRejoin = true;
+                    PhotonNetwork.Disconnect();
                 }
                 break;
 
