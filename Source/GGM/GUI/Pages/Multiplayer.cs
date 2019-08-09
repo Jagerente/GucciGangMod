@@ -21,7 +21,7 @@ namespace GGM.GUI.Pages
         private static Vector2 CreateMapSlider;
         private static Vector2 PresetsSlider;
 
-        private static int Server = -1;
+        private static int Server;
         private static readonly string[] Servers = { "Offline", "Europe", "US", "Asia", "Japan" };
         private static readonly string[] ServersAdresses = new string[] { string.Empty, "eu", "us", "asia", "jp" };
         private static string KeyWords;
@@ -47,7 +47,7 @@ namespace GGM.GUI.Pages
         private static int DifficultyToCreate;
 
         private static int PresetsCount;
-        private static int CurrentPreset = -1;
+        private static int CurrentPreset;
         private static string PresetTitle = "";
         private static List<string> PresetsTitles;
         private static List<int> MapPresets;
@@ -193,7 +193,7 @@ namespace GGM.GUI.Pages
 
                 connectedServer = Server;
                 PhotonNetwork.Disconnect();
-                if(Server > 0)
+                if (Server > 0)
                     connected = false;
             }
         }
@@ -208,17 +208,26 @@ namespace GGM.GUI.Pages
             MaxPlayersToCreate = PlayerPrefs.GetInt("GGM_MaxPlayersToCreate", 10);
             DayTimeToCreate = PlayerPrefs.GetInt("GGM_DayTimeToCreate", 0);
             DifficultyToCreate = PlayerPrefs.GetInt("GGM_DifficultyToCreate", 0);
+            PresetsTitles = new List<string>();
+            MapPresets = new List<int>();
+            ServerNamePresets = new List<string>();
+            PasswordPresets = new List<string>();
+            ServerTimePresets = new List<int>();
+            MaxPlayersPresets = new List<int>();
+            DayTimePresets = new List<int>();
+            DifficultyPresets = new List<int>();
+
             PresetsCount = PlayerPrefs.GetInt("GGM_PresetsCount", 1);
             for (var i = 0; i < PresetsCount; i++)
             {
-                PresetsTitles[i] = PlayerPrefs.GetString("GGM_PresetsTitle_" + i, "Preset");
-                MapPresets[i] = PlayerPrefs.GetInt("GGM_MapPresets_" + i, 0);
-                ServerNamePresets[i] = PlayerPrefs.GetString("GGM_ServerNamePresets_" + i, "FoodForTitan");
-                PasswordPresets[i] = PlayerPrefs.GetString("GGM_PasswordPresets_" + i, string.Empty);
-                ServerTimePresets[i] = PlayerPrefs.GetInt("GGM_ServerTimePresets_" + i, 600);
-                MaxPlayersPresets[i] = PlayerPrefs.GetInt("GGM_MaxPlayersPresets_" + i, 10);
-                DayTimePresets[i] = PlayerPrefs.GetInt("GGM_DayTimePresets_" + i, 0);
-                DifficultyPresets[i] = PlayerPrefs.GetInt("GGM_DifficultyPresets_" + i, 0);
+                PresetsTitles.Add(PlayerPrefs.GetString("GGM_PresetsTitle_" + i, "Preset"));
+                MapPresets.Add(PlayerPrefs.GetInt("GGM_MapPresets_" + i, 0));
+                ServerNamePresets.Add(PlayerPrefs.GetString("GGM_ServerNamePresets_" + i, "FoodForTitan"));
+                PasswordPresets.Add(PlayerPrefs.GetString("GGM_PasswordPresets_" + i, string.Empty));
+                ServerTimePresets.Add(PlayerPrefs.GetInt("GGM_ServerTimePresets_" + i, 600));
+                MaxPlayersPresets.Add(PlayerPrefs.GetInt("GGM_MaxPlayersPresets_" + i, 10));
+                DayTimePresets.Add(PlayerPrefs.GetInt("GGM_DayTimePresets_" + i, 0));
+                DifficultyPresets.Add(PlayerPrefs.GetInt("GGM_DifficultyPresets_" + i, 0));
             }
         }
 
@@ -349,7 +358,7 @@ namespace GGM.GUI.Pages
                         }
                         GUILayout.EndArea();
 
-                        GUILayout.BeginArea(new Rect(Screen.width / 2f - BoxWidth / 2f + BoxWidth * Proportion[2] + BoxWidth * Proportion[3], Screen.height / 2f - BoxHeight / 2f, BoxWidth * Proportion[4] + 10f, BoxHeight - 35f));
+                        GUILayout.BeginArea(new Rect(Screen.width / 2f - BoxWidth / 2f + BoxWidth * Proportion[2] + BoxWidth * Proportion[3], Screen.height / 2f - BoxHeight / 2f, BoxWidth * Proportion[4] + 10f, BoxHeight - 40f));
                         {
                             GUILayout.BeginHorizontal();
                             {
@@ -367,15 +376,16 @@ namespace GGM.GUI.Pages
                                 GUILayout.Space((BoxWidth * Proportion[4] / 2f - 50f) / 2f);
                             }
                             GUILayout.EndHorizontal();
-                            Label("Presets", LabelType.Header, width: BoxWidth * Proportion[4]);
-                            TextField(string.Empty, ref PresetTitle, BoxWidth * Proportion[4]);
+                            Label("Presets", LabelType.Header, width: BoxWidth * Proportion[4] - 10f);
+                            TextField(string.Empty, ref PresetTitle, BoxWidth * Proportion[4] - 10f);
                             PresetsSlider = GUILayout.BeginScrollView(PresetsSlider);
                             {
                                 for (var i = 0; i < PresetsCount; i++)
                                 {
-                                    if (GUILayout.Button(PresetsTitles[i], GUILayout.Width(BoxWidth * Proportion[4] / 2f)))
+                                    if (GUILayout.Button(PresetsTitles[i], GUILayout.Width(BoxWidth * Proportion[4] - 10f)))
                                     {
                                         PresetTitle = PresetsTitles[i];
+                                        MapToCreate = MapPresets[i];
                                         ServerNameToCreate = ServerNamePresets[i];
                                         PasswordToCreate = PasswordPresets[i];
                                         DifficultyToCreate = DifficultyPresets[i];
@@ -393,14 +403,14 @@ namespace GGM.GUI.Pages
                                 {
                                     PresetsCount++;
                                     CurrentPreset = PresetsCount - 1;
-                                    PresetsTitles[CurrentPreset] = PlayerPrefs.GetString("GGM_PresetsTitle_" + CurrentPreset, "Preset");
-                                    MapPresets[CurrentPreset] = PlayerPrefs.GetInt("GGM_MapPresets_" + CurrentPreset, 0);
-                                    ServerNamePresets[CurrentPreset] = PlayerPrefs.GetString("GGM_ServerNamePresets_" + CurrentPreset, "FoodForTitan");
-                                    PasswordPresets[CurrentPreset] = PlayerPrefs.GetString("GGM_PasswordPresets_" + CurrentPreset, string.Empty);
-                                    ServerTimePresets[CurrentPreset] = PlayerPrefs.GetInt("GGM_ServerTimePresets_" + CurrentPreset, 600);
-                                    MaxPlayersPresets[CurrentPreset] = PlayerPrefs.GetInt("GGM_MaxPlayersPresets_" + CurrentPreset, 10);
-                                    DayTimePresets[CurrentPreset] = PlayerPrefs.GetInt("GGM_DayTimePresets_" + CurrentPreset, 0);
-                                    DifficultyPresets[CurrentPreset] = PlayerPrefs.GetInt("GGM_DifficultyPresets_" + CurrentPreset, 0);
+                                    PresetsTitles.Add(PlayerPrefs.GetString("GGM_PresetsTitle_" + CurrentPreset, "Preset"));
+                                    MapPresets.Add(PlayerPrefs.GetInt("GGM_MapPresets_" + CurrentPreset, 0));
+                                    ServerNamePresets.Add(PlayerPrefs.GetString("GGM_ServerNamePresets_" + CurrentPreset, "FoodForTitan"));
+                                    PasswordPresets.Add(PlayerPrefs.GetString("GGM_PasswordPresets_" + CurrentPreset, string.Empty));
+                                    ServerTimePresets.Add(PlayerPrefs.GetInt("GGM_ServerTimePresets_" + CurrentPreset, 600));
+                                    MaxPlayersPresets.Add(PlayerPrefs.GetInt("GGM_MaxPlayersPresets_" + CurrentPreset, 10));
+                                    DayTimePresets.Add(PlayerPrefs.GetInt("GGM_DayTimePresets_" + CurrentPreset, 0));
+                                    DifficultyPresets.Add(PlayerPrefs.GetInt("GGM_DifficultyPresets_" + CurrentPreset, 0));
                                 }
                                 if (GUILayout.Button("Save"))
                                 {
@@ -417,14 +427,15 @@ namespace GGM.GUI.Pages
                                 {
                                     if (PresetsCount == 1) return;
                                     CurrentPreset--;
-                                    PresetsTitles.RemoveAt(CurrentPreset + 1);
-                                    MapPresets.RemoveAt(CurrentPreset + 1);
-                                    ServerNamePresets.RemoveAt(CurrentPreset + 1);
-                                    PasswordPresets.RemoveAt(CurrentPreset + 1);
-                                    ServerTimePresets.RemoveAt(CurrentPreset + 1);
-                                    MaxPlayersPresets.RemoveAt(CurrentPreset + 1);
-                                    DayTimePresets.RemoveAt(CurrentPreset + 1);
-                                    DifficultyPresets.RemoveAt(CurrentPreset + 1);
+                                    PresetsCount--;
+                                    PresetsTitles.RemoveAt(CurrentPreset);
+                                    MapPresets.RemoveAt(CurrentPreset);
+                                    ServerNamePresets.RemoveAt(CurrentPreset);
+                                    PasswordPresets.RemoveAt(CurrentPreset);
+                                    ServerTimePresets.RemoveAt(CurrentPreset);
+                                    MaxPlayersPresets.RemoveAt(CurrentPreset);
+                                    DayTimePresets.RemoveAt(CurrentPreset);
+                                    DifficultyPresets.RemoveAt(CurrentPreset);
                                 }
                             }
                             GUILayout.EndHorizontal();

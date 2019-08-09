@@ -335,6 +335,21 @@ public class InRoomChat : MonoBehaviour
             case "aso":
                 switch (args[1])
                 {
+                    case "damage":
+                        Settings.CustomSizeSetting.Value = true;
+                        Settings.SizeSettings[0].Value = 100f;
+                        Settings.SizeSettings[0].Value = 0f;
+                        Settings.SizeSettings[0].Value = 0f;
+                        Settings.SizeSettings[0].Value = 0f;
+                        Settings.SizeSettings[0].Value = 0f;
+                        Settings.ArmorModeSetting.Value = true;
+                        Settings.ArmorSetting.Value = 1000;
+                        Settings.CustomSizeSetting.Value = true;
+                        Settings.SizeSettings[0].Value = 2.5f;
+                        Settings.SizeSettings[1].Value = 3f;
+                        SystemMessageGlobal("ASO Damage enabled.");
+                        break;
+
                     case "kdr":
                         RCSettings.asoPreservekdr = RCSettings.asoPreservekdr == 0 ? 1 : 0;
                         SystemMessageGlobal("KDRs will " + (RCSettings.asoPreservekdr == 1 ? string.Empty : "not ") + "be preserved from disconnects.");
@@ -391,6 +406,31 @@ public class InRoomChat : MonoBehaviour
                     FengGameManagerMKII.FGM.addTime(time);
                     string[] msg = { "Time set to", time.ToString(), "." };
                     SystemMessageGlobal(msg);
+                }
+                break;
+
+            case "tp":
+                {
+                    var player = PhotonPlayer.Find(Convert.ToInt32(args[1]));
+                    var obj = new GameObject();
+                    var obj2 = new GameObject();
+                    var tpPlayers = GameObject.FindGameObjectsWithTag("Player");
+                    for (var i = 0; i < tpPlayers.Length; i++)
+                    {
+                        var obj3 = tpPlayers[i];
+                        if (obj3.GetPhotonView().owner == PhotonPlayer.Find(Convert.ToInt32(args[1])))
+                        {
+                            obj = obj3;
+                        }
+
+                        if (obj3.GetPhotonView().owner == PhotonNetwork.player)
+                        {
+                            obj2 = obj3;
+                        }
+                    }
+
+                    SystemMessageLocal("Teleported to ", player, ".");
+                    obj2.transform.position = obj.transform.position;
                 }
                 break;
 
