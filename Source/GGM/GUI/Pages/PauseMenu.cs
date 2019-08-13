@@ -271,6 +271,8 @@ namespace GGM.GUI.Pages
             if (UnityEngine.GUI.Button(new Rect(leftPos + 500f + 70f, topPos + height / 1.055f, 60f, 25f), "Default"))
             {
                 GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().setToDefault();
+                PlayerPrefs.DeleteAll();
+                Load();
             }
             if (UnityEngine.GUI.Button(new Rect(leftPos + 565f + 70f, topPos + height / 1.055f, 75f, 25f), "Continue"))
             {
