@@ -875,8 +875,7 @@ public class InRoomChat : MonoBehaviour
             goto Label_219C;
         }
 
-        if (Event.current.type == EventType.KeyDown &&
-            (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return))
+        if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return))
         {
             if (!string.IsNullOrEmpty(inputLine))
             {
@@ -904,22 +903,17 @@ public class InRoomChat : MonoBehaviour
 
                 if (!inputLine.StartsWith("/"))
                 {
-                    var str2 = RCextensions
-                        .returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name])
-                        .hexColor();
+                    var str2 = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]).hexColor();
                     if (str2 == string.Empty)
                     {
-                        str2 = RCextensions.returnStringFromObject(
-                            PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]);
+                        str2 = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]);
                         if (PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam] != null)
                         {
-                            if (RCextensions.returnIntFromObject(
-                                    PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam]) == 1)
+                            if (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam]) == 1)
                             {
                                 str2 = "<color=#00FFFF>" + str2 + "</color>";
                             }
-                            else if (RCextensions.returnIntFromObject(
-                                         PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam]) == 2)
+                            else if (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam]) == 2)
                             {
                                 str2 = "<color=#FF00FF>" + str2 + "</color>";
                             }
@@ -943,7 +937,7 @@ public class InRoomChat : MonoBehaviour
             GUI.FocusControl("ChatInput");
         }
 
-        Label_219C:
+    Label_219C:
         GUI.SetNextControlName(string.Empty);
         GUILayout.BeginArea(GuiRect);
         GUILayout.FlexibleSpace();
