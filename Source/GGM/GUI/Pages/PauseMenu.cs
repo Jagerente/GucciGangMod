@@ -293,7 +293,7 @@ namespace GGM.GUI.Pages
                 else
                 {
                     IN_GAME_MAIN_CAMERA.isPausing = false;
-                    if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS)
+                    if (IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS || IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.OLDTPS)
                     {
                         Screen.showCursor = false;
                         Screen.lockCursor = true;
