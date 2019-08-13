@@ -659,7 +659,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         setSpectorMode(true);
                     }
                 }
-                if (inputManager.isInputDown[InputCode.flare1])
+                if (Input.GetKeyDown(KeyCode.RightArrow) || inputManager.isInputDown[InputCode.right])
                 {
                     currentPeekPlayerIndex++;
                     var length = GameObject.FindGameObjectsWithTag("Player").Length;
@@ -674,7 +674,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         lockAngle = false;
                     }
                 }
-                if (inputManager.isInputDown[InputCode.flare2])
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || inputManager.isInputDown[InputCode.left])
                 {
                     currentPeekPlayerIndex--;
                     var num2 = GameObject.FindGameObjectsWithTag("Player").Length;
