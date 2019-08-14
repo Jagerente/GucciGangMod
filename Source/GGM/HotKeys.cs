@@ -100,6 +100,7 @@ namespace GGM
         public static HotKey Restart = new HotKey("Restart", KeyCode.G);
         public static HotKey Screenshot = new HotKey("Screenshot", KeyCode.F5);
         public static HotKey Infinites = new HotKey("Infinites", KeyCode.B);
+        public static HotKey Pause = new HotKey("Pause", KeyCode.O);
         public static HotKey CannonSpawn = new HotKey("CannonSpawn", KeyCode.J);
 
         private void Update()
@@ -147,6 +148,28 @@ namespace GGM
                 Settings.InfiniteBulletsSetting.Value = !Settings.InfiniteBulletsSetting;
                 Settings.InfiniteGasSetting.Value = !Settings.InfiniteGasSetting;
                 Settings.InfiniteBladesSetting.Value = !Settings.InfiniteBladesSetting;
+            }
+
+            //Pause
+            if (Pause.IsDown())
+            {
+                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
+                {
+                    FengGameManagerMKII.FGM.SetPause();
+                }
+                else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
+                {
+                    if (Time.timeScale == 1f)
+                    {
+                        Time.timeScale = 0f;
+                        GameObject.Find("MainCamera").GetComponent<MouseLook>().disable = false;
+                    }
+                    else
+                    {
+                        GameObject.Find("MainCamera").GetComponent<MouseLook>().disable = true;
+                        Time.timeScale = 1f;
+                    }
+                }
             }
 
             //CannonSpawn
