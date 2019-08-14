@@ -41,8 +41,7 @@ public class UIItemStorage : MonoBehaviour
                 for (var j = 0; j < maxColumns; j++)
                 {
                     var obj2 = NGUITools.AddChild(gameObject, template);
-                    obj2.transform.localPosition = new Vector3(padding + (j + 0.5f) * spacing,
-                        -padding - (i + 0.5f) * spacing, 0f);
+                    obj2.transform.localPosition = new Vector3(padding + (j + 0.5f) * spacing, -padding - (i + 0.5f) * spacing, 0f);
                     var component = obj2.GetComponent<UIStorageSlot>();
                     if (component != null)
                     {
@@ -50,8 +49,7 @@ public class UIItemStorage : MonoBehaviour
                         component.slot = num;
                     }
 
-                    bounds.Encapsulate(new Vector3(padding * 2f + (j + 1) * spacing, -padding * 2f - (i + 1) * spacing,
-                        0f));
+                    bounds.Encapsulate(new Vector3(padding * 2f + (j + 1) * spacing, -padding * 2f - (i + 1) * spacing, 0f));
                     if (++num >= maxItemCount)
                     {
                         if (background != null)

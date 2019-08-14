@@ -23,7 +23,7 @@ public class PunTeams : MonoBehaviour
         var values = Enum.GetValues(typeof(Team));
         foreach (var current in values)
         {
-            PlayersPerTeam[(Team)(byte)current] = new List<PhotonPlayer>();
+            PlayersPerTeam[(Team) (byte) current] = new List<PhotonPlayer>();
         }
     }
 
@@ -32,8 +32,9 @@ public class PunTeams : MonoBehaviour
         var values = Enum.GetValues(typeof(Team));
         foreach (var current in values)
         {
-            PlayersPerTeam[(Team)(byte)current].Clear();
+            PlayersPerTeam[(Team) (byte) current].Clear();
         }
+
         for (var i = 0; i < PhotonNetwork.playerList.Length; i++)
         {
             var photonPlayer = PhotonNetwork.playerList[i];

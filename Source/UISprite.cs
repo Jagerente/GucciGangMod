@@ -233,7 +233,7 @@ public class UISprite : UIWidget
 
             if (fillDirection == FillDirection.Radial360)
             {
-                float[] numArray = { 0.5f, 1f, 0f, 0.5f, 0.5f, 1f, 0.5f, 1f, 0f, 0.5f, 0.5f, 1f, 0f, 0.5f, 0f, 0.5f };
+                float[] numArray = {0.5f, 1f, 0f, 0.5f, 0.5f, 1f, 0.5f, 1f, 0f, 0.5f, 0.5f, 1f, 0f, 0.5f, 0f, 0.5f};
                 var vectorArray5 = new Vector2[4];
                 var vectorArray6 = new Vector2[4];
                 for (var n = 0; n < 4; n++)
@@ -379,70 +379,68 @@ public class UISprite : UIWidget
             switch (type)
             {
                 case Type.Sliced:
-                    {
-                        var localPosition = cachedTransform.localPosition;
-                        localPosition.x = Mathf.RoundToInt(localPosition.x);
-                        localPosition.y = Mathf.RoundToInt(localPosition.y);
-                        localPosition.z = Mathf.RoundToInt(localPosition.z);
-                        cachedTransform.localPosition = localPosition;
-                        var localScale = cachedTransform.localScale;
-                        localScale.x = Mathf.RoundToInt(localScale.x * 0.5f) << 1;
-                        localScale.y = Mathf.RoundToInt(localScale.y * 0.5f) << 1;
-                        localScale.z = 1f;
-                        cachedTransform.localScale = localScale;
-                        break;
-                    }
+                {
+                    var localPosition = cachedTransform.localPosition;
+                    localPosition.x = Mathf.RoundToInt(localPosition.x);
+                    localPosition.y = Mathf.RoundToInt(localPosition.y);
+                    localPosition.z = Mathf.RoundToInt(localPosition.z);
+                    cachedTransform.localPosition = localPosition;
+                    var localScale = cachedTransform.localScale;
+                    localScale.x = Mathf.RoundToInt(localScale.x * 0.5f) << 1;
+                    localScale.y = Mathf.RoundToInt(localScale.y * 0.5f) << 1;
+                    localScale.z = 1f;
+                    cachedTransform.localScale = localScale;
+                    break;
+                }
 
                 case Type.Tiled:
-                    {
-                        var vector3 = cachedTransform.localPosition;
-                        vector3.x = Mathf.RoundToInt(vector3.x);
-                        vector3.y = Mathf.RoundToInt(vector3.y);
-                        vector3.z = Mathf.RoundToInt(vector3.z);
-                        cachedTransform.localPosition = vector3;
-                        var vector4 = cachedTransform.localScale;
-                        vector4.x = Mathf.RoundToInt(vector4.x);
-                        vector4.y = Mathf.RoundToInt(vector4.y);
-                        vector4.z = 1f;
-                        cachedTransform.localScale = vector4;
-                        break;
-                    }
+                {
+                    var vector3 = cachedTransform.localPosition;
+                    vector3.x = Mathf.RoundToInt(vector3.x);
+                    vector3.y = Mathf.RoundToInt(vector3.y);
+                    vector3.z = Mathf.RoundToInt(vector3.z);
+                    cachedTransform.localPosition = vector3;
+                    var vector4 = cachedTransform.localScale;
+                    vector4.x = Mathf.RoundToInt(vector4.x);
+                    vector4.y = Mathf.RoundToInt(vector4.y);
+                    vector4.z = 1f;
+                    cachedTransform.localScale = vector4;
+                    break;
+                }
 
                 default:
+                {
+                    var mainTexture = this.mainTexture;
+                    var vector5 = cachedTransform.localScale;
+                    if (mainTexture != null)
                     {
-                        var mainTexture = this.mainTexture;
-                        var vector5 = cachedTransform.localScale;
-                        if (mainTexture != null)
-                        {
-                            var rect = NGUIMath.ConvertToPixels(outerUV, mainTexture.width, mainTexture.height, true);
-                            var pixelSize = atlas.pixelSize;
-                            vector5.x = Mathf.RoundToInt(rect.width * pixelSize) * Mathf.Sign(vector5.x);
-                            vector5.y = Mathf.RoundToInt(rect.height * pixelSize) * Mathf.Sign(vector5.y);
-                            vector5.z = 1f;
-                            cachedTransform.localScale = vector5;
-                        }
-
-                        var num2 = Mathf.RoundToInt(
-                            Mathf.Abs(vector5.x) * (1f + mSprite.paddingLeft + mSprite.paddingRight));
-                        var num3 = Mathf.RoundToInt(
-                            Mathf.Abs(vector5.y) * (1f + mSprite.paddingTop + mSprite.paddingBottom));
-                        var vector6 = cachedTransform.localPosition;
-                        vector6.x = Mathf.CeilToInt(vector6.x * 4f) >> 2;
-                        vector6.y = Mathf.CeilToInt(vector6.y * 4f) >> 2;
-                        vector6.z = Mathf.RoundToInt(vector6.z);
-                        if (num2 % 2 == 1 && (pivot == Pivot.Top || pivot == Pivot.Center || pivot == Pivot.Bottom))
-                        {
-                            vector6.x += 0.5f;
-                        }
-
-                        if (num3 % 2 == 1 && (pivot == Pivot.Left || pivot == Pivot.Center || pivot == Pivot.Right))
-                        {
-                            vector6.y += 0.5f;
-                        }
-
-                        cachedTransform.localPosition = vector6;
-                        break;
+                        var rect = NGUIMath.ConvertToPixels(outerUV, mainTexture.width, mainTexture.height, true);
+                        var pixelSize = atlas.pixelSize;
+                        vector5.x = Mathf.RoundToInt(rect.width * pixelSize) * Mathf.Sign(vector5.x);
+                        vector5.y = Mathf.RoundToInt(rect.height * pixelSize) * Mathf.Sign(vector5.y);
+                        vector5.z = 1f;
+                        cachedTransform.localScale = vector5;
                     }
+
+                    var num2 = Mathf.RoundToInt(Mathf.Abs(vector5.x) * (1f + mSprite.paddingLeft + mSprite.paddingRight));
+                    var num3 = Mathf.RoundToInt(Mathf.Abs(vector5.y) * (1f + mSprite.paddingTop + mSprite.paddingBottom));
+                    var vector6 = cachedTransform.localPosition;
+                    vector6.x = Mathf.CeilToInt(vector6.x * 4f) >> 2;
+                    vector6.y = Mathf.CeilToInt(vector6.y * 4f) >> 2;
+                    vector6.z = Mathf.RoundToInt(vector6.z);
+                    if (num2 % 2 == 1 && (pivot == Pivot.Top || pivot == Pivot.Center || pivot == Pivot.Bottom))
+                    {
+                        vector6.x += 0.5f;
+                    }
+
+                    if (num3 % 2 == 1 && (pivot == Pivot.Left || pivot == Pivot.Center || pivot == Pivot.Right))
+                    {
+                        vector6.y += 0.5f;
+                    }
+
+                    cachedTransform.localPosition = vector6;
+                    break;
+                }
             }
         }
     }
@@ -654,8 +652,7 @@ public class UISprite : UIWidget
             var num3 = Mathf.Abs(mInner.height / localScale.y) * pixelSize;
             if (num2 < 0.01f || num3 < 0.01f)
             {
-                Debug.LogWarning("The tiled sprite (" + NGUITools.GetHierarchy(gameObject) +
-                                 ") is too small.\nConsider using a bigger one.");
+                Debug.LogWarning("The tiled sprite (" + NGUITools.GetHierarchy(gameObject) + ") is too small.\nConsider using a bigger one.");
                 num2 = 0.01f;
                 num3 = 0.01f;
             }
@@ -799,8 +796,7 @@ public class UISprite : UIWidget
                 inner = NGUIMath.ConvertToPixels(inner, mainTexture.width, mainTexture.height, true);
             }
 
-            return new Vector4(inner.xMin - outer.xMin, inner.yMin - outer.yMin, outer.xMax - inner.xMax,
-                       outer.yMax - inner.yMax) * atlas.pixelSize;
+            return new Vector4(inner.xMin - outer.xMin, inner.yMin - outer.yMin, outer.xMax - inner.xMax, outer.yMax - inner.yMax) * atlas.pixelSize;
         }
     }
 
@@ -911,8 +907,7 @@ public class UISprite : UIWidget
         {
             if (isValid && type == Type.Simple)
             {
-                return new Vector4(mSprite.paddingLeft, mSprite.paddingTop, mSprite.paddingRight,
-                    mSprite.paddingBottom);
+                return new Vector4(mSprite.paddingLeft, mSprite.paddingTop, mSprite.paddingRight, mSprite.paddingBottom);
             }
 
             return base.relativePadding;

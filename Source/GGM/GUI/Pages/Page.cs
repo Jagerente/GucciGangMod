@@ -30,11 +30,13 @@ namespace GGM.GUI.Pages
             {
                 return result as T;
             }
+
             var gos = FindObjectsOfType<T>();
             if (gos.Length > 1)
             {
                 throw new Exception($"Instance of class {typeof(T).Name} is not only one!");
             }
+
             switch (gos.Length)
             {
                 case 0:

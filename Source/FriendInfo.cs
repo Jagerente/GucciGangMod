@@ -7,10 +7,7 @@
 
     public bool IsInRoom
     {
-        get
-        {
-            return IsOnline && !string.IsNullOrEmpty(Room);
-        }
+        get { return IsOnline && !string.IsNullOrEmpty(Room); }
     }
 
     public bool IsOnline { get; protected internal set; }

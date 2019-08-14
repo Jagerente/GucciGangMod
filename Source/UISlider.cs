@@ -183,8 +183,7 @@ public class UISlider : IgnoreTimeScale
                     }
                     else
                     {
-                        Debug.LogWarning("Slider thumb is only supported with Horizontal or Vertical fill direction",
-                            this);
+                        Debug.LogWarning("Slider thumb is only supported with Horizontal or Vertical fill direction", this);
                     }
                 }
                 else if (direction == Direction.Horizontal)
@@ -216,10 +215,8 @@ public class UISlider : IgnoreTimeScale
         if (Application.isPlaying && thumb != null && thumb.collider != null)
         {
             var listener = UIEventListener.Get(thumb.gameObject);
-            listener.onPress = (UIEventListener.BoolDelegate)Delegate.Combine(listener.onPress,
-                new UIEventListener.BoolDelegate(OnPressThumb));
-            listener.onDrag = (UIEventListener.VectorDelegate)Delegate.Combine(listener.onDrag,
-                new UIEventListener.VectorDelegate(OnDragThumb));
+            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress, new UIEventListener.BoolDelegate(OnPressThumb));
+            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag, new UIEventListener.VectorDelegate(OnDragThumb));
         }
 
         Set(rawValue, true);
@@ -235,7 +232,7 @@ public class UISlider : IgnoreTimeScale
             var plane = new Plane(mTrans.rotation * Vector3.back, mTrans.position);
             if (plane.Raycast(ray, out num))
             {
-                var vector = mTrans.localPosition + (Vector3)(mCenter - mSize * 0.5f);
+                var vector = mTrans.localPosition + (Vector3) (mCenter - mSize * 0.5f);
                 var vector2 = mTrans.localPosition - vector;
                 var vector4 = mTrans.InverseTransformPoint(ray.GetPoint(num)) + vector2;
                 Set(direction != Direction.Horizontal ? vector4.y / mSize.y : vector4.x / mSize.x, false);

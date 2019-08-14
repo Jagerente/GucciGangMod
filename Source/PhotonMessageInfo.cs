@@ -7,7 +7,7 @@
     public PhotonMessageInfo()
     {
         sender = PhotonNetwork.player;
-        timeInt = (int)(PhotonNetwork.time * 1000.0);
+        timeInt = (int) (PhotonNetwork.time * 1000.0);
         photonView = null;
     }
 
@@ -25,9 +25,6 @@
 
     public double timestamp
     {
-        get
-        {
-            return timeInt / 1000.0;
-        }
+        get { return timeInt / 1000.0; }
     }
 }

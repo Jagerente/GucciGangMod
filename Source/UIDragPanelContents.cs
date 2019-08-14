@@ -5,8 +5,7 @@ public class UIDragPanelContents : MonoBehaviour
 {
     public UIDraggablePanel draggablePanel;
 
-    [HideInInspector, SerializeField]
-    private UIPanel panel;
+    [HideInInspector, SerializeField] private UIPanel panel;
 
     private void Awake()
     {
@@ -20,6 +19,7 @@ public class UIDragPanelContents : MonoBehaviour
                     draggablePanel = panel.gameObject.AddComponent<UIDraggablePanel>();
                 }
             }
+
             panel = null;
         }
     }

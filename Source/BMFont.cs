@@ -5,25 +5,19 @@ using UnityEngine;
 [Serializable]
 public class BMFont
 {
-    [HideInInspector, SerializeField]
-    private int mBase;
+    [HideInInspector, SerializeField] private int mBase;
 
     private Dictionary<int, BMGlyph> mDict = new Dictionary<int, BMGlyph>();
 
-    [HideInInspector, SerializeField]
-    private int mHeight;
+    [HideInInspector, SerializeField] private int mHeight;
 
-    [HideInInspector, SerializeField]
-    private List<BMGlyph> mSaved = new List<BMGlyph>();
+    [HideInInspector, SerializeField] private List<BMGlyph> mSaved = new List<BMGlyph>();
 
-    [HideInInspector, SerializeField]
-    private int mSize;
+    [HideInInspector, SerializeField] private int mSize;
 
-    [HideInInspector, SerializeField]
-    private string mSpriteName;
+    [HideInInspector, SerializeField] private string mSpriteName;
 
-    [HideInInspector, SerializeField]
-    private int mWidth;
+    [HideInInspector, SerializeField] private int mWidth;
 
     public void Clear()
     {
@@ -50,15 +44,14 @@ public class BMFont
                 num++;
             }
         }
+
         if (!mDict.TryGetValue(index, out glyph) && createIfMissing)
         {
-            glyph = new BMGlyph
-            {
-                index = index
-            };
+            glyph = new BMGlyph {index = index};
             mSaved.Add(glyph);
             mDict.Add(index, glyph);
         }
+
         return glyph;
     }
 
@@ -79,77 +72,41 @@ public class BMFont
 
     public int baseOffset
     {
-        get
-        {
-            return mBase;
-        }
-        set
-        {
-            mBase = value;
-        }
+        get { return mBase; }
+        set { mBase = value; }
     }
 
     public int charSize
     {
-        get
-        {
-            return mSize;
-        }
-        set
-        {
-            mSize = value;
-        }
+        get { return mSize; }
+        set { mSize = value; }
     }
 
     public int glyphCount
     {
-        get
-        {
-            return !isValid ? 0 : mSaved.Count;
-        }
+        get { return !isValid ? 0 : mSaved.Count; }
     }
 
     public bool isValid
     {
-        get
-        {
-            return mSaved.Count > 0;
-        }
+        get { return mSaved.Count > 0; }
     }
 
     public string spriteName
     {
-        get
-        {
-            return mSpriteName;
-        }
-        set
-        {
-            mSpriteName = value;
-        }
+        get { return mSpriteName; }
+        set { mSpriteName = value; }
     }
 
     public int texHeight
     {
-        get
-        {
-            return mHeight;
-        }
-        set
-        {
-            mHeight = value;
-        }
+        get { return mHeight; }
+        set { mHeight = value; }
     }
 
     public int texWidth
     {
-        get
-        {
-            return mWidth;
-        }
-        set
-        {
-            mWidth = value;
-        }
+        get { return mWidth; }
+        set { mWidth = value; }
     }
 }

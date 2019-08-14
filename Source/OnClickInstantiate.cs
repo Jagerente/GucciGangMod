@@ -3,7 +3,7 @@
 public class OnClickInstantiate : MonoBehaviour
 {
     public int InstantiateType;
-    private string[] InstantiateTypeNames = { "Mine", "Scene" };
+    private string[] InstantiateTypeNames = {"Mine", "Scene"};
     public GameObject Prefab;
     public bool showGui;
 

@@ -29,6 +29,7 @@ public class UIButtonKeys : MonoBehaviour
                     {
                         UICamera.selectedObject = selectOnUp.gameObject;
                     }
+
                     break;
 
                 case KeyCode.DownArrow:
@@ -36,6 +37,7 @@ public class UIButtonKeys : MonoBehaviour
                     {
                         UICamera.selectedObject = selectOnDown.gameObject;
                     }
+
                     break;
 
                 case KeyCode.RightArrow:
@@ -43,6 +45,7 @@ public class UIButtonKeys : MonoBehaviour
                     {
                         UICamera.selectedObject = selectOnRight.gameObject;
                     }
+
                     break;
 
                 case KeyCode.LeftArrow:
@@ -50,6 +53,7 @@ public class UIButtonKeys : MonoBehaviour
                     {
                         UICamera.selectedObject = selectOnLeft.gameObject;
                     }
+
                     break;
 
                 case KeyCode.Tab:
@@ -88,6 +92,7 @@ public class UIButtonKeys : MonoBehaviour
                     {
                         UICamera.selectedObject = selectOnLeft.gameObject;
                     }
+
                     break;
             }
         }

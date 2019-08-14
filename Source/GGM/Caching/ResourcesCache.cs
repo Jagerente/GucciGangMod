@@ -32,13 +32,14 @@ namespace GGM.Caching
         {
             cacheType.TryGetValue(path, out var obj);
             if (obj != null) return obj as T;
-            var go = (GameObject)Load(path);
+            var go = (GameObject) Load(path);
             if (go.GetComponent<T>() != null)
             {
                 if (cacheType.ContainsKey(path)) cacheType[path] = go.GetComponent<T>();
                 else cacheType.Add(path, go.GetComponent<T>());
                 return go.GetComponent<T>();
             }
+
             return default(T);
         }
 
@@ -47,8 +48,9 @@ namespace GGM.Caching
             var name = _name.StartsWith("RCAsset/") ? _name.Remove(0, 8) : _name;
             if (!cacheRC_GO.ContainsKey(name))
             {
-                return cacheRC_GO[name] = (GameObject)FengGameManagerMKII.RCassets.Load(name);
+                return cacheRC_GO[name] = (GameObject) FengGameManagerMKII.RCassets.Load(name);
             }
+
             return cacheRC_GO[name];
         }
 
@@ -57,8 +59,9 @@ namespace GGM.Caching
             var name = _name.StartsWith("RCAsset/") ? _name.Remove(0, 8) : _name;
             if (!cacheRC_T2D.ContainsKey(name))
             {
-                return cacheRC_T2D[name] = (Texture2D)FengGameManagerMKII.RCassets.Load(name);
+                return cacheRC_T2D[name] = (Texture2D) FengGameManagerMKII.RCassets.Load(name);
             }
+
             return cacheRC_T2D[name];
         }
 
@@ -67,8 +70,9 @@ namespace GGM.Caching
             var name = _name.StartsWith("RCAsset/") ? _name.Remove(0, 8) : _name;
             if (!cacheRC_M.ContainsKey(name))
             {
-                return cacheRC_M[name] = (Material)FengGameManagerMKII.RCassets.Load(name);
+                return cacheRC_M[name] = (Material) FengGameManagerMKII.RCassets.Load(name);
             }
+
             return cacheRC_M[name];
         }
     }

@@ -22,7 +22,7 @@ public abstract class UITweener : IgnoreTimeScale
 
     protected UITweener()
     {
-        Keyframe[] keys = { new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f) };
+        Keyframe[] keys = {new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f)};
         animationCurve = new AnimationCurve(keys);
         ignoreTimeScale = true;
         duration = 1f;
@@ -42,7 +42,7 @@ public abstract class UITweener : IgnoreTimeScale
         component.mFactor = 0f;
         component.mAmountPerDelta = Mathf.Abs(component.mAmountPerDelta);
         component.style = Style.Once;
-        Keyframe[] keys = { new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f) };
+        Keyframe[] keys = {new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f)};
         component.animationCurve = new AnimationCurve(keys);
         component.eventReceiver = null;
         component.callWhenFinished = null;

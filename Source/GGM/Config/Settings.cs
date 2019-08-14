@@ -46,18 +46,13 @@ namespace GGM.Config
         public static BoolSetting CameraTiltSetting = new BoolSetting("GGM_CameraTilt");
         public static BoolSetting CameraStaticFOVSetting = new BoolSetting("GGM_StaticFOV");
 
-        public static BoolSetting[] CameraTypeSettings =
-        {
-            new BoolSetting("GGM_OriginalCamera", true),
-            new BoolSetting("GGM_TPSCamera", true),
-            new BoolSetting("GGM_WOWCamera"),
-            new BoolSetting("GGM_OldTPS"),
-        };
+        public static BoolSetting[] CameraTypeSettings = { new BoolSetting("GGM_OriginalCamera", true), new BoolSetting("GGM_TPSCamera", true), new BoolSetting("GGM_WOWCamera"), new BoolSetting("GGM_OldTPS"), };
 
         public static BoolSetting SnapshotsSetting = new BoolSetting("GGM_Snapshots");
         public static BoolSetting SnapshotsShowInGameSetting = new BoolSetting("GGM_SnapshotsShowInGame");
         public static BoolSetting InfiniteBladesSetting = new BoolSetting("GGM_InfiniteBlades");
         public static BoolSetting InfiniteBulletsSetting = new BoolSetting("GGM_InfiniteBullets");
+        public static BoolSetting InfiniteBulletsNoReloadingSetting = new BoolSetting("GGM_InfiniteBulletsNoReloading");
         public static BoolSetting InfiniteGasSetting = new BoolSetting("GGM_InfiniteGas");
         public static BoolSetting UserInterfaceSetting = new BoolSetting("GGM_UserInterface");
         public static BoolSetting PlayerListUISetting = new BoolSetting("GGM_PlayerListUI", true);
@@ -94,17 +89,9 @@ namespace GGM.Config
         public static BoolSetting DisableAHSSAirReloadingSetting = new BoolSetting("GGM_DisableAHSSAirReloading");
         public static BoolSetting DeadlyCannonsModeSetting = new BoolSetting("GGM_DeadlyCannonsMode");
 
-        public static BoolSetting[] ChatMajorFormatSettings =
-        {
-            new BoolSetting("GGM_ChatMajorBold"),
-            new BoolSetting("GGM_ChatMinorItalic")
-        };
+        public static BoolSetting[] ChatMajorFormatSettings = { new BoolSetting("GGM_ChatMajorBold"), new BoolSetting("GGM_ChatMinorItalic") };
 
-        public static BoolSetting[] ChatMinorFormatSettings =
-        {
-            new BoolSetting("GGM_ChatMinorBold"),
-            new BoolSetting("GGM_ChatMinorItalic")
-        };
+        public static BoolSetting[] ChatMinorFormatSettings = { new BoolSetting("GGM_ChatMinorBold"), new BoolSetting("GGM_ChatMinorItalic") };
 
         public static BoolSetting AntiTitanErenSetting = new BoolSetting("GGM_AntiTitanEren");
 
@@ -118,11 +105,7 @@ namespace GGM.Config
         public static BoolSetting CustomLightSetting = new BoolSetting("GGM_CustomLight");
 
         //Rebinds
-        public static BoolSetting[] ReelingSettings =
-        {
-            new BoolSetting("GGM_ReelIn", true),
-            new BoolSetting("GGM_ReelOut", true)
-        };
+        public static BoolSetting[] ReelingSettings = { new BoolSetting("GGM_ReelIn", true), new BoolSetting("GGM_ReelOut", true) };
 
         public static BoolSetting DashSetting = new BoolSetting("GGM_Dash");
 
@@ -149,20 +132,9 @@ namespace GGM.Config
         public static FloatSetting CameraFOVSetting = new FloatSetting("GGM_CameraFOV", 110f);
 
         //Server
-        public static FloatSetting[] SpawnRateSettings =
-        {
-            new FloatSetting("GGM_NormalSpawnRate", 100f),
-            new FloatSetting("GGM_AbnormalSpawnRate"),
-            new FloatSetting("GGM_JumperSpawnRate"),
-            new FloatSetting("GGM_CrawlerSpawnRate"),
-            new FloatSetting("GGM_PunkSpawnRate")
-        };
+        public static FloatSetting[] SpawnRateSettings = { new FloatSetting("GGM_NormalSpawnRate", 100f), new FloatSetting("GGM_AbnormalSpawnRate"), new FloatSetting("GGM_JumperSpawnRate"), new FloatSetting("GGM_CrawlerSpawnRate"), new FloatSetting("GGM_PunkSpawnRate") };
 
-        public static FloatSetting[] SizeSettings =
-        {
-            new FloatSetting("GGM_MinimumSize", 2.5f),
-            new FloatSetting("GGM_MaximumSize", 3f)
-        };
+        public static FloatSetting[] SizeSettings = { new FloatSetting("GGM_MinimumSize", 2.5f), new FloatSetting("GGM_MaximumSize", 3f) };
 
         //Video
         public static FloatSetting OverallQualitySetting = new FloatSetting("GGM_OverallQuality", 1);
@@ -170,62 +142,13 @@ namespace GGM.Config
         public static FloatSetting DrawDistanceSetting = new FloatSetting("GGM_DrawDistance", 5000f);
         public static FloatSetting ShadowDistanceSetting = new FloatSetting("GGM_ShadowDistance", 600f);
 
-        public static FloatSetting[][] CustomAmbientColorSetting =
-        {
-            new[]
-            {
-                new FloatSetting("GGM_AmbientColorDayR", 0.494f),
-                new FloatSetting("GGM_AmbientColorDayG", 0.478f),
-                new FloatSetting("GGM_AmbientColorDayB", 0.447f)
-            },
-            new []
-            {
-                new FloatSetting("GGM_AmbientColorDawnR", 0.345f),
-                new FloatSetting("GGM_AmbientColorDawnG", 0.305f),
-                new FloatSetting("GGM_AmbientColorDawnB", 0.271f)
-            },
-            new []
-            {
-                new FloatSetting("GGM_AmbientColorNightR", 0.05f),
-                new FloatSetting("GGM_AmbientColorNightG", 0.05f),
-                new FloatSetting("GGM_AmbientColorNightB", 0.05f)
-            }
-        };
+        public static FloatSetting[][] CustomAmbientColorSetting = { new[] { new FloatSetting("GGM_AmbientColorDayR", 0.494f), new FloatSetting("GGM_AmbientColorDayG", 0.478f), new FloatSetting("GGM_AmbientColorDayB", 0.447f) }, new[] { new FloatSetting("GGM_AmbientColorDawnR", 0.345f), new FloatSetting("GGM_AmbientColorDawnG", 0.305f), new FloatSetting("GGM_AmbientColorDawnB", 0.271f) }, new[] { new FloatSetting("GGM_AmbientColorNightR", 0.05f), new FloatSetting("GGM_AmbientColorNightG", 0.05f), new FloatSetting("GGM_AmbientColorNightB", 0.05f) } };
 
-        public static FloatSetting[] FogColorSettings =
-        {
-            new FloatSetting("GGM_FogColorR", 0.066f),
-            new FloatSetting("GGM_FogColorG", 0.066f),
-            new FloatSetting("GGM_FogColorB", 0.066f)
-        };
+        public static FloatSetting[] FogColorSettings = { new FloatSetting("GGM_FogColorR", 0.066f), new FloatSetting("GGM_FogColorG", 0.066f), new FloatSetting("GGM_FogColorB", 0.066f) };
 
-        public static FloatSetting[] FogDistanceSettings =
-        {
-            new FloatSetting("GGM_FogStartDistance"),
-            new FloatSetting("GGM_FogEndDistance", 1000f)
-        };
+        public static FloatSetting[] FogDistanceSettings = { new FloatSetting("GGM_FogStartDistance"), new FloatSetting("GGM_FogEndDistance", 1000f) };
 
-        public static FloatSetting[][] CustomLightColorSettings =
-        {
-            new[]
-            {
-                new FloatSetting("GGM_LightColorDayR", 1f),
-                new FloatSetting("GGM_LightColorDayG", 1f),
-                new FloatSetting("GGM_LightColorDayB", 1f)
-            },
-            new []
-            {
-                new FloatSetting("GGM_LightColorDawnR", 0.729f),
-                new FloatSetting("GGM_LightColorDawnG", 0.643f),
-                new FloatSetting("GGM_LightColorDawnB", 0.458f)
-            },
-            new []
-            {
-                new FloatSetting("GGM_LightColorNightR", 0.08f),
-                new FloatSetting("GGM_LightColorNightG", 0.08f),
-                new FloatSetting("GGM_LightColorNightB", 0.1f)
-            }
-        };
+        public static FloatSetting[][] CustomLightColorSettings = { new[] { new FloatSetting("GGM_LightColorDayR", 1f), new FloatSetting("GGM_LightColorDayG", 1f), new FloatSetting("GGM_LightColorDayB", 1f) }, new[] { new FloatSetting("GGM_LightColorDawnR", 0.729f), new FloatSetting("GGM_LightColorDawnG", 0.643f), new FloatSetting("GGM_LightColorDawnB", 0.458f) }, new[] { new FloatSetting("GGM_LightColorNightR", 0.08f), new FloatSetting("GGM_LightColorNightG", 0.08f), new FloatSetting("GGM_LightColorNightB", 0.1f) } };
 
         //Audio
         public static FloatSetting GlobalVolumeSetting = new FloatSetting("GGM_GlobalVolume", 1f);
@@ -244,12 +167,7 @@ namespace GGM.Config
         public static FloatSetting StepVolumeSetting = new FloatSetting("GGM_StepVolume", 1f);
 
         //Bombs
-        public static FloatSetting[] BombColorSetting =
-        {
-            new FloatSetting("GGM_BombColorR", 1f),
-            new FloatSetting("GGM_BombColorG", 1f),
-            new FloatSetting("GGM_BombColorB", 1f),
-        };
+        public static FloatSetting[] BombColorSetting = { new FloatSetting("GGM_BombColorR", 1f), new FloatSetting("GGM_BombColorG", 1f), new FloatSetting("GGM_BombColorB", 1f), };
 
         #endregion Floats
 
@@ -267,12 +185,7 @@ namespace GGM.Config
         public static IntSetting TitansPerWaveSetting = new IntSetting("GGM_TitansPerWave", 2);
         public static IntSetting MaximumWavesSetting = new IntSetting("GGM_MaximumWaves", 20);
 
-        public static IntSetting[] HealthSettings =
-        {
-            new IntSetting("GGM_HealthType"),
-            new IntSetting("GGM_MinimumTitansHealth", 100),
-            new IntSetting("GGM_MaximumTitansHealth", 200)
-        };
+        public static IntSetting[] HealthSettings = { new IntSetting("GGM_HealthType"), new IntSetting("GGM_MinimumTitansHealth", 100), new IntSetting("GGM_MaximumTitansHealth", 200) };
 
         public static IntSetting ArmorSetting = new IntSetting("GGM_Armor", 1000);
         public static IntSetting ExplodeRadiusSetting = new IntSetting("GGM_ExplodeRadius", 30);
@@ -295,13 +208,7 @@ namespace GGM.Config
         public static IntSetting ShadowCascadesSetting = new IntSetting("GGM_ShadowCascades", 2);
 
         //Bombs
-        public static IntSetting[] BombSettings =
-        {
-            new IntSetting("GGM_BombRadius", 5),
-            new IntSetting("GGM_BombRange", 5),
-            new IntSetting("GGM_BombSpeed", 5),
-            new IntSetting("GGM_BombCooldown", 5)
-        };
+        public static IntSetting[] BombSettings = { new IntSetting("GGM_BombRadius", 5), new IntSetting("GGM_BombRange", 5), new IntSetting("GGM_BombSpeed", 5), new IntSetting("GGM_BombCooldown", 5) };
 
         //HumanSkins
         public static IntSetting HumanSkinsSetting = new IntSetting("GGM_HumanSkins");
@@ -330,39 +237,7 @@ namespace GGM.Config
         public static StringSetting WelcomeMessageSetting = new StringSetting("GGM_WelcomeMessage");
 
         //Rebinds
-        public static StringSetting[] HumanRebindsSetting =
-        {
-            new StringSetting("GGM_HumanForward"),
-            new StringSetting("GGM_HumanBackward"),
-            new StringSetting("GGM_HumanLeft"),
-            new StringSetting("GGM_HumanRight"),
-            new StringSetting("GGM_HumanJump"),
-            new StringSetting("GGM_HumanDodge"),
-            new StringSetting("GGM_HumanLeftHook"),
-            new StringSetting("GGM_HumanRightHook"),
-            new StringSetting("GGM_HumanBothHooks"),
-            new StringSetting("GGM_HumanLock"),
-            new StringSetting("GGM_HumanAttack"),
-            new StringSetting("GGM_HumanSpecial"),
-            new StringSetting("GGM_HumanSalute"),
-            new StringSetting("GGM_HumanChangeCamera"),
-            new StringSetting("GGM_HumanRestartSuicide"),
-            new StringSetting("GGM_HumanMenu"),
-            new StringSetting("GGM_HumanShowHideCursor"),
-            new StringSetting("GGM_HumanFullscreen"),
-            new StringSetting("GGM_HumanReload"),
-            new StringSetting("GGM_HumanFlareGreen"),
-            new StringSetting("GGM_HumanFlareRed"),
-            new StringSetting("GGM_HumanFlareBlack"),
-            new StringSetting("GGM_HumanReelIn"),
-            new StringSetting("GGM_HumanReelOut"),
-            new StringSetting("GGM_HumanDash"),
-            new StringSetting("GGM_HumanMinimapMaximize"),
-            new StringSetting("GGM_HumanMinimapToggle"),
-            new StringSetting("GGM_HumanMinimapReset"),
-            new StringSetting("GGM_HumanChat"),
-            new StringSetting("GGM_HumanLiveSpectate")
-        };
+        public static StringSetting[] HumanRebindsSetting = { new StringSetting("GGM_HumanForward"), new StringSetting("GGM_HumanBackward"), new StringSetting("GGM_HumanLeft"), new StringSetting("GGM_HumanRight"), new StringSetting("GGM_HumanJump"), new StringSetting("GGM_HumanDodge"), new StringSetting("GGM_HumanLeftHook"), new StringSetting("GGM_HumanRightHook"), new StringSetting("GGM_HumanBothHooks"), new StringSetting("GGM_HumanLock"), new StringSetting("GGM_HumanAttack"), new StringSetting("GGM_HumanSpecial"), new StringSetting("GGM_HumanSalute"), new StringSetting("GGM_HumanChangeCamera"), new StringSetting("GGM_HumanRestartSuicide"), new StringSetting("GGM_HumanMenu"), new StringSetting("GGM_HumanShowHideCursor"), new StringSetting("GGM_HumanFullscreen"), new StringSetting("GGM_HumanReload"), new StringSetting("GGM_HumanFlareGreen"), new StringSetting("GGM_HumanFlareRed"), new StringSetting("GGM_HumanFlareBlack"), new StringSetting("GGM_HumanReelIn"), new StringSetting("GGM_HumanReelOut"), new StringSetting("GGM_HumanDash"), new StringSetting("GGM_HumanMinimapMaximize"), new StringSetting("GGM_HumanMinimapToggle"), new StringSetting("GGM_HumanMinimapReset"), new StringSetting("GGM_HumanChat"), new StringSetting("GGM_HumanLiveSpectate") };
 
         //HumanSkins
         public static StringSetting HumanSkinsTitlesSetting = new StringSetting("GGM_HumanSkinsSetTitles", "Set 1`Set 2`Set 3`Set 4`Set 5");
@@ -438,60 +313,21 @@ namespace GGM.Config
             for (var i = 0; i < LocationSkinsForestCountSetting; i++)
             {
                 //Skin Fields
-                LocationSkinsForestList.Add(PlayerPrefs.GetString("GGM_ForestSkin_" + i,
-                    "`````````" +
-                    "https://i.imgur.com/tAzxZjG.png`" +
-                    "https://i.imgur.com/p4lwfdl.png`" +
-                    "https://i.imgur.com/rilg26V.png`" +
-                    "https://i.imgur.com/tAzxZjG.png`" +
-                    "https://i.imgur.com/p4lwfdl.png`" +
-                    "https://i.imgur.com/rilg26V.png`" +
-                    "https://i.imgur.com/tAzxZjG.png`" +
-                    "https://i.imgur.com/p4lwfdl.png`" +
-                    "https://i.imgur.com/fxbU9wh.jpg`" +
-                    "https://i.imgur.com/SASIAcM.jpg`" +
-                    "https://i.imgur.com/V5dey1B.jpg`" +
-                    "https://i.imgur.com/lRBZmja.jpg`" +
-                    "https://i.imgur.com/PhjVKO4.jpg`" +
-                    "https://i.imgur.com/i7mzHHN.jpg").Split('`'));
+                LocationSkinsForestList.Add(PlayerPrefs.GetString("GGM_ForestSkin_" + i, "`````````" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/rilg26V.png`" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/rilg26V.png`" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/fxbU9wh.jpg`" + "https://i.imgur.com/SASIAcM.jpg`" + "https://i.imgur.com/V5dey1B.jpg`" + "https://i.imgur.com/lRBZmja.jpg`" + "https://i.imgur.com/PhjVKO4.jpg`" + "https://i.imgur.com/i7mzHHN.jpg").Split('`'));
                 //Ambient
                 LocationSkinsForestAmbientList.Add(PlayerPrefs.GetInt("GGM_ForestAmbient_" + i, 1));
-                LocationSkinsForestAmbientSettingsList.Add(new[] {
-                    PlayerPrefs.GetFloat("GGM_ForestAmbientColorR_" + i, 0.850f),
-                    PlayerPrefs.GetFloat("GGM_ForestAmbientColorG_" + i, 0.500f),
-                    PlayerPrefs.GetFloat("GGM_ForestAmbientColorB_" + i, 0.810f)
-                });
+                LocationSkinsForestAmbientSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestAmbientColorR_" + i, 0.850f), PlayerPrefs.GetFloat("GGM_ForestAmbientColorG_" + i, 0.500f), PlayerPrefs.GetFloat("GGM_ForestAmbientColorB_" + i, 0.810f) });
                 //Fog
                 LocationSkinsForestFogList.Add(PlayerPrefs.GetInt("GGM_ForestFog_" + i, 1));
-                LocationSkinsForestFogSettingsList.Add(new[] {
-                    PlayerPrefs.GetFloat("GGM_ForestFogColorR_" + i, 0.865f),
-                    PlayerPrefs.GetFloat("GGM_ForestFogColorG_" + i, 0.600f),
-                    PlayerPrefs.GetFloat("GGM_ForestFogColorB_" + i, 0.775f),
-                    PlayerPrefs.GetFloat("GGM_ForestFogStartDistance_" + i, 0f),
-                    PlayerPrefs.GetFloat("GGM_ForestFogEndDistance_" + i, 650f)
-                });
+                LocationSkinsForestFogSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestFogColorR_" + i, 0.865f), PlayerPrefs.GetFloat("GGM_ForestFogColorG_" + i, 0.600f), PlayerPrefs.GetFloat("GGM_ForestFogColorB_" + i, 0.775f), PlayerPrefs.GetFloat("GGM_ForestFogStartDistance_" + i, 0f), PlayerPrefs.GetFloat("GGM_ForestFogEndDistance_" + i, 650f) });
                 //Color
                 LocationSkinsForestLightList.Add(PlayerPrefs.GetInt("GGM_ForestLight_" + i, 0));
-                LocationSkinsForestLightSettingsList.Add(new[] {
-                    PlayerPrefs.GetFloat("GGM_ForestLightColorR_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_ForestLightColorG_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_ForestLightColorB_" + i, 1f)
-                });
+                LocationSkinsForestLightSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestLightColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestLightColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestLightColorB_" + i, 1f) });
                 //Particles
                 LocationSkinsForestParticlesList.Add(PlayerPrefs.GetInt("GGM_ForestParticles_" + i, 0));
-                LocationSkinsForestParticlesSettingsList.Add(new[]
-                {
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesCount_" + i, 1500f),
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesHeight_" + i, 125f),
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMinimum_" + i, 60f),
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMaximum_" + i, 120f),
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesGravity_" + i, 0.001f),
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesColorR_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesColorG_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesColorB_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_ForestParticlesColorA_" + i, 1f),
-                });
+                LocationSkinsForestParticlesSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestParticlesCount_" + i, 1500f), PlayerPrefs.GetFloat("GGM_ForestParticlesHeight_" + i, 125f), PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMinimum_" + i, 60f), PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMaximum_" + i, 120f), PlayerPrefs.GetFloat("GGM_ForestParticlesGravity_" + i, 0.001f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorB_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorA_" + i, 1f), });
             }
+
             foreach (var str in LocationSkinsForestSetTitlesSetting.Value.Split('`'))
             {
                 LocationSkinsForestTitlesList.Add(str);
@@ -507,6 +343,7 @@ namespace GGM.Config
                 {
                     fields += LocationSkinsForestList[i][j] + (j != 22 ? "`" : "");
                 }
+
                 PlayerPrefs.SetString("GGM_ForestSkin_" + i, fields);
                 PlayerPrefs.SetInt("GGM_ForestAmbient_" + i, LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting]);
                 PlayerPrefs.SetFloat("GGM_ForestAmbientColorR_" + i, LocationSkinsForestAmbientSettingsList[i][0]);
@@ -533,6 +370,7 @@ namespace GGM.Config
                 PlayerPrefs.SetFloat("GGM_ForestParticlesColorB_" + i, LocationSkinsForestParticlesSettingsList[i][7]);
                 PlayerPrefs.SetFloat("GGM_ForestParticlesColorA_" + i, LocationSkinsForestParticlesSettingsList[i][8]);
             }
+
             var titles = string.Empty;
             for (var i = 0; i < LocationSkinsForestTitlesList.Count; i++)
             {
@@ -565,41 +403,16 @@ namespace GGM.Config
                 LocationSkinsCityList.Add(PlayerPrefs.GetString("GGM_CitySkin_" + i, "````````````````").Split('`'));
                 //Ambient
                 LocationSkinsCityAmbientList.Add(PlayerPrefs.GetInt("GGM_CityAmbient_" + i, 0));
-                LocationSkinsCityAmbientSettingsList.Add(new[] {
-                    PlayerPrefs.GetFloat("GGM_CityAmbientColorR_" + i, 0.5f),
-                    PlayerPrefs.GetFloat("GGM_CityAmbientColorG_" + i, 0.5f),
-                    PlayerPrefs.GetFloat("GGM_CityAmbientColorB_" + i, 0.5f)
-                });
+                LocationSkinsCityAmbientSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_CityAmbientColorR_" + i, 0.5f), PlayerPrefs.GetFloat("GGM_CityAmbientColorG_" + i, 0.5f), PlayerPrefs.GetFloat("GGM_CityAmbientColorB_" + i, 0.5f) });
                 //Fog
                 LocationSkinsCityFogList.Add(PlayerPrefs.GetInt("GGM_CityFog_" + i, 0));
-                LocationSkinsCityFogSettingsList.Add(new[] {
-                    PlayerPrefs.GetFloat("GGM_CityFogColorR_" + i, 0.066f),
-                    PlayerPrefs.GetFloat("GGM_CityFogColorG_" + i, 0.066f),
-                    PlayerPrefs.GetFloat("GGM_CityFogColorB_" + i, 0.066f),
-                    PlayerPrefs.GetFloat("GGM_CityFogStartDistance" + i, 0f),
-                    PlayerPrefs.GetFloat("GGM_CityFogEndDistance" + i, 1000f)
-                });
+                LocationSkinsCityFogSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_CityFogColorR_" + i, 0.066f), PlayerPrefs.GetFloat("GGM_CityFogColorG_" + i, 0.066f), PlayerPrefs.GetFloat("GGM_CityFogColorB_" + i, 0.066f), PlayerPrefs.GetFloat("GGM_CityFogStartDistance" + i, 0f), PlayerPrefs.GetFloat("GGM_CityFogEndDistance" + i, 1000f) });
                 //Color
                 LocationSkinsCityLightList.Add(PlayerPrefs.GetInt("GGM_CityLight_" + i, 0));
-                LocationSkinsCityLightSettingsList.Add(new[] {
-                    PlayerPrefs.GetFloat("GGM_CityLightColorR_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_CityLightColorG_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_CityLightColorB_" + i, 1f)
-                });
+                LocationSkinsCityLightSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_CityLightColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityLightColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityLightColorB_" + i, 1f) });
                 //Particles
                 LocationSkinsCityParticlesList.Add(PlayerPrefs.GetInt("GGM_CityParticles_" + i, 0));
-                LocationSkinsCityParticlesSettingsList.Add(new[]
-                {
-                    PlayerPrefs.GetFloat("GGM_CityParticlesCount_" + i, 1500f),
-                    PlayerPrefs.GetFloat("GGM_CityParticlesHeight_" + i, 125f),
-                    PlayerPrefs.GetFloat("GGM_CityParticlesLifeTimeMinimum_" + i, 60f),
-                    PlayerPrefs.GetFloat("GGM_CityParticlesLifeTimeMaximum_" + i, 120f),
-                    PlayerPrefs.GetFloat("GGM_CityParticlesGravity_" + i, 0.001f),
-                    PlayerPrefs.GetFloat("GGM_CityParticlesColorR_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_CityParticlesColorG_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_CityParticlesColorB_" + i, 1f),
-                    PlayerPrefs.GetFloat("GGM_CityParticlesColorA_" + i, 1f),
-                });
+                LocationSkinsCityParticlesSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_CityParticlesCount_" + i, 1500f), PlayerPrefs.GetFloat("GGM_CityParticlesHeight_" + i, 125f), PlayerPrefs.GetFloat("GGM_CityParticlesLifeTimeMinimum_" + i, 60f), PlayerPrefs.GetFloat("GGM_CityParticlesLifeTimeMaximum_" + i, 120f), PlayerPrefs.GetFloat("GGM_CityParticlesGravity_" + i, 0.001f), PlayerPrefs.GetFloat("GGM_CityParticlesColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityParticlesColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityParticlesColorB_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityParticlesColorA_" + i, 1f), });
             }
 
             foreach (var str in LocationSkinsCitySetTitlesSetting.Value.Split('`'))
@@ -617,6 +430,7 @@ namespace GGM.Config
                 {
                     fields += LocationSkinsCityList[i][j] + (j != 16 ? "`" : "");
                 }
+
                 PlayerPrefs.SetString("GGM_CitySkin_" + i, fields);
                 PlayerPrefs.SetInt("GGM_CityAmbient_" + i, LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting]);
                 PlayerPrefs.SetFloat("GGM_CityAmbientColorR_" + i, LocationSkinsCityAmbientSettingsList[i][0]);
@@ -643,11 +457,13 @@ namespace GGM.Config
                 PlayerPrefs.SetFloat("GGM_CityParticlesColorB_" + i, LocationSkinsCityParticlesSettingsList[i][7]);
                 PlayerPrefs.SetFloat("GGM_CityParticlesColorA_" + i, LocationSkinsCityParticlesSettingsList[i][8]);
             }
+
             var titles = string.Empty;
             for (var i = 0; i < LocationSkinsCityTitlesList.Count; i++)
             {
                 titles += LocationSkinsCityTitlesList[i] + (i != LocationSkinsCityTitlesList.Count - 1 ? "`" : "");
             }
+
             LocationSkinsCitySetTitlesSetting.Value = titles;
         }
 
@@ -679,6 +495,7 @@ namespace GGM.Config
             {
                 set.Load();
             }
+
             LoadHumanSkins();
             LoadForestSkins();
             LoadCitySkins();
@@ -690,6 +507,7 @@ namespace GGM.Config
             {
                 set.Save();
             }
+
             SaveHumanSkins();
             SaveForestSkins();
             SaveCitySkins();
@@ -744,19 +562,14 @@ namespace GGM.Config
             IN_GAME_MAIN_CAMERA.cameraDistance = CameraDistanceSetting + 0.3f;
             Caching.GameObjectCache.Find("MainCamera").GetComponent<TiltShift>().enabled = BlurSetting;
             QualitySettings.SetQualityLevel(Convert.ToInt32(OverallQualitySetting), true);
-            Application.targetFrameRate = (FPSLockSetting > 0 && FPSLockSetting < 60) || FPSLockSetting < 0 ? 60 : FPSLockSetting == 0 ? -1 : FPSLockSetting;
+            Application.targetFrameRate = FPSLockSetting > 0 && FPSLockSetting < 60 || FPSLockSetting < 0 ? 60 : FPSLockSetting == 0 ? -1 : FPSLockSetting;
             QualitySettings.masterTextureLimit = TexturesSetting == 0 ? 2 : TexturesSetting == 2 ? 0 : 1;
-            QualitySettings.anisotropicFiltering = AnisotropicFilteringSetting == 0 ? AnisotropicFiltering.Disable :
-                AnisotropicFilteringSetting == 1 ? AnisotropicFiltering.Enable : AnisotropicFiltering.ForceEnable;
-            QualitySettings.antiAliasing = AntiAliasingSetting == 0 ? 0 :
-                AntiAliasingSetting == 1 ? 2 :
-                AntiAliasingSetting == 2 ? 4 : 8;
-            QualitySettings.blendWeights = BlendWeightsSetting == 0 ? BlendWeights.OneBone :
-                BlendWeightsSetting == 1 ? BlendWeights.TwoBones : BlendWeights.FourBones;
+            QualitySettings.anisotropicFiltering = AnisotropicFilteringSetting == 0 ? AnisotropicFiltering.Disable : AnisotropicFilteringSetting == 1 ? AnisotropicFiltering.Enable : AnisotropicFiltering.ForceEnable;
+            QualitySettings.antiAliasing = AntiAliasingSetting == 0 ? 0 : AntiAliasingSetting == 1 ? 2 : AntiAliasingSetting == 2 ? 4 : 8;
+            QualitySettings.blendWeights = BlendWeightsSetting == 0 ? BlendWeights.OneBone : BlendWeightsSetting == 1 ? BlendWeights.TwoBones : BlendWeights.FourBones;
             Camera.main.farClipPlane = DrawDistanceSetting;
             QualitySettings.shadowDistance = ShadowDistanceSetting;
-            QualitySettings.shadowProjection =
-                ShadowProjectionSetting == 0 ? ShadowProjection.StableFit : ShadowProjection.CloseFit;
+            QualitySettings.shadowProjection = ShadowProjectionSetting == 0 ? ShadowProjection.StableFit : ShadowProjection.CloseFit;
             QualitySettings.shadowCascades = ShadowCascadesSetting == 0 ? 0 : ShadowCascadesSetting == 1 ? 2 : 4;
             AudioListener.volume = GlobalVolumeSetting;
 
@@ -765,30 +578,18 @@ namespace GGM.Config
                 switch (IN_GAME_MAIN_CAMERA.dayLight)
                 {
                     case DayLight.Day:
-                        RenderSettings.ambientLight = CustomAmbientSetting
-                            ? new Color(CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2])
-                            : FengColor.dayAmbientLight;
-                        Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = CustomLightSetting
-                            ? new Color(CustomLightColorSettings[0][0], CustomLightColorSettings[0][1], CustomLightColorSettings[0][2])
-                            : FengColor.dayLight;
+                        RenderSettings.ambientLight = CustomAmbientSetting ? new Color(CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2]) : FengColor.dayAmbientLight;
+                        Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = CustomLightSetting ? new Color(CustomLightColorSettings[0][0], CustomLightColorSettings[0][1], CustomLightColorSettings[0][2]) : FengColor.dayLight;
                         break;
 
                     case DayLight.Dawn:
-                        RenderSettings.ambientLight = CustomAmbientSetting
-                            ? new Color(CustomAmbientColorSetting[1][0], CustomAmbientColorSetting[1][1], CustomAmbientColorSetting[1][2])
-                            : FengColor.dawnAmbientLight;
-                        Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = CustomLightSetting
-                            ? new Color(CustomLightColorSettings[1][0], CustomLightColorSettings[1][1], CustomLightColorSettings[1][2])
-                            : FengColor.dawnLight;
+                        RenderSettings.ambientLight = CustomAmbientSetting ? new Color(CustomAmbientColorSetting[1][0], CustomAmbientColorSetting[1][1], CustomAmbientColorSetting[1][2]) : FengColor.dawnAmbientLight;
+                        Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = CustomLightSetting ? new Color(CustomLightColorSettings[1][0], CustomLightColorSettings[1][1], CustomLightColorSettings[1][2]) : FengColor.dawnLight;
                         break;
 
                     case DayLight.Night:
-                        RenderSettings.ambientLight = CustomAmbientSetting
-                            ? new Color(CustomAmbientColorSetting[2][0], CustomAmbientColorSetting[2][1], CustomAmbientColorSetting[2][2])
-                            : FengColor.nightAmbientLight;
-                        Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = CustomLightSetting
-                            ? new Color(CustomLightColorSettings[2][0], CustomLightColorSettings[2][1], CustomLightColorSettings[2][2])
-                            : FengColor.nightLight;
+                        RenderSettings.ambientLight = CustomAmbientSetting ? new Color(CustomAmbientColorSetting[2][0], CustomAmbientColorSetting[2][1], CustomAmbientColorSetting[2][2]) : FengColor.nightAmbientLight;
+                        Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = CustomLightSetting ? new Color(CustomLightColorSettings[2][0], CustomLightColorSettings[2][1], CustomLightColorSettings[2][2]) : FengColor.nightLight;
                         break;
                 }
 
@@ -801,85 +602,21 @@ namespace GGM.Config
             {
                 if (Application.loadedLevelName.Contains("Forest"))
                 {
-                    RenderSettings.ambientLight =
-                        LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] == 1 ? new Color(
-                            LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][0],
-                            LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][1],
-                            LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][2]) :
-                        CustomAmbientSetting ? new Color(CustomAmbientColorSetting[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomAmbientColorSetting[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomAmbientColorSetting[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) :
-                        IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayAmbientLight :
-                        IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnAmbientLight :
-                        FengColor.nightAmbientLight;
-                    Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color =
-                        LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting] == 1 ? new Color(
-                            LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][0],
-                            LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][1],
-                            LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][2]) :
-                        CustomLightSetting ? new Color(CustomLightColorSettings[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomLightColorSettings[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomLightColorSettings[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) :
-                        IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayLight :
-                        IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnLight : FengColor.nightLight;
+                    RenderSettings.ambientLight = LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] == 1 ? new Color(LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][0], LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][1], LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][2]) : CustomAmbientSetting ? new Color(CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayAmbientLight : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnAmbientLight : FengColor.nightAmbientLight;
+                    Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting] == 1 ? new Color(LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][0], LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][1], LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][2]) : CustomLightSetting ? new Color(CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayLight : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnLight : FengColor.nightLight;
                     RenderSettings.fog = LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting] == 1;
-                    RenderSettings.fogColor = new Color(
-                        LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][0],
-                        LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][1],
-                        LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][2]);
-                    RenderSettings.fogStartDistance =
-                        LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3];
-                    RenderSettings.fogEndDistance =
-                        LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][4];
+                    RenderSettings.fogColor = new Color(LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][0], LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][1], LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][2]);
+                    RenderSettings.fogStartDistance = LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3];
+                    RenderSettings.fogEndDistance = LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][4];
                 }
                 else if (Application.loadedLevelName.Contains("City"))
                 {
-                    RenderSettings.ambientLight =
-                        LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] == 1 ? new Color(
-                            LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][0],
-                            LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][1],
-                            LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][2]) :
-                        CustomAmbientSetting ? new Color(CustomAmbientColorSetting[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomAmbientColorSetting[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomAmbientColorSetting[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) :
-                        IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayAmbientLight :
-                        IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnAmbientLight :
-                        FengColor.nightAmbientLight;
-                    Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color =
-                        LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting] == 1 ? new Color(
-                            LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][0],
-                            LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][1],
-                            LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][2]) :
-                        CustomLightSetting ? new Color(CustomLightColorSettings[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomLightColorSettings[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomLightColorSettings[
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 :
-                            IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) :
-                        IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayLight :
-                        IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnLight : FengColor.nightLight;
+                    RenderSettings.ambientLight = LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] == 1 ? new Color(LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][0], LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][1], LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][2]) : CustomAmbientSetting ? new Color(CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayAmbientLight : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnAmbientLight : FengColor.nightAmbientLight;
+                    Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting] == 1 ? new Color(LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][0], LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][1], LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][2]) : CustomLightSetting ? new Color(CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayLight : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnLight : FengColor.nightLight;
                     RenderSettings.fog = LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting] == 1;
-                    RenderSettings.fogColor = new Color(
-                        LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][0],
-                        LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][1],
-                        LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][2]);
-                    RenderSettings.fogStartDistance =
-                        LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3];
-                    RenderSettings.fogEndDistance =
-                        LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4];
+                    RenderSettings.fogColor = new Color(LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][0], LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][1], LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][2]);
+                    RenderSettings.fogStartDistance = LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3];
+                    RenderSettings.fogEndDistance = LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4];
                 }
             }
         }

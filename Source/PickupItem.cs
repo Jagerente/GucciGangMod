@@ -25,7 +25,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
     {
         if (PickupIsMine)
         {
-            object[] parameters = { newPosition };
+            object[] parameters = {newPosition};
             photonView.RPC("PunRespawn", PhotonTargets.AllViaServer, parameters);
         }
     }
@@ -38,7 +38,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
         }
         else
         {
-            var vector = (Vector3)stream.ReceiveNext();
+            var vector = (Vector3) stream.ReceiveNext();
             gameObject.transform.position = vector;
         }
     }
@@ -80,6 +80,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
         {
             SentPickup = false;
         }
+
         if (!gameObject.GetActive())
         {
             Debug.Log(string.Concat("Ignored PU RPC, cause item is inactive. ", gameObject, " SecondsBeforeRespawn: ", SecondsBeforeRespawn, " TimeOfRespawn: ", TimeOfRespawn, " respawn in future: ", TimeOfRespawn > PhotonNetwork.time));
@@ -91,6 +92,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
             {
                 OnPickedUpCall.SendMessage("OnPickedUp", this);
             }
+
             if (SecondsBeforeRespawn <= 0f)
             {
                 PickedUp(0f);
@@ -101,7 +103,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
                 var num2 = SecondsBeforeRespawn - num;
                 if (num2 > 0.0)
                 {
-                    PickedUp((float)num2);
+                    PickedUp((float) num2);
                 }
             }
         }
@@ -129,9 +131,6 @@ public class PickupItem : MonoBehaviour, IPunObservable
 
     public int ViewID
     {
-        get
-        {
-            return photonView.viewID;
-        }
+        get { return photonView.viewID; }
     }
 }

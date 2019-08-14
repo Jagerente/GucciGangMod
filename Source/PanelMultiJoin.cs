@@ -17,6 +17,7 @@ public class PanelMultiJoin : MonoBehaviour
         {
             items[num].SetActive(false);
         }
+
         num = 10 * (currentPage - 1) + index;
         char[] separator = { "`"[0] };
         var strArray = roomName.Split(separator);
@@ -28,6 +29,7 @@ public class PanelMultiJoin : MonoBehaviour
             NGUITools.SetActive(UIMainReferences.instance.panelMultiROOM, false);
             return;
         }
+
         PhotonNetwork.JoinRoom(roomName);
     }
 
@@ -64,6 +66,7 @@ public class PanelMultiJoin : MonoBehaviour
         {
             currentPage = 1;
         }
+
         showServerList();
     }
 
@@ -74,6 +77,7 @@ public class PanelMultiJoin : MonoBehaviour
         {
             currentPage = totalPage;
         }
+
         showServerList();
     }
 
@@ -107,14 +111,17 @@ public class PanelMultiJoin : MonoBehaviour
                 totalPage = 1;
             }
         }
+
         if (currentPage < 1)
         {
             currentPage = totalPage;
         }
+
         if (currentPage > totalPage)
         {
             currentPage = 1;
         }
+
         showServerList();
     }
 
@@ -158,6 +165,7 @@ public class PanelMultiJoin : MonoBehaviour
                     }
                 }
             }
+
             GGM.Caching.GameObjectCache.Find("LabelServerListPage").GetComponent<UILabel>().text = currentPage + "/" + totalPage;
         }
         else
@@ -166,6 +174,7 @@ public class PanelMultiJoin : MonoBehaviour
             {
                 items[i].SetActive(false);
             }
+
             GGM.Caching.GameObjectCache.Find("LabelServerListPage").GetComponent<UILabel>().text = currentPage + "/" + totalPage;
         }
     }

@@ -65,10 +65,7 @@ public class Localization : MonoBehaviour
 
     public string currentLanguage
     {
-        get
-        {
-            return mLanguage;
-        }
+        get { return mLanguage; }
         set
         {
             if (mLanguage != value)
@@ -88,9 +85,11 @@ public class Localization : MonoBehaviour
                                 Load(asset);
                                 return;
                             }
+
                             index++;
                         }
                     }
+
                     var asset2 = Resources.Load(value, typeof(TextAsset)) as TextAsset;
                     if (asset2 != null)
                     {
@@ -98,6 +97,7 @@ public class Localization : MonoBehaviour
                         return;
                     }
                 }
+
                 mDictionary.Clear();
                 PlayerPrefs.DeleteKey("Language");
             }
@@ -118,15 +118,13 @@ public class Localization : MonoBehaviour
                     mInstance = target.AddComponent<Localization>();
                 }
             }
+
             return mInstance;
         }
     }
 
     public static bool isActive
     {
-        get
-        {
-            return mInstance != null;
-        }
+        get { return mInstance != null; }
     }
 }

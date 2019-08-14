@@ -44,6 +44,7 @@ public class BombExplode : MonoBehaviour
                 num5 = Mathf.Max(0.5f, num5);
                 GetComponent<ParticleSystem>().startColor = new Color(num2, num3, num4, num5);
             }
+
             var num6 = RCextensions.returnFloatFromObject(owner.customProperties[PhotonPlayerProperty.RCBombRadius]) * 2f;
             num6 = Mathf.Clamp(num6, 40f, 120f);
             GetComponent<ParticleSystem>().startSize = num6;

@@ -19,34 +19,40 @@ public class RoomInfo
     {
         if (propertiesToCache != null && propertiesToCache.Count != 0 && !customPropertiesField.Equals(propertiesToCache))
         {
-            if (propertiesToCache.ContainsKey((byte)251))
+            if (propertiesToCache.ContainsKey((byte) 251))
             {
-                removedFromList = (bool)propertiesToCache[(byte)251];
+                removedFromList = (bool) propertiesToCache[(byte) 251];
                 if (removedFromList)
                 {
                     return;
                 }
             }
-            if (propertiesToCache.ContainsKey((byte)255))
+
+            if (propertiesToCache.ContainsKey((byte) 255))
             {
-                maxPlayersField = (byte)propertiesToCache[(byte)255];
+                maxPlayersField = (byte) propertiesToCache[(byte) 255];
             }
-            if (propertiesToCache.ContainsKey((byte)253))
+
+            if (propertiesToCache.ContainsKey((byte) 253))
             {
-                openField = (bool)propertiesToCache[(byte)253];
+                openField = (bool) propertiesToCache[(byte) 253];
             }
-            if (propertiesToCache.ContainsKey((byte)254))
+
+            if (propertiesToCache.ContainsKey((byte) 254))
             {
-                visibleField = (bool)propertiesToCache[(byte)254];
+                visibleField = (bool) propertiesToCache[(byte) 254];
             }
-            if (propertiesToCache.ContainsKey((byte)252))
+
+            if (propertiesToCache.ContainsKey((byte) 252))
             {
-                playerCount = (byte)propertiesToCache[(byte)252];
+                playerCount = (byte) propertiesToCache[(byte) 252];
             }
-            if (propertiesToCache.ContainsKey((byte)249))
+
+            if (propertiesToCache.ContainsKey((byte) 249))
             {
-                autoCleanUpField = (bool)propertiesToCache[(byte)249];
+                autoCleanUpField = (bool) propertiesToCache[(byte) 249];
             }
+
             customPropertiesField.MergeStringKeys(propertiesToCache);
         }
     }
@@ -64,48 +70,36 @@ public class RoomInfo
 
     public override string ToString()
     {
-        object[] args = { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount };
+        object[] args = {nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount};
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.", args);
     }
 
     public string ToStringFull()
     {
-        object[] args = { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount, customPropertiesField.ToStringFull() };
+        object[] args = {nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount, customPropertiesField.ToStringFull()};
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", args);
     }
 
     public Hashtable customProperties
     {
-        get
-        {
-            return customPropertiesField;
-        }
+        get { return customPropertiesField; }
     }
 
     public bool isLocalClientInside { get; set; }
 
     public byte maxPlayers
     {
-        get
-        {
-            return maxPlayersField;
-        }
+        get { return maxPlayersField; }
     }
 
     public string name
     {
-        get
-        {
-            return nameField;
-        }
+        get { return nameField; }
     }
 
     public bool open
     {
-        get
-        {
-            return openField;
-        }
+        get { return openField; }
     }
 
     public int playerCount { get; private set; }
@@ -114,9 +108,6 @@ public class RoomInfo
 
     public bool visible
     {
-        get
-        {
-            return visibleField;
-        }
+        get { return visibleField; }
     }
 }

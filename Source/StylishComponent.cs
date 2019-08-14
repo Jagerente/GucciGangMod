@@ -29,23 +29,25 @@ public class StylishComponent : MonoBehaviour
 
     public StylishComponent()
     {
-        string[,] textArray1 = { { "D", "eja Vu" }, { "C", "asual" }, { "B", "oppin!" }, { "A", "mazing!" }, { "S", "ensational!" }, { "S", "pectacular!!" }, { "S", "tylish!!!" }, { "X", "TREEME!!!" } };
+        string[,] textArray1 = {{"D", "eja Vu"}, {"C", "asual"}, {"B", "oppin!"}, {"A", "mazing!"}, {"S", "ensational!"}, {"S", "pectacular!!"}, {"S", "tylish!!!"}, {"X", "TREEME!!!"}};
         styleRankText = textArray1;
-        chainRankMultiplier = new[] { 1f, 1.1f, 1.2f, 1.3f, 1.5f, 1.7f, 2f, 2.3f, 2.5f };
-        styleRankPoints = new[] { 350, 950, 2450, 4550, 7000, 15000, 100000 };
-        styleRankDepletions = new[] { 1, 2, 5, 10, 15, 20, 25, 25 };
+        chainRankMultiplier = new[] {1f, 1.1f, 1.2f, 1.3f, 1.5f, 1.7f, 2f, 2.3f, 2.5f};
+        styleRankPoints = new[] {350, 950, 2450, 4550, 7000, 15000, 100000};
+        styleRankDepletions = new[] {1, 2, 5, 10, 15, 20, 25, 25};
     }
 
     private int GetRankPercentage()
     {
         if (styleRank > 0 && styleRank < styleRankPoints.Length)
         {
-            return (int)((stylePoints - styleRankPoints[styleRank - 1]) * 100f / (styleRankPoints[styleRank] - styleRankPoints[styleRank - 1]));
+            return (int) ((stylePoints - styleRankPoints[styleRank - 1]) * 100f / (styleRankPoints[styleRank] - styleRankPoints[styleRank - 1]));
         }
+
         if (styleRank == 0)
         {
-            return (int)(stylePoints * 100f) / styleRankPoints[styleRank];
+            return (int) (stylePoints * 100f) / styleRankPoints[styleRank];
         }
+
         return 100;
     }
 
@@ -66,7 +68,7 @@ public class StylishComponent : MonoBehaviour
 
     private void setPosition()
     {
-        originalPosition = new Vector3((int)(Screen.width * 0.5f - 2f), (int)(Screen.height * 0.5f - 150f), 0f);
+        originalPosition = new Vector3((int) (Screen.width * 0.5f - 2f), (int) (Screen.height * 0.5f - 150f), 0f);
         exitPosition = new Vector3(Screen.width, originalPosition.y, originalPosition.z);
     }
 
@@ -78,6 +80,7 @@ public class StylishComponent : MonoBehaviour
         {
             index++;
         }
+
         if (index < styleRankPoints.Length)
         {
             this.styleRank = index;
@@ -86,6 +89,7 @@ public class StylishComponent : MonoBehaviour
         {
             this.styleRank = styleRankPoints.Length;
         }
+
         if (this.styleRank < styleRank)
         {
             if (hasLostRank)
@@ -117,6 +121,7 @@ public class StylishComponent : MonoBehaviour
         {
             labelS2.GetComponent<UILabel>().text = string.Empty;
         }
+
         if (styleRank == 6)
         {
             labelS2.GetComponent<UILabel>().text = "[" + ColorSet.color_SSS + "]S";
@@ -126,38 +131,47 @@ public class StylishComponent : MonoBehaviour
         {
             labelS1.GetComponent<UILabel>().text = string.Empty;
         }
+
         if (styleRank == 0)
         {
             labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_D + "]D";
         }
+
         if (styleRank == 1)
         {
             labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_C + "]C";
         }
+
         if (styleRank == 2)
         {
             labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_B + "]B";
         }
+
         if (styleRank == 3)
         {
             labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_A + "]A";
         }
+
         if (styleRank == 4)
         {
             labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_S + "]S";
         }
+
         if (styleRank == 5)
         {
             labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_SS + "]S";
         }
+
         if (styleRank == 6)
         {
             labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_SSS + "]S";
         }
+
         if (styleRank == 7)
         {
             labelS.GetComponent<UILabel>().text = "[" + ColorSet.color_X + "]X";
         }
+
         labelsub.GetComponent<UILabel>().text = styleRankText[styleRank, 1];
     }
 
@@ -174,6 +188,7 @@ public class StylishComponent : MonoBehaviour
             {
                 gameObject.transform.localPosition = originalPosition - Vector3.up * R;
             }
+
             flip = !flip;
             if (duration <= 0f)
             {
@@ -201,7 +216,7 @@ public class StylishComponent : MonoBehaviour
     {
         if (damage != -1)
         {
-            stylePoints += (int)((damage + 200) * chainRankMultiplier[chainKillRank]);
+            stylePoints += (int) ((damage + 200) * chainRankMultiplier[chainKillRank]);
             styleTotalDamage += damage;
             chainKillRank = chainKillRank >= chainRankMultiplier.Length - 1 ? chainKillRank : chainKillRank + 1;
             chainTime = 5f;
@@ -213,9 +228,10 @@ public class StylishComponent : MonoBehaviour
             stylePoints++;
             SetRank();
         }
+
         startShake(5, 0.3f);
         setPosition();
-        labelTotal.GetComponent<UILabel>().text = ((int)stylePoints).ToString();
+        labelTotal.GetComponent<UILabel>().text = ((int) stylePoints).ToString();
         labelHits.GetComponent<UILabel>().text = styleHits + (styleHits <= 1 ? "Hit" : "Hits");
         if (chainKillRank == 0)
         {
@@ -242,6 +258,7 @@ public class StylishComponent : MonoBehaviour
             {
                 transform.localPosition = Vector3.Lerp(transform.localPosition, exitPosition, Time.deltaTime * 3f);
             }
+
             if (chainTime > 0f)
             {
                 chainTime -= Time.deltaTime;
@@ -251,6 +268,7 @@ public class StylishComponent : MonoBehaviour
                 chainTime = 0f;
                 chainKillRank = 0;
             }
+
             shakeUpdate();
         }
     }

@@ -15,8 +15,10 @@ public class InvEquipment : MonoBehaviour
             {
                 return Replace(baseItem.slot, item);
             }
+
             Debug.LogWarning("Can't resolve the item ID of " + item.baseItemID);
         }
+
         return item;
     }
 
@@ -24,12 +26,13 @@ public class InvEquipment : MonoBehaviour
     {
         if (slot != InvBaseItem.Slot.None)
         {
-            var index = (int)slot - 1;
+            var index = (int) slot - 1;
             if (mItems != null && index < mItems.Length)
             {
                 return mItems[index];
             }
         }
+
         return null;
     }
 
@@ -46,9 +49,11 @@ public class InvEquipment : MonoBehaviour
                 {
                     return true;
                 }
+
                 index++;
             }
         }
+
         return false;
     }
 
@@ -64,9 +69,11 @@ public class InvEquipment : MonoBehaviour
                 {
                     return true;
                 }
+
                 index++;
             }
         }
+
         return false;
     }
 
@@ -79,17 +86,20 @@ public class InvEquipment : MonoBehaviour
             {
                 return item;
             }
+
             if (mItems == null)
             {
                 var num = 8;
                 mItems = new InvGameItem[num];
             }
-            var item3 = mItems[(int)slot - 1];
-            mItems[(int)slot - 1] = item;
+
+            var item3 = mItems[(int) slot - 1];
+            mItems[(int) slot - 1] = item;
             if (mAttachments == null)
             {
                 mAttachments = GetComponentsInChildren<InvAttachmentPoint>();
             }
+
             var index = 0;
             var length = mAttachments.Length;
             while (index < length)
@@ -107,14 +117,18 @@ public class InvEquipment : MonoBehaviour
                         }
                     }
                 }
+
                 index++;
             }
+
             return item3;
         }
+
         if (item != null)
         {
             Debug.LogWarning("Can't equip \"" + item.name + "\" because it doesn't specify an item slot");
         }
+
         return item;
     }
 
@@ -130,14 +144,12 @@ public class InvEquipment : MonoBehaviour
         {
             return Replace(baseItem.slot, null);
         }
+
         return item;
     }
 
     public InvGameItem[] equippedItems
     {
-        get
-        {
-            return mItems;
-        }
+        get { return mItems; }
     }
 }

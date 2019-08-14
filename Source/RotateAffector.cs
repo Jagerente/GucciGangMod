@@ -23,7 +23,7 @@ public class RotateAffector : Affector
         var elapsedTime = Node.GetElapsedTime();
         if (Type == RSTYPE.CURVE)
         {
-            Node.RotateAngle = (int)RotateCurve.Evaluate(elapsedTime);
+            Node.RotateAngle = (int) RotateCurve.Evaluate(elapsedTime);
         }
         else if (Type == RSTYPE.SIMPLE)
         {

@@ -34,10 +34,12 @@ public class PanelOption : MonoBehaviour
             {
                 label_back.GetComponent<UILabel>().text = Language.btn_back[Language.type];
             }
+
             if (label_continue != null)
             {
                 label_continue.GetComponent<UILabel>().text = Language.btn_continue[Language.type];
             }
+
             if (label_quit != null)
             {
                 label_quit.GetComponent<UILabel>().text = Language.btn_quit[Language.type];

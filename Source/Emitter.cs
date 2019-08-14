@@ -24,6 +24,7 @@ public class Emitter
             LastClientPos = Layer.ClientTransform.position;
             return 1;
         }
+
         return 0;
     }
 
@@ -34,11 +35,13 @@ public class Emitter
         {
             return 0;
         }
+
         EmitDelayTime += Time.deltaTime;
         if (EmitDelayTime < Layer.EmitDelay && !IsFirstEmit)
         {
             return 0;
         }
+
         EmitterElapsedTime += Time.deltaTime;
         if (EmitterElapsedTime >= Layer.EmitDuration)
         {
@@ -46,19 +49,23 @@ public class Emitter
             {
                 EmitLoop--;
             }
+
             EmitterElapsedTime = 0f;
             EmitDelayTime = 0f;
             IsFirstEmit = false;
         }
+
         if (EmitLoop == 0f)
         {
             return 0;
         }
+
         if (Layer.AvailableNodeCount == 0)
         {
             return 0;
         }
-        var num2 = (int)(EmitterElapsedTime * Layer.EmitRate) - (Layer.ActiveENodes.Length - Layer.AvailableNodeCount);
+
+        var num2 = (int) (EmitterElapsedTime * Layer.EmitRate) - (Layer.ActiveENodes.Length - Layer.AvailableNodeCount);
         var availableNodeCount = 0;
         if (num2 > Layer.AvailableNodeCount)
         {
@@ -68,10 +75,12 @@ public class Emitter
         {
             availableNodeCount = num2;
         }
+
         if (availableNodeCount <= 0)
         {
             return 0;
         }
+
         return availableNodeCount;
     }
 
@@ -84,8 +93,10 @@ public class Emitter
             {
                 return node.Position - (Layer.ClientTransform.position + Layer.EmitPoint);
             }
+
             return node.Position - Layer.EmitPoint;
         }
+
         if (Layer.EmitType == 3)
         {
             Vector3 vector2;
@@ -97,15 +108,18 @@ public class Emitter
             {
                 vector2 = node.Position - Layer.EmitPoint;
             }
+
             var toDirection = Vector3.RotateTowards(vector2, Layer.CircleDir, (90 - Layer.AngleAroundAxis) * 0.01745329f, 1f);
             return Quaternion.FromToRotation(vector2, toDirection) * vector2;
         }
+
         if (Layer.IsRandomDir)
         {
             var quaternion2 = Quaternion.Euler(0f, 0f, Layer.AngleAroundAxis);
             var quaternion3 = Quaternion.Euler(0f, Random.Range(0, 360), 0f);
             return Quaternion.FromToRotation(Vector3.up, Layer.OriVelocityAxis) * quaternion3 * quaternion2 * Vector3.up;
         }
+
         return Layer.OriVelocityAxis;
     }
 
@@ -115,6 +129,7 @@ public class Emitter
         {
             return EmitByDistance();
         }
+
         return EmitByRate();
     }
 
@@ -158,6 +173,7 @@ public class Emitter
             {
                 zero = Layer.ClientTransform.position + Layer.EmitPoint;
             }
+
             var vector3 = Vector3.up * Layer.Radius;
             zero = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)) * vector3 + zero;
         }
@@ -166,7 +182,7 @@ public class Emitter
             var vector4 = Layer.EmitPoint + Layer.ClientTransform.localRotation * Vector3.forward * Layer.LineLengthLeft;
             var vector5 = Layer.EmitPoint + Layer.ClientTransform.localRotation * Vector3.forward * Layer.LineLengthRight;
             var vector6 = vector5 - vector4;
-            var num4 = (node.Index + 1) / (float)Layer.MaxENodes;
+            var num4 = (node.Index + 1) / (float) Layer.MaxENodes;
             var num5 = vector6.magnitude * num4;
             zero = vector4 + vector6.normalized * num5;
             if (!Layer.SyncClient)
@@ -176,7 +192,7 @@ public class Emitter
         }
         else if (Layer.EmitType == 3)
         {
-            var num6 = (node.Index + 1) / (float)Layer.MaxENodes;
+            var num6 = (node.Index + 1) / (float) Layer.MaxENodes;
             var y = 360f * num6;
             var vector7 = Quaternion.Euler(0f, y, 0f) * (Vector3.right * Layer.Radius);
             zero = Quaternion.FromToRotation(Vector3.up, Layer.CircleDir) * vector7;
@@ -189,6 +205,7 @@ public class Emitter
                 zero += Layer.EmitPoint;
             }
         }
+
         node.SetLocalPosition(zero);
     }
 }

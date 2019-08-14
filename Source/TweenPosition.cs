@@ -17,6 +17,7 @@ public class TweenPosition : UITweener
             position.Sample(1f, true);
             position.enabled = false;
         }
+
         return position;
     }
 
@@ -33,19 +34,14 @@ public class TweenPosition : UITweener
             {
                 mTrans = transform;
             }
+
             return mTrans;
         }
     }
 
     public Vector3 position
     {
-        get
-        {
-            return cachedTransform.localPosition;
-        }
-        set
-        {
-            cachedTransform.localPosition = value;
-        }
+        get { return cachedTransform.localPosition; }
+        set { cachedTransform.localPosition = value; }
     }
 }

@@ -41,7 +41,7 @@ public class PhotonView : MonoBehaviour
             }
             else
             {
-                object[] parameters = { pStream, info };
+                object[] parameters = {pStream, info};
                 OnSerializeMethodInfo.Invoke(observed, parameters);
             }
         }
@@ -73,6 +73,7 @@ public class PhotonView : MonoBehaviour
         {
             PhotonNetwork.networkingPeer.LocalCleanPhotonView(this);
         }
+
         if (!destroyedByPhotonNetworkOrQuit && !Application.isLoadingLevel)
         {
             if (instantiationId > 0)
@@ -88,13 +89,14 @@ public class PhotonView : MonoBehaviour
                 Debug.LogWarning(string.Format("OnDestroy manually allocated PhotonView {0}. The viewID is local (isMine) but not in manuallyAllocatedViewIds list. Use UnAllocateViewID() after you destroyed the PV.", this));
             }
         }
+
         if (PhotonNetwork.networkingPeer.instantiatedObjects.ContainsKey(instantiationId))
         {
             var obj2 = PhotonNetwork.networkingPeer.instantiatedObjects[instantiationId];
             var flag = obj2 == gameObject;
             if (flag)
             {
-                object[] args = { this, instantiationId, !Application.isLoadingLevel ? string.Empty : "Loading new scene caused this.", flag, destroyedByPhotonNetworkOrQuit };
+                object[] args = {this, instantiationId, !Application.isLoadingLevel ? string.Empty : "Loading new scene caused this.", flag, destroyedByPhotonNetworkOrQuit};
                 Debug.LogWarning(string.Format("OnDestroy for PhotonView {0} but GO is still in instantiatedObjects. instantiationId: {1}. Use PhotonNetwork.Destroy(). {2} Identical with this: {3} PN.Destroyed called for this PV: {4}", args));
             }
         }
@@ -119,7 +121,7 @@ public class PhotonView : MonoBehaviour
 
     public override string ToString()
     {
-        object[] args = { viewID, gameObject == null ? "GO==null" : gameObject.name, !isSceneView ? string.Empty : "(scene)", prefix };
+        object[] args = {viewID, gameObject == null ? "GO==null" : gameObject.name, !isSceneView ? string.Empty : "(scene)", prefix};
         return string.Format("View ({3}){0} on {1} {2}", args);
     }
 
@@ -131,44 +133,30 @@ public class PhotonView : MonoBehaviour
             {
                 instantiationDataField = PhotonNetwork.networkingPeer.FetchInstantiationData(instantiationId);
             }
+
             return instantiationDataField;
         }
-        set
-        {
-            instantiationDataField = value;
-        }
+        set { instantiationDataField = value; }
     }
 
     public bool isMine
     {
-        get
-        {
-            return ownerId == PhotonNetwork.player.ID || isSceneView && PhotonNetwork.isMasterClient;
-        }
+        get { return ownerId == PhotonNetwork.player.ID || isSceneView && PhotonNetwork.isMasterClient; }
     }
 
     public bool isSceneView
     {
-        get
-        {
-            return ownerId == 0;
-        }
+        get { return ownerId == 0; }
     }
 
     public PhotonPlayer owner
     {
-        get
-        {
-            return PhotonPlayer.Find(ownerId);
-        }
+        get { return PhotonPlayer.Find(ownerId); }
     }
 
     public int OwnerActorNr
     {
-        get
-        {
-            return ownerId;
-        }
+        get { return ownerId; }
     }
 
     public int prefix
@@ -179,20 +167,15 @@ public class PhotonView : MonoBehaviour
             {
                 prefixBackup = PhotonNetwork.networkingPeer.currentLevelPrefix;
             }
+
             return prefixBackup;
         }
-        set
-        {
-            prefixBackup = value;
-        }
+        set { prefixBackup = value; }
     }
 
     public int viewID
     {
-        get
-        {
-            return ownerId * PhotonNetwork.MAX_VIEW_IDS + subId;
-        }
+        get { return ownerId * PhotonNetwork.MAX_VIEW_IDS + subId; }
         set
         {
             var flag = didAwake && subId == 0;

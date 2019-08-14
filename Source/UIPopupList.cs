@@ -48,9 +48,7 @@ public class UIPopupList : MonoBehaviour
     private void AnimatePosition(UIWidget widget, bool placeAbove, float bottom)
     {
         var localPosition = widget.cachedTransform.localPosition;
-        var vector2 = !placeAbove
-            ? new Vector3(localPosition.x, 0f, localPosition.z)
-            : new Vector3(localPosition.x, bottom, localPosition.z);
+        var vector2 = !placeAbove ? new Vector3(localPosition.x, 0f, localPosition.z) : new Vector3(localPosition.x, bottom, localPosition.z);
         widget.cachedTransform.localPosition = vector2;
         TweenPosition.Begin(widget.gameObject, 0.15f, localPosition).method = UITweener.Method.EaseOut;
     }
@@ -66,8 +64,7 @@ public class UIPopupList : MonoBehaviour
         if (placeAbove)
         {
             var localPosition = cachedTransform.localPosition;
-            cachedTransform.localPosition =
-                new Vector3(localPosition.x, localPosition.y - localScale.y + y, localPosition.z);
+            cachedTransform.localPosition = new Vector3(localPosition.x, localPosition.y - localScale.y + y, localPosition.z);
             TweenPosition.Begin(gameObject, 0.15f, localPosition).method = UITweener.Method.EaseOut;
         }
     }
@@ -190,9 +187,7 @@ public class UIPopupList : MonoBehaviour
                 a += (border.x + padding.x) * 2f;
                 y -= border.y;
                 mBackground.cachedTransform.localScale = new Vector3(a, -y + border.y, 1f);
-                mHighlight.cachedTransform.localScale = new Vector3(
-                    a - (border.x + padding.x) * 2f + (atlasSprite.inner.xMin - atlasSprite.outer.xMin) * 2f,
-                    num2 + num * 2f, 1f);
+                mHighlight.cachedTransform.localScale = new Vector3(a - (border.x + padding.x) * 2f + (atlasSprite.inner.xMin - atlasSprite.outer.xMin) * 2f, num2 + num * 2f, 1f);
                 var placeAbove = position == Position.Above;
                 if (position == Position.Auto)
                 {

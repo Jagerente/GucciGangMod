@@ -41,7 +41,7 @@ public class PickupItemSimple : MonoBehaviour
         else
         {
             var num = PhotonNetwork.time - msgInfo.timestamp;
-            var time = SecondsBeforeRespawn - (float)num;
+            var time = SecondsBeforeRespawn - (float) num;
             if (time > 0f)
             {
                 gameObject.SetActive(false);

@@ -133,9 +133,7 @@ public class UITexture : UIWidget
             if (mPMA == -1)
             {
                 var material = this.material;
-                mPMA = material == null || material.shader == null || !material.shader.name.Contains("Premultiplied")
-                    ? 0
-                    : 1;
+                mPMA = material == null || material.shader == null || !material.shader.name.Contains("Premultiplied") ? 0 : 1;
             }
 
             return mPMA == 1;

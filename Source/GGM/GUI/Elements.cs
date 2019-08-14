@@ -35,6 +35,7 @@ namespace GGM.GUI
                             GUILayout.Label(text, LabelStyle[2], GUILayout.Width(width), GUILayout.Height(height));
                             return;
                     }
+
                     return;
 
                 case LabelType.SliderStatus:
@@ -108,6 +109,7 @@ namespace GGM.GUI
             {
                 Label(valueText, LabelType.SliderStatus, width: valueWidth);
             }
+
             GUILayout.EndHorizontal();
         }
 
@@ -124,6 +126,7 @@ namespace GGM.GUI
             {
                 Label(valueText, LabelType.SliderStatus, width: valueWidth);
             }
+
             GUILayout.EndHorizontal();
         }
 
@@ -176,6 +179,7 @@ namespace GGM.GUI
                     bools[i].Value = !bools[i];
                 }
             }
+
             if (text == string.Empty) GUILayout.FlexibleSpace();
             if (horizontal) GUILayout.EndHorizontal();
         }
@@ -197,6 +201,7 @@ namespace GGM.GUI
                     bools[i] = !bools[i];
                 }
             }
+
             if (text == string.Empty) GUILayout.FlexibleSpace();
             if (horizontal) GUILayout.EndHorizontal();
         }

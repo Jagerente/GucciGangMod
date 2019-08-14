@@ -14,6 +14,7 @@ public class EquipItems : MonoBehaviour
             {
                 component = gameObject.AddComponent<InvEquipment>();
             }
+
             var max = 12;
             var index = 0;
             var length = itemIDs.Length;
@@ -23,20 +24,18 @@ public class EquipItems : MonoBehaviour
                 var bi = InvDatabase.FindByID(num4);
                 if (bi != null)
                 {
-                    var item = new InvGameItem(num4, bi)
-                    {
-                        quality = (InvGameItem.Quality)Random.Range(0, max),
-                        itemLevel = NGUITools.RandomRange(bi.minItemLevel, bi.maxItemLevel)
-                    };
+                    var item = new InvGameItem(num4, bi) {quality = (InvGameItem.Quality) Random.Range(0, max), itemLevel = NGUITools.RandomRange(bi.minItemLevel, bi.maxItemLevel)};
                     component.Equip(item);
                 }
                 else
                 {
                     Debug.LogWarning("Can't resolve the item ID of " + num4);
                 }
+
                 index++;
             }
         }
+
         Destroy(this);
     }
 }

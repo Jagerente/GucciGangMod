@@ -18,6 +18,7 @@ public class SpringPanel : IgnoreTimeScale
         {
             component = go.AddComponent<SpringPanel>();
         }
+
         component.target = pos;
         component.strength = strength;
         component.onFinished = null;
@@ -26,6 +27,7 @@ public class SpringPanel : IgnoreTimeScale
             component.mThreshold = 0f;
             component.enabled = true;
         }
+
         return component;
     }
 
@@ -44,6 +46,7 @@ public class SpringPanel : IgnoreTimeScale
             var vector = this.target - mTrans.localPosition;
             mThreshold = vector.magnitude * 0.005f;
         }
+
         var flag = false;
         var localPosition = mTrans.localPosition;
         var target = NGUIMath.SpringLerp(mTrans.localPosition, this.target, strength, deltaTime);
@@ -53,6 +56,7 @@ public class SpringPanel : IgnoreTimeScale
             enabled = false;
             flag = true;
         }
+
         mTrans.localPosition = target;
         var vector4 = target - localPosition;
         var clipRange = mPanel.clipRange;
@@ -63,6 +67,7 @@ public class SpringPanel : IgnoreTimeScale
         {
             mDrag.UpdateScrollbars(false);
         }
+
         if (flag)
         {
             onFinished?.Invoke();

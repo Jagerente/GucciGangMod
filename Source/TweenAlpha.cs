@@ -27,6 +27,7 @@ public class TweenAlpha : UITweener
             alpha2.Sample(1f, true);
             alpha2.enabled = false;
         }
+
         return alpha2;
     }
 
@@ -43,10 +44,12 @@ public class TweenAlpha : UITweener
             {
                 return mWidget.alpha;
             }
+
             if (mPanel != null)
             {
                 return mPanel.alpha;
             }
+
             return 0f;
         }
         set

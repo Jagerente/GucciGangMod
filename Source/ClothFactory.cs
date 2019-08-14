@@ -39,8 +39,9 @@ public static class ClothFactory
         {
             go.AddComponent<SkinnedMeshRenderer>();
         }
+
         var bones = go.GetComponent<SkinnedMeshRenderer>().bones;
-        var component = ((GameObject)Object.Instantiate(Resources.Load(res))).GetComponent<SkinnedMeshRenderer>();
+        var component = ((GameObject) Object.Instantiate(Resources.Load(res))).GetComponent<SkinnedMeshRenderer>();
         component.transform.localScale = Vector3.one;
         component.bones = bones;
         component.quality = SkinQuality.Bone4;
@@ -76,6 +77,7 @@ public static class ClothFactory
                     }
                 }
             }
+
             obj4 = GenerateCloth(reference, name);
             obj4.renderer.material = material;
             obj4.AddComponent<ParentFollow>().SetParent(reference.transform);
@@ -83,12 +85,11 @@ public static class ClothFactory
             clothCache[name] = list;
             return obj4;
         }
+
         obj4 = GenerateCloth(reference, name);
         obj4.renderer.material = material;
         obj4.AddComponent<ParentFollow>().SetParent(reference.transform);
-        list = new List<GameObject> {
-            obj4
-        };
+        list = new List<GameObject> {obj4};
         clothCache.Add(name, list);
         return obj4;
     }
@@ -123,6 +124,7 @@ public static class ClothFactory
                     }
                 }
             }
+
             obj4 = GenerateCloth(reference, name);
             obj4.renderer.material = material;
             obj4.renderer.material.color = color;
@@ -131,13 +133,12 @@ public static class ClothFactory
             clothCache[name] = list;
             return obj4;
         }
+
         obj4 = GenerateCloth(reference, name);
         obj4.renderer.material = material;
         obj4.renderer.material.color = color;
         obj4.AddComponent<ParentFollow>().SetParent(reference.transform);
-        list = new List<GameObject> {
-            obj4
-        };
+        list = new List<GameObject> {obj4};
         clothCache.Add(name, list);
         return obj4;
     }

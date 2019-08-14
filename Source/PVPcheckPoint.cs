@@ -44,10 +44,12 @@ public class PVPcheckPoint : MonoBehaviour
         {
             state = CheckPointState.Non;
         }
+
         if (num == 1)
         {
             state = CheckPointState.Human;
         }
+
         if (num == 2)
         {
             state = CheckPointState.Titan;
@@ -77,13 +79,15 @@ public class PVPcheckPoint : MonoBehaviour
                     if (GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint != gameObject)
                     {
                         GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = gameObject;
-                        string[] msg = { "Respawn point changed to point ", id.ToString(), "." };
+                        string[] msg = {"Respawn point changed to point ", id.ToString(), "."};
                         InRoomChat.SystemMessageLocal(msg);
                     }
+
                     break;
                 }
             }
         }
+
         for (num = 0; num < objArray2.Length; num++)
         {
             if (Vector3.Distance(objArray2[num].transform.position, transform.position) < hitTestR + 5f && (objArray2[num].GetComponent<TITAN>() == null || !objArray2[num].GetComponent<TITAN>().hasDie))
@@ -94,9 +98,10 @@ public class PVPcheckPoint : MonoBehaviour
                     if (GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint != gameObject)
                     {
                         GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = gameObject;
-                        string[] msg = { "Respawn point changed to point ", id.ToString(), "." };
+                        string[] msg = {"Respawn point changed to point ", id.ToString(), "."};
                         InRoomChat.SystemMessageLocal(msg);
                     }
+
                     break;
                 }
             }
@@ -112,6 +117,7 @@ public class PVPcheckPoint : MonoBehaviour
                 return false;
             }
         }
+
         return true;
     }
 
@@ -124,6 +130,7 @@ public class PVPcheckPoint : MonoBehaviour
                 return false;
             }
         }
+
         return true;
     }
 
@@ -135,6 +142,7 @@ public class PVPcheckPoint : MonoBehaviour
         {
             return hit.point.y;
         }
+
         return 0f;
     }
 
@@ -144,10 +152,12 @@ public class PVPcheckPoint : MonoBehaviour
         {
             return "[" + ColorSet.color_human + "]H[-]";
         }
+
         if (state == CheckPointState.Titan)
         {
             return "[" + ColorSet.color_titan_player + "]T[-]";
         }
+
         return "[" + ColorSet.color_D + "]_[-]";
     }
 
@@ -159,12 +169,13 @@ public class PVPcheckPoint : MonoBehaviour
             titanPt = 0f;
             syncPts();
             state = CheckPointState.Human;
-            object[] parameters = { 1 };
+            object[] parameters = {1};
             photonView.RPC("changeState", PhotonTargets.All, parameters);
             if (LevelInfo.getInfo(FengGameManagerMKII.level).mapName != "The City I")
             {
                 supply = PhotonNetwork.Instantiate("aot_supply", transform.position - Vector3.up * (transform.position.y - getHeight(transform.position)), transform.rotation, 0);
             }
+
             var component = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
             component.PVPhumanScore += 2;
             GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
@@ -191,7 +202,7 @@ public class PVPcheckPoint : MonoBehaviour
                 if (state != CheckPointState.Titan)
                 {
                     state = CheckPointState.Non;
-                    object[] parameters = { 0 };
+                    object[] parameters = {0};
                     photonView.RPC("changeState", PhotonTargets.Others, parameters);
                 }
             }
@@ -209,6 +220,7 @@ public class PVPcheckPoint : MonoBehaviour
         {
             obj2.GetComponent<TITAN>().chaseDistance = 200f;
         }
+
         obj2.GetComponent<TITAN>().PVPfromCheckPt = this;
     }
 
@@ -224,6 +236,7 @@ public class PVPcheckPoint : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+
             Destroy(gameObject);
         }
         else
@@ -249,15 +262,18 @@ public class PVPcheckPoint : MonoBehaviour
                         newTitan();
                     }
                 }
+
                 if (isBase)
                 {
                     newTitan();
                 }
             }
+
             if (titanPt == titanPtMax)
             {
                 state = CheckPointState.Titan;
             }
+
             hitTestR = 15f * size;
             transform.localScale = new Vector3(size, size, size);
         }
@@ -265,9 +281,9 @@ public class PVPcheckPoint : MonoBehaviour
 
     private void syncPts()
     {
-        object[] parameters = { titanPt };
+        object[] parameters = {titanPt};
         photonView.RPC("changeTitanPt", PhotonTargets.Others, parameters);
-        object[] objArray2 = { humanPt };
+        object[] objArray2 = {humanPt};
         photonView.RPC("changeHumanPt", PhotonTargets.Others, objArray2);
     }
 
@@ -282,8 +298,9 @@ public class PVPcheckPoint : MonoBehaviour
             {
                 PhotonNetwork.Destroy(supply);
             }
+
             state = CheckPointState.Titan;
-            object[] parameters = { 2 };
+            object[] parameters = {2};
             photonView.RPC("changeState", PhotonTargets.All, parameters);
             var component = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
             component.PVPtitanScore += 2;
@@ -292,6 +309,7 @@ public class PVPcheckPoint : MonoBehaviour
             {
                 GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
             }
+
             if (hasAnnie)
             {
                 if (!annie)
@@ -327,7 +345,7 @@ public class PVPcheckPoint : MonoBehaviour
                 if (state != CheckPointState.Human)
                 {
                     state = CheckPointState.Non;
-                    object[] parameters = { 0 };
+                    object[] parameters = {0};
                     photonView.RPC("changeState", PhotonTargets.All, parameters);
                 }
             }
@@ -381,6 +399,7 @@ public class PVPcheckPoint : MonoBehaviour
                 {
                     titanLosePoint();
                 }
+
                 getPtsTimer += Time.deltaTime;
                 if (getPtsTimer > getPtsInterval)
                 {
@@ -390,6 +409,7 @@ public class PVPcheckPoint : MonoBehaviour
                         var component = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
                         component.PVPhumanScore++;
                     }
+
                     GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
                 }
             }
@@ -403,6 +423,7 @@ public class PVPcheckPoint : MonoBehaviour
                 {
                     humanLosePoint();
                 }
+
                 getPtsTimer += Time.deltaTime;
                 if (getPtsTimer > getPtsInterval)
                 {
@@ -412,8 +433,10 @@ public class PVPcheckPoint : MonoBehaviour
                         var local2 = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>();
                         local2.PVPtitanScore++;
                     }
+
                     GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkPVPpts();
                 }
+
                 spawnTitanTimer += Time.deltaTime;
                 if (spawnTitanTimer > titanInterval)
                 {
@@ -431,6 +454,7 @@ public class PVPcheckPoint : MonoBehaviour
                     }
                 }
             }
+
             syncTimer += Time.deltaTime;
             if (syncTimer > syncInterval)
             {
@@ -438,6 +462,7 @@ public class PVPcheckPoint : MonoBehaviour
                 checkIfBeingCapture();
                 syncPts();
             }
+
             x = humanPt / humanPtMax;
             num2 = titanPt / titanPtMax;
             humanCyc.transform.localScale = new Vector3(x, x, 1f);
@@ -453,6 +478,7 @@ public class PVPcheckPoint : MonoBehaviour
             {
                 return null;
             }
+
             return chkPtNextArr[Random.Range(0, chkPtNextArr.Length)];
         }
     }
@@ -465,6 +491,7 @@ public class PVPcheckPoint : MonoBehaviour
             {
                 return null;
             }
+
             return chkPtPreviousArr[Random.Range(0, chkPtPreviousArr.Length)];
         }
     }

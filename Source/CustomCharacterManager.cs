@@ -56,6 +56,7 @@ public class CustomCharacterManager : MonoBehaviour
             num += setup.myCostume.stat.BLA;
             return num + setup.myCostume.stat.ACL;
         }
+
         return 400;
     }
 
@@ -143,6 +144,7 @@ public class CustomCharacterManager : MonoBehaviour
                 break;
             }
         }
+
         index = 0;
         while (index < eyeOption.Length)
         {
@@ -151,8 +153,10 @@ public class CustomCharacterManager : MonoBehaviour
                 eyeId = index;
                 break;
             }
+
             index++;
         }
+
         faceId = -1;
         for (index = 0; index < faceOption.Length; index++)
         {
@@ -162,6 +166,7 @@ public class CustomCharacterManager : MonoBehaviour
                 break;
             }
         }
+
         glassId = -1;
         for (index = 0; index < glassOption.Length; index++)
         {
@@ -171,6 +176,7 @@ public class CustomCharacterManager : MonoBehaviour
                 break;
             }
         }
+
         for (index = 0; index < hairOption.Length; index++)
         {
             if (hairOption[index] == setup.myCostume.hairInfo.id)
@@ -179,6 +185,7 @@ public class CustomCharacterManager : MonoBehaviour
                 break;
             }
         }
+
         for (index = 0; index < skinOption.Length; index++)
         {
             if (skinOption[index] == setup.myCostume.skin_color)
@@ -187,6 +194,7 @@ public class CustomCharacterManager : MonoBehaviour
                 break;
             }
         }
+
         if (setup.myCostume.cape)
         {
             capeId = 1;
@@ -195,6 +203,7 @@ public class CustomCharacterManager : MonoBehaviour
         {
             capeId = 0;
         }
+
         index = 0;
         while (index < divisionOption.Length)
         {
@@ -203,8 +212,10 @@ public class CustomCharacterManager : MonoBehaviour
                 divisionId = index;
                 break;
             }
+
             index++;
         }
+
         costumeId = setup.myCostume.costumeId;
         var r = setup.myCostume.hair_color.r;
         var g = setup.myCostume.hair_color.g;
@@ -250,6 +261,7 @@ public class CustomCharacterManager : MonoBehaviour
             setup.deleteCharacterComponent2();
             setup.setCharacterComponent();
         }
+
         CostumeDataToMyID();
         freshLabel();
     }
@@ -363,6 +375,7 @@ public class CustomCharacterManager : MonoBehaviour
         {
             setup.part_hair.renderer.material.color = setup.myCostume.hair_color;
         }
+
         if (setup.part_hair_1 != null)
         {
             setup.part_hair_1.renderer.material.color = setup.myCostume.hair_color;
@@ -389,6 +402,7 @@ public class CustomCharacterManager : MonoBehaviour
                 setup.myCostume.stat.ACL += pt;
                 break;
         }
+
         setup.myCostume.stat.SPD = Mathf.Clamp(setup.myCostume.stat.SPD, 75, 125);
         setup.myCostume.stat.GAS = Mathf.Clamp(setup.myCostume.stat.GAS, 75, 125);
         setup.myCostume.stat.BLA = Mathf.Clamp(setup.myCostume.stat.BLA, 75, 125);
@@ -415,31 +429,37 @@ public class CustomCharacterManager : MonoBehaviour
         {
             eyeOption[num] = num;
         }
+
         faceOption = new int[14];
         for (num = 0; num < 14; num++)
         {
             faceOption[num] = num + 32;
         }
+
         glassOption = new int[10];
         for (num = 0; num < 10; num++)
         {
             glassOption[num] = num + 48;
         }
+
         hairOption = new int[11];
         for (num = 0; num < 11; num++)
         {
             hairOption[num] = num;
         }
+
         skinOption = new int[3];
         for (num = 0; num < 3; num++)
         {
             skinOption[num] = num + 1;
         }
+
         capeOption = new int[2];
         for (num = 0; num < 2; num++)
         {
             capeOption[num] = num;
         }
+
         var divisionArray1 = new DIVISION[4];
         divisionArray1[1] = DIVISION.TheGarrison;
         divisionArray1[2] = DIVISION.TheMilitaryPolice;
@@ -457,6 +477,7 @@ public class CustomCharacterManager : MonoBehaviour
         {
             id = start;
         }
+
         id = Mathf.Clamp(id, start, start + Count - 1);
         return id;
     }
@@ -472,6 +493,7 @@ public class CustomCharacterManager : MonoBehaviour
                     costumeId = 0;
                     break;
                 }
+
                 costumeId = 11;
                 break;
 
@@ -488,6 +510,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     setup.createFace();
                 }
+
                 setup.setFacialTexture(setup.part_face, faceOption[faceId]);
                 goto Label_06AE;
 
@@ -498,6 +521,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     setup.createGlass();
                 }
+
                 setup.setFacialTexture(setup.part_glass, glassOption[glassId]);
                 goto Label_06AE;
 
@@ -515,6 +539,7 @@ public class CustomCharacterManager : MonoBehaviour
                     setup.myCostume.hair_1_mesh = CostumeHair.hairsM[hairOption[hairId]].hair_1;
                     setup.myCostume.hairInfo = CostumeHair.hairsM[hairOption[hairId]];
                 }
+
                 setup.createHair2();
                 setHairColor();
                 goto Label_06AE;
@@ -528,6 +553,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     skinId = 2;
                 }
+
                 setup.myCostume.skin_color = skinOption[skinId];
                 setup.myCostume.setTexture();
                 setup.setSkin();
@@ -549,6 +575,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     costumeId = 25;
                 }
+
                 copyBodyCostume(costumeOption[costumeId], setup.myCostume);
                 setup.myCostume.setMesh2();
                 setup.myCostume.setTexture();
@@ -576,13 +603,14 @@ public class CustomCharacterManager : MonoBehaviour
             default:
                 goto Label_06AE;
         }
+
         copyCostume(costumeOption[costumeId], setup.myCostume, true);
         setup.myCostume.sex = sexOption[sexId];
         character.GetComponent<CharacterCreateAnimationControl>().toStand();
         CostumeDataToMyID();
         setup.deleteCharacterComponent2();
         setup.setCharacterComponent();
-        Label_06AE:
+    Label_06AE:
         freshLabel();
     }
 
@@ -600,6 +628,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     costumeId = 0;
                 }
+
                 copyCostume(costumeOption[costumeId], setup.myCostume, true);
                 setup.myCostume.sex = sexOption[sexId];
                 character.GetComponent<CharacterCreateAnimationControl>().toStand();
@@ -621,6 +650,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     setup.createFace();
                 }
+
                 setup.setFacialTexture(setup.part_face, faceOption[faceId]);
                 goto Label_0750;
 
@@ -631,6 +661,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     setup.createGlass();
                 }
+
                 setup.setFacialTexture(setup.part_glass, glassOption[glassId]);
                 goto Label_0750;
 
@@ -643,6 +674,7 @@ public class CustomCharacterManager : MonoBehaviour
                     setup.myCostume.hairInfo = CostumeHair.hairsM[hairOption[hairId]];
                     break;
                 }
+
                 setup.myCostume.hair_mesh = CostumeHair.hairsF[hairOption[hairId]].hair;
                 setup.myCostume.hair_1_mesh = CostumeHair.hairsF[hairOption[hairId]].hair_1;
                 setup.myCostume.hairInfo = CostumeHair.hairsF[hairOption[hairId]];
@@ -657,6 +689,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     skinId = !next ? toPrev(skinId, 2) : toNext(skinId, 2);
                 }
+
                 setup.myCostume.skin_color = skinOption[skinId];
                 setup.myCostume.setTexture();
                 setup.setSkin();
@@ -682,6 +715,7 @@ public class CustomCharacterManager : MonoBehaviour
                 {
                     costumeId = !next ? toPrev(costumeId, 24, 10) : toNext(costumeId, 24, 10);
                 }
+
                 copyBodyCostume(costumeOption[costumeId], setup.myCostume);
                 setup.myCostume.setMesh2();
                 setup.myCostume.setTexture();
@@ -709,9 +743,10 @@ public class CustomCharacterManager : MonoBehaviour
             default:
                 goto Label_0750;
         }
+
         setup.createHair2();
         setHairColor();
-        Label_0750:
+    Label_0750:
         freshLabel();
     }
 
@@ -722,6 +757,7 @@ public class CustomCharacterManager : MonoBehaviour
         {
             id = Count - 1;
         }
+
         id = Mathf.Clamp(id, start, start + Count - 1);
         return id;
     }

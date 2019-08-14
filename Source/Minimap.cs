@@ -46,6 +46,7 @@ public class Minimap : MonoBehaviour
         {
             colors[i] = borderColor;
         }
+
         texture.SetPixels(0, texture.height - borderPixelSize, texture.width - 1, borderPixelSize, colors);
         texture.SetPixels(0, 0, texture.width, borderPixelSize, colors);
         texture.SetPixels(0, 0, borderPixelSize, texture.height, colors);
@@ -67,6 +68,7 @@ public class Minimap : MonoBehaviour
                 }
             }
         }
+
         var size = minimapOrthographicBounds.size;
         var num2 = size.x > size.z ? size.x : size.z;
         size.z = size.x = num2;
@@ -94,6 +96,7 @@ public class Minimap : MonoBehaviour
                 minimapOrthographicBounds.Encapsulate(rendererArray[i].bounds);
             }
         }
+
         var size = minimapOrthographicBounds.size;
         var num2 = size.x > size.z ? size.x : size.z;
         size.z = size.x = num2;
@@ -112,10 +115,7 @@ public class Minimap : MonoBehaviour
         var active = RenderTexture.active;
         RenderTexture.active = cam.targetTexture;
         cam.Render();
-        var textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height, TextureFormat.RGB24, false)
-        {
-            filterMode = FilterMode.Bilinear
-        };
+        var textured = new Texture2D(cam.targetTexture.width, cam.targetTexture.height, TextureFormat.RGB24, false) { filterMode = FilterMode.Bilinear };
         textured.ReadPixels(new Rect(0f, 0f, cam.targetTexture.width, cam.targetTexture.height), 0, 0);
         textured.Apply();
         RenderTexture.active = active;
@@ -148,10 +148,12 @@ public class Minimap : MonoBehaviour
                 {
                     Minimize();
                 }
+
                 if (FengGameManagerMKII.inputRC.isInputHumanDown(InputCodeRC.mapToggle))
                 {
                     SetEnabled(!isEnabled);
                 }
+
                 if (maximized)
                 {
                     var flag2 = false;
@@ -165,6 +167,7 @@ public class Minimap : MonoBehaviour
                         {
                             AutomaticSetCameraProperties(lastUsedCamera);
                         }
+
                         flag2 = true;
                     }
                     else
@@ -177,9 +180,11 @@ public class Minimap : MonoBehaviour
                             {
                                 axis *= 3f;
                             }
+
                             lastMinimapOrthoSize = Mathf.Max(lastMinimapOrthoSize + axis, 1f);
                             flag2 = true;
                         }
+
                         if (Input.GetKey(KeyCode.UpArrow))
                         {
                             num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * lastMinimapOrthoSize);
@@ -192,6 +197,7 @@ public class Minimap : MonoBehaviour
                             lastMinimapCenter.z -= num2;
                             flag2 = true;
                         }
+
                         if (Input.GetKey(KeyCode.RightArrow))
                         {
                             num2 = Time.deltaTime * ((Input.GetKey(KeyCode.LeftShift) ? 2f : 0.75f) * lastMinimapOrthoSize);
@@ -205,6 +211,7 @@ public class Minimap : MonoBehaviour
                             flag2 = true;
                         }
                     }
+
                     if (flag2)
                     {
                         RecaptureMinimap(lastUsedCamera, lastMinimapCenter, lastMinimapOrthoSize);
@@ -226,6 +233,7 @@ public class Minimap : MonoBehaviour
         {
             Initialize();
         }
+
         var obj2 = GGM.Caching.GameObjectCache.Find("mainLight");
         Light component = null;
         var identity = Quaternion.identity;
@@ -247,6 +255,7 @@ public class Minimap : MonoBehaviour
             component.intensity = 0.5f;
             component.transform.eulerAngles = new Vector3(90f, 0f, 0f);
         }
+
         cam.nearClipPlane = 0.3f;
         cam.farClipPlane = 1000f;
         cam.cullingMask = 512;
@@ -264,6 +273,7 @@ public class Minimap : MonoBehaviour
         {
             AutomaticSetCameraProperties(cam);
         }
+
         CaptureMinimapRT(cam);
         if (obj2 != null)
         {
@@ -272,6 +282,7 @@ public class Minimap : MonoBehaviour
             component.color = clear;
             component.intensity = intensity;
         }
+
         cam.nearClipPlane = nearClipPlane;
         cam.farClipPlane = farClipPlane;
         cam.cullingMask = cullingMask;
@@ -294,6 +305,7 @@ public class Minimap : MonoBehaviour
                 Debug.Log(SystemInfo.graphicsDeviceName + " (" + SystemInfo.graphicsDeviceVendor + ") does not support RGB565 format, the minimap will have transparency issues on certain maps");
             }
         }
+
         cam.targetTexture = minimapRT;
     }
 
@@ -378,10 +390,12 @@ public class Minimap : MonoBehaviour
         {
             return MINIMAP_ICON_SIZE;
         }
+
         if (style == IconStyle.SUPPLY)
         {
             return MINIMAP_SUPPLY_SIZE;
         }
+
         return Vector2.zero;
     }
 
@@ -391,10 +405,12 @@ public class Minimap : MonoBehaviour
         {
             return whiteIconSprite;
         }
+
         if (style == IconStyle.SUPPLY)
         {
             return supplySprite;
         }
+
         return null;
     }
 
@@ -456,6 +472,7 @@ public class Minimap : MonoBehaviour
         {
             SetEnabledTemp(true);
         }
+
         minimapMaskT.anchorMin = minimapMaskT.anchorMax = new Vector2(0.5f, 0.5f);
         minimapMaskT.anchoredPosition = Vector2.zero;
         minimapMaskT.sizeDelta = new Vector2(MINIMAP_SIZE, MINIMAP_SIZE);
@@ -476,6 +493,7 @@ public class Minimap : MonoBehaviour
                 }
             }
         }
+
         maximized = true;
     }
 
@@ -486,6 +504,7 @@ public class Minimap : MonoBehaviour
         {
             SetEnabledTemp(false);
         }
+
         minimapMaskT.anchorMin = minimapMaskT.anchorMax = Vector2.one;
         minimapMaskT.anchoredPosition = cornerPosition;
         minimapMaskT.sizeDelta = new Vector2(MINIMAP_CORNER_SIZE, MINIMAP_CORNER_SIZE);
@@ -514,6 +533,7 @@ public class Minimap : MonoBehaviour
                 }
             }
         }
+
         maximized = false;
     }
 
@@ -559,6 +579,7 @@ public class Minimap : MonoBehaviour
                 component.intensity = 0.5f;
                 component.transform.eulerAngles = new Vector3(90f, 0f, 0f);
             }
+
             cam.nearClipPlane = 0.3f;
             cam.farClipPlane = 1000f;
             cam.clearFlags = CameraClearFlags.Color;
@@ -573,6 +594,7 @@ public class Minimap : MonoBehaviour
                 component.color = clear;
                 component.intensity = intensity;
             }
+
             cam.nearClipPlane = nearClipPlane;
             cam.farClipPlane = farClipPlane;
             cam.cullingMask = cullingMask;
@@ -617,6 +639,7 @@ public class Minimap : MonoBehaviour
             {
                 icon = MinimapIcon.Create(minimap, objToTrack, iconStyle);
             }
+
             icon.SetColor(iconColor);
             icon.SetDepth(depthAboveAll);
             var sizeForStyle = GetSizeForStyle(iconStyle);
@@ -643,6 +666,7 @@ public class Minimap : MonoBehaviour
                     icon.SetPointerSize(a, originDistance);
                 }
             }
+
             if (minimapIcons == null)
             {
                 minimapIcons = new[] { icon };
@@ -654,6 +678,7 @@ public class Minimap : MonoBehaviour
                 {
                     iconArray2[i] = minimapIcons[i];
                 }
+
                 iconArray2[iconArray2.Length - 1] = icon;
                 minimapIcons = iconArray2;
             }
@@ -848,6 +873,7 @@ public class Minimap : MonoBehaviour
             {
                 return false;
             }
+
             var x = worldBounds.size.x;
             var vector = obj.position - worldBounds.center;
             vector.y = vector.z;
@@ -863,6 +889,7 @@ public class Minimap : MonoBehaviour
                 var z = Mathf.Atan2(obj.forward.z, obj.forward.x) * 57.29578f - 90f;
                 uiRect.eulerAngles = new Vector3(0f, 0f, z);
             }
+
             return true;
         }
     }

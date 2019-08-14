@@ -19,6 +19,7 @@ public class BTN_choose_titan : MonoBehaviour
             {
                 GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().SpawnPlayer(id, "playerRespawn2");
             }
+
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);
@@ -35,6 +36,7 @@ public class BTN_choose_titan : MonoBehaviour
             {
                 GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = GGM.Caching.GameObjectCache.Find("PVPchkPtT");
             }
+
             var selection = GGM.Caching.GameObjectCache.Find("PopupListCharacterTITAN").GetComponent<UIPopupList>().selection;
             NGUITools.SetActive(transform.parent.gameObject, false);
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0], true);
@@ -47,6 +49,7 @@ public class BTN_choose_titan : MonoBehaviour
             {
                 GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().SpawnNonAITitan2(selection);
             }
+
             GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().needChooseSide = false;
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
             NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);

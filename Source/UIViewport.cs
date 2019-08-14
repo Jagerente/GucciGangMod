@@ -15,8 +15,7 @@ public class UIViewport : MonoBehaviour
         {
             var vector = sourceCamera.WorldToScreenPoint(topLeft.position);
             var vector2 = sourceCamera.WorldToScreenPoint(bottomRight.position);
-            var rect = new Rect(vector.x / Screen.width, vector2.y / Screen.height,
-                (vector2.x - vector.x) / Screen.width, (vector.y - vector2.y) / Screen.height);
+            var rect = new Rect(vector.x / Screen.width, vector2.y / Screen.height, (vector2.x - vector.x) / Screen.width, (vector.y - vector2.y) / Screen.height);
             var num = fullSize * rect.height;
             if (rect != mCam.rect)
             {

@@ -37,6 +37,7 @@ public class EanAnimation
             Frames[i].Width = br.ReadUInt16();
             Frames[i].Height = br.ReadUInt16();
         }
+
         fs.Seek(position, SeekOrigin.Begin);
     }
 }

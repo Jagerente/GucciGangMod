@@ -31,6 +31,7 @@ public class ScaleAffector : Affector
             {
                 Node.Scale.x = ScaleXCurve.Evaluate(elapsedTime);
             }
+
             if (ScaleYCurve != null)
             {
                 Node.Scale.y = ScaleYCurve.Evaluate(elapsedTime);
@@ -44,6 +45,7 @@ public class ScaleAffector : Affector
             {
                 Node.Scale.x = num2;
             }
+
             if (num3 * Node.Scale.y > 0f)
             {
                 Node.Scale.y = num3;

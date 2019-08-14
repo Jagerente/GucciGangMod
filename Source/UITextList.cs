@@ -11,7 +11,7 @@ public class UITextList : MonoBehaviour
     protected List<Paragraph> mParagraphs = new List<Paragraph>();
     protected float mScroll;
     protected bool mSelected;
-    protected char[] mSeparator = { '\n' };
+    protected char[] mSeparator = {'\n'};
     protected int mTotalLines;
     public Style style;
     public bool supportScrollWheel = true;
@@ -39,8 +39,7 @@ public class UITextList : MonoBehaviour
         mParagraphs.Add(item);
         if (textLabel != null && textLabel.font != null)
         {
-            item.lines = textLabel.font.WrapText(item.text, maxWidth / textLabel.transform.localScale.y,
-                textLabel.maxLineCount, textLabel.supportEncoding, textLabel.symbolStyle).Split(mSeparator);
+            item.lines = textLabel.font.WrapText(item.text, maxWidth / textLabel.transform.localScale.y, textLabel.maxLineCount, textLabel.supportEncoding, textLabel.symbolStyle).Split(mSeparator);
             mTotalLines = 0;
             var num = 0;
             var count = mParagraphs.Count;

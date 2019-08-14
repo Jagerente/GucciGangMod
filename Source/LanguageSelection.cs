@@ -35,8 +35,10 @@ public class LanguageSelection : MonoBehaviour
                 {
                     mList.items.Add(asset.name);
                 }
+
                 index++;
             }
+
             mList.selection = Localization.instance.currentLanguage;
         }
     }

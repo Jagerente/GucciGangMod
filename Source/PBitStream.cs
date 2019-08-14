@@ -29,11 +29,13 @@ public class PBitStream
         {
             streamBytes.Add(0);
         }
+
         if (val)
         {
             var currentByteBits = 7 - totalBits % 8;
-            streamBytes[num] |= (byte)(1 << currentByteBits);
+            streamBytes[num] |= (byte) (1 << currentByteBits);
         }
+
         totalBits++;
     }
 
@@ -43,6 +45,7 @@ public class PBitStream
         {
             return 0;
         }
+
         return (bitCount - 1) / 8 + 1;
     }
 
@@ -50,7 +53,7 @@ public class PBitStream
     {
         var num = bitIndex / 8;
         var num2 = 7 - bitIndex % 8;
-        return (streamBytes[num] & (byte)(1 << num2)) > 0;
+        return (streamBytes[num] & (byte) (1 << num2)) > 0;
     }
 
     public bool GetNext()
@@ -60,6 +63,7 @@ public class PBitStream
         {
             throw new Exception("End of PBitStream reached. Can't read more.");
         }
+
         Position = (num = Position) + 1;
         return Get(num);
     }
@@ -68,7 +72,7 @@ public class PBitStream
     {
         var byteIndex = bitIndex / 8;
         var bitInByIndex = 7 - bitIndex % 8;
-        streamBytes[byteIndex] |= (byte)(1 << bitInByIndex);
+        streamBytes[byteIndex] |= (byte) (1 << bitInByIndex);
     }
 
     public byte[] ToBytes()
@@ -78,22 +82,13 @@ public class PBitStream
 
     public int BitCount
     {
-        get
-        {
-            return totalBits;
-        }
-        private set
-        {
-            totalBits = value;
-        }
+        get { return totalBits; }
+        private set { totalBits = value; }
     }
 
     public int ByteCount
     {
-        get
-        {
-            return BytesForBits(totalBits);
-        }
+        get { return BytesForBits(totalBits); }
     }
 
     public int Position { get; set; }

@@ -9,10 +9,8 @@ public class SupportLogging : MonoBehaviour
     {
         var builder = new StringBuilder();
         builder.AppendFormat("SupportLogger Info: PUN {0}: ", "1.28");
-        builder.AppendFormat("AppID: {0}*** GameVersion: {1} ", PhotonNetwork.networkingPeer.mAppId.Substring(0, 8),
-            PhotonNetwork.networkingPeer.mAppVersionPun);
-        builder.AppendFormat("Server: {0}. Region: {1} ", PhotonNetwork.ServerAddress,
-            PhotonNetwork.networkingPeer.CloudRegion);
+        builder.AppendFormat("AppID: {0}*** GameVersion: {1} ", PhotonNetwork.networkingPeer.mAppId.Substring(0, 8), PhotonNetwork.networkingPeer.mAppVersionPun);
+        builder.AppendFormat("Server: {0}. Region: {1} ", PhotonNetwork.ServerAddress, PhotonNetwork.networkingPeer.CloudRegion);
         builder.AppendFormat("HostType: {0} ", PhotonNetwork.PhotonServerSettings.HostType);
         Debug.Log(builder.ToString());
     }

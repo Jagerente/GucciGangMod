@@ -16,6 +16,7 @@ public class DragDropSurface : MonoBehaviour
             {
                 transform.rotation = Quaternion.LookRotation(UICamera.lastHit.normal) * Quaternion.Euler(90f, 0f, 0f);
             }
+
             Destroy(go);
         }
     }

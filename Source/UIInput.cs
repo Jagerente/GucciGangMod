@@ -40,6 +40,7 @@ public class UIInput : MonoBehaviour
                         mText = mText.Substring(0, mText.Length - 1);
                         SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
                     }
+
                     break;
 
                 case '\r':
@@ -52,15 +53,18 @@ public class UIInput : MonoBehaviour
                         {
                             eventReceiver = gameObject;
                         }
+
                         eventReceiver.SendMessage(functionName, mText, SendMessageOptions.DontRequireReceiver);
                         current = null;
                         selected = false;
                         return;
                     }
+
                     if (validator != null)
                     {
                         nextChar = validator(mText, nextChar);
                     }
+
                     if (nextChar != '\0')
                     {
                         if (nextChar == '\n' || nextChar == '\r')
@@ -74,8 +78,10 @@ public class UIInput : MonoBehaviour
                         {
                             mText = mText + nextChar;
                         }
+
                         SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
                     }
+
                     break;
 
                 default:
@@ -85,16 +91,20 @@ public class UIInput : MonoBehaviour
                         {
                             nextChar = validator(mText, nextChar);
                         }
+
                         if (nextChar != '\0')
                         {
                             mText = mText + nextChar;
                             SendMessage("OnInputChanged", this, SendMessageOptions.DontRequireReceiver);
                         }
                     }
+
                     break;
             }
+
             num++;
         }
+
         UpdateLabel();
     }
 
@@ -114,12 +124,14 @@ public class UIInput : MonoBehaviour
             {
                 label = GetComponentInChildren<UILabel>();
             }
+
             if (label != null)
             {
                 if (useLabelTextAtStart)
                 {
                     mText = label.text;
                 }
+
                 mDefaultText = label.text;
                 mDefaultColor = label.color;
                 label.supportEncoding = false;
@@ -156,6 +168,7 @@ public class UIInput : MonoBehaviour
         {
             initMain();
         }
+
         if (selected && enabled && NGUITools.GetActive(gameObject) && Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer)
         {
             Append(input);
@@ -168,6 +181,7 @@ public class UIInput : MonoBehaviour
         {
             initMain();
         }
+
         if (label != null && enabled && NGUITools.GetActive(gameObject))
         {
             if (isSelected)
@@ -178,6 +192,7 @@ public class UIInput : MonoBehaviour
                 {
                     label.password = true;
                 }
+
                 Input.imeCompositionMode = IMECompositionMode.On;
                 var cachedTransform = label.cachedTransform;
                 Vector3 pivotOffset = label.pivotOffset;
@@ -201,6 +216,7 @@ public class UIInput : MonoBehaviour
                 {
                     label.text = mText;
                 }
+
                 label.showLastPasswordChar = false;
                 Input.imeCompositionMode = IMECompositionMode.Off;
                 RestoreLabel();
@@ -227,10 +243,12 @@ public class UIInput : MonoBehaviour
             {
                 UICamera.selectedObject = selectOnTab;
             }
+
             if (Input.GetKeyDown(KeyCode.V) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)))
             {
                 Append(NGUITools.clipboard);
             }
+
             if (mLastIME != Input.compositionString)
             {
                 mLastIME = Input.compositionString;
@@ -245,10 +263,12 @@ public class UIInput : MonoBehaviour
         {
             initMain();
         }
+
         if (maxChars > 0 && mText.Length > maxChars)
         {
             mText = mText.Substring(0, maxChars);
         }
+
         if (label.font != null)
         {
             string str;
@@ -262,12 +282,14 @@ public class UIInput : MonoBehaviour
                     str = str + "*";
                     num++;
                 }
+
                 str = str + Input.compositionString + caratChar;
             }
             else
             {
                 str = !selected ? mText : mText + Input.compositionString + caratChar;
             }
+
             label.supportEncoding = false;
             if (!label.shrinkToFit)
             {
@@ -295,6 +317,7 @@ public class UIInput : MonoBehaviour
                         {
                             label.pivot = UIWidget.Pivot.BottomRight;
                         }
+
                         label.cachedTransform.localPosition = localPosition;
                     }
                     else
@@ -303,6 +326,7 @@ public class UIInput : MonoBehaviour
                     }
                 }
             }
+
             label.text = str;
             label.showLastPasswordChar = selected;
         }
@@ -310,26 +334,21 @@ public class UIInput : MonoBehaviour
 
     public string defaultText
     {
-        get
-        {
-            return mDefaultText;
-        }
+        get { return mDefaultText; }
         set
         {
             if (label.text == mDefaultText)
             {
                 label.text = value;
             }
+
             mDefaultText = value;
         }
     }
 
     public bool selected
     {
-        get
-        {
-            return UICamera.selectedObject == gameObject;
-        }
+        get { return UICamera.selectedObject == gameObject; }
         set
         {
             if (!value && UICamera.selectedObject == gameObject)
@@ -351,6 +370,7 @@ public class UIInput : MonoBehaviour
             {
                 initMain();
             }
+
             return mText;
         }
         set
@@ -359,6 +379,7 @@ public class UIInput : MonoBehaviour
             {
                 initMain();
             }
+
             mText = value;
             if (label != null)
             {
@@ -366,6 +387,7 @@ public class UIInput : MonoBehaviour
                 {
                     value = mDefaultText;
                 }
+
                 label.supportEncoding = false;
                 label.text = !selected ? value : value + caratChar;
                 label.showLastPasswordChar = selected;

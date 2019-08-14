@@ -12,6 +12,7 @@ public class BTN_PAUSE_MENU_QUIT : MonoBehaviour
         {
             PhotonNetwork.Disconnect();
         }
+
         Screen.lockCursor = false;
         Screen.showCursor = true;
         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;

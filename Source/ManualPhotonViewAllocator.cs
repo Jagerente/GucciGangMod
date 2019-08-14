@@ -15,7 +15,7 @@ public class ManualPhotonViewAllocator : MonoBehaviour
         else
         {
             var num = PhotonNetwork.AllocateViewID();
-            object[] parameters = { num };
+            object[] parameters = {num};
             photonView.RPC("InstantiateRpc", PhotonTargets.AllBuffered, parameters);
         }
     }

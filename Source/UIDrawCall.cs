@@ -37,8 +37,10 @@ public class UIDrawCall : MonoBehaviour
                 rebuildIndices = true;
                 mMesh0.Clear();
             }
+
             return mMesh0;
         }
+
         if (mMesh1 == null)
         {
             mMesh1 = new Mesh();
@@ -52,6 +54,7 @@ public class UIDrawCall : MonoBehaviour
             rebuildIndices = true;
             mMesh1.Clear();
         }
+
         return mMesh1;
     }
 
@@ -70,6 +73,7 @@ public class UIDrawCall : MonoBehaviour
             mReset = false;
             UpdateMaterials();
         }
+
         if (mClippedMat != null)
         {
             mClippedMat.mainTextureOffset = new Vector2(-mClipRange.x / mClipRange.z, -mClipRange.y / mClipRange.w);
@@ -79,10 +83,12 @@ public class UIDrawCall : MonoBehaviour
             {
                 vector.x = mClipRange.z / mClipSoft.x;
             }
+
             if (mClipSoft.y > 0f)
             {
                 vector.y = mClipRange.w / mClipSoft.y;
             }
+
             mClippedMat.SetVector("_ClipSharpness", vector);
         }
     }
@@ -96,14 +102,17 @@ public class UIDrawCall : MonoBehaviour
             {
                 mFilter = gameObject.GetComponent<MeshFilter>();
             }
+
             if (mFilter == null)
             {
                 mFilter = gameObject.AddComponent<MeshFilter>();
             }
+
             if (mRen == null)
             {
                 mRen = gameObject.GetComponent<MeshRenderer>();
             }
+
             if (mRen == null)
             {
                 mRen = gameObject.AddComponent<MeshRenderer>();
@@ -113,6 +122,7 @@ public class UIDrawCall : MonoBehaviour
             {
                 UpdateMaterials();
             }
+
             if (verts.size < 65000)
             {
                 var num2 = (size >> 1) * 3;
@@ -131,22 +141,26 @@ public class UIDrawCall : MonoBehaviour
                         mIndices[num3++] = i;
                     }
                 }
+
                 var mesh = GetMesh(ref rebuildIndices, verts.size);
                 mesh.vertices = verts.ToArray();
                 if (norms != null)
                 {
                     mesh.normals = norms.ToArray();
                 }
+
                 if (tans != null)
                 {
                     mesh.tangents = tans.ToArray();
                 }
+
                 mesh.uv = uvs.ToArray();
                 mesh.colors32 = cols.ToArray();
                 if (rebuildIndices)
                 {
                     mesh.triangles = mIndices;
                 }
+
                 mesh.RecalculateBounds();
                 mFilter.mesh = mesh;
             }
@@ -156,6 +170,7 @@ public class UIDrawCall : MonoBehaviour
                 {
                     mFilter.mesh.Clear();
                 }
+
                 Debug.LogError("Too many vertices on one panel: " + verts.size);
             }
         }
@@ -165,6 +180,7 @@ public class UIDrawCall : MonoBehaviour
             {
                 mFilter.mesh.Clear();
             }
+
             Debug.LogError("UIWidgets must fill the buffer with 4 vertices per quad. Found " + size);
         }
     }
@@ -185,11 +201,13 @@ public class UIDrawCall : MonoBehaviour
                 {
                     shader = Shader.Find(str + " (SoftClip)");
                 }
+
                 if (shader == null)
                 {
                     mClipping = Clipping.None;
                 }
             }
+
             if (shader != null)
             {
                 if (mClippedMat == null)
@@ -197,6 +215,7 @@ public class UIDrawCall : MonoBehaviour
                     mClippedMat = new Material(mSharedMat);
                     mClippedMat.hideFlags = HideFlags.DontSave;
                 }
+
                 mClippedMat.shader = shader;
                 mClippedMat.CopyPropertiesFromMaterial(mSharedMat);
             }
@@ -211,6 +230,7 @@ public class UIDrawCall : MonoBehaviour
             NGUITools.Destroy(mClippedMat);
             mClippedMat = null;
         }
+
         if (mDepthPass)
         {
             if (mDepthMat == null)
@@ -219,6 +239,7 @@ public class UIDrawCall : MonoBehaviour
                 mDepthMat = new Material(shader2);
                 mDepthMat.hideFlags = HideFlags.DontSave;
             }
+
             mDepthMat.mainTexture = mSharedMat.mainTexture;
         }
         else if (mDepthMat != null)
@@ -226,17 +247,18 @@ public class UIDrawCall : MonoBehaviour
             NGUITools.Destroy(mDepthMat);
             mDepthMat = null;
         }
+
         var material = mClippedMat == null ? mSharedMat : mClippedMat;
         if (mDepthMat != null)
         {
             if (mRen.sharedMaterials == null || mRen.sharedMaterials.Length != 2 || mRen.sharedMaterials[1] != material)
             {
-                mRen.sharedMaterials = new[] { mDepthMat, material };
+                mRen.sharedMaterials = new[] {mDepthMat, material};
             }
         }
         else if (mRen.sharedMaterial != material)
         {
-            mRen.sharedMaterials = new[] { material };
+            mRen.sharedMaterials = new[] {material};
         }
     }
 
@@ -248,16 +270,14 @@ public class UIDrawCall : MonoBehaviour
             {
                 mTrans = transform;
             }
+
             return mTrans;
         }
     }
 
     public Clipping clipping
     {
-        get
-        {
-            return mClipping;
-        }
+        get { return mClipping; }
         set
         {
             if (mClipping != value)
@@ -270,34 +290,19 @@ public class UIDrawCall : MonoBehaviour
 
     public Vector4 clipRange
     {
-        get
-        {
-            return mClipRange;
-        }
-        set
-        {
-            mClipRange = value;
-        }
+        get { return mClipRange; }
+        set { mClipRange = value; }
     }
 
     public Vector2 clipSoftness
     {
-        get
-        {
-            return mClipSoft;
-        }
-        set
-        {
-            mClipSoft = value;
-        }
+        get { return mClipSoft; }
+        set { mClipSoft = value; }
     }
 
     public bool depthPass
     {
-        get
-        {
-            return mDepthPass;
-        }
+        get { return mDepthPass; }
         set
         {
             if (mDepthPass != value)
@@ -310,22 +315,13 @@ public class UIDrawCall : MonoBehaviour
 
     public bool isClipped
     {
-        get
-        {
-            return mClippedMat != null;
-        }
+        get { return mClippedMat != null; }
     }
 
     public Material material
     {
-        get
-        {
-            return mSharedMat;
-        }
-        set
-        {
-            mSharedMat = value;
-        }
+        get { return mSharedMat; }
+        set { mSharedMat = value; }
     }
 
     public int triangles

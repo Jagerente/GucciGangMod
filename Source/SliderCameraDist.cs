@@ -24,6 +24,7 @@ public class SliderCameraDist : MonoBehaviour
         {
             PlayerPrefs.SetFloat("cameraDistance", gameObject.GetComponent<UISlider>().sliderValue);
         }
+
         IN_GAME_MAIN_CAMERA.cameraDistance = 0.3f + value;
     }
 }

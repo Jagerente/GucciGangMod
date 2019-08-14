@@ -45,7 +45,7 @@ public class Xffect : MonoBehaviour
 
         foreach (Transform transform in this.transform)
         {
-            var effectLayer = (EffectLayer)transform.GetComponent(typeof(EffectLayer));
+            var effectLayer = (EffectLayer) transform.GetComponent(typeof(EffectLayer));
             if (!(effectLayer == null) && !(effectLayer.Material == null))
             {
                 var material = effectLayer.Material;
@@ -53,8 +53,8 @@ public class Xffect : MonoBehaviour
                 var transform2 = this.transform.Find("mesh " + material.name);
                 if (transform2 != null)
                 {
-                    var meshFilter = (MeshFilter)transform2.GetComponent(typeof(MeshFilter));
-                    var meshRenderer = (MeshRenderer)transform2.GetComponent(typeof(MeshRenderer));
+                    var meshFilter = (MeshFilter) transform2.GetComponent(typeof(MeshFilter));
+                    var meshRenderer = (MeshRenderer) transform2.GetComponent(typeof(MeshRenderer));
                     meshFilter.mesh.Clear();
                     MatDic[material.name] = new VertexPool(meshFilter.mesh, material);
                 }
@@ -65,8 +65,8 @@ public class Xffect : MonoBehaviour
                     gameObject.transform.parent = this.transform;
                     gameObject.AddComponent("MeshFilter");
                     gameObject.AddComponent("MeshRenderer");
-                    var meshFilter = (MeshFilter)gameObject.GetComponent(typeof(MeshFilter));
-                    var meshRenderer = (MeshRenderer)gameObject.GetComponent(typeof(MeshRenderer));
+                    var meshFilter = (MeshFilter) gameObject.GetComponent(typeof(MeshFilter));
+                    var meshRenderer = (MeshRenderer) gameObject.GetComponent(typeof(MeshRenderer));
                     meshRenderer.castShadows = false;
                     meshRenderer.receiveShadows = false;
                     meshRenderer.renderer.material = material;

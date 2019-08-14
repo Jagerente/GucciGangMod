@@ -51,17 +51,11 @@ public class PanelLoginGroupManager : MonoBehaviour
 
     public string loginName
     {
-        set
-        {
-            _loginName = value;
-        }
+        set { _loginName = value; }
     }
 
     public string loginPassword
     {
-        set
-        {
-            _loginPassword = value;
-        }
+        set { _loginPassword = value; }
     }
 }

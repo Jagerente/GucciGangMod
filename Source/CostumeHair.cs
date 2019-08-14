@@ -37,6 +37,7 @@
         {
             hairsM[i].id = i;
         }
+
         hairsF = new CostumeHair[11];
         hairsF[0] = new CostumeHair();
         hairsF[0].hair = hairsF[0].texture = "hair_girl1";

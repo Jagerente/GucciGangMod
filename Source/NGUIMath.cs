@@ -14,6 +14,7 @@ public static class NGUIMath
                 pos.y += 0.5f;
                 break;
         }
+
         return pos;
     }
 
@@ -29,12 +30,15 @@ public static class NGUIMath
                 {
                     pos.x -= 0.5f;
                 }
+
                 if (Mathf.RoundToInt(scale.y) == Mathf.RoundToInt(scale.y * 0.5f) * 2)
                 {
                     pos.y += 0.5f;
                 }
+
                 break;
         }
+
         return pos;
     }
 
@@ -45,6 +49,7 @@ public static class NGUIMath
         {
             return new Bounds(trans.position, Vector3.zero);
         }
+
         var rhs = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
         var vector2 = new Vector3(float.MinValue, float.MinValue, float.MinValue);
         var index = 0;
@@ -72,6 +77,7 @@ public static class NGUIMath
             rhs = Vector3.Min(lhs, rhs);
             index++;
         }
+
         var bounds = new Bounds(rhs, Vector3.zero);
         bounds.Encapsulate(vector2);
         return bounds;
@@ -83,6 +89,7 @@ public static class NGUIMath
         {
             return CalculateRelativeWidgetBounds(root, sprite.cachedTransform);
         }
+
         var worldToLocalMatrix = root.worldToLocalMatrix;
         var relativeSize = sprite.relativeSize;
         var pivotOffset = sprite.pivotOffset;
@@ -98,11 +105,13 @@ public static class NGUIMath
             border.x /= x;
             border.z /= x;
         }
+
         if (y != 0f)
         {
             border.y /= y;
             border.w /= y;
         }
+
         var num5 = num - relativeSize.x + border.x;
         var num6 = num + relativeSize.x - border.z;
         var num7 = num2 - relativeSize.y + border.y;
@@ -138,6 +147,7 @@ public static class NGUIMath
         {
             return new Bounds(Vector3.zero, Vector3.zero);
         }
+
         var rhs = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
         var vector2 = new Vector3(float.MinValue, float.MinValue, float.MinValue);
         var worldToLocalMatrix = root.worldToLocalMatrix;
@@ -174,6 +184,7 @@ public static class NGUIMath
             rhs = Vector3.Min(position, rhs);
             index++;
         }
+
         var bounds = new Bounds(rhs, Vector3.zero);
         bounds.Encapsulate(vector2);
         return bounds;
@@ -189,7 +200,7 @@ public static class NGUIMath
         var num3 = x + relativeSize.x + relativePadding.x + relativePadding.z;
         var num4 = y - relativeSize.y - relativePadding.y - relativePadding.w;
         var cachedTransform = w.cachedTransform;
-        return new[] { cachedTransform.TransformPoint(x, y, 0f), cachedTransform.TransformPoint(x, num4, 0f), cachedTransform.TransformPoint(num3, num4, 0f), cachedTransform.TransformPoint(num3, y, 0f) };
+        return new[] {cachedTransform.TransformPoint(x, y, 0f), cachedTransform.TransformPoint(x, num4, 0f), cachedTransform.TransformPoint(num3, num4, 0f), cachedTransform.TransformPoint(num3, y, 0f)};
     }
 
     public static int ClampIndex(int val, int max)
@@ -219,28 +230,34 @@ public static class NGUIMath
             minArea.x -= num5;
             maxArea.x += num5;
         }
+
         if (num2 > num4)
         {
             var num6 = num2 - num4;
             minArea.y -= num6;
             maxArea.y += num6;
         }
+
         if (minRect.x < minArea.x)
         {
             zero.x += minArea.x - minRect.x;
         }
+
         if (maxRect.x > maxArea.x)
         {
             zero.x -= maxRect.x - maxArea.x;
         }
+
         if (minRect.y < minArea.y)
         {
             zero.y += minArea.y - minRect.y;
         }
+
         if (maxRect.y > maxArea.y)
         {
             zero.y -= maxRect.y - maxArea.y;
         }
+
         return zero;
     }
 
@@ -255,6 +272,7 @@ public static class NGUIMath
             rect2.yMax = Mathf.RoundToInt((1f - rect.yMin) * height);
             return rect2;
         }
+
         rect2.xMin = rect.xMin * width;
         rect2.xMax = rect.xMax * width;
         rect2.yMin = (1f - rect.yMax) * height;
@@ -272,6 +290,7 @@ public static class NGUIMath
             rect2.yMin = 1f - rect.yMax / height;
             rect2.yMax = 1f - rect.yMin / height;
         }
+
         return rect2;
     }
 
@@ -287,11 +306,13 @@ public static class NGUIMath
         {
             return 'F';
         }
+
         if (num < 10)
         {
-            return (char)(48 + num);
+            return (char) (48 + num);
         }
-        return (char)(65 + num - 10);
+
+        return (char) (65 + num - 10);
     }
 
     private static float DistancePointToLineSegment(Vector2 point, Vector2 a, Vector2 b)
@@ -303,17 +324,20 @@ public static class NGUIMath
             var vector2 = point - a;
             return vector2.magnitude;
         }
+
         var num2 = Vector2.Dot(point - a, b - a) / sqrMagnitude;
         if (num2 < 0f)
         {
             var vector3 = point - a;
             return vector3.magnitude;
         }
+
         if (num2 > 1f)
         {
             var vector4 = point - b;
             return vector4.magnitude;
         }
+
         var vector5 = a + num2 * (b - a);
         var vector6 = point - vector5;
         return vector6.magnitude;
@@ -331,8 +355,10 @@ public static class NGUIMath
             {
                 flag = !flag;
             }
+
             val = i;
         }
+
         if (!flag)
         {
             var num = -1f;
@@ -346,8 +372,10 @@ public static class NGUIMath
                     num = num2;
                 }
             }
+
             return num;
         }
+
         return 0f;
     }
 
@@ -358,12 +386,13 @@ public static class NGUIMath
         {
             screenPoints[i] = cam.WorldToScreenPoint(worldPoints[i]);
         }
+
         return DistanceToRectangle(screenPoints, mousePos);
     }
 
     public static Color HexToColor(uint val)
     {
-        return IntToColor((int)val);
+        return IntToColor((int) val);
     }
 
     public static int HexToDecimal(char ch)
@@ -443,8 +472,10 @@ public static class NGUIMath
                     default:
                         return 15;
                 }
+
                 break;
         }
+
         return 10;
         Label_00A5:
         return 11;
@@ -472,8 +503,10 @@ public static class NGUIMath
                     str = str + " ";
                     break;
             }
+
             str = str + ((val & (1 << --num)) == 0 ? '0' : '1');
         }
+
         return str;
     }
 
@@ -518,14 +551,17 @@ public static class NGUIMath
         {
             return 0;
         }
+
         while (val < 0)
         {
             val += max;
         }
+
         while (val >= max)
         {
             val -= max;
         }
+
         return val;
     }
 
@@ -536,6 +572,7 @@ public static class NGUIMath
         {
             f = maxAngle * Mathf.Sign(f);
         }
+
         return @from + f;
     }
 
@@ -545,6 +582,7 @@ public static class NGUIMath
         {
             deltaTime = 1f;
         }
+
         var num = 1f - strength * 0.001f;
         var num2 = Mathf.RoundToInt(deltaTime * 1000f);
         var zero = Vector2.zero;
@@ -553,6 +591,7 @@ public static class NGUIMath
             zero += velocity * 0.06f;
             velocity = velocity * num;
         }
+
         return zero;
     }
 
@@ -562,6 +601,7 @@ public static class NGUIMath
         {
             deltaTime = 1f;
         }
+
         var num = 1f - strength * 0.001f;
         var num2 = Mathf.RoundToInt(deltaTime * 1000f);
         var zero = Vector3.zero;
@@ -570,6 +610,7 @@ public static class NGUIMath
             zero += velocity * 0.06f;
             velocity = velocity * num;
         }
+
         return zero;
     }
 
@@ -579,6 +620,7 @@ public static class NGUIMath
         {
             deltaTime = 1f;
         }
+
         var num = Mathf.RoundToInt(deltaTime * 1000f);
         deltaTime = 0.001f * strength;
         var from = 0f;
@@ -586,6 +628,7 @@ public static class NGUIMath
         {
             from = Mathf.Lerp(from, 1f, deltaTime);
         }
+
         return from;
     }
 
@@ -595,12 +638,14 @@ public static class NGUIMath
         {
             deltaTime = 1f;
         }
+
         var num = Mathf.RoundToInt(deltaTime * 1000f);
         deltaTime = 0.001f * strength;
         for (var i = 0; i < num; i++)
         {
             from = Mathf.Lerp(from, to, deltaTime);
         }
+
         return from;
     }
 
@@ -630,10 +675,12 @@ public static class NGUIMath
         {
             angle -= 360f;
         }
+
         while (angle < -180f)
         {
             angle += 360f;
         }
+
         return angle;
     }
 }

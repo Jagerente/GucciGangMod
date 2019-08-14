@@ -17,6 +17,7 @@ public class TweenRotation : UITweener
             rotation.Sample(1f, true);
             rotation.enabled = false;
         }
+
         return rotation;
     }
 
@@ -33,19 +34,14 @@ public class TweenRotation : UITweener
             {
                 mTrans = transform;
             }
+
             return mTrans;
         }
     }
 
     public Quaternion rotation
     {
-        get
-        {
-            return cachedTransform.localRotation;
-        }
-        set
-        {
-            cachedTransform.localRotation = value;
-        }
+        get { return cachedTransform.localRotation; }
+        set { cachedTransform.localRotation = value; }
     }
 }

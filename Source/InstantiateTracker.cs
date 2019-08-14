@@ -11,6 +11,7 @@ public class InstantiateTracker
         {
             return true;
         }
+
         var num = photonPlayer.ID * PhotonNetwork.MAX_VIEW_IDS;
         var num2 = num + PhotonNetwork.MAX_VIEW_IDS;
         foreach (var num3 in viewIDS)
@@ -21,9 +22,11 @@ public class InstantiateTracker
                 {
                     FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning invalid photon view.");
                 }
+
                 return false;
             }
         }
+
         key = key.ToLower();
         switch (key)
         {
@@ -35,8 +38,10 @@ public class InstantiateTracker
                     {
                         FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning bomb item (" + key + ").");
                     }
+
                     return false;
                 }
+
                 return Instantiated(photonPlayer, GameResource.bomb);
 
             case "hook":
@@ -70,10 +75,12 @@ public class InstantiateTracker
                 {
                     return Instantiated(photonPlayer, GameResource.effect);
                 }
+
                 if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.FGM.restartingTitan))
                 {
                     FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning titan effects.");
                 }
+
                 return false;
 
             case "fx/boom2":
@@ -93,6 +100,7 @@ public class InstantiateTracker
                 {
                     FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning cannon item (" + key + ").");
                 }
+
                 return Instantiated(photonPlayer, GameResource.general);
 
             case "rcasset/cannonwallprop":
@@ -101,6 +109,7 @@ public class InstantiateTracker
                 {
                     FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
                 }
+
                 return false;
 
             case "titan_eren":
@@ -112,14 +121,18 @@ public class InstantiateTracker
                         {
                             FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning titan eren (" + key + ").");
                         }
+
                         return false;
                     }
+
                     return Instantiated(photonPlayer, GameResource.general);
                 }
+
                 if (PhotonNetwork.isMasterClient)
                 {
                     FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning titan eren (" + key + ").");
                 }
+
                 return false;
 
             case "fx/justSmoke":
@@ -136,14 +149,18 @@ public class InstantiateTracker
                         {
                             FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning eren effect (" + key + ").");
                         }
+
                         return false;
                     }
+
                     return Instantiated(photonPlayer, GameResource.effect);
                 }
+
                 if (PhotonNetwork.isMasterClient)
                 {
                     FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning eren effect (" + key + ").");
                 }
+
                 return false;
 
             case "fx/colossal_steam_dmg":
@@ -153,6 +170,7 @@ public class InstantiateTracker
                 {
                     return Instantiated(photonPlayer, GameResource.effect);
                 }
+
                 FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning colossal effect (" + key + ").");
                 return false;
 
@@ -161,6 +179,7 @@ public class InstantiateTracker
                 {
                     return Instantiated(photonPlayer, GameResource.general);
                 }
+
                 FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
                 return false;
 
@@ -169,10 +188,12 @@ public class InstantiateTracker
                 {
                     return Instantiated(photonPlayer, GameResource.general);
                 }
+
                 if (!(!PhotonNetwork.isMasterClient || FengGameManagerMKII.FGM.restartingHorse))
                 {
                     FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning horse (" + key + ").");
                 }
+
                 return false;
 
             case "titan_ver3.1":
@@ -189,13 +210,16 @@ public class InstantiateTracker
                                 num4++;
                             }
                         }
+
                         if (num4 > 1)
                         {
                             return false;
                         }
                     }
+
                     break;
                 }
+
                 if (LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || RCSettings.infectionMode > 0 || IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.BOSS_FIGHT_CT || FengGameManagerMKII.FGM.restartingTitan)
                 {
                     if (IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT)
@@ -208,14 +232,17 @@ public class InstantiateTracker
                                 num4++;
                             }
                         }
+
                         if (num4 > 1)
                         {
                             FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning titan (" + key + ").");
                             return false;
                         }
                     }
+
                     break;
                 }
+
                 FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, false, "spawning titan (" + key + ").");
                 return false;
 
@@ -232,14 +259,17 @@ public class InstantiateTracker
                     {
                         return false;
                     }
+
                     return Instantiated(photonPlayer, GameResource.general);
                 }
+
                 FengGameManagerMKII.FGM.kickPlayerRC(photonPlayer, true, "spawning MC item (" + key + ").");
                 return false;
 
             default:
                 return false;
         }
+
         return Instantiated(photonPlayer, GameResource.general);
     }
 
@@ -261,6 +291,7 @@ public class InstantiateTracker
                 {
                     FengGameManagerMKII.FGM.kickPlayerRC(player, true, "spamming instantiate (" + type + ").");
                 }
+
                 RCextensions.RemoveAt(ref players, num);
                 return false;
             }
@@ -270,6 +301,7 @@ public class InstantiateTracker
             RCextensions.Add(ref players, new Player(owner.ID));
             players[players.Length - 1].IsThingExcessive(type);
         }
+
         return true;
     }
 
@@ -288,6 +320,7 @@ public class InstantiateTracker
             RCextensions.Add(ref players, new Player(owner.ID));
             players[players.Length - 1].IsThingExcessive(GameResource.name);
         }
+
         return true;
     }
 
@@ -310,6 +343,7 @@ public class InstantiateTracker
                 return true;
             }
         }
+
         result = -1;
         return false;
     }
@@ -350,6 +384,7 @@ public class InstantiateTracker
             {
                 shots = 0;
             }
+
             lastShot = Time.time;
             return false;
         }
@@ -378,6 +413,7 @@ public class InstantiateTracker
                 accumTime += num;
                 return accumTime >= 1.25f;
             }
+
             accumTime = 0f;
             return false;
         }
@@ -406,6 +442,7 @@ public class InstantiateTracker
                 accumTime += num;
                 return accumTime >= 2f;
             }
+
             accumTime = 0f;
             return false;
         }
@@ -432,6 +469,7 @@ public class InstantiateTracker
                 count = 0;
                 lastClear = Time.time;
             }
+
             count++;
             return count > 20;
         }
@@ -458,6 +496,7 @@ public class InstantiateTracker
                 effectCounter = 0;
                 lastEffectTime = Time.time;
             }
+
             effectCounter++;
             return effectCounter > 8;
         }
@@ -484,6 +523,7 @@ public class InstantiateTracker
                 flares = 0;
                 lastFlare = Time.time;
             }
+
             flares++;
             return flares > 4;
         }
@@ -511,6 +551,7 @@ public class InstantiateTracker
             {
                 nameChanges = 0;
             }
+
             nameChanges++;
             return nameChanges > 5;
         }
@@ -552,6 +593,7 @@ public class InstantiateTracker
                 count = 0;
                 lastClear = Time.time;
             }
+
             count++;
             return count > 35;
         }
@@ -600,6 +642,7 @@ public class InstantiateTracker
                 case GameResource.bomb:
                     return new ExcessiveBombs();
             }
+
             return null;
         }
 
@@ -612,6 +655,7 @@ public class InstantiateTracker
                     return i;
                 }
             }
+
             return -1;
         }
 
@@ -622,6 +666,7 @@ public class InstantiateTracker
             {
                 return thingsToCheck[thingToCheck].KickWorthy();
             }
+
             RCextensions.Add(ref thingsToCheck, GameResourceToThing(gr));
             return false;
         }

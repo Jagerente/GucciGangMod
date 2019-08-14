@@ -17,6 +17,7 @@ public class TweenColor : UITweener
         {
             mMat = renderer.material;
         }
+
         mLight = light;
     }
 
@@ -30,6 +31,7 @@ public class TweenColor : UITweener
             color2.Sample(1f, true);
             color2.enabled = false;
         }
+
         return color2;
     }
 
@@ -46,14 +48,17 @@ public class TweenColor : UITweener
             {
                 return mWidget.color;
             }
+
             if (mLight != null)
             {
                 return mLight.color;
             }
+
             if (mMat != null)
             {
                 return mMat.color;
             }
+
             return Color.black;
         }
         set
@@ -62,10 +67,12 @@ public class TweenColor : UITweener
             {
                 mWidget.color = value;
             }
+
             if (mMat != null)
             {
                 mMat.color = value;
             }
+
             if (mLight != null)
             {
                 mLight.color = value;

@@ -17,6 +17,7 @@ public class TweenVolume : UITweener
             volume.Sample(1f, true);
             volume.enabled = false;
         }
+
         return volume;
     }
 
@@ -43,19 +44,14 @@ public class TweenVolume : UITweener
                     }
                 }
             }
+
             return mSource;
         }
     }
 
     public float volume
     {
-        get
-        {
-            return audioSource.volume;
-        }
-        set
-        {
-            audioSource.volume = value;
-        }
+        get { return audioSource.volume; }
+        set { audioSource.volume = value; }
     }
 }

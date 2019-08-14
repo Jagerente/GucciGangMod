@@ -40,6 +40,7 @@ public class CannonBall : MonoBehaviour
             {
                 collider.dmg = 0;
             }
+
             if (RCSettings.deadlyCannons == 1)
             {
                 foreach (HERO hero in FengGameManagerMKII.FGM.getPlayers())
@@ -68,6 +69,7 @@ public class CannonBall : MonoBehaviour
                     }
                 }
             }
+
             if (myTitanTriggers != null)
             {
                 for (var i = 0; i < myTitanTriggers.Count; i++)
@@ -78,6 +80,7 @@ public class CannonBall : MonoBehaviour
                     }
                 }
             }
+
             PhotonNetwork.Destroy(this.gameObject);
         }
     }
@@ -94,6 +97,7 @@ public class CannonBall : MonoBehaviour
                 LayerMask mask4 = 1 << LayerMask.NameToLayer("Ground");
                 mask3 |= mask4;
             }
+
             var colliderArray = Physics.OverlapSphere(transform.position, 0.6f, mask3.value);
             var flag2 = false;
             for (var i = 0; i < colliderArray.Length; i++)
@@ -136,6 +140,7 @@ public class CannonBall : MonoBehaviour
                         {
                             titan.hitR(transform.position, 0.05f);
                         }
+
                         destroyMe();
                     }
                 }
@@ -144,6 +149,7 @@ public class CannonBall : MonoBehaviour
                     flag2 = true;
                 }
             }
+
             if (!(isCollider || flag2))
             {
                 isCollider = true;
@@ -169,8 +175,8 @@ public class CannonBall : MonoBehaviour
         }
         else
         {
-            correctPos = (Vector3)stream.ReceiveNext();
-            correctVelocity = (Vector3)stream.ReceiveNext();
+            correctPos = (Vector3) stream.ReceiveNext();
+            correctVelocity = (Vector3) stream.ReceiveNext();
         }
     }
 

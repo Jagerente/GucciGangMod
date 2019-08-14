@@ -62,7 +62,7 @@ public class Bullet : MonoBehaviour
         killTime = 0f;
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
         {
-            object[] parameters = { 2 };
+            object[] parameters = {2};
             photonView.RPC("setPhase", PhotonTargets.Others, parameters);
         }
     }
@@ -79,6 +79,7 @@ public class Bullet : MonoBehaviour
                 return;
             }
         }
+
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && !photonView.isMine)
         {
             if (phase == 0)
@@ -102,12 +103,13 @@ public class Bullet : MonoBehaviour
             var flag3 = false;
             if (nodes.Count > 1)
             {
-                flag3 = Physics.Linecast((Vector3)nodes[nodes.Count - 2], gameObject.transform.position, out hit, mask4.value);
+                flag3 = Physics.Linecast((Vector3) nodes[nodes.Count - 2], gameObject.transform.position, out hit, mask4.value);
             }
             else
             {
-                flag3 = Physics.Linecast((Vector3)nodes[nodes.Count - 1], gameObject.transform.position, out hit, mask4.value);
+                flag3 = Physics.Linecast((Vector3) nodes[nodes.Count - 1], gameObject.transform.position, out hit, mask4.value);
             }
+
             if (flag3)
             {
                 var flag4 = true;
@@ -115,9 +117,10 @@ public class Bullet : MonoBehaviour
                 {
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                     {
-                        object[] parameters = { hit.collider.transform.root.gameObject.GetPhotonView().viewID };
+                        object[] parameters = {hit.collider.transform.root.gameObject.GetPhotonView().viewID};
                         photonView.RPC("tieMeToOBJ", PhotonTargets.Others, parameters);
                     }
+
                     master.GetComponent<HERO>().lastHook = hit.collider.transform.root;
                     transform.parent = hit.collider.transform;
                 }
@@ -129,9 +132,10 @@ public class Bullet : MonoBehaviour
                 {
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                     {
-                        object[] objArray3 = { hit.collider.transform.root.gameObject.GetPhotonView().viewID };
+                        object[] objArray3 = {hit.collider.transform.root.gameObject.GetPhotonView().viewID};
                         photonView.RPC("tieMeToOBJ", PhotonTargets.Others, objArray3);
                     }
+
                     master.GetComponent<HERO>().hookToHuman(hit.collider.transform.root.gameObject, transform.position);
                     transform.parent = hit.collider.transform;
                     master.GetComponent<HERO>().lastHook = null;
@@ -140,10 +144,12 @@ public class Bullet : MonoBehaviour
                 {
                     flag4 = false;
                 }
+
                 if (phase == 2)
                 {
                     flag4 = false;
                 }
+
                 if (flag4)
                 {
                     master.GetComponent<HERO>().launch(hit.point, left, leviMode);
@@ -153,19 +159,22 @@ public class Bullet : MonoBehaviour
                         phase = 1;
                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                         {
-                            object[] objArray4 = { 1 };
+                            object[] objArray4 = {1};
                             photonView.RPC("setPhase", PhotonTargets.Others, objArray4);
-                            object[] objArray5 = { transform.position };
+                            object[] objArray5 = {transform.position};
                             photonView.RPC("tieMeTo", PhotonTargets.Others, objArray5);
                         }
+
                         if (leviMode)
                         {
                             getSpiral(master.transform.position, master.transform.rotation.eulerAngles);
                         }
+
                         flag2 = true;
                     }
                 }
             }
+
             nodes.Add(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z));
             if (!flag2)
             {
@@ -175,7 +184,7 @@ public class Bullet : MonoBehaviour
                     phase = 4;
                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                     {
-                        object[] objArray6 = { 4 };
+                        object[] objArray6 = {4};
                         photonView.RPC("setPhase", PhotonTargets.Others, objArray6);
                     }
                 }
@@ -199,6 +208,7 @@ public class Bullet : MonoBehaviour
         {
             num = 1.2f + (60 - spiralcount) * 0.1f;
         }
+
         num4 -= spiralcount * 0.06f;
         var num6 = num / num2;
         var num7 = num3 / num2;
@@ -242,22 +252,27 @@ public class Bullet : MonoBehaviour
             {
                 velocity2 = Vector3.Project(v2, v);
             }
+
             if (launcher_ref == "hookRefL1")
             {
                 myRef = hero.GetComponent<HERO>().hookRefL1;
             }
+
             if (launcher_ref == "hookRefL2")
             {
                 myRef = hero.GetComponent<HERO>().hookRefL2;
             }
+
             if (launcher_ref == "hookRefR1")
             {
                 myRef = hero.GetComponent<HERO>().hookRefR1;
             }
+
             if (launcher_ref == "hookRefR2")
             {
                 myRef = hero.GetComponent<HERO>().hookRefR2;
             }
+
             nodes = new ArrayList();
             nodes.Add(myRef.transform.position);
             phase = 0;
@@ -265,11 +280,12 @@ public class Bullet : MonoBehaviour
             left = isLeft;
             if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
             {
-                object[] parameters = { hero.GetComponent<HERO>().photonView.viewID, launcher_ref };
+                object[] parameters = {hero.GetComponent<HERO>().photonView.viewID, launcher_ref};
                 photonView.RPC("myMasterIs", PhotonTargets.Others, parameters);
-                object[] objArray2 = { v, velocity2, left };
+                object[] objArray2 = {v, velocity2, left};
                 photonView.RPC("setVelocityAndLeft", PhotonTargets.Others, objArray2);
             }
+
             transform.position = myRef.transform.position;
             transform.rotation = Quaternion.LookRotation(v.normalized);
         }
@@ -283,14 +299,17 @@ public class Bullet : MonoBehaviour
         {
             myRef = master.GetComponent<HERO>().hookRefL1;
         }
+
         if (launcherRef == "hookRefL2")
         {
             myRef = master.GetComponent<HERO>().hookRefL2;
         }
+
         if (launcherRef == "hookRefR1")
         {
             myRef = master.GetComponent<HERO>().hookRefR1;
         }
+
         if (launcherRef == "hookRefR2")
         {
             myRef = master.GetComponent<HERO>().hookRefR2;
@@ -310,20 +329,20 @@ public class Bullet : MonoBehaviour
         phase = 2;
         leviMode = true;
         getSpiral(masterPosition, masterrotation);
-        var vector = masterPosition - (Vector3)spiralNodes[0];
-        lineRenderer.SetVertexCount(spiralNodes.Count - (int)(spiralcount * 0.5f));
+        var vector = masterPosition - (Vector3) spiralNodes[0];
+        lineRenderer.SetVertexCount(spiralNodes.Count - (int) (spiralcount * 0.5f));
         for (var i = 0; i <= spiralNodes.Count - 1 - spiralcount * 0.5f; i++)
         {
             if (spiralcount < 5)
             {
-                var position = (Vector3)spiralNodes[i] + vector;
+                var position = (Vector3) spiralNodes[i] + vector;
                 var num2 = spiralNodes.Count - 1 - spiralcount * 0.5f;
                 position = new Vector3(position.x, position.y * ((num2 - i) / num2) + newPosition.y * (i / num2), position.z);
                 lineRenderer.SetPosition(i, position);
             }
             else
             {
-                lineRenderer.SetPosition(i, (Vector3)spiralNodes[i] + vector);
+                lineRenderer.SetPosition(i, (Vector3) spiralNodes[i] + vector);
             }
         }
     }
@@ -343,10 +362,12 @@ public class Bullet : MonoBehaviour
         {
             FengGameManagerMKII.FGM.removeHook(this);
         }
+
         if (myTitan != null)
         {
             myTitan.isHooked = false;
         }
+
         Destroy(rope);
     }
 
@@ -374,12 +395,13 @@ public class Bullet : MonoBehaviour
         }
         else if (nodes.Count > 0)
         {
-            var vector = myRef.transform.position - (Vector3)nodes[0];
+            var vector = myRef.transform.position - (Vector3) nodes[0];
             lineRenderer.SetVertexCount(nodes.Count);
             for (var i = 0; i <= nodes.Count - 1; i++)
             {
-                lineRenderer.SetPosition(i, (Vector3)nodes[i] + vector * Mathf.Pow(0.75f, i));
+                lineRenderer.SetPosition(i, (Vector3) nodes[i] + vector * Mathf.Pow(0.75f, i));
             }
+
             if (nodes.Count > 1)
             {
                 lineRenderer.SetPosition(1, myRef.transform.position);
@@ -404,7 +426,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        rope = (GameObject)Instantiate(Resources.Load("rope"));
+        rope = (GameObject) Instantiate(Resources.Load("rope"));
         lineRenderer = rope.GetComponent<LineRenderer>();
         GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().addHook(this);
     }
@@ -438,6 +460,7 @@ public class Bullet : MonoBehaviour
                     gameObject.GetComponent<MeshRenderer>().enabled = false;
                 }
             }
+
             if (phase == 0)
             {
                 setLinePhase0();
@@ -449,7 +472,7 @@ public class Bullet : MonoBehaviour
                 var velocity = master.rigidbody.velocity;
                 var magnitude = velocity.magnitude;
                 var f = vector.magnitude;
-                var num3 = (int)((f + magnitude) / 5f);
+                var num3 = (int) ((f + magnitude) / 5f);
                 num3 = Mathf.Clamp(num3, 2, 6);
                 lineRenderer.SetVertexCount(num3);
                 lineRenderer.SetPosition(0, myRef.transform.position);
@@ -462,9 +485,10 @@ public class Bullet : MonoBehaviour
                     var num8 = (num6 - num7) / num6;
                     num8 = Mathf.Pow(num8, 0.5f);
                     var max = (num5 + magnitude) * 0.0015f * num8;
-                    lineRenderer.SetPosition(index, new Vector3(Random.Range(-max, max), Random.Range(-max, max), Random.Range(-max, max)) + myRef.transform.position + vector * (index / (float)num3) - Vector3.up * num5 * 0.05f * num8 - velocity * 0.001f * num8 * num5);
+                    lineRenderer.SetPosition(index, new Vector3(Random.Range(-max, max), Random.Range(-max, max), Random.Range(-max, max)) + myRef.transform.position + vector * (index / (float) num3) - Vector3.up * num5 * 0.05f * num8 - velocity * 0.001f * num8 * num5);
                     index++;
                 }
+
                 lineRenderer.SetPosition(num3 - 1, transform.position);
             }
             else if (phase == 2)
@@ -484,20 +508,20 @@ public class Bullet : MonoBehaviour
                 else
                 {
                     getSpiral(master.transform.position, master.transform.rotation.eulerAngles);
-                    var vector4 = myRef.transform.position - (Vector3)spiralNodes[0];
-                    lineRenderer.SetVertexCount(spiralNodes.Count - (int)(spiralcount * 0.5f));
+                    var vector4 = myRef.transform.position - (Vector3) spiralNodes[0];
+                    lineRenderer.SetVertexCount(spiralNodes.Count - (int) (spiralcount * 0.5f));
                     for (var i = 0; i <= spiralNodes.Count - 1 - spiralcount * 0.5f; i++)
                     {
                         if (spiralcount < 5)
                         {
-                            var position = (Vector3)spiralNodes[i] + vector4;
+                            var position = (Vector3) spiralNodes[i] + vector4;
                             var num11 = spiralNodes.Count - 1 - spiralcount * 0.5f;
                             position = new Vector3(position.x, position.y * ((num11 - i) / num11) + gameObject.transform.position.y * (i / num11), position.z);
                             lineRenderer.SetPosition(i, position);
                         }
                         else
                         {
-                            lineRenderer.SetPosition(i, (Vector3)spiralNodes[i] + vector4);
+                            lineRenderer.SetPosition(i, (Vector3) spiralNodes[i] + vector4);
                         }
                     }
                 }
@@ -507,12 +531,13 @@ public class Bullet : MonoBehaviour
                 var transform = gameObject.transform;
                 transform.position += velocity + velocity2 * Time.deltaTime;
                 nodes.Add(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z));
-                var vector10 = myRef.transform.position - (Vector3)nodes[0];
+                var vector10 = myRef.transform.position - (Vector3) nodes[0];
                 for (var j = 0; j <= nodes.Count - 1; j++)
                 {
                     lineRenderer.SetVertexCount(nodes.Count);
-                    lineRenderer.SetPosition(j, (Vector3)nodes[j] + vector10 * Mathf.Pow(0.5f, j));
+                    lineRenderer.SetPosition(j, (Vector3) nodes[j] + vector10 * Mathf.Pow(0.5f, j));
                 }
+
                 killTime2 += Time.deltaTime;
                 if (killTime2 > 0.8f)
                 {

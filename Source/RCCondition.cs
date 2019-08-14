@@ -23,6 +23,7 @@
             case 5:
                 return baseBool != compareBool;
         }
+
         return false;
     }
 
@@ -48,6 +49,7 @@
             case 5:
                 return titanCompare(parameter1.returnTitan(null), parameter2.returnTitan(null));
         }
+
         return false;
     }
 
@@ -60,6 +62,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 1:
@@ -67,6 +70,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 2:
@@ -74,6 +78,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 3:
@@ -81,6 +86,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 4:
@@ -88,6 +94,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 5:
@@ -95,8 +102,10 @@
                 {
                     return false;
                 }
+
                 return true;
         }
+
         return false;
     }
 
@@ -109,6 +118,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 1:
@@ -116,6 +126,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 2:
@@ -123,6 +134,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 3:
@@ -130,6 +142,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 4:
@@ -137,6 +150,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 5:
@@ -144,8 +158,10 @@
                 {
                     return false;
                 }
+
                 return true;
         }
+
         return false;
     }
 
@@ -159,6 +175,7 @@
             case 5:
                 return basePlayer != comparePlayer;
         }
+
         return false;
     }
 
@@ -171,6 +188,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 1:
@@ -178,6 +196,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 2:
@@ -185,6 +204,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 3:
@@ -192,6 +212,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 4:
@@ -199,6 +220,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 5:
@@ -206,6 +228,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 6:
@@ -213,6 +236,7 @@
                 {
                     return false;
                 }
+
                 return true;
 
             case 7:
@@ -220,8 +244,10 @@
                 {
                     return false;
                 }
+
                 return true;
         }
+
         return false;
     }
 
@@ -235,6 +261,7 @@
             case 5:
                 return baseTitan != compareTitan;
         }
+
         return false;
     }
 

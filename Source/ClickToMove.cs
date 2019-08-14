@@ -24,6 +24,7 @@ public class ClickToMove : MonoBehaviour
                 transform.rotation = quaternion;
             }
         }
+
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smooth);
     }
 }

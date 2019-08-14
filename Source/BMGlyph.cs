@@ -27,9 +27,11 @@ public class BMGlyph
                 {
                     return kerning[num + 1];
                 }
+
                 num += 2;
             }
         }
+
         return 0;
     }
 
@@ -39,6 +41,7 @@ public class BMGlyph
         {
             kerning = new List<int>();
         }
+
         for (var i = 0; i < kerning.Count; i += 2)
         {
             if (kerning[i] == previousChar)
@@ -47,6 +50,7 @@ public class BMGlyph
                 return;
             }
         }
+
         kerning.Add(previousChar);
         kerning.Add(amount);
     }
@@ -62,6 +66,7 @@ public class BMGlyph
             width -= num3;
             offsetX += num3;
         }
+
         if (y < yMin)
         {
             var num4 = yMin - y;
@@ -69,10 +74,12 @@ public class BMGlyph
             height -= num4;
             offsetY += num4;
         }
+
         if (num > xMax)
         {
             width -= num - xMax;
         }
+
         if (num2 > yMax)
         {
             height -= num2 - yMax;

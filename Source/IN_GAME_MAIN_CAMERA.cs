@@ -95,6 +95,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         this.transform.RotateAround(this.transform.position, Vector3.up, angle);
                         this.transform.RotateAround(this.transform.position, this.transform.right, num2);
                     }
+
                     var transform3 = this.transform;
                     transform3.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
                     break;
@@ -113,6 +114,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         num3 = (Input.mousePosition.x - Screen.width * 0.6f) / Screen.width * 0.4f * getSensitivityMultiWithDeltaTime() * 150f;
                         this.transform.RotateAround(this.transform.position, Vector3.up, num3);
                     }
+
                     var x = 140f * (Screen.height * 0.6f - Input.mousePosition.y) / Screen.height * 0.5f;
                     this.transform.rotation = Quaternion.Euler(x, this.transform.rotation.eulerAngles.y, this.transform.rotation.eulerAngles.z);
                     var transform4 = this.transform;
@@ -126,6 +128,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     {
                         Screen.lockCursor = true;
                     }
+
                     var num5 = Input.GetAxis("Mouse X") * 10f * getSensitivityMulti();
                     var num6 = -Input.GetAxis("Mouse Y") * 10f * getSensitivityMulti() * (Settings.MouseInvertYSetting ? -1 : 1);
                     this.transform.RotateAround(this.transform.position, Vector3.up, num5);
@@ -135,6 +138,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     {
                         this.transform.RotateAround(this.transform.position, this.transform.right, num6);
                     }
+
                     var transform5 = this.transform;
                     transform5.position -= this.transform.forward * distance * distanceMulti * distanceOffsetMulti;
                     break;
@@ -157,6 +161,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     return;
                 }
         }
+
         if (cameraDistance < 0.65f)
         {
             var transform6 = this.transform;
@@ -175,6 +180,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 50f, 0.1f);
         }
+
         var num2 = hero.CameraMultiplier * (200f - Camera.main.fieldOfView) / 150f;
         this.transform.position = head.transform.position + Vector3.up * heightMulti - Vector3.up * (0.6f - cameraDistance) * 2f;
         var transform = this.transform;
@@ -184,6 +190,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             var transform2 = this.transform;
             transform2.position += this.transform.right * Mathf.Max((0.6f - hero.CameraMultiplier) * 2f, 0.65f);
         }
+
         this.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, hero.GetComponent<SmoothSyncMovement>().correctCameraRot, Time.deltaTime * 5f);
     }
 
@@ -200,6 +207,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 Minimap.instance.myCam.farClipPlane = 1000f;
                 Minimap.instance.myCam.enabled = false;
             }
+
             minimap.CreateMinimap(Minimap.instance.myCam, 512, 0.3f, info.minimapPreset);
             if (Settings.MinimapSetting || RCSettings.globalDisableMinimap == 1)
             {
@@ -214,6 +222,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             snapshotRT.Release();
         }
+
         if (QualitySettings.GetQualityLevel() > 3)
         {
             snapshotRT = new RenderTexture((int)(Screen.width * 0.8f), (int)(Screen.height * 0.8f), 24);
@@ -243,6 +252,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 closestDistance = num2;
             }
         }
+
         return obj2;
     }
 
@@ -291,6 +301,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             textured.SetPixel(0, 0, Color.white);
             return textured;
         }
+
         return textured;
     }
 
@@ -341,6 +352,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             GGM.Caching.GameObjectCache.Find("Chatroom").GetComponent<InRoomChat>().SetPosition();
         }
+
         if (!usingTitan || gametype == GAMETYPE.SINGLE)
         {
             GGM.Caching.GameObjectCache.Find("skill_cd_bottom").transform.localPosition = new Vector3(0f, (int)(-Screen.height * 0.5f + 5f), 0f);
@@ -364,6 +376,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             GGM.Caching.GameObjectCache.Find("stamina_titan").transform.localPosition = new Vector3(-160f, (int)(-Screen.height * 0.5f + 15f), 0f);
             GGM.Caching.GameObjectCache.Find("stamina_titan_bottom").transform.localPosition = new Vector3(-160f, (int)(-Screen.height * 0.5f + 15f), 0f);
         }
+
         if (main_object != null && main_object.GetComponent<HERO>() != null)
         {
             if (gametype == GAMETYPE.SINGLE)
@@ -375,10 +388,12 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 main_object.GetComponent<HERO>().setSkillHUDPosition();
             }
         }
+
         if (stereoType == STEREO_3D_TYPE.SIDE_BY_SIDE)
         {
             gameObject.GetComponent<Camera>().aspect = Screen.width / Screen.height;
         }
+
         createSnapShotRT();
     }
 
@@ -418,6 +433,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
+
         this.lockAngle = lockAngle;
         return obj;
     }
@@ -432,6 +448,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             heightMulti = head != null ? Vector3.Distance(head.transform.position, main_object.transform.position) * 0.45f : 1f;
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
+
         return obj;
     }
 
@@ -457,6 +474,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 var transform2 = gameObject.transform;
                 transform2.position -= Vector3.up * R;
             }
+
             flip = !flip;
             R *= decay;
         }
@@ -484,6 +502,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             snapShotCamera.transform.RotateAround(this.transform.position, Vector3.up, Random.Range(-20f, 20f));
         }
+
         snapShotCamera.transform.LookAt(worldPosition);
         snapShotCamera.transform.RotateAround(worldPosition, this.transform.right, Random.Range(-20f, 20f));
         var num = Vector3.Distance(snapShotTargetPosition, vector);
@@ -491,6 +510,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             num += (index - 1) * snapShotTarget.transform.localScale.x * 10f;
         }
+
         var transform3 = snapShotCamera.transform;
         transform3.position -= snapShotCamera.transform.forward * Random.Range(num + 3f, num + 10f);
         snapShotCamera.transform.LookAt(worldPosition);
@@ -516,6 +536,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         {
             snapShotCamera.transform.position = hit.point;
         }
+
         switch (index)
         {
             case 1:
@@ -533,6 +554,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 SnapShotSaves.addIMG(snapshot3, snapShotDmg);
                 break;
         }
+
         snapShotCount = index;
         hasSnapShot = true;
         snapShotCountDown = 2f;
@@ -564,6 +586,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 startSnapShotFrameCount = false;
             }
         }
+
         if (hasSnapShot)
         {
             snapShotCountDown -= Time.deltaTime;
@@ -581,6 +604,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             {
                 GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[0].transform.Find("snapshot1").GetComponent<UITexture>().mainTexture = snapshot2;
             }
+
             if (snapShotCount < 3)
             {
                 snapShotInterval -= Time.deltaTime;
@@ -637,8 +661,10 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             {
                 flashDuration = 0f;
             }
+
             GGM.Caching.GameObjectCache.Find("flash").GetComponent<UISprite>().alpha = flashDuration * 0.5f;
         }
+
         if (gametype == GAMETYPE.STOP)
         {
             Screen.showCursor = true;
@@ -659,7 +685,8 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         setSpectorMode(true);
                     }
                 }
-                if (inputManager.isInputDown[InputCode.flare1])
+
+                if (Input.GetKeyDown(KeyCode.RightArrow) || inputManager.isInputDown[InputCode.right])
                 {
                     currentPeekPlayerIndex++;
                     var length = GameObject.FindGameObjectsWithTag("Player").Length;
@@ -667,6 +694,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     {
                         currentPeekPlayerIndex = 0;
                     }
+
                     if (length > 0)
                     {
                         setMainObject(GameObject.FindGameObjectsWithTag("Player")[currentPeekPlayerIndex]);
@@ -674,7 +702,8 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         lockAngle = false;
                     }
                 }
-                if (inputManager.isInputDown[InputCode.flare2])
+
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || inputManager.isInputDown[InputCode.left])
                 {
                     currentPeekPlayerIndex--;
                     var num2 = GameObject.FindGameObjectsWithTag("Player").Length;
@@ -682,10 +711,12 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     {
                         currentPeekPlayerIndex = 0;
                     }
+
                     if (currentPeekPlayerIndex < 0)
                     {
                         currentPeekPlayerIndex = num2;
                     }
+
                     if (num2 > 0)
                     {
                         setMainObject(GameObject.FindGameObjectsWithTag("Player")[currentPeekPlayerIndex]);
@@ -693,11 +724,13 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         lockAngle = false;
                     }
                 }
+
                 if (spectatorMode)
                 {
                     return;
                 }
             }
+
             if (inputManager.isInputDown[InputCode.pause])
             {
                 if (isPausing)
@@ -709,8 +742,10 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         position += Vector3.up * heightMulti;
                         transform.position = Vector3.Lerp(transform.position, position - transform.forward * 5f, 0.2f);
                     }
+
                     return;
                 }
+
                 isPausing = !isPausing;
                 if (isPausing)
                 {
@@ -718,12 +753,14 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     {
                         Time.timeScale = 0f;
                     }
+
                     GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = true;
                     Page.GetInstance<PauseMenu>().Enable();
                     Screen.showCursor = true;
                     Screen.lockCursor = false;
                 }
             }
+
             if (needSetHUD)
             {
                 needSetHUD = false;
@@ -731,6 +768,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 Screen.lockCursor = !Screen.lockCursor;
                 Screen.lockCursor = !Screen.lockCursor;
             }
+
             if (inputManager.isInputDown[InputCode.fullscreen])
             {
                 Screen.fullScreen = !Screen.fullScreen;
@@ -742,13 +780,16 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 {
                     Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
                 }
+
                 needSetHUD = true;
                 Minimap.OnScreenResolutionChanged();
             }
+
             if (inputManager.isInputDown[InputCode.restart])
             {
                 reset();
             }
+
             if (main_object != null)
             {
                 RaycastHit hit;
@@ -772,6 +813,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                                 cameraMode = CAMERA_TYPE.OLDTPS;
                                 Screen.lockCursor = true;
                             }
+
                             break;
 
                         case CAMERA_TYPE.WOW:
@@ -790,6 +832,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                                 cameraMode = CAMERA_TYPE.ORIGINAL;
                                 Screen.lockCursor = false;
                             }
+
                             break;
 
                         case CAMERA_TYPE.TPS:
@@ -808,6 +851,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                                 cameraMode = CAMERA_TYPE.WOW;
                                 Screen.lockCursor = false;
                             }
+
                             break;
 
                         case CAMERA_TYPE.OLDTPS:
@@ -826,6 +870,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                                 cameraMode = CAMERA_TYPE.TPS;
                                 Screen.lockCursor = true;
                             }
+
                             break;
                     }
 
@@ -834,10 +879,12 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         Screen.showCursor = false;
                     }
                 }
+
                 if (inputManager.isInputDown[InputCode.hideCursor])
                 {
                     Screen.showCursor = !Screen.showCursor;
                 }
+
                 if (inputManager.isInputDown[InputCode.focus])
                 {
                     triggerAutoLock = !triggerAutoLock;
@@ -851,6 +898,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                         }
                     }
                 }
+
                 if (gameOver && main_object != null)
                 {
                     if (FengGameManagerMKII.inputRC.isInputHumanDown(InputCodeRC.liveCam))
@@ -864,6 +912,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                             FengGameManagerMKII.settings[263] = 0;
                         }
                     }
+
                     var component = main_object.GetComponent<HERO>();
                     if (component != null && (int)FengGameManagerMKII.settings[263] == 1 && component.GetComponent<SmoothSyncMovement>().enabled && component.isPhotonCamera)
                     {
@@ -883,6 +932,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 {
                     camareMovement();
                 }
+
                 if (triggerAutoLock && lockTarget != null)
                 {
                     var z = this.transform.eulerAngles.z;
@@ -901,6 +951,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     {
                         this.transform.LookAt(main_object.transform.position * 0.8f + transform.position * 0.2f);
                     }
+
                     this.transform.localEulerAngles = new Vector3(this.transform.eulerAngles.x, this.transform.eulerAngles.y, z);
                     Vector2 vector3 = camera.WorldToScreenPoint(transform.position - transform.forward * lockTarget.transform.localScale.x);
                     locker.transform.localPosition = new Vector3(vector3.x - Screen.width * 0.5f, vector3.y - Screen.height * 0.5f, 0f);
@@ -913,6 +964,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                 {
                     locker.transform.localPosition = new Vector3(0f, -Screen.height * 0.5f - 50f, 0f);
                 }
+
                 var end = head == null ? main_object.transform.position : head.transform.position;
                 var vector5 = (head == null ? main_object.transform.position : head.transform.position) - this.transform.position;
                 var normalized = vector5.normalized;
@@ -930,12 +982,14 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     {
                         transform.position = hit.point;
                     }
+
                     Debug.DrawLine(head.transform.position - normalized * distanceMulti * 3f, end, Color.red);
                 }
                 else if (Physics.Linecast(main_object.transform.position + Vector3.up, end, out hit, mask3))
                 {
                     transform.position = hit.point;
                 }
+
                 shakeUpdate();
             }
         }

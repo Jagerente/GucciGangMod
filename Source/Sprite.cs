@@ -133,6 +133,7 @@ public class Sprite
             {
                 toDirection = Vector3.up;
             }
+
             if (OriPoint == ORIPOINT.CENTER)
             {
                 var quaternion2 = Quaternion.FromToRotation(new Vector3(0f, 0f, 1f), toDirection);
@@ -178,6 +179,7 @@ public class Sprite
                 var quaternion18 = Quaternion.FromToRotation(new Vector3(1f, 0f, 0f), toDirection);
                 identity = Quaternion.FromToRotation(toDirection, dir) * quaternion18;
             }
+
             MyTransform.rotation = identity;
         }
     }
@@ -227,6 +229,7 @@ public class Sprite
         {
             zero = new Vector3(-width / 2f, 0f, 0f);
         }
+
         v1 += zero;
         v2 += zero;
         v3 += zero;
@@ -248,6 +251,7 @@ public class Sprite
             var transform = MainCamera.transform;
             MyTransform.LookAt(MyTransform.position + transform.rotation * Vector3.up, transform.rotation * Vector3.back);
         }
+
         WorldMat.SetTRS(MyTransform.position, MyTransform.rotation, Vector3.one);
         var matrixx = WorldMat * LocalMat;
         var pool = Vertexsegment.Pool;
@@ -275,6 +279,7 @@ public class Sprite
                 var vector8 = vector2 - vector;
                 magnitude = vector8.magnitude;
             }
+
             var lhs = zero - vector6;
             var rhs = MainCamera.transform.position - zero;
             var vector11 = Vector3.Cross(lhs, rhs);
@@ -299,6 +304,7 @@ public class Sprite
                 vector3 = vector6 + vector13;
             }
         }
+
         pool.Vertices[vertStart] = vector;
         pool.Vertices[vertStart + 1] = vector2;
         pool.Vertices[vertStart + 2] = vector3;
@@ -315,10 +321,12 @@ public class Sprite
             {
                 UpdateUV();
             }
+
             if (ColorChanged)
             {
                 UpdateColor();
             }
+
             UVChanged = ColorChanged = false;
             if (!force)
             {
@@ -356,6 +364,7 @@ public class Sprite
             pool.UVs[vertStart + 2] = LowerLeftUV + UVDimensions;
             pool.UVs[vertStart + 3] = LowerLeftUV + Vector2.right * UVDimensions.x;
         }
+
         Vertexsegment.Pool.UVChanged = true;
     }
 }

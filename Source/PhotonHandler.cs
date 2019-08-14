@@ -21,6 +21,7 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
         {
             DestroyImmediate(SP.gameObject);
         }
+
         SP = this;
         DontDestroyOnLoad(gameObject);
         updateInterval = 1000 / PhotonNetwork.sendRate;
@@ -54,6 +55,7 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
         {
             PhotonNetwork.networkingPeer.SendAcksOnly();
         }
+
         return sendThreadShouldRun;
     }
 
@@ -127,6 +129,7 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
             for (var flag = true; PhotonNetwork.isMessageQueueRunning && flag; flag = PhotonNetwork.networkingPeer.DispatchIncomingCommands())
             {
             }
+
             var num = (int)(Time.realtimeSinceStartup * 1000f);
             if (PhotonNetwork.isMessageQueueRunning && num > nextSendTickCountOnSerialize)
             {
@@ -134,12 +137,14 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
                 nextSendTickCountOnSerialize = num + updateIntervalOnSerialize;
                 nextSendTickCount = 0;
             }
+
             num = (int)(Time.realtimeSinceStartup * 1000f);
             if (num > nextSendTickCount)
             {
                 for (var flag2 = true; PhotonNetwork.isMessageQueueRunning && flag2; flag2 = PhotonNetwork.networkingPeer.SendOutgoingCommands())
                 {
                 }
+
                 nextSendTickCount = num + updateInterval;
             }
         }
@@ -154,6 +159,7 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
             {
                 return Region.Parse(str);
             }
+
             return CloudRegionCode.none;
         }
         set

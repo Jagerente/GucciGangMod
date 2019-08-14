@@ -13,7 +13,7 @@ public class MovementUpdate1 : MonoBehaviour
         }
         else if (networkView.isMine)
         {
-            object[] args = { transform.position, transform.rotation, transform.lossyScale };
+            object[] args = {transform.position, transform.rotation, transform.lossyScale};
             networkView.RPC("updateMovement1", RPCMode.OthersBuffered, args);
         }
         else
@@ -26,7 +26,7 @@ public class MovementUpdate1 : MonoBehaviour
     {
         if (!disabled)
         {
-            object[] args = { transform.position, transform.rotation, transform.lossyScale };
+            object[] args = {transform.position, transform.rotation, transform.lossyScale};
             networkView.RPC("updateMovement1", RPCMode.Others, args);
         }
     }

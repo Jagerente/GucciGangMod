@@ -8,8 +8,7 @@ public class InvGameItem
     public int itemLevel;
     private InvBaseItem mBaseItem;
 
-    [SerializeField]
-    private int mBaseItemID;
+    [SerializeField] private int mBaseItemID;
 
     public Quality quality;
 
@@ -55,23 +54,23 @@ public class InvGameItem
                             flag = true;
                             break;
                         }
+
                         num5++;
                     }
+
                     if (!flag)
                     {
-                        var item = new InvStat
-                        {
-                            id = stat.id,
-                            amount = num4,
-                            modifier = stat.modifier
-                        };
+                        var item = new InvStat {id = stat.id, amount = num4, modifier = stat.modifier};
                         list.Add(item);
                     }
                 }
+
                 num2++;
             }
+
             list.Sort(InvStat.CompareArmor);
         }
+
         return list;
     }
 
@@ -83,16 +82,14 @@ public class InvGameItem
             {
                 mBaseItem = InvDatabase.FindByID(baseItemID);
             }
+
             return mBaseItem;
         }
     }
 
     public int baseItemID
     {
-        get
-        {
-            return mBaseItemID;
-        }
+        get { return mBaseItemID; }
     }
 
     public Color color
@@ -138,6 +135,7 @@ public class InvGameItem
                 case Quality.Legendary:
                     return NGUIMath.HexToColor(4287627519);
             }
+
             return white;
         }
     }
@@ -150,6 +148,7 @@ public class InvGameItem
             {
                 return null;
             }
+
             return quality + " " + baseItem.name;
         }
     }
@@ -209,6 +208,7 @@ public class InvGameItem
                     num = 3f;
                     break;
             }
+
             var from = itemLevel / 50f;
             return num * Mathf.Lerp(@from, @from * @from, 0.5f);
         }

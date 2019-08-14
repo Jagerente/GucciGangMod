@@ -26,6 +26,7 @@ public class CameraShake : MonoBehaviour
                 var transform2 = gameObject.transform;
                 transform2.position -= Vector3.up * R;
             }
+
             flip = !flip;
             R *= decay;
         }

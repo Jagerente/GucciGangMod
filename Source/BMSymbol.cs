@@ -27,12 +27,14 @@ public class BMSymbol
         {
             return false;
         }
+
         if (!mIsValid)
         {
             if (string.IsNullOrEmpty(spriteName))
             {
                 return false;
             }
+
             mSprite = atlas == null ? null : atlas.GetSprite(spriteName);
             if (mSprite != null)
             {
@@ -53,6 +55,7 @@ public class BMSymbol
                     {
                         outer = NGUIMath.ConvertToPixels(outer, texture.width, texture.height, true);
                     }
+
                     mOffsetX = Mathf.RoundToInt(mSprite.paddingLeft * outer.width);
                     mOffsetY = Mathf.RoundToInt(mSprite.paddingTop * outer.width);
                     mWidth = Mathf.RoundToInt(outer.width);
@@ -62,23 +65,18 @@ public class BMSymbol
                 }
             }
         }
+
         return mSprite != null;
     }
 
     public int advance
     {
-        get
-        {
-            return mAdvance;
-        }
+        get { return mAdvance; }
     }
 
     public int height
     {
-        get
-        {
-            return mHeight;
-        }
+        get { return mHeight; }
     }
 
     public int length
@@ -89,39 +87,28 @@ public class BMSymbol
             {
                 mLength = sequence.Length;
             }
+
             return mLength;
         }
     }
 
     public int offsetX
     {
-        get
-        {
-            return mOffsetX;
-        }
+        get { return mOffsetX; }
     }
 
     public int offsetY
     {
-        get
-        {
-            return mOffsetY;
-        }
+        get { return mOffsetY; }
     }
 
     public Rect uvRect
     {
-        get
-        {
-            return mUV;
-        }
+        get { return mUV; }
     }
 
     public int width
     {
-        get
-        {
-            return mWidth;
-        }
+        get { return mWidth; }
     }
 }

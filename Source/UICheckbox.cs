@@ -15,8 +15,7 @@ public class UICheckbox : MonoBehaviour
     private Transform mTrans;
     public OnStateChange onStateChange;
 
-    [SerializeField, HideInInspector]
-    private bool option;
+    [SerializeField, HideInInspector] private bool option;
 
     public bool optionCanBeNone;
     public Transform radioButtonRoot;
@@ -29,6 +28,7 @@ public class UICheckbox : MonoBehaviour
         {
             checkSprite.alpha = !startsChecked ? 0f : 1f;
         }
+
         if (option)
         {
             option = false;
@@ -72,9 +72,11 @@ public class UICheckbox : MonoBehaviour
                     {
                         checkbox.Set(false);
                     }
+
                     index++;
                 }
             }
+
             mChecked = state;
             if (checkSprite != null)
             {
@@ -87,12 +89,14 @@ public class UICheckbox : MonoBehaviour
                     TweenAlpha.Begin(checkSprite.gameObject, 0.15f, !mChecked ? 0f : 1f);
                 }
             }
+
             current = this;
             onStateChange?.Invoke(mChecked);
             if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
             {
                 eventReceiver.SendMessage(functionName, mChecked, SendMessageOptions.DontRequireReceiver);
             }
+
             current = null;
             if (checkAnimation != null)
             {
@@ -107,6 +111,7 @@ public class UICheckbox : MonoBehaviour
         {
             eventReceiver = gameObject;
         }
+
         mChecked = !startsChecked;
         mStarted = true;
         Set(startsChecked);
@@ -114,10 +119,7 @@ public class UICheckbox : MonoBehaviour
 
     public bool isChecked
     {
-        get
-        {
-            return mChecked;
-        }
+        get { return mChecked; }
         set
         {
             if (radioButtonRoot == null || value || optionCanBeNone || !mStarted)

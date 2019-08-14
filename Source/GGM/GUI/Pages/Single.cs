@@ -15,27 +15,9 @@ namespace GGM.GUI.Pages
 
         private static int map;
 
-        private static readonly string[] MapStr =
-        {
-            "[S]Tutorial",
-            "[S]Battle training",
-            "[S]City",
-            "[S]Forest",
-            "[S]Forest Survive(no crawler)",
-            "[S]Forest Survive(no crawler no punk)",
-            "[S]Racing - Akina"
-        };
+        private static readonly string[] MapStr = { "[S]Tutorial", "[S]Battle training", "[S]City", "[S]Forest", "[S]Forest Survive(no crawler)", "[S]Forest Survive(no crawler no punk)", "[S]Racing - Akina" };
 
-        private static readonly string[] MapNameStr =
-        {
-            "tutorial",
-            "tutorial 1",
-            "The City I",
-            "The Forest",
-            "The Forest",
-            "The Forest",
-            "track - akina"
-        };
+        private static readonly string[] MapNameStr = { "tutorial", "tutorial 1", "The City I", "The Forest", "The Forest", "The Forest", "track - akina" };
 
         private static int daytime;
 
@@ -97,13 +79,8 @@ namespace GGM.GUI.Pages
                         Label("Map", LabelType.Header, width: BoxWidth * Proportion[0] - 15f);
                         Grid(string.Empty, ref map, MapStr, false, 1, BoxWidth * Proportion[0] - 15f);
 
-                        UnityEngine.GUI.DrawTexture(
-                            new Rect(4f, ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight,
-                                BoxWidth * Proportion[0] - 15f, 158f), ColorCache.Textures[ColorCache.Black]);
-                        UnityEngine.GUI.DrawTexture(
-                            new Rect(4f + 1f,
-                                ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight + 1f,
-                                BoxWidth * Proportion[0] - 15f - 2f, 158f - 2f), GetImage());
+                        UnityEngine.GUI.DrawTexture(new Rect(4f, ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight, BoxWidth * Proportion[0] - 15f, 158f), ColorCache.Textures[ColorCache.Black]);
+                        UnityEngine.GUI.DrawTexture(new Rect(4f + 1f, ButtonHeight * MapStr.Length + 5 * (MapStr.Length - 1) + 10f + HeaderHeight + 1f, BoxWidth * Proportion[0] - 15f - 2f, 158f - 2f), GetImage());
                     }
                     GUILayout.EndVertical();
 
@@ -140,8 +117,7 @@ namespace GGM.GUI.Pages
                         IN_GAME_MAIN_CAMERA.dayLight = (DayLight)daytime;
 
                         IN_GAME_MAIN_CAMERA.singleCharacter = CharacterStr[character].ToUpper();
-                        if (IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("SET") ||
-                            IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("AHSS"))
+                        if (IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("SET") || IN_GAME_MAIN_CAMERA.singleCharacter.StartsWith("AHSS"))
                         {
                             CheckBoxCostume.costumeSet = 1;
                         }
@@ -189,6 +165,7 @@ namespace GGM.GUI.Pages
                         case 1:
                             return Styles.CityDawn;
                     }
+
                     return Styles.CityNight;
 
                 case 3:
@@ -202,6 +179,7 @@ namespace GGM.GUI.Pages
                         case 1:
                             return Styles.ForestDawn;
                     }
+
                     return Styles.ForestNight;
 
                 default:

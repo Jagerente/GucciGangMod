@@ -22,8 +22,10 @@ public static class NGUITools
             {
                 return;
             }
+
             index++;
         }
+
         var num3 = 0;
         var num4 = t.childCount;
         while (num3 < num4)
@@ -45,6 +47,7 @@ public static class NGUITools
             transform.localScale = Vector3.one;
             obj2.layer = parent.layer;
         }
+
         return obj2;
     }
 
@@ -67,6 +70,7 @@ public static class NGUITools
             transform.localScale = Vector3.one;
             obj2.layer = parent.layer;
         }
+
         return obj2;
     }
 
@@ -99,6 +103,7 @@ public static class NGUITools
         {
             return null;
         }
+
         var component = go.GetComponent<Collider>();
         var collider2 = component as BoxCollider;
         if (collider2 == null)
@@ -114,8 +119,10 @@ public static class NGUITools
                     Object.DestroyImmediate(component);
                 }
             }
+
             collider2 = go.AddComponent<BoxCollider>();
         }
+
         var num = CalculateNextDepth(go);
         var bounds = NGUIMath.CalculateRelativeWidgetBounds(go.transform);
         collider2.isTrigger = true;
@@ -132,6 +139,7 @@ public static class NGUITools
             c.g *= c.a;
             c.b *= c.a;
         }
+
         return c;
     }
 
@@ -170,6 +178,7 @@ public static class NGUITools
             a = Mathf.Max(a, componentsInChildren[index].depth);
             index++;
         }
+
         return a + 1;
     }
 
@@ -189,6 +198,7 @@ public static class NGUITools
                     var obj2 = obj as GameObject;
                     obj2.transform.parent = null;
                 }
+
                 Object.Destroy(obj);
             }
             else
@@ -237,8 +247,10 @@ public static class NGUITools
             {
                 return camera;
             }
+
             index++;
         }
+
         return null;
     }
 
@@ -248,6 +260,7 @@ public static class NGUITools
         {
             return null;
         }
+
         object component = go.GetComponent<T>();
         if (component == null)
         {
@@ -256,7 +269,8 @@ public static class NGUITools
                 component = transform.gameObject.GetComponent<T>();
             }
         }
-        return (T)component;
+
+        return (T) component;
     }
 
     public static bool GetActive(GameObject go)
@@ -272,6 +286,7 @@ public static class NGUITools
             obj = obj.transform.parent.gameObject;
             name = obj.name + "/" + name;
         }
+
         return "\"" + name + "\"";
     }
 
@@ -282,10 +297,12 @@ public static class NGUITools
         {
             return str.Substring(2);
         }
+
         if (str.StartsWith("UnityEngine."))
         {
             str = str.Substring(12);
         }
+
         return str;
     }
 
@@ -299,6 +316,7 @@ public static class NGUITools
             {
                 return transform.gameObject;
             }
+
             transform = parent;
         }
     }
@@ -313,9 +331,11 @@ public static class NGUITools
                 {
                     return true;
                 }
+
                 child = child.parent;
             }
         }
+
         return false;
     }
 
@@ -368,6 +388,7 @@ public static class NGUITools
         {
             Debug.LogError(exception.Message);
         }
+
         return www;
     }
 
@@ -377,6 +398,7 @@ public static class NGUITools
         {
             return OpenURL(url);
         }
+
         WWW www = null;
         try
         {
@@ -386,6 +408,7 @@ public static class NGUITools
         {
             Debug.LogError(exception == null ? "<null>" : exception.Message);
         }
+
         return www;
     }
 
@@ -411,6 +434,7 @@ public static class NGUITools
                     {
                         colors.RemoveAt(colors.Count - 1);
                     }
+
                     return 3;
                 }
             }
@@ -423,17 +447,21 @@ public static class NGUITools
                     {
                         return 0;
                     }
+
                     var color2 = colors[colors.Count - 1];
                     c.a = color2.a;
                     if (premultiply && c.a != 1f)
                     {
                         c = Color.Lerp(mInvisible, c, c.a);
                     }
+
                     colors.Add(c);
                 }
+
                 return 8;
             }
         }
+
         return 0;
     }
 
@@ -462,12 +490,14 @@ public static class NGUITools
                     {
                         main = Object.FindObjectOfType(typeof(Camera)) as Camera;
                     }
+
                     if (main != null)
                     {
                         mListener = main.gameObject.AddComponent<AudioListener>();
                     }
                 }
             }
+
             if (mListener != null && mListener.enabled && GetActive(mListener.gameObject))
             {
                 var audio = mListener.audio;
@@ -475,11 +505,13 @@ public static class NGUITools
                 {
                     audio = mListener.gameObject.AddComponent<AudioSource>();
                 }
+
                 audio.pitch = pitch;
                 audio.PlayOneShot(clip, volume);
                 return audio;
             }
         }
+
         return null;
     }
 
@@ -489,6 +521,7 @@ public static class NGUITools
         {
             return min;
         }
+
         return Random.Range(min, max + 1);
     }
 
@@ -579,29 +612,23 @@ public static class NGUITools
                         continue;
                     }
                 }
+
                 index++;
             }
         }
+
         return text;
     }
 
     public static string clipboard
     {
-        get
-        {
-            return null;
-        }
-        set
-        {
-        }
+        get { return null; }
+        set { }
     }
 
     public static bool fileAccess
     {
-        get
-        {
-            return Application.platform != RuntimePlatform.WindowsWebPlayer && Application.platform != RuntimePlatform.OSXWebPlayer;
-        }
+        get { return Application.platform != RuntimePlatform.WindowsWebPlayer && Application.platform != RuntimePlatform.OSXWebPlayer; }
     }
 
     public static float soundVolume
@@ -613,6 +640,7 @@ public static class NGUITools
                 mLoaded = true;
                 mGlobalVolume = PlayerPrefs.GetFloat("Sound", 1f);
             }
+
             return mGlobalVolume;
         }
         set

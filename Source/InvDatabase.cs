@@ -32,10 +32,13 @@ public class InvDatabase : MonoBehaviour
                 {
                     return item;
                 }
+
                 num3++;
             }
+
             index++;
         }
+
         return null;
     }
 
@@ -50,8 +53,10 @@ public class InvDatabase : MonoBehaviour
             {
                 return (database.databaseID << 16) | item.id16;
             }
+
             index++;
         }
+
         return -1;
     }
 
@@ -66,8 +71,10 @@ public class InvDatabase : MonoBehaviour
             {
                 return database;
             }
+
             index++;
         }
+
         return null;
     }
 
@@ -82,8 +89,10 @@ public class InvDatabase : MonoBehaviour
             {
                 return item;
             }
+
             num++;
         }
+
         return null;
     }
 
@@ -106,6 +115,7 @@ public class InvDatabase : MonoBehaviour
                 mIsDirty = false;
                 mList = NGUITools.FindActive<InvDatabase>();
             }
+
             return mList;
         }
     }

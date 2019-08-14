@@ -77,12 +77,13 @@ namespace GGM.Discord
             else
             {
                 presence.details = "Multiplayer";
-                presence.state = (Extensions.GetRoomName().Length > 14) ? (Extensions.GetRoomName().Remove(12) + "...") : Extensions.GetRoomName();
+                presence.state = Extensions.GetRoomName().Length > 14 ? Extensions.GetRoomName().Remove(12) + "..." : Extensions.GetRoomName();
                 presence.largeImageKey = GetImage();
                 presence.largeImageText = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
                 presence.partySize = PhotonNetwork.room.playerCount;
                 presence.partyMax = PhotonNetwork.room.maxPlayers;
             }
+
             DiscordAPI.UpdatePresence(presence);
         }
 
@@ -97,10 +98,12 @@ namespace GGM.Discord
                     break;
                 }
             }
+
             if ((FengGameManagerMKII.level.ToLower().Contains("forest") || FengGameManagerMKII.level.ToLower().Contains("city")) && largeImageKey != "logo_large")
             {
                 return $"{largeImageKey}_{Extensions.GetDayLight().ToLower()}";
             }
+
             return largeImageKey;
         }
     }

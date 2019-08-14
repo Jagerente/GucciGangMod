@@ -154,8 +154,7 @@ public class UITable : MonoBehaviour
                 for (var i = 0; i < transform.childCount; i++)
                 {
                     var child = transform.GetChild(i);
-                    if (child != null && child.gameObject != null &&
-                        (!hideInactive || NGUITools.GetActive(child.gameObject)))
+                    if (child != null && child.gameObject != null && (!hideInactive || NGUITools.GetActive(child.gameObject)))
                     {
                         mChildren.Add(child);
                     }

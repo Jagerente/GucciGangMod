@@ -16,14 +16,17 @@ public class PopListCamera : MonoBehaviour
         {
             IN_GAME_MAIN_CAMERA.cameraMode = CAMERA_TYPE.ORIGINAL;
         }
+
         if (GetComponent<UIPopupList>().selection == "WOW")
         {
             IN_GAME_MAIN_CAMERA.cameraMode = CAMERA_TYPE.WOW;
         }
+
         if (GetComponent<UIPopupList>().selection == "TPS")
         {
             IN_GAME_MAIN_CAMERA.cameraMode = CAMERA_TYPE.TPS;
         }
+
         PlayerPrefs.SetString("cameraType", GetComponent<UIPopupList>().selection);
     }
 }

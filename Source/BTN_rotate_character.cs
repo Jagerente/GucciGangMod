@@ -33,6 +33,7 @@ public class BTN_rotate_character : MonoBehaviour
             camera.transform.RotateAround(camera.transform.position, Vector3.up, angle);
             camera.transform.RotateAround(camera.transform.position, camera.transform.right, num2);
         }
+
         var transform2 = camera.transform;
         transform2.position -= camera.transform.forward * distance;
     }

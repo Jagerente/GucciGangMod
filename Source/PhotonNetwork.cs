@@ -54,6 +54,7 @@ public static class PhotonNetwork
         {
             numArray[i] = AllocateViewID(0);
         }
+
         return numArray;
     }
 
@@ -83,8 +84,10 @@ public static class PhotonNetwork
                     }
                 }
             }
+
             throw new Exception(string.Format("AllocateViewID() failed. Room (user {0}) is out of subIds, as all room viewIDs are used.", ownerId));
         }
+
         var lastUsedViewSubId = PhotonNetwork.lastUsedViewSubId;
         var num6 = ownerId * MAX_VIEW_IDS;
         for (var i = 1; i < MAX_VIEW_IDS; i++)
@@ -100,6 +103,7 @@ public static class PhotonNetwork
                 }
             }
         }
+
         throw new Exception(string.Format("AllocateViewID() failed. User {0} is out of subIds, as all viewIDs are used.", ownerId));
     }
 
@@ -109,16 +113,19 @@ public static class PhotonNetwork
         {
             return false;
         }
+
         if (!player.isMasterClient)
         {
             Debug.LogError("CloseConnection: Only the masterclient can kick another player.");
             return false;
         }
+
         if (kickPlayer == null)
         {
             Debug.LogError("CloseConnection: No such player connected!");
             return false;
         }
+
         var options = new RaiseEventOptions();
         options.TargetActors = new[] { kickPlayer.ID };
         var raiseEventOptions = options;
@@ -132,10 +139,12 @@ public static class PhotonNetwork
             Debug.LogError("Can't connect: Loading settings failed. ServerSettings asset must be in any 'Resources' folder as: PhotonServerSettings");
             return false;
         }
+
         if (PhotonServerSettings.HostType == ServerSettings.HostingOption.OfflineMode)
         {
             return ConnectUsingSettings(gameVersion);
         }
+
         networkingPeer.IsInitialConnect = true;
         networkingPeer.SetApp(PhotonServerSettings.AppID, gameVersion);
         var bestRegionCodeInPreferences = PhotonHandler.BestRegionCodeInPreferences;
@@ -144,6 +153,7 @@ public static class PhotonNetwork
             Debug.Log("Best region found in PlayerPrefs. Connecting to: " + bestRegionCodeInPreferences);
             return networkingPeer.ConnectToRegionMaster(bestRegionCodeInPreferences);
         }
+
         return networkingPeer.ConnectToNameServer();
     }
 
@@ -157,21 +167,25 @@ public static class PhotonNetwork
         {
             masterServerAddress = "wss://" + masterServerAddress;
         }
+
         if (networkingPeer.PeerState != PeerStateValue.Disconnected)
         {
             Debug.LogWarning("ConnectToMaster() failed. Can only connect while in state 'Disconnected'. Current state: " + networkingPeer.PeerState);
             return false;
         }
+
         if (offlineMode)
         {
             offlineMode = false;
             Debug.LogWarning("ConnectToMaster() disabled the offline mode. No longer offline.");
         }
+
         if (!isMessageQueueRunning)
         {
             isMessageQueueRunning = true;
             Debug.LogWarning("ConnectToMaster() enabled isMessageQueueRunning. Needs to be able to dispatch incoming messages.");
         }
+
         networkingPeer.SetApp(appID, gameVersion);
         networkingPeer.IsUsingNameServer = false;
         networkingPeer.IsInitialConnect = true;
@@ -186,6 +200,7 @@ public static class PhotonNetwork
             Debug.LogError("Can't connect: Loading settings failed. ServerSettings asset must be in any 'Resources' folder as: PhotonServerSettings");
             return false;
         }
+
         SwitchToProtocol(PhotonServerSettings.Protocol);
         networkingPeer.SetApp(PhotonServerSettings.AppID, gameVersion);
         if (PhotonServerSettings.HostType == ServerSettings.HostingOption.OfflineMode)
@@ -193,10 +208,12 @@ public static class PhotonNetwork
             offlineMode = true;
             return true;
         }
+
         if (offlineMode)
         {
             Debug.LogWarning("ConnectUsingSettings() disabled the offline mode. No longer offline.");
         }
+
         offlineMode = false;
         isMessageQueueRunning = true;
         networkingPeer.IsInitialConnect = true;
@@ -206,10 +223,12 @@ public static class PhotonNetwork
             networkingPeer.MasterServerAddress = PhotonServerSettings.ServerAddress + ":" + PhotonServerSettings.ServerPort;
             return networkingPeer.Connect(networkingPeer.MasterServerAddress, ServerConnection.MasterServer);
         }
+
         if (PhotonServerSettings.HostType == ServerSettings.HostingOption.BestRegion)
         {
             return ConnectToBestCloudServer(gameVersion);
         }
+
         return networkingPeer.ConnectToRegionMaster(PhotonServerSettings.PreferredRegion);
     }
 
@@ -227,15 +246,18 @@ public static class PhotonNetwork
                 Debug.LogError("CreateRoom failed. In offline mode you still have to leave a room to enter another.");
                 return false;
             }
+
             offlineModeRoom = new Room(roomName, roomOptions);
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnCreatedRoom);
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnJoinedRoom);
             return true;
         }
+
         if (networkingPeer.server == ServerConnection.MasterServer && connectedAndReady)
         {
             return networkingPeer.OpCreateGame(roomName, roomOptions, typedLobby);
         }
+
         Debug.LogError("CreateRoom failed. Client is not on Master Server or not yet ready to call operations. Wait for callback: OnJoinedLobby or OnConnectedToMaster.");
         return false;
     }
@@ -243,12 +265,7 @@ public static class PhotonNetwork
     [Obsolete("Use overload with RoomOptions and TypedLobby parameters.")]
     public static bool CreateRoom(string roomName, bool isVisible, bool isOpen, int maxPlayers)
     {
-        var roomOptions = new RoomOptions
-        {
-            isVisible = isVisible,
-            isOpen = isOpen,
-            maxPlayers = maxPlayers
-        };
+        var roomOptions = new RoomOptions { isVisible = isVisible, isOpen = isOpen, maxPlayers = maxPlayers };
         return CreateRoom(roomName, roomOptions, null);
     }
 
@@ -301,6 +318,7 @@ public static class PhotonNetwork
         {
             Debug.LogError("DestroyPlayerObjects() failed, cause parameter 'targetPlayer' was null.");
         }
+
         DestroyPlayerObjects(targetPlayer.ID);
     }
 
@@ -355,6 +373,7 @@ public static class PhotonNetwork
         {
             return networkingPeer.mGameListCopy;
         }
+
         return new RoomInfo[0];
     }
 
@@ -376,6 +395,7 @@ public static class PhotonNetwork
             Debug.LogError(string.Concat("Failed to Instantiate prefab: ", prefabName, ". Client should be in a room. Current connectionStateDetailed: ", connectionStateDetailed));
             return null;
         }
+
         if (!UsePrefabCache || !PrefabCache.TryGetValue(prefabName, out obj2))
         {
             if (prefabName.StartsWith("RCAsset/"))
@@ -386,26 +406,31 @@ public static class PhotonNetwork
             {
                 obj2 = (GameObject)Resources.Load(prefabName, typeof(GameObject));
             }
+
             if (UsePrefabCache)
             {
                 PrefabCache.Add(prefabName, obj2);
             }
         }
+
         if (obj2 == null)
         {
             Debug.LogError("Failed to Instantiate prefab: " + prefabName + ". Verify the Prefab is in a Resources folder (and not in a subfolder)");
             return null;
         }
+
         if (obj2.GetComponent<PhotonView>() == null)
         {
             Debug.LogError("Failed to Instantiate prefab:" + prefabName + ". Prefab must have a PhotonView component.");
             return null;
         }
+
         var viewIDs = new int[obj2.GetPhotonViewsInChildren().Length];
         for (var i = 0; i < viewIDs.Length; i++)
         {
             viewIDs[i] = AllocateViewID(player.ID);
         }
+
         var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, false);
         return networkingPeer.DoInstantiate(evData, networkingPeer.mLocalActor, obj2);
     }
@@ -418,11 +443,13 @@ public static class PhotonNetwork
             Debug.LogError(string.Concat("Failed to InstantiateSceneObject prefab: ", prefabName, ". Client should be in a room. Current connectionStateDetailed: ", connectionStateDetailed));
             return null;
         }
+
         if (!isMasterClient)
         {
             Debug.LogError("Failed to InstantiateSceneObject prefab: " + prefabName + ". Client is not the MasterClient in this room.");
             return null;
         }
+
         if (!UsePrefabCache || !PrefabCache.TryGetValue(prefabName, out obj2))
         {
             obj2 = (GameObject)Resources.Load(prefabName, typeof(GameObject));
@@ -431,22 +458,26 @@ public static class PhotonNetwork
                 PrefabCache.Add(prefabName, obj2);
             }
         }
+
         if (obj2 == null)
         {
             Debug.LogError("Failed to InstantiateSceneObject prefab: " + prefabName + ". Verify the Prefab is in a Resources folder (and not in a subfolder)");
             return null;
         }
+
         if (obj2.GetComponent<PhotonView>() == null)
         {
             Debug.LogError("Failed to InstantiateSceneObject prefab:" + prefabName + ". Prefab must have a PhotonView component.");
             return null;
         }
+
         var viewIDs = AllocateSceneViewIDs(obj2.GetPhotonViewsInChildren().Length);
         if (viewIDs == null)
         {
             Debug.LogError(string.Concat("Failed to InstantiateSceneObject prefab: ", prefabName, ". No ViewIDs are free to use. Max is: ", MAX_VIEW_IDS));
             return null;
         }
+
         var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, true);
         return networkingPeer.DoInstantiate(evData, networkingPeer.mLocalActor, obj2);
     }
@@ -464,6 +495,7 @@ public static class PhotonNetwork
                 {
                     Object.DestroyImmediate(handler.gameObject);
                 }
+
                 Object.DestroyImmediate(handler);
             }
         }
@@ -480,15 +512,18 @@ public static class PhotonNetwork
         {
             return false;
         }
+
         if (typedLobby == null)
         {
             typedLobby = TypedLobby.Default;
         }
+
         var flag = networkingPeer.OpJoinLobby(typedLobby);
         if (flag)
         {
             networkingPeer.lobby = typedLobby;
         }
+
         return flag;
     }
 
@@ -501,21 +536,25 @@ public static class PhotonNetwork
                 Debug.LogError("JoinOrCreateRoom failed. In offline mode you still have to leave a room to enter another.");
                 return false;
             }
+
             offlineModeRoom = new Room(roomName, roomOptions);
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnCreatedRoom);
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnJoinedRoom);
             return true;
         }
+
         if (networkingPeer.server != ServerConnection.MasterServer || !connectedAndReady)
         {
             Debug.LogError("JoinOrCreateRoom failed. Client is not on Master Server or not yet ready to call operations. Wait for callback: OnJoinedLobby or OnConnectedToMaster.");
             return false;
         }
+
         if (string.IsNullOrEmpty(roomName))
         {
             Debug.LogError("JoinOrCreateRoom failed. A roomname is required. If you don't know one, how will you join?");
             return false;
         }
+
         return networkingPeer.OpJoinRoom(roomName, roomOptions, typedLobby, true);
     }
 
@@ -538,21 +577,25 @@ public static class PhotonNetwork
                 Debug.LogError("JoinRandomRoom failed. In offline mode you still have to leave a room to enter another.");
                 return false;
             }
+
             offlineModeRoom = new Room("offline room", null);
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnJoinedRoom);
             return true;
         }
+
         if (networkingPeer.server != ServerConnection.MasterServer || !connectedAndReady)
         {
             Debug.LogError("JoinRandomRoom failed. Client is not on Master Server or not yet ready to call operations. Wait for callback: OnJoinedLobby or OnConnectedToMaster.");
             return false;
         }
+
         var target = new Hashtable();
         target.MergeStringKeys(expectedCustomRoomProperties);
         if (expectedMaxPlayers > 0)
         {
             target[(byte)255] = expectedMaxPlayers;
         }
+
         return networkingPeer.OpJoinRandomRoom(target, 0, null, matchingType, typedLobby, sqlLobbyFilter);
     }
 
@@ -565,20 +608,24 @@ public static class PhotonNetwork
                 Debug.LogError("JoinRoom failed. In offline mode you still have to leave a room to enter another.");
                 return false;
             }
+
             offlineModeRoom = new Room(roomName, null);
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnJoinedRoom);
             return true;
         }
+
         if (networkingPeer.server != ServerConnection.MasterServer || !connectedAndReady)
         {
             Debug.LogError("JoinRoom failed. Client is not on Master Server or not yet ready to call operations. Wait for callback: OnJoinedLobby or OnConnectedToMaster.");
             return false;
         }
+
         if (string.IsNullOrEmpty(roomName))
         {
             Debug.LogError("JoinRoom failed. A roomname is required. If you don't know one, how will you join?");
             return false;
         }
+
         return networkingPeer.OpJoinRoom(roomName, null, null, false);
     }
 
@@ -605,8 +652,10 @@ public static class PhotonNetwork
                 NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnJoinedRoom);
                 return true;
             }
+
             return networkingPeer.OpJoinRoom(roomName, null, null, createIfNotExists);
         }
+
         return false;
     }
 
@@ -623,10 +672,12 @@ public static class PhotonNetwork
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnLeftRoom);
             return true;
         }
+
         if (room == null)
         {
             Debug.LogWarning("PhotonNetwork.room is null. You don't have to call LeaveRoom() when you're not in one. State: " + connectionStateDetailed);
         }
+
         return networkingPeer.OpLeave();
     }
 
@@ -657,6 +708,7 @@ public static class PhotonNetwork
         {
             return networkingPeer.VitalStatsToString(false);
         }
+
         return "Offline or in OfflineMode. No VitalStats available.";
     }
 
@@ -671,6 +723,7 @@ public static class PhotonNetwork
         {
             return networkingPeer.OpRaiseEvent(eventCode, eventContent, sendReliable, options);
         }
+
         Debug.LogWarning("RaiseEvent() failed. Your event is not being sent! Check if your are in a Room and the eventCode must be less than 200 (0..199).");
         return false;
     }
@@ -725,6 +778,7 @@ public static class PhotonNetwork
                 {
                     Debug.LogError("Error; Sending RPC to player null! Aborted \"" + methodName + "\"");
                 }
+
                 if (networkingPeer != null)
                 {
                     networkingPeer.RPC(view, methodName, targetPlayer, parameters);
@@ -789,6 +843,7 @@ public static class PhotonNetwork
                 customProperties[(string)obj2] = null;
             }
         }
+
         if (room != null && room.isLocalClientInside)
         {
             player.SetCustomProperties(customProperties);
@@ -843,6 +898,7 @@ public static class PhotonNetwork
             catch
             {
             }
+
             networkingPeer = new NetworkingPeer(photonMono, string.Empty, cp);
             Debug.Log("Protocol switched to: " + cp);
         }
@@ -863,6 +919,7 @@ public static class PhotonNetwork
         {
             return true;
         }
+
         Debug.LogError("Cannot send messages when not connected. Either connect to Photon OR use offline mode!");
         return false;
     }
@@ -874,10 +931,7 @@ public static class PhotonNetwork
 
     public static AuthenticationValues AuthValues
     {
-        get
-        {
-            return networkingPeer == null ? null : networkingPeer.CustomAuthenticationValues;
-        }
+        get { return networkingPeer == null ? null : networkingPeer.CustomAuthenticationValues; }
         set
         {
             if (networkingPeer != null)
@@ -889,10 +943,7 @@ public static class PhotonNetwork
 
     public static bool autoCleanUpPlayerObjects
     {
-        get
-        {
-            return m_autoCleanUpPlayerObjects;
-        }
+        get { return m_autoCleanUpPlayerObjects; }
         set
         {
             if (room != null)
@@ -908,22 +959,13 @@ public static class PhotonNetwork
 
     public static bool autoJoinLobby
     {
-        get
-        {
-            return autoJoinLobbyField;
-        }
-        set
-        {
-            autoJoinLobbyField = value;
-        }
+        get { return autoJoinLobbyField; }
+        set { autoJoinLobbyField = value; }
     }
 
     public static bool automaticallySyncScene
     {
-        get
-        {
-            return _mAutomaticallySyncScene;
-        }
+        get { return _mAutomaticallySyncScene; }
         set
         {
             _mAutomaticallySyncScene = value;
@@ -942,10 +984,12 @@ public static class PhotonNetwork
             {
                 return true;
             }
+
             if (networkingPeer == null)
             {
                 return false;
             }
+
             return !networkingPeer.IsInitialConnect && networkingPeer.State != PeerStates.PeerCreated && networkingPeer.State != PeerStates.Disconnected && networkingPeer.State != PeerStates.Disconnecting && networkingPeer.State != PeerStates.ConnectingToNameServer;
         }
     }
@@ -958,6 +1002,7 @@ public static class PhotonNetwork
             {
                 return false;
             }
+
             if (!offlineMode)
             {
                 switch (connectionStateDetailed)
@@ -974,16 +1019,14 @@ public static class PhotonNetwork
                         return false;
                 }
             }
+
             return true;
         }
     }
 
     public static bool connecting
     {
-        get
-        {
-            return networkingPeer.IsInitialConnect && !offlineMode;
-        }
+        get { return networkingPeer.IsInitialConnect && !offlineMode; }
     }
 
     public static ConnectionState connectionState
@@ -994,6 +1037,7 @@ public static class PhotonNetwork
             {
                 return ConnectionState.Connected;
             }
+
             if (networkingPeer != null)
             {
                 switch (networkingPeer.PeerState)
@@ -1014,6 +1058,7 @@ public static class PhotonNetwork
                         return ConnectionState.InitializingApplication;
                 }
             }
+
             return ConnectionState.Disconnected;
         }
     }
@@ -1026,52 +1071,39 @@ public static class PhotonNetwork
             {
                 return offlineModeRoom == null ? PeerStates.ConnectedToMaster : PeerStates.Joined;
             }
+
             if (networkingPeer == null)
             {
                 return PeerStates.Disconnected;
             }
+
             return networkingPeer.State;
         }
     }
 
     public static int countOfPlayers
     {
-        get
-        {
-            return networkingPeer.mPlayersInRoomsCount + networkingPeer.mPlayersOnMasterCount;
-        }
+        get { return networkingPeer.mPlayersInRoomsCount + networkingPeer.mPlayersOnMasterCount; }
     }
 
     public static int countOfPlayersInRooms
     {
-        get
-        {
-            return networkingPeer.mPlayersInRoomsCount;
-        }
+        get { return networkingPeer.mPlayersInRoomsCount; }
     }
 
     public static int countOfPlayersOnMaster
     {
-        get
-        {
-            return networkingPeer.mPlayersOnMasterCount;
-        }
+        get { return networkingPeer.mPlayersOnMasterCount; }
     }
 
     public static int countOfRooms
     {
-        get
-        {
-            return networkingPeer.mGameCount;
-        }
+        get { return networkingPeer.mGameCount; }
     }
 
     public static bool CrcCheckEnabled
     {
-        get
-        {
-            return networkingPeer.CrcEnabled;
-        }
+        get { return networkingPeer.CrcEnabled; }
         set
         {
             if (!connected && !connecting)
@@ -1089,60 +1121,40 @@ public static class PhotonNetwork
 
     public static int FriendsListAge
     {
-        get
-        {
-            return networkingPeer == null ? 0 : networkingPeer.FriendsListAge;
-        }
+        get { return networkingPeer == null ? 0 : networkingPeer.FriendsListAge; }
     }
 
     public static string gameVersion
     {
-        get
-        {
-            return networkingPeer.mAppVersion;
-        }
-        set
-        {
-            networkingPeer.mAppVersion = value;
-        }
+        get { return networkingPeer.mAppVersion; }
+        set { networkingPeer.mAppVersion = value; }
     }
 
     public static bool inRoom
     {
-        get
-        {
-            return connectionStateDetailed == PeerStates.Joined;
-        }
+        get { return connectionStateDetailed == PeerStates.Joined; }
     }
 
     public static bool insideLobby
     {
-        get
-        {
-            return networkingPeer.insideLobby;
-        }
+        get { return networkingPeer.insideLobby; }
     }
 
     public static bool isMasterClient
     {
-        get
-        {
-            return offlineMode || networkingPeer.mMasterClient == networkingPeer.mLocalActor;
-        }
+        get { return offlineMode || networkingPeer.mMasterClient == networkingPeer.mLocalActor; }
     }
 
     public static bool isMessageQueueRunning
     {
-        get
-        {
-            return m_isMessageQueueRunning;
-        }
+        get { return m_isMessageQueueRunning; }
         set
         {
             if (value)
             {
                 PhotonHandler.StartFallbackSendAckThread();
             }
+
             networkingPeer.IsSendingOnlyAcks = !value;
             m_isMessageQueueRunning = value;
         }
@@ -1150,30 +1162,18 @@ public static class PhotonNetwork
 
     public static bool isNonMasterClientInRoom
     {
-        get
-        {
-            return !isMasterClient && room != null;
-        }
+        get { return !isMasterClient && room != null; }
     }
 
     public static TypedLobby lobby
     {
-        get
-        {
-            return networkingPeer.lobby;
-        }
-        set
-        {
-            networkingPeer.lobby = value;
-        }
+        get { return networkingPeer.lobby; }
+        set { networkingPeer.lobby = value; }
     }
 
     public static PhotonPlayer masterClient
     {
-        get
-        {
-            return networkingPeer?.mMasterClient;
-        }
+        get { return networkingPeer?.mMasterClient; }
     }
 
     [Obsolete("Used for compatibility with Unity networking only.")]
@@ -1185,52 +1185,40 @@ public static class PhotonNetwork
             {
                 return 0;
             }
+
             return room.maxPlayers;
         }
-        set
-        {
-            room.maxPlayers = value;
-        }
+        set { room.maxPlayers = value; }
     }
 
     public static int MaxResendsBeforeDisconnect
     {
-        get
-        {
-            return networkingPeer.SentCountAllowance;
-        }
+        get { return networkingPeer.SentCountAllowance; }
         set
         {
             if (value < 3)
             {
                 value = 3;
             }
+
             if (value > 10)
             {
                 value = 10;
             }
+
             networkingPeer.SentCountAllowance = value;
         }
     }
 
     public static bool NetworkStatisticsEnabled
     {
-        get
-        {
-            return networkingPeer.TrafficStatsEnabled;
-        }
-        set
-        {
-            networkingPeer.TrafficStatsEnabled = value;
-        }
+        get { return networkingPeer.TrafficStatsEnabled; }
+        set { networkingPeer.TrafficStatsEnabled = value; }
     }
 
     public static bool offlineMode
     {
-        get
-        {
-            return isOfflineMode;
-        }
+        get { return isOfflineMode; }
         set
         {
             if (value != isOfflineMode)
@@ -1245,6 +1233,7 @@ public static class PhotonNetwork
                     {
                         networkingPeer.Disconnect();
                     }
+
                     isOfflineMode = value;
                     if (isOfflineMode)
                     {
@@ -1271,24 +1260,19 @@ public static class PhotonNetwork
             {
                 return new PhotonPlayer[0];
             }
+
             return networkingPeer.mOtherPlayerListCopy;
         }
     }
 
     public static int PacketLossByCrcCheck
     {
-        get
-        {
-            return networkingPeer.PacketLossByCrc;
-        }
+        get { return networkingPeer.PacketLossByCrc; }
     }
 
     public static PhotonPlayer player
     {
-        get
-        {
-            return networkingPeer?.mLocalActor;
-        }
+        get { return networkingPeer?.mLocalActor; }
     }
 
     public static PhotonPlayer[] playerList
@@ -1299,28 +1283,20 @@ public static class PhotonNetwork
             {
                 return new PhotonPlayer[0];
             }
+
             return networkingPeer.mPlayerListCopy;
         }
     }
 
     public static string playerName
     {
-        get
-        {
-            return networkingPeer.PlayerName;
-        }
-        set
-        {
-            networkingPeer.PlayerName = value;
-        }
+        get { return networkingPeer.PlayerName; }
+        set { networkingPeer.PlayerName = value; }
     }
 
     public static int ResentReliableCommands
     {
-        get
-        {
-            return networkingPeer.ResentReliableCommands;
-        }
+        get { return networkingPeer.ResentReliableCommands; }
     }
 
     public static Room room
@@ -1331,16 +1307,14 @@ public static class PhotonNetwork
             {
                 return offlineModeRoom;
             }
+
             return networkingPeer.mCurrentGame;
         }
     }
 
     public static int sendRate
     {
-        get
-        {
-            return 1000 / sendInterval;
-        }
+        get { return 1000 / sendInterval; }
         set
         {
             sendInterval = 1000 / value;
@@ -1348,6 +1322,7 @@ public static class PhotonNetwork
             {
                 photonMono.updateInterval = sendInterval;
             }
+
             if (value < sendRateOnSerialize)
             {
                 sendRateOnSerialize = value;
@@ -1357,10 +1332,7 @@ public static class PhotonNetwork
 
     public static int sendRateOnSerialize
     {
-        get
-        {
-            return 1000 / sendIntervalOnSerialize;
-        }
+        get { return 1000 / sendIntervalOnSerialize; }
         set
         {
             if (value > sendRate)
@@ -1368,6 +1340,7 @@ public static class PhotonNetwork
                 Debug.LogError("Error, can not set the OnSerialize SendRate more often then the overall SendRate");
                 value = sendRate;
             }
+
             sendIntervalOnSerialize = 1000 / value;
             if (photonMono != null)
             {
@@ -1378,18 +1351,12 @@ public static class PhotonNetwork
 
     public static ServerConnection Server
     {
-        get
-        {
-            return networkingPeer.server;
-        }
+        get { return networkingPeer.server; }
     }
 
     public static string ServerAddress
     {
-        get
-        {
-            return networkingPeer == null ? "<not connected>" : networkingPeer.ServerAddress;
-        }
+        get { return networkingPeer == null ? "<not connected>" : networkingPeer.ServerAddress; }
     }
 
     public static double time
@@ -1400,6 +1367,7 @@ public static class PhotonNetwork
             {
                 return Time.time;
             }
+
             return networkingPeer.ServerTimeInMilliSeconds / 1000.0;
         }
     }

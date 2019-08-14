@@ -25,6 +25,7 @@ public class BTN_REGISTER : MonoBehaviour
         {
             invalid = true;
         }
+
         return match.Groups[1].Value + unicode;
     }
 
@@ -35,11 +36,13 @@ public class BTN_REGISTER : MonoBehaviour
         {
             return false;
         }
+
         strIn = Regex.Replace(strIn, "(@)(.+)", DomainMapper);
         if (invalid)
         {
             return false;
         }
+
         return Regex.IsMatch(strIn, "^(?(\")(\"[^\"]+?\"@)|(([0-9a-z]((\\.(?!\\.))|[-!#\\%&'\\*\\+/=\\?\\^`\\{\\}\\|~\\w])*)(?<=[0-9a-z])@))(?(\\[)(\\[(\\d{1,3}\\.){3}\\d{1,3}\\])|(([0-9a-z][-\\w]*[0-9a-z]*\\.)+[a-z0-9]{2,17}))", RegexOptions.IgnoreCase);
     }
 

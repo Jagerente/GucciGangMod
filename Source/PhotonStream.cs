@@ -27,8 +27,9 @@ public class PhotonStream
             Debug.LogError("Error: you cannot read this stream that you are writing!");
             return null;
         }
+
         var obj2 = data[currentItem];
-        currentItem = (byte)(currentItem + 1);
+        currentItem = (byte) (currentItem + 1);
         return obj2;
     }
 
@@ -52,8 +53,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            obj = (PhotonPlayer)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            obj = (PhotonPlayer) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -65,8 +66,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            myBool = (bool)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            myBool = (bool) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -78,8 +79,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            value = (char)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            value = (char) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -91,8 +92,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            value = (short)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            value = (short) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -104,8 +105,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            myInt = (int)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            myInt = (int) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -117,8 +118,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            obj = (float)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            obj = (float) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -130,8 +131,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            value = (string)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            value = (string) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -143,8 +144,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            obj = (Quaternion)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            obj = (Quaternion) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -156,8 +157,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            obj = (Vector2)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            obj = (Vector2) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -169,8 +170,8 @@ public class PhotonStream
         }
         else if (data.Count > currentItem)
         {
-            obj = (Vector3)data[currentItem];
-            currentItem = (byte)(currentItem + 1);
+            obj = (Vector3) data[currentItem];
+            currentItem = (byte) (currentItem + 1);
         }
     }
 
@@ -181,25 +182,16 @@ public class PhotonStream
 
     public int Count
     {
-        get
-        {
-            return data.Count;
-        }
+        get { return data.Count; }
     }
 
     public bool isReading
     {
-        get
-        {
-            return !write;
-        }
+        get { return !write; }
     }
 
     public bool isWriting
     {
-        get
-        {
-            return write;
-        }
+        get { return write; }
     }
 }

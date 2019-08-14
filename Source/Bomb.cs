@@ -59,6 +59,7 @@ public class Bomb : MonoBehaviour
             {
                 PhotonNetwork.Destroy(myExplosion);
             }
+
             PhotonNetwork.Destroy(gameObject);
         }
     }
@@ -94,6 +95,7 @@ public class Bomb : MonoBehaviour
                 }
             }
         }
+
         StartCoroutine(WaitAndFade(1.5f));
     }
 
@@ -107,9 +109,9 @@ public class Bomb : MonoBehaviour
         }
         else
         {
-            correctPlayerPos = (Vector3)stream.ReceiveNext();
-            correctPlayerRot = (Quaternion)stream.ReceiveNext();
-            correctPlayerVelocity = (Vector3)stream.ReceiveNext();
+            correctPlayerPos = (Vector3) stream.ReceiveNext();
+            correctPlayerRot = (Quaternion) stream.ReceiveNext();
+            correctPlayerVelocity = (Vector3) stream.ReceiveNext();
         }
     }
 

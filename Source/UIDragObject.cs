@@ -38,6 +38,7 @@ public class UIDragObject : IgnoreTimeScale
                 {
                     component.enabled = false;
                 }
+
                 mScroll = 0f;
             }
             else
@@ -50,6 +51,7 @@ public class UIDragObject : IgnoreTimeScale
                     {
                         FindPanel();
                     }
+
                     if (mPanel != null)
                     {
                         target.position += NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
@@ -65,6 +67,7 @@ public class UIDragObject : IgnoreTimeScale
                                 }
                             }
                         }
+
                         return;
                     }
                 }
@@ -73,6 +76,7 @@ public class UIDragObject : IgnoreTimeScale
                     mScroll = 0f;
                 }
             }
+
             NGUIMath.SpringDampen(ref mMomentum, 9f, deltaTime);
         }
     }
@@ -95,10 +99,12 @@ public class UIDragObject : IgnoreTimeScale
                     direction.Scale(scale);
                     direction = target.TransformDirection(direction);
                 }
+
                 if (dragEffect != DragEffect.None)
                 {
                     mMomentum = Vector3.Lerp(mMomentum, mMomentum + direction * (0.01f * momentumAmount), 0.67f);
                 }
+
                 if (restrictWithinPanel)
                 {
                     var localPosition = target.localPosition;
@@ -129,10 +135,12 @@ public class UIDragObject : IgnoreTimeScale
                 {
                     FindPanel();
                 }
+
                 if (restrictWithinPanel)
                 {
                     mBounds = NGUIMath.CalculateRelativeWidgetBounds(mPanel.cachedTransform, target);
                 }
+
                 mMomentum = Vector3.zero;
                 mScroll = 0f;
                 var component = target.GetComponent<SpringPosition>();
@@ -140,6 +148,7 @@ public class UIDragObject : IgnoreTimeScale
                 {
                     component.enabled = false;
                 }
+
                 mLastPos = UICamera.lastHit.point;
                 var transform = UICamera.currentCamera.transform;
                 mPlane = new Plane((mPanel == null ? transform.rotation : mPanel.cachedTransform.rotation) * Vector3.back, mLastPos);
@@ -159,6 +168,7 @@ public class UIDragObject : IgnoreTimeScale
             {
                 mScroll = 0f;
             }
+
             mScroll += delta * scrollWheelFactor;
         }
     }

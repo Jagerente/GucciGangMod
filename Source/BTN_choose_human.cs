@@ -9,15 +9,16 @@ public class BTN_choose_human : MonoBehaviour
         var num2 = 0;
         foreach (var player in PhotonNetwork.playerList)
         {
-            if ((int)player.customProperties[PhotonPlayerProperty.isTitan] == 1)
+            if ((int) player.customProperties[PhotonPlayerProperty.isTitan] == 1)
             {
                 num++;
-                if ((bool)player.customProperties[PhotonPlayerProperty.dead])
+                if ((bool) player.customProperties[PhotonPlayerProperty.dead])
                 {
                     num2++;
                 }
             }
         }
+
         return num == num2;
     }
 
@@ -36,6 +37,7 @@ public class BTN_choose_human : MonoBehaviour
                 }
             }
         }
+
         return num == num2;
     }
 
@@ -48,6 +50,7 @@ public class BTN_choose_human : MonoBehaviour
         {
             GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().checkpoint = GGM.Caching.GameObjectCache.Find("PVPchkPtH");
         }
+
         if (!PhotonNetwork.isMasterClient && GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().roundTime > 60f)
         {
             if (!isPlayerAllDead2())
@@ -76,6 +79,7 @@ public class BTN_choose_human : MonoBehaviour
         {
             GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().SpawnPlayer(selection);
         }
+
         NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[1], false);
         NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[2], false);
         NGUITools.SetActive(GGM.Caching.GameObjectCache.Find("UI_IN_GAME").GetComponent<UIReferArray>().panels[3], false);

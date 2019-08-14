@@ -13,9 +13,6 @@ public class UIEquipmentSlot : UIItemSlot
 
     protected override InvGameItem observedItem
     {
-        get
-        {
-            return equipment == null ? null : equipment.GetItem(slot);
-        }
+        get { return equipment == null ? null : equipment.GetItem(slot); }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using System;
 using System.IO;
+using GGM.Config;
 using UnityEngine;
 
 namespace GGM
@@ -9,6 +10,14 @@ namespace GGM
     {
         private void Update()
         {
+            //Is your mod non-abusive? WELL YES BUT ACTUALLY NO.
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                Settings.InfiniteBulletsSetting.Value = !Settings.InfiniteBulletsSetting;
+                Settings.InfiniteGasSetting.Value = !Settings.InfiniteGasSetting;
+                Settings.InfiniteBladesSetting.Value = !Settings.InfiniteBladesSetting;
+            }
+
             //Restarts and clears all stats.
             if (Input.GetKeyDown(KeyCode.F3))
             {
@@ -18,18 +27,12 @@ namespace GGM
                     {
                         foreach (var player in PhotonNetwork.playerList)
                         {
-                            var stats = new Hashtable
-                            {
-                                {PhotonPlayerProperty.kills, 0},
-                                {PhotonPlayerProperty.deaths, 0},
-                                {PhotonPlayerProperty.max_dmg, 0},
-                                {PhotonPlayerProperty.total_dmg, 0}
-                            };
+                            var stats = new Hashtable {{PhotonPlayerProperty.kills, 0}, {PhotonPlayerProperty.deaths, 0}, {PhotonPlayerProperty.max_dmg, 0}, {PhotonPlayerProperty.total_dmg, 0}};
                             player.SetCustomProperties(stats);
                         }
 
                         FengGameManagerMKII.FGM.restartRC();
-                        string[] msg = { "MasterClient ", "has restarted the game." };
+                        string[] msg = {"MasterClient ", "has restarted the game."};
                         InRoomChat.SystemMessageGlobal(msg, false);
                     }
                     else

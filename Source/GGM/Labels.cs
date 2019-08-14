@@ -26,6 +26,7 @@ namespace GGM
                 {
                     return bottomRight.text;
                 }
+
                 bottomRight = CreateLabel("LabelInfoBottomRight", 32, TextAnchor.LowerRight, White, Fonts[Font], TextAlignment.Right);
                 return bottomRight == null ? string.Empty : bottomRight.text;
             }
@@ -39,6 +40,7 @@ namespace GGM
                         return;
                     }
                 }
+
                 bottomRight.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
@@ -51,6 +53,7 @@ namespace GGM
                 {
                     return center.text;
                 }
+
                 center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, White, Fonts[Font], TextAlignment.Center);
                 return center == null ? string.Empty : center.text;
             }
@@ -62,6 +65,7 @@ namespace GGM
                     if (center == null)
                         return;
                 }
+
                 center.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
@@ -74,6 +78,7 @@ namespace GGM
                 {
                     return networkStatus.text;
                 }
+
                 networkStatus = CreateLabel("LabelNetworkStatus", 32, TextAnchor.UpperLeft, White, Fonts[Font], TextAlignment.Left);
                 return networkStatus == null ? string.Empty : networkStatus.text;
             }
@@ -87,6 +92,7 @@ namespace GGM
                     if (networkStatus == null)
                         return;
                 }
+
                 networkStatus.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
@@ -99,6 +105,7 @@ namespace GGM
                 {
                     return topCenter.text;
                 }
+
                 topCenter = CreateLabel("LabelInfoTopCenter", 32, TextAnchor.UpperCenter, White, Fonts[Font], TextAlignment.Center);
                 return topCenter == null ? string.Empty : topCenter.text;
             }
@@ -110,6 +117,7 @@ namespace GGM
                     if (topCenter == null)
                         return;
                 }
+
                 topCenter.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
@@ -122,6 +130,7 @@ namespace GGM
                 {
                     return topLeft.text;
                 }
+
                 topLeft = CreateLabel("LabelInfoTopLeft", 28, TextAnchor.UpperLeft, White, Fonts[Font], TextAlignment.Left);
                 return topLeft == null ? string.Empty : topLeft.text;
             }
@@ -133,6 +142,7 @@ namespace GGM
                     if (topLeft == null)
                         return;
                 }
+
                 topLeft.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
@@ -145,6 +155,7 @@ namespace GGM
                 {
                     return topRight.text;
                 }
+
                 topRight = CreateLabel("LabelInfoTopRight", 28, TextAnchor.UpperRight, White, Fonts[Font], TextAlignment.Right);
                 return topRight == null ? string.Empty : topRight.text;
             }
@@ -156,6 +167,7 @@ namespace GGM
                     if (topRight == null)
                         return;
                 }
+
                 topRight.text = Settings.UserInterfaceSetting ? string.Empty : value;
             }
         }
@@ -168,6 +180,7 @@ namespace GGM
                 {
                     return version.text;
                 }
+
                 version = CreateLabel("VERSION", 28, TextAnchor.MiddleCenter, White, Fonts[Font], TextAlignment.Center);
                 return version == null ? string.Empty : version.text;
             }
@@ -179,6 +192,7 @@ namespace GGM
                     if (version == null)
                         return;
                 }
+
                 version.text = value;
             }
         }
@@ -191,6 +205,7 @@ namespace GGM
                 {
                     return crosshair.text;
                 }
+
                 crosshair = CreateLabel("LabelDistance", 26, TextAnchor.MiddleCenter, White, Fonts[Font], TextAlignment.Center);
                 return crosshair == null ? string.Empty : crosshair.text;
             }
@@ -202,6 +217,7 @@ namespace GGM
                     if (crosshair == null)
                         return;
                 }
+
                 crosshair.text = "\n\n\n" + value;
             }
         }
@@ -234,6 +250,7 @@ namespace GGM
                 text.text = label.text;
                 label.enabled = false;
             }
+
             text.richText = true;
             return text;
         }

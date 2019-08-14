@@ -82,6 +82,7 @@ public class EffectNode
             Ribbon.SetHeadPosition(ClientTrans.position + Position + OriDirection.normalized * Owner.TailDistance);
             Ribbon.ResetElementsPos();
         }
+
         if (Type == 1)
         {
             Sprite.SetRotationTo(OriDirection);
@@ -104,6 +105,7 @@ public class EffectNode
         {
             affector.Reset();
         }
+
         if (Type == 1)
         {
             Sprite.SetRotation(OriRotateAngle);
@@ -150,11 +152,13 @@ public class EffectNode
         {
             affector.Update();
         }
+
         Position += Velocity * Time.deltaTime;
         if (Mathf.Abs(Acceleration) > 0.0001)
         {
             Velocity += Velocity.normalized * Acceleration * Time.deltaTime;
         }
+
         if (SyncClient)
         {
             CurWorldPos = ClientTrans.TransformPoint(Position);
@@ -163,6 +167,7 @@ public class EffectNode
         {
             CurWorldPos = Position;
         }
+
         if (Type == 1)
         {
             UpdateSprite();
@@ -171,6 +176,7 @@ public class EffectNode
         {
             UpdateRibbonTrail();
         }
+
         LastWorldPos = CurWorldPos;
         if (ElapsedTime > LifeTime && LifeTime > 0f)
         {
@@ -186,6 +192,7 @@ public class EffectNode
         {
             Ribbon.SetUVCoord(LowerLeftUV, UVDimensions);
         }
+
         Ribbon.SetColor(Color);
         Ribbon.Update();
     }
@@ -203,21 +210,25 @@ public class EffectNode
             {
                 return;
             }
+
             if (zero != Vector3.zero)
             {
                 CurDirection = zero;
                 Sprite.SetRotationTo(CurDirection);
             }
         }
+
         Sprite.SetScale(Scale.x * OriScaleX, Scale.y * OriScaleY);
         if (Owner.ColorAffectorEnable)
         {
             Sprite.SetColor(Color);
         }
+
         if (Owner.UVAffectorEnable)
         {
             Sprite.SetUVCoord(LowerLeftUV, UVDimensions);
         }
+
         Sprite.SetRotation(OriRotateAngle + RotateAngle);
         Sprite.SetPosition(CurWorldPos);
         Sprite.Update(false);

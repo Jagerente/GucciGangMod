@@ -17,7 +17,7 @@ public class Horse : MonoBehaviour
         animation.CrossFade(aniName, time);
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = { aniName, time };
+            object[] parameters = {aniName, time};
             photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
         }
     }
@@ -41,6 +41,7 @@ public class Horse : MonoBehaviour
         {
             return hit.point.y;
         }
+
         return 0f;
     }
 
@@ -58,6 +59,7 @@ public class Horse : MonoBehaviour
         {
             PhotonNetwork.Destroy(gameObject);
         }
+
         if (State == "mounted")
         {
             if (myHero == null)
@@ -65,6 +67,7 @@ public class Horse : MonoBehaviour
                 unmounted();
                 return;
             }
+
             myHero.transform.position = transform.position + Vector3.up * 1.68f;
             myHero.transform.rotation = transform.rotation;
             myHero.rigidbody.velocity = rigidbody.velocity;
@@ -87,20 +90,23 @@ public class Horse : MonoBehaviour
                         rigidbody.AddForce(-speed * rigidbody.velocity.normalized, ForceMode.Acceleration);
                     }
                 }
+
                 if (rigidbody.velocity.magnitude > 8f)
                 {
                     if (!animation.IsPlaying("horse_Run"))
                     {
                         crossFade("horse_Run", 0.1f);
                     }
+
                     if (!myHero.animation.IsPlaying("horse_Run"))
                     {
                         myHero.GetComponent<HERO>().crossFade("horse_run", 0.1f);
                     }
+
                     if (!dust.GetComponent<ParticleSystem>().enableEmission)
                     {
                         dust.GetComponent<ParticleSystem>().enableEmission = true;
-                        object[] parameters = { true };
+                        object[] parameters = {true};
                         photonView.RPC("setDust", PhotonTargets.Others, parameters);
                     }
                 }
@@ -110,14 +116,16 @@ public class Horse : MonoBehaviour
                     {
                         crossFade("horse_WALK", 0.1f);
                     }
+
                     if (!myHero.animation.IsPlaying("horse_idle"))
                     {
                         myHero.GetComponent<HERO>().crossFade("horse_idle", 0.1f);
                     }
+
                     if (dust.GetComponent<ParticleSystem>().enableEmission)
                     {
                         dust.GetComponent<ParticleSystem>().enableEmission = false;
-                        object[] objArray2 = { false };
+                        object[] objArray2 = {false};
                         photonView.RPC("setDust", PhotonTargets.Others, objArray2);
                     }
                 }
@@ -137,6 +145,7 @@ public class Horse : MonoBehaviour
                     myHero.GetComponent<HERO>().crossFade("horse_idle", 0.1f);
                 }
             }
+
             if ((controller.isAttackDown || controller.isAttackIIDown) && IsGrounded())
             {
                 rigidbody.AddForce(Vector3.up * 25f, ForceMode.VelocityChange);
@@ -149,16 +158,18 @@ public class Horse : MonoBehaviour
                 unmounted();
                 return;
             }
+
             if (rigidbody.velocity.magnitude > 8f)
             {
                 if (!animation.IsPlaying("horse_Run"))
                 {
                     crossFade("horse_Run", 0.1f);
                 }
+
                 if (!dust.GetComponent<ParticleSystem>().enableEmission)
                 {
                     dust.GetComponent<ParticleSystem>().enableEmission = true;
-                    object[] objArray3 = { true };
+                    object[] objArray3 = {true};
                     photonView.RPC("setDust", PhotonTargets.Others, objArray3);
                 }
             }
@@ -168,13 +179,15 @@ public class Horse : MonoBehaviour
                 {
                     crossFade("horse_WALK", 0.1f);
                 }
+
                 if (dust.GetComponent<ParticleSystem>().enableEmission)
                 {
                     dust.GetComponent<ParticleSystem>().enableEmission = false;
-                    object[] objArray4 = { false };
+                    object[] objArray4 = {false};
                     photonView.RPC("setDust", PhotonTargets.Others, objArray4);
                 }
             }
+
             var num = -Mathf.DeltaAngle(FengMath.getHorizontalAngle(transform.position, setPoint), gameObject.transform.rotation.eulerAngles.y - 90f);
             gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, gameObject.transform.rotation.eulerAngles.y + num, 0f), 200f * Time.deltaTime / (rigidbody.velocity.magnitude + 20f));
             if (Vector3.Distance(setPoint, transform.position) < 20f)
@@ -193,6 +206,7 @@ public class Horse : MonoBehaviour
                     rigidbody.AddForce(-speed * rigidbody.velocity.normalized, ForceMode.Acceleration);
                 }
             }
+
             timeElapsed += Time.deltaTime;
             if (timeElapsed > 0.6f)
             {
@@ -202,14 +216,17 @@ public class Horse : MonoBehaviour
                     followed();
                 }
             }
+
             if (Vector3.Distance(myHero.transform.position, transform.position) < 5f)
             {
                 unmounted();
             }
+
             if (Vector3.Distance(setPoint, transform.position) < 5f)
             {
                 unmounted();
             }
+
             awayTimer += Time.deltaTime;
             if (awayTimer > 6f)
             {
@@ -229,6 +246,7 @@ public class Horse : MonoBehaviour
                 followed();
             }
         }
+
         rigidbody.AddForce(new Vector3(0f, -50f * rigidbody.mass, 0f));
     }
 
@@ -262,7 +280,7 @@ public class Horse : MonoBehaviour
         animation.Play(aniName);
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = { aniName };
+            object[] parameters = {aniName};
             photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
         }
     }
@@ -273,7 +291,7 @@ public class Horse : MonoBehaviour
         animation[aniName].normalizedTime = normalizedTime;
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = { aniName, normalizedTime };
+            object[] parameters = {aniName, normalizedTime};
             photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
         }
     }
@@ -302,10 +320,11 @@ public class Horse : MonoBehaviour
                 {
                     crossFade("horse_Run", 0.1f);
                 }
+
                 if (!dust.GetComponent<ParticleSystem>().enableEmission)
                 {
                     dust.GetComponent<ParticleSystem>().enableEmission = true;
-                    object[] parameters = { true };
+                    object[] parameters = {true};
                     photonView.RPC("setDust", PhotonTargets.Others, parameters);
                 }
             }
@@ -315,10 +334,11 @@ public class Horse : MonoBehaviour
                 {
                     crossFade("horse_WALK", 0.1f);
                 }
+
                 if (dust.GetComponent<ParticleSystem>().enableEmission)
                 {
                     dust.GetComponent<ParticleSystem>().enableEmission = false;
-                    object[] objArray2 = { false };
+                    object[] objArray2 = {false};
                     photonView.RPC("setDust", PhotonTargets.Others, objArray2);
                 }
             }
@@ -329,18 +349,22 @@ public class Horse : MonoBehaviour
             {
                 crossFade("horse_idle0", 0.1f);
             }
+
             if (animation.IsPlaying("horse_idle2") && animation["horse_idle2"].normalizedTime >= 1f)
             {
                 crossFade("horse_idle0", 0.1f);
             }
+
             if (animation.IsPlaying("horse_idle3") && animation["horse_idle3"].normalizedTime >= 1f)
             {
                 crossFade("horse_idle0", 0.1f);
             }
+
             if (!animation.IsPlaying("horse_idle0") && !animation.IsPlaying("horse_idle1") && !animation.IsPlaying("horse_idle2") && !animation.IsPlaying("horse_idle3"))
             {
                 crossFade("horse_idle0", 0.1f);
             }
+
             if (animation.IsPlaying("horse_idle0"))
             {
                 var num = Random.Range(0, 10000);
@@ -357,12 +381,14 @@ public class Horse : MonoBehaviour
                     crossFade("horse_idle3", 0.1f);
                 }
             }
+
             if (dust.GetComponent<ParticleSystem>().enableEmission)
             {
                 dust.GetComponent<ParticleSystem>().enableEmission = false;
-                object[] objArray3 = { false };
+                object[] objArray3 = {false};
                 photonView.RPC("setDust", PhotonTargets.Others, objArray3);
             }
+
             rigidbody.AddForce(-rigidbody.velocity, ForceMode.VelocityChange);
         }
     }

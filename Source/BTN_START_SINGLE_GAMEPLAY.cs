@@ -14,11 +14,13 @@ public class BTN_START_SINGLE_GAMEPLAY : MonoBehaviour
         {
             Screen.lockCursor = true;
         }
+
         Screen.showCursor = false;
         if (selection == "trainning_0")
         {
             IN_GAME_MAIN_CAMERA.difficulty = -1;
         }
+
         FengGameManagerMKII.level = selection;
         Application.LoadLevel(LevelInfo.getInfo(selection).mapName);
     }

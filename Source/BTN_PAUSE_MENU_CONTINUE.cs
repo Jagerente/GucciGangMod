@@ -8,6 +8,7 @@ public class BTN_PAUSE_MENU_CONTINUE : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
+
         var obj2 = GGM.Caching.GameObjectCache.Find("UI_IN_GAME");
         NGUITools.SetActive(obj2.GetComponent<UIReferArray>().panels[0], true);
         NGUITools.SetActive(obj2.GetComponent<UIReferArray>().panels[1], false);
@@ -34,6 +35,7 @@ public class BTN_PAUSE_MENU_CONTINUE : MonoBehaviour
                 Screen.showCursor = false;
                 Screen.lockCursor = false;
             }
+
             GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
             GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
         }

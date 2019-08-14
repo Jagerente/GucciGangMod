@@ -7,27 +7,22 @@ public class UIPanel : MonoBehaviour
     public bool depthPass;
     public bool generateNormals;
 
-    [SerializeField, HideInInspector]
-    private float mAlpha = 1f;
+    [SerializeField, HideInInspector] private float mAlpha = 1f;
 
     private Camera mCam;
     private BetterList<Material> mChanged = new BetterList<Material>();
     private UIPanel[] mChildPanels;
 
-    [SerializeField, HideInInspector]
-    private UIDrawCall.Clipping mClipping;
+    [SerializeField, HideInInspector] private UIDrawCall.Clipping mClipping;
 
-    [HideInInspector, SerializeField]
-    private Vector4 mClipRange = Vector4.zero;
+    [HideInInspector, SerializeField] private Vector4 mClipRange = Vector4.zero;
 
-    [HideInInspector, SerializeField]
-    private Vector2 mClipSoftness = new Vector2(40f, 40f);
+    [HideInInspector, SerializeField] private Vector2 mClipSoftness = new Vector2(40f, 40f);
 
     private BetterList<Color32> mCols = new BetterList<Color32>();
     private float mCullTime;
 
-    [SerializeField, HideInInspector]
-    private DebugInfo mDebugInfo = DebugInfo.Gizmos;
+    [SerializeField, HideInInspector] private DebugInfo mDebugInfo = DebugInfo.Gizmos;
 
     private bool mDepthChanged;
     private BetterList<UIDrawCall> mDrawCalls = new BetterList<UIDrawCall>();
@@ -48,8 +43,7 @@ public class UIPanel : MonoBehaviour
     public bool showInPanelTool = true;
     public bool widgetsAreStatic;
 
-    [HideInInspector]
-    public Matrix4x4 worldToLocal = Matrix4x4.identity;
+    [HideInInspector] public Matrix4x4 worldToLocal = Matrix4x4.identity;
 
     public void AddWidget(UIWidget w)
     {
@@ -60,6 +54,7 @@ public class UIPanel : MonoBehaviour
             {
                 mChanged.Add(w.material);
             }
+
             mDepthChanged = true;
         }
     }
@@ -85,6 +80,7 @@ public class UIPanel : MonoBehaviour
             maxArea.x -= clipSoftness.x;
             maxArea.y -= clipSoftness.y;
         }
+
         return NGUIMath.ConstrainRect(minRect, maxRect, minArea, maxArea);
     }
 
@@ -101,6 +97,7 @@ public class UIPanel : MonoBehaviour
         {
             return false;
         }
+
         if (immediate)
         {
             target.localPosition += vector;
@@ -117,6 +114,7 @@ public class UIPanel : MonoBehaviour
             position2.ignoreTimeScale = true;
             position2.worldSpace = false;
         }
+
         return true;
     }
 
@@ -151,9 +149,11 @@ public class UIPanel : MonoBehaviour
                         continue;
                     }
                 }
+
                 index++;
             }
         }
+
         if (mVerts.size > 0)
         {
             var drawCall = GetDrawCall(mat, true);
@@ -169,6 +169,7 @@ public class UIPanel : MonoBehaviour
                 NGUITools.DestroyImmediate(item.gameObject);
             }
         }
+
         mVerts.Clear();
         mNorms.Clear();
         mTans.Clear();
@@ -192,13 +193,16 @@ public class UIPanel : MonoBehaviour
             {
                 break;
             }
+
             trans = trans.parent;
         }
+
         if (createIfMissing && component == null && trans != transform)
         {
             component = trans.gameObject.AddComponent<UIPanel>();
             SetChildLayer(component.cachedTransform, component.cachedGameObject.layer);
         }
+
         return component;
     }
 
@@ -213,8 +217,10 @@ public class UIPanel : MonoBehaviour
             {
                 return call;
             }
+
             index++;
         }
+
         UIDrawCall item = null;
         if (createIfMissing)
         {
@@ -225,6 +231,7 @@ public class UIPanel : MonoBehaviour
             item.material = mat;
             mDrawCalls.Add(item);
         }
+
         return item;
     }
 
@@ -234,14 +241,17 @@ public class UIPanel : MonoBehaviour
         {
             return false;
         }
+
         if (!w.enabled || !NGUITools.GetActive(w.cachedGameObject) || w.alpha < 0.001f)
         {
             return false;
         }
+
         if (mClipping == UIDrawCall.Clipping.None)
         {
             return true;
         }
+
         var relativeSize = w.relativeSize;
         var vector2 = Vector2.Scale(w.pivotOffset, relativeSize);
         var vector3 = vector2;
@@ -261,6 +271,7 @@ public class UIPanel : MonoBehaviour
         {
             return false;
         }
+
         if (mClipping != UIDrawCall.Clipping.None)
         {
             UpdateTransformMatrix();
@@ -269,19 +280,23 @@ public class UIPanel : MonoBehaviour
             {
                 return false;
             }
+
             if (vector.y < mMin.y)
             {
                 return false;
             }
+
             if (vector.x > mMax.x)
             {
                 return false;
             }
+
             if (vector.y > mMax.y)
             {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -308,18 +323,22 @@ public class UIPanel : MonoBehaviour
         {
             return false;
         }
+
         if (num4 < mMin.y)
         {
             return false;
         }
+
         if (num > mMax.x)
         {
             return false;
         }
+
         if (num3 > mMax.y)
         {
             return false;
         }
+
         return true;
     }
 
@@ -341,6 +360,7 @@ public class UIPanel : MonoBehaviour
                 num++;
             }
         }
+
         var forceVisible = !cullWhileDragging ? clipping == UIDrawCall.Clipping.None || mCullTime > mUpdateTime : false;
         var num3 = 0;
         var size = mWidgets.size;
@@ -351,17 +371,21 @@ public class UIPanel : MonoBehaviour
             {
                 mChanged.Add(widget.material);
             }
+
             num3++;
         }
+
         if (mChanged.size != 0)
         {
             onChange?.Invoke();
         }
+
         if (mDepthChanged)
         {
             mDepthChanged = false;
             mWidgets.Sort(UIWidget.CompareFunc);
         }
+
         var index = 0;
         var num6 = mChanged.size;
         while (index < num6)
@@ -369,6 +393,7 @@ public class UIPanel : MonoBehaviour
             Fill(mChanged.buffer[index]);
             index++;
         }
+
         UpdateDrawcalls();
         mChanged.Clear();
     }
@@ -381,6 +406,7 @@ public class UIPanel : MonoBehaviour
             {
                 mDepthChanged = true;
             }
+
             if (!mChanged.Contains(mat))
             {
                 mChanged.Add(mat);
@@ -399,6 +425,7 @@ public class UIPanel : MonoBehaviour
                 NGUITools.DestroyImmediate(call.gameObject);
             }
         }
+
         mDrawCalls.Clear();
         mChanged.Clear();
     }
@@ -431,6 +458,7 @@ public class UIPanel : MonoBehaviour
             componentsInChildren[index].Update();
             index++;
         }
+
         LateUpdate();
     }
 
@@ -448,6 +476,7 @@ public class UIPanel : MonoBehaviour
         {
             mChildPanels = GetComponentsInChildren<UIPanel>(true);
         }
+
         var index = 0;
         var length = mChildPanels.Length;
         while (index < length)
@@ -468,6 +497,7 @@ public class UIPanel : MonoBehaviour
                 {
                     child.gameObject.layer = layer;
                 }
+
                 SetChildLayer(child, layer);
             }
         }
@@ -487,14 +517,17 @@ public class UIPanel : MonoBehaviour
         {
             zero = new Vector4(mClipRange.x, mClipRange.y, mClipRange.z * 0.5f, mClipRange.w * 0.5f);
         }
+
         if (zero.z == 0f)
         {
             zero.z = Screen.width * 0.5f;
         }
+
         if (zero.w == 0f)
         {
             zero.w = Screen.height * 0.5f;
         }
+
         switch (Application.platform)
         {
             case RuntimePlatform.WindowsPlayer:
@@ -504,6 +537,7 @@ public class UIPanel : MonoBehaviour
                 zero.y += 0.5f;
                 break;
         }
+
         var cachedTransform = this.cachedTransform;
         var index = 0;
         var size = mDrawCalls.size;
@@ -535,10 +569,12 @@ public class UIPanel : MonoBehaviour
                 {
                     vector.x = mCam != null ? mCam.pixelWidth : Screen.width;
                 }
+
                 if (vector.y == 0f)
                 {
                     vector.y = mCam != null ? mCam.pixelHeight : Screen.height;
                 }
+
                 vector = vector * 0.5f;
                 mMin.x = mClipRange.x - vector.x;
                 mMin.y = mClipRange.y - vector.y;
@@ -550,10 +586,7 @@ public class UIPanel : MonoBehaviour
 
     public float alpha
     {
-        get
-        {
-            return mAlpha;
-        }
+        get { return mAlpha; }
         set
         {
             var num = Mathf.Clamp01(value);
@@ -565,6 +598,7 @@ public class UIPanel : MonoBehaviour
                     var call = mDrawCalls[i];
                     MarkMaterialAsChanged(call.material, false);
                 }
+
                 for (var j = 0; j < mWidgets.size; j++)
                 {
                     mWidgets[j].MarkAsChangedLite();
@@ -581,6 +615,7 @@ public class UIPanel : MonoBehaviour
             {
                 mGo = gameObject;
             }
+
             return mGo;
         }
     }
@@ -593,16 +628,14 @@ public class UIPanel : MonoBehaviour
             {
                 mTrans = transform;
             }
+
             return mTrans;
         }
     }
 
     public UIDrawCall.Clipping clipping
     {
-        get
-        {
-            return mClipping;
-        }
+        get { return mClipping; }
         set
         {
             if (mClipping != value)
@@ -616,10 +649,7 @@ public class UIPanel : MonoBehaviour
 
     public Vector4 clipRange
     {
-        get
-        {
-            return mClipRange;
-        }
+        get { return mClipRange; }
         set
         {
             if (mClipRange != value)
@@ -634,10 +664,7 @@ public class UIPanel : MonoBehaviour
 
     public Vector2 clipSoftness
     {
-        get
-        {
-            return mClipSoftness;
-        }
+        get { return mClipSoftness; }
         set
         {
             if (mClipSoftness != value)
@@ -650,10 +677,7 @@ public class UIPanel : MonoBehaviour
 
     public DebugInfo debugInfo
     {
-        get
-        {
-            return mDebugInfo;
-        }
+        get { return mDebugInfo; }
         set
         {
             if (mDebugInfo != value)
@@ -689,16 +713,14 @@ public class UIPanel : MonoBehaviour
                     mDrawCalls.RemoveAt(size);
                 }
             }
+
             return mDrawCalls;
         }
     }
 
     public BetterList<UIWidget> widgets
     {
-        get
-        {
-            return mWidgets;
-        }
+        get { return mWidgets; }
     }
 
     public enum DebugInfo

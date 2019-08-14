@@ -3,20 +3,15 @@
 [AddComponentMenu("NGUI/UI/Label"), ExecuteInEditMode]
 public class UILabel : UIWidget
 {
-    [HideInInspector, SerializeField]
-    private Color mEffectColor = Color.black;
+    [HideInInspector, SerializeField] private Color mEffectColor = Color.black;
 
-    [HideInInspector, SerializeField]
-    private Vector2 mEffectDistance = Vector2.one;
+    [HideInInspector, SerializeField] private Vector2 mEffectDistance = Vector2.one;
 
-    [HideInInspector, SerializeField]
-    private Effect mEffectStyle;
+    [HideInInspector, SerializeField] private Effect mEffectStyle;
 
-    [HideInInspector, SerializeField]
-    private bool mEncoding = true;
+    [HideInInspector, SerializeField] private bool mEncoding = true;
 
-    [HideInInspector, SerializeField]
-    private UIFont mFont;
+    [HideInInspector, SerializeField] private UIFont mFont;
 
     private int mLastCount;
     private Effect mLastEffect;
@@ -27,38 +22,29 @@ public class UILabel : UIWidget
     private string mLastText = string.Empty;
     private int mLastWidth;
 
-    [HideInInspector, SerializeField]
-    private float mLineWidth;
+    [HideInInspector, SerializeField] private float mLineWidth;
 
-    [HideInInspector, SerializeField]
-    private int mMaxLineCount;
+    [HideInInspector, SerializeField] private int mMaxLineCount;
 
-    [SerializeField, HideInInspector]
-    private int mMaxLineWidth;
+    [SerializeField, HideInInspector] private int mMaxLineWidth;
 
-    [HideInInspector, SerializeField]
-    private bool mMultiline = true;
+    [HideInInspector, SerializeField] private bool mMultiline = true;
 
-    [HideInInspector, SerializeField]
-    private bool mPassword;
+    [HideInInspector, SerializeField] private bool mPassword;
 
     private bool mPremultiply;
     private string mProcessedText;
     private bool mShouldBeProcessed = true;
 
-    [HideInInspector, SerializeField]
-    private bool mShowLastChar;
+    [HideInInspector, SerializeField] private bool mShowLastChar;
 
-    [HideInInspector, SerializeField]
-    private bool mShrinkToFit;
+    [HideInInspector, SerializeField] private bool mShrinkToFit;
 
     private Vector2 mSize = Vector2.zero;
 
-    [SerializeField, HideInInspector]
-    private UIFont.SymbolStyle mSymbols = UIFont.SymbolStyle.Uncolored;
+    [SerializeField, HideInInspector] private UIFont.SymbolStyle mSymbols = UIFont.SymbolStyle.Uncolored;
 
-    [SerializeField, HideInInspector]
-    private string mText = string.Empty;
+    [SerializeField, HideInInspector] private string mText = string.Empty;
 
     private void ApplyShadow(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols, int start, int end, float x, float y)
     {
@@ -124,6 +110,7 @@ public class UILabel : UIWidget
             {
                 c = NGUITools.ApplyPMA(c);
             }
+
             switch (pivot)
             {
                 case Pivot.Left:
@@ -142,6 +129,7 @@ public class UILabel : UIWidget
                     mFont.Print(processedText, c, verts, uvs, cols, mEncoding, mSymbols, UIFont.Alignment.Center, Mathf.RoundToInt(relativeSize.x * mFont.size), mPremultiply);
                     break;
             }
+
             if (effectStyle != Effect.None)
             {
                 var end = verts.size;
@@ -172,11 +160,13 @@ public class UILabel : UIWidget
             mMaxLineWidth = Mathf.RoundToInt(mLineWidth);
             mLineWidth = 0f;
         }
+
         if (!mMultiline)
         {
             mMaxLineCount = 1;
             mMultiline = true;
         }
+
         mPremultiply = font != null && font.material != null && font.material.shader.name.Contains("Premultiplied");
     }
 
@@ -195,6 +185,7 @@ public class UILabel : UIWidget
             mProcessedText = string.Empty;
             goto Label_037C;
         }
+
         Label_0057:
         if (mPassword)
         {
@@ -208,6 +199,7 @@ public class UILabel : UIWidget
                     mProcessedText = mProcessedText + "*";
                     num3++;
                 }
+
                 if (mText.Length > 0)
                 {
                     mProcessedText = mProcessedText + mText[mText.Length - 1];
@@ -223,6 +215,7 @@ public class UILabel : UIWidget
                     num5++;
                 }
             }
+
             mProcessedText = mFont.WrapText(mProcessedText, mMaxLineWidth / b, mMaxLineCount, false, UIFont.SymbolStyle.None);
         }
         else if (mMaxLineWidth > 0)
@@ -237,6 +230,7 @@ public class UILabel : UIWidget
         {
             mProcessedText = mText;
         }
+
         mSize = string.IsNullOrEmpty(mProcessedText) ? Vector2.one : mFont.CalculatePrintedSize(mProcessedText, mEncoding, mSymbols);
         if (mShrinkToFit)
         {
@@ -248,15 +242,18 @@ public class UILabel : UIWidget
                     goto Label_0057;
                 }
             }
+
             if (mMaxLineWidth > 0)
             {
                 var num7 = mMaxLineWidth / b;
                 var a = mSize.x * b <= num7 ? b : num7 / mSize.x * b;
                 b = Mathf.Min(a, b);
             }
+
             b = Mathf.Round(b);
             cachedTransform.localScale = new Vector3(b, b, 1f);
         }
+
         mSize.x = Mathf.Max(mSize.x, b <= 0f ? 1f : lineWidth / b);
         Label_037C:
         mSize.y = Mathf.Max(mSize.y, 1f);
@@ -264,10 +261,7 @@ public class UILabel : UIWidget
 
     public Color effectColor
     {
-        get
-        {
-            return mEffectColor;
-        }
+        get { return mEffectColor; }
         set
         {
             if (!mEffectColor.Equals(value))
@@ -283,10 +277,7 @@ public class UILabel : UIWidget
 
     public Vector2 effectDistance
     {
-        get
-        {
-            return mEffectDistance;
-        }
+        get { return mEffectDistance; }
         set
         {
             if (mEffectDistance != value)
@@ -299,10 +290,7 @@ public class UILabel : UIWidget
 
     public Effect effectStyle
     {
-        get
-        {
-            return mEffectStyle;
-        }
+        get { return mEffectStyle; }
         set
         {
             if (mEffectStyle != value)
@@ -315,10 +303,7 @@ public class UILabel : UIWidget
 
     public UIFont font
     {
-        get
-        {
-            return mFont;
-        }
+        get { return mFont; }
         set
         {
             if (mFont != value)
@@ -334,10 +319,7 @@ public class UILabel : UIWidget
 
     private bool hasChanged
     {
-        get
-        {
-            return mShouldBeProcessed || mLastText != text || mLastWidth != mMaxLineWidth || mLastEncoding != mEncoding || mLastCount != mMaxLineCount || mLastPass != mPassword || mLastShow != mShowLastChar || mLastEffect != mEffectStyle;
-        }
+        get { return mShouldBeProcessed || mLastText != text || mLastWidth != mMaxLineWidth || mLastEncoding != mEncoding || mLastCount != mMaxLineCount || mLastPass != mPassword || mLastShow != mShowLastChar || mLastEffect != mEffectStyle; }
         set
         {
             if (value)
@@ -361,10 +343,7 @@ public class UILabel : UIWidget
 
     public int lineWidth
     {
-        get
-        {
-            return mMaxLineWidth;
-        }
+        get { return mMaxLineWidth; }
         set
         {
             if (mMaxLineWidth != value)
@@ -389,16 +368,14 @@ public class UILabel : UIWidget
                 material = mFont == null ? null : mFont.material;
                 this.material = material;
             }
+
             return material;
         }
     }
 
     public int maxLineCount
     {
-        get
-        {
-            return mMaxLineCount;
-        }
+        get { return mMaxLineCount; }
         set
         {
             if (mMaxLineCount != value)
@@ -415,10 +392,7 @@ public class UILabel : UIWidget
 
     public bool multiLine
     {
-        get
-        {
-            return mMaxLineCount != 1;
-        }
+        get { return mMaxLineCount != 1; }
         set
         {
             if (mMaxLineCount != 1 != value)
@@ -435,10 +409,7 @@ public class UILabel : UIWidget
 
     public bool password
     {
-        get
-        {
-            return mPassword;
-        }
+        get { return mPassword; }
         set
         {
             if (mPassword != value)
@@ -448,6 +419,7 @@ public class UILabel : UIWidget
                     mMaxLineCount = 1;
                     mEncoding = false;
                 }
+
                 mPassword = value;
                 hasChanged = true;
             }
@@ -463,10 +435,12 @@ public class UILabel : UIWidget
                 mLastScale = cachedTransform.localScale;
                 mShouldBeProcessed = true;
             }
+
             if (hasChanged)
             {
                 ProcessText();
             }
+
             return mProcessedText;
         }
     }
@@ -479,20 +453,19 @@ public class UILabel : UIWidget
             {
                 return Vector3.one;
             }
+
             if (hasChanged)
             {
                 ProcessText();
             }
+
             return mSize;
         }
     }
 
     public bool showLastPasswordChar
     {
-        get
-        {
-            return mShowLastChar;
-        }
+        get { return mShowLastChar; }
         set
         {
             if (mShowLastChar != value)
@@ -505,10 +478,7 @@ public class UILabel : UIWidget
 
     public bool shrinkToFit
     {
-        get
-        {
-            return mShrinkToFit;
-        }
+        get { return mShrinkToFit; }
         set
         {
             if (mShrinkToFit != value)
@@ -521,10 +491,7 @@ public class UILabel : UIWidget
 
     public bool supportEncoding
     {
-        get
-        {
-            return mEncoding;
-        }
+        get { return mEncoding; }
         set
         {
             if (mEncoding != value)
@@ -541,10 +508,7 @@ public class UILabel : UIWidget
 
     public UIFont.SymbolStyle symbolStyle
     {
-        get
-        {
-            return mSymbols;
-        }
+        get { return mSymbols; }
         set
         {
             if (mSymbols != value)
@@ -557,10 +521,7 @@ public class UILabel : UIWidget
 
     public string text
     {
-        get
-        {
-            return mText;
-        }
+        get { return mText; }
         set
         {
             if (string.IsNullOrEmpty(value))
@@ -569,6 +530,7 @@ public class UILabel : UIWidget
                 {
                     mText = string.Empty;
                 }
+
                 hasChanged = true;
             }
             else if (mText != value)

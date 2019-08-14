@@ -43,8 +43,7 @@ public class UIRoot : MonoBehaviour
     {
         if (param == null)
         {
-            Debug.LogError(
-                "SendMessage is bugged when you try to pass 'null' in the parameter field. It behaves as if no parameter was specified.");
+            Debug.LogError("SendMessage is bugged when you try to pass 'null' in the parameter field. It behaves as if no parameter was specified.");
         }
         else
         {
@@ -68,17 +67,17 @@ public class UIRoot : MonoBehaviour
         height = Mathf.Max(2, height);
         if (scalingStyle == Scaling.FixedSize)
         {
-            return manualHeight / (float)height;
+            return manualHeight / (float) height;
         }
 
         if (height < minimumHeight)
         {
-            return minimumHeight / (float)height;
+            return minimumHeight / (float) height;
         }
 
         if (height > maximumHeight)
         {
-            return maximumHeight / (float)height;
+            return maximumHeight / (float) height;
         }
 
         return 1f;
@@ -100,8 +99,7 @@ public class UIRoot : MonoBehaviour
         var componentInChildren = GetComponentInChildren<UIOrthoCamera>();
         if (componentInChildren != null)
         {
-            Debug.LogWarning("UIRoot should not be active at the same time as UIOrthoCamera. Disabling UIOrthoCamera.",
-                componentInChildren);
+            Debug.LogWarning("UIRoot should not be active at the same time as UIOrthoCamera. Disabling UIOrthoCamera.", componentInChildren);
             var component = componentInChildren.gameObject.GetComponent<Camera>();
             componentInChildren.enabled = false;
             if (component != null)
@@ -120,8 +118,7 @@ public class UIRoot : MonoBehaviour
             {
                 var x = 2f / activeHeight;
                 var localScale = mTrans.localScale;
-                if (Mathf.Abs(localScale.x - x) > float.Epsilon || Mathf.Abs(localScale.y - x) > float.Epsilon ||
-                    Mathf.Abs(localScale.z - x) > float.Epsilon)
+                if (Mathf.Abs(localScale.x - x) > float.Epsilon || Mathf.Abs(localScale.y - x) > float.Epsilon || Mathf.Abs(localScale.z - x) > float.Epsilon)
                 {
                     mTrans.localScale = new Vector3(x, x, x);
                 }

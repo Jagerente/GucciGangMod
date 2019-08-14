@@ -30,7 +30,7 @@ public class UICamera : MonoBehaviour
     private static GameObject mHover;
     private bool mIsEditor;
     private static List<UICamera> mList = new List<UICamera>();
-    private static MouseOrTouch[] mMouse = { new MouseOrTouch(), new MouseOrTouch(), new MouseOrTouch() };
+    private static MouseOrTouch[] mMouse = {new MouseOrTouch(), new MouseOrTouch(), new MouseOrTouch()};
     private static float mNextEvent;
     public float mouseClickThreshold = 10f;
     public float mouseDragThreshold = 4f;
@@ -75,8 +75,7 @@ public class UICamera : MonoBehaviour
             useKeyboard = false;
             useController = true;
         }
-        else if (Application.platform == RuntimePlatform.WindowsEditor ||
-                 Application.platform == RuntimePlatform.OSXEditor)
+        else if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
         {
             mIsEditor = true;
         }
@@ -195,10 +194,7 @@ public class UICamera : MonoBehaviour
         MouseOrTouch touch = null;
         if (!mTouches.TryGetValue(id, out touch))
         {
-            touch = new MouseOrTouch
-            {
-                touchBegan = true
-            };
+            touch = new MouseOrTouch {touchBegan = true};
             mTouches.Add(id, touch);
         }
 
@@ -235,11 +231,7 @@ public class UICamera : MonoBehaviour
 
             if (highlighted)
             {
-                var highlighted3 = new Highlighted
-                {
-                    go = go,
-                    counter = 1
-                };
+                var highlighted3 = new Highlighted {go = go, counter = 1};
                 mHighlighted.Add(highlighted3);
                 Notify(go, "OnHover", true);
             }
@@ -404,10 +396,8 @@ public class UICamera : MonoBehaviour
         currentTouchID = -100;
         currentTouch = mController;
         inputHasFocus = mSel != null && mSel.GetComponent<UIInput>() != null;
-        var pressed = submitKey0 != KeyCode.None && Input.GetKeyDown(submitKey0) ||
-                      submitKey1 != KeyCode.None && Input.GetKeyDown(submitKey1);
-        var unpressed = submitKey0 != KeyCode.None && Input.GetKeyUp(submitKey0) ||
-                        submitKey1 != KeyCode.None && Input.GetKeyUp(submitKey1);
+        var pressed = submitKey0 != KeyCode.None && Input.GetKeyDown(submitKey0) || submitKey1 != KeyCode.None && Input.GetKeyDown(submitKey1);
+        var unpressed = submitKey0 != KeyCode.None && Input.GetKeyUp(submitKey0) || submitKey1 != KeyCode.None && Input.GetKeyUp(submitKey1);
         if (pressed || unpressed)
         {
             currentTouch.current = mSel;
@@ -504,8 +494,7 @@ public class UICamera : MonoBehaviour
         }
         else
         {
-            if (currentTouch.clickNotification != ClickNotification.None && !stickyPress && !unpressed &&
-                currentTouch.pressStarted && currentTouch.pressed != hoveredObject)
+            if (currentTouch.clickNotification != ClickNotification.None && !stickyPress && !unpressed && currentTouch.pressStarted && currentTouch.pressed != hoveredObject)
             {
                 isDragging = true;
                 Notify(currentTouch.pressed, "OnPress", false);
@@ -563,8 +552,7 @@ public class UICamera : MonoBehaviour
                     Notify(currentTouch.pressed, "OnHover", true);
                 }
 
-                if (currentTouch.dragged == currentTouch.current ||
-                    currentTouch.clickNotification != ClickNotification.None && currentTouch.totalDelta.magnitude < num)
+                if (currentTouch.dragged == currentTouch.current || currentTouch.clickNotification != ClickNotification.None && currentTouch.totalDelta.magnitude < num)
                 {
                     if (currentTouch.pressed != mSel)
                     {
@@ -669,9 +657,7 @@ public class UICamera : MonoBehaviour
                 {
                     var ray = currentCamera.ScreenPointToRay(inPos);
                     var layerMask = currentCamera.cullingMask & camera.eventReceiverMask;
-                    var distance = camera.rangeDistance <= 0f
-                        ? currentCamera.farClipPlane - currentCamera.nearClipPlane
-                        : camera.rangeDistance;
+                    var distance = camera.rangeDistance <= 0f ? currentCamera.farClipPlane - currentCamera.nearClipPlane : camera.rangeDistance;
                     if (camera.clipRaycasts)
                     {
                         var array = Physics.RaycastAll(ray, distance, layerMask);
@@ -753,8 +739,7 @@ public class UICamera : MonoBehaviour
             }
 
             onCustomInput?.Invoke();
-            if (useMouse && mSel != null && (cancelKey0 != KeyCode.None && Input.GetKeyDown(cancelKey0) ||
-                                             cancelKey1 != KeyCode.None && Input.GetKeyDown(cancelKey1)))
+            if (useMouse && mSel != null && (cancelKey0 != KeyCode.None && Input.GetKeyDown(cancelKey0) || cancelKey1 != KeyCode.None && Input.GetKeyDown(cancelKey1)))
             {
                 selectedObject = null;
             }
@@ -795,9 +780,7 @@ public class UICamera : MonoBehaviour
                     Notify(mHover, "OnScroll", axis);
                 }
 
-                if (showTooltips && mTooltipTime != 0f &&
-                    (mTooltipTime < Time.realtimeSinceStartup || Input.GetKey(KeyCode.LeftShift) ||
-                     Input.GetKey(KeyCode.RightShift)))
+                if (showTooltips && mTooltipTime != 0f && (mTooltipTime < Time.realtimeSinceStartup || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
                 {
                     mTooltip = mHover;
                     ShowTooltip(true);

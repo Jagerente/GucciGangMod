@@ -37,6 +37,7 @@ public class Cannon : MonoBehaviour
                     isCannonGround = true;
                 }
             }
+
             if (PhotonNetwork.isMasterClient)
             {
                 var owner = photonView.owner;
@@ -71,6 +72,7 @@ public class Cannon : MonoBehaviour
             {
                 collider.dmg = 0;
             }
+
             myCannonBall = PhotonNetwork.Instantiate("RCAsset/CannonBallObject", ballPoint.position, firingPoint.rotation, 0);
             myCannonBall.rigidbody.velocity = firingPoint.forward * 300f;
             myCannonBall.GetComponent<CannonBall>().myHero = myHero;
@@ -109,9 +111,9 @@ public class Cannon : MonoBehaviour
         }
         else
         {
-            correctPlayerPos = (Vector3)stream.ReceiveNext();
-            correctPlayerRot = (Quaternion)stream.ReceiveNext();
-            correctBarrelRot = (Quaternion)stream.ReceiveNext();
+            correctPlayerPos = (Vector3) stream.ReceiveNext();
+            correctPlayerRot = (Quaternion) stream.ReceiveNext();
+            correctBarrelRot = (Quaternion) stream.ReceiveNext();
         }
     }
 
@@ -135,9 +137,10 @@ public class Cannon : MonoBehaviour
                         {
                             a = num2;
                         }
+
                         foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
-                            renderer.material = (Material)GGM.Caching.ResourcesCache.RCLoadM("transparent");
+                            renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM("transparent");
                             if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                             {
                                 renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
@@ -150,7 +153,7 @@ public class Cannon : MonoBehaviour
                         {
                             if (!renderer.name.Contains("Line Renderer"))
                             {
-                                renderer.material = (Material)GGM.Caching.ResourcesCache.RCLoadM(strArray[2]);
+                                renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM(strArray[2]);
                                 if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                                 {
                                     renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
@@ -159,6 +162,7 @@ public class Cannon : MonoBehaviour
                         }
                     }
                 }
+
                 var x = gameObject.transform.localScale.x * Convert.ToSingle(strArray[3]);
                 x -= 0.001f;
                 var y = gameObject.transform.localScale.y * Convert.ToSingle(strArray[4]);
@@ -175,6 +179,7 @@ public class Cannon : MonoBehaviour
                         {
                             colorArray[i] = color;
                         }
+
                         mesh.colors = colorArray;
                     }
                 }
@@ -204,11 +209,13 @@ public class Cannon : MonoBehaviour
                 position += vector3 * num + 0.5f * vector * num * num;
                 vector3 += vector * num;
             }
+
             var num3 = 30f;
             if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonSlow))
             {
                 num3 = 5f;
             }
+
             if (isCannonGround)
             {
                 if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonForward))
@@ -224,6 +231,7 @@ public class Cannon : MonoBehaviour
                     currentRot += Time.deltaTime * -num3;
                     barrel.Rotate(new Vector3(0f, 0f, Time.deltaTime * -num3));
                 }
+
                 if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonLeft))
                 {
                     transform.Rotate(new Vector3(0f, Time.deltaTime * -num3, 0f));
@@ -248,6 +256,7 @@ public class Cannon : MonoBehaviour
                     currentRot += Time.deltaTime * num3;
                     barrel.Rotate(new Vector3(Time.deltaTime * num3, 0f, 0f));
                 }
+
                 if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonLeft))
                 {
                     transform.Rotate(new Vector3(0f, Time.deltaTime * -num3, 0f));
@@ -257,6 +266,7 @@ public class Cannon : MonoBehaviour
                     transform.Rotate(new Vector3(0f, Time.deltaTime * num3, 0f));
                 }
             }
+
             if (FengGameManagerMKII.inputRC.isInputCannon(InputCodeRC.cannonFire))
             {
                 Fire();
@@ -273,6 +283,7 @@ public class Cannon : MonoBehaviour
                     myHero.skillCDLast = myHero.skillCDLastCannon;
                     myHero.skillCDDuration = myHero.skillCDLast;
                 }
+
                 PhotonNetwork.Destroy(gameObject);
             }
         }

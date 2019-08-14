@@ -30,10 +30,12 @@ public class UIAnchor : MonoBehaviour
         {
             mNeedsHalfPixelOffset = SystemInfo.graphicsShaderLevel < 40;
         }
+
         if (uiCamera == null)
         {
             uiCamera = NGUITools.FindCameraForLayer(gameObject.layer);
         }
+
         Update();
     }
 
@@ -46,7 +48,7 @@ public class UIAnchor : MonoBehaviour
             {
                 if (panelContainer.clipping == UIDrawCall.Clipping.None)
                 {
-                    var num = mRoot == null ? 0.5f : mRoot.activeHeight / (float)Screen.height * 0.5f;
+                    var num = mRoot == null ? 0.5f : mRoot.activeHeight / (float) Screen.height * 0.5f;
                     mRect.xMin = -Screen.width * num;
                     mRect.yMin = -Screen.height * num;
                     mRect.xMax = -mRect.xMin;
@@ -85,6 +87,7 @@ public class UIAnchor : MonoBehaviour
             {
                 return;
             }
+
             var x = (mRect.xMin + mRect.xMax) * 0.5f;
             var y = (mRect.yMin + mRect.yMax) * 0.5f;
             var position = new Vector3(x, y, 0f);
@@ -102,6 +105,7 @@ public class UIAnchor : MonoBehaviour
                 {
                     position.x = mRect.xMin;
                 }
+
                 if (side == Side.Top || side == Side.TopRight || side == Side.TopLeft)
                 {
                     position.y = mRect.yMax;
@@ -115,6 +119,7 @@ public class UIAnchor : MonoBehaviour
                     position.y = mRect.yMin;
                 }
             }
+
             var width = mRect.width;
             var height = mRect.height;
             position.x += relativeOffset.x * width;
@@ -131,6 +136,7 @@ public class UIAnchor : MonoBehaviour
                         position.y += 0.5f;
                     }
                 }
+
                 position.z = uiCamera.WorldToScreenPoint(mTrans.position).z;
                 position = uiCamera.ScreenToWorldPoint(position);
             }
@@ -150,12 +156,15 @@ public class UIAnchor : MonoBehaviour
                         position = parent.TransformPoint(position);
                     }
                 }
+
                 position.z = mTrans.position.z;
             }
+
             if (mTrans.position != position)
             {
                 mTrans.position = position;
             }
+
             if (runOnlyOnce && Application.isPlaying)
             {
                 Destroy(this);

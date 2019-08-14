@@ -60,30 +60,35 @@ namespace GGM.GUI
                 ForestDay = forestDay.texture;
                 ForestDay.Apply();
             }
+
             var forestDawn = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/forest_dawn.png");
             if (ForestDawn == null && forestDawn != null)
             {
                 ForestDawn = forestDawn.texture;
                 ForestDawn.Apply();
             }
+
             var forestNight = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/forest_night.png");
             if (ForestNight == null && forestNight != null)
             {
                 ForestNight = forestNight.texture;
                 ForestNight.Apply();
             }
+
             var cityDay = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/city_day.png");
             if (CityDay == null && cityDay != null)
             {
                 CityDay = cityDay.texture;
                 CityDay.Apply();
             }
+
             var cityDawn = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/city_dawn.png");
             if (CityDawn == null && cityDawn != null)
             {
                 CityDawn = cityDawn.texture;
                 CityDawn.Apply();
             }
+
             var cityNight = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/city_night.png");
             if (CityNight == null && cityNight != null)
             {
@@ -104,162 +109,189 @@ namespace GGM.GUI
                 Logo = logo.texture;
                 Logo.Apply();
             }
+
             if (Box == null)
             {
                 Box = new Texture2D(1, 1, TextureFormat.ARGB32, false);
                 Box.SetPixel(0, 0, new Color(ColorCache.DarkScarlet.Value.r, ColorCache.DarkScarlet.Value.g, ColorCache.DarkScarlet.Value.b, 0.5f));
                 Box.Apply();
             }
+
             var window = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}Window.png");
             if (Window == null && window != null)
             {
                 Window = window.texture;
                 Window.Apply();
             }
+
             var buttonN = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ButtonN.png");
             if (ButtonN == null && buttonN != null)
             {
                 ButtonN = buttonN.texture;
                 ButtonN.Apply();
             }
+
             var buttonA = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ButtonA.png");
             if (ButtonA == null && buttonA != null)
             {
                 ButtonA = buttonA.texture;
                 ButtonA.Apply();
             }
+
             var buttonH = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ButtonH.png");
             if (ButtonH == null && buttonH != null)
             {
                 ButtonH = buttonH.texture;
                 ButtonH.Apply();
             }
+
             var buttonON = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ButtonON.png");
             if (ButtonON == null && buttonON != null)
             {
                 ButtonON = buttonON.texture;
                 ButtonON.Apply();
             }
+
             var buttonOH = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ButtonOH.png");
             if (ButtonOH == null && buttonOH != null)
             {
                 ButtonOH = buttonOH.texture;
                 ButtonOH.Apply();
             }
+
             var buttonOA = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ButtonOA.png");
             if (ButtonOA == null && buttonOA != null)
             {
                 ButtonOA = buttonOA.texture;
                 ButtonOA.Apply();
             }
+
             var textN = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}TextN.png");
             if (TextN == null && textN != null)
             {
                 TextN = textN.texture;
                 TextN.Apply();
             }
+
             var textH = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}TextH.png");
             if (TextH == null && textH != null)
             {
                 TextH = textH.texture;
                 TextH.Apply();
             }
+
             var textF = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}TextF.png");
             if (TextF == null && textF != null)
             {
                 TextF = textF.texture;
                 TextF.Apply();
             }
+
             var textON = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}TextON.png");
             if (TextON == null && textON != null)
             {
                 TextON = textON.texture;
                 TextON.Apply();
             }
+
             var thumbN = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ThumbN.png");
             if (ThumbN == null && thumbN != null)
             {
                 ThumbN = thumbN.texture;
                 ThumbN.Apply();
             }
+
             var thumbA = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ThumbA.png");
             if (ThumbA == null && thumbA != null)
             {
                 ThumbA = thumbA.texture;
                 ThumbA.Apply();
             }
+
             var thumbH = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ThumbH.png");
             if (ThumbH == null && thumbH != null)
             {
                 ThumbH = thumbH.texture;
                 ThumbH.Apply();
             }
+
             var toggleN = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ToggleN.png");
             if (ToggleN == null && toggleN != null)
             {
                 ToggleN = toggleN.texture;
                 ToggleN.Apply();
             }
+
             var toggleA = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ToggleA.png");
             if (ToggleA == null && toggleA != null)
             {
                 ToggleA = toggleA.texture;
                 ToggleA.Apply();
             }
+
             var toggleH = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ToggleH.png");
             if (ToggleH == null && toggleH != null)
             {
                 ToggleH = toggleH.texture;
                 ToggleH.Apply();
             }
+
             var toggleON = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ToggleON.png");
             if (ToggleON == null && toggleON != null)
             {
                 ToggleON = toggleON.texture;
                 ToggleON.Apply();
             }
+
             var toggleOA = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ToggleOA.png");
             if (ToggleOA == null && toggleOA != null)
             {
                 ToggleOA = toggleOA.texture;
                 ToggleOA.Apply();
             }
+
             var toggleOH = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ToggleOH.png");
             if (ToggleOH == null && toggleOH != null)
             {
                 ToggleOH = toggleOH.texture;
                 ToggleOH.Apply();
             }
+
             var verticalScrollBar = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ScrollBarH.png");
             if (VerticalScrollBar == null && verticalScrollBar != null)
             {
                 VerticalScrollBar = verticalScrollBar.texture;
                 VerticalScrollBar.Apply();
             }
+
             var horizontalScrollBar = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ScrollBarV.png");
             if (HorizontalScrollBar == null && horizontalScrollBar != null)
             {
                 HorizontalScrollBar = horizontalScrollBar.texture;
                 HorizontalScrollBar.Apply();
             }
+
             var scrollBarThumbN = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ScrollBarThumbN.png");
             if (ScrollBarThumbN == null && scrollBarThumbN != null)
             {
                 ScrollBarThumbN = scrollBarThumbN.texture;
                 ScrollBarThumbN.Apply();
             }
+
             var scrollBarThumbA = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ScrollBarThumbA.png");
             if (ScrollBarThumbA == null && scrollBarThumbA != null)
             {
                 ScrollBarThumbA = scrollBarThumbA.texture;
                 ScrollBarThumbA.Apply();
             }
+
             var scrollBarThumbH = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ScrollBarThumbH.png");
             if (ScrollBarThumbH == null && scrollBarThumbH != null)
             {
                 ScrollBarThumbH = scrollBarThumbH.texture;
                 ScrollBarThumbH.Apply();
             }
+
             var slider = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}Slider.png");
             if (Slider == null && slider != null)
             {

@@ -23,6 +23,7 @@ public class InputToEvent : MonoBehaviour
             inputHitPos = hit.point;
             return hit.collider.gameObject;
         }
+
         return null;
     }
 
@@ -34,6 +35,7 @@ public class InputToEvent : MonoBehaviour
             {
                 lastGo.SendMessage("OnClick", SendMessageOptions.DontRequireReceiver);
             }
+
             lastGo.SendMessage("OnRelease", SendMessageOptions.DontRequireReceiver);
             lastGo = null;
         }
@@ -45,6 +47,7 @@ public class InputToEvent : MonoBehaviour
         {
             goPointedAt = RaycastObject(Input.mousePosition);
         }
+
         if (Input.touchCount > 0)
         {
             var touch = Input.GetTouch(0);
@@ -63,6 +66,7 @@ public class InputToEvent : MonoBehaviour
             {
                 Press(Input.mousePosition);
             }
+
             if (Input.GetMouseButtonUp(0))
             {
                 Release(Input.mousePosition);

@@ -28,6 +28,7 @@ public class RibbonTrail
         {
             Debug.LogError("ribbon trail's maxelement should > 2!");
         }
+
         MaxElements = maxelemnt;
         Vertexsegment = segment;
         ElementArray = new Element[MaxElements];
@@ -63,6 +64,7 @@ public class RibbonTrail
             {
                 Head--;
             }
+
             if (Head == Tail)
             {
                 if (Tail == 0)
@@ -79,6 +81,7 @@ public class RibbonTrail
                 ElemCount++;
             }
         }
+
         ElementArray[Head] = dtls;
         IndexDirty = true;
     }
@@ -100,11 +103,13 @@ public class RibbonTrail
                 {
                     index = 0;
                 }
+
                 ElementArray[index].Position = HeadPosition;
                 if (index == Tail)
                 {
                     break;
                 }
+
                 head = index + 1;
             }
         }
@@ -143,11 +148,13 @@ public class RibbonTrail
             {
                 index = 0;
             }
+
             var num2 = index + 1;
             if (num2 == MaxElements)
             {
                 num2 = 0;
             }
+
             var element2 = ElementArray[index];
             var element3 = ElementArray[num2];
             var from = element.Position - element2.Position;
@@ -179,6 +186,7 @@ public class RibbonTrail
                 {
                     index = 0;
                 }
+
                 var element2 = ElementArray[index];
                 var headPosition = HeadPosition;
                 var vector2 = headPosition - element2.Position;
@@ -199,6 +207,7 @@ public class RibbonTrail
                     element.Position = headPosition;
                     flag = true;
                 }
+
                 if ((Tail + 1) % MaxElements == Head)
                 {
                     int num3;
@@ -211,6 +220,7 @@ public class RibbonTrail
                     {
                         num3 = Tail - 1;
                     }
+
                     var element5 = ElementArray[num3];
                     var vector4 = element4.Position - element5.Position;
                     var magnitude = vector4.magnitude;
@@ -222,6 +232,7 @@ public class RibbonTrail
                     }
                 }
             }
+
             var position = Camera.main.transform.position;
             UpdateVertices(position);
             UpdateIndices();
@@ -244,10 +255,12 @@ public class RibbonTrail
                     {
                         num3 = 0;
                     }
+
                     if (num3 * 2 >= 65536)
                     {
                         Debug.LogError("Too many elements!");
                     }
+
                     var num4 = Vertexsegment.VertStart + num3 * 2;
                     var num5 = Vertexsegment.VertStart + head * 2;
                     var index = Vertexsegment.IndexStart + num2 * 6;
@@ -261,11 +274,14 @@ public class RibbonTrail
                     {
                         break;
                     }
+
                     head = num3;
                     num2++;
                 }
+
                 pool.IndiceChanged = true;
             }
+
             IndexDirty = false;
         }
     }
@@ -280,6 +296,7 @@ public class RibbonTrail
         {
             return;
         }
+
         var head = Head;
         var index = Head;
         Label_0052:
@@ -287,17 +304,20 @@ public class RibbonTrail
         {
             index = 0;
         }
+
         var element = ElementArray[index];
         if (index * 2 >= 65536)
         {
             Debug.LogError("Too many elements!");
         }
+
         var num6 = Vertexsegment.VertStart + index * 2;
         var num7 = index + 1;
         if (num7 == MaxElements)
         {
             num7 = 0;
         }
+
         if (index == Head)
         {
             vector = ElementArray[num7].Position - element.Position;
@@ -310,6 +330,7 @@ public class RibbonTrail
         {
             vector = ElementArray[num7].Position - ElementArray[head].Position;
         }
+
         var rhs = eyePos - element.Position;
         var vector3 = Vector3.Cross(vector, rhs);
         vector3.Normalize();
@@ -325,6 +346,7 @@ public class RibbonTrail
         {
             num = num2 / num3 * Mathf.Abs(UVDimensions.x);
         }
+
         var zero = Vector2.zero;
         pool.Vertices[num6] = vector4;
         pool.Colors[num6] = Color;
@@ -338,6 +360,7 @@ public class RibbonTrail
             zero.x = LowerLeftUV.x + num;
             zero.y = LowerLeftUV.y;
         }
+
         pool.UVs[num6] = zero;
         pool.Vertices[num6 + 1] = vector5;
         pool.Colors[num6 + 1] = Color;
@@ -351,6 +374,7 @@ public class RibbonTrail
             zero.x = LowerLeftUV.x + num;
             zero.y = LowerLeftUV.y - Mathf.Abs(UVDimensions.y);
         }
+
         pool.UVs[num6 + 1] = zero;
         if (index != Tail)
         {
@@ -360,6 +384,7 @@ public class RibbonTrail
             index++;
             goto Label_0052;
         }
+
         Vertexsegment.Pool.UVChanged = true;
         Vertexsegment.Pool.VertChanged = true;
         Vertexsegment.Pool.ColorChanged = true;

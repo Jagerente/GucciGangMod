@@ -29,6 +29,7 @@ public class UIGeometry
                 mRtpVerts.Add(widgetToPanel.MultiplyPoint3x4(verts[num]));
                 num++;
             }
+
             mRtpNormal = widgetToPanel.MultiplyVector(Vector3.back).normalized;
             var normalized = widgetToPanel.MultiplyVector(Vector3.right).normalized;
             mRtpTan = new Vector4(normalized.x, normalized.y, normalized.z, -1f);
@@ -76,17 +77,11 @@ public class UIGeometry
 
     public bool hasTransformed
     {
-        get
-        {
-            return mRtpVerts != null && mRtpVerts.size > 0 && mRtpVerts.size == verts.size;
-        }
+        get { return mRtpVerts != null && mRtpVerts.size > 0 && mRtpVerts.size == verts.size; }
     }
 
     public bool hasVertices
     {
-        get
-        {
-            return verts.size > 0;
-        }
+        get { return verts.size > 0; }
     }
 }

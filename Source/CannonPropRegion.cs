@@ -31,6 +31,7 @@ public class CannonPropRegion : MonoBehaviour
                 {
                     component.myCannonRegion.storedHero = null;
                 }
+
                 component.myCannonRegion = this;
                 storedHero = component;
             }
@@ -88,9 +89,10 @@ public class CannonPropRegion : MonoBehaviour
                         {
                             a = num2;
                         }
+
                         foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
-                            renderer.material = (Material)GGM.Caching.ResourcesCache.RCLoadM("transparent");
+                            renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM("transparent");
                             if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                             {
                                 renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
@@ -101,7 +103,7 @@ public class CannonPropRegion : MonoBehaviour
                     {
                         foreach (var renderer in gameObject.GetComponentsInChildren<Renderer>())
                         {
-                            renderer.material = (Material)GGM.Caching.ResourcesCache.RCLoadM(strArray[2]);
+                            renderer.material = (Material) GGM.Caching.ResourcesCache.RCLoadM(strArray[2]);
                             if (Convert.ToSingle(strArray[10]) != 1f || Convert.ToSingle(strArray[11]) != 1f)
                             {
                                 renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle(strArray[10]), renderer.material.mainTextureScale.y * Convert.ToSingle(strArray[11]));
@@ -109,6 +111,7 @@ public class CannonPropRegion : MonoBehaviour
                         }
                     }
                 }
+
                 var x = gameObject.transform.localScale.x * Convert.ToSingle(strArray[3]);
                 x -= 0.001f;
                 var y = gameObject.transform.localScale.y * Convert.ToSingle(strArray[4]);
@@ -125,6 +128,7 @@ public class CannonPropRegion : MonoBehaviour
                         {
                             colorArray[i] = color;
                         }
+
                         mesh.colors = colorArray;
                     }
                 }
@@ -134,7 +138,7 @@ public class CannonPropRegion : MonoBehaviour
 
     public void Start()
     {
-        if ((int)FengGameManagerMKII.settings[64] >= 100)
+        if ((int) FengGameManagerMKII.settings[64] >= 100)
         {
             GetComponent<Collider>().enabled = false;
         }

@@ -69,8 +69,7 @@ public class UIAtlas : MonoBehaviour
         while (num < count)
         {
             var sprite = sprites[num];
-            if (sprite != null && !string.IsNullOrEmpty(sprite.name) &&
-                string.Equals(match, sprite.name, StringComparison.OrdinalIgnoreCase))
+            if (sprite != null && !string.IsNullOrEmpty(sprite.name) && string.Equals(match, sprite.name, StringComparison.OrdinalIgnoreCase))
             {
                 list.Add(sprite.name);
                 return list;
@@ -79,7 +78,7 @@ public class UIAtlas : MonoBehaviour
             num++;
         }
 
-        char[] separator = { ' ' };
+        char[] separator = {' '};
         var strArray = match.Split(separator, StringSplitOptions.RemoveEmptyEntries);
         for (var i = 0; i < strArray.Length; i++)
         {
@@ -233,17 +232,13 @@ public class UIAtlas : MonoBehaviour
                         var sprite = sprites[num];
                         if (mCoordinates == Coordinates.TexCoords)
                         {
-                            sprite.outer =
-                                NGUIMath.ConvertToTexCoords(sprite.outer, mainTexture.width, mainTexture.height);
-                            sprite.inner =
-                                NGUIMath.ConvertToTexCoords(sprite.inner, mainTexture.width, mainTexture.height);
+                            sprite.outer = NGUIMath.ConvertToTexCoords(sprite.outer, mainTexture.width, mainTexture.height);
+                            sprite.inner = NGUIMath.ConvertToTexCoords(sprite.inner, mainTexture.width, mainTexture.height);
                         }
                         else
                         {
-                            sprite.outer = NGUIMath.ConvertToPixels(sprite.outer, mainTexture.width, mainTexture.height,
-                                true);
-                            sprite.inner = NGUIMath.ConvertToPixels(sprite.inner, mainTexture.width, mainTexture.height,
-                                true);
+                            sprite.outer = NGUIMath.ConvertToPixels(sprite.outer, mainTexture.width, mainTexture.height, true);
+                            sprite.inner = NGUIMath.ConvertToPixels(sprite.inner, mainTexture.width, mainTexture.height, true);
                         }
 
                         num++;
@@ -286,10 +281,7 @@ public class UIAtlas : MonoBehaviour
             if (mPMA == -1)
             {
                 var spriteMaterial = this.spriteMaterial;
-                mPMA = spriteMaterial == null || spriteMaterial.shader == null ||
-                       !spriteMaterial.shader.name.Contains("Premultiplied")
-                    ? 0
-                    : 1;
+                mPMA = spriteMaterial == null || spriteMaterial.shader == null || !spriteMaterial.shader.name.Contains("Premultiplied") ? 0 : 1;
             }
 
             return mPMA == 1;

@@ -19,6 +19,7 @@ public class TweenScale : UITweener
             scale2.Sample(1f, true);
             scale2.enabled = false;
         }
+
         return scale2;
     }
 
@@ -36,6 +37,7 @@ public class TweenScale : UITweener
                     return;
                 }
             }
+
             mTable.repositionNow = true;
         }
     }
@@ -48,19 +50,14 @@ public class TweenScale : UITweener
             {
                 mTrans = transform;
             }
+
             return mTrans;
         }
     }
 
     public Vector3 scale
     {
-        get
-        {
-            return cachedTransform.localScale;
-        }
-        set
-        {
-            cachedTransform.localScale = value;
-        }
+        get { return cachedTransform.localScale; }
+        set { cachedTransform.localScale = value; }
     }
 }

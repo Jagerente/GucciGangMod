@@ -9,9 +9,10 @@ public class Room : RoomInfo
         {
             options = new RoomOptions();
         }
+
         visibleField = options.isVisible;
         openField = options.isOpen;
-        maxPlayersField = (byte)options.maxPlayers;
+        maxPlayersField = (byte) options.maxPlayers;
         autoCleanUpField = false;
         CacheProperties(options.customRoomProperties);
         propertiesListedInLobby = options.customRoomPropertiesForLobby;
@@ -28,7 +29,8 @@ public class Room : RoomInfo
             {
                 PhotonNetwork.networkingPeer.OpSetCustomPropertiesOfRoom(gameProperties, true, 0);
             }
-            object[] parameters = { propertiesToSet };
+
+            object[] parameters = {propertiesToSet};
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnPhotonCustomRoomPropertiesChanged, parameters);
         }
     }
@@ -36,88 +38,78 @@ public class Room : RoomInfo
     public void SetPropertiesListedInLobby(string[] propsListedInLobby)
     {
         var gameProperties = new Hashtable();
-        gameProperties[(byte)250] = propsListedInLobby;
+        gameProperties[(byte) 250] = propsListedInLobby;
         PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, false, 0);
         propertiesListedInLobby = propsListedInLobby;
     }
 
     public override string ToString()
     {
-        object[] args = { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount };
+        object[] args = {nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount};
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.", args);
     }
 
     public new string ToStringFull()
     {
-        object[] args = { nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount, customProperties.ToStringFull() };
+        object[] args = {nameField, !visibleField ? "hidden" : "visible", !openField ? "closed" : "open", maxPlayersField, playerCount, customProperties.ToStringFull()};
         return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", args);
     }
 
     public bool autoCleanUp
     {
-        get
-        {
-            return autoCleanUpField;
-        }
+        get { return autoCleanUpField; }
     }
 
     public new int maxPlayers
     {
-        get
-        {
-            return maxPlayersField;
-        }
+        get { return maxPlayersField; }
         set
         {
             if (!Equals(PhotonNetwork.room))
             {
                 Debug.LogWarning("Can't set maxPlayers when not in that room.");
             }
+
             if (value > 255)
             {
                 Debug.LogWarning("Can't set Room.maxPlayers to: " + value + ". Using max value: 255.");
                 value = 255;
             }
+
             if (value != maxPlayersField && !PhotonNetwork.offlineMode)
             {
                 var gameProperties = new Hashtable();
-                gameProperties.Add((byte)255, (byte)value);
+                gameProperties.Add((byte) 255, (byte) value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
-            maxPlayersField = (byte)value;
+
+            maxPlayersField = (byte) value;
         }
     }
 
     public new string name
     {
-        get
-        {
-            return nameField;
-        }
-        internal set
-        {
-            nameField = value;
-        }
+        get { return nameField; }
+        internal set { nameField = value; }
     }
 
     public new bool open
     {
-        get
-        {
-            return openField;
-        }
+        get { return openField; }
         set
         {
             if (!Equals(PhotonNetwork.room))
             {
                 Debug.LogWarning("Can't set open when not in that room.");
             }
+
             if (value != openField && !PhotonNetwork.offlineMode)
             {
                 var gameProperties = new Hashtable();
-                gameProperties.Add((byte)253, value);
+                gameProperties.Add((byte) 253, value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
+
             openField = value;
         }
     }
@@ -130,6 +122,7 @@ public class Room : RoomInfo
             {
                 return PhotonNetwork.playerList.Length;
             }
+
             return 0;
         }
     }
@@ -138,22 +131,21 @@ public class Room : RoomInfo
 
     public new bool visible
     {
-        get
-        {
-            return visibleField;
-        }
+        get { return visibleField; }
         set
         {
             if (!Equals(PhotonNetwork.room))
             {
                 Debug.LogWarning("Can't set visible when not in that room.");
             }
+
             if (value != visibleField && !PhotonNetwork.offlineMode)
             {
                 var gameProperties = new Hashtable();
-                gameProperties.Add((byte)254, value);
+                gameProperties.Add((byte) 254, value);
                 PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(gameProperties, true, 0);
             }
+
             visibleField = value;
         }
     }

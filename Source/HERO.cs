@@ -276,9 +276,7 @@ public class HERO : MonoBehaviour
                 var num4 = rigidbody.velocity.z;
                 var num5 = Mathf.Sqrt(x * x + num4 * num4);
                 var num6 = Mathf.Atan2(y, num5) * 57.29578f;
-                targetRotation =
-                    Quaternion.Euler(-num6 * (1f - Vector3.Angle(rigidbody.velocity, transform.forward) / 90f),
-                        facingDirection, 0f);
+                targetRotation = Quaternion.Euler(-num6 * (1f - Vector3.Angle(rigidbody.velocity, transform.forward) / 90f), facingDirection, 0f);
                 if (isLeftHandHooked && bulletLeft != null || isRightHandHooked && bulletRight != null)
                 {
                     transform.rotation = targetRotation;
@@ -365,32 +363,24 @@ public class HERO : MonoBehaviour
         GameObject obj8;
         GameObject obj9;
         GameObject obj10;
-        var obj2 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
-            this.transform.position, this.transform.rotation);
+        var obj2 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), this.transform.position, this.transform.rotation);
         obj2.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
         obj2.GetComponent<HERO_SETUP>().isDeadBody = true;
-        obj2.GetComponent<HERO_DEAD_BODY_SETUP>()
-            .init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.ARM_R);
+        obj2.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.ARM_R);
         if (!isBite)
         {
-            var gO = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
-                this.transform.position, this.transform.rotation);
-            var obj4 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
-                this.transform.position, this.transform.rotation);
-            var obj5 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"),
-                this.transform.position, this.transform.rotation);
+            var gO = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), this.transform.position, this.transform.rotation);
+            var obj4 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), this.transform.position, this.transform.rotation);
+            var obj5 = (GameObject)Instantiate(Resources.Load("Character_parts/AOTTG_HERO_body"), this.transform.position, this.transform.rotation);
             gO.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
             obj4.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
             obj5.gameObject.GetComponent<HERO_SETUP>().myCostume = setup.myCostume;
             gO.GetComponent<HERO_SETUP>().isDeadBody = true;
             obj4.GetComponent<HERO_SETUP>().isDeadBody = true;
             obj5.GetComponent<HERO_SETUP>().isDeadBody = true;
-            gO.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime,
-                BODY_PARTS.UPPER);
-            obj4.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime,
-                BODY_PARTS.LOWER);
-            obj5.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime,
-                BODY_PARTS.ARM_L);
+            gO.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.UPPER);
+            obj4.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.LOWER);
+            obj5.GetComponent<HERO_DEAD_BODY_SETUP>().init(currentAnimation, animation[currentAnimation].normalizedTime, BODY_PARTS.ARM_L);
             applyForceToBody(gO, v);
             applyForceToBody(obj4, v);
             applyForceToBody(obj5, v);
@@ -405,35 +395,23 @@ public class HERO : MonoBehaviour
         }
 
         applyForceToBody(obj2, v);
-        var transform = this.transform
-            .Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L").transform;
-        var transform2 = this.transform
-            .Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R").transform;
+        var transform = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L").transform;
+        var transform2 = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R").transform;
         if (useGun)
         {
-            obj6 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position,
-                transform.rotation);
-            obj7 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_r"), transform2.position,
-                transform2.rotation);
-            obj8 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_2"), this.transform.position,
-                this.transform.rotation);
-            obj9 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_mag_l"),
-                this.transform.position, this.transform.rotation);
-            obj10 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_mag_r"),
-                this.transform.position, this.transform.rotation);
+            obj6 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
+            obj7 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_r"), transform2.position, transform2.rotation);
+            obj8 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_2"), this.transform.position, this.transform.rotation);
+            obj9 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_mag_l"), this.transform.position, this.transform.rotation);
+            obj10 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_mag_r"), this.transform.position, this.transform.rotation);
         }
         else
         {
-            obj6 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position,
-                transform.rotation);
-            obj7 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position,
-                transform2.rotation);
-            obj8 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg"), this.transform.position,
-                this.transform.rotation);
-            obj9 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_gas_l"),
-                this.transform.position, this.transform.rotation);
-            obj10 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_gas_r"),
-                this.transform.position, this.transform.rotation);
+            obj6 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position, transform.rotation);
+            obj7 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position, transform2.rotation);
+            obj8 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg"), this.transform.position, this.transform.rotation);
+            obj9 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_gas_l"), this.transform.position, this.transform.rotation);
+            obj10 = (GameObject)Instantiate(Resources.Load("Character_parts/character_3dmg_gas_r"), this.transform.position, this.transform.rotation);
         }
 
         obj6.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
@@ -487,8 +465,7 @@ public class HERO : MonoBehaviour
                 if (obj2.GetComponent<UISprite>() != null && obj2.activeInHierarchy)
                 {
                     var name = obj2.name;
-                    if (!(!name.Contains("blade") && !name.Contains("bullet") && !name.Contains("gas") && !name.Contains("flare") && !name.Contains("skill_cd") ||
-                          cachedSprites.ContainsKey(name)))
+                    if (!(!name.Contains("blade") && !name.Contains("bullet") && !name.Contains("gas") && !name.Contains("flare") && !name.Contains("skill_cd") || cachedSprites.ContainsKey(name)))
                     {
                         cachedSprites.Add(name, obj2.GetComponent<UISprite>());
                     }
@@ -596,7 +573,7 @@ public class HERO : MonoBehaviour
                         reloadAnimation = "AHSS_gun_reload_both_air";
                     }
 
-                    leftGunHasBullet = rightGunHasBullet = false;
+                    leftGunHasBullet = rightGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
                 }
 
                 crossFade(reloadAnimation, 0.05f);
@@ -969,8 +946,7 @@ public class HERO : MonoBehaviour
 
     private void dodge(bool offTheWall = false)
     {
-        if (myHorse != null && !isMounted &&
-            Vector3.Distance(myHorse.transform.position, transform.position) < 15f)
+        if (myHorse != null && !isMounted && Vector3.Distance(myHorse.transform.position, transform.position) < 15f)
         {
             getOnHorse();
         }
@@ -1028,8 +1004,7 @@ public class HERO : MonoBehaviour
 
     private void dodge2(bool offTheWall = false)
     {
-        if (!FengGameManagerMKII.inputRC.isInputHorse(InputCodeRC.horseMount) || myHorse == null || isMounted ||
-            Vector3.Distance(myHorse.transform.position, transform.position) >= 15f)
+        if (!FengGameManagerMKII.inputRC.isInputHorse(InputCodeRC.horseMount) || myHorse == null || isMounted || Vector3.Distance(myHorse.transform.position, transform.position) >= 15f)
         {
             state = HERO_STATE.GroundDodge;
             if (!offTheWall)
@@ -1191,17 +1166,14 @@ public class HERO : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!titanForm && !isCannon &&
-            (!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE))
+        if (!titanForm && !isCannon && (!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE))
         {
             currentSpeed = baseRigidBody.velocity.magnitude;
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine)
             {
-                if (!(baseAnimation.IsPlaying("attack3_2") || baseAnimation.IsPlaying("attack5") ||
-                      baseAnimation.IsPlaying("special_petra")))
+                if (!(baseAnimation.IsPlaying("attack3_2") || baseAnimation.IsPlaying("attack5") || baseAnimation.IsPlaying("special_petra")))
                 {
-                    baseRigidBody.rotation =
-                        Quaternion.Lerp(gameObject.transform.rotation, targetRotation, Time.deltaTime * 6f);
+                    baseRigidBody.rotation = Quaternion.Lerp(gameObject.transform.rotation, targetRotation, Time.deltaTime * 6f);
                 }
 
                 if (state == HERO_STATE.Grab)
@@ -1232,9 +1204,7 @@ public class HERO : MonoBehaviour
                             var magnitude = vector2.magnitude;
                             if (magnitude > 2f)
                             {
-                                baseRigidBody.AddForce(
-                                    vector2.normalized * Mathf.Pow(magnitude, 0.15f) * 30f -
-                                    baseRigidBody.velocity * 0.95f, ForceMode.VelocityChange);
+                                baseRigidBody.AddForce(vector2.normalized * Mathf.Pow(magnitude, 0.15f) * 30f - baseRigidBody.velocity * 0.95f, ForceMode.VelocityChange);
                             }
                         }
                         else
@@ -1250,8 +1220,7 @@ public class HERO : MonoBehaviour
                             var f = vector3.magnitude;
                             if (f > 5f)
                             {
-                                baseRigidBody.AddForce(vector3.normalized * Mathf.Pow(f, 0.15f) * 0.2f,
-                                    ForceMode.Impulse);
+                                baseRigidBody.AddForce(vector3.normalized * Mathf.Pow(f, 0.15f) * 0.2f, ForceMode.Impulse);
                             }
                         }
                         else
@@ -1309,8 +1278,7 @@ public class HERO : MonoBehaviour
                                 to = to * 2f;
                             }
 
-                            if (Vector3.Angle(baseRigidBody.velocity, to) > 90f &&
-                                inputManager.isInput[InputCode.jump])
+                            if (Vector3.Angle(baseRigidBody.velocity, to) > 90f && inputManager.isInput[InputCode.jump])
                             {
                                 flag3 = true;
                                 flag2 = true;
@@ -1324,6 +1292,7 @@ public class HERO : MonoBehaviour
                                     baseRigidBody.AddForce(-baseRigidBody.velocity * 2f, ForceMode.Acceleration);
                                 }
                             }
+
                             if (!Settings.BodyLean && !useGun)
                             {
                                 facingDirection = Mathf.Atan2(to.x, to.z) * 57.29578f;
@@ -1364,8 +1333,7 @@ public class HERO : MonoBehaviour
                                 vector5 = vector5 * 2f;
                             }
 
-                            if (Vector3.Angle(baseRigidBody.velocity, vector5) > 90f &&
-                                inputManager.isInput[InputCode.jump])
+                            if (Vector3.Angle(baseRigidBody.velocity, vector5) > 90f && inputManager.isInput[InputCode.jump])
                             {
                                 flag4 = true;
                                 flag2 = true;
@@ -1379,6 +1347,7 @@ public class HERO : MonoBehaviour
                                     baseRigidBody.AddForce(-baseRigidBody.velocity * 2f, ForceMode.Acceleration);
                                 }
                             }
+
                             if (!Settings.BodyLean && !useGun)
                             {
                                 facingDirection = Mathf.Atan2(vector5.x, vector5.z) * 57.29578f;
@@ -1414,16 +1383,14 @@ public class HERO : MonoBehaviour
                         {
                             if (attackAnimation == "attack5")
                             {
-                                if (baseAnimation[attackAnimation].normalizedTime > 0.4f &&
-                                    baseAnimation[attackAnimation].normalizedTime < 0.61f)
+                                if (baseAnimation[attackAnimation].normalizedTime > 0.4f && baseAnimation[attackAnimation].normalizedTime < 0.61f)
                                 {
                                     baseRigidBody.AddForce(gameObject.transform.forward * 200f);
                                 }
                             }
                             else if (attackAnimation == "special_petra")
                             {
-                                if (baseAnimation[attackAnimation].normalizedTime > 0.35f &&
-                                    baseAnimation[attackAnimation].normalizedTime < 0.48f)
+                                if (baseAnimation[attackAnimation].normalizedTime > 0.35f && baseAnimation[attackAnimation].normalizedTime < 0.48f)
                                 {
                                     baseRigidBody.AddForce(gameObject.transform.forward * 200f);
                                 }
@@ -1445,9 +1412,7 @@ public class HERO : MonoBehaviour
 
                         if (justGrounded)
                         {
-                            if (state != HERO_STATE.Attack ||
-                                attackAnimation != "attack3_1" && attackAnimation != "attack5" &&
-                                attackAnimation != "special_petra")
+                            if (state != HERO_STATE.Attack || attackAnimation != "attack3_1" && attackAnimation != "attack5" && attackAnimation != "special_petra")
                             {
                                 if (state != HERO_STATE.Attack && x == 0f && z == 0f && bulletLeft == null && bulletRight == null && state != HERO_STATE.FillGas)
                                 {
@@ -1457,15 +1422,11 @@ public class HERO : MonoBehaviour
                                 else
                                 {
                                     buttonAttackRelease = true;
-                                    if (state != HERO_STATE.Attack &&
-                                        baseRigidBody.velocity.x * baseRigidBody.velocity.x +
-                                        baseRigidBody.velocity.z * baseRigidBody.velocity.z >
-                                        speed * speed * 1.5f && state != HERO_STATE.FillGas)
+                                    if (state != HERO_STATE.Attack && baseRigidBody.velocity.x * baseRigidBody.velocity.x + baseRigidBody.velocity.z * baseRigidBody.velocity.z > speed * speed * 1.5f && state != HERO_STATE.FillGas)
                                     {
                                         state = HERO_STATE.Slide;
                                         crossFade("slide", 0.05f);
-                                        facingDirection =
-                                            Mathf.Atan2(baseRigidBody.velocity.x, baseRigidBody.velocity.z) * 57.29578f;
+                                        facingDirection = Mathf.Atan2(baseRigidBody.velocity.x, baseRigidBody.velocity.z) * 57.29578f;
                                         targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
                                         sparks.enableEmission = true;
                                     }
@@ -1476,8 +1437,7 @@ public class HERO : MonoBehaviour
                             zero = baseRigidBody.velocity;
                         }
 
-                        if (state == HERO_STATE.Attack && attackAnimation == "attack3_1" &&
-                            baseAnimation[attackAnimation].normalizedTime >= 1f)
+                        if (state == HERO_STATE.Attack && attackAnimation == "attack3_1" && baseAnimation[attackAnimation].normalizedTime >= 1f)
                         {
                             playAnimation("attack3_2");
                             resetAnimationSpeed();
@@ -1489,8 +1449,7 @@ public class HERO : MonoBehaviour
 
                         if (state == HERO_STATE.GroundDodge)
                         {
-                            if (baseAnimation["dodge"].normalizedTime >= 0.2f &&
-                                baseAnimation["dodge"].normalizedTime < 0.8f)
+                            if (baseAnimation["dodge"].normalizedTime >= 0.2f && baseAnimation["dodge"].normalizedTime < 0.8f)
                             {
                                 zero = -baseTransform.forward * 2.4f * speed;
                             }
@@ -1505,9 +1464,7 @@ public class HERO : MonoBehaviour
                             var vector8 = new Vector3(x, 0f, z);
                             var resultAngle = getGlobalFacingDirection(x, z);
                             zero = getGlobaleFacingVector3(resultAngle);
-                            var num6 = vector8.magnitude <= 0.95f
-                                ? vector8.magnitude >= 0.25f ? vector8.magnitude : 0f
-                                : 1f;
+                            var num6 = vector8.magnitude <= 0.95f ? vector8.magnitude >= 0.25f ? vector8.magnitude : 0f : 1f;
                             zero = zero * num6;
                             zero = zero * speed;
                             if (buffTime > 0f && currentBuff == BUFF.SpeedUp)
@@ -1517,10 +1474,7 @@ public class HERO : MonoBehaviour
 
                             if (x != 0f || z != 0f)
                             {
-                                if (!baseAnimation.IsPlaying("run") && !baseAnimation.IsPlaying("jump") &&
-                                    !baseAnimation.IsPlaying("run_sasha") &&
-                                    (!baseAnimation.IsPlaying("horse_geton") ||
-                                     baseAnimation["horse_geton"].normalizedTime >= 0.5f))
+                                if (!baseAnimation.IsPlaying("run") && !baseAnimation.IsPlaying("jump") && !baseAnimation.IsPlaying("run_sasha") && (!baseAnimation.IsPlaying("horse_geton") || baseAnimation["horse_geton"].normalizedTime >= 0.5f))
                                 {
                                     if (buffTime > 0f && currentBuff == BUFF.SpeedUp)
                                     {
@@ -1573,9 +1527,7 @@ public class HERO : MonoBehaviour
                             force.y += 8f;
                         }
 
-                        if (baseAnimation.IsPlaying("horse_geton") &&
-                            baseAnimation["horse_geton"].normalizedTime > 0.18f &&
-                            baseAnimation["horse_geton"].normalizedTime < 1f)
+                        if (baseAnimation.IsPlaying("horse_geton") && baseAnimation["horse_geton"].normalizedTime > 0.18f && baseAnimation["horse_geton"].normalizedTime < 1f)
                         {
                             var num7 = 6f;
                             force = -baseRigidBody.velocity;
@@ -1589,8 +1541,7 @@ public class HERO : MonoBehaviour
                         if (!(state == HERO_STATE.Attack && useGun))
                         {
                             baseRigidBody.AddForce(force, ForceMode.VelocityChange);
-                            baseRigidBody.rotation = Quaternion.Lerp(gameObject.transform.rotation,
-                                Quaternion.Euler(0f, facingDirection, 0f), Time.deltaTime * 10f);
+                            baseRigidBody.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, facingDirection, 0f), Time.deltaTime * 10f);
                         }
                     }
                     else
@@ -1600,9 +1551,7 @@ public class HERO : MonoBehaviour
                             sparks.enableEmission = false;
                         }
 
-                        if (myHorse != null &&
-                            (baseAnimation.IsPlaying("horse_geton") || baseAnimation.IsPlaying("air_fall")) && baseRigidBody.velocity.y < 0f && Vector3.Distance(myHorse.transform.position + Vector3.up * 1.65f,
-                                baseTransform.position) < 0.5f)
+                        if (myHorse != null && (baseAnimation.IsPlaying("horse_geton") || baseAnimation.IsPlaying("air_fall")) && baseRigidBody.velocity.y < 0f && Vector3.Distance(myHorse.transform.position + Vector3.up * 1.65f, baseTransform.position) < 0.5f)
                         {
                             baseTransform.position = myHorse.transform.position + Vector3.up * 1.65f;
                             baseTransform.rotation = myHorse.transform.rotation;
@@ -1611,21 +1560,15 @@ public class HERO : MonoBehaviour
                             myHorse.GetComponent<Horse>().mounted();
                         }
 
-                        if (state == HERO_STATE.Idle && !baseAnimation.IsPlaying("dash") && !baseAnimation.IsPlaying("wallrun") && !baseAnimation.IsPlaying("toRoof") && !baseAnimation.IsPlaying("horse_geton") && !baseAnimation.IsPlaying("horse_getoff") && !baseAnimation.IsPlaying("air_release") && !isMounted && (!baseAnimation.IsPlaying("air_hook_l_just") ||
-                                                                                                                                                                                                                                                                                                                          baseAnimation["air_hook_l_just"].normalizedTime >= 1f) && (!baseAnimation.IsPlaying("air_hook_r_just") ||
-                                                                                                                                                                                                                                                                                                                                                                                       baseAnimation["air_hook_r_just"].normalizedTime >= 1f) ||
-                            baseAnimation["dash"].normalizedTime >= 0.99f)
+                        if (state == HERO_STATE.Idle && !baseAnimation.IsPlaying("dash") && !baseAnimation.IsPlaying("wallrun") && !baseAnimation.IsPlaying("toRoof") && !baseAnimation.IsPlaying("horse_geton") && !baseAnimation.IsPlaying("horse_getoff") && !baseAnimation.IsPlaying("air_release") && !isMounted && (!baseAnimation.IsPlaying("air_hook_l_just") || baseAnimation["air_hook_l_just"].normalizedTime >= 1f) && (!baseAnimation.IsPlaying("air_hook_r_just") || baseAnimation["air_hook_r_just"].normalizedTime >= 1f) || baseAnimation["dash"].normalizedTime >= 0.99f)
                         {
-                            if (!isLeftHandHooked && !isRightHandHooked &&
-                                (baseAnimation.IsPlaying("air_hook_l") || baseAnimation.IsPlaying("air_hook_r") ||
-                                 baseAnimation.IsPlaying("air_hook")) && baseRigidBody.velocity.y > 20f)
+                            if (!isLeftHandHooked && !isRightHandHooked && (baseAnimation.IsPlaying("air_hook_l") || baseAnimation.IsPlaying("air_hook_r") || baseAnimation.IsPlaying("air_hook")) && baseRigidBody.velocity.y > 20f)
                             {
                                 baseAnimation.CrossFade("air_release");
                             }
                             else
                             {
-                                var flag5 =
-                                    Mathf.Abs(baseRigidBody.velocity.x) + Mathf.Abs(baseRigidBody.velocity.z) > 25f;
+                                var flag5 = Mathf.Abs(baseRigidBody.velocity.x) + Mathf.Abs(baseRigidBody.velocity.z) > 25f;
                                 var flag6 = baseRigidBody.velocity.y < 0f;
                                 if (!flag5)
                                 {
@@ -1643,10 +1586,8 @@ public class HERO : MonoBehaviour
                                 }
                                 else if (!isLeftHandHooked && !isRightHandHooked)
                                 {
-                                    var current = -Mathf.Atan2(baseRigidBody.velocity.z, baseRigidBody.velocity.x) *
-                                                    57.29578f;
-                                    var num11 = -Mathf.DeltaAngle(current,
-                                        baseTransform.rotation.eulerAngles.y - 90f);
+                                    var current = -Mathf.Atan2(baseRigidBody.velocity.z, baseRigidBody.velocity.x) * 57.29578f;
+                                    var num11 = -Mathf.DeltaAngle(current, baseTransform.rotation.eulerAngles.y - 90f);
                                     if (Mathf.Abs(num11) < 45f)
                                     {
                                         if (!baseAnimation.IsPlaying("air2"))
@@ -1715,14 +1656,12 @@ public class HERO : MonoBehaviour
                             }
                         }
 
-                        if (state == HERO_STATE.Idle && baseAnimation.IsPlaying("air_release") &&
-                            baseAnimation["air_release"].normalizedTime >= 1f)
+                        if (state == HERO_STATE.Idle && baseAnimation.IsPlaying("air_release") && baseAnimation["air_release"].normalizedTime >= 1f)
                         {
                             crossFade("air_rise", 0.2f);
                         }
 
-                        if (baseAnimation.IsPlaying("horse_getoff") &&
-                            baseAnimation["horse_getoff"].normalizedTime >= 1f)
+                        if (baseAnimation.IsPlaying("horse_getoff") && baseAnimation["horse_getoff"].normalizedTime >= 1f)
                         {
                             crossFade("air_rise", 0.2f);
                         }
@@ -1757,8 +1696,7 @@ public class HERO : MonoBehaviour
                         }
                         else if (baseAnimation.IsPlaying("wallrun"))
                         {
-                            baseRigidBody.AddForce(Vector3.up * speed - baseRigidBody.velocity,
-                                ForceMode.VelocityChange);
+                            baseRigidBody.AddForce(Vector3.up * speed - baseRigidBody.velocity, ForceMode.VelocityChange);
                             wallRunTime += Time.deltaTime;
                             if (wallRunTime > 1f || z == 0f && x == 0f)
                             {
@@ -1780,9 +1718,7 @@ public class HERO : MonoBehaviour
                             var vector11 = new Vector3(x, 0f, z);
                             var num12 = getGlobalFacingDirection(x, z);
                             var vector12 = getGlobaleFacingVector3(num12);
-                            var num13 = vector11.magnitude <= 0.95f
-                                ? vector11.magnitude >= 0.25f ? vector11.magnitude : 0f
-                                : 1f;
+                            var num13 = vector11.magnitude <= 0.95f ? vector11.magnitude >= 0.25f ? vector11.magnitude : 0f : 1f;
                             vector12 = vector12 * num13;
                             vector12 = vector12 * (setup.myCostume.stat.ACL / 10f * 2f);
                             if (x == 0f && z == 0f)
@@ -1809,8 +1745,7 @@ public class HERO : MonoBehaviour
                                 }
                                 else
                                 {
-                                    baseRigidBody.AddForce(baseTransform.forward * vector12.magnitude,
-                                        ForceMode.Acceleration);
+                                    baseRigidBody.AddForce(baseTransform.forward * vector12.magnitude, ForceMode.Acceleration);
                                 }
 
                                 flag2 = true;
@@ -1827,8 +1762,7 @@ public class HERO : MonoBehaviour
                     {
                         var num14 = currentSpeed + 0.1f;
                         baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
-                        var vector13 = (bulletRight.transform.position + bulletLeft.transform.position) * 0.5f -
-                                           baseTransform.position;
+                        var vector13 = (bulletRight.transform.position + bulletLeft.transform.position) * 0.5f - baseTransform.position;
                         var num15 = 0f;
                         if (Settings.ReelingSettings[0] && FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
@@ -1845,8 +1779,7 @@ public class HERO : MonoBehaviour
 
                         num15 = Mathf.Clamp(num15, -0.8f, 0.8f);
                         var num16 = 1f + num15;
-                        var vector14 = Vector3.RotateTowards(vector13, baseRigidBody.velocity, 1.53938f * num16,
-                            1.53938f * num16);
+                        var vector14 = Vector3.RotateTowards(vector13, baseRigidBody.velocity, 1.53938f * num16, 1.53938f * num16);
                         vector14.Normalize();
                         baseRigidBody.velocity = vector14 * num14;
                     }
@@ -1856,13 +1789,11 @@ public class HERO : MonoBehaviour
                         baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
                         var vector15 = bulletLeft.transform.position - baseTransform.position;
                         var num18 = 0f;
-                        if (Settings.ReelingSettings[0] &&
-                            FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
+                        if (Settings.ReelingSettings[0] && FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
                             num18 = -1f;
                         }
-                        else if (Settings.ReelingSettings[1] &&
-                                 FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelout))
+                        else if (Settings.ReelingSettings[1] && FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelout))
                         {
                             num18 = 1f;
                         }
@@ -1873,8 +1804,7 @@ public class HERO : MonoBehaviour
 
                         num18 = Mathf.Clamp(num18, -0.8f, 0.8f);
                         var num19 = 1f + num18;
-                        var vector16 = Vector3.RotateTowards(vector15, baseRigidBody.velocity, 1.53938f * num19,
-                            1.53938f * num19);
+                        var vector16 = Vector3.RotateTowards(vector15, baseRigidBody.velocity, 1.53938f * num19, 1.53938f * num19);
                         vector16.Normalize();
                         baseRigidBody.velocity = vector16 * num17;
                     }
@@ -1884,13 +1814,11 @@ public class HERO : MonoBehaviour
                         baseRigidBody.AddForce(-baseRigidBody.velocity, ForceMode.VelocityChange);
                         var vector17 = bulletRight.transform.position - baseTransform.position;
                         var num21 = 0f;
-                        if (Settings.ReelingSettings[0] &&
-                            FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
+                        if (Settings.ReelingSettings[0] && FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelin))
                         {
                             num21 = -1f;
                         }
-                        else if (Settings.ReelingSettings[1] &&
-                                 FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelout))
+                        else if (Settings.ReelingSettings[1] && FengGameManagerMKII.inputRC.isInputHuman(InputCodeRC.reelout))
                         {
                             num21 = 1f;
                         }
@@ -1901,14 +1829,12 @@ public class HERO : MonoBehaviour
 
                         num21 = Mathf.Clamp(num21, -0.8f, 0.8f);
                         var num22 = 1f + num21;
-                        var vector18 = Vector3.RotateTowards(vector17, baseRigidBody.velocity, 1.53938f * num22,
-                            1.53938f * num22);
+                        var vector18 = Vector3.RotateTowards(vector17, baseRigidBody.velocity, 1.53938f * num22, 1.53938f * num22);
                         vector18.Normalize();
                         baseRigidBody.velocity = vector18 * num20;
                     }
 
-                    if (state == HERO_STATE.Attack &&
-                        (attackAnimation == "attack5" || attackAnimation == "special_petra") && baseAnimation[attackAnimation].normalizedTime > 0.4f && !attackMove)
+                    if (state == HERO_STATE.Attack && (attackAnimation == "attack5" || attackAnimation == "special_petra") && baseAnimation[attackAnimation].normalizedTime > 0.4f && !attackMove)
                     {
                         attackMove = true;
                         if (launchPointRight.magnitude > 0f)
@@ -1944,14 +1870,12 @@ public class HERO : MonoBehaviour
                     var flag7 = false;
                     if (bulletLeft != null || bulletRight != null)
                     {
-                        if (bulletLeft != null &&
-                            bulletLeft.transform.position.y > gameObject.transform.position.y && isLaunchLeft && bulletLeft.GetComponent<Bullet>().isHooked())
+                        if (bulletLeft != null && bulletLeft.transform.position.y > gameObject.transform.position.y && isLaunchLeft && bulletLeft.GetComponent<Bullet>().isHooked())
                         {
                             flag7 = true;
                         }
 
-                        if (bulletRight != null &&
-                            bulletRight.transform.position.y > gameObject.transform.position.y && isLaunchRight && bulletRight.GetComponent<Bullet>().isHooked())
+                        if (bulletRight != null && bulletRight.transform.position.y > gameObject.transform.position.y && isLaunchRight && bulletRight.GetComponent<Bullet>().isHooked())
                         {
                             flag7 = true;
                         }
@@ -1970,14 +1894,11 @@ public class HERO : MonoBehaviour
                     {
                         if (currentSpeed > 10f)
                         {
-                            currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
-                                currentCamera.GetComponent<Camera>().fieldOfView, Mathf.Min(100f, currentSpeed + 40f),
-                                0.1f);
+                            currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCamera.GetComponent<Camera>().fieldOfView, Mathf.Min(100f, currentSpeed + 40f), 0.1f);
                         }
                         else
                         {
-                            currentCamera.GetComponent<Camera>().fieldOfView =
-                                Mathf.Lerp(currentCamera.GetComponent<Camera>().fieldOfView, 50f, 0.1f);
+                            currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCamera.GetComponent<Camera>().fieldOfView, 50f, 0.1f);
                         }
                     }
                     else
@@ -1988,8 +1909,7 @@ public class HERO : MonoBehaviour
                     if (flag2)
                     {
                         useGas(useGasSpeed * Time.deltaTime);
-                        if (!smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE &&
-                            photonView.isMine)
+                        if (!smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
                         {
                             object[] parameters = { true };
                             photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
@@ -1999,8 +1919,7 @@ public class HERO : MonoBehaviour
                     }
                     else
                     {
-                        if (smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE &&
-                            photonView.isMine)
+                        if (smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
                         {
                             object[] objArray3 = { false };
                             photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray3);
@@ -2047,8 +1966,7 @@ public class HERO : MonoBehaviour
             str = str + (int)(Mathf.Atan2(vector2.x, vector2.z) * 57.29578f);
         }
 
-        str = str + "\nfacingDirection:" + (int)facingDirection + "\nActual facingDirection:" +
-              (int)transform.rotation.eulerAngles.y + "\nState:" + state + "\n\n\n\n\n";
+        str = str + "\nfacingDirection:" + (int)facingDirection + "\nActual facingDirection:" + (int)transform.rotation.eulerAngles.y + "\nState:" + state + "\n\n\n\n\n";
         if (state == HERO_STATE.Attack)
         {
             targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
@@ -2136,8 +2054,7 @@ public class HERO : MonoBehaviour
     private void getOffHorse()
     {
         playAnimation("horse_getoff");
-        rigidbody.AddForce(Vector3.up * 10f - transform.forward * 2f - transform.right * 1f,
-            ForceMode.VelocityChange);
+        rigidbody.AddForce(Vector3.up * 10f - transform.forward * 2f - transform.right * 1f, ForceMode.VelocityChange);
         unmounted();
     }
 
@@ -2150,8 +2067,7 @@ public class HERO : MonoBehaviour
 
     public void getSupply()
     {
-        if ((animation.IsPlaying(standAnimation) || animation.IsPlaying("run") || animation.IsPlaying("run_sasha")) &&
-            (currentBladeSta != totalBladeSta || currentBladeNum != totalBladeNum || currentGas != totalGas || leftBulletLeft != bulletMAX || rightBulletLeft != bulletMAX))
+        if ((animation.IsPlaying(standAnimation) || animation.IsPlaying("run") || animation.IsPlaying("run_sasha")) && (currentBladeSta != totalBladeSta || currentBladeNum != totalBladeNum || currentGas != totalGas || leftBulletLeft != bulletMAX || rightBulletLeft != bulletMAX))
         {
             state = HERO_STATE.FillGas;
             crossFade("supply", 0.1f);
@@ -2195,8 +2111,7 @@ public class HERO : MonoBehaviour
     {
         var transform = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head");
         var transform2 = this.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck");
-        var x = Mathf.Sqrt((gunTarget.x - this.transform.position.x) * (gunTarget.x - this.transform.position.x) +
-                             (gunTarget.z - this.transform.position.z) * (gunTarget.z - this.transform.position.z));
+        var x = Mathf.Sqrt((gunTarget.x - this.transform.position.x) * (gunTarget.x - this.transform.position.x) + (gunTarget.z - this.transform.position.z) * (gunTarget.z - this.transform.position.z));
         targetHeadRotation = transform.rotation;
         var vector5 = gunTarget - this.transform.position;
         var current = -Mathf.Atan2(vector5.z, vector5.x) * 57.29578f;
@@ -2205,8 +2120,7 @@ public class HERO : MonoBehaviour
         var y = transform2.position.y - gunTarget.y;
         var num5 = Mathf.Atan2(y, x) * 57.29578f;
         num5 = Mathf.Clamp(num5, -40f, 30f);
-        targetHeadRotation = Quaternion.Euler(transform.rotation.eulerAngles.x + num5,
-            transform.rotation.eulerAngles.y + num3, transform.rotation.eulerAngles.z);
+        targetHeadRotation = Quaternion.Euler(transform.rotation.eulerAngles.x + num5, transform.rotation.eulerAngles.y + num3, transform.rotation.eulerAngles.z);
         oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 60f);
         transform.rotation = oldHeadRotation;
     }
@@ -2260,8 +2174,7 @@ public class HERO : MonoBehaviour
         LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
         LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
         LayerMask mask3 = mask2 | mask;
-        return Physics.Raycast(gameObject.transform.position + gameObject.transform.up * 1f,
-            gameObject.transform.forward, 1f, mask3.value);
+        return Physics.Raycast(gameObject.transform.position + gameObject.transform.up * 1f, gameObject.transform.forward, 1f, mask3.value);
     }
 
     public bool IsGrounded()
@@ -2292,8 +2205,7 @@ public class HERO : MonoBehaviour
         LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
         LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
         LayerMask mask3 = mask2 | mask;
-        return Physics.Raycast(gameObject.transform.position + gameObject.transform.up * 3f,
-            gameObject.transform.forward, 1.2f, mask3.value);
+        return Physics.Raycast(gameObject.transform.position + gameObject.transform.up * 3f, gameObject.transform.forward, 1.2f, mask3.value);
     }
 
     [RPC]
@@ -2311,29 +2223,25 @@ public class HERO : MonoBehaviour
                 myNetWorkName.transform.localPosition = Vector3.up * Screen.height * 2f;
             }
 
-            var start = new Vector3(baseTransform.position.x, baseTransform.position.y + 2f,
-                baseTransform.position.z);
+            var start = new Vector3(baseTransform.position.x, baseTransform.position.y + 2f, baseTransform.position.z);
             var maincamera = this.maincamera;
             LayerMask mask = 1 << LayerMask.NameToLayer("Ground");
             LayerMask mask2 = 1 << LayerMask.NameToLayer("EnemyBox");
             LayerMask mask3 = mask2 | mask;
-            if (Vector3.Angle(maincamera.transform.forward, start - maincamera.transform.position) > 90f ||
-                Physics.Linecast(start, maincamera.transform.position, mask3))
+            if (Vector3.Angle(maincamera.transform.forward, start - maincamera.transform.position) > 90f || Physics.Linecast(start, maincamera.transform.position, mask3))
             {
                 myNetWorkName.transform.localPosition = Vector3.up * Screen.height * 2f;
             }
             else
             {
                 Vector2 vector2 = this.maincamera.GetComponent<Camera>().WorldToScreenPoint(start);
-                myNetWorkName.transform.localPosition = new Vector3((int)(vector2.x - Screen.width * 0.5f),
-                    (int)(vector2.y - Screen.height * 0.5f), 0f);
+                myNetWorkName.transform.localPosition = new Vector3((int)(vector2.x - Screen.width * 0.5f), (int)(vector2.y - Screen.height * 0.5f), 0f);
             }
         }
 
         if (!titanForm && !isCannon)
         {
-            if (Settings.CameraTiltSetting &&
-                (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine))
+            if (Settings.CameraTiltSetting && (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine))
             {
                 Quaternion quaternion2;
                 var zero = Vector3.zero;
@@ -2369,18 +2277,14 @@ public class HERO : MonoBehaviour
                     var to = from + vector7;
                     var num = Vector3.Angle(vector5 - baseTransform.position, baseRigidBody.velocity) * 0.005f;
                     var vector9 = maincamera.transform.right + vector7.normalized;
-                    quaternion2 = Quaternion.Euler(maincamera.transform.rotation.eulerAngles.x,
-                        maincamera.transform.rotation.eulerAngles.y,
-                        vector9.magnitude >= 1f ? -Vector3.Angle(@from, to) * num : Vector3.Angle(@from, to) * num);
+                    quaternion2 = Quaternion.Euler(maincamera.transform.rotation.eulerAngles.x, maincamera.transform.rotation.eulerAngles.y, vector9.magnitude >= 1f ? -Vector3.Angle(@from, to) * num : Vector3.Angle(@from, to) * num);
                 }
                 else
                 {
-                    quaternion2 = Quaternion.Euler(maincamera.transform.rotation.eulerAngles.x,
-                        maincamera.transform.rotation.eulerAngles.y, 0f);
+                    quaternion2 = Quaternion.Euler(maincamera.transform.rotation.eulerAngles.x, maincamera.transform.rotation.eulerAngles.y, 0f);
                 }
 
-                maincamera.transform.rotation =
-                    Quaternion.Lerp(maincamera.transform.rotation, quaternion2, Time.deltaTime * 2f);
+                maincamera.transform.rotation = Quaternion.Lerp(maincamera.transform.rotation, quaternion2, Time.deltaTime * 2f);
             }
 
             if (state == HERO_STATE.Grab && titanWhoGrabMe != null)
@@ -2501,6 +2405,7 @@ public class HERO : MonoBehaviour
                 }
             }
         }
+
         if (left)
         {
             isLaunchLeft = true;
@@ -2642,8 +2547,7 @@ public class HERO : MonoBehaviour
         var num4 = Mathf.Sqrt(y * y + x * x);
         handL.localRotation = Quaternion.Euler(90f, 0f, 0f);
         forearmL.localRotation = Quaternion.Euler(-90f, 0f, 0f);
-        upperarmL.rotation =
-            Quaternion.Euler(0f, 90f + Mathf.Atan2(y, x) * 57.29578f, -Mathf.Atan2(num2, num4) * 57.29578f);
+        upperarmL.rotation = Quaternion.Euler(0f, 90f + Mathf.Atan2(y, x) * 57.29578f, -Mathf.Atan2(num2, num4) * 57.29578f);
     }
 
     public void loadskin()
@@ -2674,9 +2578,11 @@ public class HERO : MonoBehaviour
                         {
                             url += Settings.HumanSkinsList[Settings.HumanSkinsCurrentSetSetting][i] + (i != 12 ? "," : "");
                         }
+
                         StartCoroutine(loadskinE(-1, url));
                         return;
                     }
+
                 case 2:
                     {
                         if (Settings.HumanSkinsCountSetting <= 0) return;
@@ -2700,6 +2606,7 @@ public class HERO : MonoBehaviour
 
                             photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, viewID, url);
                         }
+
                         return;
                     }
             }
@@ -2745,6 +2652,7 @@ public class HERO : MonoBehaviour
                         {
                             hairRenderer.material = CharacterMaterials.materials[setup.myCostume.hairInfo.texture];
                         }
+
                         hairRenderer.material.mainTexture = hairSkin;
                         FengGameManagerMKII.linkHash[0].Add(skins[1], hairRenderer.material);
                         hairRenderer.material = (Material)FengGameManagerMKII.linkHash[0][skins[1]];
@@ -2864,6 +2772,7 @@ public class HERO : MonoBehaviour
                             {
                                 otherRenderer.material = CharacterMaterials.materials[setup.myCostume.hairInfo.texture];
                             }
+
                             otherRenderer.material.mainTexture = hairSkin;
                             FengGameManagerMKII.linkHash[0].Add(skins[1], otherRenderer.material);
                             otherRenderer.material = (Material)FengGameManagerMKII.linkHash[0][skins[1]];
@@ -3341,6 +3250,7 @@ public class HERO : MonoBehaviour
                         leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                         rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     }
+
                     leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 }
@@ -3352,6 +3262,7 @@ public class HERO : MonoBehaviour
                     leftbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                     rightbladetrail2.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 }
+
                 leftbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
                 rightbladetrail.MyMaterial = (Material)FengGameManagerMKII.linkHash[0][skins[12]];
             }
@@ -3425,8 +3336,7 @@ public class HERO : MonoBehaviour
     }
 
     [RPC]
-    public void netDie(Vector3 v, bool isBite, int viewID = -1, string titanName = "", bool killByTitan = true,
-        PhotonMessageInfo info = null)
+    public void netDie(Vector3 v, bool isBite, int viewID = -1, string titanName = "", bool killByTitan = true, PhotonMessageInfo info = null)
     {
         if (photonView.isMine && info != null && IN_GAME_MAIN_CAMERA.gamemode != GAMEMODE.BOSS_FIGHT_CT)
         {
@@ -3438,8 +3348,7 @@ public class HERO : MonoBehaviour
 
             if (!info.sender.isLocal && !info.sender.isMasterClient)
             {
-                if (info.sender.customProperties[PhotonPlayerProperty.name] == null ||
-                    info.sender.customProperties[PhotonPlayerProperty.isTitan] == null)
+                if (info.sender.customProperties[PhotonPlayerProperty.name] == null || info.sender.customProperties[PhotonPlayerProperty.isTitan] == null)
                 {
                     InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
                     return;
@@ -3548,9 +3457,7 @@ public class HERO : MonoBehaviour
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.deaths,
-                RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) +
-                1);
+            propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             object[] parameters = { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
@@ -3559,24 +3466,15 @@ public class HERO : MonoBehaviour
                 var view2 = PhotonView.Find(viewID);
                 if (view2 != null)
                 {
-                    FengGameManagerMKII.FGM.sendKillInfo(killByTitan,
-                        "[FFC000][" + info.sender.ID + "][FFFFFF]" +
-                        RCextensions.returnStringFromObject(view2.owner.customProperties[PhotonPlayerProperty.name]),
-                        false,
-                        RCextensions.returnStringFromObject(
-                            PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
+                    FengGameManagerMKII.FGM.sendKillInfo(killByTitan, "[FFC000][" + info.sender.ID + "][FFFFFF]" + RCextensions.returnStringFromObject(view2.owner.customProperties[PhotonPlayerProperty.name]), false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
                     propertiesToSet = new Hashtable();
-                    propertiesToSet.Add(PhotonPlayerProperty.kills,
-                        RCextensions.returnIntFromObject(view2.owner.customProperties[PhotonPlayerProperty.kills]) + 1);
+                    propertiesToSet.Add(PhotonPlayerProperty.kills, RCextensions.returnIntFromObject(view2.owner.customProperties[PhotonPlayerProperty.kills]) + 1);
                     view2.owner.SetCustomProperties(propertiesToSet);
                 }
             }
             else
             {
-                FengGameManagerMKII.FGM.sendKillInfo(!(titanName == string.Empty),
-                    "[FFC000][" + info.sender.ID + "][FFFFFF]" + titanName, false,
-                    RCextensions.returnStringFromObject(
-                        PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
+                FengGameManagerMKII.FGM.sendKillInfo(!(titanName == string.Empty), "[FFC000][" + info.sender.ID + "][FFFFFF]" + titanName, false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
         }
 
@@ -3600,8 +3498,7 @@ public class HERO : MonoBehaviour
 
             if (!info.sender.isLocal && !info.sender.isMasterClient)
             {
-                if (info.sender.customProperties[PhotonPlayerProperty.name] == null ||
-                    info.sender.customProperties[PhotonPlayerProperty.isTitan] == null)
+                if (info.sender.customProperties[PhotonPlayerProperty.name] == null || info.sender.customProperties[PhotonPlayerProperty.isTitan] == null)
                 {
                     InRoomChat.SystemMessageLocal("Unusual Kill from", info.sender);
                     return;
@@ -3689,32 +3586,22 @@ public class HERO : MonoBehaviour
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.deaths,
-                (int)PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths] + 1);
+            propertiesToSet.Add(PhotonPlayerProperty.deaths, (int)PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths] + 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             if (viewID != -1)
             {
                 var view2 = PhotonView.Find(viewID);
                 if (view2 != null)
                 {
-                    FengGameManagerMKII.FGM.sendKillInfo(true,
-                        "[FFC000][" + info.sender.ID + "][FFFFFF]" +
-                        RCextensions.returnStringFromObject(view2.owner.customProperties[PhotonPlayerProperty.name]),
-                        false,
-                        RCextensions.returnStringFromObject(
-                            PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
+                    FengGameManagerMKII.FGM.sendKillInfo(true, "[FFC000][" + info.sender.ID + "][FFFFFF]" + RCextensions.returnStringFromObject(view2.owner.customProperties[PhotonPlayerProperty.name]), false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
                     propertiesToSet = new Hashtable();
-                    propertiesToSet.Add(PhotonPlayerProperty.kills,
-                        RCextensions.returnIntFromObject(view2.owner.customProperties[PhotonPlayerProperty.kills]) + 1);
+                    propertiesToSet.Add(PhotonPlayerProperty.kills, RCextensions.returnIntFromObject(view2.owner.customProperties[PhotonPlayerProperty.kills]) + 1);
                     view2.owner.SetCustomProperties(propertiesToSet);
                 }
             }
             else
             {
-                FengGameManagerMKII.FGM.sendKillInfo(true, "[FFC000][" + info.sender.ID + "][FFFFFF]" + titanName,
-                    false,
-                    RCextensions.returnStringFromObject(
-                        PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
+                FengGameManagerMKII.FGM.sendKillInfo(true, "[FFC000][" + info.sender.ID + "][FFFFFF]" + titanName, false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
 
             object[] parameters = { !(titanName == string.Empty) ? 1 : 0 };
@@ -3813,9 +3700,7 @@ public class HERO : MonoBehaviour
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             propertiesToSet = new Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.deaths,
-                RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) +
-                1);
+            propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             object[] parameters = { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
@@ -3824,22 +3709,15 @@ public class HERO : MonoBehaviour
                 var view = PhotonView.Find(viewID);
                 if (view != null)
                 {
-                    FengGameManagerMKII.FGM.sendKillInfo(killByTitan,
-                        RCextensions.returnStringFromObject(view.owner.customProperties[PhotonPlayerProperty.name]),
-                        false,
-                        RCextensions.returnStringFromObject(
-                            PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
+                    FengGameManagerMKII.FGM.sendKillInfo(killByTitan, RCextensions.returnStringFromObject(view.owner.customProperties[PhotonPlayerProperty.name]), false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
                     propertiesToSet = new Hashtable();
-                    propertiesToSet.Add(PhotonPlayerProperty.kills,
-                        RCextensions.returnIntFromObject(view.owner.customProperties[PhotonPlayerProperty.kills]) + 1);
+                    propertiesToSet.Add(PhotonPlayerProperty.kills, RCextensions.returnIntFromObject(view.owner.customProperties[PhotonPlayerProperty.kills]) + 1);
                     view.owner.SetCustomProperties(propertiesToSet);
                 }
             }
             else
             {
-                FengGameManagerMKII.FGM.sendKillInfo(!(titanName == string.Empty), titanName, false,
-                    RCextensions.returnStringFromObject(
-                        PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
+                FengGameManagerMKII.FGM.sendKillInfo(!(titanName == string.Empty), titanName, false, RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name]), 0);
             }
         }
 
@@ -3871,9 +3749,7 @@ public class HERO : MonoBehaviour
     {
         foreach (var obj2 in GameObject.FindGameObjectsWithTag("titan"))
         {
-            if (Vector3.Distance(obj2.transform.position, transform.position) < 50f &&
-                Vector3.Angle(obj2.transform.forward, transform.position - obj2.transform.position) < 90f &&
-                obj2.GetComponent<TITAN>() != null)
+            if (Vector3.Distance(obj2.transform.position, transform.position) < 50f && Vector3.Angle(obj2.transform.forward, transform.position - obj2.transform.position) < 90f && obj2.GetComponent<TITAN>() != null)
             {
                 obj2.GetComponent<TITAN>().beLaughAttacked();
             }
@@ -3921,8 +3797,7 @@ public class HERO : MonoBehaviour
     {
         foreach (var obj2 in GameObject.FindGameObjectsWithTag("titan"))
         {
-            if (Vector3.Distance(obj2.transform.position, transform.position) < distance &&
-                obj2.GetComponent<TITAN>() != null)
+            if (Vector3.Distance(obj2.transform.position, transform.position) < distance && obj2.GetComponent<TITAN>() != null)
             {
                 obj2.GetComponent<TITAN>().beTauntedBy(gameObject, tauntTime);
             }
@@ -3958,13 +3833,11 @@ public class HERO : MonoBehaviour
 
                 if (FengGameManagerMKII.titanVariables.ContainsKey(strArray[1]))
                 {
-                    FengGameManagerMKII.titanVariables[strArray[1]] =
-                        PhotonView.Find(viewID).gameObject.GetComponent<TITAN>();
+                    FengGameManagerMKII.titanVariables[strArray[1]] = PhotonView.Find(viewID).gameObject.GetComponent<TITAN>();
                 }
                 else
                 {
-                    FengGameManagerMKII.titanVariables.Add(strArray[1],
-                        PhotonView.Find(viewID).gameObject.GetComponent<TITAN>());
+                    FengGameManagerMKII.titanVariables.Add(strArray[1], PhotonView.Find(viewID).gameObject.GetComponent<TITAN>());
                 }
 
                 event2.checkEvent();
@@ -4095,8 +3968,7 @@ public class HERO : MonoBehaviour
     public IEnumerator reloadSky()
     {
         yield return new WaitForSeconds(0.5f);
-        if (FengGameManagerMKII.skyMaterial != null &&
-            Camera.main.GetComponent<Skybox>().material != FengGameManagerMKII.skyMaterial)
+        if (FengGameManagerMKII.skyMaterial != null && Camera.main.GetComponent<Skybox>().material != FengGameManagerMKII.skyMaterial)
         {
             Camera.main.GetComponent<Skybox>().material = FengGameManagerMKII.skyMaterial;
         }
@@ -4130,8 +4002,7 @@ public class HERO : MonoBehaviour
         var num4 = Mathf.Sqrt(y * y + x * x);
         handR.localRotation = Quaternion.Euler(-90f, 0f, 0f);
         forearmR.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        upperarmR.rotation =
-            Quaternion.Euler(180f, 90f + Mathf.Atan2(y, x) * 57.29578f, Mathf.Atan2(num2, num4) * 57.29578f);
+        upperarmR.rotation = Quaternion.Euler(180f, 90f + Mathf.Atan2(y, x) * 57.29578f, Mathf.Atan2(num2, num4) * 57.29578f);
     }
 
     [RPC]
@@ -4188,8 +4059,7 @@ public class HERO : MonoBehaviour
                 var normal = bulletLeft.transform.position - bulletRight.transform.position;
                 if (normal.sqrMagnitude < 4f)
                 {
-                    var vector2 = (bulletLeft.transform.position + bulletRight.transform.position) * 0.5f -
-                                      transform.position;
+                    var vector2 = (bulletLeft.transform.position + bulletRight.transform.position) * 0.5f - transform.position;
                     facingDirection = Mathf.Atan2(vector2.x, vector2.z) * 57.29578f;
                     if (useGun && state != HERO_STATE.Attack)
                     {
@@ -4325,8 +4195,7 @@ public class HERO : MonoBehaviour
                 var num = 0;
                 if (photonView.owner.customProperties[PhotonPlayerProperty.RCteam] != null)
                 {
-                    num = RCextensions.returnIntFromObject(
-                        photonView.owner.customProperties[PhotonPlayerProperty.RCteam]);
+                    num = RCextensions.returnIntFromObject(photonView.owner.customProperties[PhotonPlayerProperty.RCteam]);
                 }
 
                 if (val != num)
@@ -4387,8 +4256,7 @@ public class HERO : MonoBehaviour
             skillCDLast = 120f;
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
             {
-                if (LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan ||
-                    LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.RACING || LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.PVP_CAPTURE || LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.TROST)
+                if (LevelInfo.getInfo(FengGameManagerMKII.level).teamTitan || LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.RACING || LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.PVP_CAPTURE || LevelInfo.getInfo(FengGameManagerMKII.level).type == GAMEMODE.TROST)
                 {
                     skillId = "petra";
                     skillCDLast = 1f;
@@ -4398,10 +4266,7 @@ public class HERO : MonoBehaviour
                     var num = 0;
                     foreach (var player in PhotonNetwork.playerList)
                     {
-                        if (RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.isTitan]) ==
-                            1 && RCextensions
-                                .returnStringFromObject(player.customProperties[PhotonPlayerProperty.character])
-                                .ToUpper() == "EREN")
+                        if (RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.isTitan]) == 1 && RCextensions.returnStringFromObject(player.customProperties[PhotonPlayerProperty.character]).ToUpper() == "EREN")
                         {
                             num++;
                         }
@@ -4554,15 +4419,13 @@ public class HERO : MonoBehaviour
         {
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
             {
-                var obj2 = (GameObject)Instantiate(Resources.Load("FX/flareBullet" + type), transform.position,
-                    transform.rotation);
+                var obj2 = (GameObject)Instantiate(Resources.Load("FX/flareBullet" + type), transform.position, transform.rotation);
                 obj2.GetComponent<FlareMovement>().dontShowHint();
                 Destroy(obj2, 25f);
             }
             else
             {
-                PhotonNetwork.Instantiate("FX/flareBullet" + type, transform.position, transform.rotation, 0)
-                    .GetComponent<FlareMovement>().dontShowHint();
+                PhotonNetwork.Instantiate("FX/flareBullet" + type, transform.position, transform.rotation, 0).GetComponent<FlareMovement>().dontShowHint();
             }
         }
     }
@@ -4614,37 +4477,32 @@ public class HERO : MonoBehaviour
                 switch (Settings.SpeedometerSetting)
                 {
                     case 1:
-                        str = str + "\n" +
-                              currentSpeed.ToString("F1") + " U/S";
+                        str = str + "\n" + currentSpeed.ToString("F1") + " U/S";
                         break;
 
                     case 2:
                         if (!useGun)
                         {
-                            str = str + "\n" +
-                                  (hitDamage / 100).ToString("F1") + "K";
+                            str = str + "\n" + (hitDamage / 100).ToString("F1") + "K";
                         }
                         else
                         {
                             switch (Settings.SpeedometerAHSSSetting)
                             {
                                 case 0:
-                                    str = str + "\n" +
-                                          (singleShotDamage / 100).ToString("F1") + "K\n" +
-                                          (doubleShotDamage / 100f).ToString("F1") + "K";
+                                    str = str + "\n" + (singleShotDamage / 100).ToString("F1") + "K\n" + (doubleShotDamage / 100f).ToString("F1") + "K";
                                     break;
 
                                 case 1:
-                                    str = str + "\n" +
-                                          (singleShotDamage / 100).ToString("F1") + "K";
+                                    str = str + "\n" + (singleShotDamage / 100).ToString("F1") + "K";
                                     break;
 
                                 case 2:
-                                    str = str + "\n" +
-                                          (doubleShotDamage / 100f).ToString("F1") + "K";
+                                    str = str + "\n" + (doubleShotDamage / 100f).ToString("F1") + "K";
                                     break;
                             }
                         }
+
                         break;
                 }
 
@@ -4675,17 +4533,13 @@ public class HERO : MonoBehaviour
                 vector5.Normalize();
                 vector4 = vector4 * 1000000f;
                 vector5 = vector5 * 1000000f;
-                if (Physics.Linecast(baseTransform.position + vector2, baseTransform.position + vector2 + vector4,
-                    out hit2, mask3.value))
+                if (Physics.Linecast(baseTransform.position + vector2, baseTransform.position + vector2 + vector4, out hit2, mask3.value))
                 {
                     var obj12 = crossL1;
                     obj12.transform.localPosition = currentCamera.WorldToScreenPoint(hit2.point);
                     var transform14 = obj12.transform;
                     transform14.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
-                    obj12.transform.localRotation = Quaternion.Euler(0f, 0f,
-                        Mathf.Atan2(obj12.transform.localPosition.y - (Input.mousePosition.y - Screen.height * 0.5f),
-                            obj12.transform.localPosition.x - (Input.mousePosition.x - Screen.width * 0.5f)) *
-                        57.29578f + 180f);
+                    obj12.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(obj12.transform.localPosition.y - (Input.mousePosition.y - Screen.height * 0.5f), obj12.transform.localPosition.x - (Input.mousePosition.x - Screen.width * 0.5f)) * 57.29578f + 180f);
                     var obj13 = crossL2;
                     obj13.transform.localPosition = obj12.transform.localPosition;
                     obj13.transform.localRotation = obj12.transform.localRotation;
@@ -4701,17 +4555,13 @@ public class HERO : MonoBehaviour
                     }
                 }
 
-                if (Physics.Linecast(baseTransform.position + vector3, baseTransform.position + vector3 + vector5,
-                    out hit2, mask3.value))
+                if (Physics.Linecast(baseTransform.position + vector3, baseTransform.position + vector3 + vector5, out hit2, mask3.value))
                 {
                     var obj14 = crossR1;
                     obj14.transform.localPosition = currentCamera.WorldToScreenPoint(hit2.point);
                     var transform17 = obj14.transform;
                     transform17.localPosition -= new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
-                    obj14.transform.localRotation = Quaternion.Euler(0f, 0f,
-                        Mathf.Atan2(obj14.transform.localPosition.y - (Input.mousePosition.y - Screen.height * 0.5f),
-                            obj14.transform.localPosition.x - (Input.mousePosition.x - Screen.width * 0.5f)) *
-                        57.29578f);
+                    obj14.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(obj14.transform.localPosition.y - (Input.mousePosition.y - Screen.height * 0.5f), obj14.transform.localPosition.x - (Input.mousePosition.x - Screen.width * 0.5f)) * 57.29578f);
                     var obj15 = crossR2;
                     obj15.transform.localPosition = obj14.transform.localPosition;
                     obj15.transform.localRotation = obj14.transform.localRotation;
@@ -4871,11 +4721,9 @@ public class HERO : MonoBehaviour
             speed = (int)(speed * 0.1f);
             speed = Mathf.Clamp(speed, 40f, 150f);
             iTween.Stop(target);
-            object[] args =
-                {"x", speed, "y", speed, "z", speed, "easetype", iTween.EaseType.easeOutElastic, "time", 1f};
+            object[] args = { "x", speed, "y", speed, "z", speed, "easetype", iTween.EaseType.easeOutElastic, "time", 1f };
             iTween.ScaleTo(target, iTween.Hash(args));
-            object[] objArray2 =
-                {"x", 0, "y", 0, "z", 0, "easetype", iTween.EaseType.easeInBounce, "time", 0.5f, "delay", 2f};
+            object[] objArray2 = { "x", 0, "y", 0, "z", 0, "easetype", iTween.EaseType.easeInBounce, "time", 0.5f, "delay", 2f };
             iTween.ScaleTo(target, iTween.Hash(objArray2));
         }
     }
@@ -4920,19 +4768,11 @@ public class HERO : MonoBehaviour
             var strArray = settings.Split(',');
             if (strArray.Length > 15)
             {
-                myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1],
-                    new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]),
-                        Convert.ToSingle(strArray[14])),
-                    new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[16]),
-                        Convert.ToSingle(strArray[17]), Convert.ToSingle(strArray[18])), 0);
+                myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1], new Vector3(Convert.ToSingle(strArray[12]), Convert.ToSingle(strArray[13]), Convert.ToSingle(strArray[14])), new Quaternion(Convert.ToSingle(strArray[15]), Convert.ToSingle(strArray[16]), Convert.ToSingle(strArray[17]), Convert.ToSingle(strArray[18])), 0);
             }
             else
             {
-                myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1],
-                    new Vector3(Convert.ToSingle(strArray[2]), Convert.ToSingle(strArray[3]),
-                        Convert.ToSingle(strArray[4])),
-                    new Quaternion(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]),
-                        Convert.ToSingle(strArray[7]), Convert.ToSingle(strArray[8])), 0);
+                myCannon = PhotonNetwork.Instantiate("RCAsset/" + strArray[1], new Vector3(Convert.ToSingle(strArray[2]), Convert.ToSingle(strArray[3]), Convert.ToSingle(strArray[4])), new Quaternion(Convert.ToSingle(strArray[5]), Convert.ToSingle(strArray[6]), Convert.ToSingle(strArray[7]), Convert.ToSingle(strArray[8])), 0);
             }
 
             myCannonBase = myCannon.transform;
@@ -4940,8 +4780,7 @@ public class HERO : MonoBehaviour
             isCannon = true;
             myCannon.GetComponent<Cannon>().myHero = this;
             myCannonRegion = null;
-            Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>()
-                .setMainObject(myCannon.transform.Find("Barrel").Find("FiringPoint").gameObject);
+            Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(myCannon.transform.Find("Barrel").Find("FiringPoint").gameObject);
             Camera.main.fieldOfView = 55f;
             photonView.RPC("SetMyCannon", PhotonTargets.OthersBuffered, myCannon.GetPhotonView().viewID);
             skillCDLastCannon = skillCDLast;
@@ -4953,11 +4792,9 @@ public class HERO : MonoBehaviour
     private void Start()
     {
         FengGameManagerMKII.FGM.addHero(this);
-        if ((LevelInfo.getInfo(FengGameManagerMKII.level).horse || RCSettings.horseMode == 1) &&
-            IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
+        if ((LevelInfo.getInfo(FengGameManagerMKII.level).horse || RCSettings.horseMode == 1) && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
         {
-            myHorse = PhotonNetwork.Instantiate("horse", baseTransform.position + Vector3.up * 5f,
-                baseTransform.rotation, 0);
+            myHorse = PhotonNetwork.Instantiate("horse", baseTransform.position + Vector3.up * 5f, baseTransform.rotation, 0);
             myHorse.GetComponent<Horse>().myHero = gameObject;
             myHorse.GetComponent<TITAN_CONTROLLER>().isHorse = true;
         }
@@ -5007,16 +4844,14 @@ public class HERO : MonoBehaviour
                 }
 
                 GetComponent<SmoothSyncMovement>().PhotonCamera = true;
-                photonView.RPC("SetMyPhotonCamera", PhotonTargets.OthersBuffered,
-                    PlayerPrefs.GetFloat("cameraDistance") + 0.3f);
+                photonView.RPC("SetMyPhotonCamera", PhotonTargets.OthersBuffered, PlayerPrefs.GetFloat("cameraDistance") + 0.3f);
             }
             else
             {
                 var flag2 = false;
                 if (photonView.owner.customProperties[PhotonPlayerProperty.RCteam] != null)
                 {
-                    switch (RCextensions.returnIntFromObject(
-                        photonView.owner.customProperties[PhotonPlayerProperty.RCteam]))
+                    switch (RCextensions.returnIntFromObject(photonView.owner.customProperties[PhotonPlayerProperty.RCteam]))
                     {
                         case 1:
                             flag2 = true;
@@ -5052,25 +4887,18 @@ public class HERO : MonoBehaviour
                 }
             }
 
-            var str =
-                RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.guildName]);
+            var str = RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.guildName]);
             if (str != string.Empty)
             {
                 var component = myNetWorkName.GetComponent<UILabel>();
                 var text = component.text;
-                string[] strArray2 =
-                {
-                    text, "[FFFF00]", str, "\n[FFFFFF]",
-                    RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.name])
-                };
+                string[] strArray2 = { text, "[FFFF00]", str, "\n[FFFFFF]", RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.name]) };
                 component.text = string.Concat(strArray2);
             }
             else
             {
                 var label2 = myNetWorkName.GetComponent<UILabel>();
-                label2.text = label2.text +
-                              RCextensions.returnStringFromObject(
-                                  photonView.owner.customProperties[PhotonPlayerProperty.name]);
+                label2.text = label2.text + RCextensions.returnStringFromObject(photonView.owner.customProperties[PhotonPlayerProperty.name]);
             }
         }
 
@@ -5134,10 +4962,8 @@ public class HERO : MonoBehaviour
     {
         var transform = setup.part_blade_l.transform;
         var transform2 = setup.part_blade_r.transform;
-        var obj2 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_l"),
-            transform.position, transform.rotation);
-        var obj3 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_r"),
-            transform2.position, transform2.rotation);
+        var obj2 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_l"), transform.position, transform.rotation);
+        var obj3 = (GameObject)Instantiate(Resources.Load("Character_parts/character_blade_r"), transform2.position, transform2.rotation);
         obj2.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
         obj3.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
         var force = this.transform.forward + this.transform.up * 2f - this.transform.right;
@@ -5192,8 +5018,7 @@ public class HERO : MonoBehaviour
             {
                 if (titanForm && eren_titan != null)
                 {
-                    baseTransform.position = eren_titan.transform
-                        .Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position;
+                    baseTransform.position = eren_titan.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position;
                     gameObject.GetComponent<SmoothSyncMovement>().disabled = true;
                 }
                 else if (isCannon && myCannon != null)
@@ -5209,8 +5034,7 @@ public class HERO : MonoBehaviour
                         FengGameManagerMKII.FGM.ShowHUDInfoCenter("Press 'Cannon Mount' key to use Cannon.");
                         if (FengGameManagerMKII.inputRC.isInputCannonDown(InputCodeRC.cannonMount))
                         {
-                            myCannonRegion.photonView.RPC("RequestControlRPC", PhotonTargets.MasterClient,
-                                photonView.viewID);
+                            myCannonRegion.photonView.RPC("RequestControlRPC", PhotonTargets.MasterClient, photonView.viewID);
                         }
                     }
 
@@ -5218,18 +5042,14 @@ public class HERO : MonoBehaviour
                     {
                         if (skillId == "jean")
                         {
-                            if (state != HERO_STATE.Attack &&
-                                (inputManager.isInputDown[InputCode.attack0] ||
-                                 inputManager.isInputDown[InputCode.attack1]) && escapeTimes > 0 && !baseAnimation.IsPlaying("grabbed_jean"))
+                            if (state != HERO_STATE.Attack && (inputManager.isInputDown[InputCode.attack0] || inputManager.isInputDown[InputCode.attack1]) && escapeTimes > 0 && !baseAnimation.IsPlaying("grabbed_jean"))
                             {
                                 playAnimation("grabbed_jean");
                                 baseAnimation["grabbed_jean"].time = 0f;
                                 escapeTimes--;
                             }
 
-                            if (baseAnimation.IsPlaying("grabbed_jean") &&
-                                baseAnimation["grabbed_jean"].normalizedTime > 0.64f &&
-                                titanWhoGrabMe.GetComponent<TITAN>() != null)
+                            if (baseAnimation.IsPlaying("grabbed_jean") && baseAnimation["grabbed_jean"].normalizedTime > 0.64f && titanWhoGrabMe.GetComponent<TITAN>() != null)
                             {
                                 ungrabbed();
                                 baseRigidBody.velocity = Vector3.up * 30f;
@@ -5246,8 +5066,7 @@ public class HERO : MonoBehaviour
                                     }
                                     else
                                     {
-                                        PhotonView.Find(titanWhoGrabMeID).RPC("grabbedTargetEscape",
-                                            PhotonTargets.MasterClient);
+                                        PhotonView.Find(titanWhoGrabMeID).RPC("grabbedTargetEscape", PhotonTargets.MasterClient);
                                     }
                                 }
                             }
@@ -5255,8 +5074,7 @@ public class HERO : MonoBehaviour
                         else if (skillId == "eren")
                         {
                             showSkillCD();
-                            if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE ||
-                                IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE && !IN_GAME_MAIN_CAMERA.isPausing)
+                            if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE && !IN_GAME_MAIN_CAMERA.isPausing)
                             {
                                 calcSkillCD();
                                 calcFlareCD();
@@ -5288,8 +5106,7 @@ public class HERO : MonoBehaviour
                                             }
                                             else
                                             {
-                                                PhotonView.Find(titanWhoGrabMeID).photonView.RPC("grabbedTargetEscape",
-                                                    PhotonTargets.MasterClient);
+                                                PhotonView.Find(titanWhoGrabMeID).photonView.RPC("grabbedTargetEscape", PhotonTargets.MasterClient);
                                             }
                                         }
 
@@ -5345,22 +5162,19 @@ public class HERO : MonoBehaviour
 
                         if (grounded && (state == HERO_STATE.Idle || state == HERO_STATE.Slide))
                         {
-                            if (!(!inputManager.isInputDown[InputCode.jump] || baseAnimation.IsPlaying("jump") ||
-                                  baseAnimation.IsPlaying("horse_geton")))
+                            if (!(!inputManager.isInputDown[InputCode.jump] || baseAnimation.IsPlaying("jump") || baseAnimation.IsPlaying("horse_geton")))
                             {
                                 idle();
                                 crossFade("jump", 0.1f);
                                 sparks.enableEmission = false;
                             }
 
-                            if (FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount) &&
-                                !baseAnimation.IsPlaying("jump") && !baseAnimation.IsPlaying("horse_geton") && myHorse != null && !isMounted && Vector3.Distance(myHorse.transform.position, transform.position) < 15f)
+                            if (FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount) && !baseAnimation.IsPlaying("jump") && !baseAnimation.IsPlaying("horse_geton") && myHorse != null && !isMounted && Vector3.Distance(myHorse.transform.position, transform.position) < 15f)
                             {
                                 getOnHorse();
                             }
 
-                            if (!(!inputManager.isInputDown[InputCode.dodge] || baseAnimation.IsPlaying("jump") ||
-                                  baseAnimation.IsPlaying("horse_geton")))
+                            if (!(!inputManager.isInputDown[InputCode.dodge] || baseAnimation.IsPlaying("jump") || baseAnimation.IsPlaying("horse_geton")))
                             {
                                 dodge2();
                                 return;
@@ -5389,15 +5203,12 @@ public class HERO : MonoBehaviour
                                 suicide();
                             }
 
-                            if (myHorse != null && isMounted &&
-                                FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount))
+                            if (myHorse != null && isMounted && FengGameManagerMKII.inputRC.isInputHorseDown(InputCodeRC.horseMount))
                             {
                                 getOffHorse();
                             }
 
-                            if ((animation.IsPlaying(standAnimation) || !grounded) &&
-                                inputManager.isInputDown[InputCode.reload] &&
-                                (!useGun || RCSettings.ahssReload != 1 || grounded))
+                            if ((animation.IsPlaying(standAnimation) || !grounded) && inputManager.isInputDown[InputCode.reload] && (!useGun || RCSettings.ahssReload != 1 || grounded))
                             {
                                 changeBlade();
                                 return;
@@ -5409,8 +5220,7 @@ public class HERO : MonoBehaviour
                                 return;
                             }
 
-                            if (!isMounted && (inputManager.isInputDown[InputCode.attack0] ||
-                                               inputManager.isInputDown[InputCode.attack1]) && !useGun)
+                            if (!isMounted && (inputManager.isInputDown[InputCode.attack0] || inputManager.isInputDown[InputCode.attack1]) && !useGun)
                             {
                                 var flag3 = false;
                                 if (inputManager.isInputDown[InputCode.attack1])
@@ -5432,9 +5242,7 @@ public class HERO : MonoBehaviour
                                         {
                                             if (IsGrounded())
                                             {
-                                                attackAnimation = Random.Range(0, 2) != 0
-                                                    ? "special_marco_1"
-                                                    : "special_marco_0";
+                                                attackAnimation = Random.Range(0, 2) != 0 ? "special_marco_1" : "special_marco_0";
                                                 playAnimation(attackAnimation);
                                             }
                                             else
@@ -5544,15 +5352,11 @@ public class HERO : MonoBehaviour
                                             {
                                                 if (leanLeft)
                                                 {
-                                                    attackAnimation = Random.Range(0, 100) >= 50
-                                                        ? "attack1_hook_l1"
-                                                        : "attack1_hook_l2";
+                                                    attackAnimation = Random.Range(0, 100) >= 50 ? "attack1_hook_l1" : "attack1_hook_l2";
                                                 }
                                                 else
                                                 {
-                                                    attackAnimation = Random.Range(0, 100) >= 50
-                                                        ? "attack1_hook_r1"
-                                                        : "attack1_hook_r2";
+                                                    attackAnimation = Random.Range(0, 100) >= 50 ? "attack1_hook_r1" : "attack1_hook_r2";
                                                 }
                                             }
                                             else
@@ -5570,27 +5374,19 @@ public class HERO : MonoBehaviour
                                     {
                                         if (inputManager.isInput[InputCode.left])
                                         {
-                                            attackAnimation = Random.Range(0, 100) >= 50
-                                                ? "attack1_hook_l1"
-                                                : "attack1_hook_l2";
+                                            attackAnimation = Random.Range(0, 100) >= 50 ? "attack1_hook_l1" : "attack1_hook_l2";
                                         }
                                         else if (inputManager.isInput[InputCode.right])
                                         {
-                                            attackAnimation = Random.Range(0, 100) >= 50
-                                                ? "attack1_hook_r1"
-                                                : "attack1_hook_r2";
+                                            attackAnimation = Random.Range(0, 100) >= 50 ? "attack1_hook_r1" : "attack1_hook_r2";
                                         }
                                         else if (leanLeft)
                                         {
-                                            attackAnimation = Random.Range(0, 100) >= 50
-                                                ? "attack1_hook_l1"
-                                                : "attack1_hook_l2";
+                                            attackAnimation = Random.Range(0, 100) >= 50 ? "attack1_hook_l1" : "attack1_hook_l2";
                                         }
                                         else
                                         {
-                                            attackAnimation = Random.Range(0, 100) >= 50
-                                                ? "attack1_hook_r1"
-                                                : "attack1_hook_r2";
+                                            attackAnimation = Random.Range(0, 100) >= 50 ? "attack1_hook_r1" : "attack1_hook_r2";
                                         }
                                     }
                                     else if (inputManager.isInput[InputCode.left])
@@ -5605,8 +5401,7 @@ public class HERO : MonoBehaviour
                                     {
                                         if (lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck") != null)
                                         {
-                                            attackAccordingToTarget(
-                                                lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck"));
+                                            attackAccordingToTarget(lastHook.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck"));
                                         }
                                         else
                                         {
@@ -5615,9 +5410,7 @@ public class HERO : MonoBehaviour
                                     }
                                     else if (bulletLeft != null && bulletLeft.transform.parent != null)
                                     {
-                                        var a =
-                                            bulletLeft.transform.parent.transform.root.Find(
-                                                "Amarture/Core/Controller_Body/hip/spine/chest/neck");
+                                        var a = bulletLeft.transform.parent.transform.root.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                         if (a != null)
                                         {
                                             attackAccordingToTarget(a);
@@ -5629,9 +5422,7 @@ public class HERO : MonoBehaviour
                                     }
                                     else if (bulletRight != null && bulletRight.transform.parent != null)
                                     {
-                                        var transform2 =
-                                            bulletRight.transform.parent.transform.root.Find(
-                                                "Amarture/Core/Controller_Body/hip/spine/chest/neck");
+                                        var transform2 = bulletRight.transform.parent.transform.root.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                         if (transform2 != null)
                                         {
                                             attackAccordingToTarget(transform2);
@@ -5646,9 +5437,7 @@ public class HERO : MonoBehaviour
                                         var obj2 = findNearestTitan();
                                         if (obj2 != null)
                                         {
-                                            var transform3 =
-                                                obj2.transform.Find(
-                                                    "Amarture/Core/Controller_Body/hip/spine/chest/neck");
+                                            var transform3 = obj2.transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
                                             if (transform3 != null)
                                             {
                                                 attackAccordingToTarget(transform3);
@@ -5831,8 +5620,7 @@ public class HERO : MonoBehaviour
                                     facingDirection = gunDummy.transform.rotation.eulerAngles.y;
                                     targetRotation = Quaternion.Euler(0f, facingDirection, 0f);
                                 }
-                                else if (flag5 && (grounded || LevelInfo.getInfo(FengGameManagerMKII.level).type !=
-                                                   GAMEMODE.PVP_AHSS && RCSettings.ahssReload == 0))
+                                else if (flag5 && (grounded || LevelInfo.getInfo(FengGameManagerMKII.level).type != GAMEMODE.PVP_AHSS && RCSettings.ahssReload == 0))
                                 {
                                     changeBlade();
                                 }
@@ -5934,8 +5722,7 @@ public class HERO : MonoBehaviour
                                         num = 0.85f;
                                     }
 
-                                    if (baseAnimation[attackAnimation].normalizedTime > num2 &&
-                                        baseAnimation[attackAnimation].normalizedTime < num)
+                                    if (baseAnimation[attackAnimation].normalizedTime > num2 && baseAnimation[attackAnimation].normalizedTime < num)
                                     {
                                         if (!checkBoxLeft.GetComponent<TriggerColliderWeapon>().active_me)
                                         {
@@ -5976,16 +5763,14 @@ public class HERO : MonoBehaviour
 
                                 if (baseAnimation[attackAnimation].normalizedTime >= 1f)
                                 {
-                                    if (attackAnimation == "special_marco_0" ||
-                                        attackAnimation == "special_marco_1")
+                                    if (attackAnimation == "special_marco_0" || attackAnimation == "special_marco_1")
                                     {
                                         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
                                         {
                                             if (!PhotonNetwork.isMasterClient)
                                             {
                                                 object[] parameters = { 5f, 100f };
-                                                photonView.RPC("netTauntAttack", PhotonTargets.MasterClient,
-                                                    parameters);
+                                                photonView.RPC("netTauntAttack", PhotonTargets.MasterClient, parameters);
                                             }
                                             else
                                             {
@@ -6017,11 +5802,7 @@ public class HERO : MonoBehaviour
                                         {
                                             foreach (var obj3 in GameObject.FindGameObjectsWithTag("titan"))
                                             {
-                                                if (Vector3.Distance(obj3.transform.position,
-                                                        baseTransform.position) < 50f &&
-                                                    Vector3.Angle(obj3.transform.forward,
-                                                        baseTransform.position - obj3.transform.position) < 90f &&
-                                                    obj3.GetComponent<TITAN>() != null)
+                                                if (Vector3.Distance(obj3.transform.position, baseTransform.position) < 50f && Vector3.Angle(obj3.transform.forward, baseTransform.position - obj3.transform.position) < 90f && obj3.GetComponent<TITAN>() != null)
                                                 {
                                                     obj3.GetComponent<TITAN>().beLaughAttacked();
                                                 }
@@ -6042,8 +5823,7 @@ public class HERO : MonoBehaviour
                                     }
                                 }
 
-                                if (baseAnimation.IsPlaying("attack3_2") &&
-                                    baseAnimation["attack3_2"].normalizedTime >= 1f)
+                                if (baseAnimation.IsPlaying("attack3_2") && baseAnimation["attack3_2"].normalizedTime >= 1f)
                                 {
                                     falseAttack();
                                     idle();
@@ -6051,31 +5831,28 @@ public class HERO : MonoBehaviour
                             }
                             else
                             {
-                                baseTransform.rotation = Quaternion.Lerp(baseTransform.rotation,
-                                    gunDummy.transform.rotation, Time.deltaTime * 30f);
+                                baseTransform.rotation = Quaternion.Lerp(baseTransform.rotation, gunDummy.transform.rotation, Time.deltaTime * 30f);
                                 if (!attackReleased && baseAnimation[attackAnimation].normalizedTime > 0.167f)
                                 {
                                     GameObject obj4;
                                     attackReleased = true;
                                     var flag7 = false;
-                                    if (attackAnimation == "AHSS_shoot_both" ||
-                                        attackAnimation == "AHSS_shoot_both_air")
+                                    if (attackAnimation == "AHSS_shoot_both" || attackAnimation == "AHSS_shoot_both_air")
                                     {
                                         flag7 = true;
-                                        leftGunHasBullet = false;
-                                        rightGunHasBullet = false;
+                                        leftGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
+                                        rightGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
                                         baseRigidBody.AddForce(-baseTransform.forward * 1000f, ForceMode.Acceleration);
                                     }
                                     else
                                     {
-                                        if (attackAnimation == "AHSS_shoot_l" ||
-                                            attackAnimation == "AHSS_shoot_l_air")
+                                        if (attackAnimation == "AHSS_shoot_l" || attackAnimation == "AHSS_shoot_l_air")
                                         {
-                                            leftGunHasBullet = false;
+                                            leftGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
                                         }
                                         else
                                         {
-                                            rightGunHasBullet = false;
+                                            rightGunHasBullet = Settings.InfiniteBulletsNoReloadingSetting;
                                         }
 
                                         baseRigidBody.AddForce(-baseTransform.forward * 600f, ForceMode.Acceleration);
@@ -6090,9 +5867,7 @@ public class HERO : MonoBehaviour
 
                                     if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
                                     {
-                                        obj4 = PhotonNetwork.Instantiate(prefabName,
-                                            baseTransform.position + baseTransform.up * 0.8f -
-                                            baseTransform.right * 0.1f, baseTransform.rotation, 0);
+                                        obj4 = PhotonNetwork.Instantiate(prefabName, baseTransform.position + baseTransform.up * 0.8f - baseTransform.right * 0.1f, baseTransform.rotation, 0);
                                         if (obj4.GetComponent<EnemyfxIDcontainer>() != null)
                                         {
                                             obj4.GetComponent<EnemyfxIDcontainer>().myOwnerViewID = photonView.viewID;
@@ -6100,9 +5875,7 @@ public class HERO : MonoBehaviour
                                     }
                                     else
                                     {
-                                        obj4 = (GameObject)Instantiate(Resources.Load(prefabName),
-                                            baseTransform.position + baseTransform.up * 0.8f -
-                                            baseTransform.right * 0.1f, baseTransform.rotation);
+                                        obj4 = (GameObject)Instantiate(Resources.Load(prefabName), baseTransform.position + baseTransform.up * 0.8f - baseTransform.right * 0.1f, baseTransform.rotation);
                                     }
                                 }
 
@@ -6129,16 +5902,11 @@ public class HERO : MonoBehaviour
                                     {
                                         setup.part_blade_l.SetActive(false);
                                         var transform = setup.part_blade_l.transform;
-                                        var obj5 = (GameObject)Instantiate(
-                                            Resources.Load("Character_parts/character_gun_l"), transform.position,
-                                            transform.rotation);
-                                        obj5.renderer.material =
-                                            CharacterMaterials.materials[setup.myCostume._3dmg_texture];
-                                        var force = -baseTransform.forward * 10f + baseTransform.up * 5f -
-                                                        baseTransform.right;
+                                        var obj5 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
+                                        obj5.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+                                        var force = -baseTransform.forward * 10f + baseTransform.up * 5f - baseTransform.right;
                                         obj5.rigidbody.AddForce(force, ForceMode.Impulse);
-                                        var torque = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100),
-                                            Random.Range(-100, 100));
+                                        var torque = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), Random.Range(-100, 100));
                                         obj5.rigidbody.AddTorque(torque, ForceMode.Acceleration);
                                     }
 
@@ -6146,17 +5914,11 @@ public class HERO : MonoBehaviour
                                     {
                                         setup.part_blade_r.SetActive(false);
                                         var transform5 = setup.part_blade_r.transform;
-                                        var obj6 = (GameObject)Instantiate(
-                                            Resources.Load("Character_parts/character_gun_r"), transform5.position,
-                                            transform5.rotation);
-                                        obj6.renderer.material =
-                                            CharacterMaterials.materials[setup.myCostume._3dmg_texture];
-                                        var vector3 =
-                                            -baseTransform.forward * 10f + baseTransform.up * 5f +
-                                            baseTransform.right;
+                                        var obj6 = (GameObject)Instantiate(Resources.Load("Character_parts/character_gun_r"), transform5.position, transform5.rotation);
+                                        obj6.renderer.material = CharacterMaterials.materials[setup.myCostume._3dmg_texture];
+                                        var vector3 = -baseTransform.forward * 10f + baseTransform.up * 5f + baseTransform.right;
                                         obj6.rigidbody.AddForce(vector3, ForceMode.Impulse);
-                                        var vector4 = new Vector3(Random.Range(-300, 300), Random.Range(-300, 300),
-                                            Random.Range(-300, 300));
+                                        var vector4 = new Vector3(Random.Range(-300, 300), Random.Range(-300, 300), Random.Range(-300, 300));
                                         obj6.rigidbody.AddTorque(vector4, ForceMode.Acceleration);
                                     }
                                 }
@@ -6166,7 +5928,7 @@ public class HERO : MonoBehaviour
                                     throwedBlades = true;
                                     if (!(leftBulletLeft <= 0 || leftGunHasBullet))
                                     {
-                                        leftBulletLeft--;
+                                        if (!Settings.InfiniteBulletsSetting) leftBulletLeft--;
                                         setup.part_blade_l.SetActive(true);
                                         leftGunHasBullet = true;
                                     }
@@ -6174,7 +5936,7 @@ public class HERO : MonoBehaviour
                                     if (!(rightBulletLeft <= 0 || rightGunHasBullet))
                                     {
                                         setup.part_blade_r.SetActive(true);
-                                        rightBulletLeft--;
+                                        if (!Settings.InfiniteBulletsSetting) rightBulletLeft--;
                                         rightGunHasBullet = true;
                                     }
 
@@ -6218,8 +5980,7 @@ public class HERO : MonoBehaviour
                                         }
                                     }
 
-                                    if (baseAnimation[reloadAnimation].normalizedTime >= 0.37f &&
-                                        currentBladeNum > 0)
+                                    if (baseAnimation[reloadAnimation].normalizedTime >= 0.37f && currentBladeNum > 0)
                                     {
                                         setup.part_blade_l.SetActive(true);
                                         setup.part_blade_r.SetActive(true);
@@ -6257,8 +6018,7 @@ public class HERO : MonoBehaviour
                         }
                         else if (state == HERO_STATE.Land)
                         {
-                            if (baseAnimation.IsPlaying("dash_land") &&
-                                baseAnimation["dash_land"].normalizedTime >= 1f)
+                            if (baseAnimation.IsPlaying("dash_land") && baseAnimation["dash_land"].normalizedTime >= 1f)
                             {
                                 idle();
                             }
@@ -6302,8 +6062,7 @@ public class HERO : MonoBehaviour
                                 dashTime -= Time.deltaTime;
                                 if (currentSpeed > originVM)
                                 {
-                                    baseRigidBody.AddForce(-baseRigidBody.velocity * Time.deltaTime * 1.7f,
-                                        ForceMode.VelocityChange);
+                                    baseRigidBody.AddForce(-baseRigidBody.velocity * Time.deltaTime * 1.7f, ForceMode.VelocityChange);
                                 }
                             }
                             else
@@ -6313,9 +6072,7 @@ public class HERO : MonoBehaviour
                             }
                         }
 
-                        if (inputManager.isInput[InputCode.leftRope] &&
-                            (!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5") && !baseAnimation.IsPlaying("special_petra") && state != HERO_STATE.Grab ||
-                             state == HERO_STATE.Idle))
+                        if (inputManager.isInput[InputCode.leftRope] && (!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5") && !baseAnimation.IsPlaying("special_petra") && state != HERO_STATE.Grab || state == HERO_STATE.Idle))
                         {
                             if (bulletLeft != null)
                             {
@@ -6340,9 +6097,7 @@ public class HERO : MonoBehaviour
                             QHold = false;
                         }
 
-                        if (inputManager.isInput[InputCode.rightRope] &&
-                            (!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5") && !baseAnimation.IsPlaying("special_petra") && state != HERO_STATE.Grab ||
-                             state == HERO_STATE.Idle))
+                        if (inputManager.isInput[InputCode.rightRope] && (!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5") && !baseAnimation.IsPlaying("special_petra") && state != HERO_STATE.Grab || state == HERO_STATE.Idle))
                         {
                             if (bulletRight != null)
                             {
@@ -6367,9 +6122,7 @@ public class HERO : MonoBehaviour
                             EHold = false;
                         }
 
-                        if (inputManager.isInput[InputCode.bothRope] &&
-                            (!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5") && !baseAnimation.IsPlaying("special_petra") && state != HERO_STATE.Grab ||
-                             state == HERO_STATE.Idle))
+                        if (inputManager.isInput[InputCode.bothRope] && (!baseAnimation.IsPlaying("attack3_1") && !baseAnimation.IsPlaying("attack5") && !baseAnimation.IsPlaying("special_petra") && state != HERO_STATE.Grab || state == HERO_STATE.Idle))
                         {
                             QHold = true;
                             EHold = true;
@@ -6389,8 +6142,7 @@ public class HERO : MonoBehaviour
                             }
                         }
 
-                        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE ||
-                            IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE && !IN_GAME_MAIN_CAMERA.isPausing)
+                        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE && !IN_GAME_MAIN_CAMERA.isPausing)
                         {
                             calcSkillCD();
                             calcFlareCD();
@@ -6477,8 +6229,7 @@ public class HERO : MonoBehaviour
                 }
 
                 var vector = Vector3.Normalize(targetV - currentV);
-                var obj2 = PhotonNetwork.Instantiate("RCAsset/BombMain", currentV + vector * 4f,
-                    new Quaternion(0f, 0f, 0f, 1f), 0);
+                var obj2 = PhotonNetwork.Instantiate("RCAsset/BombMain", currentV + vector * 4f, new Quaternion(0f, 0f, 0f, 1f), 0);
                 obj2.rigidbody.velocity = vector * bombSpeed;
                 myBomb = obj2.GetComponent<Bomb>();
                 bombTime = 0f;
@@ -6539,6 +6290,7 @@ public class HERO : MonoBehaviour
 
     public void useBlade(int amount)
     {
+        if (Settings.InfiniteBladesSetting) return;
         if (amount == 0)
         {
             amount = 1;
@@ -6568,6 +6320,7 @@ public class HERO : MonoBehaviour
 
     private void useGas(float amount)
     {
+        if (Settings.InfiniteGasSetting) return;
         if (amount == 0f)
         {
             amount = useGasSpeed;

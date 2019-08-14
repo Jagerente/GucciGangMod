@@ -21,6 +21,7 @@ namespace GGM.Caching
                 else typeCache.Add(name, value);
                 return value;
             }
+
             return value;
         }
 
@@ -53,6 +54,7 @@ namespace GGM.Caching
                         goCache.Add(name, go);
                         return go;
                     }
+
                     return goCache[name] = go;
             }
         }

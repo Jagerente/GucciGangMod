@@ -33,6 +33,7 @@ public class CameraFacingBillboard : MonoBehaviour
             case Axis.back:
                 return Vector3.back;
         }
+
         return Vector3.up;
     }
 

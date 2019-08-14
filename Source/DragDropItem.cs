@@ -29,6 +29,7 @@ public class DragDropItem : MonoBehaviour
         {
             mTrans.parent = mParent;
         }
+
         UpdateTable();
         NGUITools.MarkParentAsChanged(gameObject);
     }
@@ -49,7 +50,7 @@ public class DragDropItem : MonoBehaviour
             }
             else
             {
-                mTrans.localPosition += (Vector3)delta;
+                mTrans.localPosition += (Vector3) delta;
             }
         }
     }
@@ -71,12 +72,14 @@ public class DragDropItem : MonoBehaviour
                 mSticky = false;
                 UICamera.current.stickyPress = false;
             }
+
             mIsDragging = false;
             var collider = this.collider;
             if (collider != null)
             {
                 collider.enabled = !isPressed;
             }
+
             if (!isPressed)
             {
                 Drop();

@@ -59,6 +59,7 @@ public class UIButtonTween : MonoBehaviour
             {
                 Play(isOver);
             }
+
             mHighlighted = isOver;
         }
     }
@@ -88,8 +89,10 @@ public class UIButtonTween : MonoBehaviour
             {
                 return;
             }
+
             NGUITools.SetActive(go, true);
         }
+
         mTweens = !includeChildren ? go.GetComponents<UITweener>() : go.GetComponentsInChildren<UITweener>();
         if (mTweens.Length == 0)
         {
@@ -105,6 +108,7 @@ public class UIButtonTween : MonoBehaviour
             {
                 forward = !forward;
             }
+
             var index = 0;
             var length = mTweens.Length;
             while (index < length)
@@ -117,6 +121,7 @@ public class UIButtonTween : MonoBehaviour
                         flag = true;
                         NGUITools.SetActive(go, true);
                     }
+
                     if (playDirection == Direction.Toggle)
                     {
                         tweener.Toggle();
@@ -125,10 +130,12 @@ public class UIButtonTween : MonoBehaviour
                     {
                         tweener.Play(forward);
                     }
+
                     if (resetOnPlay)
                     {
                         tweener.Reset();
                     }
+
                     tweener.onFinished = onFinished;
                     if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                     {
@@ -136,6 +143,7 @@ public class UIButtonTween : MonoBehaviour
                         tweener.callWhenFinished = callWhenFinished;
                     }
                 }
+
                 index++;
             }
         }
@@ -168,19 +176,23 @@ public class UIButtonTween : MonoBehaviour
                         flag = false;
                         break;
                     }
-                    if (tweener.direction != (Direction)(int)disableWhenFinished)
+
+                    if (tweener.direction != (Direction) (int) disableWhenFinished)
                     {
                         flag2 = false;
                     }
                 }
+
                 index++;
             }
+
             if (flag)
             {
                 if (flag2)
                 {
                     NGUITools.SetActive(tweenTarget, false);
                 }
+
                 mTweens = null;
             }
         }

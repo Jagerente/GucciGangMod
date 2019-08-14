@@ -18,6 +18,7 @@ public class TypewriterEffect : MonoBehaviour
             mLabel.symbolStyle = UIFont.SymbolStyle.None;
             mText = mLabel.font.WrapText(mLabel.text, mLabel.lineWidth / mLabel.cachedTransform.localScale.x, mLabel.maxLineCount, false, UIFont.SymbolStyle.None);
         }
+
         if (mOffset < mText.Length)
         {
             if (mNextChar <= Time.time)
@@ -33,6 +34,7 @@ public class TypewriterEffect : MonoBehaviour
                         num *= 4f;
                         break;
                 }
+
                 mNextChar = Time.time + num;
                 mLabel.text = mText.Substring(0, ++mOffset);
             }

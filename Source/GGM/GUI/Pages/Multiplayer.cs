@@ -116,6 +116,7 @@ namespace GGM.GUI.Pages
             {
                 return false;
             }
+
             if (KeyWords.ToUpper().Contains(";"))
             {
                 var pass = false;
@@ -176,6 +177,7 @@ namespace GGM.GUI.Pages
             {
                 return false;
             }
+
             return true;
         }
 
@@ -275,8 +277,7 @@ namespace GGM.GUI.Pages
                                     Label("Day Time", LabelType.SubHeader, width: BoxWidth * Proportion[0] - 10f);
                                     ButtonToggle(string.Empty, DayTimes, DayTime, false, width: BoxWidth * Proportion[0] - 10f);
                                     Label("Extended", LabelType.SubHeader, width: BoxWidth * Proportion[0] - 10f);
-                                    ButtonToggle(string.Empty, ExtendedSettings, ExtendedSetting, false,
-                                        width: BoxWidth * Proportion[0] - 10f);
+                                    ButtonToggle(string.Empty, ExtendedSettings, ExtendedSetting, false, width: BoxWidth * Proportion[0] - 10f);
                                     GUILayout.Space(1f);
                                 }
                                 GUILayout.EndScrollView();
@@ -292,15 +293,13 @@ namespace GGM.GUI.Pages
                             foreach (var server in servers)
                             {
                                 var data = server.name.Split('`');
-                                if (GUILayout.Button(
-                                    (data[5] != string.Empty ? "[PWD]" : string.Empty) +
-                                    (data[0].Length > 40
-                                        ? data[0].Remove(40, data[0].Length - 40).ToHTML()
-                                        : data[0].ToHTML()) +
-                                    "/" + data[1] + "/" + data[2] + "/" + data[4] + "    " + server.playerCount + "/" +
-                                    server.maxPlayers, GUILayout.Width(BoxWidth * Proportion[1] - 10f)))
+                                if (GUILayout.Button((data[5] != string.Empty ? "[PWD]" : string.Empty) + (data[0].Length > 40 ? data[0].Remove(40, data[0].Length - 40).ToHTML() : data[0].ToHTML()) + "/" + data[1] + "/" + data[2] + "/" + data[4] + "    " + server.playerCount + "/" + server.maxPlayers, GUILayout.Width(BoxWidth * Proportion[1] - 10f)))
                                 {
-                                    Debug.Log("Connection");
+                                    if (server.playerCount < server.maxPlayers)
+                                    {
+                                        GetInstance<Multiplayer>().Disable();
+                                        PhotonNetwork.JoinRoom(server.name);
+                                    }
                                 }
                             }
 
@@ -371,7 +370,7 @@ namespace GGM.GUI.Pages
                             {
                                 GUILayout.Space((BoxWidth * Proportion[4] / 2f - 50f) / 2f);
                                 TextField(string.Empty, ref ServerTimeToCreate, 50f);
-                                GUILayout.Space((BoxWidth * Proportion[4] / 2f - 50f));
+                                GUILayout.Space(BoxWidth * Proportion[4] / 2f - 50f);
                                 TextField(string.Empty, ref MaxPlayersToCreate, 50f);
                                 GUILayout.Space((BoxWidth * Proportion[4] / 2f - 50f) / 2f);
                             }
@@ -413,6 +412,7 @@ namespace GGM.GUI.Pages
                                     DifficultyPresets.Add(PlayerPrefs.GetInt("GGM_DifficultyPresets_" + CurrentPreset, 0));
                                     Save();
                                 }
+
                                 if (GUILayout.Button("Save"))
                                 {
                                     PresetsTitles[CurrentPreset] = PresetTitle;
@@ -425,6 +425,7 @@ namespace GGM.GUI.Pages
                                     DifficultyPresets[CurrentPreset] = DifficultyToCreate;
                                     Save();
                                 }
+
                                 if (GUILayout.Button("Remove"))
                                 {
                                     if (PresetsCount > 1)
@@ -454,16 +455,7 @@ namespace GGM.GUI.Pages
                                 if (GUILayout.Button("Start", GUILayout.Width(120f), GUILayout.Height(35f)))
                                 {
                                     PhotonNetwork.offlineMode = Server == 0;
-                                    PhotonNetwork.CreateRoom(
-                                        string.Concat(ServerNameToCreate, "`", Maps[MapToCreate], "`",
-                                            Difficulties[DifficultyToCreate], "`", ServerTimeToCreate, "`",
-                                            DayTimes[DayTimeToCreate], "`",
-                                            PasswordToCreate.Length > 0
-                                                ? new SimpleAES().Encrypt(PasswordToCreate)
-                                                : string.Empty, "`", Random.Range(0, 50000)),
-                                        new RoomOptions
-                                        { isOpen = true, isVisible = true, maxPlayers = MaxPlayersToCreate },
-                                        null);
+                                    PhotonNetwork.CreateRoom(string.Concat(ServerNameToCreate, "`", Maps[MapToCreate], "`", Difficulties[DifficultyToCreate], "`", ServerTimeToCreate, "`", DayTimes[DayTimeToCreate], "`", PasswordToCreate.Length > 0 ? new SimpleAES().Encrypt(PasswordToCreate) : string.Empty, "`", Random.Range(0, 50000)), new RoomOptions { isOpen = true, isVisible = true, maxPlayers = MaxPlayersToCreate }, null);
                                     GetInstance<Multiplayer>().Disable();
                                 }
 
@@ -496,6 +488,7 @@ namespace GGM.GUI.Pages
                 {
                     PhotonNetwork.ConnectToMaster($"app-{ServersAdresses[Server]}.exitgamescloud.com", NetworkingPeer.ProtocolToNameServerPort[PhotonNetwork.networkingPeer.UsedProtocol], FengGameManagerMKII.applicationId, UIMainReferences.ServerKey);
                 }
+
                 UpdateRoomList();
                 timeToUpdate = UpdateTime;
             }
