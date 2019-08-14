@@ -38,6 +38,8 @@ namespace GGM.Config
         public static List<float[]> LocationSkinsCityParticlesSettingsList;
         public static string[] LocationSkinsCityCopiedSet;
 
+        public static List<object> ReceievedLocationSkinsData;
+
         #region Booleans
 
         //Game
@@ -617,6 +619,27 @@ namespace GGM.Config
                     RenderSettings.fogColor = new Color(LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][0], LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][1], LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][2]);
                     RenderSettings.fogStartDistance = LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3];
                     RenderSettings.fogEndDistance = LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4];
+                }
+            }
+            else if (LocationSkinsSetting == 2 && !PhotonNetwork.isMasterClient && ReceievedLocationSkinsData != null)
+            {
+                if (Application.loadedLevelName.Contains("Forest"))
+                {
+                    RenderSettings.ambientLight = (int)ReceievedLocationSkinsData[0] == 1 ? new Color((float)ReceievedLocationSkinsData[1], (float)ReceievedLocationSkinsData[2], (float)ReceievedLocationSkinsData[3]) : CustomAmbientSetting ? new Color(CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayAmbientLight : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnAmbientLight : FengColor.nightAmbientLight;
+                    Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = (int)ReceievedLocationSkinsData[4] == 1 ? new Color((float)ReceievedLocationSkinsData[5], (float)ReceievedLocationSkinsData[6], (float)ReceievedLocationSkinsData[7]) : CustomLightSetting ? new Color(CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayLight : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnLight : FengColor.nightLight;
+                    RenderSettings.fog = (int)ReceievedLocationSkinsData[8] == 1;
+                    RenderSettings.fogColor = new Color((float)ReceievedLocationSkinsData[9], (float)ReceievedLocationSkinsData[10], (float)ReceievedLocationSkinsData[11]);
+                    RenderSettings.fogStartDistance = (float)ReceievedLocationSkinsData[12];
+                    RenderSettings.fogEndDistance = (float)ReceievedLocationSkinsData[12];
+                }
+                else if (Application.loadedLevelName.Contains("City"))
+                {
+                    RenderSettings.ambientLight = (int)ReceievedLocationSkinsData[1] == 1 ? new Color((float)ReceievedLocationSkinsData[1], (float)ReceievedLocationSkinsData[2], (float)ReceievedLocationSkinsData[3]) : CustomAmbientSetting ? new Color(CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomAmbientColorSetting[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayAmbientLight : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnAmbientLight : FengColor.nightAmbientLight;
+                    Caching.GameObjectCache.Find("mainLight").GetComponent<Light>().color = (int)ReceievedLocationSkinsData[4] == 1 ? new Color((float)ReceievedLocationSkinsData[5], (float)ReceievedLocationSkinsData[6], (float)ReceievedLocationSkinsData[7]) : CustomLightSetting ? new Color(CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][0], CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][1], CustomLightColorSettings[IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? 0 : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? 1 : 2][2]) : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Day ? FengColor.dayLight : IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn ? FengColor.dawnLight : FengColor.nightLight;
+                    RenderSettings.fog = (float)ReceievedLocationSkinsData[8] == 1;
+                    RenderSettings.fogColor = new Color((float)ReceievedLocationSkinsData[9], (float)ReceievedLocationSkinsData[10], (float)ReceievedLocationSkinsData[11]);
+                    RenderSettings.fogStartDistance = (float)ReceievedLocationSkinsData[12];
+                    RenderSettings.fogEndDistance = (float)ReceievedLocationSkinsData[12];
                 }
             }
         }
