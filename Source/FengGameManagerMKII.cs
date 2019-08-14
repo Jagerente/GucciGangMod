@@ -7925,37 +7925,117 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void ShowHUDInfoCenter(string content)
     {
-        Labels.Center = content.ToHTML();
+        if (Settings.LegacyLabelsSetting)
+        {
+            var obj2 = GameObjectCache.Find("LabelInfoCenter");
+            if (obj2 != null)
+            {
+                obj2.GetComponent<UILabel>().text = content;
+            }
+        }
+        else
+        {
+            Labels.Center = content.ToHTML();
+        }
     }
 
     public void ShowHUDInfoCenterADD(string content)
     {
-        Labels.Center = content.ToHTML();
+        if (Settings.LegacyLabelsSetting)
+        {
+            var obj2 = GameObjectCache.Find("LabelInfoCenter");
+            if (obj2 != null)
+            {
+                var component = obj2.GetComponent<UILabel>();
+                component.text = component.text + content;
+            }
+        }
+        else
+        {
+            Labels.Center = content.ToHTML();
+        }
     }
 
     public void ShowHUDInfoTopCenter(string content)
     {
-        Labels.TopCenter = content.ToHTML();
+        if (Settings.LegacyLabelsSetting)
+        {
+            var obj2 = GameObjectCache.Find("LabelInfoTopCenter");
+            if (obj2 != null)
+            {
+                obj2.GetComponent<UILabel>().text = content;
+            }
+        }
+        else
+        {
+            Labels.TopCenter = content.ToHTML();
+        }
     }
 
     public void ShowHUDInfoTopCenterADD(string content)
     {
-        Labels.TopCenter += content.ToHTML();
+        if (Settings.LegacyLabelsSetting)
+        {
+            var obj2 = GameObjectCache.Find("LabelInfoTopCenter");
+            if (obj2 != null)
+            {
+                var component = obj2.GetComponent<UILabel>();
+                component.text = component.text + content;
+            }
+        }
+        else
+        {
+            Labels.TopCenter += content.ToHTML();
+        }
     }
 
     public void ShowHUDInfoTopLeft(string content)
     {
-        Labels.TopLeft = content.ToHTML();
+        if (Settings.LegacyLabelsSetting)
+        {
+            var obj2 = GameObjectCache.Find("LabelInfoTopLeft");
+            if (obj2 != null)
+            {
+                obj2.GetComponent<UILabel>().text = content;
+            }
+        }
+        else
+        {
+            Labels.TopLeft = content.ToHTML();
+        }
     }
 
     public void ShowHUDInfoTopRight(string content)
     {
-        Labels.TopRight = content.ToHTML();
+        if (Settings.LegacyLabelsSetting)
+        {
+            var obj2 = GameObjectCache.Find("LabelInfoTopRight");
+            if (obj2 != null)
+            {
+                obj2.GetComponent<UILabel>().text = content;
+            }
+        }
+        else
+        {
+            Labels.TopRight = content.ToHTML();
+        }
     }
 
     public void ShowHUDInfoTopRightMAPNAME(string content)
     {
-        Labels.TopRight += content.ToHTML();
+        if (Settings.LegacyLabelsSetting)
+        {
+            var obj2 = GameObjectCache.Find("LabelInfoTopRight");
+            if (obj2 != null)
+            {
+                var component = obj2.GetComponent<UILabel>();
+                component.text = component.text + content;
+            }
+        }
+        else
+        {
+            Labels.TopRight += content.ToHTML();
+        }
     }
 
     #endregion UILabels
@@ -9049,7 +9129,23 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         FPS.Update();
         Settings.Update();
-        Labels.NetworkStatus = PhotonNetwork.connectionState != ConnectionState.Disconnected ? PhotonNetwork.connectionState.ToString() + (PhotonNetwork.connected ? " ping: " + PhotonNetwork.GetPing() : "") : string.Empty;
+        if (Settings.LegacyLabelsSetting)
+        {
+            if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && GameObjectCache.Find("LabelNetworkStatus"))
+            {
+                GameObjectCache.Find("LabelNetworkStatus").GetComponent<UILabel>().text = PhotonNetwork.connectionStateDetailed.ToString();
+                if (PhotonNetwork.connected)
+                {
+                    UILabel expr_5A = GameObjectCache.Find("LabelNetworkStatus").GetComponent<UILabel>();
+                    expr_5A.text = expr_5A.text + " ping:" + PhotonNetwork.GetPing();
+                }
+            }
+        }
+        else
+        {
+            Labels.NetworkStatus = PhotonNetwork.connectionState != ConnectionState.Disconnected ? PhotonNetwork.connectionState.ToString() + (PhotonNetwork.connected ? " ping: " + PhotonNetwork.GetPing() : string.Empty) : string.Empty;
+        }
+
         if (Settings.DamageFeedUISetting)
         {
             deltaTimer2 += Time.deltaTime;
@@ -9065,48 +9161,47 @@ public class FengGameManagerMKII : MonoBehaviour
                 FengGameManagerMKII.deltaTimer2 = 0f;
                 is_feed = false;
             }
-
-            if (gameStart)
+        }
+        if (gameStart)
+        {
+            foreach (HERO hERO in heroes)
             {
-                foreach (HERO hERO in heroes)
-                {
-                    hERO.update();
-                }
+                hERO.update();
+            }
 
-                foreach (Bullet bullet in hooks)
-                {
-                    bullet.update();
-                }
+            foreach (Bullet bullet in hooks)
+            {
+                bullet.update();
+            }
 
-                if (mainCamera != null)
-                {
-                    mainCamera.snapShotUpdate();
-                }
+            if (mainCamera != null)
+            {
+                mainCamera.snapShotUpdate();
+            }
 
-                foreach (TITAN_EREN tITAN_EREN in eT)
-                {
-                    tITAN_EREN.update();
-                }
+            foreach (TITAN_EREN tITAN_EREN in eT)
+            {
+                tITAN_EREN.update();
+            }
 
-                foreach (TITAN tITAN in titans)
-                {
-                    tITAN.update();
-                }
+            foreach (TITAN tITAN in titans)
+            {
+                tITAN.update();
+            }
 
-                foreach (FEMALE_TITAN fEMALE_TITAN in fT)
-                {
-                    fEMALE_TITAN.update();
-                }
+            foreach (FEMALE_TITAN fEMALE_TITAN in fT)
+            {
+                fEMALE_TITAN.update();
+            }
 
-                foreach (COLOSSAL_TITAN cOLOSSAL_TITAN in cT)
-                {
-                    cOLOSSAL_TITAN.update();
-                }
+            foreach (COLOSSAL_TITAN cOLOSSAL_TITAN in cT)
+            {
+                cOLOSSAL_TITAN.update();
+            }
 
-                if (mainCamera != null)
-                {
-                    mainCamera.update();
-                }
+            if (mainCamera != null)
+            {
+                mainCamera.update();
             }
         }
     }

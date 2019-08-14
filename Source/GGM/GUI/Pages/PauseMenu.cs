@@ -335,6 +335,7 @@ namespace GGM.GUI.Pages
                 GUILayout.Space(15f);
 
                 Label("User Interface", LabelType.Header);
+                Grid("Legacy Labels", ref LegacyLabelsSetting.Value);
                 Grid("Hide Everything", ref UserInterfaceSetting.Value);
                 if (!UserInterfaceSetting)
                 {

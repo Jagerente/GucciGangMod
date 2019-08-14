@@ -4506,7 +4506,15 @@ public class HERO : MonoBehaviour
                         break;
                 }
 
-                Labels.Crosshair = str;
+                if (Settings.LegacyLabelsSetting)
+                {
+                    obj11.GetComponent<UILabel>().text = str;
+                }
+                else
+                {
+                    Labels.Crosshair = str;
+                }
+
                 if (magnitude > 120f)
                 {
                     var transform11 = obj9.transform;

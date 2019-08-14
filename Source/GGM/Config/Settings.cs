@@ -56,6 +56,7 @@ namespace GGM.Config
         public static BoolSetting InfiniteBulletsSetting = new BoolSetting("GGM_InfiniteBullets");
         public static BoolSetting InfiniteBulletsNoReloadingSetting = new BoolSetting("GGM_InfiniteBulletsNoReloading");
         public static BoolSetting InfiniteGasSetting = new BoolSetting("GGM_InfiniteGas");
+        public static BoolSetting LegacyLabelsSetting = new BoolSetting("GGM_LegacyLabels");
         public static BoolSetting UserInterfaceSetting = new BoolSetting("GGM_UserInterface");
         public static BoolSetting PlayerListUISetting = new BoolSetting("GGM_PlayerListUI", true);
         public static BoolSetting GameInfoUISetting = new BoolSetting("GGM_GameInfoUI", true);

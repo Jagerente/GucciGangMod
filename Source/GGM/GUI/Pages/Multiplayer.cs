@@ -320,6 +320,7 @@ namespace GGM.GUI.Pages
 
                                 if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
                                 {
+                                    if (PhotonNetwork.connected) PhotonNetwork.Disconnect();
                                     NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, true);
                                     GetInstance<Multiplayer>().Disable();
                                 }
