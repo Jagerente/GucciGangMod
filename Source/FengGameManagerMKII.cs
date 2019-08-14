@@ -4803,13 +4803,12 @@ public class FengGameManagerMKII : MonoBehaviour
         }
 
         RejoinRegion = PhotonNetwork.networkingPeer.MasterServerAddress.Split(':')[0].Replace("wss://", string.Empty).Replace("ws://", string.Empty);
-        //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiStart, false);
-        //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().panelMultiROOM, true);
-        //NGUITools.SetActive(GameObjectCache.Find("UIRefer").GetComponent<UIMainReferences>().PanelMultiJoinPrivate, false);
     }
 
     public void OnJoinedRoom()
     {
+        HERO.PlayersSkins = new Dictionary<int, string>();
+
         var section = "--------------------------------------------------------------------------------------------------------------------------------------------------------";
         var info = string.Empty;
         for (var i = 0; i < 4; i++) info += PhotonNetwork.room.name.Split('`')[i].ToUpper() + (i < 3 ? "/" : string.Empty);
@@ -7852,6 +7851,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void SetPause()
     {
+        if (Commands.MCRequired()) return;
         RCPausing = !RCPausing;
         if (RCPausing) gameObject.AddComponent<Pause>();
         else Destroy(GameObjectCache.Find("Pause"));
