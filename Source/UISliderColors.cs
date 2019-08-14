@@ -3,7 +3,7 @@
 [AddComponentMenu("NGUI/Examples/Slider Colors"), RequireComponent(typeof(UISlider)), ExecuteInEditMode]
 public class UISliderColors : MonoBehaviour
 {
-    public Color[] colors = { Color.red, Color.yellow, Color.green };
+    public Color[] colors = {Color.red, Color.yellow, Color.green};
     private UISlider mSlider;
     public UISprite sprite;
 

@@ -30,6 +30,7 @@ public class LevelInfo
                 return info;
             }
         }
+
         return null;
     }
 
@@ -38,10 +39,7 @@ public class LevelInfo
         if (!init)
         {
             init = true;
-            levels = new[] {
-                new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(),
-                new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo()
-             };
+            levels = new[] {new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo(), new LevelInfo()};
             levels[0].name = "The City";
             levels[0].mapName = "The City I";
             levels[0].desc = "kill all the titans with your friends.(No RESPAWN/SUPPLY/PLAY AS TITAN)";

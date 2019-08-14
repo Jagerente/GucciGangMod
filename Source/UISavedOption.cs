@@ -14,15 +14,12 @@ public class UISavedOption : MonoBehaviour
         mCheck = GetComponent<UICheckbox>();
         if (mList != null)
         {
-            mList.onSelectionChange = (UIPopupList.OnSelectionChange)Delegate.Combine(mList.onSelectionChange,
-                new UIPopupList.OnSelectionChange(SaveSelection));
+            mList.onSelectionChange = (UIPopupList.OnSelectionChange) Delegate.Combine(mList.onSelectionChange, new UIPopupList.OnSelectionChange(SaveSelection));
         }
 
         if (mCheck != null)
         {
-            mCheck.onStateChange =
-                (UICheckbox.OnStateChange)Delegate.Combine(mCheck.onStateChange,
-                    new UICheckbox.OnStateChange(SaveState));
+            mCheck.onStateChange = (UICheckbox.OnStateChange) Delegate.Combine(mCheck.onStateChange, new UICheckbox.OnStateChange(SaveState));
         }
     }
 
@@ -30,15 +27,12 @@ public class UISavedOption : MonoBehaviour
     {
         if (mCheck != null)
         {
-            mCheck.onStateChange =
-                (UICheckbox.OnStateChange)Delegate.Remove(mCheck.onStateChange,
-                    new UICheckbox.OnStateChange(SaveState));
+            mCheck.onStateChange = (UICheckbox.OnStateChange) Delegate.Remove(mCheck.onStateChange, new UICheckbox.OnStateChange(SaveState));
         }
 
         if (mList != null)
         {
-            mList.onSelectionChange = (UIPopupList.OnSelectionChange)Delegate.Remove(mList.onSelectionChange,
-                new UIPopupList.OnSelectionChange(SaveSelection));
+            mList.onSelectionChange = (UIPopupList.OnSelectionChange) Delegate.Remove(mList.onSelectionChange, new UIPopupList.OnSelectionChange(SaveSelection));
         }
     }
 

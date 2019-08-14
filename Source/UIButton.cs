@@ -42,6 +42,7 @@ public class UIButton : UIButtonColor
                 mStarted = true;
                 Init();
             }
+
             var color = !shouldBeEnabled ? disabledColor : defaultColor;
             var color2 = TweenColor.Begin(tweenTarget, 0.15f, color);
             if (immediate)

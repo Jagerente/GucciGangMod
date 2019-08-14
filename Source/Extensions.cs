@@ -39,6 +39,7 @@ public static class Extensions
                 }
             }
         }
+
         return false;
     }
 
@@ -58,6 +59,7 @@ public static class Extensions
         {
             return;
         }
+
         foreach (var current in addHash.Keys)
         {
             target[current] = addHash[current];
@@ -71,6 +73,7 @@ public static class Extensions
         {
             return;
         }
+
         foreach (var current in addHash.Keys)
         {
             if (current is string)
@@ -88,6 +91,7 @@ public static class Extensions
         {
             array[num++] = current;
         }
+
         for (var i = 0; i < array.Length; i++)
         {
             var key = array[i];
@@ -108,6 +112,7 @@ public static class Extensions
                 hashtable[dictionaryEntry.Key] = dictionaryEntry.Value;
             }
         }
+
         return hashtable;
     }
 

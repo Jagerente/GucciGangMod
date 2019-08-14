@@ -61,30 +61,37 @@ public class EffectController : MonoBehaviour
         {
             OnEffect("crystal");
         }
+
         if (GUI.Button(new Rect(10f, 45f, 80f, 20f), "Effect2"))
         {
             OnEffect("rage_explode");
         }
+
         if (GUI.Button(new Rect(10f, 70f, 80f, 20f), "Effect3"))
         {
             OnEffect("cyclone");
         }
+
         if (GUI.Button(new Rect(10f, 95f, 80f, 20f), "Effect4"))
         {
             OnEffect("lightning");
         }
+
         if (GUI.Button(new Rect(10f, 120f, 80f, 20f), "Effect5"))
         {
             OnEffect("hit");
         }
+
         if (GUI.Button(new Rect(10f, 145f, 80f, 20f), "Effect6"))
         {
             OnEffect("firebody");
         }
+
         if (GUI.Button(new Rect(10f, 170f, 80f, 20f), "Effect7"))
         {
             OnEffect("explode");
         }
+
         if (GUI.Button(new Rect(10f, 195f, 80f, 20f), "Effect8"))
         {
             OnEffect("rain");

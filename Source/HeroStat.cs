@@ -36,6 +36,7 @@ public class HeroStat
         {
             return;
         }
+
         MIKASA = new HeroStat();
         LEVI = new HeroStat();
         ARMIN = new HeroStat();

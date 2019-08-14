@@ -17,8 +17,7 @@ public class LevelBottom : MonoBehaviour
                     {
                         if (other.gameObject.GetPhotonView().isMine)
                         {
-                            other.gameObject.GetComponent<HERO>()
-                                .netDieLocal(rigidbody.velocity * 50f, false, -1, string.Empty);
+                            other.gameObject.GetComponent<HERO>().netDieLocal(rigidbody.velocity * 50f, false, -1, string.Empty);
                         }
                     }
                     else

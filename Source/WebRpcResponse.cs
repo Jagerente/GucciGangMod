@@ -9,7 +9,7 @@ public class WebRpcResponse
         response.Parameters.TryGetValue(209, out obj2);
         Name = obj2 as string;
         response.Parameters.TryGetValue(207, out obj2);
-        ReturnCode = obj2 == null ? -1 : (byte)obj2;
+        ReturnCode = obj2 == null ? -1 : (byte) obj2;
         response.Parameters.TryGetValue(208, out obj2);
         Parameters = obj2 as Dictionary<string, object>;
         response.Parameters.TryGetValue(206, out obj2);
@@ -18,7 +18,7 @@ public class WebRpcResponse
 
     public string ToStringFull()
     {
-        object[] args = { Name, SupportClass.DictionaryToString(Parameters), ReturnCode, DebugMessage };
+        object[] args = {Name, SupportClass.DictionaryToString(Parameters), ReturnCode, DebugMessage};
         return string.Format("{0}={2}: {1} \"{3}\"", args);
     }
 

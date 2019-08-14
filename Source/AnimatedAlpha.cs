@@ -19,6 +19,7 @@ public class AnimatedAlpha : MonoBehaviour
         {
             mWidget.alpha = alpha;
         }
+
         if (mPanel != null)
         {
             mPanel.alpha = alpha;

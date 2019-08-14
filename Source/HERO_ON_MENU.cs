@@ -31,6 +31,7 @@ public class HERO_ON_MENU : MonoBehaviour
         {
             cameraOffset = GGM.Caching.GameObjectCache.Find("MainCamera_Mono").transform.position - cameraPref.position;
         }
+
         if (component.myCostume.sex == SEX.FEMALE)
         {
             animation.Play("stand");
@@ -41,6 +42,7 @@ public class HERO_ON_MENU : MonoBehaviour
             animation.Play("stand_levi");
             animation["stand_levi"].normalizedTime = Random.Range(0f, 1f);
         }
+
         var num = 0.5f;
         animation["stand"].speed = num;
         animation["stand_levi"].speed = num;

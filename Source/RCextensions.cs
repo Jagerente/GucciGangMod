@@ -10,6 +10,7 @@ public static class RCextensions
         {
             localArray[i] = source[i];
         }
+
         localArray[localArray.Length - 1] = value;
         source = localArray;
     }
@@ -20,6 +21,7 @@ public static class RCextensions
         {
             text = text.Replace("]", ">");
         }
+
         var flag2 = false;
         while (text.Contains("[") && !flag2)
         {
@@ -33,6 +35,7 @@ public static class RCextensions
                 {
                     length = text.IndexOf("[");
                 }
+
                 text = text.Insert(length, "</color>");
             }
             else
@@ -40,10 +43,12 @@ public static class RCextensions
                 flag2 = true;
             }
         }
+
         if (flag2)
         {
             return string.Empty;
         }
+
         return text;
     }
 
@@ -56,6 +61,7 @@ public static class RCextensions
                 return false;
             }
         }
+
         return true;
     }
 
@@ -66,6 +72,7 @@ public static class RCextensions
         {
             return tex;
         }
+
         var texture = link.texture;
         var width = texture.width;
         var height = texture.height;
@@ -88,6 +95,7 @@ public static class RCextensions
                 num3 *= 2;
             }
         }
+
         if (num3 == 0)
         {
             if (mipmap)
@@ -101,15 +109,19 @@ public static class RCextensions
                     tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
                     link.LoadImageIntoTexture(tex);
                 }
+
                 return tex;
             }
+
             link.LoadImageIntoTexture(tex);
             return tex;
         }
+
         if (num3 < 4)
         {
             return tex;
         }
+
         var textured3 = new Texture2D(4, 4, TextureFormat.DXT1, false);
         link.LoadImageIntoTexture(textured3);
         if (mipmap)
@@ -127,6 +139,7 @@ public static class RCextensions
         {
             textured3.Resize(num3, num3, TextureFormat.DXT1, mipmap);
         }
+
         textured3.Apply();
         return textured3;
     }
@@ -149,23 +162,26 @@ public static class RCextensions
                     localArray[num2] = source[num];
                     num2++;
                 }
+
                 num++;
             }
+
             source = localArray;
         }
     }
 
     public static bool returnBoolFromObject(object obj)
     {
-        return obj != null && obj is bool && (bool)obj;
+        return obj != null && obj is bool && (bool) obj;
     }
 
     public static float returnFloatFromObject(object obj)
     {
         if (obj != null && obj is float)
         {
-            return (float)obj;
+            return (float) obj;
         }
+
         return 0f;
     }
 
@@ -173,8 +189,9 @@ public static class RCextensions
     {
         if (obj != null && obj is int)
         {
-            return (int)obj;
+            return (int) obj;
         }
+
         return 0;
     }
 
@@ -185,6 +202,7 @@ public static class RCextensions
         {
             return str;
         }
+
         return string.Empty;
     }
 }

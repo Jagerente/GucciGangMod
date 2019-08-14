@@ -26,6 +26,7 @@ public class NGUIDebug : MonoBehaviour
             {
                 mLines.RemoveAt(0);
             }
+
             mLines.Add(text);
             if (mInstance == null)
             {

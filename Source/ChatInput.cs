@@ -20,6 +20,7 @@ public class ChatInput : MonoBehaviour
                 mInput.selected = false;
             }
         }
+
         mIgnoreNextEnter = true;
     }
 
@@ -43,6 +44,7 @@ public class ChatInput : MonoBehaviour
             {
                 mInput.selected = true;
             }
+
             mIgnoreNextEnter = false;
         }
     }

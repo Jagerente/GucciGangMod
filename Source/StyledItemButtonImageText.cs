@@ -48,6 +48,7 @@ public class StyledItemButtonImageText : StyledItem
                 {
                     rawImageCtrl.texture = data.image;
                 }
+
                 if (textCtrl != null)
                 {
                     textCtrl.text = data.text;

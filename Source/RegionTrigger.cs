@@ -28,7 +28,7 @@ public class RegionTrigger : MonoBehaviour
                 var component = gameObject.GetComponent<HERO>();
                 if (component != null)
                 {
-                    str = (string)FengGameManagerMKII.RCVariableNames["OnPlayerEnterRegion[" + myName + "]"];
+                    str = (string) FengGameManagerMKII.RCVariableNames["OnPlayerEnterRegion[" + myName + "]"];
                     if (FengGameManagerMKII.playerVariables.ContainsKey(str))
                     {
                         FengGameManagerMKII.playerVariables[str] = component.photonView.owner;
@@ -37,6 +37,7 @@ public class RegionTrigger : MonoBehaviour
                     {
                         FengGameManagerMKII.playerVariables.Add(str, component.photonView.owner);
                     }
+
                     playerEventEnter.checkEvent();
                 }
             }
@@ -46,7 +47,7 @@ public class RegionTrigger : MonoBehaviour
             var titan = gameObject.transform.root.gameObject.GetComponent<TITAN>();
             if (titan != null)
             {
-                str = (string)FengGameManagerMKII.RCVariableNames["OnTitanEnterRegion[" + myName + "]"];
+                str = (string) FengGameManagerMKII.RCVariableNames["OnTitanEnterRegion[" + myName + "]"];
                 if (FengGameManagerMKII.titanVariables.ContainsKey(str))
                 {
                     FengGameManagerMKII.titanVariables[str] = titan;
@@ -55,6 +56,7 @@ public class RegionTrigger : MonoBehaviour
                 {
                     FengGameManagerMKII.titanVariables.Add(str, titan);
                 }
+
                 titanEventEnter.checkEvent();
             }
         }
@@ -71,7 +73,7 @@ public class RegionTrigger : MonoBehaviour
                 var component = gameObject.GetComponent<HERO>();
                 if (component != null)
                 {
-                    str = (string)FengGameManagerMKII.RCVariableNames["OnPlayerLeaveRegion[" + myName + "]"];
+                    str = (string) FengGameManagerMKII.RCVariableNames["OnPlayerLeaveRegion[" + myName + "]"];
                     if (FengGameManagerMKII.playerVariables.ContainsKey(str))
                     {
                         FengGameManagerMKII.playerVariables[str] = component.photonView.owner;
@@ -88,7 +90,7 @@ public class RegionTrigger : MonoBehaviour
             var titan = gameObject.GetComponent<TITAN>();
             if (titan != null)
             {
-                str = (string)FengGameManagerMKII.RCVariableNames["OnTitanLeaveRegion[" + myName + "]"];
+                str = (string) FengGameManagerMKII.RCVariableNames["OnTitanLeaveRegion[" + myName + "]"];
                 if (FengGameManagerMKII.titanVariables.ContainsKey(str))
                 {
                     FengGameManagerMKII.titanVariables[str] = titan;
@@ -97,6 +99,7 @@ public class RegionTrigger : MonoBehaviour
                 {
                     FengGameManagerMKII.titanVariables.Add(str, titan);
                 }
+
                 titanEventExit.checkEvent();
             }
         }

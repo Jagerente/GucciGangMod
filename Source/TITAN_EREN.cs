@@ -58,6 +58,7 @@ public class TITAN_EREN : MonoBehaviour
                 obj2.GetComponent<FEMALE_TITAN>().erenIsHere(gameObject);
             }
         }
+
         if (!bottomObject.GetComponent<CheckHitGround>().isGrounded)
         {
             playAnimation("jump_air");
@@ -69,6 +70,7 @@ public class TITAN_EREN : MonoBehaviour
             playAnimation("born");
             isPlayRoar = false;
         }
+
         playSound("snd_eren_shift");
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
@@ -78,6 +80,7 @@ public class TITAN_EREN : MonoBehaviour
         {
             PhotonNetwork.Instantiate("FX/Thunder", transform.position + Vector3.up * 23f, Quaternion.Euler(270f, 0f, 0f), 0);
         }
+
         lifeTimeMax = lifeTime = 30f;
     }
 
@@ -86,7 +89,7 @@ public class TITAN_EREN : MonoBehaviour
         animation.CrossFade(aniName, time);
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = { aniName, time };
+            object[] parameters = {aniName, time};
             photonView.RPC("netCrossFade", PhotonTargets.Others, parameters);
         }
     }
@@ -134,12 +137,14 @@ public class TITAN_EREN : MonoBehaviour
                     {
                         currentCamera.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCamera.GetComponent<Camera>().fieldOfView, 50f, 0.1f);
                     }
+
                     if (bottomObject.GetComponent<CheckHitGround>().isGrounded)
                     {
                         if (!grounded)
                         {
                             justGrounded = true;
                         }
+
                         grounded = true;
                         bottomObject.GetComponent<CheckHitGround>().isGrounded = false;
                     }
@@ -147,6 +152,7 @@ public class TITAN_EREN : MonoBehaviour
                     {
                         grounded = false;
                     }
+
                     var x = 0f;
                     var z = 0f;
                     if (!IN_GAME_MAIN_CAMERA.isTyping)
@@ -163,6 +169,7 @@ public class TITAN_EREN : MonoBehaviour
                         {
                             z = 0f;
                         }
+
                         if (inputManager.isInput[InputCode.left])
                         {
                             x = -1f;
@@ -176,11 +183,13 @@ public class TITAN_EREN : MonoBehaviour
                             x = 0f;
                         }
                     }
+
                     if (needFreshCorePosition)
                     {
                         oldCorePosition = transform.position - transform.Find("Amarture/Core").position;
                         needFreshCorePosition = false;
                     }
+
                     if (isAttack || isHit)
                     {
                         var vector4 = transform.position - transform.Find("Amarture/Core").position - oldCorePosition;
@@ -201,7 +210,7 @@ public class TITAN_EREN : MonoBehaviour
                             zero = rigidbody.velocity;
                             if (animation.IsPlaying("jump_air"))
                             {
-                                var obj2 = (GameObject)Instantiate(Resources.Load("FX/boom2_eren"), transform.position, Quaternion.Euler(270f, 0f, 0f));
+                                var obj2 = (GameObject) Instantiate(Resources.Load("FX/boom2_eren"), transform.position, Quaternion.Euler(270f, 0f, 0f));
                                 obj2.transform.localScale = Vector3.one * 1.5f;
                                 if (needRoar)
                                 {
@@ -215,6 +224,7 @@ public class TITAN_EREN : MonoBehaviour
                                 }
                             }
                         }
+
                         if (!animation.IsPlaying("jump_land") && !isAttack && !isHit && !animation.IsPlaying("born"))
                         {
                             var vector7 = new Vector3(x, 0f, z);
@@ -243,13 +253,16 @@ public class TITAN_EREN : MonoBehaviour
                                     crossFade("idle", 0.1f);
                                     zero = zero * 0f;
                                 }
+
                                 num5 = -874f;
                             }
+
                             if (num5 != -874f)
                             {
                                 facingDirection = num5;
                             }
                         }
+
                         var velocity = rigidbody.velocity;
                         var force = zero - velocity;
                         force.x = Mathf.Clamp(force.x, -maxVelocityChange, maxVelocityChange);
@@ -264,6 +277,7 @@ public class TITAN_EREN : MonoBehaviour
                         {
                             force = -rigidbody.velocity;
                         }
+
                         rigidbody.AddForce(force, ForceMode.VelocityChange);
                         rigidbody.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, facingDirection, 0f), Time.deltaTime * 10f);
                     }
@@ -274,6 +288,7 @@ public class TITAN_EREN : MonoBehaviour
                             playAnimation("jump_air");
                             rigidbody.AddForce(Vector3.up * 240f, ForceMode.VelocityChange);
                         }
+
                         if (!animation.IsPlaying("jump") && !isHit)
                         {
                             var vector11 = new Vector3(x, 0f, z);
@@ -296,16 +311,19 @@ public class TITAN_EREN : MonoBehaviour
                             {
                                 num12 = -874f;
                             }
+
                             if (num12 != -874f)
                             {
                                 facingDirection = num12;
                             }
+
                             if (!animation.IsPlaying(string.Empty) && !animation.IsPlaying("attack3_2") && !animation.IsPlaying("attack5"))
                             {
                                 rigidbody.rotation = Quaternion.Lerp(gameObject.transform.rotation, Quaternion.Euler(0f, facingDirection, 0f), Time.deltaTime * 6f);
                             }
                         }
                     }
+
                     rigidbody.AddForce(new Vector3(0f, -gravity * rigidbody.mass, 0f));
                 }
             }
@@ -332,8 +350,9 @@ public class TITAN_EREN : MonoBehaviour
                 }
                 else
                 {
-                    obj2 = (GameObject)Instantiate(Resources.Load("bloodExplore"), transform.position + Vector3.up * 1f * 4f, Quaternion.Euler(270f, 0f, 0f));
+                    obj2 = (GameObject) Instantiate(Resources.Load("bloodExplore"), transform.position + Vector3.up * 1f * 4f, Quaternion.Euler(270f, 0f, 0f));
                 }
+
                 obj2.transform.localScale = this.transform.localScale;
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
                 {
@@ -341,8 +360,9 @@ public class TITAN_EREN : MonoBehaviour
                 }
                 else
                 {
-                    obj2 = (GameObject)Instantiate(Resources.Load("bloodsplatter"), transform.position, Quaternion.Euler(90f + transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
+                    obj2 = (GameObject) Instantiate(Resources.Load("bloodsplatter"), transform.position, Quaternion.Euler(90f + transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
                 }
+
                 obj2.transform.localScale = this.transform.localScale;
                 obj2.transform.parent = transform;
                 if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
@@ -351,8 +371,9 @@ public class TITAN_EREN : MonoBehaviour
                 }
                 else
                 {
-                    obj2 = (GameObject)Instantiate(Resources.Load("FX/justSmoke"), transform.position, Quaternion.Euler(270f, 0f, 0f));
+                    obj2 = (GameObject) Instantiate(Resources.Load("FX/justSmoke"), transform.position, Quaternion.Euler(270f, 0f, 0f));
                 }
+
                 obj2.transform.parent = transform;
             }
         }
@@ -360,7 +381,7 @@ public class TITAN_EREN : MonoBehaviour
 
     public void hitByFTByServer(int phase)
     {
-        object[] parameters = { phase };
+        object[] parameters = {phase};
         photonView.RPC("hitByFTRPC", PhotonTargets.All, parameters);
     }
 
@@ -382,7 +403,7 @@ public class TITAN_EREN : MonoBehaviour
                 crossFade("die", 0.1f);
                 isHitWhileCarryingRock = true;
                 GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameLose();
-                object[] parameters = { "set" };
+                object[] parameters = {"set"};
                 photonView.RPC("rockPlayAnimation", PhotonTargets.All, parameters);
             }
             else
@@ -428,15 +449,15 @@ public class TITAN_EREN : MonoBehaviour
     {
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
         {
-            var url = (string)FengGameManagerMKII.settings[65];
-            if ((int)FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
+            var url = (string) FengGameManagerMKII.settings[65];
+            if ((int) FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
             {
                 StartCoroutine(loadskinE(url));
             }
         }
-        else if (photonView.isMine && (int)FengGameManagerMKII.settings[1] == 1)
+        else if (photonView.isMine && (int) FengGameManagerMKII.settings[1] == 1)
         {
-            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string)FengGameManagerMKII.settings[65]);
+            photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, (string) FengGameManagerMKII.settings[65]);
         }
     }
 
@@ -446,6 +467,7 @@ public class TITAN_EREN : MonoBehaviour
         {
             yield return null;
         }
+
         var mipmap = Settings.MipMappingSetting;
         var iteratorVariable1 = false;
 
@@ -462,18 +484,19 @@ public class TITAN_EREN : MonoBehaviour
                     iteratorVariable1 = true;
                     iteratorVariable4.material.mainTexture = iteratorVariable6;
                     FengGameManagerMKII.linkHash[2].Add(url, iteratorVariable4.material);
-                    iteratorVariable4.material = (Material)FengGameManagerMKII.linkHash[2][url];
+                    iteratorVariable4.material = (Material) FengGameManagerMKII.linkHash[2][url];
                 }
                 else
                 {
-                    iteratorVariable4.material = (Material)FengGameManagerMKII.linkHash[2][url];
+                    iteratorVariable4.material = (Material) FengGameManagerMKII.linkHash[2][url];
                 }
             }
             else
             {
-                iteratorVariable4.material = (Material)FengGameManagerMKII.linkHash[2][url];
+                iteratorVariable4.material = (Material) FengGameManagerMKII.linkHash[2][url];
             }
         }
+
         if (iteratorVariable1)
         {
             FengGameManagerMKII.FGM.unloadAssets();
@@ -483,7 +506,7 @@ public class TITAN_EREN : MonoBehaviour
     [RPC]
     public void loadskinRPC(string url)
     {
-        if ((int)FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
+        if ((int) FengGameManagerMKII.settings[1] == 1 && (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg")))
         {
             StartCoroutine(loadskinE(url));
         }
@@ -517,6 +540,7 @@ public class TITAN_EREN : MonoBehaviour
             {
                 obj2.GetComponent<TITAN>().beTauntedBy(gameObject, tauntTime);
             }
+
             if (obj2.GetComponent<FEMALE_TITAN>() != null)
             {
                 obj2.GetComponent<FEMALE_TITAN>().erenIsHere(gameObject);
@@ -537,7 +561,7 @@ public class TITAN_EREN : MonoBehaviour
         animation.Play(aniName);
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = { aniName };
+            object[] parameters = {aniName};
             photonView.RPC("netPlayAnimation", PhotonTargets.Others, parameters);
         }
     }
@@ -548,7 +572,7 @@ public class TITAN_EREN : MonoBehaviour
         animation[aniName].normalizedTime = normalizedTime;
         if (PhotonNetwork.connected && photonView.isMine)
         {
-            object[] parameters = { aniName, normalizedTime };
+            object[] parameters = {aniName, normalizedTime};
             photonView.RPC("netPlayAnimationAt", PhotonTargets.Others, parameters);
         }
     }
@@ -558,7 +582,7 @@ public class TITAN_EREN : MonoBehaviour
         playsoundRPC(sndname);
         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
         {
-            object[] parameters = { sndname };
+            object[] parameters = {sndname};
             photonView.RPC("playsoundRPC", PhotonTargets.Others, parameters);
         }
     }
@@ -592,6 +616,7 @@ public class TITAN_EREN : MonoBehaviour
                 rock.transform.position = transform.position;
                 rock.transform.rotation = transform.rotation;
             }
+
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine)
             {
                 if (rockPhase == 0)
@@ -645,10 +670,10 @@ public class TITAN_EREN : MonoBehaviour
                     {
                         rockPhase++;
                         crossFade("rock_lift", 0.1f);
-                        object[] parameters = { "lift" };
+                        object[] parameters = {"lift"};
                         photonView.RPC("rockPlayAnimation", PhotonTargets.All, parameters);
                         waitCounter = 0f;
-                        targetCheckPt = (Vector3)checkPoints[0];
+                        targetCheckPt = (Vector3) checkPoints[0];
                     }
                 }
                 else if (rockPhase == 4)
@@ -660,7 +685,7 @@ public class TITAN_EREN : MonoBehaviour
                     {
                         rockPhase++;
                         crossFade("rock_walk", 0.1f);
-                        object[] objArray3 = { "move" };
+                        object[] objArray3 = {"move"};
                         photonView.RPC("rockPlayAnimation", PhotonTargets.All, objArray3);
                         rock.animation["move"].normalizedTime = animation["rock_walk"].normalizedTime;
                         waitCounter = 0f;
@@ -679,7 +704,7 @@ public class TITAN_EREN : MonoBehaviour
                             }
                             else
                             {
-                                var vector6 = (Vector3)checkPoints[0];
+                                var vector6 = (Vector3) checkPoints[0];
                                 targetCheckPt = vector6;
                                 checkPoints.RemoveAt(0);
                                 var objArray = GameObject.FindGameObjectsWithTag("titanRespawn2");
@@ -703,6 +728,7 @@ public class TITAN_EREN : MonoBehaviour
                             rockPhase++;
                         }
                     }
+
                     if (checkPoints.Count > 0 && Random.Range(0, 3000) < 10 - checkPoints.Count)
                     {
                         Quaternion quaternion;
@@ -715,6 +741,7 @@ public class TITAN_EREN : MonoBehaviour
                         {
                             quaternion = transform.rotation * Quaternion.Euler(0f, Random.Range(-30f, 30f), 0f);
                         }
+
                         var vector7 = quaternion * new Vector3(Random.Range(100f, 200f), 0f, 0f);
                         var position = transform.position + vector7;
                         LayerMask mask2 = 1 << LayerMask.NameToLayer("Ground");
@@ -723,11 +750,13 @@ public class TITAN_EREN : MonoBehaviour
                         {
                             y = hit.point.y;
                         }
+
                         position += Vector3.up * y;
                         var obj5 = GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().spawnTitan(70, position, transform.rotation, false);
                         obj5.GetComponent<TITAN>().isAlarm = true;
                         obj5.GetComponent<TITAN>().chaseDistance = 999999f;
                     }
+
                     var vector10 = transform.forward * 6f;
                     var vector11 = rigidbody.velocity;
                     var vector12 = vector10 - vector11;
@@ -748,7 +777,7 @@ public class TITAN_EREN : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                     rockPhase++;
                     crossFade("rock_fix_hole", 0.1f);
-                    object[] objArray4 = { "set" };
+                    object[] objArray4 = {"set"};
                     photonView.RPC("rockPlayAnimation", PhotonTargets.All, objArray4);
                     photonView.RPC("endMovingRock", PhotonTargets.All);
                 }
@@ -762,6 +791,7 @@ public class TITAN_EREN : MonoBehaviour
                         rockPhase++;
                         GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
                     }
+
                     if (animation["rock_fix_hole"].normalizedTime >= 0.62f && !rockHitGround)
                     {
                         rockHitGround = true;
@@ -787,6 +817,7 @@ public class TITAN_EREN : MonoBehaviour
         {
             checkPoints.Add(obj2.transform.Find("r" + i).position);
         }
+
         checkPoints.Add("end");
     }
 
@@ -833,6 +864,7 @@ public class TITAN_EREN : MonoBehaviour
             animation["hit_annie_2"].speed = 0.7f;
             animation["hit_annie_3"].speed = 0.7f;
         }
+
         hasSpawn = true;
     }
 
@@ -855,6 +887,7 @@ public class TITAN_EREN : MonoBehaviour
                     transform.GetComponent<AudioSource>().Stop();
                     transform.GetComponent<AudioSource>().Play();
                 }
+
                 if (animation["run"].normalizedTime % 1f > 0.75f && stepSoundPhase == 1)
                 {
                     stepSoundPhase = 2;
@@ -863,6 +896,7 @@ public class TITAN_EREN : MonoBehaviour
                     transform2.GetComponent<AudioSource>().Play();
                 }
             }
+
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine)
             {
                 if (hasDied)
@@ -875,13 +909,14 @@ public class TITAN_EREN : MonoBehaviour
                             realBody.transform.position = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position + Vector3.up * 2f;
                             realBody = null;
                         }
+
                         dieTime += Time.deltaTime;
                         if (dieTime > 2f && !hasDieSteam)
                         {
                             hasDieSteam = true;
                             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                             {
-                                var obj2 = (GameObject)Instantiate(Resources.Load("FX/FXtitanDie1"));
+                                var obj2 = (GameObject) Instantiate(Resources.Load("FX/FXtitanDie1"));
                                 obj2.transform.position = transform.Find("Amarture/Core/Controller_Body/hip").position;
                                 obj2.transform.localScale = transform.localScale;
                             }
@@ -890,11 +925,12 @@ public class TITAN_EREN : MonoBehaviour
                                 PhotonNetwork.Instantiate("FX/FXtitanDie1", transform.Find("Amarture/Core/Controller_Body/hip").position, Quaternion.Euler(-90f, 0f, 0f), 0).transform.localScale = transform.localScale;
                             }
                         }
+
                         if (dieTime > 5f)
                         {
                             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                             {
-                                var obj4 = (GameObject)Instantiate(Resources.Load("FX/FXtitanDie"));
+                                var obj4 = (GameObject) Instantiate(Resources.Load("FX/FXtitanDie"));
                                 obj4.transform.position = transform.Find("Amarture/Core/Controller_Body/hip").position;
                                 obj4.transform.localScale = transform.localScale;
                                 Destroy(gameObject);
@@ -930,6 +966,7 @@ public class TITAN_EREN : MonoBehaviour
                                 return;
                             }
                         }
+
                         if (grounded && !isAttack && !animation.IsPlaying("jump_land") && !isAttack && !animation.IsPlaying("born"))
                         {
                             if (inputManager.isInputDown[InputCode.attack0] || inputManager.isInputDown[InputCode.attack1])
@@ -941,6 +978,7 @@ public class TITAN_EREN : MonoBehaviour
                                     {
                                         flag = true;
                                     }
+
                                     if (flag)
                                     {
                                         flag = true;
@@ -954,6 +992,7 @@ public class TITAN_EREN : MonoBehaviour
                                 {
                                     attackAnimation = "attack_combo_001";
                                 }
+
                                 if (!flag)
                                 {
                                     playAnimation(attackAnimation);
@@ -972,9 +1011,11 @@ public class TITAN_EREN : MonoBehaviour
                                     {
                                         attackBox = transform.Find("Amarture/Core/Controller_Body/hip/thigh_R/shin_R/foot_R");
                                     }
+
                                     hitTargets = new ArrayList();
                                 }
                             }
+
                             if (inputManager.isInputDown[InputCode.salute])
                             {
                                 crossFade("born", 0.1f);
@@ -982,6 +1023,7 @@ public class TITAN_EREN : MonoBehaviour
                                 isPlayRoar = false;
                             }
                         }
+
                         if (!isAttack)
                         {
                             if ((grounded || animation.IsPlaying("idle")) && !animation.IsPlaying("jump_start") && !animation.IsPlaying("jump_air") && !animation.IsPlaying("jump_land") && inputManager.isInput[InputCode.bothRope])
@@ -995,6 +1037,7 @@ public class TITAN_EREN : MonoBehaviour
                             {
                                 isNextAttack = true;
                             }
+
                             var num = 0f;
                             var num2 = 0f;
                             var num3 = 0f;
@@ -1030,6 +1073,7 @@ public class TITAN_EREN : MonoBehaviour
                                 num = 0.5f;
                                 num2 = 0.85f;
                             }
+
                             if (hitPause > 0f)
                             {
                                 hitPause -= Time.deltaTime;
@@ -1039,17 +1083,19 @@ public class TITAN_EREN : MonoBehaviour
                                     hitPause = 0f;
                                 }
                             }
+
                             if (num3 > 0f && isNextAttack && animation[attackAnimation].normalizedTime >= num3)
                             {
                                 if (hitTargets.Count > 0)
                                 {
-                                    var transform3 = (Transform)hitTargets[0];
+                                    var transform3 = (Transform) hitTargets[0];
                                     if (transform3 != null)
                                     {
                                         transform.rotation = Quaternion.Euler(0f, Quaternion.LookRotation(transform3.position - transform.position).eulerAngles.y, 0f);
                                         facingDirection = transform.rotation.eulerAngles.y;
                                     }
                                 }
+
                                 falseAttack();
                                 attackAnimation = str;
                                 crossFade(attackAnimation, 0.1f);
@@ -1065,8 +1111,10 @@ public class TITAN_EREN : MonoBehaviour
                                 {
                                     attackBox = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R");
                                 }
+
                                 hitTargets = new ArrayList();
                             }
+
                             if (animation[attackAnimation].normalizedTime >= num && animation[attackAnimation].normalizedTime <= num2 || !attackChkOnce && animation[attackAnimation].normalizedTime >= num)
                             {
                                 if (!attackChkOnce)
@@ -1083,8 +1131,10 @@ public class TITAN_EREN : MonoBehaviour
                                     {
                                         playSound("snd_eren_swing3");
                                     }
+
                                     attackChkOnce = true;
                                 }
+
                                 var colliderArray = Physics.OverlapSphere(attackBox.transform.position, 8f);
                                 for (var i = 0; i < colliderArray.Length; i++)
                                 {
@@ -1092,15 +1142,17 @@ public class TITAN_EREN : MonoBehaviour
                                     {
                                         continue;
                                     }
+
                                     var flag2 = false;
                                     for (var j = 0; j < hitTargets.Count; j++)
                                     {
-                                        if (colliderArray[i].gameObject.transform.root == (Transform)hitTargets[j])
+                                        if (colliderArray[i].gameObject.transform.root == (Transform) hitTargets[j])
                                         {
                                             flag2 = true;
                                             break;
                                         }
                                     }
+
                                     if (!flag2 && !colliderArray[i].gameObject.transform.root.GetComponent<TITAN>().hasDie)
                                     {
                                         animation[attackAnimation].speed = 0f;
@@ -1139,6 +1191,7 @@ public class TITAN_EREN : MonoBehaviour
                                                 colliderArray[i].gameObject.transform.root.GetComponent<TITAN>().hitR(transform.position, hitPause);
                                             }
                                         }
+
                                         hitTargets.Add(colliderArray[i].gameObject.transform.root);
                                         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
                                         {
@@ -1151,16 +1204,19 @@ public class TITAN_EREN : MonoBehaviour
                                     }
                                 }
                             }
+
                             if (animation[attackAnimation].normalizedTime >= 1f)
                             {
                                 falseAttack();
                                 playAnimation("idle");
                             }
                         }
+
                         if (animation.IsPlaying("jump_land") && animation["jump_land"].normalizedTime >= 1f)
                         {
                             crossFade("idle", 0.1f);
                         }
+
                         if (animation.IsPlaying("born"))
                         {
                             if (animation["born"].normalizedTime >= 0.28f && !isPlayRoar)
@@ -1168,10 +1224,12 @@ public class TITAN_EREN : MonoBehaviour
                                 isPlayRoar = true;
                                 playSound("snd_eren_roar");
                             }
+
                             if (animation["born"].normalizedTime >= 0.5f && animation["born"].normalizedTime <= 0.7f)
                             {
                                 currentCamera.GetComponent<IN_GAME_MAIN_CAMERA>().startShake(0.5f, 1f);
                             }
+
                             if (animation["born"].normalizedTime >= 1f)
                             {
                                 crossFade("idle", 0.1f);
@@ -1179,7 +1237,7 @@ public class TITAN_EREN : MonoBehaviour
                                 {
                                     if (PhotonNetwork.isMasterClient)
                                     {
-                                        object[] parameters = { 10f, 500f };
+                                        object[] parameters = {10f, 500f};
                                         photonView.RPC("netTauntAttack", PhotonTargets.MasterClient, parameters);
                                     }
                                     else
@@ -1193,6 +1251,7 @@ public class TITAN_EREN : MonoBehaviour
                                 }
                             }
                         }
+
                         showAimUI();
                         showSkillCD();
                     }

@@ -26,6 +26,7 @@ public class TweenTransform : UITweener
             transform.Sample(1f, true);
             transform.enabled = false;
         }
+
         return transform;
     }
 
@@ -40,6 +41,7 @@ public class TweenTransform : UITweener
                 mRot = mTrans.rotation;
                 mScale = mTrans.localScale;
             }
+
             if (from != null)
             {
                 mTrans.position = @from.position * (1f - factor) + to.position * factor;
@@ -52,6 +54,7 @@ public class TweenTransform : UITweener
                 mTrans.localScale = mScale * (1f - factor) + to.localScale * factor;
                 mTrans.rotation = Quaternion.Slerp(mRot, to.rotation, factor);
             }
+
             if (parentWhenFinished && isFinished)
             {
                 mTrans.parent = to;

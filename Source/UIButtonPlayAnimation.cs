@@ -58,6 +58,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
             {
                 Play(isOver);
             }
+
             mHighlighted = isOver;
         }
     }
@@ -84,14 +85,16 @@ public class UIButtonPlayAnimation : MonoBehaviour
         {
             target = GetComponentInChildren<Animation>();
         }
+
         if (target != null)
         {
             if (clearSelection && UICamera.selectedObject == gameObject)
             {
                 UICamera.selectedObject = null;
             }
-            var num = -(int)this.playDirection;
-            var playDirection = !forward ? (Direction)num : this.playDirection;
+
+            var num = -(int) this.playDirection;
+            var playDirection = !forward ? (Direction) num : this.playDirection;
             var animation = ActiveAnimation.Play(target, clipName, playDirection, ifDisabledOnPlay, disableWhenFinished);
             if (animation != null)
             {
@@ -99,6 +102,7 @@ public class UIButtonPlayAnimation : MonoBehaviour
                 {
                     animation.Reset();
                 }
+
                 animation.onFinished = onFinished;
                 if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
                 {

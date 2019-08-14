@@ -14,17 +14,31 @@ namespace GGM.GUI
         //winRect = GUIHelpers.AlignRect(32f, 32f, inRect, GUIHelpers.ALIGN.TOPCENTER, 5f, -10f);
         public enum Alignment
         {
-            TOPLEFT, TOPCENTER, TOPRIGHT, RIGHT, BOTTOMRIGHT, BOTTOMCENTER, BOTTOMLEFT, LEFT, CENTER
+            TOPLEFT,
+            TOPCENTER,
+            TOPRIGHT,
+            RIGHT,
+            BOTTOMRIGHT,
+            BOTTOMCENTER,
+            BOTTOMLEFT,
+            LEFT,
+            CENTER
         }
 
         public static Rect AlignRect(float width, float height, Alignment alignment)
-        { return AlignRect(width, height, new Rect(0, 0, Screen.width, Screen.height), alignment, 0f, 0f); }
+        {
+            return AlignRect(width, height, new Rect(0, 0, Screen.width, Screen.height), alignment, 0f, 0f);
+        }
 
         public static Rect AlignRect(float width, float height, Alignment alignment, float xOffset, float yOffset)
-        { return AlignRect(width, height, new Rect(0, 0, Screen.width, Screen.height), alignment, xOffset, yOffset); }
+        {
+            return AlignRect(width, height, new Rect(0, 0, Screen.width, Screen.height), alignment, xOffset, yOffset);
+        }
 
         public static Rect AlignRect(float width, float height, Rect parentRect, Alignment alignment)
-        { return AlignRect(width, height, parentRect, alignment, 0f, 0f); }
+        {
+            return AlignRect(width, height, parentRect, alignment, 0f, 0f);
+        }
 
         public static Rect AlignRect(float width, float height, Rect parentRect, Alignment alignment, float xOffset, float yOffset)
         {
@@ -80,7 +94,10 @@ namespace GGM.GUI
 
         // Rect extensions
         // Reduce the size of the rect from the center
-        public static Rect Shrink(this Rect r, float nbPixels) { return r.Shrink(nbPixels, nbPixels); }
+        public static Rect Shrink(this Rect r, float nbPixels)
+        {
+            return r.Shrink(nbPixels, nbPixels);
+        }
 
         public static Rect Shrink(this Rect r, float nbPixelX, float nbPixelY)
         {
@@ -88,7 +105,10 @@ namespace GGM.GUI
         }
 
         // Enhance the size of the rect from the center
-        public static Rect Grow(this Rect r, float nbPixels) { return r.Shrink(-nbPixels, -nbPixels); }
+        public static Rect Grow(this Rect r, float nbPixels)
+        {
+            return r.Shrink(-nbPixels, -nbPixels);
+        }
 
         public static Rect Grow(this Rect r, float nbPixelX, float nbPixelY)
         {
@@ -98,13 +118,14 @@ namespace GGM.GUI
         // Make sure the rect is contained inside another rect. It's size isn't changed.
         public static Rect ClampPosition(this Rect r, Rect borderRect)
         {
-            return new Rect(Mathf.Clamp(r.x, borderRect.x, borderRect.x + borderRect.width - r.width),
-                            Mathf.Clamp(r.y, borderRect.y, borderRect.y + borderRect.height - r.height),
-                            r.width, r.height);
+            return new Rect(Mathf.Clamp(r.x, borderRect.x, borderRect.x + borderRect.width - r.width), Mathf.Clamp(r.y, borderRect.y, borderRect.y + borderRect.height - r.height), r.width, r.height);
         }
 
         // Translate the rect
-        public static Rect MoveX(this Rect r, float xMovement) { return r.Move(xMovement, 0f); }
+        public static Rect MoveX(this Rect r, float xMovement)
+        {
+            return r.Move(xMovement, 0f);
+        }
 
         public static Rect MoveY(this Rect r, float yMovement)
         {
@@ -134,18 +155,28 @@ namespace GGM.GUI
         }
 
         // Quick access to the screen rect
-        public static Rect screenRect { get { return new Rect(0f, 0f, Screen.width, Screen.height); } }
+        public static Rect screenRect
+        {
+            get { return new Rect(0f, 0f, Screen.width, Screen.height); }
+        }
 
         // MOUSE FUNCTIONS
         // Easy access to the gui mouse pos
-        public static Vector2 mousePos { get { return Event.current.mousePosition; } }
+        public static Vector2 mousePos
+        {
+            get { return Event.current.mousePosition; }
+        }
 
         // gui mouse pos with the y inverted
-        public static Vector2 mousePosInvertY { get { return FlipY(mousePos); } }
+        public static Vector2 mousePosInvertY
+        {
+            get { return FlipY(mousePos); }
+        }
 
         public static Vector2 FlipY(Vector2 inPos)
         {
-            inPos.y = Screen.height - inPos.y; return inPos;
+            inPos.y = Screen.height - inPos.y;
+            return inPos;
         }
 
         public static Vector2 MouseRelativePos(Rect rect)
@@ -154,7 +185,10 @@ namespace GGM.GUI
         }
 
         // Give the inPos relative to the input rect
-        public static Vector2 RelativePos(Rect rect, Vector2 inPos) { return RelativePos(rect, inPos.x, inPos.y); }
+        public static Vector2 RelativePos(Rect rect, Vector2 inPos)
+        {
+            return RelativePos(rect, inPos.x, inPos.y);
+        }
 
         public static Vector2 RelativePos(Rect rect, Vector3 inPos)
         {

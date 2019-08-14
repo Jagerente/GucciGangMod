@@ -32,16 +32,19 @@ public class InputManagerRC
             humanWheel[num] = 0;
             humanKeys[num] = KeyCode.None;
         }
+
         for (num = 0; num < horseWheel.Length; num++)
         {
             horseWheel[num] = 0;
             horseKeys[num] = KeyCode.None;
         }
+
         for (num = 0; num < titanWheel.Length; num++)
         {
             titanWheel[num] = 0;
             titanKeys[num] = KeyCode.None;
         }
+
         for (num = 0; num < levelWheel.Length; num++)
         {
             levelWheel[num] = 0;
@@ -55,6 +58,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * cannonWheel[code] > 0f;
         }
+
         return Input.GetKey(cannonKeys[code]);
     }
 
@@ -64,6 +68,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * cannonWheel[code] > 0f;
         }
+
         return Input.GetKeyDown(cannonKeys[code]);
     }
 
@@ -73,6 +78,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * horseWheel[code] > 0f;
         }
+
         return Input.GetKey(horseKeys[code]);
     }
 
@@ -82,6 +88,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * horseWheel[code] > 0f;
         }
+
         return Input.GetKeyDown(horseKeys[code]);
     }
 
@@ -91,6 +98,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * humanWheel[code] > 0f;
         }
+
         return Input.GetKey(humanKeys[code]);
     }
 
@@ -100,6 +108,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * humanWheel[code] > 0f;
         }
+
         return Input.GetKeyDown(humanKeys[code]);
     }
 
@@ -109,6 +118,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * levelWheel[code] > 0f;
         }
+
         return Input.GetKey(levelKeys[code]);
     }
 
@@ -118,6 +128,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * levelWheel[code] > 0f;
         }
+
         return Input.GetKeyDown(levelKeys[code]);
     }
 
@@ -127,6 +138,7 @@ public class InputManagerRC
         {
             return Input.GetAxis("Mouse ScrollWheel") * titanWheel[code] > 0f;
         }
+
         return Input.GetKey(titanKeys[code]);
     }
 
@@ -144,7 +156,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            cannonKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
+            cannonKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
         }
     }
 
@@ -162,7 +174,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            horseKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
+            horseKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
         }
     }
 
@@ -180,7 +192,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            humanKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
+            humanKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
         }
     }
 
@@ -198,7 +210,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            levelKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
+            levelKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
         }
     }
 
@@ -216,7 +228,7 @@ public class InputManagerRC
         }
         else if (Enum.IsDefined(typeof(KeyCode), setting))
         {
-            titanKeys[code] = (KeyCode)Enum.Parse(typeof(KeyCode), setting);
+            titanKeys[code] = (KeyCode) Enum.Parse(typeof(KeyCode), setting);
         }
     }
 }

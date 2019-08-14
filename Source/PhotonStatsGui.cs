@@ -16,6 +16,7 @@ public class PhotonStatsGui : MonoBehaviour
         {
             PhotonNetwork.networkingPeer.TrafficStatsEnabled = statsOn;
         }
+
         if (statsWindowOn)
         {
             statsRect = GUILayout.Window(WindowId, statsRect, TrafficStatsWindow, "Messages (shift+tab)");
@@ -36,6 +37,7 @@ public class PhotonStatsGui : MonoBehaviour
         {
             num = 1L;
         }
+
         GUILayout.BeginHorizontal();
         buttonsOn = GUILayout.Toggle(buttonsOn, "buttons");
         healthStatsVisible = GUILayout.Toggle(healthStatsVisible, "health");
@@ -56,9 +58,11 @@ public class PhotonStatsGui : MonoBehaviour
                 PhotonNetwork.networkingPeer.TrafficStatsReset();
                 PhotonNetwork.networkingPeer.TrafficStatsEnabled = true;
             }
+
             flag = GUILayout.Button("To Log");
             GUILayout.EndHorizontal();
         }
+
         var str4 = string.Empty;
         var str5 = string.Empty;
         if (trafficStatsOn)
@@ -68,22 +72,26 @@ public class PhotonStatsGui : MonoBehaviour
             GUILayout.Label(str4);
             GUILayout.Label(str5);
         }
+
         var str6 = string.Empty;
         if (healthStatsVisible)
         {
-            object[] args = { trafficStatsGameLevel.LongestDeltaBetweenSending, trafficStatsGameLevel.LongestDeltaBetweenDispatching, trafficStatsGameLevel.LongestEventCallback, trafficStatsGameLevel.LongestEventCallbackCode, trafficStatsGameLevel.LongestOpResponseCallback, trafficStatsGameLevel.LongestOpResponseCallbackOpCode, PhotonNetwork.networkingPeer.RoundTripTime, PhotonNetwork.networkingPeer.RoundTripTimeVariance };
+            object[] args = {trafficStatsGameLevel.LongestDeltaBetweenSending, trafficStatsGameLevel.LongestDeltaBetweenDispatching, trafficStatsGameLevel.LongestEventCallback, trafficStatsGameLevel.LongestEventCallbackCode, trafficStatsGameLevel.LongestOpResponseCallback, trafficStatsGameLevel.LongestOpResponseCallbackOpCode, PhotonNetwork.networkingPeer.RoundTripTime, PhotonNetwork.networkingPeer.RoundTripTimeVariance};
             str6 = string.Format("ping: {6}[+/-{7}]ms\nlongest delta between\nsend: {0,4}ms disp: {1,4}ms\nlongest time for:\nev({3}):{2,3}ms op({5}):{4,3}ms", args);
             GUILayout.Label(str6);
         }
+
         if (flag)
         {
-            object[] objArray2 = { text, str2, str3, str4, str5, str6 };
+            object[] objArray2 = {text, str2, str3, str4, str5, str6};
             Debug.Log(string.Format("{0}\n{1}\n{2}\n{3}\n{4}\n{5}", objArray2));
         }
+
         if (GUI.changed)
         {
             statsRect.height = 100f;
         }
+
         GUI.DragWindow();
     }
 

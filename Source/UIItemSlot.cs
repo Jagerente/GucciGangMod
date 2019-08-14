@@ -67,9 +67,9 @@ public abstract class UIItemSlot : MonoBehaviour
         var baseItem = item?.baseItem;
         if (baseItem != null)
         {
-            string[] textArray1 = { "[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n" };
+            string[] textArray1 = {"[", NGUITools.EncodeColor(item.color), "]", item.name, "[-]\n"};
             var str2 = string.Concat(textArray1);
-            object[] objArray1 = { str2, "[AFAFAF]Level ", item.itemLevel, " ", baseItem.slot };
+            object[] objArray1 = {str2, "[AFAFAF]Level ", item.itemLevel, " ", baseItem.slot};
             var tooltipText = string.Concat(objArray1);
             var list = item.CalculateStats();
             var num = 0;

@@ -47,6 +47,7 @@ namespace Xft
                 {
                     mMeshObj.SetActive(true);
                 }
+
                 mFadeT = 1f;
                 mIsFading = false;
                 mFadeTime = 1f;
@@ -59,6 +60,7 @@ namespace Xft
                     mSpline.ControlPoints[i].Position = mSnapshotList[i].Pos;
                     mSpline.ControlPoints[i].Normal = mSnapshotList[i].PointEnd - mSnapshotList[i].PointStart;
                 }
+
                 RefreshSpline();
                 UpdateVertex();
             }
@@ -164,6 +166,7 @@ namespace Xft
                 mSpline.ControlPoints[i].Position = mSnapshotList[i].Pos;
                 mSpline.ControlPoints[i].Normal = mSnapshotList[i].PointEnd - mSnapshotList[i].PointStart;
             }
+
             mSpline.RefreshSpline();
         }
 
@@ -246,6 +249,7 @@ namespace Xft
                 pool.Indices[index + 10] = num2 + 2;
                 pool.Indices[index + 11] = num2 + 1;
             }
+
             pool.IndiceChanged = true;
         }
 
@@ -255,7 +259,7 @@ namespace Xft
             for (var i = 0; i < Granularity; i++)
             {
                 var index = mVertexSegment.VertStart + i * 3;
-                var num3 = i / (float)Granularity;
+                var num3 = i / (float) Granularity;
                 var tl = num3 * mFadeT;
                 var zero = Vector2.zero;
                 var vector2 = mSpline.InterpolateByLen(tl);
@@ -278,6 +282,7 @@ namespace Xft
                 zero.y = num3;
                 pool.UVs[index + 2] = zero;
             }
+
             mVertexSegment.Pool.UVChanged = true;
             mVertexSegment.Pool.VertChanged = true;
             mVertexSegment.Pool.ColorChanged = true;
@@ -285,26 +290,17 @@ namespace Xft
 
         public Vector3 CurHeadPos
         {
-            get
-            {
-                return (PointStart.position + PointEnd.position) / 2f;
-            }
+            get { return (PointStart.position + PointEnd.position) / 2f; }
         }
 
         public float TrailWidth
         {
-            get
-            {
-                return mTrailWidth;
-            }
+            get { return mTrailWidth; }
         }
 
         public float UpdateInterval
         {
-            get
-            {
-                return 1f / fps;
-            }
+            get { return 1f / fps; }
         }
 
         public class Element
@@ -324,10 +320,7 @@ namespace Xft
 
             public Vector3 Pos
             {
-                get
-                {
-                    return (PointStart + PointEnd) / 2f;
-                }
+                get { return (PointStart + PointEnd) / 2f; }
             }
         }
     }

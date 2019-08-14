@@ -51,8 +51,7 @@ public class UIScrollBar : MonoBehaviour
             mScroll = Mathf.Clamp01(mScroll);
             var border = mBG.border;
             var vector2 = mFG.border;
-            var vector3 = new Vector2(Mathf.Max(0f, mBG.cachedTransform.localScale.x - border.x - border.z),
-                Mathf.Max(0f, mBG.cachedTransform.localScale.y - border.y - border.w));
+            var vector3 = new Vector2(Mathf.Max(0f, mBG.cachedTransform.localScale.x - border.x - border.z), Mathf.Max(0f, mBG.cachedTransform.localScale.y - border.y - border.w));
             var num = !mInverted ? mScroll : 1f - mScroll;
             if (mDir == Direction.Horizontal)
             {
@@ -60,10 +59,8 @@ public class UIScrollBar : MonoBehaviour
                 mFG.pivot = UIWidget.Pivot.Left;
                 mBG.pivot = UIWidget.Pivot.Left;
                 mBG.cachedTransform.localPosition = Vector3.zero;
-                mFG.cachedTransform.localPosition =
-                    new Vector3(border.x - vector2.x + (vector3.x - vector6.x) * num, 0f, 0f);
-                mFG.cachedTransform.localScale = new Vector3(vector6.x + vector2.x + vector2.z,
-                    vector6.y + vector2.y + vector2.w, 1f);
+                mFG.cachedTransform.localPosition = new Vector3(border.x - vector2.x + (vector3.x - vector6.x) * num, 0f, 0f);
+                mFG.cachedTransform.localScale = new Vector3(vector6.x + vector2.x + vector2.z, vector6.y + vector2.y + vector2.w, 1f);
                 if (num < 0.999f && num > 0.001f)
                 {
                     mFG.MakePixelPerfect();
@@ -75,10 +72,8 @@ public class UIScrollBar : MonoBehaviour
                 mFG.pivot = UIWidget.Pivot.Top;
                 mBG.pivot = UIWidget.Pivot.Top;
                 mBG.cachedTransform.localPosition = Vector3.zero;
-                mFG.cachedTransform.localPosition =
-                    new Vector3(0f, -border.y + vector2.y - (vector3.y - vector7.y) * num, 0f);
-                mFG.cachedTransform.localScale = new Vector3(vector7.x + vector2.x + vector2.z,
-                    vector7.y + vector2.y + vector2.w, 1f);
+                mFG.cachedTransform.localPosition = new Vector3(0f, -border.y + vector2.y - (vector3.y - vector7.y) * num, 0f);
+                mFG.cachedTransform.localScale = new Vector3(vector7.x + vector2.x + vector2.z, vector7.y + vector2.y + vector2.w, 1f);
                 if (num < 0.999f && num > 0.001f)
                 {
                     mFG.MakePixelPerfect();
@@ -140,19 +135,15 @@ public class UIScrollBar : MonoBehaviour
         if (background != null && background.collider != null)
         {
             var listener = UIEventListener.Get(background.gameObject);
-            listener.onPress = (UIEventListener.BoolDelegate)Delegate.Combine(listener.onPress,
-                new UIEventListener.BoolDelegate(OnPressBackground));
-            listener.onDrag = (UIEventListener.VectorDelegate)Delegate.Combine(listener.onDrag,
-                new UIEventListener.VectorDelegate(OnDragBackground));
+            listener.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener.onPress, new UIEventListener.BoolDelegate(OnPressBackground));
+            listener.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener.onDrag, new UIEventListener.VectorDelegate(OnDragBackground));
         }
 
         if (foreground != null && foreground.collider != null)
         {
             var listener2 = UIEventListener.Get(foreground.gameObject);
-            listener2.onPress = (UIEventListener.BoolDelegate)Delegate.Combine(listener2.onPress,
-                new UIEventListener.BoolDelegate(OnPressForeground));
-            listener2.onDrag = (UIEventListener.VectorDelegate)Delegate.Combine(listener2.onDrag,
-                new UIEventListener.VectorDelegate(OnDragForeground));
+            listener2.onPress = (UIEventListener.BoolDelegate) Delegate.Combine(listener2.onPress, new UIEventListener.BoolDelegate(OnPressForeground));
+            listener2.onDrag = (UIEventListener.VectorDelegate) Delegate.Combine(listener2.onDrag, new UIEventListener.VectorDelegate(OnDragForeground));
         }
 
         ForceUpdate();
@@ -265,8 +256,7 @@ public class UIScrollBar : MonoBehaviour
                 {
                     var cachedTransform = mBG.cachedTransform;
                     var localScale = cachedTransform.localScale;
-                    if (mDir == Direction.Vertical && localScale.x > localScale.y ||
-                        mDir == Direction.Horizontal && localScale.x < localScale.y)
+                    if (mDir == Direction.Vertical && localScale.x > localScale.y || mDir == Direction.Horizontal && localScale.x < localScale.y)
                     {
                         var x = localScale.x;
                         localScale.x = localScale.y;

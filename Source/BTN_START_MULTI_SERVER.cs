@@ -14,14 +14,17 @@ public class BTN_START_MULTI_SERVER : MonoBehaviour
         {
             str4 = "day";
         }
+
         if (IN_GAME_MAIN_CAMERA.dayLight == DayLight.Dawn)
         {
             str4 = "dawn";
         }
+
         if (IN_GAME_MAIN_CAMERA.dayLight == DayLight.Night)
         {
             str4 = "night";
         }
+
         var unencrypted = GGM.Caching.GameObjectCache.Find("InputStartServerPWD").GetComponent<UIInput>().label.text;
         PhotonNetwork.CreateRoom(string.Concat(text, "`", selection, "`", str3, "`", num2, "`", str4, "`", unencrypted.Length > 0 ? new SimpleAES().Encrypt(unencrypted) : "", "`", Random.Range(0, 50000)), new RoomOptions { isOpen = true, isVisible = true, maxPlayers = maxPlayers }, null);
     }

@@ -27,6 +27,7 @@ public class RCEvent
                 {
                     trueActions[num2].doAction();
                 }
+
                 break;
 
             case 1:
@@ -35,10 +36,12 @@ public class RCEvent
                     elseAction?.doAction();
                     break;
                 }
+
                 for (num2 = 0; num2 < trueActions.Count; num2++)
                 {
                     trueActions[num2].doAction();
                 }
+
                 break;
 
             case 2:
@@ -55,11 +58,13 @@ public class RCEvent
                             {
                                 FengGameManagerMKII.titanVariables.Add(foreachVariableName, titan);
                             }
+
                             foreach (var action in trueActions)
                             {
                                 action.doAction();
                             }
                         }
+
                         return;
 
                     case 1:
@@ -73,13 +78,16 @@ public class RCEvent
                             {
                                 FengGameManagerMKII.titanVariables.Add(foreachVariableName, player);
                             }
+
                             foreach (var action in trueActions)
                             {
                                 action.doAction();
                             }
                         }
+
                         return;
                 }
+
                 break;
 
             case 3:
@@ -90,6 +98,7 @@ public class RCEvent
                         action.doAction();
                     }
                 }
+
                 break;
         }
     }

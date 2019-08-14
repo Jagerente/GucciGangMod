@@ -21,6 +21,7 @@ public class SnapShotReview : MonoBehaviour
         {
             page.text = SnapShotSaves.getCurrentIndex() + 1 + "/" + SnapShotSaves.getLength();
         }
+
         if (SnapShotSaves.getCurrentDMG() > 0)
         {
             labelDMG.GetComponent<UILabel>().text = SnapShotSaves.getCurrentDMG().ToString();
@@ -74,6 +75,7 @@ public class SnapShotReview : MonoBehaviour
         {
             texture.GetComponent<UITexture>().mainTexture = SnapShotSaves.getCurrentIMG();
         }
+
         labelInfo.GetComponent<UILabel>().text = LoginFengKAI.player.name + " " + DateTime.Today.ToShortDateString();
         freshInfo();
         setTextureWH();

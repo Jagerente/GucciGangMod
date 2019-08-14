@@ -80,14 +80,14 @@ public class HeroCostume
         {
             inited = true;
             CostumeHair.init();
-            body_uniform_ma_texture = new[] { "aottg_hero_uniform_ma_1", "aottg_hero_uniform_ma_2", "aottg_hero_uniform_ma_3" };
-            body_uniform_fa_texture = new[] { "aottg_hero_uniform_fa_1", "aottg_hero_uniform_fa_2", "aottg_hero_uniform_fa_3" };
-            body_uniform_mb_texture = new[] { "aottg_hero_uniform_mb_1", "aottg_hero_uniform_mb_2", "aottg_hero_uniform_mb_3", "aottg_hero_uniform_mb_4" };
-            body_uniform_fb_texture = new[] { "aottg_hero_uniform_fb_1", "aottg_hero_uniform_fb_2" };
-            body_casual_ma_texture = new[] { "aottg_hero_casual_ma_1", "aottg_hero_casual_ma_2", "aottg_hero_casual_ma_3" };
-            body_casual_fa_texture = new[] { "aottg_hero_casual_fa_1", "aottg_hero_casual_fa_2", "aottg_hero_casual_fa_3" };
-            body_casual_mb_texture = new[] { "aottg_hero_casual_mb_1", "aottg_hero_casual_mb_2", "aottg_hero_casual_mb_3", "aottg_hero_casual_mb_4" };
-            body_casual_fb_texture = new[] { "aottg_hero_casual_fb_1", "aottg_hero_casual_fb_2" };
+            body_uniform_ma_texture = new[] {"aottg_hero_uniform_ma_1", "aottg_hero_uniform_ma_2", "aottg_hero_uniform_ma_3"};
+            body_uniform_fa_texture = new[] {"aottg_hero_uniform_fa_1", "aottg_hero_uniform_fa_2", "aottg_hero_uniform_fa_3"};
+            body_uniform_mb_texture = new[] {"aottg_hero_uniform_mb_1", "aottg_hero_uniform_mb_2", "aottg_hero_uniform_mb_3", "aottg_hero_uniform_mb_4"};
+            body_uniform_fb_texture = new[] {"aottg_hero_uniform_fb_1", "aottg_hero_uniform_fb_2"};
+            body_casual_ma_texture = new[] {"aottg_hero_casual_ma_1", "aottg_hero_casual_ma_2", "aottg_hero_casual_ma_3"};
+            body_casual_fa_texture = new[] {"aottg_hero_casual_fa_1", "aottg_hero_casual_fa_2", "aottg_hero_casual_fa_3"};
+            body_casual_mb_texture = new[] {"aottg_hero_casual_mb_1", "aottg_hero_casual_mb_2", "aottg_hero_casual_mb_3", "aottg_hero_casual_mb_4"};
+            body_casual_fb_texture = new[] {"aottg_hero_casual_fb_1", "aottg_hero_casual_fb_2"};
             costume = new HeroCostume[38];
             costume[0] = new HeroCostume();
             costume[0].name = "annie";
@@ -651,10 +651,8 @@ public class HeroCostume
                 costume[i].setMesh2();
                 costume[i].setTexture();
             }
-            costumeOption = new[] {
-                costume[0], costume[2], costume[3], costume[4], costume[5], costume[11], costume[13], costume[14], costume[15], costume[16], costume[17], costume[6], costume[7], costume[8], costume[10], costume[18],
-                costume[19], costume[21], costume[22], costume[23], costume[24], costume[25], costume[27], costume[28], costume[30], costume[37]
-             };
+
+            costumeOption = new[] {costume[0], costume[2], costume[3], costume[4], costume[5], costume[11], costume[13], costume[14], costume[15], costume[16], costume[17], costume[6], costume[7], costume[8], costume[10], costume[18], costume[19], costume[21], costume[22], costume[23], costume[24], costume[25], costume[27], costume[28], costume[30], costume[37]};
         }
     }
 
@@ -664,14 +662,14 @@ public class HeroCostume
         {
             inited = true;
             CostumeHair.init();
-            body_uniform_ma_texture = new[] { "aottg_hero_uniform_ma_1", "aottg_hero_uniform_ma_2", "aottg_hero_uniform_ma_3" };
-            body_uniform_fa_texture = new[] { "aottg_hero_uniform_fa_1", "aottg_hero_uniform_fa_2", "aottg_hero_uniform_fa_3" };
-            body_uniform_mb_texture = new[] { "aottg_hero_uniform_mb_1", "aottg_hero_uniform_mb_2", "aottg_hero_uniform_mb_3", "aottg_hero_uniform_mb_4" };
-            body_uniform_fb_texture = new[] { "aottg_hero_uniform_fb_1", "aottg_hero_uniform_fb_2" };
-            body_casual_ma_texture = new[] { "aottg_hero_casual_ma_1", "aottg_hero_casual_ma_2", "aottg_hero_casual_ma_3" };
-            body_casual_fa_texture = new[] { "aottg_hero_casual_fa_1", "aottg_hero_casual_fa_2", "aottg_hero_casual_fa_3" };
-            body_casual_mb_texture = new[] { "aottg_hero_casual_mb_1", "aottg_hero_casual_mb_2", "aottg_hero_casual_mb_3", "aottg_hero_casual_mb_4" };
-            body_casual_fb_texture = new[] { "aottg_hero_casual_fb_1", "aottg_hero_casual_fb_2" };
+            body_uniform_ma_texture = new[] {"aottg_hero_uniform_ma_1", "aottg_hero_uniform_ma_2", "aottg_hero_uniform_ma_3"};
+            body_uniform_fa_texture = new[] {"aottg_hero_uniform_fa_1", "aottg_hero_uniform_fa_2", "aottg_hero_uniform_fa_3"};
+            body_uniform_mb_texture = new[] {"aottg_hero_uniform_mb_1", "aottg_hero_uniform_mb_2", "aottg_hero_uniform_mb_3", "aottg_hero_uniform_mb_4"};
+            body_uniform_fb_texture = new[] {"aottg_hero_uniform_fb_1", "aottg_hero_uniform_fb_2"};
+            body_casual_ma_texture = new[] {"aottg_hero_casual_ma_1", "aottg_hero_casual_ma_2", "aottg_hero_casual_ma_3"};
+            body_casual_fa_texture = new[] {"aottg_hero_casual_fa_1", "aottg_hero_casual_fa_2", "aottg_hero_casual_fa_3"};
+            body_casual_mb_texture = new[] {"aottg_hero_casual_mb_1", "aottg_hero_casual_mb_2", "aottg_hero_casual_mb_3", "aottg_hero_casual_mb_4"};
+            body_casual_fb_texture = new[] {"aottg_hero_casual_fb_1", "aottg_hero_casual_fb_2"};
             costume = new HeroCostume[39];
             costume[0] = new HeroCostume();
             costume[0].name = "annie";
@@ -1248,10 +1246,8 @@ public class HeroCostume
                 costume[i].setMesh2();
                 costume[i].setTexture();
             }
-            costumeOption = new[] {
-                costume[0], costume[2], costume[3], costume[4], costume[5], costume[11], costume[13], costume[14], costume[15], costume[16], costume[17], costume[6], costume[7], costume[8], costume[10], costume[18],
-                costume[19], costume[21], costume[22], costume[23], costume[24], costume[25], costume[27], costume[28], costume[30], costume[37], costume[38]
-             };
+
+            costumeOption = new[] {costume[0], costume[2], costume[3], costume[4], costume[5], costume[11], costume[13], costume[14], costume[15], costume[16], costume[17], costume[6], costume[7], costume[8], costume[10], costume[18], costume[19], costume[21], costume[22], costume[23], costume[24], costume[25], costume[27], costume[28], costume[30], costume[37], costume[38]};
         }
     }
 
@@ -1261,6 +1257,7 @@ public class HeroCostume
         {
             id = costumeId;
         }
+
         costumeId = id;
         arm_l_mesh = costumeOption[id].arm_l_mesh;
         arm_r_mesh = costumeOption[id].arm_r_mesh;
@@ -1379,18 +1376,22 @@ public class HeroCostume
                 body_mesh = "character_body_casual_MB";
             }
         }
+
         if (hairInfo.hair.Length > 0)
         {
             hair_mesh = hairInfo.hair;
         }
+
         if (hairInfo.hasCloth)
         {
             hair_1_mesh = hairInfo.hair_1;
         }
+
         if (eye_texture_id >= 0)
         {
             eye_mesh = "character_eye";
         }
+
         if (beard_texture_id >= 0)
         {
             beard_mesh = "character_face";
@@ -1399,6 +1400,7 @@ public class HeroCostume
         {
             beard_mesh = string.Empty;
         }
+
         if (glass_texture_id >= 0)
         {
             glass_mesh = "glass";
@@ -1407,6 +1409,7 @@ public class HeroCostume
         {
             glass_mesh = string.Empty;
         }
+
         setCape();
     }
 
@@ -1438,6 +1441,7 @@ public class HeroCostume
             {
                 body_mesh = "character_body_casual_MA";
             }
+
             mesh_3dmg = "character_3dmg_2";
             mesh_3dmg_belt = string.Empty;
             mesh_3dmg_gas_l = "character_gun_mag_l";
@@ -1509,18 +1513,22 @@ public class HeroCostume
                 body_mesh = "character_body_casual_MB";
             }
         }
+
         if (hairInfo.hair.Length > 0)
         {
             hair_mesh = hairInfo.hair;
         }
+
         if (hairInfo.hasCloth)
         {
             hair_1_mesh = hairInfo.hair_1;
         }
+
         if (eye_texture_id >= 0)
         {
             eye_mesh = "character_eye";
         }
+
         if (beard_texture_id >= 0)
         {
             beard_mesh = "character_face";
@@ -1529,6 +1537,7 @@ public class HeroCostume
         {
             beard_mesh = string.Empty;
         }
+
         if (glass_texture_id >= 0)
         {
             glass_mesh = "glass";
@@ -1537,6 +1546,7 @@ public class HeroCostume
         {
             glass_mesh = string.Empty;
         }
+
         setCape();
     }
 
@@ -1550,23 +1560,28 @@ public class HeroCostume
         {
             _3dmg_texture = "AOTTG_HERO_3DMG";
         }
+
         face_texture = "aottg_hero_eyes";
         if (division == DIVISION.TheMilitaryPolice)
         {
             brand_texture = "aottg_hero_brand_mp";
         }
+
         if (division == DIVISION.TheGarrison)
         {
             brand_texture = "aottg_hero_brand_g";
         }
+
         if (division == DIVISION.TheSurveryCorps)
         {
             brand_texture = "aottg_hero_brand_sc";
         }
+
         if (division == DIVISION.TraineesSquad)
         {
             brand_texture = "aottg_hero_brand_ts";
         }
+
         if (skin_color == 1)
         {
             skin_texture = "aottg_hero_skin_1";

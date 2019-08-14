@@ -15,12 +15,13 @@ namespace GGM
                 var file = File.Create(path);
                 file.Close();
             }
+
             File.AppendAllText(path, message);
         }
 
         public static void LogChat(string path, string message, PhotonMessageInfo info)
         {
-            Log(path, ($"[{DateTime.Now.ToShortTimeString()}] {info.sender.Name}: {message}{Environment.NewLine}").StripHTML());
+            Log(path, $"[{DateTime.Now.ToShortTimeString()}] {info.sender.Name}: {message}{Environment.NewLine}".StripHTML());
         }
     }
 }

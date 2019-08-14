@@ -59,79 +59,98 @@ public class Language
             {
                 return "简体中文";
             }
+
             if (id == 2)
             {
                 return "SPANISH";
             }
+
             if (id == 3)
             {
                 return "POLSKI";
             }
+
             if (id == 4)
             {
                 return "ITALIANO";
             }
+
             if (id == 5)
             {
                 return "NORWEGIAN";
             }
+
             if (id == 6)
             {
                 return "PORTUGUESE";
             }
+
             if (id == 7)
             {
                 return "PORTUGUESE_BR";
             }
+
             if (id == 8)
             {
                 return "繁體中文_台";
             }
+
             if (id == 9)
             {
                 return "繁體中文_港";
             }
+
             if (id == 10)
             {
                 return "SLOVAK";
             }
+
             if (id == 11)
             {
                 return "GERMAN";
             }
+
             if (id == 12)
             {
                 return "FRANCAIS";
             }
+
             if (id == 13)
             {
                 return "T\x00dcRK\x00c7E";
             }
+
             if (id == 14)
             {
                 return "ARABIC";
             }
+
             if (id == 15)
             {
                 return "Thai";
             }
+
             if (id == 16)
             {
                 return "Русский";
             }
+
             if (id == 17)
             {
                 return "NEDERLANDS";
             }
+
             if (id == 18)
             {
                 return "Hebrew";
             }
+
             if (id == 19)
             {
                 return "DANSK";
             }
         }
+
         return "ENGLISH";
     }
 
@@ -143,86 +162,105 @@ public class Language
             {
                 return 2;
             }
+
             if (txt == "POLSKI")
             {
                 return 3;
             }
+
             if (txt == "ITALIANO")
             {
                 return 4;
             }
+
             if (txt == "NORWEGIAN")
             {
                 return 5;
             }
+
             if (txt == "PORTUGUESE")
             {
                 return 6;
             }
+
             if (txt == "PORTUGUESE_BR")
             {
                 return 7;
             }
+
             if (txt == "SLOVAK")
             {
                 return 10;
             }
+
             if (txt == "GERMAN")
             {
                 return 11;
             }
+
             if (txt == "FRANCAIS")
             {
                 return 12;
             }
+
             if (txt == "T\x00dcRK\x00c7E")
             {
                 return 13;
             }
+
             if (txt == "ARABIC")
             {
                 return 14;
             }
+
             if (txt == "Thai")
             {
                 return 15;
             }
+
             if (txt == "Русский")
             {
                 return 16;
             }
+
             if (txt == "NEDERLANDS")
             {
                 return 17;
             }
+
             if (txt == "Hebrew")
             {
                 return 18;
             }
+
             if (txt == "DANSK")
             {
                 return 19;
             }
+
             if (txt == "简体中文")
             {
                 return 1;
             }
+
             if (txt == "繁體中文_台")
             {
                 return 8;
             }
+
             if (txt == "繁體中文_港")
             {
                 return 9;
             }
         }
+
         return 0;
     }
 
     public static void init()
     {
-        char[] separator = { "\n"[0] };
-        var strArray = ((TextAsset)Resources.Load("lang")).text.Split(separator);
+        char[] separator = {"\n"[0]};
+        var strArray = ((TextAsset) Resources.Load("lang")).text.Split(separator);
         var txt = string.Empty;
         var index = 0;
         var str3 = string.Empty;
@@ -234,7 +272,7 @@ public class Language
             {
                 if (str5.Contains("#START"))
                 {
-                    char[] chArray2 = { "@"[0] };
+                    char[] chArray2 = {"@"[0]};
                     txt = str5.Split(chArray2)[1];
                     index = GetLangIndex(txt);
                 }
@@ -244,9 +282,9 @@ public class Language
                 }
                 else if (txt != string.Empty && str5.Contains("@"))
                 {
-                    char[] chArray3 = { "@"[0] };
+                    char[] chArray3 = {"@"[0]};
                     str3 = str5.Split(chArray3)[0];
-                    char[] chArray4 = { "@"[0] };
+                    char[] chArray4 = {"@"[0]};
                     str4 = str5.Split(chArray4)[1];
                     switch (str3)
                     {

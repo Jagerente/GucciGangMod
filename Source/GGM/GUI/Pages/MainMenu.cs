@@ -36,9 +36,7 @@ namespace GGM.GUI.Pages
                 GetInstance<Single>().Enable();
             }
 
-            singleButton = single.Contains(GUIHelpers.mousePos)
-                ? $"<color=#{Color1}><size={Size}><b><i>S I N G L E</i></b></size></color>"
-                : $"<color=#{Color2}><size={Size}><b><i>S I N G L E</i></b></size></color>";
+            singleButton = single.Contains(GUIHelpers.mousePos) ? $"<color=#{Color1}><size={Size}><b><i>S I N G L E</i></b></size></color>" : $"<color=#{Color2}><size={Size}><b><i>S I N G L E</i></b></size></color>";
 
             #endregion Single
 
@@ -50,9 +48,7 @@ namespace GGM.GUI.Pages
                 GetInstance<Multiplayer>().Enable();
             }
 
-            multiplayerButton = multiplayer.Contains(GUIHelpers.mousePos)
-                ? $"<color=#{Color1}><size={Size}><b><i>M U L T I P L A Y E R</i></b></size></color>"
-                : $"<color=#{Color2}><size={Size}><b><i>M U L T I P L A Y E R</i></b></size></color>";
+            multiplayerButton = multiplayer.Contains(GUIHelpers.mousePos) ? $"<color=#{Color1}><size={Size}><b><i>M U L T I P L A Y E R</i></b></size></color>" : $"<color=#{Color2}><size={Size}><b><i>M U L T I P L A Y E R</i></b></size></color>";
 
             #endregion Multiplayer
 
@@ -63,9 +59,7 @@ namespace GGM.GUI.Pages
                 Application.Quit();
             }
 
-            quitButton = quit.Contains(GUIHelpers.mousePos)
-                ? $"<color=#{Color1}><size={Size}><b><i>Q U I T</i></b></size></color>"
-                : $"<color=#{Color2}><size={Size}><b><i>Q U I T</i></b></size></color>";
+            quitButton = quit.Contains(GUIHelpers.mousePos) ? $"<color=#{Color1}><size={Size}><b><i>Q U I T</i></b></size></color>" : $"<color=#{Color2}><size={Size}><b><i>Q U I T</i></b></size></color>";
 
             #endregion Quit
 
@@ -85,13 +79,11 @@ namespace GGM.GUI.Pages
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("<size=16>Name:</size>", GUILayout.Width(115));
-                    FengGameManagerMKII.nameField =
-                        GUILayout.TextField(FengGameManagerMKII.nameField, GUILayout.Width(180));
+                    FengGameManagerMKII.nameField = GUILayout.TextField(FengGameManagerMKII.nameField, GUILayout.Width(180));
                     GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("<size=16>Guild:</size>", GUILayout.Width(115));
-                    LoginFengKAI.player.guildname =
-                        GUILayout.TextArea(LoginFengKAI.player.guildname, GUILayout.Width(180));
+                    LoginFengKAI.player.guildname = GUILayout.TextArea(LoginFengKAI.player.guildname, GUILayout.Width(180));
                     GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal();
                     if (GUILayout.Button("<size=16>Save</size>", GUILayout.Width(147)))
@@ -117,26 +109,21 @@ namespace GGM.GUI.Pages
 
                     if (UIMainReferences.ServerKey == UIMainReferences.PublicKey)
                     {
-                        GUILayout.Label("<size=24><b><i>Connected to Public server.</i></b></size>",
-                            GUILayout.Width(400));
+                        GUILayout.Label("<size=24><b><i>Connected to Public server.</i></b></size>", GUILayout.Width(400));
                     }
                     else if (UIMainReferences.ServerKey == FengGameManagerMKII.s[0])
                     {
-                        GUILayout.Label("<size=24><b><i>Connected to RC Private server.</i></b></size>",
-                            GUILayout.Width(400));
+                        GUILayout.Label("<size=24><b><i>Connected to RC Private server.</i></b></size>", GUILayout.Width(400));
                     }
                     else
                     {
                         if (FengGameManagerMKII.privateServerField != string.Empty)
                         {
-                            GUILayout.Label(
-                                "<size=24><b><i>Connected to " + FengGameManagerMKII.privateServerField +
-                                " server.</i></b></size>", GUILayout.Width(400));
+                            GUILayout.Label("<size=24><b><i>Connected to " + FengGameManagerMKII.privateServerField + " server.</i></b></size>", GUILayout.Width(400));
                         }
                         else
                         {
-                            GUILayout.Label("<size=24><b><i>Connected to Custom server.</i></b></size>",
-                                GUILayout.Width(400));
+                            GUILayout.Label("<size=24><b><i>Connected to Custom server.</i></b></size>", GUILayout.Width(400));
                         }
                     }
 
@@ -157,8 +144,7 @@ namespace GGM.GUI.Pages
 
                     GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal();
-                    FengGameManagerMKII.privateServerField = GUILayout.TextField(FengGameManagerMKII.privateServerField,
-                        50, GUILayout.Width(115));
+                    FengGameManagerMKII.privateServerField = GUILayout.TextField(FengGameManagerMKII.privateServerField, 50, GUILayout.Width(115));
                     if (GUILayout.Button("<size=18><b>Connect</b></size>", GUILayout.Width(280)))
                     {
                         UIMainReferences.ServerKey = FengGameManagerMKII.privateServerField;
@@ -176,13 +162,11 @@ namespace GGM.GUI.Pages
 
             #region Top Right Navigation Panel
 
-            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(135f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 5f),
-                "Custom Characters")) //45f, 128,25f
+            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(135f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 5f), "Custom Characters")) //45f, 128,25f
             {
                 Application.LoadLevel("characterCreation");
             }
-            else if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(135f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 35f),
-                "Snapshot Reviewer")) //75
+            else if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(135f, 25f, GUIHelpers.Alignment.TOPRIGHT, -5f, 35f), "Snapshot Reviewer")) //75
             {
                 Application.LoadLevel("SnapShot");
             }

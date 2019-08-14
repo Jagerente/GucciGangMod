@@ -13,7 +13,7 @@ public class InRoomRoundTimer : MonoBehaviour
     {
         var num = PhotonNetwork.time - StartTime;
         var num2 = SecondsPerTurn - num % SecondsPerTurn;
-        var num3 = (int)(num / SecondsPerTurn);
+        var num3 = (int) (num / SecondsPerTurn);
         GUILayout.BeginArea(TextPos);
         GUILayout.Label(string.Format("elapsed: {0:0.000}", num));
         GUILayout.Label(string.Format("remaining: {0:0.000}", num2));
@@ -22,6 +22,7 @@ public class InRoomRoundTimer : MonoBehaviour
         {
             StartRoundNow();
         }
+
         GUILayout.EndArea();
     }
 
@@ -50,7 +51,7 @@ public class InRoomRoundTimer : MonoBehaviour
     {
         if (propertiesThatChanged.ContainsKey("st"))
         {
-            StartTime = (double)propertiesThatChanged["st"];
+            StartTime = (double) propertiesThatChanged["st"];
         }
     }
 

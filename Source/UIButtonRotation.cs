@@ -40,6 +40,7 @@ public class UIButtonRotation : MonoBehaviour
             {
                 Start();
             }
+
             TweenRotation.Begin(tweenTarget.gameObject, duration, !isOver ? mRot : mRot * Quaternion.Euler(hover)).method = UITweener.Method.EaseInOut;
             mHighlighted = isOver;
         }
@@ -53,6 +54,7 @@ public class UIButtonRotation : MonoBehaviour
             {
                 Start();
             }
+
             TweenRotation.Begin(tweenTarget.gameObject, duration, !isPressed ? !UICamera.IsHighlighted(gameObject) ? mRot : mRot * Quaternion.Euler(hover) : mRot * Quaternion.Euler(pressed)).method = UITweener.Method.EaseInOut;
         }
     }
@@ -66,6 +68,7 @@ public class UIButtonRotation : MonoBehaviour
             {
                 tweenTarget = transform;
             }
+
             mRot = tweenTarget.localRotation;
         }
     }

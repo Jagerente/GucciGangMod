@@ -42,7 +42,7 @@ public class ActiveAnimation : IgnoreTimeScale
                 if (string.IsNullOrEmpty(clipName) || animationState.name == clipName)
                 {
                     var num = Mathf.Abs(animationState.speed);
-                    animationState.speed = num * (float)playDirection;
+                    animationState.speed = num * (float) playDirection;
                     if (playDirection == Direction.Reverse && animationState.time == 0f)
                     {
                         animationState.time = animationState.length;
@@ -70,8 +70,7 @@ public class ActiveAnimation : IgnoreTimeScale
         return Play(anim, clipName, playDirection, EnableCondition.DoNothing, DisableCondition.DoNotDisable);
     }
 
-    public static ActiveAnimation Play(Animation anim, string clipName, Direction playDirection,
-        EnableCondition enableBeforePlay, DisableCondition disableCondition)
+    public static ActiveAnimation Play(Animation anim, string clipName, Direction playDirection, EnableCondition enableBeforePlay, DisableCondition disableCondition)
     {
         if (!NGUITools.GetActive(anim.gameObject))
         {
@@ -98,7 +97,7 @@ public class ActiveAnimation : IgnoreTimeScale
         }
 
         component.mAnim = anim;
-        component.mDisableDirection = (Direction)disableCondition;
+        component.mDisableDirection = (Direction) disableCondition;
         component.eventReceiver = null;
         component.callWhenFinished = null;
         component.onFinished = null;

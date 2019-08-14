@@ -44,6 +44,7 @@ public class PhotonPlayer
                 return player;
             }
         }
+
         return null;
     }
 
@@ -68,6 +69,7 @@ public class PhotonPlayer
         {
             return null;
         }
+
         return GetNextFor(currentPlayer.ID);
     }
 
@@ -77,6 +79,7 @@ public class PhotonPlayer
         {
             return null;
         }
+
         var mActors = PhotonNetwork.networkingPeer.mActors;
         var num = 2147483647;
         var num2 = currentPlayerId;
@@ -91,6 +94,7 @@ public class PhotonPlayer
                 num = num3;
             }
         }
+
         return num == 2147483647 ? mActors[num2] : mActors[num];
     }
 
@@ -102,6 +106,7 @@ public class PhotonPlayer
             {
                 nameField = (string)properties[(byte)255];
             }
+
             customProperties.MergeStringKeys(properties);
             customProperties.StripKeysWithNullValues();
         }
@@ -130,6 +135,7 @@ public class PhotonPlayer
             {
                 PhotonNetwork.networkingPeer.OpSetCustomPropertiesOfActor(actorID, actorProperties, true, 0);
             }
+
             object[] parameters = { this, propertiesToSet };
             NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnPhotonPlayerPropertiesChanged, parameters);
         }
@@ -141,6 +147,7 @@ public class PhotonPlayer
         {
             return string.Format("#{0:00}{1}", ID, !isMasterClient ? string.Empty : "(master)");
         }
+
         return string.Format("'{0}'{1}", name, !isMasterClient ? string.Empty : "(master)");
     }
 
@@ -164,18 +171,12 @@ public class PhotonPlayer
 
     public int ID
     {
-        get
-        {
-            return actorID;
-        }
+        get { return actorID; }
     }
 
     public bool isMasterClient
     {
-        get
-        {
-            return PhotonNetwork.networkingPeer.mMasterClient == this;
-        }
+        get { return PhotonNetwork.networkingPeer.mMasterClient == this; }
     }
 
     protected internal string Name
@@ -195,10 +196,7 @@ public class PhotonPlayer
 
     public string name
     {
-        get
-        {
-            return nameField;
-        }
+        get { return nameField; }
         set
         {
             if (!isLocal)

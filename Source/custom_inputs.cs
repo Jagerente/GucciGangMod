@@ -7,24 +7,19 @@ public class custom_inputs : MonoBehaviour
     private float AltInputBox_X = 120f;
     private bool altInputson;
 
-    [HideInInspector]
-    public float analogFeel_down;
+    [HideInInspector] public float analogFeel_down;
 
     public float analogFeel_gravity = 0.2f;
 
-    [HideInInspector]
-    public float analogFeel_jump;
+    [HideInInspector] public float analogFeel_jump;
 
-    [HideInInspector]
-    public float analogFeel_left;
+    [HideInInspector] public float analogFeel_left;
 
-    [HideInInspector]
-    public float analogFeel_right;
+    [HideInInspector] public float analogFeel_right;
 
     public float analogFeel_sensitivity = 0.8f;
 
-    [HideInInspector]
-    public float analogFeel_up;
+    [HideInInspector] public float analogFeel_up;
 
     public float Boxes_Y = 300f;
     public float BoxesMargin_Y = 30f;
@@ -45,26 +40,19 @@ public class custom_inputs : MonoBehaviour
     private string[] inputString;
     private string[] inputString2;
 
-    [HideInInspector]
-    public bool[] isInput;
+    [HideInInspector] public bool[] isInput;
 
-    [HideInInspector]
-    public bool[] isInputDown;
+    [HideInInspector] public bool[] isInputDown;
 
-    [HideInInspector]
-    public bool[] isInputUp;
+    [HideInInspector] public bool[] isInputUp;
 
-    [HideInInspector]
-    public bool[] joystickActive;
+    [HideInInspector] public bool[] joystickActive;
 
-    [HideInInspector]
-    public bool[] joystickActive2;
+    [HideInInspector] public bool[] joystickActive2;
 
-    [HideInInspector]
-    public string[] joystickString;
+    [HideInInspector] public string[] joystickString;
 
-    [HideInInspector]
-    public string[] joystickString2;
+    [HideInInspector] public string[] joystickString2;
 
     private float lastInterval;
     public bool menuOn;
@@ -95,6 +83,7 @@ public class custom_inputs : MonoBehaviour
                     joystickString[i] = "#";
                     saveInputs();
                 }
+
                 if (testAxisString == joystickString2[i] && (i != o || p == 1))
                 {
                     inputKey2[i] = KeyCode.None;
@@ -123,6 +112,7 @@ public class custom_inputs : MonoBehaviour
                     joystickString[i] = "#";
                     saveInputs();
                 }
+
                 if (testkey == inputKey2[i] && (i != o || p == 1))
                 {
                     inputKey2[i] = KeyCode.None;
@@ -158,16 +148,19 @@ public class custom_inputs : MonoBehaviour
             {
                 joystickString[i] = "#";
             }
+
             if (inputBool[i])
             {
                 GUI.Toggle(position, true, string.Empty, OurSkin.button);
             }
+
             if (position.Contains(point) && Input.GetMouseButtonUp(0) && !tempbool)
             {
                 tempbool = true;
                 inputBool[i] = true;
                 lastInterval = Time.realtimeSinceStartup;
             }
+
             if (GUI.Button(new Rect(resetbuttonX, resetbuttonLocY, buttonSize, buttonHeight), resetbuttonText) && Input.GetMouseButtonUp(0))
             {
                 PlayerPrefs.DeleteAll();
@@ -175,6 +168,7 @@ public class custom_inputs : MonoBehaviour
                 loadConfig();
                 saveInputs();
             }
+
             if (Event.current.type == EventType.KeyDown && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = Event.current.keyCode;
@@ -186,6 +180,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubles(inputKey[i], i, 1);
             }
+
             if (mouseButtonsOn)
             {
                 var num5 = 323;
@@ -204,6 +199,7 @@ public class custom_inputs : MonoBehaviour
                     }
                 }
             }
+
             for (var j = 350; j < 409; j++)
             {
                 if (Input.GetKey((KeyCode)j) && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
@@ -218,6 +214,7 @@ public class custom_inputs : MonoBehaviour
                     checDoubles(inputKey[i], i, 1);
                 }
             }
+
             if (mouseAxisOn)
             {
                 if (Input.GetAxis("MouseUp") == 1f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
@@ -231,6 +228,7 @@ public class custom_inputs : MonoBehaviour
                     saveInputs();
                     checDoubleAxis(joystickString[i], i, 1);
                 }
+
                 if (Input.GetAxis("MouseDown") == 1f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
                 {
                     inputKey[i] = KeyCode.None;
@@ -242,6 +240,7 @@ public class custom_inputs : MonoBehaviour
                     saveInputs();
                     checDoubleAxis(joystickString[i], i, 1);
                 }
+
                 if (Input.GetAxis("MouseLeft") == 1f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
                 {
                     inputKey[i] = KeyCode.None;
@@ -254,6 +253,7 @@ public class custom_inputs : MonoBehaviour
                     saveInputs();
                     checDoubleAxis(joystickString[i], i, 1);
                 }
+
                 if (Input.GetAxis("MouseRight") == 1f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
                 {
                     inputKey[i] = KeyCode.None;
@@ -266,6 +266,7 @@ public class custom_inputs : MonoBehaviour
                     checDoubleAxis(joystickString[i], i, 1);
                 }
             }
+
             if (mouseButtonsOn)
             {
                 if (Input.GetAxis("MouseScrollUp") > 0f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
@@ -280,6 +281,7 @@ public class custom_inputs : MonoBehaviour
                     saveInputs();
                     checDoubleAxis(joystickString[i], i, 1);
                 }
+
                 if (Input.GetAxis("MouseScrollDown") > 0f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
                 {
                     inputKey[i] = KeyCode.None;
@@ -293,6 +295,7 @@ public class custom_inputs : MonoBehaviour
                     checDoubleAxis(joystickString[i], i, 1);
                 }
             }
+
             if (Input.GetAxis("JoystickUp") > 0.5f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -304,6 +307,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("JoystickDown") > 0.5f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -315,6 +319,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("JoystickLeft") > 0.5f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -326,6 +331,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("JoystickRight") > 0.5f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -337,6 +343,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_3a") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -348,6 +355,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_3b") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -359,6 +367,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_4a") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -370,6 +379,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_4b") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -381,6 +391,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_5b") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -392,6 +403,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_6b") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -403,6 +415,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_7a") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -414,6 +427,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_7b") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -425,6 +439,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_8a") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -436,6 +451,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString[i], i, 1);
             }
+
             if (Input.GetAxis("Joystick_8b") > 0.8f && inputBool[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey[i] = KeyCode.None;
@@ -466,16 +482,19 @@ public class custom_inputs : MonoBehaviour
             {
                 joystickString2[i] = "#";
             }
+
             if (inputBool2[i])
             {
                 GUI.Toggle(position, true, string.Empty, OurSkin.button);
             }
+
             if (position.Contains(point) && Input.GetMouseButtonUp(0) && !tempbool)
             {
                 tempbool = true;
                 inputBool2[i] = true;
                 lastInterval = Time.realtimeSinceStartup;
             }
+
             if (Event.current.type == EventType.KeyDown && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = Event.current.keyCode;
@@ -487,6 +506,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubles(inputKey2[i], i, 2);
             }
+
             if (mouseButtonsOn)
             {
                 var num5 = 323;
@@ -505,6 +525,7 @@ public class custom_inputs : MonoBehaviour
                     }
                 }
             }
+
             for (var j = 350; j < 409; j++)
             {
                 if (Input.GetKey((KeyCode)j) && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
@@ -519,6 +540,7 @@ public class custom_inputs : MonoBehaviour
                     checDoubles(inputKey2[i], i, 2);
                 }
             }
+
             if (mouseAxisOn)
             {
                 if (Input.GetAxis("MouseUp") == 1f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
@@ -532,6 +554,7 @@ public class custom_inputs : MonoBehaviour
                     saveInputs();
                     checDoubleAxis(joystickString2[i], i, 2);
                 }
+
                 if (Input.GetAxis("MouseDown") == 1f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
                 {
                     inputKey2[i] = KeyCode.None;
@@ -543,6 +566,7 @@ public class custom_inputs : MonoBehaviour
                     saveInputs();
                     checDoubleAxis(joystickString2[i], i, 2);
                 }
+
                 if (Input.GetAxis("MouseLeft") == 1f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
                 {
                     inputKey2[i] = KeyCode.None;
@@ -555,6 +579,7 @@ public class custom_inputs : MonoBehaviour
                     saveInputs();
                     checDoubleAxis(joystickString2[i], i, 2);
                 }
+
                 if (Input.GetAxis("MouseRight") == 1f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
                 {
                     inputKey2[i] = KeyCode.None;
@@ -567,6 +592,7 @@ public class custom_inputs : MonoBehaviour
                     checDoubleAxis(joystickString2[i], i, 2);
                 }
             }
+
             if (mouseButtonsOn)
             {
                 if (Input.GetAxis("MouseScrollUp") > 0f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
@@ -581,6 +607,7 @@ public class custom_inputs : MonoBehaviour
                     saveInputs();
                     checDoubleAxis(joystickString2[i], i, 2);
                 }
+
                 if (Input.GetAxis("MouseScrollDown") > 0f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
                 {
                     inputKey2[i] = KeyCode.None;
@@ -594,6 +621,7 @@ public class custom_inputs : MonoBehaviour
                     checDoubleAxis(joystickString2[i], i, 2);
                 }
             }
+
             if (Input.GetAxis("JoystickUp") > 0.5f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -605,6 +633,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("JoystickDown") > 0.5f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -616,6 +645,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("JoystickLeft") > 0.5f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -628,6 +658,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("JoystickRight") > 0.5f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -639,6 +670,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_3a") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -650,6 +682,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_3b") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -661,6 +694,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_4a") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -672,6 +706,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_4b") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -683,6 +718,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_5b") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -694,6 +730,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_6b") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -705,6 +742,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_7a") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -716,6 +754,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_7b") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -727,6 +766,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_8a") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -738,6 +778,7 @@ public class custom_inputs : MonoBehaviour
                 saveInputs();
                 checDoubleAxis(joystickString2[i], i, 2);
             }
+
             if (Input.GetAxis("Joystick_8b") > 0.8f && inputBool2[i] && Event.current.keyCode != KeyCode.Escape)
             {
                 inputKey2[i] = KeyCode.None;
@@ -764,6 +805,7 @@ public class custom_inputs : MonoBehaviour
             {
                 isInput[i] = false;
             }
+
             if (Input.GetKeyDown(inputKey[i]) || Input.GetKeyDown(inputKey2[i]))
             {
                 isInputDown[i] = true;
@@ -772,33 +814,39 @@ public class custom_inputs : MonoBehaviour
             {
                 isInputDown[i] = false;
             }
+
             if (joystickActive[i] && Input.GetAxis(joystickString[i]) > 0.95f || joystickActive2[i] && Input.GetAxis(joystickString2[i]) > 0.95f)
             {
                 if (!tempjoy1[i])
                 {
                     isInputDown[i] = false;
                 }
+
                 if (tempjoy1[i])
                 {
                     isInputDown[i] = true;
                     tempjoy1[i] = false;
                 }
             }
+
             if (!tempjoy1[i] && joystickActive[i] && Input.GetAxis(joystickString[i]) < 0.1f && joystickActive2[i] && Input.GetAxis(joystickString2[i]) < 0.1f)
             {
                 isInputDown[i] = false;
                 tempjoy1[i] = true;
             }
+
             if (!tempjoy1[i] && !joystickActive[i] && joystickActive2[i] && Input.GetAxis(joystickString2[i]) < 0.1f)
             {
                 isInputDown[i] = false;
                 tempjoy1[i] = true;
             }
+
             if (!tempjoy1[i] && !joystickActive2[i] && joystickActive[i] && Input.GetAxis(joystickString[i]) < 0.1f)
             {
                 isInputDown[i] = false;
                 tempjoy1[i] = true;
             }
+
             if (Input.GetKeyUp(inputKey[i]) || Input.GetKeyUp(inputKey2[i]))
             {
                 isInputUp[i] = true;
@@ -807,28 +855,33 @@ public class custom_inputs : MonoBehaviour
             {
                 isInputUp[i] = false;
             }
+
             if (joystickActive[i] && Input.GetAxis(joystickString[i]) > 0.95f || joystickActive2[i] && Input.GetAxis(joystickString2[i]) > 0.95f)
             {
                 if (tempjoy2[i])
                 {
                     isInputUp[i] = false;
                 }
+
                 if (!tempjoy2[i])
                 {
                     isInputUp[i] = false;
                     tempjoy2[i] = true;
                 }
             }
+
             if (tempjoy2[i] && joystickActive[i] && Input.GetAxis(joystickString[i]) < 0.1f && joystickActive2[i] && Input.GetAxis(joystickString2[i]) < 0.1f)
             {
                 isInputUp[i] = true;
                 tempjoy2[i] = false;
             }
+
             if (tempjoy2[i] && !joystickActive[i] && joystickActive2[i] && Input.GetAxis(joystickString2[i]) < 0.1f)
             {
                 isInputUp[i] = true;
                 tempjoy2[i] = false;
             }
+
             if (tempjoy2[i] && !joystickActive2[i] && joystickActive[i] && Input.GetAxis(joystickString[i]) < 0.1f)
             {
                 isInputUp[i] = true;
@@ -873,6 +926,7 @@ public class custom_inputs : MonoBehaviour
             {
                 joystickActive[i] = true;
             }
+
             if (joystickString2[i] == "#")
             {
                 joystickActive2[i] = false;
@@ -890,6 +944,7 @@ public class custom_inputs : MonoBehaviour
         {
             tempbool = false;
         }
+
         if (menuOn)
         {
             drawButtons1();
@@ -906,10 +961,12 @@ public class custom_inputs : MonoBehaviour
         {
             default_inputKeys = new KeyCode[DescriptionString.Length];
         }
+
         if (alt_default_inputKeys.Length != default_inputKeys.Length)
         {
             alt_default_inputKeys = new KeyCode[default_inputKeys.Length];
         }
+
         var str = string.Empty;
         var str2 = string.Empty;
         var str3 = string.Empty;
@@ -951,6 +1008,7 @@ public class custom_inputs : MonoBehaviour
             str5 = joystickString2[i] + "*" + str5;
             str6 = inputString2[i] + "*" + str6;
         }
+
         PlayerPrefs.SetString("KeyCodes", str);
         PlayerPrefs.SetString("Joystick_input", str2);
         PlayerPrefs.SetString("Names_input", str3);
@@ -966,6 +1024,7 @@ public class custom_inputs : MonoBehaviour
         {
             altInputson = true;
         }
+
         inputBool = new bool[DescriptionString.Length];
         inputString = new string[DescriptionString.Length];
         inputKey = new KeyCode[DescriptionString.Length];
@@ -986,6 +1045,7 @@ public class custom_inputs : MonoBehaviour
         {
             reset2defaults();
         }
+
         tempLength = PlayerPrefs.GetInt("KeyLength");
         if (PlayerPrefs.HasKey("KeyCodes") && tempLength == DescriptionString.Length)
         {
@@ -998,6 +1058,7 @@ public class custom_inputs : MonoBehaviour
             loadConfig();
             saveInputs();
         }
+
         for (var i = 0; i < DescriptionString.Length; i++)
         {
             isInput[i] = false;
@@ -1018,6 +1079,7 @@ public class custom_inputs : MonoBehaviour
         {
             inputSetBools();
         }
+
         if (Input.GetKeyDown("escape"))
         {
             if (menuOn)

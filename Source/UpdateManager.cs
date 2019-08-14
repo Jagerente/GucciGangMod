@@ -29,13 +29,7 @@ public class UpdateManager : MonoBehaviour
             num++;
         }
 
-        var item = new UpdateEntry
-        {
-            index = updateOrder,
-            func = func,
-            mb = mb,
-            isMonoBehaviour = mb != null
-        };
+        var item = new UpdateEntry {index = updateOrder, func = func, mb = mb, isMonoBehaviour = mb != null};
         list.Add(item);
         if (updateOrder != 0)
         {
@@ -58,11 +52,7 @@ public class UpdateManager : MonoBehaviour
                 if (delay > 0f)
                 {
                     CreateInstance();
-                    var item = new DestroyEntry
-                    {
-                        obj = obj,
-                        time = Time.realtimeSinceStartup + delay
-                    };
+                    var item = new DestroyEntry {obj = obj, time = Time.realtimeSinceStartup + delay};
                     mInst.mDest.Add(item);
                 }
                 else
@@ -106,7 +96,7 @@ public class UpdateManager : MonoBehaviour
 
     private IEnumerator CoroutineFunction()
     {
-        return new CoroutineFunctionc__Iterator8 { f__this = this };
+        return new CoroutineFunctionc__Iterator8 {f__this = this};
     }
 
     private bool CoroutineUpdate()
@@ -230,7 +220,7 @@ public class UpdateManager : MonoBehaviour
 
         public bool MoveNext()
         {
-            var num = (uint)PC;
+            var num = (uint) PC;
             PC = -1;
             switch (num)
             {

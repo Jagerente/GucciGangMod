@@ -4,7 +4,7 @@ public class BTN_ToJoin : MonoBehaviour
 {
     public static GameObject CreateInput(GameObject parent, GameObject toClone, Vector3 position, Quaternion rotation, string name, string hint, uint width, int maxChars, bool isPassword)
     {
-        var prefab = (GameObject)Instantiate(toClone);
+        var prefab = (GameObject) Instantiate(toClone);
         var obj3 = NGUITools.AddChild(parent, prefab);
         obj3.name = name;
         obj3.transform.localPosition = position;
@@ -16,7 +16,7 @@ public class BTN_ToJoin : MonoBehaviour
         var x = size.x;
         size.x = width;
         obj3.GetComponent<BoxCollider>().size = size;
-        obj3.GetComponent<UIInput>().label.lineWidth = (int)width;
+        obj3.GetComponent<UIInput>().label.lineWidth = (int) width;
         size = obj3.transform.Find("Background").localScale;
         size.x *= width / x;
         obj3.transform.Find("Background").localScale = size;
@@ -26,7 +26,7 @@ public class BTN_ToJoin : MonoBehaviour
 
     public static GameObject CreateLabel(GameObject parent, GameObject toClone, Vector3 position, Quaternion rotation, string name, string text, int fontsize, int lineWidth)
     {
-        var prefab = (GameObject)Instantiate(toClone);
+        var prefab = (GameObject) Instantiate(toClone);
         var obj3 = NGUITools.AddChild(parent, prefab);
         obj3.name = name;
         obj3.transform.localPosition = position;
@@ -48,6 +48,7 @@ public class BTN_ToJoin : MonoBehaviour
         {
             transform2.gameObject.AddComponent<BTN_Join_LAN>();
         }
+
         var transform3 = transform.Find("InputIP");
         var transform4 = transform.Find("InputPort");
         var str = PlayerPrefs.GetString("lastIP", "127.0.0.1");
@@ -62,11 +63,12 @@ public class BTN_ToJoin : MonoBehaviour
         var transform6 = transform.Find("InputAuthPass");
         if (transform6 == null)
         {
-            var x = (uint)transform3.transform.Find("Background").localScale.x;
+            var x = (uint) transform3.transform.Find("Background").localScale.x;
             vector = transform2.localPosition + new Vector3(0f, 61f, 0f);
             transform6 = CreateInput(transform.gameObject, transform3.gameObject, vector, transform2.rotation, "InputAuthPass", string.Empty, x, 100, false).transform;
             transform6.GetComponent<UIInput>().label.shrinkToFit = true;
         }
+
         if (transform5 == null)
         {
             vector = transform6.localPosition + new Vector3(0f, 35f, 0f);
@@ -75,6 +77,7 @@ public class BTN_ToJoin : MonoBehaviour
             transform5.localScale = gameObject.transform.localScale;
             transform5.GetComponent<UILabel>().color = gameObject.GetComponent<UILabel>().color;
         }
+
         var str3 = PlayerPrefs.GetString("lastAuthPass", string.Empty);
         transform6.GetComponent<UIInput>().text = str3;
         transform6.GetComponent<UIInput>().label.text = str3;

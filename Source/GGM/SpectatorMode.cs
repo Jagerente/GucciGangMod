@@ -56,7 +56,8 @@ namespace GGM
                         if (str.Trim() != "" && str.Contains(":"))
                         {
                             var keys = str.Split(':');
-                            var key = keys[0].Trim(); var value = keys[1].Trim();
+                            var key = keys[0].Trim();
+                            var value = keys[1].Trim();
                             if (key == "smooth")
                             {
                                 _multiButton = value == "True";
@@ -113,6 +114,7 @@ namespace GGM
                     var num5 = (Input.mousePosition.x - Screen.width * 0.6f) / Screen.width * 0.4f * SpeedCamera * 150f;
                     _baseT.Rotate(0f, num5, 0f, Space.World);
                 }
+
                 if (Input.mousePosition.y < Screen.height * 0.4f)
                 {
                     var num5 = (Screen.height * 0.4f - Input.mousePosition.y) / Screen.height * 0.4f * SpeedCamera * 150f;
@@ -139,12 +141,14 @@ namespace GGM
                         _baseT.position += _baseT.forward * (_speedButton * _timered["up"].ValueLocal) * Time.deltaTime;
                         _timered["up"].Stop();
                     }
+
                     if (_timered["down"].ValueLocal > 0)
                     {
                         _baseT.position -= _baseT.forward * (_speedButton * _timered["down"].ValueLocal) * Time.deltaTime;
                         _timered["down"].Stop();
                     }
                 }
+
                 if (Input.GetKey(_buttonLeft))
                 {
                     _baseT.position -= _baseT.right * (_speedButton * _timered["left"].Value(100)) * Time.deltaTime;
@@ -160,6 +164,7 @@ namespace GGM
                         _baseT.position -= _baseT.right * (_speedButton * _timered["left"].ValueLocal) * Time.deltaTime;
                         _timered["left"].Stop();
                     }
+
                     if (_timered["right"].ValueLocal > 0)
                     {
                         _baseT.position += _baseT.right * (_speedButton * _timered["right"].ValueLocal) * Time.deltaTime;
@@ -171,8 +176,16 @@ namespace GGM
 
         private void LateUpdate()
         {
-            if (Input.GetKeyDown(_buttonEnable) && SpecMode) { ONEnable = !ONEnable; Activate(ONEnable); }
-            if (Input.GetKeyDown(_buttonShowGUI) && SpecMode) { _showGui = !_showGui; }
+            if (Input.GetKeyDown(_buttonEnable) && SpecMode)
+            {
+                ONEnable = !ONEnable;
+                Activate(ONEnable);
+            }
+
+            if (Input.GetKeyDown(_buttonShowGUI) && SpecMode)
+            {
+                _showGui = !_showGui;
+            }
         }
 
         private void OnGUI()
@@ -198,6 +211,7 @@ namespace GGM
                 {
                     Save_Load_Settings(true);
                 }
+
                 GUILayout.EndHorizontal();
                 GUILayout.EndArea();
             }
@@ -219,6 +233,7 @@ namespace GGM
                     {
                         ValueLocal = 0;
                     }
+
                     _dynamicTime += Time.deltaTime;
                     if (_dynamicTime > _timeStatic)
                     {
@@ -236,6 +251,7 @@ namespace GGM
                     Update();
                     return ValueLocal;
                 }
+
                 return setValue;
             }
 
@@ -247,6 +263,7 @@ namespace GGM
                     {
                         ValueLocal = 0;
                     }
+
                     _dynamicTime += Time.deltaTime;
                     if (_dynamicTime > _timeStatic)
                     {

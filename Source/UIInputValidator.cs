@@ -67,7 +67,7 @@ public class UIInputValidator : MonoBehaviour
         {
             if (ch >= 'A' && ch <= 'Z')
             {
-                return (char)(ch - 'A' + 97);
+                return (char) (ch - 'A' + 97);
             }
 
             if (ch >= 'a' && ch <= 'z')
@@ -87,7 +87,7 @@ public class UIInputValidator : MonoBehaviour
             {
                 if (ch2 == ' ')
                 {
-                    return (char)(ch - 'a' + 65);
+                    return (char) (ch - 'a' + 65);
                 }
 
                 return ch;
@@ -97,7 +97,7 @@ public class UIInputValidator : MonoBehaviour
             {
                 if (ch2 != ' ' && ch2 != '\'')
                 {
-                    return (char)(ch - 'A' + 97);
+                    return (char) (ch - 'A' + 97);
                 }
 
                 return ch;

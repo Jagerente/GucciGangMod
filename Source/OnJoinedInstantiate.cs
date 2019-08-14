@@ -18,6 +18,7 @@ public class OnJoinedInstantiate : MonoBehaviour
                 {
                     up = SpawnPosition.position;
                 }
+
                 var insideUnitSphere = Random.insideUnitSphere;
                 insideUnitSphere.y = 0f;
                 insideUnitSphere = insideUnitSphere.normalized;

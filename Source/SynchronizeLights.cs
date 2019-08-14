@@ -13,6 +13,7 @@ public class SynchronizeLights : MonoBehaviour
             renderer.material.SetVector("_LightDirection0", new Vector4(vector.x, vector.y, vector.z, 0f));
             renderer.material.SetColor("_MyLightColor0", light0.color);
         }
+
         if (light1 != null)
         {
             var vector2 = light1.transform.rotation * new Vector3(0f, 0f, -1f);

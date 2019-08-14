@@ -21,7 +21,7 @@ public class ByteReader
     public Dictionary<string, string> ReadDictionary()
     {
         var dictionary = new Dictionary<string, string>();
-        char[] separator = { '=' };
+        char[] separator = {'='};
         while (canRead)
         {
             var str = ReadLine();
@@ -29,6 +29,7 @@ public class ByteReader
             {
                 return dictionary;
             }
+
             if (!str.StartsWith("//"))
             {
                 var strArray = str.Split(separator, 2, StringSplitOptions.RemoveEmptyEntries);
@@ -40,6 +41,7 @@ public class ByteReader
                 }
             }
         }
+
         return dictionary;
     }
 
@@ -51,12 +53,14 @@ public class ByteReader
         {
             this.mOffset++;
         }
+
         var mOffset = this.mOffset;
         if (mOffset >= length)
         {
             this.mOffset = length;
             return null;
         }
+
         while (mOffset < length)
         {
             switch (mBuffer[mOffset++])
@@ -66,6 +70,7 @@ public class ByteReader
                     goto Label_007E;
             }
         }
+
         mOffset++;
         Label_007E:
         str = ReadLine(mBuffer, this.mOffset, mOffset - this.mOffset - 1);
@@ -80,9 +85,6 @@ public class ByteReader
 
     public bool canRead
     {
-        get
-        {
-            return mBuffer != null && mOffset < mBuffer.Length;
-        }
+        get { return mBuffer != null && mOffset < mBuffer.Length; }
     }
 }

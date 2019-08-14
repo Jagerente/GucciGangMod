@@ -17,6 +17,7 @@ public class TweenOrthoSize : UITweener
             size.Sample(1f, true);
             size.enabled = false;
         }
+
         return size;
     }
 
@@ -33,19 +34,14 @@ public class TweenOrthoSize : UITweener
             {
                 mCam = camera;
             }
+
             return mCam;
         }
     }
 
     public float orthoSize
     {
-        get
-        {
-            return cachedCamera.orthographicSize;
-        }
-        set
-        {
-            cachedCamera.orthographicSize = value;
-        }
+        get { return cachedCamera.orthographicSize; }
+        set { cachedCamera.orthographicSize = value; }
     }
 }

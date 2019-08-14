@@ -27,18 +27,12 @@ namespace GGM
                     {
                         foreach (var player in PhotonNetwork.playerList)
                         {
-                            var stats = new Hashtable
-                            {
-                                {PhotonPlayerProperty.kills, 0},
-                                {PhotonPlayerProperty.deaths, 0},
-                                {PhotonPlayerProperty.max_dmg, 0},
-                                {PhotonPlayerProperty.total_dmg, 0}
-                            };
+                            var stats = new Hashtable {{PhotonPlayerProperty.kills, 0}, {PhotonPlayerProperty.deaths, 0}, {PhotonPlayerProperty.max_dmg, 0}, {PhotonPlayerProperty.total_dmg, 0}};
                             player.SetCustomProperties(stats);
                         }
 
                         FengGameManagerMKII.FGM.restartRC();
-                        string[] msg = { "MasterClient ", "has restarted the game." };
+                        string[] msg = {"MasterClient ", "has restarted the game."};
                         InRoomChat.SystemMessageGlobal(msg, false);
                     }
                     else

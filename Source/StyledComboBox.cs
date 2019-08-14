@@ -9,25 +9,19 @@ public class StyledComboBox : StyledItem
     public StyledItem itemMenuPrefab;
     public StyledItem itemPrefab;
 
-    [HideInInspector, SerializeField]
-    private List<StyledItem> items = new List<StyledItem>();
+    [HideInInspector, SerializeField] private List<StyledItem> items = new List<StyledItem>();
 
     public SelectionChangedHandler OnSelectionChanged;
 
-    [HideInInspector, SerializeField]
-    private StyledComboBoxPrefab root;
+    [HideInInspector, SerializeField] private StyledComboBoxPrefab root;
 
-    [SerializeField]
-    private int selectedIndex;
+    [SerializeField] private int selectedIndex;
 
     private void AddItem(object data)
     {
         if (itemPrefab != null)
         {
-            var yf = new AddItemc__AnonStoreyF
-            {
-                f__this = this
-            };
+            var yf = new AddItemc__AnonStoreyF {f__this = this};
             var fourCornersArray = new Vector3[4];
             itemPrefab.GetComponent<RectTransform>().GetLocalCorners(fourCornersArray);
             var position = fourCornersArray[0];
@@ -61,6 +55,7 @@ public class StyledComboBox : StyledItem
         {
             AddItem(list[i]);
         }
+
         SelectedIndex = 0;
     }
 
@@ -86,6 +81,7 @@ public class StyledComboBox : StyledItem
                 DestroyObject(root.menuItem.transform.GetChild(i).gameObject);
             }
         }
+
         if (itemMenuPrefab != null && root.menuItem != null)
         {
             var item = Instantiate(itemMenuPrefab) as StyledItem;
@@ -112,6 +108,7 @@ public class StyledComboBox : StyledItem
         {
             DestroyImmediate(root.gameObject);
         }
+
         if (containerPrefab != null)
         {
             var component = GetComponent<RectTransform>();
@@ -143,10 +140,7 @@ public class StyledComboBox : StyledItem
 
     public int SelectedIndex
     {
-        get
-        {
-            return selectedIndex;
-        }
+        get { return selectedIndex; }
         set
         {
             if (value >= 0 && value <= items.Count)
@@ -165,6 +159,7 @@ public class StyledComboBox : StyledItem
             {
                 return items[selectedIndex];
             }
+
             return null;
         }
     }

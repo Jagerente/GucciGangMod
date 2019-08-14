@@ -15,7 +15,7 @@ internal static class ScoreExtensions
         object obj2;
         if (player.customProperties.TryGetValue("score", out obj2))
         {
-            return (int)obj2;
+            return (int) obj2;
         }
 
         return 0;

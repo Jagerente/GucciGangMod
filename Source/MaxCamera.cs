@@ -30,10 +30,12 @@ public class MaxCamera : MonoBehaviour
         {
             angle += 360f;
         }
+
         if (angle > 360f)
         {
             angle -= 360f;
         }
+
         return Mathf.Clamp(angle, min, max);
     }
 
@@ -41,12 +43,10 @@ public class MaxCamera : MonoBehaviour
     {
         if (target == null)
         {
-            var obj2 = new GameObject("Cam Target")
-            {
-                transform = { position = transform.position + transform.forward * distance }
-            };
+            var obj2 = new GameObject("Cam Target") {transform = {position = transform.position + transform.forward * distance}};
             target = obj2.transform;
         }
+
         distance = Vector3.Distance(transform.position, target.position);
         currentDistance = distance;
         desiredDistance = distance;
@@ -74,6 +74,7 @@ public class MaxCamera : MonoBehaviour
             rotation = Quaternion.Lerp(currentRotation, desiredRotation, Time.deltaTime * zoomDampening);
             transform.rotation = rotation;
         }
+
         desiredDistance -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * zoomRate * Mathf.Abs(desiredDistance);
         desiredDistance = Mathf.Clamp(desiredDistance, minDistance, maxDistance);
         currentDistance = Mathf.Lerp(currentDistance, desiredDistance, Time.deltaTime * zoomDampening);

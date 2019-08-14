@@ -59,6 +59,7 @@ public class LoginFengKAI : MonoBehaviour
                 NGUITools.SetActive(panelStatus, true);
                 StartCoroutine(getInfo());
             }
+
             w.Dispose();
         }
     }
@@ -84,6 +85,7 @@ public class LoginFengKAI : MonoBehaviour
                 NGUITools.SetActive(panelChangePassword, false);
                 NGUITools.SetActive(panelLogin, true);
             }
+
             w.Dispose();
         }
     }
@@ -126,6 +128,7 @@ public class LoginFengKAI : MonoBehaviour
             NGUITools.SetActive(panelForget, false);
             NGUITools.SetActive(panelLogin, true);
         }
+
         clearCOOKIE();
     }
 
@@ -158,6 +161,7 @@ public class LoginFengKAI : MonoBehaviour
                 player.name = playerName;
                 player.guildname = playerGUILDName;
             }
+
             w.Dispose();
         }
     }
@@ -225,8 +229,10 @@ public class LoginFengKAI : MonoBehaviour
                 NGUITools.SetActive(panelRegister, false);
                 NGUITools.SetActive(panelLogin, true);
             }
+
             w.Dispose();
         }
+
         clearCOOKIE();
     }
 
@@ -247,6 +253,7 @@ public class LoginFengKAI : MonoBehaviour
             player = new PlayerInfoPHOTON();
             player.initAsGuest();
         }
+
         if (playerName != string.Empty)
         {
             NGUITools.SetActive(panelLogin, false);

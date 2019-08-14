@@ -177,6 +177,7 @@ namespace GGM.Discord
                 {
                     str += "\0\0";
                 }
+
                 return Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(str));
             }
 

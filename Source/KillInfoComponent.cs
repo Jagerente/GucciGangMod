@@ -38,6 +38,7 @@ public class KillInfoComponent : MonoBehaviour
         {
             timeElapsed = lifeTime;
         }
+
         groupBig.SetActive(false);
         groupSmall.SetActive(true);
     }
@@ -54,6 +55,7 @@ public class KillInfoComponent : MonoBehaviour
             spriteSkeleton.GetComponent<UISprite>().color = new Color(1f, 1f, 1f, alpha);
             spriteSword.GetComponent<UISprite>().color = new Color(1f, 1f, 1f, alpha);
         }
+
         if (groupSmall.activeInHierarchy)
         {
             slabelScore.GetComponent<UILabel>().color = new Color(labelScore.GetComponent<UILabel>().color.r, labelScore.GetComponent<UILabel>().color.g, labelScore.GetComponent<UILabel>().color.b, alpha);
@@ -90,11 +92,13 @@ public class KillInfoComponent : MonoBehaviour
             var transform4 = slabelNameRight.transform;
             transform4.position -= new Vector3(16f, 0f, 0f);
         }
+
         if (!isTitan2)
         {
             rightTitan.SetActive(false);
             srightTitan.SetActive(false);
         }
+
         labelNameLeft.GetComponent<UILabel>().text = name1;
         labelNameRight.GetComponent<UILabel>().text = name2;
         slabelNameLeft.GetComponent<UILabel>().text = name1;
@@ -114,6 +118,7 @@ public class KillInfoComponent : MonoBehaviour
                 slabelScore.GetComponent<UILabel>().color = Color.red;
             }
         }
+
         groupSmall.SetActive(false);
     }
 
@@ -137,6 +142,7 @@ public class KillInfoComponent : MonoBehaviour
             {
                 transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, Time.deltaTime * 10f);
             }
+
             if (timeElapsed > lifeTime)
             {
                 transform.position += new Vector3(0f, Time.deltaTime * 0.15f, 0f);
@@ -145,9 +151,10 @@ public class KillInfoComponent : MonoBehaviour
             }
             else
             {
-                float num = (int)(100f - Screen.height * 0.5f) + col * offset;
+                float num = (int) (100f - Screen.height * 0.5f) + col * offset;
                 transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0f, -num, 0f), Time.deltaTime * 10f);
             }
+
             if (timeElapsed > lifeTime + 0.5f)
             {
                 Destroy(gameObject);

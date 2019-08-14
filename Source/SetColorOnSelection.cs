@@ -13,6 +13,7 @@ public class SetColorOnSelection : MonoBehaviour
         {
             mWidget = GetComponent<UIWidget>();
         }
+
         var key = val;
         if (key != null)
         {
@@ -29,6 +30,7 @@ public class SetColorOnSelection : MonoBehaviour
                 dictionary.Add("Magenta", 6);
                 f__switchmap4 = dictionary;
             }
+
             if (f__switchmap4.TryGetValue(key, out num))
             {
                 switch (num)

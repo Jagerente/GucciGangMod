@@ -28,7 +28,7 @@ public class OnAwakeUsePhotonView : MonoBehaviour
     {
         if (photonView.isMine)
         {
-            object[] parameters = { (byte)1 };
+            object[] parameters = {(byte) 1};
             photonView.RPC("OnAwakeRPC", PhotonTargets.All, parameters);
         }
     }

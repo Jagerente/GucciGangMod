@@ -50,25 +50,7 @@ namespace GGM
         /// <returns></returns>
         public static string StripHEX(this string text)
         {
-            var list = new[]
-            {
-                'A',
-                'B',
-                'C',
-                'D',
-                'E',
-                'F',
-                '0',
-                '1',
-                '2',
-                '3',
-                '4',
-                '5',
-                '6',
-                '7',
-                '8',
-                '9'
-            }.ToList();
+            var list = new[] { 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }.ToList();
             for (var i = 0; i < text.Length; i++)
             {
                 if (text[i] == '[')
@@ -83,6 +65,7 @@ namespace GGM
                         {
                             break;
                         }
+
                         var num3 = num + num2 - 1;
                         if (text[num3] == ']')
                         {
@@ -90,6 +73,7 @@ namespace GGM
                             {
                                 flag = true;
                             }
+
                             break;
                         }
 
@@ -98,6 +82,7 @@ namespace GGM
                             break;
                         }
                     }
+
                     if (flag)
                     {
                         text = text.Remove(num, num2);
@@ -105,6 +90,7 @@ namespace GGM
                     }
                 }
             }
+
             return string.Concat(text);
         }
 
@@ -124,6 +110,7 @@ namespace GGM
                     str += "</color>";
                 }
             }
+
             return str;
         }
 
@@ -141,6 +128,7 @@ namespace GGM
                 case DayLight.Night:
                     return dayLight = "Night";
             }
+
             return dayLight;
         }
 
@@ -158,6 +146,7 @@ namespace GGM
                 case 2:
                     return difficulty = "Abnormal";
             }
+
             return difficulty;
         }
 

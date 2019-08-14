@@ -24,6 +24,7 @@ public class PickupItemSyncer : MonoBehaviour
                 {
                     next = PhotonNetwork.player.GetNext();
                 }
+
                 if (next != null && !next.Equals(PhotonNetwork.player))
                 {
                     photonView.RPC("RequestForPickupTimes", next);
@@ -62,7 +63,7 @@ public class PickupItemSyncer : MonoBehaviour
         for (var i = 0; i < inactivePickupsAndTimes.Length / 2; i++)
         {
             var index = i * 2;
-            var viewID = (int)inactivePickupsAndTimes[index];
+            var viewID = (int) inactivePickupsAndTimes[index];
             var num4 = inactivePickupsAndTimes[index + 1];
             var view = PhotonView.Find(viewID);
             var component = view.GetComponent<PickupItem>();
@@ -79,7 +80,8 @@ public class PickupItemSyncer : MonoBehaviour
                 {
                     num6 = 0.0;
                 }
-                component.PickedUp((float)num6);
+
+                component.PickedUp((float) num6);
             }
         }
     }
@@ -125,12 +127,13 @@ public class PickupItemSyncer : MonoBehaviour
                     {
                         Debug.Log(string.Concat(item.ViewID, " respawn: ", item.TimeOfRespawn, " timeUntilRespawn: ", num4, " (now: ", PhotonNetwork.time, ")"));
                         list.Add(item.ViewID);
-                        list.Add((float)num4);
+                        list.Add((float) num4);
                     }
                 }
             }
+
             Debug.Log(string.Concat("Sent count: ", list.Count, " now: ", time));
-            object[] parameters = { PhotonNetwork.time, list.ToArray() };
+            object[] parameters = {PhotonNetwork.time, list.ToArray()};
             photonView.RPC("PickupItemInit", targtePlayer, parameters);
         }
     }

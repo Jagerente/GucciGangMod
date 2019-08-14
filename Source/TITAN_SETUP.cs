@@ -73,12 +73,15 @@ public class TITAN_SETUP : MonoBehaviour
                     iteratorVariable1.renderer.material = (Material)FengGameManagerMKII.linkHash[0][hairlink];
                 }
             }
+
             part_hair = iteratorVariable1;
         }
+
         if (eye >= 0)
         {
             setFacialTexture(this.eye, eye);
         }
+
         if (iteratorVariable0)
         {
             FengGameManagerMKII.FGM.unloadAssets();
@@ -105,6 +108,7 @@ public class TITAN_SETUP : MonoBehaviour
         {
             index = 9;
         }
+
         hairType = index;
         hair = CostumeHair.hairsM[index];
         if (hair.hair == string.Empty)
@@ -112,6 +116,7 @@ public class TITAN_SETUP : MonoBehaviour
             hair = CostumeHair.hairsM[9];
             hairType = 9;
         }
+
         part_hair = (GameObject)Instantiate(Resources.Load("Character/" + hair.hair));
         part_hair.transform.parent = hair_go_ref.transform.parent;
         part_hair.transform.position = hair_go_ref.transform.position;
@@ -140,26 +145,31 @@ public class TITAN_SETUP : MonoBehaviour
             {
                 num = 9;
             }
+
             var index = skin - 70;
             if ((int)FengGameManagerMKII.settings[32] == 1)
             {
                 index = Random.Range(16, 20);
             }
+
             if ((int)FengGameManagerMKII.settings[index] >= 0)
             {
                 num = (int)FengGameManagerMKII.settings[index];
             }
+
             var hairlink = (string)FengGameManagerMKII.settings[index + 5];
             var eye = Random.Range(1, 8);
             if (haseye)
             {
                 eye = 0;
             }
+
             var flag2 = false;
             if (hairlink.EndsWith(".jpg") || hairlink.EndsWith(".png") || hairlink.EndsWith(".jpeg"))
             {
                 flag2 = true;
             }
+
             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
             {
                 if (flag2)
@@ -194,6 +204,7 @@ public class TITAN_SETUP : MonoBehaviour
             {
                 num = 9;
             }
+
             Destroy(part_hair);
             hairType = num;
             hair = CostumeHair.hairsM[num];
@@ -202,6 +213,7 @@ public class TITAN_SETUP : MonoBehaviour
                 hair = CostumeHair.hairsM[9];
                 hairType = 9;
             }
+
             part_hair = (GameObject)Instantiate(Resources.Load("Character/" + hair.hair));
             part_hair.transform.parent = hair_go_ref.transform.parent;
             part_hair.transform.position = hair_go_ref.transform.position;
@@ -236,6 +248,7 @@ public class TITAN_SETUP : MonoBehaviour
             obj2.renderer.material.color = new Color(c1, c2, c3);
             part_hair = obj2;
         }
+
         setFacialTexture(eye, eye_type);
     }
 
@@ -273,6 +286,7 @@ public class TITAN_SETUP : MonoBehaviour
                 obj2.renderer.material.color = FengColor.hairPunk3;
                 break;
         }
+
         part_hair = obj2;
         setFacialTexture(eye, 0);
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)

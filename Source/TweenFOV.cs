@@ -17,6 +17,7 @@ public class TweenFOV : UITweener
             nfov.Sample(1f, true);
             nfov.enabled = false;
         }
+
         return nfov;
     }
 
@@ -33,19 +34,14 @@ public class TweenFOV : UITweener
             {
                 mCam = camera;
             }
+
             return mCam;
         }
     }
 
     public float fov
     {
-        get
-        {
-            return cachedCamera.fieldOfView;
-        }
-        set
-        {
-            cachedCamera.fieldOfView = value;
-        }
+        get { return cachedCamera.fieldOfView; }
+        set { cachedCamera.fieldOfView = value; }
     }
 }

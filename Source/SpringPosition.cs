@@ -20,6 +20,7 @@ public class SpringPosition : IgnoreTimeScale
         {
             component = go.AddComponent<SpringPosition>();
         }
+
         component.target = pos;
         component.strength = strength;
         component.onFinished = null;
@@ -28,6 +29,7 @@ public class SpringPosition : IgnoreTimeScale
             component.mThreshold = 0f;
             component.enabled = true;
         }
+
         return component;
     }
 
@@ -46,6 +48,7 @@ public class SpringPosition : IgnoreTimeScale
                 var vector = target - mTrans.position;
                 mThreshold = vector.magnitude * 0.001f;
             }
+
             mTrans.position = NGUIMath.SpringLerp(mTrans.position, target, strength, deltaTime);
             var vector2 = target - mTrans.position;
             if (mThreshold >= vector2.magnitude)
@@ -56,6 +59,7 @@ public class SpringPosition : IgnoreTimeScale
                 {
                     eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
                 }
+
                 enabled = false;
             }
         }
@@ -66,6 +70,7 @@ public class SpringPosition : IgnoreTimeScale
                 var vector3 = target - mTrans.localPosition;
                 mThreshold = vector3.magnitude * 0.001f;
             }
+
             mTrans.localPosition = NGUIMath.SpringLerp(mTrans.localPosition, target, strength, deltaTime);
             var vector4 = target - mTrans.localPosition;
             if (mThreshold >= vector4.magnitude)
@@ -76,6 +81,7 @@ public class SpringPosition : IgnoreTimeScale
                 {
                     eventReceiver.SendMessage(callWhenFinished, this, SendMessageOptions.DontRequireReceiver);
                 }
+
                 enabled = false;
             }
         }

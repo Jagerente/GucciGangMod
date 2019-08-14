@@ -33,6 +33,7 @@ public class CharacterCreateAnimationControl : MonoBehaviour
                 dictionary.Add("petra", 6);
                 f__switchmap0 = dictionary;
             }
+
             if (f__switchmap0.TryGetValue(key, out num))
             {
                 switch (num)
@@ -67,6 +68,7 @@ public class CharacterCreateAnimationControl : MonoBehaviour
                 }
             }
         }
+
         animation.Play(currentAnimation);
     }
 
@@ -87,6 +89,7 @@ public class CharacterCreateAnimationControl : MonoBehaviour
         {
             currentAnimation = "stand_levi";
         }
+
         animation.CrossFade(currentAnimation, 0.1f);
         timeElapsed = 0f;
     }

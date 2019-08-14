@@ -8,8 +8,7 @@ public class ServerSettings : ScriptableObject
 {
     public string AppID = string.Empty;
 
-    [HideInInspector]
-    public bool DisableAutoOpenWizard;
+    [HideInInspector] public bool DisableAutoOpenWizard;
 
     public HostingOption HostType;
     public bool PingCloudServersOnAwake;
@@ -21,7 +20,7 @@ public class ServerSettings : ScriptableObject
 
     public override string ToString()
     {
-        object[] objArray1 = { "ServerSettings: ", HostType, " ", ServerAddress };
+        object[] objArray1 = {"ServerSettings: ", HostType, " ", ServerAddress};
         return string.Concat(objArray1);
     }
 

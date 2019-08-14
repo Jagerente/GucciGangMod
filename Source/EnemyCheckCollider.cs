@@ -39,22 +39,25 @@ public class EnemyCheckCollider : MonoBehaviour
                         {
                             num2 = transform.localScale.x * gameObject.GetComponent<SphereCollider>().radius;
                         }
+
                         if (gameObject.GetComponent<CapsuleCollider>() != null)
                         {
                             num2 = transform.localScale.x * gameObject.GetComponent<CapsuleCollider>().height;
                         }
+
                         var num3 = 5f;
                         if (num2 > 0f)
                         {
                             num3 = Mathf.Max(5f, num2 - vector.magnitude);
                         }
+
                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
                         {
                             component.transform.root.GetComponent<HERO>().blowAway(vector.normalized * num3 + Vector3.up * 1f);
                         }
                         else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                         {
-                            object[] parameters = { vector.normalized * num3 + Vector3.up * 1f };
+                            object[] parameters = {vector.normalized * num3 + Vector3.up * 1f};
                             component.transform.root.GetComponent<HERO>().photonView.RPC("blowAway", PhotonTargets.All, parameters);
                         }
                     }
@@ -78,6 +81,7 @@ public class EnemyCheckCollider : MonoBehaviour
                                 myOwnerViewID = transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID;
                                 titanName = transform.root.gameObject.GetComponent<EnemyfxIDcontainer>().titanName;
                             }
+
                             var objArray2 = new object[5];
                             var vector5 = component.transform.root.position - transform.position;
                             objArray2[0] = vector5.normalized * b * 1000f + Vector3.up * 50f;

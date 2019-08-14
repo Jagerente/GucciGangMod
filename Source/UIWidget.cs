@@ -32,9 +32,7 @@ public abstract class UIWidget : MonoBehaviour
     {
         if (mPanel != null && mPanel.gameObject.layer != gameObject.layer)
         {
-            Debug.LogWarning(
-                "You can't place widgets on a layer different than the UIPanel that manages them.\nIf you want to move widgets to a different layer, parent them to a new panel instead.",
-                this);
+            Debug.LogWarning("You can't place widgets on a layer different than the UIPanel that manages them.\nIf you want to move widgets to a different layer, parent them to a new panel instead.", this);
             gameObject.layer = mPanel.gameObject.layer;
         }
     }
@@ -318,8 +316,7 @@ public abstract class UIWidget : MonoBehaviour
         return false;
     }
 
-    public void WriteToBuffers(BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color32> c,
-        BetterList<Vector3> n, BetterList<Vector4> t)
+    public void WriteToBuffers(BetterList<Vector3> v, BetterList<Vector2> u, BetterList<Color32> c, BetterList<Vector3> n, BetterList<Vector4> t)
     {
         mGeom.WriteToBuffers(v, u, c, n, t);
     }

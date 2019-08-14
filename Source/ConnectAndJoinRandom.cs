@@ -12,6 +12,7 @@ public class ConnectAndJoinRandom : MonoBehaviour
         {
             Debug.LogWarning(string.Concat("List of available regions counts ", PhotonNetwork.networkingPeer.AvailableRegions.Count, ". First: ", PhotonNetwork.networkingPeer.AvailableRegions[0], " \t Current Region: ", PhotonNetwork.networkingPeer.CloudRegion));
         }
+
         Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
         PhotonNetwork.JoinRandomRoom();
     }
@@ -34,10 +35,7 @@ public class ConnectAndJoinRandom : MonoBehaviour
     public virtual void OnPhotonRandomJoinFailed()
     {
         Debug.Log("OnPhotonRandomJoinFailed() was called by PUN. No random room available, so we create one. Calling: PhotonNetwork.CreateRoom(null, new RoomOptions() {maxPlayers = 4}, null);");
-        var roomOptions = new RoomOptions
-        {
-            maxPlayers = 4
-        };
+        var roomOptions = new RoomOptions {maxPlayers = 4};
         PhotonNetwork.CreateRoom(null, roomOptions, null);
     }
 

@@ -6,14 +6,11 @@ namespace ExitGames.Client.Photon.Lite
     {
         DoNotCache,
 
-        [Obsolete]
-        MergeCache,
+        [Obsolete] MergeCache,
 
-        [Obsolete]
-        ReplaceCache,
+        [Obsolete] ReplaceCache,
 
-        [Obsolete]
-        RemoveCache,
+        [Obsolete] RemoveCache,
 
         AddToRoomCache,
         AddToRoomCacheGlobal,

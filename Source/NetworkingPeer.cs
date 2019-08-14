@@ -83,6 +83,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             var str = PhotonNetwork.PhotonServerSettings.RpcList[i];
             rpcShortcuts[str] = i;
         }
+
         State = PeerStates.PeerCreated;
     }
 
@@ -107,6 +108,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 return false;
             }
+
             for (var i = 0; i < currentContent.Length; i++)
             {
                 var one = currentContent[i];
@@ -117,6 +119,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 }
             }
         }
+
         return true;
     }
 
@@ -126,10 +129,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             Debug.LogWarning(string.Format("Local actor is null or not in mActors! mLocalActor: {0} mActors==null: {1} newID: {2}", mLocalActor, mActors == null, newID));
         }
+
         if (mActors.ContainsKey(mLocalActor.ID))
         {
             mActors.Remove(mLocalActor.ID);
         }
+
         mLocalActor.InternalChangeLocalID(newID);
         mActors[mLocalActor.ID] = mLocalActor;
         RebuildPlayerListCopies();
@@ -163,8 +168,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         num = num2;
                     }
                 }
+
                 mMasterClient = mActors[num];
             }
+
             if (flag2)
             {
                 object[] parameters = { mMasterClient };
@@ -179,6 +186,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return false;
         }
+
         for (var i = 0; i < callParameterTypes.Length; i++)
         {
             var parameterType = methodParameters[i].ParameterType;
@@ -187,6 +195,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 return false;
             }
         }
+
         return true;
     }
 
@@ -209,11 +218,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             Debug.LogWarning("Ignoring Connect() because app gets closed. If this is an error, check PhotonHandler.AppQuits.");
             return false;
         }
+
         if (PhotonNetwork.connectionStateDetailed == PeerStates.Disconnecting)
         {
             Debug.LogError("Connect() failed. Can't connect while disconnecting (still). Current state: " + PhotonNetwork.connectionStateDetailed);
             return false;
         }
+
         var flag = base.Connect(serverAddress, string.Empty);
         if (flag)
         {
@@ -232,6 +243,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     return flag;
             }
         }
+
         return flag;
     }
 
@@ -248,6 +260,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             Debug.LogWarning("Ignoring Connect() because app gets closed. If this is an error, check PhotonHandler.AppQuits.");
             return false;
         }
+
         IsUsingNameServer = true;
         CloudRegion = CloudRegionCode.none;
         if (State != PeerStates.ConnectedToNameServer)
@@ -260,12 +273,15 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 nameServerAddress = string.Format("{0}:{1}", nameServerAddress, num);
                 Debug.Log(string.Concat("Server to connect to: ", nameServerAddress, " settings protocol: ", PhotonNetwork.PhotonServerSettings.Protocol));
             }
+
             if (!base.Connect(nameServerAddress, "ns"))
             {
                 return false;
             }
+
             State = PeerStates.ConnectingToNameServer;
         }
+
         return true;
     }
 
@@ -276,12 +292,14 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             Debug.LogWarning("Ignoring Connect() because app gets closed. If this is an error, check PhotonHandler.AppQuits.");
             return false;
         }
+
         IsUsingNameServer = true;
         CloudRegion = region;
         if (State == PeerStates.ConnectedToNameServer)
         {
             return OpAuthenticate(mAppId, mAppVersionPun, PlayerName, CustomAuthenticationValues, region.ToString());
         }
+
         var nameServerAddress = NameServerAddress;
         if (!nameServerAddress.Contains(":"))
         {
@@ -289,10 +307,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             ProtocolToNameServerPort.TryGetValue(UsedProtocol, out num);
             nameServerAddress = string.Format("{0}:{1}", nameServerAddress, num);
         }
+
         if (!base.Connect(nameServerAddress, "ns"))
         {
             return false;
         }
+
         State = PeerStates.ConnectingToNameServer;
         return true;
     }
@@ -310,16 +330,19 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 return false;
             }
+
             var objArray = data[(byte)2] as object[];
             if (objArray == null)
             {
                 return false;
             }
+
             var target = data[(byte)3] as int[];
             if (target == null)
             {
                 target = new int[0];
             }
+
             var lastOnSerializeDataReceived = view.lastOnSerializeDataReceived;
             for (var i = 0; i < objArray.Length; i++)
             {
@@ -328,8 +351,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     objArray[i] = lastOnSerializeDataReceived[i];
                 }
             }
+
             data[(byte)1] = objArray;
         }
+
         return true;
     }
 
@@ -343,10 +368,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 return false;
             }
+
             if (lastOnSerializeDataSent.Length != objArray2.Length)
             {
                 return true;
             }
+
             var objArray3 = new object[objArray2.Length];
             var num = 0;
             var list = new List<int>();
@@ -367,6 +394,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     }
                 }
             }
+
             if (num > 0)
             {
                 data.Remove((byte)1);
@@ -374,6 +402,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     return false;
                 }
+
                 data[(byte)2] = objArray3;
                 if (list.Count > 0)
                 {
@@ -381,6 +410,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 }
             }
         }
+
         return true;
     }
 
@@ -391,6 +421,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             OpRemoveCompleteCache();
             SendDestroyOfAll();
         }
+
         LocalCleanupAnythingInstantiated(true);
     }
 
@@ -408,6 +439,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 OpCleanRpcBuffer(playerId);
                 SendDestroyOfPlayer(playerId);
             }
+
             var queue = new Queue<GameObject>();
             var num = playerId * PhotonNetwork.MAX_VIEW_IDS;
             var num2 = num + PhotonNetwork.MAX_VIEW_IDS;
@@ -418,6 +450,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     queue.Enqueue(pair.Value);
                 }
             }
+
             foreach (var obj2 in queue)
             {
                 RemoveInstantiatedGO(obj2, true);
@@ -479,21 +512,25 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             zero = Vector3.zero;
         }
+
         var identity = Quaternion.identity;
         if (evData.ContainsKey((byte)2))
         {
             identity = (Quaternion)evData[(byte)2];
         }
+
         var item = 0;
         if (evData.ContainsKey((byte)3))
         {
             item = (int)evData[(byte)3];
         }
+
         short num4 = 0;
         if (evData.ContainsKey((byte)8))
         {
             num4 = (short)evData[(byte)8];
         }
+
         if (evData.ContainsKey((byte)4))
         {
             numArray = (int[])evData[(byte)4];
@@ -502,10 +539,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             numArray = new[] { instantiationId };
         }
+
         if (!InstantiateTracker.instance.checkObj(key, photonPlayer, numArray))
         {
             return null;
         }
+
         if (evData.ContainsKey((byte)5))
         {
             objArray = (object[])evData[(byte)5];
@@ -514,10 +553,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             objArray = null;
         }
+
         if (!(item == 0 || allowedReceivingGroups.Contains(item)))
         {
             return null;
         }
+
         if (resourceGameObject == null)
         {
             if (!UsePrefabCache || !PrefabCache.TryGetValue(key, out resourceGameObject))
@@ -530,28 +571,33 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     resourceGameObject = (GameObject)Resources.Load(key, typeof(GameObject));
                 }
+
                 if (UsePrefabCache)
                 {
                     PrefabCache.Add(key, resourceGameObject);
                 }
             }
+
             if (resourceGameObject == null)
             {
                 Debug.LogError("PhotonNetwork error: Could not Instantiate the prefab [" + key + "]. Please verify you have this gameobject in a Resources folder.");
                 return null;
             }
         }
+
         var photonViewsInChildren = resourceGameObject.GetPhotonViewsInChildren();
         if (photonViewsInChildren.Length != numArray.Length)
         {
             throw new Exception("Error in Instantiation! The resource's PhotonView count is not the same as in incoming data.");
         }
+
         for (var i = 0; i < numArray.Length; i++)
         {
             photonViewsInChildren[i].viewID = numArray[i];
             photonViewsInChildren[i].prefix = num4;
             photonViewsInChildren[i].instantiationId = instantiationId;
         }
+
         StoreInstantiationData(instantiationId, objArray);
         var obj3 = (GameObject)Object.Instantiate(resourceGameObject, zero, identity);
         for (var j = 0; j < numArray.Length; j++)
@@ -561,6 +607,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             photonViewsInChildren[j].prefixBackup = -1;
             photonViewsInChildren[j].instantiationId = -1;
         }
+
         RemoveInstantiationData(instantiationId);
         if (instantiatedObjects.ContainsKey(instantiationId))
         {
@@ -576,10 +623,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     }
                 }
             }
+
             object[] args = { obj3, instantiationId, instantiatedObjects.Count, go, str2, PhotonNetwork.lastUsedViewSubId, PhotonNetwork.lastUsedViewSubIdStatic, photonViewList.Count };
             Debug.LogError(string.Format("DoInstantiate re-defines a GameObject. Destroying old entry! New: '{0}' (instantiationID: {1}) Old: {3}. PhotonViews on old: {4}. instantiatedObjects.Count: {2}. PhotonNetwork.lastUsedViewSubId: {5} PhotonNetwork.lastUsedViewSubIdStatic: {6} this.photonViewList.Count {7}.)", args));
             RemoveInstantiatedGO(go, true);
         }
+
         instantiatedObjects.Add(instantiationId, obj3);
         obj3.SendMessage(PhotonNetworkingMessage.OnPhotonInstantiate.ToString(), new PhotonMessageInfo(photonPlayer, timestamp, null), SendMessageOptions.DontRequireReceiver);
         return obj3;
@@ -600,6 +649,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 num2 = (short)rpcData[(byte)1];
             }
+
             if (rpcData.ContainsKey((byte)5))
             {
                 int num3 = (byte)rpcData[(byte)5];
@@ -608,21 +658,25 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     Debug.LogError("Could not find RPC with index: " + num3 + ". Going to ignore! Check PhotonServerSettings.RpcList");
                     return;
                 }
+
                 str = PhotonNetwork.PhotonServerSettings.RpcList[num3];
             }
             else
             {
                 str = (string)rpcData[(byte)3];
             }
+
             object[] parameters = null;
             if (rpcData.ContainsKey((byte)4))
             {
                 parameters = (object[])rpcData[(byte)4];
             }
+
             if (parameters == null)
             {
                 parameters = new object[0];
             }
+
             var photonView = GetPhotonView(viewID);
             if (photonView == null)
             {
@@ -652,6 +706,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     Debug.Log("Received RPC: " + str);
                 }
+
                 if (photonView.@group == 0 || allowedReceivingGroups.Contains(photonView.group))
                 {
                     var callParameterTypes = new Type[0];
@@ -670,9 +725,11 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             {
                                 callParameterTypes[index] = obj2.GetType();
                             }
+
                             index++;
                         }
                     }
+
                     var num7 = 0;
                     var num8 = 0;
                     foreach (var behaviour in photonView.GetComponents<MonoBehaviour>())
@@ -689,12 +746,14 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             {
                                 list = monoRPCMethodsCache[key];
                             }
+
                             if (list == null)
                             {
                                 var methods = SupportClass.GetMethods(key, typeof(RPC));
                                 monoRPCMethodsCache[key] = methods;
                                 list = methods;
                             }
+
                             if (list != null)
                             {
                                 for (var j = 0; j < list.Count; j++)
@@ -747,6 +806,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             }
                         }
                     }
+
                     if (num7 != 1)
                     {
                         var str2 = string.Empty;
@@ -757,6 +817,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             {
                                 str2 = str2 + ", ";
                             }
+
                             if (type2 == null)
                             {
                                 str2 = str2 + "null";
@@ -766,6 +827,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                 str2 = str2 + type2.Name;
                             }
                         }
+
                         if (num7 == 0)
                         {
                             if (num8 == 0)
@@ -794,6 +856,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return null;
         }
+
         tempInstantiationData.TryGetValue(instantiationId, out objArray);
         return objArray;
     }
@@ -814,6 +877,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 SendPlayerName();
             }
+
             switch (operationResponse.OperationCode)
             {
                 case 227:
@@ -835,10 +899,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                 Debug.Log("Most likely the game became empty during the switch to GameServer.");
                             }
                         }
+
                         object[] parameters = { operationResponse.ReturnCode, operationResponse.DebugMessage };
                         SendMonoMessage(PhotonNetworkingMessage.OnPhotonRandomJoinFailed, parameters);
                         break;
                     }
+
                 case 226:
                     {
                         if (PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
@@ -849,21 +915,25 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                 Debug.Log("Most likely the game became empty during the switch to GameServer.");
                             }
                         }
+
                         object[] objArray2 = { operationResponse.ReturnCode, operationResponse.DebugMessage };
                         SendMonoMessage(PhotonNetworkingMessage.OnPhotonJoinRoomFailed, objArray2);
                         break;
                     }
+
                 case 227:
                     {
                         if (PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
                         {
                             Debug.Log("Create failed on GameServer. Changing back to MasterServer. Msg: " + operationResponse.DebugMessage);
                         }
+
                         object[] objArray1 = { operationResponse.ReturnCode, operationResponse.DebugMessage };
                         SendMonoMessage(PhotonNetworkingMessage.OnPhotonCreateRoomFailed, objArray1);
                         break;
                     }
             }
+
             DisconnectToReconnect();
         }
     }
@@ -874,6 +944,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return (Hashtable)actorProperties[actorNr];
         }
+
         return actorProperties;
     }
 
@@ -885,15 +956,18 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             Debug.LogError("GetInstantiatedObjectsId() for GO == null.");
             return num;
         }
+
         var photonViewsInChildren = go.GetPhotonViewsInChildren();
         if (photonViewsInChildren != null && photonViewsInChildren.Length > 0 && photonViewsInChildren[0] != null)
         {
             return photonViewsInChildren[0].instantiationId;
         }
+
         if (PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
         {
             Debug.Log("GetInstantiatedObjectsId failed for GO: " + go);
         }
+
         return num;
     }
 
@@ -903,6 +977,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return PhotonNetwork.player.allProperties;
         }
+
         var hashtable = new Hashtable();
         hashtable[(byte)255] = PlayerName;
         return hashtable;
@@ -924,6 +999,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 }
             }
         }
+
         return false;
     }
 
@@ -942,10 +1018,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         Debug.LogWarning("Had to lookup view that wasn't in dict: " + view2);
                     }
+
                     return view2;
                 }
             }
         }
+
         return view;
     }
 
@@ -955,6 +1033,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return mActors[number];
         }
+
         return null;
     }
 
@@ -964,11 +1043,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return false;
         }
+
         var flag = OpGetRegions(mAppId);
         if (flag)
         {
             AvailableRegions = null;
         }
+
         return flag;
     }
 
@@ -978,6 +1059,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             Debug.Log("HandleEventLeave for player ID: " + actorID);
         }
+
         if (actorID < 0 || !mActors.ContainsKey(actorID))
         {
             Debug.LogError(string.Format("Received event Leave for unknown player ID: {0}", actorID));
@@ -989,11 +1071,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 Debug.LogError("HandleEventLeave for player ID: " + actorID + " has no PhotonPlayer!");
             }
+
             CheckMasterClient(actorID);
             if (mCurrentGame != null && mCurrentGame.autoCleanUp)
             {
                 DestroyPlayerObjects(actorID, true);
             }
+
             RemovePlayer(actorID, playerWithID);
             object[] parameters = { playerWithID };
             SendMonoMessage(PhotonNetworkingMessage.OnPhotonPlayerDisconnected, parameters);
@@ -1032,6 +1116,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             LocalCleanupAnythingInstantiated(true);
             PhotonNetwork.manuallyAllocatedViewIds = new List<int>();
         }
+
         if (flag)
         {
             SendMonoMessage(PhotonNetworkingMessage.OnLeftRoom);
@@ -1069,6 +1154,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             Debug.LogWarning("It seems some instantiation is not completed, as instantiation data is used. You should make sure instantiations are paused when calling this method. Cleaning now, despite this.");
         }
+
         if (destroyInstantiatedGameObjects)
         {
             var set = new HashSet<GameObject>(instantiatedObjects.Values);
@@ -1077,6 +1163,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 RemoveInstantiatedGO(obj2, true);
             }
         }
+
         tempInstantiationData.Clear();
         instantiatedObjects = new Dictionary<int, GameObject>();
         PhotonNetwork.lastUsedViewSubId = 0;
@@ -1090,6 +1177,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             loadingLevelAndPausedNetwork = false;
             PhotonNetwork.isMessageQueueRunning = true;
         }
+
         var list = new List<int>();
         foreach (var pair in photonViewList)
         {
@@ -1098,11 +1186,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 list.Add(pair.Key);
             }
         }
+
         for (var i = 0; i < list.Count; i++)
         {
             var key = list[i];
             photonViewList.Remove(key);
         }
+
         if (list.Count > 0 && PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
         {
             Debug.Log("New level loaded. Removed " + list.Count + " scene view IDs from last level.");
@@ -1115,10 +1205,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return one == null && two == null;
         }
+
         if (one.Equals(two))
         {
             return true;
         }
+
         if (one is Vector3)
         {
             var target = (Vector3)one;
@@ -1155,6 +1247,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 return true;
             }
         }
+
         return false;
     }
 
@@ -1178,6 +1271,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return;
         }
+
         switch (photonEvent.Code)
         {
             case 200:
@@ -1186,6 +1280,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     ExecuteRPC(photonEvent[245] as Hashtable, sender);
                     break;
                 }
+
                 return;
 
             case 201:
@@ -1200,6 +1295,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         {
                             return;
                         }
+
                         var networkTime = (int)hashtable[(byte)0];
                         short correctPrefix = -1;
                         short num6 = 1;
@@ -1209,16 +1305,20 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             {
                                 return;
                             }
+
                             correctPrefix = (short)hashtable[(byte)1];
                             num6 = 2;
                         }
+
                         for (var i = num6; i < hashtable.Count; i = (short)(i + 1))
                         {
                             OnSerializeRead(hashtable[i] as Hashtable, sender, networkTime, correctPrefix);
                         }
                     }
+
                     break;
                 }
+
                 return;
 
             case 202:
@@ -1230,8 +1330,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         DoInstantiate(evData, sender, null);
                     }
+
                     break;
                 }
+
                 return;
 
             case 203:
@@ -1239,6 +1341,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     PhotonNetwork.LeaveRoom();
                 }
+
                 break;
 
             case 204:
@@ -1258,8 +1361,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             }
                         }
                     }
+
                     break;
                 }
+
                 return;
 
             case 207:
@@ -1281,8 +1386,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             }
                         }
                     }
+
                     break;
                 }
+
                 return;
 
             case 208:
@@ -1291,11 +1398,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         break;
                     }
+
                     hashtable3 = (Hashtable)photonEvent[245];
                     if (!(hashtable3[(byte)1] is int))
                     {
                         break;
                     }
+
                     var num10 = (int)hashtable3[(byte)1];
                     if (sender == null || !sender.isMasterClient || num10 != sender.ID)
                     {
@@ -1307,8 +1416,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                 PhotonNetwork.SetMasterClient(PhotonNetwork.player);
                                 FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "stealing MC.");
                             }
+
                             return;
                         }
+
                         if (num10 == mLocalActor.ID)
                         {
                             SetMasterClient(num10, false);
@@ -1317,10 +1428,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         {
                             SetMasterClient(num10, false);
                         }
+
                         break;
                     }
+
                     return;
                 }
+
             case 226:
                 if (sender == null || !FengGameManagerMKII.ignoreList.Contains(sender.ID))
                 {
@@ -1333,8 +1447,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         mPlayersOnMasterCount = (int)obj5;
                         mGameCount = (int)obj6;
                     }
+
                     break;
                 }
+
                 return;
 
             case 228:
@@ -1348,6 +1464,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             mQueuePosition = (int)obj7;
                         }
                     }
+
                     if (mQueuePosition == 0)
                     {
                         if (PhotonNetwork.autoJoinLobby)
@@ -1361,8 +1478,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             SendMonoMessage(PhotonNetworkingMessage.OnConnectedToMaster);
                         }
                     }
+
                     break;
                 }
+
                 return;
 
             case 229:
@@ -1384,12 +1503,15 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                 mGameList[roomName] = info;
                             }
                         }
+
                         mGameListCopy = new RoomInfo[mGameList.Count];
                         mGameList.Values.CopyTo(mGameListCopy, 0);
                         SendMonoMessage(PhotonNetworkingMessage.OnReceivedRoomListUpdate);
                     }
+
                     break;
                 }
+
                 return;
 
             case 230:
@@ -1404,12 +1526,15 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             var str3 = (string)entry2.Key;
                             mGameList[str3] = new RoomInfo(str3, (Hashtable)entry2.Value);
                         }
+
                         mGameListCopy = new RoomInfo[mGameList.Count];
                         mGameList.Values.CopyTo(mGameListCopy, 0);
                         SendMonoMessage(PhotonNetworkingMessage.OnReceivedRoomListUpdate);
                     }
+
                     break;
                 }
+
                 return;
 
             case 253:
@@ -1438,22 +1563,26 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                             FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
+
                                         if (pActorProperties.ContainsKey("statBLA") && RCextensions.returnIntFromObject(pActorProperties["statBLA"]) > 125)
                                         {
                                             FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
+
                                         if (pActorProperties.ContainsKey("statGAS") && RCextensions.returnIntFromObject(pActorProperties["statGAS"]) > 150)
                                         {
                                             FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
+
                                         if (pActorProperties.ContainsKey("statSPD") && RCextensions.returnIntFromObject(pActorProperties["statSPD"]) > 140)
                                         {
                                             FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
                                     }
+
                                     if (pActorProperties.ContainsKey("name"))
                                     {
                                         if (iD != sender.ID)
@@ -1480,10 +1609,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                 return;
                             }
                         }
+
                         ReadoutProperties(gameProperties, pActorProperties, iD);
                     }
+
                     break;
                 }
+
                 return;
 
             case 254:
@@ -1503,6 +1635,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             AddNewPlayer(key, new PhotonPlayer(isLocal, key, properties));
                             ResetPhotonViewsOnSerialize();
                         }
+
                         if (key != mLocalActor.ID)
                         {
                             object[] parameters = { mActors[key] };
@@ -1521,16 +1654,20 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                         AddNewPlayer(num17, new PhotonPlayer(false, num17, string.Empty));
                                     }
                                 }
+
                                 if (mLastJoinType == JoinType.JoinOrCreateOnDemand && mLocalActor.ID == 1)
                                 {
                                     SendMonoMessage(PhotonNetworkingMessage.OnCreatedRoom);
                                 }
+
                                 SendMonoMessage(PhotonNetworkingMessage.OnJoinedRoom);
                             }
                         }
                     }
+
                     break;
                 }
+
                 return;
 
             default:
@@ -1538,13 +1675,16 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     return;
                 }
+
                 if (photonEvent.Code < 200 && PhotonNetwork.OnEventCall != null)
                 {
                     var content = photonEvent[245];
                     PhotonNetwork.OnEventCall(photonEvent.Code, content, key);
                 }
+
                 break;
         }
+
         externalListener.OnEvent(photonEvent);
     }
 
@@ -1556,8 +1696,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 Debug.Log("OperationResponse ignored while disconnecting. Code: " + operationResponse.OperationCode);
             }
+
             return;
         }
+
         if (operationResponse.ReturnCode == 0)
         {
             if (PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
@@ -1577,14 +1719,17 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             Debug.LogError(string.Concat("Operation failed: ", operationResponse.ToStringFull(), " Server: ", server));
         }
+
         if (operationResponse.Parameters.ContainsKey(221))
         {
             if (CustomAuthenticationValues == null)
             {
                 CustomAuthenticationValues = new AuthenticationValues();
             }
+
             CustomAuthenticationValues.Secret = operationResponse[221] as string;
         }
+
         var operationCode = operationResponse.OperationCode;
         switch (operationCode)
         {
@@ -1594,6 +1739,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     SendMonoMessage(PhotonNetworkingMessage.OnWebRpcResponse, parameters);
                     goto Label_0955;
                 }
+
             case 220:
                 {
                     if (operationResponse.ReturnCode != 32767)
@@ -1613,21 +1759,20 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                 if (!string.IsNullOrEmpty(str))
                                 {
                                     var code = Region.Parse(str.ToLower());
-                                    var item = new Region
-                                    {
-                                        Code = code,
-                                        HostAndPort = strArray2[i]
-                                    };
+                                    var item = new Region { Code = code, HostAndPort = strArray2[i] };
                                     AvailableRegions.Add(item);
                                 }
                             }
+
                             if (PhotonNetwork.PhotonServerSettings.HostType == ServerSettings.HostingOption.BestRegion)
                             {
                                 PhotonHandler.PingAvailableRegionsAndConnectToBest();
                             }
                         }
+
                         goto Label_0955;
                     }
+
                     Debug.LogError("The appId this client sent is unknown on the server (Cloud). Check settings. If using the Cloud, check account.");
                     object[] objArray8 = { DisconnectCause.InvalidAuthentication };
                     SendMonoMessage(PhotonNetworkingMessage.OnFailedToConnectToPhoton, objArray8);
@@ -1635,6 +1780,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     Disconnect();
                     return;
                 }
+
             case 222:
                 {
                     var flagArray = operationResponse[1] as bool[];
@@ -1648,16 +1794,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         var list = new List<FriendInfo>(friendListRequested.Length);
                         for (var j = 0; j < friendListRequested.Length; j++)
                         {
-                            var info = new FriendInfo
-                            {
-                                Name = friendListRequested[j],
-                                Room = strArray3[j],
-                                IsOnline = flagArray[j]
-                            };
+                            var info = new FriendInfo { Name = friendListRequested[j], Room = strArray3[j], IsOnline = flagArray[j] };
                             list.Insert(j, info);
                         }
+
                         PhotonNetwork.Friends = list;
                     }
+
                     friendListRequested = null;
                     isFetchingFriends = false;
                     friendListTimestamp = Environment.TickCount;
@@ -1665,9 +1808,11 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         friendListTimestamp = 1;
                     }
+
                     SendMonoMessage(PhotonNetworkingMessage.OnUpdatedFriendList);
                     goto Label_0955;
                 }
+
             case 225:
                 if (operationResponse.ReturnCode == 0)
                 {
@@ -1689,8 +1834,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         Debug.Log("JoinRandom failed: No open game. Calling: OnPhotonRandomJoinFailed() and staying on master server.");
                     }
+
                     SendMonoMessage(PhotonNetworkingMessage.OnPhotonRandomJoinFailed);
                 }
+
                 goto Label_0955;
 
             case 226:
@@ -1709,8 +1856,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         Debug.Log(string.Format("JoinRoom failed (room maybe closed by now). Client stays on masterserver: {0}. State: {1}", operationResponse.ToStringFull(), State));
                     }
+
                     SendMonoMessage(PhotonNetworkingMessage.OnPhotonJoinRoomFailed);
                 }
+
                 goto Label_0955;
 
             case 227:
@@ -1722,6 +1871,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         {
                             Debug.LogWarning(string.Format("CreateRoom failed, client stays on masterserver: {0}.", operationResponse.ToStringFull()));
                         }
+
                         SendMonoMessage(PhotonNetworkingMessage.OnPhotonCreateRoomFailed);
                     }
                     else
@@ -1731,6 +1881,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         {
                             mRoomToGetInto.name = str2;
                         }
+
                         mGameserver = (string)operationResponse[230];
                         DisconnectToReconnect();
                     }
@@ -1739,6 +1890,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     GameEnteredOnGameServer(operationResponse);
                 }
+
                 goto Label_0955;
 
             case 228:
@@ -1785,8 +1937,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             OpCreateGame(mRoomToGetInto.name, mRoomOptionsForCreate, mRoomToEnterLobby);
                         }
                     }
+
                     goto Label_0955;
                 }
+
                 if (operationResponse.ReturnCode != -2)
                 {
                     if (operationResponse.ReturnCode == 32767)
@@ -1810,6 +1964,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     Debug.LogError(string.Format("If you host Photon yourself, make sure to start the 'Instance LoadBalancing' " + ServerAddress));
                 }
+
                 break;
 
             default:
@@ -1822,6 +1977,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             ReadoutProperties(gameProperties, pActorProperties, 0);
                             goto Label_0955;
                         }
+
                     case 252:
                     case 253:
                         goto Label_0955;
@@ -1835,6 +1991,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         goto Label_0955;
                 }
         }
+
         State = PeerStates.Disconnecting;
         Disconnect();
         if (operationResponse.ReturnCode == 32757)
@@ -1843,6 +2000,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 Debug.LogWarning("Currently, the limit of users is reached for this title. Try again later. Disconnecting");
             }
+
             SendMonoMessage(PhotonNetworkingMessage.OnPhotonMaxCccuReached);
             object[] objArray5 = { DisconnectCause.MaxCcuReached };
             SendMonoMessage(PhotonNetworkingMessage.OnConnectionFail, objArray5);
@@ -1853,6 +2011,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 Debug.LogError("The used master server address is not available with the subscription currently used. Got to Photon Cloud Dashboard or change URL. Disconnecting.");
             }
+
             object[] objArray6 = { DisconnectCause.InvalidRegion };
             SendMonoMessage(PhotonNetworkingMessage.OnConnectionFail, objArray6);
         }
@@ -1862,10 +2021,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 Debug.LogError("The authentication ticket expired. You need to connect (and authenticate) again. Disconnecting.");
             }
+
             object[] objArray7 = { DisconnectCause.AuthenticationTicketExpired };
             SendMonoMessage(PhotonNetworkingMessage.OnConnectionFail, objArray7);
         }
-        Label_0955:
+
+    Label_0955:
         externalListener.OnOperationResponse(operationResponse);
     }
 
@@ -1891,10 +2052,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         Debug.Log(string.Concat("Skipping packet for ", photonView.name, " [", photonView.viewID, "] as we haven't received a full packet for delta compression yet. This is OK if it happens for the first few frames after joining a game."));
                     }
+
                     return;
                 }
+
                 photonView.lastOnSerializeDataReceived = data[(byte)1] as object[];
             }
+
             if (photonView.observed is MonoBehaviour)
             {
                 var incomingData = data[(byte)1] as object[];
@@ -1910,10 +2074,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     observed.localPosition = (Vector3)objArray2[0];
                 }
+
                 if (objArray2.Length >= 2 && objArray2[1] != null)
                 {
                     observed.localRotation = (Quaternion)objArray2[1];
                 }
+
                 if (objArray2.Length >= 3 && objArray2[2] != null)
                 {
                     observed.localScale = (Vector3)objArray2[2];
@@ -1927,6 +2093,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     rigidbody.velocity = (Vector3)objArray3[0];
                 }
+
                 if (objArray3.Length >= 2 && objArray3[1] != null)
                 {
                     rigidbody.angularVelocity = (Vector3)objArray3[1];
@@ -1951,6 +2118,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 return null;
             }
+
             list = pStream.data;
         }
         else if (view.observed is Transform)
@@ -1964,6 +2132,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 list.Add(null);
             }
+
             if (view.onSerializeTransformOption == OnSerializeTransform.OnlyRotation || view.onSerializeTransformOption == OnSerializeTransform.PositionAndRotation || view.onSerializeTransformOption == OnSerializeTransform.All)
             {
                 list.Add(observed.localRotation);
@@ -1972,6 +2141,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 list.Add(null);
             }
+
             if (view.onSerializeTransformOption == OnSerializeTransform.OnlyScale || view.onSerializeTransformOption == OnSerializeTransform.All)
             {
                 list.Add(observed.localScale);
@@ -1988,6 +2158,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 list.Add(null);
             }
+
             if (view.onSerializeRigidBodyOption != OnSerializeRigidBody.OnlyVelocity)
             {
                 list.Add(rigidbody.angularVelocity);
@@ -1998,6 +2169,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             Debug.LogError("Observed type is not serializable: " + view.observed.GetType());
             return null;
         }
+
         var lastData = list.ToArray();
         if (view.synchronization == ViewSynchronization.UnreliableOnChange)
         {
@@ -2007,6 +2179,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     return null;
                 }
+
                 view.mixedModeIsReliable = true;
                 view.lastOnSerializeDataSent = lastData;
             }
@@ -2016,6 +2189,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 view.lastOnSerializeDataSent = lastData;
             }
         }
+
         var data = new Hashtable();
         data[(byte)0] = view.viewID;
         data[(byte)1] = lastData;
@@ -2028,6 +2202,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 return null;
             }
         }
+
         return data;
     }
 
@@ -2038,6 +2213,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             Debug.Log(string.Format("OnStatusChanged: {0}", statusCode.ToString()));
         }
+
         switch (statusCode)
         {
             case StatusCode.SecurityExceptionOnConnect:
@@ -2048,11 +2224,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         CustomAuthenticationValues.Secret = null;
                     }
+
                     cause = (DisconnectCause)statusCode;
                     object[] parameters = { cause };
                     SendMonoMessage(PhotonNetworkingMessage.OnFailedToConnectToPhoton, parameters);
                     goto Label_055E;
                 }
+
             case StatusCode.Connect:
                 if (State == PeerStates.ConnectingToNameServer)
                 {
@@ -2060,27 +2238,32 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         Debug.Log("Connected to NameServer.");
                     }
+
                     server = ServerConnection.NameServer;
                     if (CustomAuthenticationValues != null)
                     {
                         CustomAuthenticationValues.Secret = null;
                     }
                 }
+
                 if (State == PeerStates.ConnectingToGameserver)
                 {
                     if (PhotonNetwork.logLevel >= PhotonLogLevel.Full)
                     {
                         Debug.Log("Connected to gameserver.");
                     }
+
                     server = ServerConnection.GameServer;
                     State = PeerStates.ConnectedToGameserver;
                 }
+
                 if (State == PeerStates.ConnectingToMasterserver)
                 {
                     if (PhotonNetwork.logLevel >= PhotonLogLevel.Full)
                     {
                         Debug.Log("Connected to masterserver.");
                     }
+
                     server = ServerConnection.MasterServer;
                     State = PeerStates.ConnectedToMaster;
                     if (IsInitialConnect)
@@ -2089,6 +2272,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         SendMonoMessage(PhotonNetworkingMessage.OnConnectedToPhoton);
                     }
                 }
+
                 EstablishEncryption();
                 if (IsAuthorizeSecretAvailable)
                 {
@@ -2098,6 +2282,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         State = PeerStates.Authenticating;
                     }
                 }
+
                 goto Label_055E;
 
             case StatusCode.Disconnect:
@@ -2107,10 +2292,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     LeftRoomCleanup();
                 }
+
                 if (server == ServerConnection.MasterServer)
                 {
                     LeftLobbyCleanup();
                 }
+
                 if (State == PeerStates.DisconnectingFromMasterserver)
                 {
                     if (Connect(mGameserver, ServerConnection.GameServer))
@@ -2131,9 +2318,11 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         CustomAuthenticationValues.Secret = null;
                     }
+
                     State = PeerStates.PeerCreated;
                     SendMonoMessage(PhotonNetworkingMessage.OnDisconnectedFromPhoton);
                 }
+
                 goto Label_055E;
 
             case StatusCode.Exception:
@@ -2146,6 +2335,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         SendMonoMessage(PhotonNetworkingMessage.OnConnectionFail, objArray3);
                         break;
                     }
+
                     Debug.LogError("Exception while connecting to: " + ServerAddress + ". Check if the server is available.");
                     if (ServerAddress == null || ServerAddress.StartsWith("127.0.0.1"))
                     {
@@ -2155,6 +2345,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             Debug.LogWarning("This might be a misconfiguration in the game server config. You need to edit it to a (public) address.");
                         }
                     }
+
                     State = PeerStates.PeerCreated;
                     cause = (DisconnectCause)statusCode;
                     object[] objArray2 = { cause };
@@ -2183,10 +2374,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     object[] objArray5 = { cause };
                     SendMonoMessage(PhotonNetworkingMessage.OnFailedToConnectToPhoton, objArray5);
                 }
+
                 if (CustomAuthenticationValues != null)
                 {
                     CustomAuthenticationValues.Secret = null;
                 }
+
                 Disconnect();
                 goto Label_055E;
 
@@ -2199,6 +2392,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         OpGetRegions(mAppId);
                     }
                 }
+
                 if (!didAuthenticate && (!IsUsingNameServer || CloudRegion != CloudRegionCode.none))
                 {
                     didAuthenticate = OpAuthenticate(mAppId, mAppVersionPun, PlayerName, CustomAuthenticationValues, CloudRegion.ToString());
@@ -2207,6 +2401,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         State = PeerStates.Authenticating;
                     }
                 }
+
                 goto Label_055E;
 
             case StatusCode.EncryptionFailedToEstablish:
@@ -2218,8 +2413,9 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 Debug.LogError("Received unknown status code: " + statusCode);
                 goto Label_055E;
         }
+
         Disconnect();
-        Label_055E:
+    Label_055E:
         externalListener.OnStatusChanged(statusCode);
     }
 
@@ -2227,19 +2423,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     {
         var customEventContent = new Hashtable();
         customEventContent[(byte)0] = view.viewID;
-        var raiseEventOptions = new RaiseEventOptions
-        {
-            CachingOption = EventCaching.RemoveFromRoomCache
-        };
+        var raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.RemoveFromRoomCache };
         OpRaiseEvent(200, customEventContent, true, raiseEventOptions);
     }
 
     public void OpCleanRpcBuffer(int actorNumber)
     {
-        var options = new RaiseEventOptions
-        {
-            CachingOption = EventCaching.RemoveFromRoomCache
-        };
+        var options = new RaiseEventOptions { CachingOption = EventCaching.RemoveFromRoomCache };
         options.TargetActors = new[] { actorNumber };
         var raiseEventOptions = options;
         OpRaiseEvent(200, null, true, raiseEventOptions);
@@ -2255,8 +2445,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             if (typedLobby == null)
             {
             }
+
             mRoomToEnterLobby = !insideLobby ? null : lobby;
         }
+
         mLastJoinType = JoinType.CreateGame;
         return base.OpCreateRoom(roomName, roomOptions, mRoomToEnterLobby, GetLocalActorProperties(), onGameServer);
     }
@@ -2267,6 +2459,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return false;
         }
+
         friendListRequested = friendsToFind;
         isFetchingFriends = true;
         return base.OpFindFriends(friendsToFind);
@@ -2293,9 +2486,11 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 if (typedLobby == null)
                 {
                 }
+
                 mRoomToEnterLobby = !insideLobby ? null : lobby;
             }
         }
+
         mLastJoinType = !createIfNotExists ? JoinType.JoinGame : JoinType.JoinOrCreateOnDemand;
         return base.OpJoinRoom(roomName, roomOptions, mRoomToEnterLobby, createIfNotExists, GetLocalActorProperties(), onGameServer);
     }
@@ -2307,6 +2502,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             Debug.LogWarning("Not sending leave operation. State is not 'Joined': " + State);
             return false;
         }
+
         return SendOperation(254, null, SendOptions.SendReliable);
     }
 
@@ -2316,25 +2512,19 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return false;
         }
+
         return base.OpRaiseEvent(eventCode, customEventContent, sendReliable, raiseEventOptions);
     }
 
     public void OpRemoveCompleteCache()
     {
-        var raiseEventOptions = new RaiseEventOptions
-        {
-            CachingOption = EventCaching.RemoveFromRoomCache,
-            Receivers = ReceiverGroup.MasterClient
-        };
+        var raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.RemoveFromRoomCache, Receivers = ReceiverGroup.MasterClient };
         OpRaiseEvent(0, null, true, raiseEventOptions);
     }
 
     public void OpRemoveCompleteCacheOfPlayer(int actorNumber)
     {
-        var options = new RaiseEventOptions
-        {
-            CachingOption = EventCaching.RemoveFromRoomCache
-        };
+        var options = new RaiseEventOptions { CachingOption = EventCaching.RemoveFromRoomCache };
         options.TargetActors = new[] { actorNumber };
         var raiseEventOptions = options;
         OpRaiseEvent(0, null, true, raiseEventOptions);
@@ -2342,10 +2532,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
 
     private void OpRemoveFromServerInstantiationsOfPlayer(int actorNr)
     {
-        var options = new RaiseEventOptions
-        {
-            CachingOption = EventCaching.RemoveFromRoomCache
-        };
+        var options = new RaiseEventOptions { CachingOption = EventCaching.RemoveFromRoomCache };
         options.TargetActors = new[] { actorNr };
         var raiseEventOptions = options;
         OpRaiseEvent(202, null, true, raiseEventOptions);
@@ -2363,6 +2550,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 LoadLevelIfSynced();
             }
         }
+
         if (pActorProperties != null && pActorProperties.Count > 0)
         {
             if (targetActorNr > 0)
@@ -2389,6 +2577,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         player = new PhotonPlayer(false, number, name);
                         AddNewPlayer(number, player);
                     }
+
                     player.InternalCacheProperties(properties);
                     object[] objArray3 = { player, properties };
                     SendMonoMessage(PhotonNetworkingMessage.OnPhotonPlayerPropertiesChanged, objArray3);
@@ -2409,6 +2598,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 list.Add(player);
             }
         }
+
         mOtherPlayerListCopy = list.ToArray();
     }
 
@@ -2426,8 +2616,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     Debug.LogError(string.Format("PhotonView ID duplicate found: {0}. New: {1} old: {2}. Maybe one wasn't destroyed on scene load?! Check for 'DontDestroyOnLoad'. Destroying old entry, adding new.", netView.viewID, netView, photonViewList[netView.viewID]));
                 }
+
                 RemoveInstantiatedGO(photonViewList[netView.viewID].gameObject, true);
             }
+
             photonViewList.Add(netView.viewID, netView);
             if (PhotonNetwork.logLevel >= PhotonLogLevel.Full)
             {
@@ -2448,10 +2640,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 RemoveInstantiatedGO(go, false);
             }
         }
+
         if (instantiatedObjects.Count > 0)
         {
             Debug.LogError("RemoveAllInstantiatedObjects() this.instantiatedObjects.Count should be 0 by now.");
         }
+
         instantiatedObjects = new Dictionary<int, GameObject>();
     }
 
@@ -2488,16 +2682,19 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         Debug.LogError("Failed to 'network-remove' GameObject. Client is neither owner nor masterClient taking over for owner who left: " + view);
                         return;
                     }
+
                     if (instantiationId < 1)
                     {
                         Debug.LogError("Failed to 'network-remove' GameObject because it is missing a valid InstantiationId on view: " + view + ". Not Destroying GameObject or PhotonViews!");
                         return;
                     }
                 }
+
                 if (!localOnly)
                 {
                     ServerCleanInstantiateAndDestroy(instantiationId, ownerActorNr);
                 }
+
                 instantiatedObjects.Remove(instantiationId);
                 for (var i = componentsInChildren.Length - 1; i >= 0; i--)
                 {
@@ -2508,16 +2705,19 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         {
                             LocalCleanPhotonView(view2);
                         }
+
                         if (!localOnly)
                         {
                             OpCleanRpcBuffer(view2);
                         }
                     }
                 }
+
                 if (PhotonNetwork.logLevel >= PhotonLogLevel.Full)
                 {
                     Debug.Log("Network destroy Instantiated GO: " + go.name);
                 }
+
                 Object.Destroy(go);
             }
         }
@@ -2563,6 +2763,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return -1;
         }
+
         var iD = 2147483647;
         for (var i = 0; i < players.Length; i++)
         {
@@ -2572,6 +2773,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 iD = player.ID;
             }
         }
+
         return iD;
     }
 
@@ -2583,16 +2785,19 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 Debug.LogError(string.Concat("Illegal view ID:", view.viewID, " method: ", methodName, " GO:", view.gameObject.name));
             }
+
             if (PhotonNetwork.logLevel >= PhotonLogLevel.Full)
             {
                 Debug.Log(string.Concat("Sending RPC \"", methodName, "\" to player[", player, "]"));
             }
+
             var rpcData = new Hashtable();
             rpcData[(byte)0] = view.viewID;
             if (view.prefix > 0)
             {
                 rpcData[(byte)1] = (short)view.prefix;
             }
+
             rpcData[(byte)2] = ServerTimeInMilliSeconds;
             var num = 0;
             if (rpcShortcuts.TryGetValue(methodName, out num))
@@ -2603,10 +2808,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 rpcData[(byte)3] = methodName;
             }
+
             if (parameters != null && parameters.Length > 0)
             {
                 rpcData[(byte)4] = parameters;
             }
+
             if (mLocalActor == player)
             {
                 ExecuteRPC(rpcData, player);
@@ -2630,16 +2837,19 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 Debug.LogError(string.Concat("Illegal view ID:", view.viewID, " method: ", methodName, " GO:", view.gameObject.name));
             }
+
             if (PhotonNetwork.logLevel >= PhotonLogLevel.Full)
             {
                 Debug.Log(string.Concat("Sending RPC \"", methodName, "\" to ", target));
             }
+
             var customEventContent = new Hashtable();
             customEventContent[(byte)0] = view.viewID;
             if (view.prefix > 0)
             {
                 customEventContent[(byte)1] = (short)view.prefix;
             }
+
             customEventContent[(byte)2] = ServerTimeInMilliSeconds;
             var num = 0;
             if (rpcShortcuts.TryGetValue(methodName, out num))
@@ -2650,45 +2860,35 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 customEventContent[(byte)3] = methodName;
             }
+
             if (parameters != null && parameters.Length > 0)
             {
                 customEventContent[(byte)4] = parameters;
             }
+
             if (target == PhotonTargets.All)
             {
-                options = new RaiseEventOptions
-                {
-                    InterestGroup = (byte)view.group
-                };
+                options = new RaiseEventOptions { InterestGroup = (byte)view.group };
                 var raiseEventOptions = options;
                 OpRaiseEvent(200, customEventContent, true, raiseEventOptions);
                 ExecuteRPC(customEventContent, mLocalActor);
             }
             else if (target == PhotonTargets.Others)
             {
-                options = new RaiseEventOptions
-                {
-                    InterestGroup = (byte)view.group
-                };
+                options = new RaiseEventOptions { InterestGroup = (byte)view.group };
                 var options3 = options;
                 OpRaiseEvent(200, customEventContent, true, options3);
             }
             else if (target == PhotonTargets.AllBuffered)
             {
-                options = new RaiseEventOptions
-                {
-                    CachingOption = EventCaching.AddToRoomCache
-                };
+                options = new RaiseEventOptions { CachingOption = EventCaching.AddToRoomCache };
                 var options4 = options;
                 OpRaiseEvent(200, customEventContent, true, options4);
                 ExecuteRPC(customEventContent, mLocalActor);
             }
             else if (target == PhotonTargets.OthersBuffered)
             {
-                options = new RaiseEventOptions
-                {
-                    CachingOption = EventCaching.AddToRoomCache
-                };
+                options = new RaiseEventOptions { CachingOption = EventCaching.AddToRoomCache };
                 var options5 = options;
                 OpRaiseEvent(200, customEventContent, true, options5);
             }
@@ -2700,32 +2900,20 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 }
                 else
                 {
-                    options = new RaiseEventOptions
-                    {
-                        Receivers = ReceiverGroup.MasterClient
-                    };
+                    options = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
                     var options6 = options;
                     OpRaiseEvent(200, customEventContent, true, options6);
                 }
             }
             else if (target == PhotonTargets.AllViaServer)
             {
-                options = new RaiseEventOptions
-                {
-                    InterestGroup = (byte)view.group,
-                    Receivers = ReceiverGroup.All
-                };
+                options = new RaiseEventOptions { InterestGroup = (byte)view.group, Receivers = ReceiverGroup.All };
                 var options7 = options;
                 OpRaiseEvent(200, customEventContent, true, options7);
             }
             else if (target == PhotonTargets.AllBufferedViaServer)
             {
-                options = new RaiseEventOptions
-                {
-                    InterestGroup = (byte)view.group,
-                    Receivers = ReceiverGroup.All,
-                    CachingOption = EventCaching.AddToRoomCache
-                };
+                options = new RaiseEventOptions { InterestGroup = (byte)view.group, Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCache };
                 var options8 = options;
                 OpRaiseEvent(200, customEventContent, true, options8);
             }
@@ -2763,6 +2951,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                         dictionary[view.group][(byte)1] = currentLevelPrefix;
                                     }
                                 }
+
                                 var hashtable2 = dictionary[view.group];
                                 hashtable2.Add((short)hashtable2.Count, hashtable);
                             }
@@ -2778,18 +2967,21 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                     dictionary2[view.group][(byte)1] = currentLevelPrefix;
                                 }
                             }
+
                             var hashtable3 = dictionary2[view.group];
                             hashtable3.Add((short)hashtable3.Count, hashtable);
                         }
                     }
                 }
             }
+
             var raiseEventOptions = new RaiseEventOptions();
             foreach (var pair2 in dictionary)
             {
                 raiseEventOptions.InterestGroup = (byte)pair2.Key;
                 OpRaiseEvent(206, pair2.Value, true, raiseEventOptions);
             }
+
             foreach (var pair3 in dictionary2)
             {
                 raiseEventOptions.InterestGroup = (byte)pair3.Key;
@@ -2821,32 +3013,35 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             customEventContent[(byte)1] = position;
         }
+
         if (rotation != Quaternion.identity)
         {
             customEventContent[(byte)2] = rotation;
         }
+
         if (group != 0)
         {
             customEventContent[(byte)3] = group;
         }
+
         if (viewIDs.Length > 1)
         {
             customEventContent[(byte)4] = viewIDs;
         }
+
         if (data != null)
         {
             customEventContent[(byte)5] = data;
         }
+
         if (currentLevelPrefix > 0)
         {
             customEventContent[(byte)8] = currentLevelPrefix;
         }
+
         customEventContent[(byte)6] = ServerTimeInMilliSeconds;
         customEventContent[(byte)7] = num;
-        var raiseEventOptions = new RaiseEventOptions
-        {
-            CachingOption = !isGlobalObject ? EventCaching.AddToRoomCache : EventCaching.AddToRoomCacheGlobal
-        };
+        var raiseEventOptions = new RaiseEventOptions { CachingOption = !isGlobalObject ? EventCaching.AddToRoomCache : EventCaching.AddToRoomCacheGlobal };
         OpRaiseEvent(202, customEventContent, true, raiseEventOptions);
         return customEventContent;
     }
@@ -2867,6 +3062,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 sendMonoMessageTargets.Add(componentArray[i].gameObject);
             }
         }
+
         var methodName = methodString.ToString();
         foreach (var obj2 in sendMonoMessageTargets)
         {
@@ -2904,10 +3100,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     {
         var customEventContent = new Hashtable();
         customEventContent[(byte)7] = instantiateId;
-        var options = new RaiseEventOptions
-        {
-            CachingOption = EventCaching.RemoveFromRoomCache
-        };
+        var options = new RaiseEventOptions { CachingOption = EventCaching.RemoveFromRoomCache };
         options.TargetActors = new[] { actorNr };
         var raiseEventOptions = options;
         OpRaiseEvent(202, customEventContent, true, raiseEventOptions);
@@ -2942,11 +3135,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     {
                         return;
                     }
+
                     if (obj2 is string && Application.loadedLevelName.Equals((string)obj2))
                     {
                         return;
                     }
                 }
+
                 var propertiesToSet = new Hashtable();
                 if (levelId is int)
                 {
@@ -2960,6 +3155,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     Debug.LogError("Parameter levelId must be int or string!");
                 }
+
                 PhotonNetwork.room.SetCustomProperties(propertiesToSet);
                 SendOutgoingCommands();
             }
@@ -2977,6 +3173,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return false;
         }
+
         if (sync)
         {
             var customEventContent = new Hashtable();
@@ -2986,6 +3183,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 return false;
             }
         }
+
         hasSwitchedMC = true;
         mMasterClient = mActors[playerId];
         object[] parameters = { mMasterClient };
@@ -3036,6 +3234,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 }
             }
         }
+
         if (disableGroups != null)
         {
             for (var j = 0; j < disableGroups.Length; j++)
@@ -3056,6 +3255,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 }
             }
         }
+
         OpChangeGroups(list2.Count <= 0 ? null : list2.ToArray(), list.Count <= 0 ? null : list.ToArray());
     }
 
@@ -3083,6 +3283,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 }
             }
         }
+
         if (disableGroups != null)
         {
             foreach (var num4 in disableGroups)
@@ -3116,18 +3317,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
 
     protected internal int FriendsListAge
     {
-        get
-        {
-            return !isFetchingFriends && friendListTimestamp != 0 ? Environment.TickCount - friendListTimestamp : 0;
-        }
+        get { return !isFetchingFriends && friendListTimestamp != 0 ? Environment.TickCount - friendListTimestamp : 0; }
     }
 
     public bool IsAuthorizeSecretAvailable
     {
-        get
-        {
-            return false;
-        }
+        get { return false; }
     }
 
     public bool IsUsingNameServer { get; protected internal set; }
@@ -3136,10 +3331,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
 
     protected internal string mAppVersionPun
     {
-        get
-        {
-            return string.Format("{0}_{1}", mAppVersion, "1.28");
-        }
+        get { return string.Format("{0}_{1}", mAppVersion, "1.28"); }
     }
 
     public string MasterServerAddress { get; protected internal set; }
@@ -3152,6 +3344,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 return mRoomToGetInto;
             }
+
             return null;
         }
     }
@@ -3176,10 +3369,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
 
     public string PlayerName
     {
-        get
-        {
-            return playername;
-        }
+        get { return playername; }
         set
         {
             if (!string.IsNullOrEmpty(value) && !value.Equals(playername))
@@ -3188,6 +3378,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 {
                     mLocalActor.name = value;
                 }
+
                 playername = value;
                 if (mCurrentGame != null)
                 {

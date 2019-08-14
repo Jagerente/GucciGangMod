@@ -17,6 +17,7 @@ public class UIButtonColor : MonoBehaviour
         {
             tweenTarget = gameObject;
         }
+
         var component = tweenTarget.GetComponent<UIWidget>();
         if (component != null)
         {
@@ -43,6 +44,7 @@ public class UIButtonColor : MonoBehaviour
                 }
             }
         }
+
         OnEnable();
     }
 
@@ -75,6 +77,7 @@ public class UIButtonColor : MonoBehaviour
             {
                 Start();
             }
+
             TweenColor.Begin(tweenTarget, duration, !isOver ? mColor : hover);
             mHighlighted = isOver;
         }
@@ -88,6 +91,7 @@ public class UIButtonColor : MonoBehaviour
             {
                 Start();
             }
+
             TweenColor.Begin(tweenTarget, duration, !isPressed ? !UICamera.IsHighlighted(gameObject) ? mColor : hover : pressed);
         }
     }
@@ -109,11 +113,9 @@ public class UIButtonColor : MonoBehaviour
             {
                 Init();
             }
+
             return mColor;
         }
-        set
-        {
-            mColor = value;
-        }
+        set { mColor = value; }
     }
 }

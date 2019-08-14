@@ -108,6 +108,7 @@ public class EffectLayer : MonoBehaviour
         {
             Debug.LogError("out index!");
         }
+
         if (AvailableENodes[node.Index] != null)
         {
             ActiveENodes[node.Index] = node;
@@ -125,6 +126,7 @@ public class EffectLayer : MonoBehaviour
             {
                 break;
             }
+
             var node = AvailableENodes[i];
             if (node != null)
             {
@@ -140,6 +142,7 @@ public class EffectLayer : MonoBehaviour
                 {
                     life = Random.Range(NodeLifeMin, NodeLifeMax);
                 }
+
                 var emitRotation = emitter.GetEmitRotation(node);
                 node.Init(emitRotation.normalized, OriSpeed, life, Random.Range(OriRotationMin, OriRotationMax), Random.Range(OriScaleXMin, OriScaleXMax), Random.Range(OriScaleYMin, OriScaleYMax), Color1, OriLowerLeftUV, OriUVDimensions);
             }
@@ -163,6 +166,7 @@ public class EffectLayer : MonoBehaviour
         {
             return ActiveENodes[0].Ribbon;
         }
+
         return null;
     }
 
@@ -182,14 +186,16 @@ public class EffectLayer : MonoBehaviour
             node.SetAffectorList(afts);
             if (RenderType == 0)
             {
-                node.SetType(SpriteWidth, SpriteHeight, (STYPE)SpriteType, (ORIPOINT)OriPoint, SpriteUVStretch, MaxFps);
+                node.SetType(SpriteWidth, SpriteHeight, (STYPE) SpriteType, (ORIPOINT) OriPoint, SpriteUVStretch, MaxFps);
             }
             else
             {
                 node.SetType(RibbonWidth, MaxRibbonElements, RibbonLen, ClientTransform.position, StretchType, MaxFps);
             }
+
             AvailableENodes[i] = node;
         }
+
         AvailableNodeCount = MaxENodes;
         emitter = new Emitter(this);
     }
@@ -218,6 +224,7 @@ public class EffectLayer : MonoBehaviour
                 OriUVDimensions = cellSize;
                 OriUVDimensions.y = -OriUVDimensions.y;
             }
+
             if (frame.frames.Length == 1)
             {
                 OriLowerLeftUV = frame.frames[0];
@@ -230,6 +237,7 @@ public class EffectLayer : MonoBehaviour
                 list.Add(affector);
             }
         }
+
         if (RotAffectorEnable && RotateType != RSTYPE.NONE)
         {
             Affector affector2;
@@ -241,8 +249,10 @@ public class EffectLayer : MonoBehaviour
             {
                 affector2 = new RotateAffector(DeltaRot, node);
             }
+
             list.Add(affector2);
         }
+
         if (ScaleAffectorEnable && ScaleType != RSTYPE.NONE)
         {
             Affector affector3;
@@ -254,33 +264,39 @@ public class EffectLayer : MonoBehaviour
             {
                 affector3 = new ScaleAffector(DeltaScaleX, DeltaScaleY, node);
             }
+
             list.Add(affector3);
         }
+
         if (ColorAffectorEnable && ColorAffectType != 0)
         {
             ColorAffector affector4;
             if (ColorAffectType == 2)
             {
-                Color[] colorArr = { Color1, Color2, Color3, Color4 };
+                Color[] colorArr = {Color1, Color2, Color3, Color4};
                 affector4 = new ColorAffector(colorArr, ColorGradualTimeLength, ColorGradualType, node);
             }
             else
             {
-                Color[] colorArray2 = { Color1, Color2 };
+                Color[] colorArray2 = {Color1, Color2};
                 affector4 = new ColorAffector(colorArray2, ColorGradualTimeLength, ColorGradualType, node);
             }
+
             list.Add(affector4);
         }
+
         if (LinearForceAffectorEnable)
         {
             Affector affector5 = new LinearForceAffector(LinearForce.normalized * LinearMagnitude, node);
             list.Add(affector5);
         }
+
         if (JetAffectorEnable)
         {
             Affector affector6 = new JetAffector(JetMin, JetMax, node);
             list.Add(affector6);
         }
+
         if (VortexAffectorEnable)
         {
             Affector affector7;
@@ -292,8 +308,10 @@ public class EffectLayer : MonoBehaviour
             {
                 affector7 = new VortexAffector(VortexMag, VortexDirection, node);
             }
+
             list.Add(affector7);
         }
+
         if (AttractionAffectorEnable)
         {
             Affector affector8;
@@ -305,8 +323,10 @@ public class EffectLayer : MonoBehaviour
             {
                 affector8 = new AttractionForceAffector(AttractMag, AttractionPosition, node);
             }
+
             list.Add(affector8);
         }
+
         return list;
     }
 
@@ -320,6 +340,7 @@ public class EffectLayer : MonoBehaviour
         {
             Debug.LogError("out index!");
         }
+
         if (ActiveENodes[node.Index] != null)
         {
             ActiveENodes[node.Index] = null;
@@ -336,6 +357,7 @@ public class EffectLayer : MonoBehaviour
             {
                 return;
             }
+
             var node = ActiveENodes[i];
             if (node != null)
             {
@@ -343,6 +365,7 @@ public class EffectLayer : MonoBehaviour
                 RemoveActiveNode(node);
             }
         }
+
         emitter.Reset();
     }
 
@@ -352,6 +375,7 @@ public class EffectLayer : MonoBehaviour
         {
             MainCamera = Camera.main;
         }
+
         Init();
         LastClientPos = ClientTransform.position;
     }

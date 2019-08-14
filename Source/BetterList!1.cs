@@ -14,6 +14,7 @@ public class BetterList<T>
         {
             AllocateMore();
         }
+
         buffer[size++] = item;
     }
 
@@ -24,6 +25,7 @@ public class BetterList<T>
         {
             buffer.CopyTo(array, 0);
         }
+
         buffer = array;
     }
 
@@ -44,12 +46,13 @@ public class BetterList<T>
                 }
             }
         }
+
         return false;
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        return new GetEnumeratorc__Iterator9 { f__this = this };
+        return new GetEnumeratorc__Iterator9 {f__this = this};
     }
 
     public void Insert(int index, T item)
@@ -58,12 +61,14 @@ public class BetterList<T>
         {
             AllocateMore();
         }
+
         if (index < size)
         {
             for (var i = size; i > index; i--)
             {
                 buffer[i] = buffer[i - 1];
             }
+
             buffer[index] = item;
             size++;
         }
@@ -81,6 +86,7 @@ public class BetterList<T>
             buffer[size] = default;
             return local;
         }
+
         return default;
     }
 
@@ -105,10 +111,12 @@ public class BetterList<T>
                     {
                         buffer[j] = buffer[j + 1];
                     }
+
                     return true;
                 }
             }
         }
+
         return false;
     }
 
@@ -161,6 +169,7 @@ public class BetterList<T>
                 {
                     localArray[i] = buffer[i];
                 }
+
                 buffer = localArray;
             }
         }
@@ -172,14 +181,8 @@ public class BetterList<T>
 
     public T this[int i]
     {
-        get
-        {
-            return buffer[i];
-        }
-        set
-        {
-            buffer[i] = value;
-        }
+        get { return buffer[i]; }
+        set { buffer[i] = value; }
     }
 
     private sealed class GetEnumeratorc__Iterator9 : IEnumerator, IDisposable, IEnumerator<T>
@@ -196,7 +199,7 @@ public class BetterList<T>
 
         public bool MoveNext()
         {
-            var num = (uint)PC;
+            var num = (uint) PC;
             PC = -1;
             switch (num)
             {
@@ -205,6 +208,7 @@ public class BetterList<T>
                     {
                         goto Label_0086;
                     }
+
                     __0 = 0;
                     break;
 
@@ -215,12 +219,14 @@ public class BetterList<T>
                 default:
                     goto Label_008D;
             }
+
             if (__0 < f__this.size)
             {
                 current = f__this.buffer[__0];
                 PC = 1;
                 return true;
             }
+
             Label_0086:
             PC = -1;
             Label_008D:
@@ -234,18 +240,12 @@ public class BetterList<T>
 
         T IEnumerator<T>.Current
         {
-            get
-            {
-                return current;
-            }
+            get { return current; }
         }
 
         object IEnumerator.Current
         {
-            get
-            {
-                return current;
-            }
+            get { return current; }
         }
     }
 }

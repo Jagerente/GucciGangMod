@@ -25,14 +25,8 @@ namespace ExitGames.Client.DemoParticle
 
         public bool ShouldExecute
         {
-            get
-            {
-                return IsEnabled && (shouldExecute || Environment.TickCount - lastExecutionTime > Interval);
-            }
-            set
-            {
-                shouldExecute = value;
-            }
+            get { return IsEnabled && (shouldExecute || Environment.TickCount - lastExecutionTime > Interval); }
+            set { shouldExecute = value; }
         }
     }
 }

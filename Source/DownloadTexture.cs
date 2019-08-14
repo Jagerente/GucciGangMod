@@ -16,6 +16,7 @@ public class DownloadTexture : MonoBehaviour
         {
             Destroy(mMat);
         }
+
         if (mTex != null)
         {
             Destroy(mTex);
@@ -24,7 +25,7 @@ public class DownloadTexture : MonoBehaviour
 
     private IEnumerator Start()
     {
-        return new Startc__Iterator7 { f__this = this };
+        return new Startc__Iterator7 {f__this = this};
     }
 
     private sealed class Startc__Iterator7 : IEnumerator, IDisposable, IEnumerator<object>
@@ -42,7 +43,7 @@ public class DownloadTexture : MonoBehaviour
 
         public bool MoveNext()
         {
-            var num = (uint)PC;
+            var num = (uint) PC;
             PC = -1;
             switch (num)
             {
@@ -58,18 +59,21 @@ public class DownloadTexture : MonoBehaviour
                     {
                         goto Label_0118;
                     }
+
                     ut__1 = f__this.GetComponent<UITexture>();
                     if (ut__1.material != null)
                     {
                         f__this.mMat = new Material(ut__1.material);
                         break;
                     }
+
                     f__this.mMat = new Material(Shader.Find("Unlit/Transparent Colored"));
                     break;
 
                 default:
                     goto Label_012A;
             }
+
             ut__1.material = f__this.mMat;
             f__this.mMat.mainTexture = f__this.mTex;
             ut__1.MakePixelPerfect();
@@ -87,18 +91,12 @@ public class DownloadTexture : MonoBehaviour
 
         object IEnumerator<object>.Current
         {
-            get
-            {
-                return current;
-            }
+            get { return current; }
         }
 
         object IEnumerator.Current
         {
-            get
-            {
-                return current;
-            }
+            get { return current; }
         }
     }
 }

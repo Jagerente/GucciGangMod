@@ -110,6 +110,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                     list.Add(obj2);
                 }
             }
+
             var obj3 = (GameObject)list[Random.Range(0, list.Count)];
             string[] strArray = { "TITAN_VER3.1" };
             if (FengGameManagerMKII.LAN)
@@ -120,6 +121,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
             {
                 obj4 = PhotonNetwork.Instantiate(strArray[Random.Range(0, strArray.Length)], obj3.transform.position, obj3.transform.rotation, 0);
             }
+
             if (special)
             {
                 var objArray3 = GameObject.FindGameObjectsWithTag("route");
@@ -128,6 +130,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 {
                     route = objArray3[Random.Range(0, objArray3.Length)];
                 }
+
                 obj4.GetComponent<TITAN>().setRoute(route);
                 obj4.GetComponent<TITAN>().setAbnormalType(AbnormalType.TYPE_I, false);
                 obj4.GetComponent<TITAN>().activeRad = 0;
@@ -150,6 +153,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         num3 = 0.7f;
                     }
                 }
+
                 if (GameObject.FindGameObjectsWithTag("titan").Length == 5)
                 {
                     obj4.GetComponent<TITAN>().setAbnormalType(AbnormalType.TYPE_JUMPER, false);
@@ -165,8 +169,10 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         obj4.GetComponent<TITAN>().setAbnormalType(AbnormalType.TYPE_CRAWLER, false);
                     }
                 }
+
                 obj4.GetComponent<TITAN>().activeRad = 200;
             }
+
             if (FengGameManagerMKII.LAN)
             {
                 var obj6 = (GameObject)Network.Instantiate(Resources.Load("FX/FXtitanSpawn"), obj4.transform.position, Quaternion.Euler(-90f, 0f, 0f), 0);
@@ -197,10 +203,12 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 num2 = 5;
             }
         }
+
         if (attackCount % num == 0)
         {
             callTitan();
         }
+
         if (NapeArmor < NapeArmorTotal * 0.3)
         {
             if (attackCount % (int)(num2 * 0.5f) == 0)
@@ -240,14 +248,17 @@ public class COLOSSAL_TITAN : MonoBehaviour
                     {
                         gameObject.GetComponent<TITAN_EREN>().hitByTitan();
                     }
+
                     return gameObject;
                 }
+
                 if (gameObject.GetComponent<HERO>() != null && !gameObject.GetComponent<HERO>().isInvincible())
                 {
                     return gameObject;
                 }
             }
         }
+
         return null;
     }
 
@@ -283,6 +294,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 }
             }
         }
+
         return obj2;
     }
 
@@ -356,8 +368,10 @@ public class COLOSSAL_TITAN : MonoBehaviour
                     a = 15f / size;
                     a = Mathf.Min(a, 100f);
                 }
+
                 healthLabel.transform.localScale = new Vector3(a, a, a);
             }
+
             var str = "[7FFF00]";
             var num2 = health / (float)maxHealth;
             if (num2 < 0.75f && num2 >= 0.5f)
@@ -372,6 +386,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
             {
                 str = "[ff3333]";
             }
+
             healthLabel.GetComponent<UILabel>().text = str + Convert.ToString(health);
         }
     }
@@ -390,6 +405,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             yield return null;
         }
+
         var mipmap = Settings.MipMappingSetting;
         var iteratorVariable1 = false;
 
@@ -421,6 +437,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 }
             }
         }
+
         if (iteratorVariable1)
         {
             FengGameManagerMKII.FGM.unloadAssets();
@@ -453,6 +470,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 photonView.RPC("startNeckSteam", PhotonTargets.Others);
             }
         }
+
         isSteamNeed = true;
         var neck = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck");
         var radius = 30f;
@@ -578,10 +596,12 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R/hand_R/hand_R_001");
         }
+
         if (type == "l1" || type == "l2")
         {
             checkHitCapsuleStart = transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L/forearm_L/hand_L/hand_L_001");
         }
+
         attackCheckTime = 0.57f;
         attackChkOnce = false;
         crossFade("attack_slap_" + attackAnimation, 0.1f);
@@ -595,6 +615,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             Minimap.instance.TrackGameObjectOnMinimap(gameObject, Color.black, false, true);
         }
+
         if (photonView.isMine)
         {
             if (RCSettings.sizeMode > 0)
@@ -604,6 +625,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 size = Random.Range(sizeLower, sizeUpper);
                 photonView.RPC("setSize", PhotonTargets.AllBuffered, size);
             }
+
             lagMax = 150f + size * 3f;
             healthTime = 0f;
             maxHealth = NapeArmor;
@@ -611,12 +633,15 @@ public class COLOSSAL_TITAN : MonoBehaviour
             {
                 maxHealth = NapeArmor = Random.Range(RCSettings.healthLower, RCSettings.healthUpper);
             }
+
             if (NapeArmor > 0)
             {
                 photonView.RPC("labelRPC", PhotonTargets.AllBuffered, NapeArmor, maxHealth);
             }
+
             loadskin();
         }
+
         hasspawn = true;
     }
 
@@ -627,6 +652,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             findNearestHero();
         }
+
         name = "COLOSSAL_TITAN";
         NapeArmor = 1000;
         var flag = false;
@@ -634,6 +660,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             flag = true;
         }
+
         if (IN_GAME_MAIN_CAMERA.difficulty == 0)
         {
             NapeArmor = !flag ? 5000 : 2000;
@@ -654,6 +681,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 animationState2.speed = 1.05f;
             }
         }
+
         NapeArmorTotal = NapeArmor;
         state = "wait";
         transform.position += -Vector3.up * 10000f;
@@ -665,6 +693,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
         {
             GetComponent<NetworkView>().enabled = false;
         }
+
         door_broken = GGM.Caching.GameObjectCache.Find("door_broke");
         door_closed = GGM.Caching.GameObjectCache.Find("door_fine");
         door_broken.SetActive(false);
@@ -716,10 +745,12 @@ public class COLOSSAL_TITAN : MonoBehaviour
                 {
                     NapeArmor -= speed;
                 }
+
                 if (maxHealth > 0f)
                 {
                     photonView.RPC("labelRPC", PhotonTargets.AllBuffered, NapeArmor, maxHealth);
                 }
+
                 neckSteam();
                 if (NapeArmor <= 0)
                 {
@@ -744,6 +775,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                     object[] parameters = { speed };
                     GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().photonView.RPC("netShowDamage", view.owner, parameters);
                 }
+
                 healthTime = 0.2f;
             }
         }
@@ -787,6 +819,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         {
                             attackChkOnce = true;
                         }
+
                         foreach (var hit in checkHitCapsule(checkHitCapsuleStart.position, checkHitCapsuleEnd.position, checkHitCapsuleR))
                         {
                             var gameObject = hit.collider.gameObject;
@@ -794,11 +827,13 @@ public class COLOSSAL_TITAN : MonoBehaviour
                             {
                                 killPlayer(gameObject);
                             }
+
                             if (gameObject.tag == "erenHitbox" && attackAnimation == "combo_3" && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && (!FengGameManagerMKII.LAN ? PhotonNetwork.isMasterClient : Network.isServer))
                             {
                                 gameObject.transform.root.gameObject.GetComponent<TITAN_EREN>().hitByFTByServer(3);
                             }
                         }
+
                         foreach (var hit2 in checkHitCapsule(checkHitCapsuleEndOld, checkHitCapsuleEnd.position, checkHitCapsuleR))
                         {
                             var hitHero = hit2.collider.gameObject;
@@ -807,8 +842,10 @@ public class COLOSSAL_TITAN : MonoBehaviour
                                 killPlayer(hitHero);
                             }
                         }
+
                         checkHitCapsuleEndOld = checkHitCapsuleEnd.position;
                     }
+
                     if (animation["attack_" + attackAnimation].normalizedTime >= 1f)
                     {
                         sweepSmokeObject.GetComponent<ParticleSystem>().enableEmission = false;
@@ -817,6 +854,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         {
                             photonView.RPC("stopSweepSmoke", PhotonTargets.Others);
                         }
+
                         findNearestHero();
                         idle();
                         playAnimation("idle");
@@ -833,6 +871,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         {
                             photonView.RPC("changeDoor", PhotonTargets.OthersBuffered);
                         }
+
                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                         {
                             if (FengGameManagerMKII.LAN)
@@ -852,6 +891,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                             Instantiate(Resources.Load("rock"), transform.position + transform.forward * 120f + transform.right * 30f, Quaternion.Euler(0f, 0f, 0f));
                         }
                     }
+
                     if (animation[actionName].normalizedTime >= 1f)
                     {
                         findNearestHero();
@@ -875,6 +915,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                             {
                                 obj4 = PhotonNetwork.Instantiate("FX/boom1", checkHitCapsuleStart.position, Quaternion.Euler(270f, 0f, 0f), 0);
                             }
+
                             if (obj4.GetComponent<EnemyfxIDcontainer>() != null)
                             {
                                 obj4.GetComponent<EnemyfxIDcontainer>().titanName = name;
@@ -884,8 +925,10 @@ public class COLOSSAL_TITAN : MonoBehaviour
                         {
                             obj4 = (GameObject)Instantiate(Resources.Load("FX/boom1"), checkHitCapsuleStart.position, Quaternion.Euler(270f, 0f, 0f));
                         }
+
                         obj4.transform.localScale = new Vector3(5f, 5f, 5f);
                     }
+
                     if (animation["attack_slap_" + attackAnimation].normalizedTime >= 1f)
                     {
                         findNearestHero();
@@ -920,6 +963,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                             Instantiate(Resources.Load("FX/colossal_steam"), transform.position + transform.forward * 50f, Quaternion.Euler(270f, 0f, 0f));
                         }
                     }
+
                     if (animation[actionName].normalizedTime >= 1f)
                     {
                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
@@ -937,11 +981,13 @@ public class COLOSSAL_TITAN : MonoBehaviour
                                 {
                                     obj5.GetComponent<EnemyfxIDcontainer>().titanName = name;
                                 }
+
                                 obj5 = PhotonNetwork.Instantiate("FX/colossal_steam_dmg", transform.position + transform.up * 303f, Quaternion.Euler(270f, 0f, 0f), 0);
                                 if (obj5.GetComponent<EnemyfxIDcontainer>() != null)
                                 {
                                     obj5.GetComponent<EnemyfxIDcontainer>().titanName = name;
                                 }
+
                                 obj5 = PhotonNetwork.Instantiate("FX/colossal_steam_dmg", transform.position + transform.up * 50f, Quaternion.Euler(270f, 0f, 0f), 0);
                                 if (obj5.GetComponent<EnemyfxIDcontainer>() != null)
                                 {
@@ -955,6 +1001,7 @@ public class COLOSSAL_TITAN : MonoBehaviour
                             Instantiate(Resources.Load("FX/colossal_steam_dmg"), transform.position + transform.forward * 303f, Quaternion.Euler(270f, 0f, 0f));
                             Instantiate(Resources.Load("FX/colossal_steam_dmg"), transform.position + transform.forward * 50f, Quaternion.Euler(270f, 0f, 0f));
                         }
+
                         if (hasDie)
                         {
                             if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
@@ -971,8 +1018,10 @@ public class COLOSSAL_TITAN : MonoBehaviour
                             {
                                 PhotonNetwork.Destroy(photonView);
                             }
+
                             GGM.Caching.GameObjectCache.Find("MultiplayerManager").GetComponent<FengGameManagerMKII>().gameWin();
                         }
+
                         findNearestHero();
                         idle();
                         playAnimation("idle");
@@ -1031,27 +1080,32 @@ public class COLOSSAL_TITAN : MonoBehaviour
                             slap("l1");
                             return;
                         }
+
                         if (Vector3.Distance(myHero.transform.position, transform.Find("APL2").position) < 40f)
                         {
                             slap("l2");
                             return;
                         }
+
                         if (Vector3.Distance(myHero.transform.position, transform.Find("APR1").position) < 40f)
                         {
                             slap("r1");
                             return;
                         }
+
                         if (Vector3.Distance(myHero.transform.position, transform.Find("APR2").position) < 40f)
                         {
                             slap("r2");
                             return;
                         }
+
                         if (myDistance < 150f && Mathf.Abs(f) < 80f)
                         {
                             attack_sweep(string.Empty);
                             return;
                         }
                     }
+
                     if (num4 < 300f && Mathf.Abs(f) < 80f && myDistance < 85f)
                     {
                         attack_sweep("_vertical");

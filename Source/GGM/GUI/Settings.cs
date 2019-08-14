@@ -23,39 +23,21 @@ namespace GGM.GUI
         /// 1 - top,
         /// 2 - bottom,
         /// </summary>
-        internal static readonly Rect[] center =
-        {
-            new Rect(leftPos + 20f, topPos + 60f, fullAreaWidth, fullAreaHeight),
-            new Rect(leftPos + 20f, topPos + 60f, fullAreaWidth, topAreaHeight),
-            new Rect(leftPos + 20f, topPos + 100f, fullAreaWidth, bottomAreaHeight),
-            new Rect(leftPos + 20f, topPos + height / 2.7f, fullAreaWidth, height / 1.7f)
-        };
+        internal static readonly Rect[] center = { new Rect(leftPos + 20f, topPos + 60f, fullAreaWidth, fullAreaHeight), new Rect(leftPos + 20f, topPos + 60f, fullAreaWidth, topAreaHeight), new Rect(leftPos + 20f, topPos + 100f, fullAreaWidth, bottomAreaHeight), new Rect(leftPos + 20f, topPos + height / 2.7f, fullAreaWidth, height / 1.7f) };
 
         /// <summary>
         /// 0 - full,
         /// 1 - top,
         /// 2 - bottom,
         /// </summary>
-        internal static readonly Rect[] left =
-        {
-            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, fullAreaHeight),
-            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, topAreaHeight),
-            new Rect(leftPos + 20f, topPos + 100f, halfAreaWidth, bottomAreaHeight),
-            new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f),
-        };
+        internal static readonly Rect[] left = { new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, fullAreaHeight), new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, topAreaHeight), new Rect(leftPos + 20f, topPos + 100f, halfAreaWidth, bottomAreaHeight), new Rect(leftPos + 20f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f), };
 
         /// <summary>
         /// 0 - full,
         /// 1 - top,
         /// 2 - bottom,
         /// </summary>
-        internal static readonly Rect[] right =
-        {
-            new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, fullAreaHeight),
-            new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, topAreaHeight),
-            new Rect(leftPos + halfAreaWidth + 40f, topPos + 100f, halfAreaWidth, bottomAreaHeight),
-            new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f)
-        };
+        internal static readonly Rect[] right = { new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, fullAreaHeight), new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, topAreaHeight), new Rect(leftPos + halfAreaWidth + 40f, topPos + 100f, halfAreaWidth, bottomAreaHeight), new Rect(leftPos + halfAreaWidth + 40f, topPos + 60f, halfAreaWidth, bottomAreaHeight / 2f) };
 
         internal const int HeaderFontSize = 20;
         internal const float HeaderWidth = halfAreaWidth;
@@ -81,12 +63,7 @@ namespace GGM.GUI
         internal static readonly Color ColorMajor = ColorCache.White;
         internal static readonly Color ColorMinor = new Color(1f, 0.702f, 0.8f);
 
-        internal static readonly GUIStyle[] LabelStyle =
-        {
-            TextStyle(TextAnchor.MiddleLeft, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor),
-            TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor),
-            TextStyle(TextAnchor.MiddleRight, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor)
-        };
+        internal static readonly GUIStyle[] LabelStyle = { TextStyle(TextAnchor.MiddleLeft, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor), TextStyle(TextAnchor.MiddleCenter, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor), TextStyle(TextAnchor.MiddleRight, FontStyle.Normal, LabelFontSize, false, ColorMajor, ColorMajor, ColorMajor) };
 
         internal static readonly GUIStyle HeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, HeaderFontSize, false, ColorMinor, ColorMinor, ColorMinor);
         internal static readonly GUIStyle SubHeaderStyle = TextStyle(TextAnchor.MiddleCenter, FontStyle.Bold, SubHeaderFontSize, false, ColorMinor, ColorMinor, ColorMinor);
@@ -101,18 +78,9 @@ namespace GGM.GUI
                 fontStyle = fontStyle,
                 fontSize = fontSize,
                 wordWrap = wordWrap,
-                normal =
-                {
-                    textColor = normalColor
-                },
-                hover =
-                {
-                    textColor = hoverColor
-                },
-                active =
-                {
-                    textColor = activeColor
-                }
+                normal = { textColor = normalColor },
+                hover = { textColor = hoverColor },
+                active = { textColor = activeColor }
             };
         }
 

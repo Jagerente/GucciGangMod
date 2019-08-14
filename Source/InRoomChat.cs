@@ -47,26 +47,12 @@ public class InRoomChat : MonoBehaviour
 
     public static string ChatFormatting(string text, string color, bool bold, bool italic, string size = "")
     {
-        return "<color=#" + color + ">" +
-            (size != string.Empty ? "<size=" + size + ">" : string.Empty) +
-            (bold ? "<b>" : string.Empty) +
-            (italic ? "<i>" : string.Empty) +
-            text +
-            (italic ? "</i>" : string.Empty) +
-            (bold ? "</b>" : string.Empty) +
-            (size != "" ? "</size>" : string.Empty) +
-            "</color>";
+        return "<color=#" + color + ">" + (size != string.Empty ? "<size=" + size + ">" : string.Empty) + (bold ? "<b>" : string.Empty) + (italic ? "<i>" : string.Empty) + text + (italic ? "</i>" : string.Empty) + (bold ? "</b>" : string.Empty) + (size != "" ? "</size>" : string.Empty) + "</color>";
     }
 
     public static void SystemMessageLocal(string str, bool major = true)
     {
-        Messages.Add(
-            ChatFormatting(
-                str,
-                major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting,
-                major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0],
-                major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()));
+        Messages.Add(ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
     }
 
     public static void SystemMessageLocal(string[] str, bool parity = true)
@@ -76,21 +62,11 @@ public class InRoomChat : MonoBehaviour
         {
             if (i % 2 == 0 || i == 0)
             {
-                msg.Append(ChatFormatting(
-                str[i],
-                parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting,
-                parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0],
-                parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()));
+                msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
             }
             else
             {
-                msg.Append(ChatFormatting(
-                str[i],
-                parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting,
-                parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0],
-                parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()));
+                msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting, parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0], parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
             }
         }
 
@@ -99,77 +75,24 @@ public class InRoomChat : MonoBehaviour
 
     public static void SystemMessageLocal(string str, PhotonPlayer player)
     {
-        Messages.Add(
-            ChatFormatting(
-                str,
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()) +
-            ChatFormatting(
-                $" [{player.ID}] {player.Name.hexColor()}",
-                Settings.ChatMinorColorSetting,
-                Settings.ChatMinorFormatSettings[0],
-                Settings.ChatMinorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()) +
-            ChatFormatting(
-                ".",
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()));
+        Messages.Add(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
     }
 
     public static void SystemMessageLocal(PhotonPlayer player, string str)
     {
-        Messages.Add(
-            ChatFormatting(
-                $"[{player.ID}] {player.Name.hexColor()} ",
-                Settings.ChatMinorColorSetting,
-                Settings.ChatMinorFormatSettings[0],
-                Settings.ChatMinorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()) +
-            ChatFormatting(
-                str,
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()));
+        Messages.Add(ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
     }
 
     public static void SystemMessageLocal(string str, PhotonPlayer player, string str2)
     {
-        Messages.Add(
-            ChatFormatting(
-                str,
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()) +
-            ChatFormatting(
-                $" [{player.ID}] {player.Name.hexColor()} ",
-                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0],
-                Settings.ChatMinorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()) +
-            ChatFormatting(
-                str2,
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()));
+        Messages.Add(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
     }
 
     public static void SystemMessageGlobal(string str, bool major = true)
     {
         SystemMessageLocal(str, major);
 
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others,
-            ChatFormatting(
-                str,
-                major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting,
-                major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0],
-                major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]),
-            string.Empty);
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]), string.Empty);
     }
 
     public static void SystemMessageGlobal(string[] str, bool parity = true)
@@ -179,19 +102,11 @@ public class InRoomChat : MonoBehaviour
         {
             if (i % 2 == 0 || i == 0)
             {
-                msg.Append(ChatFormatting(
-                str[i],
-                parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting,
-                parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0],
-                parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]));
+                msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]));
             }
             else
             {
-                msg.Append(ChatFormatting(
-                str[i],
-                parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting,
-                parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0],
-                parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1]));
+                msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting, parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0], parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1]));
             }
         }
 
@@ -203,64 +118,21 @@ public class InRoomChat : MonoBehaviour
     {
         SystemMessageLocal(str, player);
 
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others,
-            ChatFormatting(
-                str,
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1]
-                ) +
-                ChatFormatting(
-                    $" [{player.ID}] {player.Name.hexColor()}",
-                    Settings.ChatMinorColorSetting,
-                    Settings.ChatMinorFormatSettings[0],
-                    Settings.ChatMinorFormatSettings[1]) +
-                ChatFormatting(
-                    ".",
-                    Settings.ChatMajorColorSetting,
-                    Settings.ChatMajorFormatSettings[0],
-                    Settings.ChatMajorFormatSettings[1]),
-            string.Empty);
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
     }
 
     public static void SystemMessageGlobal(PhotonPlayer player, string str)
     {
         SystemMessageLocal(player, str);
 
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others,
-            ChatFormatting(
-                $"[{player.ID}] {player.Name.hexColor()} ",
-                Settings.ChatMinorColorSetting,
-                Settings.ChatMinorFormatSettings[0],
-                Settings.ChatMinorFormatSettings[1]) +
-            ChatFormatting(
-                str,
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1]),
-            string.Empty);
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
     }
 
     public static void SystemMessageGlobal(string str, PhotonPlayer player, string str2)
     {
         SystemMessageLocal(str, player, str2);
 
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others,
-            ChatFormatting(
-                str,
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1]) +
-            ChatFormatting(
-                $" [{player.ID}] {player.Name.hexColor()} ",
-                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0],
-                Settings.ChatMinorFormatSettings[1]) +
-            ChatFormatting(
-                str2,
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1]),
-            string.Empty);
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
     }
 
     public static bool MCRequired()
@@ -284,10 +156,7 @@ public class InRoomChat : MonoBehaviour
         {
             case "pos":
                 {
-                    string[] msg = { "Your position:\n",
-                        "\nX", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" +
-                        "\nY", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" +
-                        "\nZ", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
+                    string[] msg = { "Your position:\n", "\nX", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" + "\nY", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" + "\nZ", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
 
                     SystemMessageLocal(msg);
                 }
@@ -324,6 +193,7 @@ public class InRoomChat : MonoBehaviour
                                 }
                             }
                         }
+
                         if (PhotonPlayer.Find(id) == null)
                         {
                             SystemMessageLocal(Error(1));
@@ -361,14 +231,11 @@ public class InRoomChat : MonoBehaviour
                         break;
 
                     default:
-                        string[] err = {
-                            "Invalid command. Possibles:",
-                            "\n/aso kdr", " - preserves players KDR's from disconnects.",
-                            "\n/aso racing", " - racing will not restart on finish.",
-                            "\n/aso damage", " - sets ASO Damage settings." };
+                        string[] err = { "Invalid command. Possibles:", "\n/aso kdr", " - preserves players KDR's from disconnects.", "\n/aso racing", " - racing will not restart on finish.", "\n/aso damage", " - sets ASO Damage settings." };
                         SystemMessageLocal(err);
                         break;
                 }
+
                 break;
 
             case "clean":
@@ -405,6 +272,7 @@ public class InRoomChat : MonoBehaviour
                 {
                     SystemMessageLocal(id.ToString());
                 }
+
                 break;
 
             case "slots":
@@ -463,12 +331,7 @@ public class InRoomChat : MonoBehaviour
 
             case "resetkd":
                 {
-                    PhotonNetwork.player.SetCustomProperties(new Hashtable {
-                        { "kills", 0 },
-                        { "deaths", 0 },
-                        { "max_dmg", 0 },
-                        { "total_dmg", 0 }
-                    });
+                    PhotonNetwork.player.SetCustomProperties(new Hashtable { { "kills", 0 }, { "deaths", 0 }, { "max_dmg", 0 }, { "total_dmg", 0 } });
                     SystemMessageLocal("Your stats have been reset.");
                 }
                 break;
@@ -482,6 +345,7 @@ public class InRoomChat : MonoBehaviour
                     {
                         player.SetCustomProperties(hash);
                     }
+
                     SystemMessageGlobal("All stats have been reset.");
                 }
                 break;
@@ -513,6 +377,7 @@ public class InRoomChat : MonoBehaviour
                     {
                         msg += args[i] + (i == args.Length - 1 ? "" : " ");
                     }
+
                     var myName = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties["name"]).hexColor();
                     string sendName;
                     switch (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties["RCteam"]))
@@ -529,25 +394,9 @@ public class InRoomChat : MonoBehaviour
                             sendName = myName;
                             break;
                     }
+
                     FengGameManagerMKII.FGM.photonView.RPC("ChatPM", player, sendName, msg);
-                    Messages.Add(
-            ChatFormatting(
-                "PM to",
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()) +
-            ChatFormatting(
-                $" [{player.ID}] {player.Name.hexColor()}",
-                Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0],
-                Settings.ChatMinorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()) +
-            ChatFormatting(
-                $": {msg}",
-                Settings.ChatMajorColorSetting,
-                Settings.ChatMajorFormatSettings[0],
-                Settings.ChatMajorFormatSettings[1],
-                Settings.ChatSizeSetting.ToString()));
+                    Messages.Add(ChatFormatting("PM to", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
                 }
                 break;
 
@@ -559,6 +408,7 @@ public class InRoomChat : MonoBehaviour
                         SystemMessageLocal(msg, false);
                         return;
                     }
+
                     var teamValue = 0;
                     var newTeamName = "Individuals";
                     switch (args[1])
@@ -580,13 +430,11 @@ public class InRoomChat : MonoBehaviour
                             break;
 
                         default:
-                            string[] err = { "Invalid team code/name. Possibles:\n" +
-                                    "Team Individuals - ", "0", "/", "individuals.\n",
-                                "Team Cyan - ", "1", "/", "cyan.\n",
-                                "Team Magenta - ", "2", "/", "magenta." };
+                            string[] err = { "Invalid team code/name. Possibles:\n" + "Team Individuals - ", "0", "/", "individuals.\n", "Team Cyan - ", "1", "/", "cyan.\n", "Team Magenta - ", "2", "/", "magenta." };
                             SystemMessageLocal(err);
                             return;
                     }
+
                     FengGameManagerMKII.FGM.photonView.RPC("setTeamRPC", PhotonNetwork.player, teamValue);
                     string[] msg2 = { "You have joined ", "Team " + newTeamName, "." };
                     SystemMessageLocal(msg2);
@@ -633,6 +481,7 @@ public class InRoomChat : MonoBehaviour
                                 }
                             }
                         }
+
                         if (PhotonPlayer.Find(num8) == null)
                         {
                             SystemMessageLocal(Error(1));
@@ -666,6 +515,7 @@ public class InRoomChat : MonoBehaviour
                     string[] msg = { "You have exited ", "Spectator ", "mode." };
                     SystemMessageLocal(msg);
                 }
+
                 return;
 
             case "fov":
@@ -699,6 +549,7 @@ public class InRoomChat : MonoBehaviour
                         string[] msg = { "Bomb ", "mode is enabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.teamMode > 0)
                     {
                         var sort = "Unsorted";
@@ -714,31 +565,31 @@ public class InRoomChat : MonoBehaviour
                         string[] msg = { "Team ", "mode is enabled. ", sort, "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.pointMode > 0)
                     {
                         string[] msg = { "Points ", "limit is ", $"[{Convert.ToString(RCSettings.pointMode)}]", "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.disableRock > 0)
                     {
                         string[] msg = { "Punks Rock-Throwing ", "is disabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.spawnMode > 0)
                     {
-                        string[] msg = { "Custom Spawn Rate ", "is:",
-                            $"\n[{RCSettings.nRate.ToString("F2")}% Normal]" +
-                            $"\n[{RCSettings.aRate.ToString("F2")}% Abnormal]" +
-                            $"\n[{RCSettings.jRate.ToString("F2")}% Jumper]" +
-                            $"\n[{RCSettings.cRate.ToString("F2")}% Crawler]" +
-                            $"\n[{RCSettings.pRate.ToString("F2")}% Punk]"};
+                        string[] msg = { "Custom Spawn Rate ", "is:", $"\n[{RCSettings.nRate.ToString("F2")}% Normal]" + $"\n[{RCSettings.aRate.ToString("F2")}% Abnormal]" + $"\n[{RCSettings.jRate.ToString("F2")}% Jumper]" + $"\n[{RCSettings.cRate.ToString("F2")}% Crawler]" + $"\n[{RCSettings.pRate.ToString("F2")}% Punk]" };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.explodeMode > 0)
                     {
                         string[] msg = { "Explode ", "radius is ", $"[{Convert.ToString(RCSettings.explodeMode)}]", "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.healthMode > 0)
                     {
                         var mode = "Static ";
@@ -750,41 +601,49 @@ public class InRoomChat : MonoBehaviour
                         string[] msg = { mode + "Health ", "amount is ", $"[{Convert.ToString(RCSettings.healthLower)} - {Convert.ToString(RCSettings.healthUpper)}]", "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.infectionMode > 0)
                     {
                         string[] msg = { "Infection ", "mode with ", $"[{Convert.ToString(RCSettings.infectionMode)}]", " infected on start." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.damageMode > 0)
                     {
                         string[] msg = { "Minimum Nape Damage ", "is ", $"[{Convert.ToString(RCSettings.damageMode)}]", "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.moreTitans > 0)
                     {
                         string[] msg = { "Custom Titans Amount ", "is ", $"[{Convert.ToString(RCSettings.moreTitans)}]", "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.sizeMode > 0)
                     {
                         string[] msg = { "Custom Titans Size ", "is ", $"[{RCSettings.sizeLower.ToString("F2")} - {RCSettings.sizeUpper.ToString("F2")}]", "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.banEren > 0)
                     {
                         string[] msg = { "Anti-Eren ", "mode is enabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.waveModeOn == 1)
                     {
                         string[] msg = { "Custom Titans/Wave ", "amount is ", $"[{Convert.ToString(RCSettings.waveModeNum)}]", "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.friendlyMode > 0)
                     {
                         string[] msg = { "Friendly ", "mode is enabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.pvpMode > 0)
                     {
                         var mode = "";
@@ -800,41 +659,49 @@ public class InRoomChat : MonoBehaviour
                         string[] msg = { mode + "PVP ", "mode is enabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.maxWave > 0)
                     {
                         string[] msg = { "Custom Maximum Wave ", "is ", $"[{RCSettings.maxWave.ToString()}]", "." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.horseMode > 0)
                     {
                         string[] msg = { "Horses ", "are enabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.ahssReload > 0)
                     {
                         string[] msg = { "AHSS Air-Reloading ", "is disabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.punkWaves > 0)
                     {
                         string[] msg = { "Punk Waves Override ", "is enabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.endlessMode > 0)
                     {
                         string[] msg = { "Endless Respawn ", "is ", $"[{RCSettings.endlessMode.ToString()}]", " seconds." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.globalDisableMinimap > 0)
                     {
                         string[] msg = { "Minimaps ", "are disabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.deadlyCannons > 0)
                     {
                         string[] msg = { "Deadly Cannons ", "mode is enabled." };
                         SystemMessageLocal(msg, false);
                     }
+
                     if (RCSettings.motd != string.Empty)
                     {
                         string[] msg = { "MOTD:\n", RCSettings.motd };
@@ -858,17 +725,13 @@ public class InRoomChat : MonoBehaviour
 
         if (Event.current.type == EventType.KeyDown)
         {
-            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') &&
-                !IN_GAME_MAIN_CAMERA.isPausing &&
-                FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab)
+            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') && !IN_GAME_MAIN_CAMERA.isPausing && FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab)
             {
                 Event.current.Use();
                 goto Label_219C;
             }
         }
-        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None &&
-                 Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] &&
-                 GUI.GetNameOfFocusedControl() != "ChatInput")
+        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None && Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] && GUI.GetNameOfFocusedControl() != "ChatInput")
         {
             inputLine = string.Empty;
             GUI.FocusControl("ChatInput");

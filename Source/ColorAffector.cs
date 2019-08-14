@@ -31,6 +31,7 @@ public class ColorAffector : Affector
         {
             GradualLen = Node.GetLifeTime();
         }
+
         if (GradualLen > 0f)
         {
             if (ElapsedTime > GradualLen)
@@ -50,17 +51,19 @@ public class ColorAffector : Affector
                             ColorArr[array.Length - i - 1] = array[i];
                             ColorArr[i] = array[array.Length - i - 1];
                         }
+
                         ElapsedTime = 0f;
                     }
                 }
             }
             else
             {
-                var index = (int)((ColorArr.Length - 1) * (ElapsedTime / GradualLen));
+                var index = (int) ((ColorArr.Length - 1) * (ElapsedTime / GradualLen));
                 if (index == ColorArr.Length - 1)
                 {
                     index--;
                 }
+
                 var num3 = index + 1;
                 var num4 = GradualLen / (ColorArr.Length - 1);
                 var t = (ElapsedTime - num4 * index) / num4;

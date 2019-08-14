@@ -9,8 +9,8 @@ public class InvStat
 
     public static int CompareArmor(InvStat a, InvStat b)
     {
-        var id = (int)a.id;
-        var num2 = (int)b.id;
+        var id = (int) a.id;
+        var num2 = (int) b.id;
         if (a.id == Identifier.Armor)
         {
             id -= 10000;
@@ -19,6 +19,7 @@ public class InvStat
         {
             id -= 5000;
         }
+
         if (b.id == Identifier.Armor)
         {
             num2 -= 10000;
@@ -27,37 +28,44 @@ public class InvStat
         {
             num2 -= 5000;
         }
+
         if (a.amount < 0)
         {
             id += 1000;
         }
+
         if (b.amount < 0)
         {
             num2 += 1000;
         }
+
         if (a.modifier == Modifier.Percent)
         {
             id += 100;
         }
+
         if (b.modifier == Modifier.Percent)
         {
             num2 += 100;
         }
+
         if (id < num2)
         {
             return -1;
         }
+
         if (id > num2)
         {
             return 1;
         }
+
         return 0;
     }
 
     public static int CompareWeapon(InvStat a, InvStat b)
     {
-        var id = (int)a.id;
-        var num2 = (int)b.id;
+        var id = (int) a.id;
+        var num2 = (int) b.id;
         if (a.id == Identifier.Damage)
         {
             id -= 10000;
@@ -66,6 +74,7 @@ public class InvStat
         {
             id -= 5000;
         }
+
         if (b.id == Identifier.Damage)
         {
             num2 -= 10000;
@@ -74,30 +83,37 @@ public class InvStat
         {
             num2 -= 5000;
         }
+
         if (a.amount < 0)
         {
             id += 1000;
         }
+
         if (b.amount < 0)
         {
             num2 += 1000;
         }
+
         if (a.modifier == Modifier.Percent)
         {
             id += 100;
         }
+
         if (b.modifier == Modifier.Percent)
         {
             num2 += 100;
         }
+
         if (id < num2)
         {
             return -1;
         }
+
         if (id > num2)
         {
             return 1;
         }
+
         return 0;
     }
 
@@ -132,6 +148,7 @@ public class InvStat
             case Identifier.Mana:
                 return "Mana increases the number of spells that can be cast";
         }
+
         return null;
     }
 
