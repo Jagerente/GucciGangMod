@@ -1581,11 +1581,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                             FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
-
                                     }
                                     if (iD == sender.ID && pActorProperties["RCteam"] is string str && str != null)
                                     {
-                                        if (str == "Gucci")
+                                        if (str == "GGM")
                                         {
                                             sender.GucciGangMod = true;
                                         }
@@ -3002,7 +3001,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     private void SendCheck()
     {
         int team = PhotonNetwork.player.customProperties["RCteam"] is int ? (int)PhotonNetwork.player.customProperties["RCteam"] : 0;
-        Hashtable hash = new Hashtable() { { "RCteam", "Gucci" } };
+        Hashtable hash = new Hashtable() { { "RCteam", "GGM" } };
         PhotonNetwork.player.SetCustomProperties(hash);
         hash["RCteam"] = team;
         PhotonNetwork.player.SetCustomProperties(hash);
