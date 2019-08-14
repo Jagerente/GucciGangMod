@@ -1,4 +1,5 @@
-﻿using ExitGames.Client.Photon;
+﻿using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using UnityEngine;
 
 public class PhotonPlayer
@@ -7,6 +8,21 @@ public class PhotonPlayer
     public readonly bool isLocal;
     private string nameField;
     public object TagObject;
+
+    public bool GucciGangMod = false;
+
+    public static PhotonPlayer[] GetGGMUsers()
+    {
+        var tmp = new List<PhotonPlayer>();
+        foreach (var player in PhotonNetwork.playerList)
+        {
+            if (player.GucciGangMod)
+            {
+                tmp.Add(player);
+            }
+        }
+        return tmp.ToArray();
+    }
 
     protected internal PhotonPlayer(bool isLocal, int actorID, Hashtable properties)
     {
