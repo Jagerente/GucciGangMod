@@ -41,7 +41,7 @@ namespace GGM.GUI.Pages
         private static readonly string[] shadowProjection = { "Stable Fit", "Close Fit" };
         private static readonly string[] shadowCascades = { "0", "2", "4" };
         private static readonly string[] dayTime = { "Day", "Dawn", "Night" };
-        private static readonly string[] rebindsPages = { "Human", "Titan", "Mount" };
+        private static readonly string[] rebindsPages = { "Human", "Titan", "Mount", "Misc" };
 
         private static readonly string[] humanRebinds = { "Forward", "Backward", "Left", "Right", "Jump", "Dodge", "Left Hook", "Right Hook", "Both Hooks", "Lock", "Attack", "Special", "Salute", "Change Camera", "Restart/Suicide", "Menu", "Show/Hide Cursor", "Fullscreen", "Reload", "Flare Green", "Flare Red", "Flare Black", "Reel In", "Reel Out", "Dash", "Minimap Maximize", "Minimap Toggle", "Minimap Reset", "Chat", "Live Spectate" };
 
@@ -133,6 +133,7 @@ namespace GGM.GUI.Pages
             if (UnityEngine.GUI.Button(new Rect(leftPos + 408f + 65f, topPos + height / 1.055f, 42f, 25f), "Save"))
             {
                 Save();
+                HotKey.Save();
                 PlayerPrefs.SetInt("titan", (int)FengGameManagerMKII.settings[1]);
                 PlayerPrefs.SetInt("titantype1", (int)FengGameManagerMKII.settings[16]);
                 PlayerPrefs.SetInt("titantype2", (int)FengGameManagerMKII.settings[17]);
@@ -224,6 +225,7 @@ namespace GGM.GUI.Pages
             if (UnityEngine.GUI.Button(new Rect(leftPos + 455f + 65f, topPos + height / 1.055f, 45f, 25f), "Load"))
             {
                 Load();
+                HotKey.Load();
                 FengGameManagerMKII.FGM.loadconfig();
                 FengGameManagerMKII.settings[64] = 5;
             }
@@ -675,6 +677,9 @@ namespace GGM.GUI.Pages
             }
         }
 
+        private static bool[] HotKeysToWait;
+        private static int HotKeyToRebind = -1;
+
         private static void Rebinds()
         {
             if (FengGameManagerMKII.inputManager == null) return;
@@ -685,7 +690,7 @@ namespace GGM.GUI.Pages
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.FlexibleSpace();
-                    rebindsSwitch = GUILayout.SelectionGrid(rebindsSwitch, rebindsPages, 3, GUILayout.Height(25f));
+                    rebindsSwitch = GUILayout.SelectionGrid(rebindsSwitch, rebindsPages, 4, GUILayout.Height(25f));
                     GUILayout.FlexibleSpace();
                 }
                 GUILayout.EndHorizontal();
@@ -1110,6 +1115,39 @@ namespace GGM.GUI.Pages
                             }
                         }
 
+                        break;
+                    }
+
+                case 3:
+                    {
+                        GUILayout.BeginArea(left[2]);
+                        {
+                            Label("Special", LabelType.Header);
+                            if (HotKeysToWait == null) HotKeysToWait = new bool[HotKey.AllHotKeys.Count];
+                            for (var i = 0; i < HotKey.AllHotKeys.Count; i++)
+                            {
+                                GUILayout.BeginHorizontal();
+                                {
+                                    Label(HotKey.AllHotKeys[i].Name, width: 225f);
+                                    if (GUILayout.Button(HotKeysToWait[i] ? "waiting..." : HotKey.AllHotKeys[i].Key.ToString()))
+                                    {
+                                        HotKeyToRebind = i;
+                                        HotKeysToWait[i] = true;
+                                    }
+                                }
+                                GUILayout.EndHorizontal();
+                            }
+
+                            var eventCurrent = Event.current;
+
+                            if (HotKeyToRebind != -1 && eventCurrent.type == EventType.KeyDown && eventCurrent.keyCode != KeyCode.None)
+                            {
+                                HotKey.AllHotKeys[HotKeyToRebind].Rebind(eventCurrent.keyCode);
+                                HotKeysToWait[HotKeyToRebind] = false;
+                                HotKeyToRebind = -1;
+                            }
+                        }
+                        GUILayout.EndArea();
                         break;
                     }
             }
