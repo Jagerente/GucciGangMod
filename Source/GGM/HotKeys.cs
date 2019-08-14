@@ -34,6 +34,7 @@ namespace GGM
             {
                 return Ignore = false;
             }
+
             return Input.GetKeyUp(Key);
         }
 
@@ -43,6 +44,7 @@ namespace GGM
             {
                 return Ignore = false;
             }
+
             return Input.GetKeyDown(Key);
         }
 
@@ -52,6 +54,7 @@ namespace GGM
             {
                 return Ignore = false;
             }
+
             return Input.GetKey(Key);
         }
 
@@ -87,6 +90,7 @@ namespace GGM
                     res = key;
                 }
             }
+
             return res;
         }
     }
@@ -96,6 +100,7 @@ namespace GGM
         public static HotKey Restart = new HotKey("Restart", KeyCode.G);
         public static HotKey Screenshot = new HotKey("Screenshot", KeyCode.F5);
         public static HotKey Infinites = new HotKey("Infinites", KeyCode.B);
+        public static HotKey CannonSpawn = new HotKey("CannonSpawn", KeyCode.J);
 
         private void Update()
         {
@@ -142,6 +147,59 @@ namespace GGM
                 Settings.InfiniteBulletsSetting.Value = !Settings.InfiniteBulletsSetting;
                 Settings.InfiniteGasSetting.Value = !Settings.InfiniteGasSetting;
                 Settings.InfiniteBladesSetting.Value = !Settings.InfiniteBladesSetting;
+            }
+
+            //CannonSpawn
+            if (CannonSpawn.IsDown())
+            {
+                if (PhotonNetwork.isMasterClient)
+                {
+                    RaycastHit hitInfo;
+                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, 9999999f, Layer.GroundEnemy.value))
+                    {
+                        var vector = hitInfo.point;
+                        var objToSpawn = Settings.CannonTypeSetting == 0 ? "RCAsset/CannonGroundProp" : "RCAsset/CannonWallProp";
+                        var obj = PhotonNetwork.Instantiate(objToSpawn, vector, new Quaternion(0, 0, 0, 0), 0);
+                        if (objToSpawn == "RCAsset/CannonWallProp")
+                        {
+                            var cpr = obj.GetComponent<CannonPropRegion>();
+                            string[] array = new string[7];
+                            array[0] = " photon,CannonWall,default,1,1,1,0,1,1,1,1.0,1.0,";
+                            string[] array2 = array;
+                            int num = 1;
+                            array2[num] = vector.x.ToString();
+                            array[2] = ",";
+                            string[] array3 = array;
+                            int num2 = 3;
+                            array3[num2] = vector.y.ToString();
+                            array[4] = ",";
+                            string[] array4 = array;
+                            int num3 = 5;
+                            array4[num3] = vector.z.ToString();
+                            array[6] = ",0,0,0,0";
+                            cpr.settings = string.Concat(array);
+                        }
+                        else if (objToSpawn == "RCAsset/CannonGroundProp")
+                        {
+                            var cpr = obj.GetComponent<CannonPropRegion>();
+                            string[] array = new string[7];
+                            array[0] = " photon,CannonGround,default,1,1,1,0,1,1,1,1.0,1.0,";
+                            string[] array2 = array;
+                            int num = 1;
+                            array2[num] = vector.x.ToString();
+                            array[2] = ",";
+                            string[] array3 = array;
+                            int num2 = 3;
+                            array3[num2] = vector.y.ToString();
+                            array[4] = ",";
+                            string[] array4 = array;
+                            int num3 = 5;
+                            array4[num3] = vector.z.ToString();
+                            array[6] = ",0,0,0,0";
+                            cpr.settings = string.Concat(array);
+                        }
+                    }
+                }
             }
         }
     }

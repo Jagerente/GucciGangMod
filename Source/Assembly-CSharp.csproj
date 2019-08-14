@@ -82,6 +82,7 @@
     <Compile Include="GGM\GUI\Settings.cs" />
     <Compile Include="GGM\HotKeys.cs" />
     <Compile Include="GGM\Labels.cs" />
+    <Compile Include="GGM\Layer.cs" />
     <Compile Include="GGM\Logger.cs" />
     <Compile Include="GGM\SpectatorMode.cs" />
     <Compile Include="GGM\Storage\IDataStorage.cs" />

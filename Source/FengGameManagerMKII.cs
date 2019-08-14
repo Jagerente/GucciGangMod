@@ -3512,12 +3512,12 @@ public class FengGameManagerMKII : MonoBehaviour
         objArray[242] = PlayerPrefs.GetString("hjump", "Q");
         objArray[243] = PlayerPrefs.GetString("hmount", "LeftControl");
         objArray[245] = 0;
-        objArray[254] = PlayerPrefs.GetString("cannonUp", "W");
-        objArray[255] = PlayerPrefs.GetString("cannonDown", "S");
-        objArray[256] = PlayerPrefs.GetString("cannonLeft", "A");
-        objArray[257] = PlayerPrefs.GetString("cannonRight", "D");
-        objArray[258] = PlayerPrefs.GetString("cannonFire", "Q");
-        objArray[259] = PlayerPrefs.GetString("cannonMount", "G");
+        objArray[254] = PlayerPrefs.GetString("cannonUp", "UpArrow");
+        objArray[255] = PlayerPrefs.GetString("cannonDown", "DownArrow");
+        objArray[256] = PlayerPrefs.GetString("cannonLeft", "LeftArrow");
+        objArray[257] = PlayerPrefs.GetString("cannonRight", "RightArrow");
+        objArray[258] = PlayerPrefs.GetString("cannonFire", "Mouse0");
+        objArray[259] = PlayerPrefs.GetString("cannonMount", "LeftCtrl");
         objArray[260] = PlayerPrefs.GetString("cannonSlow", "LeftShift");
         objArray[262] = PlayerPrefs.GetString("liveCam", "Y");
         objArray[263] = 0;
@@ -4324,21 +4324,21 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         if (Settings.LocationSkinsSetting == 2 && info.sender.isMasterClient)
         {
-            Settings.ReceievedLocationSkinsData = new List<object>();
-            Settings.ReceievedLocationSkinsData.Add(ambient);
-            Settings.ReceievedLocationSkinsData.Add(ambientColor[0]);
-            Settings.ReceievedLocationSkinsData.Add(ambientColor[1]);
-            Settings.ReceievedLocationSkinsData.Add(ambientColor[2]);
-            Settings.ReceievedLocationSkinsData.Add(light);
-            Settings.ReceievedLocationSkinsData.Add(lightColor[0]);
-            Settings.ReceievedLocationSkinsData.Add(lightColor[1]);
-            Settings.ReceievedLocationSkinsData.Add(lightColor[2]);
-            Settings.ReceievedLocationSkinsData.Add(fog);
-            Settings.ReceievedLocationSkinsData.Add(fogColor[0]);
-            Settings.ReceievedLocationSkinsData.Add(fogColor[1]);
-            Settings.ReceievedLocationSkinsData.Add(fogColor[2]);
-            Settings.ReceievedLocationSkinsData.Add(fogColor[3]);
-            Settings.ReceievedLocationSkinsData.Add(fogColor[4]);
+            Settings.ReceivedLocationSkinsData = new List<object>();
+            Settings.ReceivedLocationSkinsData.Add(ambient);
+            Settings.ReceivedLocationSkinsData.Add(ambientColor[0]);
+            Settings.ReceivedLocationSkinsData.Add(ambientColor[1]);
+            Settings.ReceivedLocationSkinsData.Add(ambientColor[2]);
+            Settings.ReceivedLocationSkinsData.Add(light);
+            Settings.ReceivedLocationSkinsData.Add(lightColor[0]);
+            Settings.ReceivedLocationSkinsData.Add(lightColor[1]);
+            Settings.ReceivedLocationSkinsData.Add(lightColor[2]);
+            Settings.ReceivedLocationSkinsData.Add(fog);
+            Settings.ReceivedLocationSkinsData.Add(fogColor[0]);
+            Settings.ReceivedLocationSkinsData.Add(fogColor[1]);
+            Settings.ReceivedLocationSkinsData.Add(fogColor[2]);
+            Settings.ReceivedLocationSkinsData.Add(fogColor[3]);
+            Settings.ReceivedLocationSkinsData.Add(fogColor[4]);
         }
     }
 

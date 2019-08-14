@@ -65,11 +65,14 @@ namespace GGM.GUI.Pages
 
         private static readonly string[] connectionProtocols = { "UDP", "TCP", "WS" };
 
+        private static readonly string[] cannonTypes = { "Ground", "Wall" };
+
         #endregion Strings
 
         #region Scrolls
 
         private static Vector2 scrollGameLeft = Vector2.zero;
+        private static Vector2 scrollGameRight = Vector2.zero;
         private static Vector2 scrollServerTitansLeft = Vector2.zero;
         private static Vector2 scrollServerMiscLeft = Vector2.zero;
         private static Vector2 scrollVideoLeft = Vector2.zero;
@@ -332,27 +335,36 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginArea(right[0]);
             {
-                GUILayout.Space(15f);
-
-                Label("User Interface", LabelType.Header);
-                Grid("Legacy Labels", ref LegacyLabelsSetting.Value);
-                Grid("Hide Everything", ref UserInterfaceSetting.Value);
-                if (!UserInterfaceSetting)
+                scrollGameRight = GUILayout.BeginScrollView(scrollGameRight);
                 {
-                    Grid("Player List", ref PlayerListUISetting.Value);
-                    Grid("Damage Feed", ref DamageFeedUISetting.Value);
-                    Grid("Game Info", ref GameInfoUISetting.Value);
-                    Grid("Chat", ref ChatUISetting.Value);
-                    Grid("Crosshair", ref CrosshairUISetting.Value);
-                    Grid("Sprites", ref SpritesUISetting.Value);
-                }
+                    GUILayout.Space(15f);
 
-                Label("Misc", LabelType.Header);
-                Grid("Body Lean", ref BodyLean.Value);
-                Grid("Chat Feed", ref ChatFeedSetting.Value);
-                Grid("Minimap", ref MinimapSetting.Value);
-                Grid("Speedometer", ref SpeedometerSetting.Value, speedometerTypes);
-                if (SpeedometerSetting == 2) Grid("• AHSS Damage", ref SpeedometerAHSSSetting.Value, ahssSpeedometerTypes);
+                    Label("User Interface", LabelType.Header);
+                    Grid("Legacy Labels", ref LegacyLabelsSetting.Value);
+                    Grid("Hide Everything", ref UserInterfaceSetting.Value);
+                    if (!UserInterfaceSetting)
+                    {
+                        Grid("Player List", ref PlayerListUISetting.Value);
+                        Grid("Damage Feed", ref DamageFeedUISetting.Value);
+                        Grid("Game Info", ref GameInfoUISetting.Value);
+                        Grid("Chat", ref ChatUISetting.Value);
+                        Grid("Crosshair", ref CrosshairUISetting.Value);
+                        Grid("Sprites", ref SpritesUISetting.Value);
+                    }
+
+                    Label("Misc", LabelType.Header);
+                    Grid("Body Lean", ref BodyLean.Value);
+                    Grid("Chat Feed", ref ChatFeedSetting.Value);
+                    Grid("Minimap", ref MinimapSetting.Value);
+                    Grid("Speedometer", ref SpeedometerSetting.Value, speedometerTypes);
+                    if (SpeedometerSetting == 2) Grid("• AHSS Damage", ref SpeedometerAHSSSetting.Value, ahssSpeedometerTypes);
+                    Grid("Cannon Type", ref CannonTypeSetting.Value, cannonTypes);
+                    TextField("Movement Speed", ref CannonMovementSpeedSetting.Value);
+                    TextField("Rotate Speed", ref CannonRotateSpeedSetting.Value);
+                    TextField("Fire Cooldown", ref CannonCooldown.Value);
+                    GUILayout.Space(1f);
+                }
+                GUILayout.EndScrollView();
             }
             GUILayout.EndArea();
         }
@@ -1037,7 +1049,7 @@ namespace GGM.GUI.Pages
                                 var k = 254 + i;
                                 GUILayout.BeginHorizontal();
                                 {
-                                    Label(horseRebinds[i], width: 225f);
+                                    Label(cannonRebinds[i], width: 225f);
                                     if (GUILayout.Button((string)FengGameManagerMKII.settings[k]))
                                     {
                                         FengGameManagerMKII.settings[k] = "waiting...";
