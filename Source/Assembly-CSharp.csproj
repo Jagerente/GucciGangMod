@@ -56,6 +56,7 @@
     <Compile Include="GGM\Caching\ColorCache.cs" />
     <Compile Include="GGM\Caching\GameObjectCache.cs" />
     <Compile Include="GGM\Caching\ResourcesCache.cs" />
+    <Compile Include="GGM\Commands.cs" />
     <Compile Include="GGM\Config\AssetsManager.cs" />
     <Compile Include="GGM\Discord\DiscordAPI.cs" />
     <Compile Include="GGM\Discord\RichPresence.cs" />
