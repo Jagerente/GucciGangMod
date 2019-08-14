@@ -3,6 +3,7 @@ using GGM.Config;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Xft;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -3276,10 +3277,18 @@ public class HERO : MonoBehaviour
         }
     }
 
+    public static Dictionary<int, string> PlayersSkins;
+
     [RPC]
-    public void loadskinRPC(int horse, string url)
+    public void loadskinRPC(int horse, string url, PhotonMessageInfo info)
     {
-        if (Settings.HumanSkinsSetting == 2)
+        if (PlayersSkins == null) PlayersSkins = new Dictionary<int, string>();
+        if (PlayersSkins.Count > 30) PlayersSkins.Remove(PlayersSkins.First().Key);
+        if (!(PlayersSkins.ContainsValue(url) || PlayersSkins.ContainsKey(info.sender.ID)))
+        {
+            PlayersSkins.Add(info.sender.ID, url);
+        }
+        if (Settings.HumanSkinsSetting != 0)
         {
             StartCoroutine(loadskinE(horse, url));
         }
