@@ -32,6 +32,8 @@ public class PhotonPlayer
         this.isLocal = isLocal;
         this.actorID = actorID;
         InternalCacheProperties(properties);
+        if (isLocal)
+            GucciGangMod = true;
     }
 
     public PhotonPlayer(bool isLocal, int actorID, string name)
@@ -42,6 +44,8 @@ public class PhotonPlayer
         this.isLocal = isLocal;
         this.actorID = actorID;
         nameField = name;
+        if (isLocal)
+            GucciGangMod = true;
     }
 
     public override bool Equals(object p)

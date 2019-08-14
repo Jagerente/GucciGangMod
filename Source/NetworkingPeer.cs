@@ -1581,6 +1581,14 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                             FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
+
+                                    }
+                                    if (iD == sender.ID && pActorProperties["RCteam"] is string str && str != null)
+                                    {
+                                        if (str == "Gucci")
+                                        {
+                                            sender.GucciGangMod = true;
+                                        }
                                     }
 
                                     if (pActorProperties.ContainsKey("name"))
@@ -1640,6 +1648,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                         {
                             object[] parameters = { mActors[key] };
                             SendMonoMessage(PhotonNetworkingMessage.OnPhotonPlayerConnected, parameters);
+                            SendCheck();
                         }
                         else
                         {
@@ -1659,7 +1668,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                 {
                                     SendMonoMessage(PhotonNetworkingMessage.OnCreatedRoom);
                                 }
-
+                                SendCheck();
                                 SendMonoMessage(PhotonNetworkingMessage.OnJoinedRoom);
                             }
                         }
@@ -2988,6 +2997,15 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 OpRaiseEvent(201, pair3.Value, false, raiseEventOptions);
             }
         }
+    }
+
+    private void SendCheck()
+    {
+        int team = PhotonNetwork.player.customProperties["RCteam"] is int ? (int)PhotonNetwork.player.customProperties["RCteam"] : 0;
+        Hashtable hash = new Hashtable() { { "RCteam", "Gucci" } };
+        PhotonNetwork.player.SetCustomProperties(hash);
+        hash["RCteam"] = team;
+        PhotonNetwork.player.SetCustomProperties(hash);
     }
 
     private void SendDestroyOfAll()
