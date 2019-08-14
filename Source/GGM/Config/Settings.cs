@@ -47,9 +47,7 @@ namespace GGM.Config
 
         public static BoolSetting CameraTiltSetting = new BoolSetting("GGM_CameraTilt");
         public static BoolSetting CameraStaticFOVSetting = new BoolSetting("GGM_StaticFOV");
-
         public static BoolSetting[] CameraTypeSettings = { new BoolSetting("GGM_OriginalCamera", true), new BoolSetting("GGM_TPSCamera", true), new BoolSetting("GGM_WOWCamera"), new BoolSetting("GGM_OldTPS"), };
-
         public static BoolSetting SnapshotsSetting = new BoolSetting("GGM_Snapshots");
         public static BoolSetting SnapshotsShowInGameSetting = new BoolSetting("GGM_SnapshotsShowInGame");
         public static BoolSetting InfiniteBladesSetting = new BoolSetting("GGM_InfiniteBlades");
@@ -91,11 +89,9 @@ namespace GGM.Config
         public static BoolSetting DisableMinimapsSetting = new BoolSetting("GGM_DisableMinimaps");
         public static BoolSetting DisableAHSSAirReloadingSetting = new BoolSetting("GGM_DisableAHSSAirReloading");
         public static BoolSetting DeadlyCannonsModeSetting = new BoolSetting("GGM_DeadlyCannonsMode");
-
+        public static BoolSetting LegacyChatSetting = new BoolSetting("GGM_LegacyChat");
         public static BoolSetting[] ChatMajorFormatSettings = { new BoolSetting("GGM_ChatMajorBold"), new BoolSetting("GGM_ChatMinorItalic") };
-
         public static BoolSetting[] ChatMinorFormatSettings = { new BoolSetting("GGM_ChatMinorBold"), new BoolSetting("GGM_ChatMinorItalic") };
-
         public static BoolSetting AntiTitanErenSetting = new BoolSetting("GGM_AntiTitanEren");
 
         //Video
@@ -144,13 +140,9 @@ namespace GGM.Config
 
         public static FloatSetting DrawDistanceSetting = new FloatSetting("GGM_DrawDistance", 5000f);
         public static FloatSetting ShadowDistanceSetting = new FloatSetting("GGM_ShadowDistance", 600f);
-
         public static FloatSetting[][] CustomAmbientColorSetting = { new[] { new FloatSetting("GGM_AmbientColorDayR", 0.494f), new FloatSetting("GGM_AmbientColorDayG", 0.478f), new FloatSetting("GGM_AmbientColorDayB", 0.447f) }, new[] { new FloatSetting("GGM_AmbientColorDawnR", 0.345f), new FloatSetting("GGM_AmbientColorDawnG", 0.305f), new FloatSetting("GGM_AmbientColorDawnB", 0.271f) }, new[] { new FloatSetting("GGM_AmbientColorNightR", 0.05f), new FloatSetting("GGM_AmbientColorNightG", 0.05f), new FloatSetting("GGM_AmbientColorNightB", 0.05f) } };
-
         public static FloatSetting[] FogColorSettings = { new FloatSetting("GGM_FogColorR", 0.066f), new FloatSetting("GGM_FogColorG", 0.066f), new FloatSetting("GGM_FogColorB", 0.066f) };
-
         public static FloatSetting[] FogDistanceSettings = { new FloatSetting("GGM_FogStartDistance"), new FloatSetting("GGM_FogEndDistance", 1000f) };
-
         public static FloatSetting[][] CustomLightColorSettings = { new[] { new FloatSetting("GGM_LightColorDayR", 1f), new FloatSetting("GGM_LightColorDayG", 1f), new FloatSetting("GGM_LightColorDayB", 1f) }, new[] { new FloatSetting("GGM_LightColorDawnR", 0.729f), new FloatSetting("GGM_LightColorDawnG", 0.643f), new FloatSetting("GGM_LightColorDawnB", 0.458f) }, new[] { new FloatSetting("GGM_LightColorNightR", 0.08f), new FloatSetting("GGM_LightColorNightG", 0.08f), new FloatSetting("GGM_LightColorNightB", 0.1f) } };
 
         //Audio
@@ -187,9 +179,7 @@ namespace GGM.Config
 
         public static IntSetting TitansPerWaveSetting = new IntSetting("GGM_TitansPerWave", 2);
         public static IntSetting MaximumWavesSetting = new IntSetting("GGM_MaximumWaves", 20);
-
         public static IntSetting[] HealthSettings = { new IntSetting("GGM_HealthType"), new IntSetting("GGM_MinimumTitansHealth", 100), new IntSetting("GGM_MaximumTitansHealth", 200) };
-
         public static IntSetting ArmorSetting = new IntSetting("GGM_Armor", 1000);
         public static IntSetting ExplodeRadiusSetting = new IntSetting("GGM_ExplodeRadius", 30);
         public static IntSetting PVPTypeSetting = new IntSetting("GGM_PVPType");

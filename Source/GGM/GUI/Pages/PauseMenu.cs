@@ -478,6 +478,7 @@ namespace GGM.GUI.Pages
                             scrollServerMiscLeft = GUILayout.BeginScrollView(scrollServerMiscLeft);
                             {
                                 Label("Chat", LabelType.Header);
+                                Grid("Legacy Chat", ref LegacyChatSetting.Value);
                                 TextField("Size", ref ChatSizeSetting.Value);
                                 TextField("Major Color", ref ChatMajorColorSetting.Value);
                                 TextField("Minor Color", ref ChatMinorColorSetting.Value);

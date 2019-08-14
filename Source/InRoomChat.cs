@@ -4,6 +4,7 @@ using GGM.Config;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using GGM.GUI.Pages;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 
@@ -16,9 +17,36 @@ public class InRoomChat : MonoBehaviour
     private string inputLine = string.Empty;
     public static List<string> Messages = new List<string>();
 
-    public static void AddLine(string newLine = "")
+    public static string RCLine(string line)
+    {
+        return "<color=#FFC000>" + line + "</color>";
+    }
+
+    public static void AddLine(string newLine)
     {
         Messages.Add(newLine);
+    }
+
+    public static void AddLineRC(params string[] newLine)
+    {
+        var str = string.Empty;
+        foreach (var line in newLine)
+        {
+            str += line;
+        }
+
+        Messages.Add(RCLine(str));
+    }
+
+    public static void SendLineRC(params string[] newLine)
+    {
+        var str = string.Empty;
+        foreach (var line in newLine)
+        {
+            str += line;
+        }
+
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.All, RCLine(str), string.Empty);
     }
 
     /// <param name="type">
@@ -52,87 +80,159 @@ public class InRoomChat : MonoBehaviour
 
     public static void SystemMessageLocal(string str, bool major = true)
     {
-        Messages.Add(ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+        if (Settings.LegacyChatSetting)
+        {
+            AddLineRC(str);
+        }
+        else
+        {
+            Messages.Add(ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+        }
     }
 
     public static void SystemMessageLocal(string[] str, bool parity = true)
     {
-        var msg = new StringBuilder();
-        for (var i = 0; i < str.Length; i++)
+        if (Settings.LegacyChatSetting)
         {
-            if (i % 2 == 0 || i == 0)
+            AddLineRC(str);
+        }
+        else
+        {
+            var msg = new StringBuilder();
+            if (str.Length != 1)
             {
-                msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+                for (var i = 0; i < str.Length; i++)
+                {
+                    if (i % 2 == 0 || i == 0)
+                    {
+                        msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+                    }
+                    else
+                    {
+                        msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting, parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0], parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+                    }
+                }
             }
             else
             {
-                msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting, parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0], parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+                msg.Append(msg.Append(ChatFormatting(str[0], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString())));
             }
+            Messages.Add(msg.ToString());
         }
-
-        Messages.Add(msg.ToString());
     }
 
     public static void SystemMessageLocal(string str, PhotonPlayer player)
     {
-        Messages.Add(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+        if (Settings.LegacyChatSetting)
+        {
+            AddLineRC(str, $" [{player.ID}] {player.Name.hexColor()}.");
+        }
+        else
+        {
+            Messages.Add(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+        }
     }
 
     public static void SystemMessageLocal(PhotonPlayer player, string str)
     {
-        Messages.Add(ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+        if (Settings.LegacyChatSetting)
+        {
+            AddLineRC($"[{player.ID}] {player.Name.hexColor()} ", str);
+        }
+        else
+        {
+            Messages.Add(ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+        }
     }
 
     public static void SystemMessageLocal(string str, PhotonPlayer player, string str2)
     {
-        Messages.Add(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+        if (Settings.LegacyChatSetting)
+        {
+            AddLineRC(str, $" [{player.ID}] {player.Name.hexColor()} ", str2);
+        }
+        else
+        {
+            Messages.Add(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+        }
     }
 
     public static void SystemMessageGlobal(string str, bool major = true)
     {
-        SystemMessageLocal(str, major);
-
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]), string.Empty);
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC(str);
+        }
+        else
+        {
+            SystemMessageLocal(str, major);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]), string.Empty);
+        }
     }
 
     public static void SystemMessageGlobal(string[] str, bool parity = true)
     {
-        var msg = new StringBuilder();
-        for (var i = 0; i < str.Length; i++)
+        if (Settings.LegacyChatSetting)
         {
-            if (i % 2 == 0 || i == 0)
-            {
-                msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]));
-            }
-            else
-            {
-                msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting, parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0], parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1]));
-            }
+            SendLineRC(str);
         }
+        else
+        {
+            var msg = new StringBuilder();
+            for (var i = 0; i < str.Length; i++)
+            {
+                if (i % 2 == 0 || i == 0)
+                {
+                    msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]));
+                }
+                else
+                {
+                    msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting, parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0], parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1]));
+                }
+            }
 
-        SystemMessageLocal(msg.ToString(), parity);
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, msg.ToString(), string.Empty);
+            SystemMessageLocal(msg.ToString(), parity);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, msg.ToString(), string.Empty);
+        }
     }
 
     public static void SystemMessageGlobal(string str, PhotonPlayer player)
     {
-        SystemMessageLocal(str, player);
-
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC(str, $" [{player.ID}] {player.Name.hexColor()}.");
+        }
+        else
+        {
+            SystemMessageLocal(str, player);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        }
     }
 
     public static void SystemMessageGlobal(PhotonPlayer player, string str)
     {
-        SystemMessageLocal(player, str);
-
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC($"[{player.ID}] {player.Name.hexColor()} ", str);
+        }
+        else
+        {
+            SystemMessageLocal(player, str);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        }
     }
 
     public static void SystemMessageGlobal(string str, PhotonPlayer player, string str2)
     {
-        SystemMessageLocal(str, player, str2);
-
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC(str, $" [{player.ID}] {player.Name.hexColor()} ", str2);
+        }
+        else
+        {
+            SystemMessageLocal(str, player, str2);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        }
     }
 
     public static bool MCRequired()
@@ -544,175 +644,297 @@ public class InRoomChat : MonoBehaviour
 
             case "rules":
                 {
-                    if (RCSettings.bombMode > 0)
-                    {
-                        string[] msg = { "Bomb ", "mode is enabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.teamMode > 0)
-                    {
-                        var sort = "Unsorted";
-                        if (RCSettings.teamMode == 2)
-                        {
-                            sort = "Sorted by size";
-                        }
-                        else if (RCSettings.teamMode == 3)
-                        {
-                            sort = "Sorted by skill";
-                        }
-
-                        string[] msg = { "Team ", "mode is enabled. ", sort, "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.pointMode > 0)
-                    {
-                        string[] msg = { "Points ", "limit is ", $"[{Convert.ToString(RCSettings.pointMode)}]", "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.disableRock > 0)
-                    {
-                        string[] msg = { "Punks Rock-Throwing ", "is disabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.spawnMode > 0)
-                    {
-                        string[] msg = { "Custom Spawn Rate ", "is:", $"\n[{RCSettings.nRate.ToString("F2")}% Normal]" + $"\n[{RCSettings.aRate.ToString("F2")}% Abnormal]" + $"\n[{RCSettings.jRate.ToString("F2")}% Jumper]" + $"\n[{RCSettings.cRate.ToString("F2")}% Crawler]" + $"\n[{RCSettings.pRate.ToString("F2")}% Punk]" };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.explodeMode > 0)
-                    {
-                        string[] msg = { "Explode ", "radius is ", $"[{Convert.ToString(RCSettings.explodeMode)}]", "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.healthMode > 0)
-                    {
-                        var mode = "Static ";
-                        if (RCSettings.healthMode == 2)
-                        {
-                            mode = "Scaled ";
-                        }
-
-                        string[] msg = { mode + "Health ", "amount is ", $"[{Convert.ToString(RCSettings.healthLower)} - {Convert.ToString(RCSettings.healthUpper)}]", "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.infectionMode > 0)
-                    {
-                        string[] msg = { "Infection ", "mode with ", $"[{Convert.ToString(RCSettings.infectionMode)}]", " infected on start." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.damageMode > 0)
-                    {
-                        string[] msg = { "Minimum Nape Damage ", "is ", $"[{Convert.ToString(RCSettings.damageMode)}]", "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.moreTitans > 0)
-                    {
-                        string[] msg = { "Custom Titans Amount ", "is ", $"[{Convert.ToString(RCSettings.moreTitans)}]", "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.sizeMode > 0)
-                    {
-                        string[] msg = { "Custom Titans Size ", "is ", $"[{RCSettings.sizeLower.ToString("F2")} - {RCSettings.sizeUpper.ToString("F2")}]", "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.banEren > 0)
-                    {
-                        string[] msg = { "Anti-Eren ", "mode is enabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.waveModeOn == 1)
-                    {
-                        string[] msg = { "Custom Titans/Wave ", "amount is ", $"[{Convert.ToString(RCSettings.waveModeNum)}]", "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.friendlyMode > 0)
-                    {
-                        string[] msg = { "Friendly ", "mode is enabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.pvpMode > 0)
-                    {
-                        var mode = "";
-                        if (RCSettings.pvpMode == 1)
-                        {
-                            mode = "Team ";
-                        }
-                        else if (RCSettings.pvpMode == 2)
-                        {
-                            mode = "FFA ";
-                        }
-
-                        string[] msg = { mode + "PVP ", "mode is enabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.maxWave > 0)
-                    {
-                        string[] msg = { "Custom Maximum Wave ", "is ", $"[{RCSettings.maxWave.ToString()}]", "." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.horseMode > 0)
-                    {
-                        string[] msg = { "Horses ", "are enabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.ahssReload > 0)
-                    {
-                        string[] msg = { "AHSS Air-Reloading ", "is disabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.punkWaves > 0)
-                    {
-                        string[] msg = { "Punk Waves Override ", "is enabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.endlessMode > 0)
-                    {
-                        string[] msg = { "Endless Respawn ", "is ", $"[{RCSettings.endlessMode.ToString()}]", " seconds." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.globalDisableMinimap > 0)
-                    {
-                        string[] msg = { "Minimaps ", "are disabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.deadlyCannons > 0)
-                    {
-                        string[] msg = { "Deadly Cannons ", "mode is enabled." };
-                        SystemMessageLocal(msg, false);
-                    }
-
-                    if (RCSettings.motd != string.Empty)
-                    {
-                        string[] msg = { "MOTD:\n", RCSettings.motd };
-                        SystemMessageLocal(msg, false);
-                    }
+                    Rules();
                 }
                 break;
 
             default:
                 SystemMessageLocal("Unknown command.");
                 break;
+        }
+    }
+
+    private static void Rules()
+    {
+        if (Settings.LegacyChatSetting)
+        {
+            AddLineRC("Currently activated gamemodes:");
+            if (RCSettings.bombMode > 0)
+            {
+                AddLineRC("Bomb mode is on.");
+            }
+            if (RCSettings.teamMode > 0)
+            {
+                if (RCSettings.teamMode == 1)
+                {
+                    AddLineRC("Team mode is on (no sort).");
+                }
+                else if (RCSettings.teamMode == 2)
+                {
+                    AddLineRC("Team mode is on (sort by size).");
+                }
+                else if (RCSettings.teamMode == 3)
+                {
+                    AddLineRC("Team mode is on (sort by skill).");
+                }
+            }
+            if (RCSettings.pointMode > 0)
+            {
+                AddLineRC("Point mode is on (" + Convert.ToString(RCSettings.pointMode) + ").");
+            }
+            if (RCSettings.disableRock > 0)
+            {
+                AddLineRC("Punk Rock-Throwing is disabled.");
+            }
+            if (RCSettings.spawnMode > 0)
+            {
+                AddLineRC("Custom spawn rate is on (" + RCSettings.nRate.ToString("F2") + "% Normal, " + RCSettings.aRate.ToString("F2") + "% Abnormal, " + RCSettings.jRate.ToString("F2") + "% Jumper, " + RCSettings.cRate.ToString("F2") + "% Crawler, " + RCSettings.pRate.ToString("F2") + "% Punk");
+            }
+            if (RCSettings.explodeMode > 0)
+            {
+                AddLineRC("Titan explode mode is on (" + Convert.ToString(RCSettings.explodeMode) + ").");
+            }
+            if (RCSettings.healthMode > 0)
+            {
+                AddLineRC("Titan health mode is on (" + Convert.ToString(RCSettings.healthLower) + "-" + Convert.ToString(RCSettings.healthUpper) + ").");
+            }
+            if (RCSettings.infectionMode > 0)
+            {
+                AddLineRC("Infection mode is on (" + Convert.ToString(RCSettings.infectionMode) + ").");
+            }
+            if (RCSettings.damageMode > 0)
+            {
+                AddLineRC("Minimum nape damage is on (" + Convert.ToString(RCSettings.damageMode) + ").");
+            }
+            if (RCSettings.moreTitans > 0)
+            {
+                AddLineRC("Custom titan # is on (" + Convert.ToString(RCSettings.moreTitans) + ").");
+            }
+            if (RCSettings.sizeMode > 0)
+            {
+                AddLineRC("Custom titan size is on (" + RCSettings.sizeLower.ToString("F2") + "," + RCSettings.sizeUpper.ToString("F2") + ").");
+            }
+            if (RCSettings.banEren > 0)
+            {
+                AddLineRC("Anti-Eren is on. Using Titan eren will get you kicked.");
+            }
+            if (RCSettings.waveModeOn == 1)
+            {
+                AddLineRC("Custom wave mode is on (" + Convert.ToString(RCSettings.waveModeNum) + ").");
+            }
+            if (RCSettings.friendlyMode > 0)
+            {
+                AddLineRC("Friendly-Fire disabled. PVP is prohibited.");
+            }
+            if (RCSettings.pvpMode > 0)
+            {
+                if (RCSettings.pvpMode == 1)
+                {
+                    AddLineRC("AHSS/Blade PVP is on (team-based).");
+                }
+                else if (RCSettings.pvpMode == 2)
+                {
+                    AddLineRC("AHSS/Blade PVP is on (FFA).");
+                }
+            }
+            if (RCSettings.maxWave > 0)
+            {
+                AddLineRC("Max Wave set to " + RCSettings.maxWave.ToString());
+            }
+            if (RCSettings.horseMode > 0)
+            {
+                AddLineRC("Horses are enabled.");
+            }
+            if (RCSettings.ahssReload > 0)
+            {
+                AddLineRC("AHSS Air-Reload disabled.");
+            }
+            if (RCSettings.punkWaves > 0)
+            {
+                AddLineRC("Punk override every 5 waves enabled.");
+            }
+            if (RCSettings.endlessMode > 0)
+            {
+                AddLineRC("Endless Respawn is enabled (" + RCSettings.endlessMode.ToString() + " seconds).");
+            }
+            if (RCSettings.globalDisableMinimap > 0)
+            {
+                AddLineRC("Minimap are disabled.");
+            }
+            if (RCSettings.motd != string.Empty)
+            {
+                AddLineRC("MOTD:" + RCSettings.motd);
+            }
+            if (RCSettings.deadlyCannons > 0)
+            {
+                AddLineRC("Cannons will kill humans.");
+            }
+        }
+        else
+        {
+            if (RCSettings.bombMode > 0)
+            {
+                string[] msg = { "Bomb mode is enabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.teamMode > 0)
+            {
+                var sort = "Unsorted";
+                if (RCSettings.teamMode == 2)
+                {
+                    sort = "Sorted by size";
+                }
+                else if (RCSettings.teamMode == 3)
+                {
+                    sort = "Sorted by skill";
+                }
+
+                string[] msg = { "Team mode is enabled. ", sort, "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.pointMode > 0)
+            {
+                string[] msg = { "Points limit is ", $"[{Convert.ToString(RCSettings.pointMode)}]", "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.disableRock > 0)
+            {
+                string[] msg = { "Punks Rock-Throwing is disabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.spawnMode > 0)
+            {
+                string[] msg = { "Custom Spawn Rate is:", $"\n[{RCSettings.nRate.ToString("F2")}% Normal]" + $"\n[{RCSettings.aRate.ToString("F2")}% Abnormal]" + $"\n[{RCSettings.jRate.ToString("F2")}% Jumper]" + $"\n[{RCSettings.cRate.ToString("F2")}% Crawler]" + $"\n[{RCSettings.pRate.ToString("F2")}% Punk]" };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.explodeMode > 0)
+            {
+                string[] msg = { "Explode radius is ", $"[{Convert.ToString(RCSettings.explodeMode)}]", "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.healthMode > 0)
+            {
+                var mode = "Static ";
+                if (RCSettings.healthMode == 2)
+                {
+                    mode = "Scaled ";
+                }
+
+                string[] msg = { mode + "Health amount is ", $"[{Convert.ToString(RCSettings.healthLower)} - {Convert.ToString(RCSettings.healthUpper)}]", "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.infectionMode > 0)
+            {
+                string[] msg = { "Infection mode with ", $"[{Convert.ToString(RCSettings.infectionMode)}]", " infected on start." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.damageMode > 0)
+            {
+                string[] msg = { "Minimum Nape Damage is ", $"[{Convert.ToString(RCSettings.damageMode)}]", "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.moreTitans > 0)
+            {
+                string[] msg = { "Custom Titans Amount is ", $"[{Convert.ToString(RCSettings.moreTitans)}]", "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.sizeMode > 0)
+            {
+                string[] msg = { "Custom Titans Size is ", $"[{RCSettings.sizeLower.ToString("F2")} - {RCSettings.sizeUpper.ToString("F2")}]", "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.banEren > 0)
+            {
+                string[] msg = { "Anti-Eren mode is enabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.waveModeOn == 1)
+            {
+                string[] msg = { "Custom Titans/Wave amount is ", $"[{Convert.ToString(RCSettings.waveModeNum)}]", "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.friendlyMode > 0)
+            {
+                string[] msg = { "Friendly mode is enabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.pvpMode > 0)
+            {
+                var mode = "";
+                if (RCSettings.pvpMode == 1)
+                {
+                    mode = "Team ";
+                }
+                else if (RCSettings.pvpMode == 2)
+                {
+                    mode = "FFA ";
+                }
+
+                string[] msg = { mode + "PVP mode is enabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.maxWave > 0)
+            {
+                string[] msg = { "Custom Maximum Wave is ", $"[{RCSettings.maxWave.ToString()}]", "." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.horseMode > 0)
+            {
+                string[] msg = { "Horses are enabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.ahssReload > 0)
+            {
+                string[] msg = { "AHSS Air-Reloading is disabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.punkWaves > 0)
+            {
+                string[] msg = { "Punk Waves Override is enabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.endlessMode > 0)
+            {
+                string[] msg = { "Endless Respawn is ", $"[{RCSettings.endlessMode.ToString()}]", " seconds." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.globalDisableMinimap > 0)
+            {
+                string[] msg = { "Minimaps are disabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.deadlyCannons > 0)
+            {
+                string[] msg = { "Deadly Cannons mode is enabled." };
+                SystemMessageLocal(msg, true);
+            }
+
+            if (RCSettings.motd != string.Empty)
+            {
+                string[] msg = { "MOTD:\n", RCSettings.motd };
+                SystemMessageLocal(msg, false);
+            }
         }
     }
 
@@ -725,20 +947,20 @@ public class InRoomChat : MonoBehaviour
 
         if (Event.current.type == EventType.KeyDown)
         {
-            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') && !IN_GAME_MAIN_CAMERA.isPausing && FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab)
+            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') && !IN_GAME_MAIN_CAMERA.isPausing && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn && FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab)
             {
                 Event.current.Use();
                 goto Label_219C;
             }
         }
-        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None && Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] && GUI.GetNameOfFocusedControl() != "ChatInput")
+        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None && Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] && GUI.GetNameOfFocusedControl() != "ChatInput" && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn)
         {
             inputLine = string.Empty;
             GUI.FocusControl("ChatInput");
             goto Label_219C;
         }
 
-        if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return))
+        if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return) && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn)
         {
             if (!string.IsNullOrEmpty(inputLine))
             {

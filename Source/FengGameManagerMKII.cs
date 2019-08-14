@@ -266,8 +266,15 @@ public class FengGameManagerMKII : MonoBehaviour
 
             if (Settings.ChatFeedSetting)
             {
-                string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round Start." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                if (Settings.LegacyChatSetting)
+                {
+                    InRoomChat.AddLineRC("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round Start.");
+                }
+                else
+                {
+                    string[] msg = { $"({roundTime.ToString("F2")}) ", "Round Start." };
+                    InRoomChat.SystemMessageLocal(msg, false);
+                }
             }
         }
 
@@ -286,8 +293,16 @@ public class FengGameManagerMKII : MonoBehaviour
             content = sender + ": " + content;
         }
 
-        content = InRoomChat.ChatFormatting($"[{Convert.ToString(info.sender.ID)}] ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + content;
-        InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
+        if (Settings.LegacyChatSetting)
+        {
+            content = "<color=#FFC000>[" + Convert.ToString(info.sender.ID) + "]</color> " + content;
+            InRoomChat.AddLine(content);
+        }
+        else
+        {
+            content = InRoomChat.ChatFormatting($"[{Convert.ToString(info.sender.ID)}] ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + content;
+            InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
+        }
     }
 
     [RPC]
@@ -295,7 +310,15 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         Logger.LogChat(Application.dataPath + "/chat.txt", content, info);
         content = InRoomChat.ChatFormatting("Message from ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting($"[{Convert.ToString(info.sender.ID)}]", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + info.sender.Name.hexColor() + content;
-        InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
+        if (Settings.LegacyChatSetting)
+        {
+            content = "<color=#FFC000>FROM [" + Convert.ToString(info.sender.ID) + "]</color> " + content;
+            InRoomChat.AddLine(content);
+        }
+        else
+        {
+            InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
+        }
     }
 
     private Hashtable checkGameGUI()
@@ -2448,8 +2471,15 @@ public class FengGameManagerMKII : MonoBehaviour
                 photonView.RPC("netGameLose", PhotonTargets.Others, parameters);
                 if (Settings.ChatFeedSetting)
                 {
-                    string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Lose]" };
-                    InRoomChat.SystemMessageLocal(msg, false);
+                    if (Settings.LegacyChatSetting)
+                    {
+                        InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game lose).");
+                    }
+                    else
+                    {
+                        string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Lose]" };
+                        InRoomChat.SystemMessageLocal(msg, false);
+                    }
                 }
             }
         }
@@ -2478,8 +2508,15 @@ public class FengGameManagerMKII : MonoBehaviour
                     photonView.RPC("netGameWin", PhotonTargets.Others, parameters);
                     if (Settings.ChatFeedSetting)
                     {
-                        string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Win]" };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        if (Settings.LegacyChatSetting)
+                        {
+                            InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                        }
+                        else
+                        {
+                            string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Win]" };
+                            InRoomChat.SystemMessageLocal(msg, false);
+                        }
                     }
                 }
             }
@@ -2492,8 +2529,15 @@ public class FengGameManagerMKII : MonoBehaviour
                     photonView.RPC("netGameWin", PhotonTargets.Others, objArray3);
                     if (Settings.ChatFeedSetting)
                     {
-                        string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Win]" };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        if (Settings.LegacyChatSetting)
+                        {
+                            InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                        }
+                        else
+                        {
+                            string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Win]" };
+                            InRoomChat.SystemMessageLocal(msg, false);
+                        }
                     }
                 }
 
@@ -2508,8 +2552,15 @@ public class FengGameManagerMKII : MonoBehaviour
                     photonView.RPC("netGameWin", PhotonTargets.Others, objArray4);
                     if (Settings.ChatFeedSetting)
                     {
-                        string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Win]" };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        if (Settings.LegacyChatSetting)
+                        {
+                            InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                        }
+                        else
+                        {
+                            string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Win]" };
+                            InRoomChat.SystemMessageLocal(msg, false);
+                        }
                     }
                 }
             }
@@ -4339,8 +4390,15 @@ public class FengGameManagerMKII : MonoBehaviour
         gameEndCD = gameEndTotalCDtime;
         if (Settings.ChatFeedSetting)
         {
-            string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Lose]" };
-            InRoomChat.SystemMessageLocal(msg, false);
+            if (Settings.LegacyChatSetting)
+            {
+                InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game lose).");
+            }
+            else
+            {
+                string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Lose]" };
+                InRoomChat.SystemMessageLocal(msg, false);
+            }
         }
 
         if (info.sender != PhotonNetwork.masterClient && !info.sender.isLocal && PhotonNetwork.isMasterClient)
@@ -4378,8 +4436,15 @@ public class FengGameManagerMKII : MonoBehaviour
 
         if (Settings.ChatFeedSetting)
         {
-            string[] msg = { $"[{roundTime.ToString("F2")}] ", "Round ended. ", "[Game Win]" };
-            InRoomChat.SystemMessageLocal(msg, false);
+            if (Settings.LegacyChatSetting)
+            {
+                InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+            }
+            else
+            {
+                string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Win]" };
+                InRoomChat.SystemMessageLocal(msg, false);
+            }
         }
 
         if (!(info.sender == PhotonNetwork.masterClient || info.sender.isLocal))
@@ -7300,15 +7365,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.bombMode != (int)hash["bomb"])
             {
                 RCSettings.bombMode = (int)hash["bomb"];
-                string[] msg = { "Bomb ", "mode is enabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Bomb mode is enabled." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.bombMode != 0)
         {
             RCSettings.bombMode = 0;
-            string[] msg = { "Bomb ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Bomb mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
             if (PhotonNetwork.isMasterClient)
             {
                 restartingBomb = true;
@@ -7320,15 +7385,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.globalDisableMinimap != (int)hash["globalDisableMinimap"])
             {
                 RCSettings.globalDisableMinimap = (int)hash["globalDisableMinimap"];
-                string[] msg = { "Minimaps ", "are disabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Minimaps are disabled." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.globalDisableMinimap != 0)
         {
             RCSettings.globalDisableMinimap = 0;
-            string[] msg = { "Minimaps ", "are enabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Minimaps are enabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("horse"))
@@ -7336,15 +7401,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.horseMode != (int)hash["horse"])
             {
                 RCSettings.horseMode = (int)hash["horse"];
-                string[] msg = { "Horses ", "are enabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Horses are enabled." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.horseMode != 0)
         {
             RCSettings.horseMode = 0;
-            string[] msg = { "Horses ", "are disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Horses are disabled." };
+            InRoomChat.SystemMessageLocal(msg);
             if (PhotonNetwork.isMasterClient)
             {
                 restartingHorse = true;
@@ -7356,15 +7421,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.punkWaves != (int)hash["punkWaves"])
             {
                 RCSettings.punkWaves = (int)hash["punkWaves"];
-                string[] msg = { "Punk Waves Override ", "is enabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Punk Waves Override is enabled." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.punkWaves != 0)
         {
             RCSettings.punkWaves = 0;
-            string[] msg = { "Punk Waves Override ", "is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Punk Waves Override is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("ahssReload"))
@@ -7372,15 +7437,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.ahssReload != (int)hash["ahssReload"])
             {
                 RCSettings.ahssReload = (int)hash["ahssReload"];
-                string[] msg = { "AHSS Air-Reloading ", "is disabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "AHSS Air-Reloading is disabled." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.ahssReload != 0)
         {
             RCSettings.ahssReload = 0;
-            string[] msg = { "AHSS Air-Reloading ", "is enabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "AHSS Air-Reloading is enabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("team"))
@@ -7402,8 +7467,8 @@ public class FengGameManagerMKII : MonoBehaviour
                     sort = "Sorted by Skill";
                 }
 
-                string[] msg = { "Team ", "mode is enabled. ", sort, "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Team mode is enabled. ", sort, "." };
+                InRoomChat.SystemMessageLocal(msg);
 
                 if (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCteam]) == 0)
                 {
@@ -7415,8 +7480,8 @@ public class FengGameManagerMKII : MonoBehaviour
         {
             RCSettings.teamMode = 0;
             setTeam(0);
-            string[] msg = { "Team ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Team mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("point"))
@@ -7424,15 +7489,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.pointMode != (int)hash["point"])
             {
                 RCSettings.pointMode = (int)hash["point"];
-                string[] msg = { "Points ", "limit is ", $"[{Convert.ToString(RCSettings.pointMode)}]", "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Points limit is ", $"[{Convert.ToString(RCSettings.pointMode)}]", "." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.pointMode != 0)
         {
             RCSettings.pointMode = 0;
-            string[] msg = { "Points ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Points mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("rock"))
@@ -7440,15 +7505,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.disableRock != (int)hash["rock"])
             {
                 RCSettings.disableRock = (int)hash["rock"];
-                string[] msg = { "Punks Rock-Throwing ", "is disabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Punks Rock-Throwing is disabled." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.disableRock != 0)
         {
             RCSettings.disableRock = 0;
-            string[] msg = { "Punks Rock-Throwing ", "is enabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Punks Rock-Throwing is enabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("explode"))
@@ -7456,15 +7521,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.explodeMode != (int)hash["explode"])
             {
                 RCSettings.explodeMode = (int)hash["explode"];
-                string[] msg = { "Explode ", "radius is ", $"[{Convert.ToString(RCSettings.explodeMode)}", "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Explode radius is ", $"[{Convert.ToString(RCSettings.explodeMode)}", "." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.explodeMode != 0)
         {
             RCSettings.explodeMode = 0;
-            string[] msg = { "Explode ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Explode mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("healthMode") && hash.ContainsKey("healthLower") && hash.ContainsKey("healthUpper"))
@@ -7480,8 +7545,8 @@ public class FengGameManagerMKII : MonoBehaviour
                     mode = "Scaled ";
                 }
 
-                string[] msg = { mode + "Health ", " amount is ", $"[{Convert.ToString(RCSettings.healthLower)} - {Convert.ToString(RCSettings.healthUpper)}]", "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { mode + "Health amount is ", $"[{Convert.ToString(RCSettings.healthLower)} - {Convert.ToString(RCSettings.healthUpper)}]", "." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.healthMode != 0 || RCSettings.healthLower != 0 || RCSettings.healthUpper != 0)
@@ -7489,8 +7554,8 @@ public class FengGameManagerMKII : MonoBehaviour
             RCSettings.healthMode = 0;
             RCSettings.healthLower = 0;
             RCSettings.healthUpper = 0;
-            string[] msg = { "Health ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Health mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("infection"))
@@ -7502,8 +7567,8 @@ public class FengGameManagerMKII : MonoBehaviour
                 hashtable = new Hashtable();
                 hashtable.Add(PhotonPlayerProperty.RCteam, 0);
                 PhotonNetwork.player.SetCustomProperties(hashtable);
-                string[] msg = { "Infection ", "mode with ", $"[{Convert.ToString(RCSettings.infectionMode)}]", " infected on start." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Infection mode with ", $"[{Convert.ToString(RCSettings.infectionMode)}]", " infected on start." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.infectionMode != 0)
@@ -7512,8 +7577,8 @@ public class FengGameManagerMKII : MonoBehaviour
             hashtable = new Hashtable();
             hashtable.Add(PhotonPlayerProperty.isTitan, 1);
             PhotonNetwork.player.SetCustomProperties(hashtable);
-            string[] msg = { "Infection ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Infection mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
 
             if (PhotonNetwork.isMasterClient)
             {
@@ -7526,8 +7591,8 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.banEren != (int)hash["eren"])
             {
                 RCSettings.banEren = (int)hash["eren"];
-                string[] msg = { "Anti-Eren ", "mode is enabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Anti-Eren mode is enabled." };
+                InRoomChat.SystemMessageLocal(msg);
                 if (PhotonNetwork.isMasterClient)
                 {
                     restartingEren = true;
@@ -7537,8 +7602,8 @@ public class FengGameManagerMKII : MonoBehaviour
         else if (RCSettings.banEren != 0)
         {
             RCSettings.banEren = 0;
-            string[] msg = { "Anti-Eren ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Anti-Eren mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("titanc"))
@@ -7546,15 +7611,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.moreTitans != (int)hash["titanc"])
             {
                 RCSettings.moreTitans = (int)hash["titanc"];
-                string[] msg = { "Custom Titans Amount ", "is ", $"[{Convert.ToString(RCSettings.moreTitans)}]", "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Custom Titans Amount is ", $"[{Convert.ToString(RCSettings.moreTitans)}]", "." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.moreTitans != 0)
         {
             RCSettings.moreTitans = 0;
-            string[] msg = { "Custom Titans Amount ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Custom Titans Amount mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("damage"))
@@ -7562,15 +7627,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.damageMode != (int)hash["damage"])
             {
                 RCSettings.damageMode = (int)hash["damage"];
-                string[] msg = { "Minimum Nape Damage ", "is ", $"[{Convert.ToString(RCSettings.damageMode)}]", "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Minimum Nape Damage is ", $"[{Convert.ToString(RCSettings.damageMode)}]", "." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.damageMode != 0)
         {
             RCSettings.damageMode = 0;
-            string[] msg = { "Minimum Nape Damage ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Minimum Nape Damage mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("sizeMode") && hash.ContainsKey("sizeLower") && hash.ContainsKey("sizeUpper"))
@@ -7580,8 +7645,8 @@ public class FengGameManagerMKII : MonoBehaviour
                 RCSettings.sizeMode = (int)hash["sizeMode"];
                 RCSettings.sizeLower = (float)hash["sizeLower"];
                 RCSettings.sizeUpper = (float)hash["sizeUpper"];
-                string[] msg = { "Custom Titans Size ", "is ", $"[{RCSettings.sizeLower.ToString("F2")} - {RCSettings.sizeUpper.ToString("F2")}]", "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Custom Titans Size is ", $"[{RCSettings.sizeLower.ToString("F2")} - {RCSettings.sizeUpper.ToString("F2")}]", "." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.sizeMode != 0 || RCSettings.sizeLower != 0f || RCSettings.sizeUpper != 0f)
@@ -7589,8 +7654,8 @@ public class FengGameManagerMKII : MonoBehaviour
             RCSettings.sizeMode = 0;
             RCSettings.sizeLower = 0f;
             RCSettings.sizeUpper = 0f;
-            string[] msg = { "Custom Titans Size ", "mode is enabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Custom Titans Size mode is enabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("spawnMode") && hash.ContainsKey("nRate") && hash.ContainsKey("aRate") && hash.ContainsKey("jRate") && hash.ContainsKey("cRate") && hash.ContainsKey("pRate"))
@@ -7603,8 +7668,8 @@ public class FengGameManagerMKII : MonoBehaviour
                 RCSettings.jRate = (float)hash["jRate"];
                 RCSettings.cRate = (float)hash["cRate"];
                 RCSettings.pRate = (float)hash["pRate"];
-                string[] msg = { "Custom Spawn Rate ", "is:", $"\n[{RCSettings.nRate.ToString("F2")}% Normal]" + $"\n[{RCSettings.aRate.ToString("F2")}% Abnormal]" + $"\n[{RCSettings.jRate.ToString("F2")}% Jumper]" + $"\n[{RCSettings.cRate.ToString("F2")}% Crawler]" + $"\n[{RCSettings.pRate.ToString("F2")}% Punk]" };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Custom Spawn Rate is:", $"\n[{RCSettings.nRate.ToString("F2")}% Normal]" + $"\n[{RCSettings.aRate.ToString("F2")}% Abnormal]" + $"\n[{RCSettings.jRate.ToString("F2")}% Jumper]" + $"\n[{RCSettings.cRate.ToString("F2")}% Crawler]" + $"\n[{RCSettings.pRate.ToString("F2")}% Punk]" };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.spawnMode != 0 || RCSettings.nRate != 0f || RCSettings.aRate != 0f || RCSettings.jRate != 0f || RCSettings.cRate != 0f || RCSettings.pRate != 0f)
@@ -7615,8 +7680,8 @@ public class FengGameManagerMKII : MonoBehaviour
             RCSettings.jRate = 0f;
             RCSettings.cRate = 0f;
             RCSettings.pRate = 0f;
-            string[] msg = { "Custom Spawn Rate ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Custom Spawn Rate mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("waveModeOn") && hash.ContainsKey("waveModeNum"))
@@ -7625,16 +7690,16 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 RCSettings.waveModeOn = (int)hash["waveModeOn"];
                 RCSettings.waveModeNum = (int)hash["waveModeNum"];
-                string[] msg = { "Custom Titans/Wave ", "amount is ", $"[{Convert.ToString(RCSettings.waveModeNum)}]", "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Custom Titans/Wave amount is ", $"[{Convert.ToString(RCSettings.waveModeNum)}]", "." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.waveModeOn != 0 || RCSettings.waveModeNum != 0)
         {
             RCSettings.waveModeOn = 0;
             RCSettings.waveModeNum = 0;
-            string[] msg = { "Custom Titans/Wave ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Custom Titans/Wave mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("friendly"))
@@ -7642,15 +7707,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.friendlyMode != (int)hash["friendly"])
             {
                 RCSettings.friendlyMode = (int)hash["friendly"];
-                string[] msg = { "Friendly ", "mode is enabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Friendly mode is enabled." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.friendlyMode != 0)
         {
             RCSettings.friendlyMode = 0;
-            string[] msg = { "Friendly ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Friendly mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("pvp"))
@@ -7668,15 +7733,15 @@ public class FengGameManagerMKII : MonoBehaviour
                     mode = "FFA ";
                 }
 
-                string[] msg = { mode + "PVP ", "mode is enabled." };
+                string[] msg = { mode + "PVP mode is enabled." };
                 InRoomChat.SystemMessageLocal(msg, false);
             }
         }
         else if (RCSettings.pvpMode != 0)
         {
             RCSettings.pvpMode = 0;
-            string[] msg = { "PVP ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "PVP mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("maxwave"))
@@ -7684,15 +7749,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.maxWave != (int)hash["maxwave"])
             {
                 RCSettings.maxWave = (int)hash["maxwave"];
-                string[] msg = { "Custom Maximum Wave ", "is ", $"[{RCSettings.maxWave.ToString()}]", "." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Custom Maximum Wave is ", $"[{RCSettings.maxWave.ToString()}]", "." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.maxWave != 0)
         {
             RCSettings.maxWave = 0;
-            string[] msg = { "Custom Maximum Wave ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Custom Maximum Wave mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("endless"))
@@ -7700,15 +7765,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.endlessMode != (int)hash["endless"])
             {
                 RCSettings.endlessMode = (int)hash["endless"];
-                string[] msg = { "Endless Respawn ", "is ", $"[{RCSettings.endlessMode.ToString()}]", " seconds." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Endless Respawn is ", $"[{RCSettings.endlessMode.ToString()}]", " seconds." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.endlessMode != 0)
         {
             RCSettings.endlessMode = 0;
-            string[] msg = { "Endless Respawn ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Endless Respawn mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("deadlycannons"))
@@ -7716,15 +7781,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.deadlyCannons != (int)hash["deadlycannons"])
             {
                 RCSettings.deadlyCannons = (int)hash["deadlycannons"];
-                string[] msg = { "Deadly Cannons ", "mode is enabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Deadly Cannons mode is enabled." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.deadlyCannons != 0)
         {
             RCSettings.deadlyCannons = 0;
-            string[] msg = { "Deadly Cannons ", "mode is disabled." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Deadly Cannons mode is disabled." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("asoracing"))
@@ -7732,15 +7797,15 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.racingStatic != (int)hash["asoracing"])
             {
                 RCSettings.racingStatic = (int)hash["asoracing"];
-                string[] msg = { "Racing ", "will not restart on finish." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                string[] msg = { "Racing will not restart on finish." };
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.racingStatic != 0)
         {
             RCSettings.racingStatic = 0;
-            string[] msg = { "Racing ", "will restart on finish." };
-            InRoomChat.SystemMessageLocal(msg, false);
+            string[] msg = { "Racing will restart on finish." };
+            InRoomChat.SystemMessageLocal(msg);
         }
 
         if (hash.ContainsKey("motd"))
@@ -9242,8 +9307,17 @@ public class FengGameManagerMKII : MonoBehaviour
         killInfoGO.Add(obj3);
         if (Settings.ChatFeedSetting)
         {
-            var msg = InRoomChat.ChatFormatting($"[{roundTime.ToString("F2")}] ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + killer.hexColor() + InRoomChat.ChatFormatting(" killed ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + (victim.Contains("[") ? victim.hexColor() : InRoomChat.ChatFormatting(victim, Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1])) + InRoomChat.ChatFormatting(" for ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting(dmg.ToString(), Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + InRoomChat.ChatFormatting(" damage.", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]);
-            InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
+            if (Settings.LegacyChatSetting)
+            {
+                string str2 = ("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> ") + killer.hexColor() + " killed ";
+                string newLine = str2 + victim.hexColor() + " for " + dmg.ToString() + " damage.";
+                InRoomChat.AddLine(newLine);
+            }
+            else
+            {
+                var msg = InRoomChat.ChatFormatting($"[{roundTime.ToString("F2")}] ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + killer.hexColor() + InRoomChat.ChatFormatting(" killed ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + (victim.Contains("[") ? victim.hexColor() : InRoomChat.ChatFormatting(victim, Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1])) + InRoomChat.ChatFormatting(" for ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting(dmg.ToString(), Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + InRoomChat.ChatFormatting(" damage.", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]);
+                InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
+            }
         }
 
         if (killer.Equals(RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name])))
