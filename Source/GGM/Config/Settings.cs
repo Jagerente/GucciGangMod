@@ -195,6 +195,7 @@ namespace GGM.Config
         public static IntSetting AutoReviveTimeSetting = new IntSetting("GGM_AutoReviveTime", 5);
         public static IntSetting ChatSizeSetting = new IntSetting("GGM_ChatSize", 13);
         public static IntSetting ConnectionProtocolSettings = new IntSetting("GGM_ConnectionProtocol");
+        public static IntSetting InfoPanelPageSetting = new IntSetting("GGM_InfoPanelPage");
 
         //Video
         public static IntSetting TexturesSetting = new IntSetting("GGM_Textures", 2);

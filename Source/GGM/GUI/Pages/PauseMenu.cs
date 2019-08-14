@@ -1,6 +1,7 @@
 ﻿using GGM.Caching;
 using System;
 using System.Linq;
+using System.Net;
 using UnityEngine;
 using static GGM.Config.Settings;
 using static GGM.GUI.Elements;
@@ -10,6 +11,10 @@ namespace GGM.GUI.Pages
 {
     internal class PauseMenu : Page
     {
+        private static float[] ControlPanelProportion = { 0.35f, 0.4f, 0.25f };
+
+        private static PhotonPlayer ChosenPlayer;
+
         #region Switchers
 
         private static int pauseMenuSwitchInt;
@@ -28,7 +33,7 @@ namespace GGM.GUI.Pages
         private static readonly string[] cameraTypes = { "Original", "TPS", "WOW", "OldTPS" };
         private static readonly string[] speedometerTypes = { "Off", "Speed", "Damage" };
         private static readonly string[] ahssSpeedometerTypes = { "Both", "Single", "Double" };
-        private static readonly string[] serverPages = { "Titans", "Humans", "Misc" };
+        private static readonly string[] serverPages = { "Titans", "Humans", "Misc", "Control Panel" };
         private static readonly string[] healthTypes = { "Fixed", "Static" };
         private static readonly string[] pvpTypes = { "Teams", "FFA" };
         private static readonly string[] teamTypes = { "Off", "Size", "Skill" };
@@ -67,6 +72,8 @@ namespace GGM.GUI.Pages
 
         private static readonly string[] cannonTypes = { "Ground", "Wall" };
 
+        private static readonly string[] infoPanel = { "Info", "RPC", "Events", "Props" };
+
         #endregion Strings
 
         #region Scrolls
@@ -81,6 +88,9 @@ namespace GGM.GUI.Pages
         private static Vector2 scrollLocationSkinsForestRight = Vector2.zero;
         private static Vector2 scrollLocationSkinsCityLeft = Vector2.zero;
         private static Vector2 scrollLocationSkinsCityRight = Vector2.zero;
+        private static Vector2 scrollControlPanelLeft = Vector2.zero;
+        private static Vector2 scrollControlPanelCenter = Vector2.zero;
+        private static Vector2 scrollControlPanelRight = Vector2.zero;
 
         #endregion Scrolls
 
@@ -377,7 +387,7 @@ namespace GGM.GUI.Pages
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.FlexibleSpace();
-                    Grid(string.Empty, ref serverSwitch, serverPages, width: 225f, height: 25f);
+                    Grid(string.Empty, ref serverSwitch, serverPages, width: 425, height: 25f);
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
                 }
@@ -533,6 +543,139 @@ namespace GGM.GUI.Pages
                             Grid("Anti Titan Eren", ref AntiTitanErenSetting.Value);
                         }
                         GUILayout.EndArea();
+                        break;
+                    }
+
+                case 3:
+                    {
+                        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
+                        {
+                            if (Extensions.AllProps == null) Extensions.AllProps = System.IO.File.ReadAllLines(Application.dataPath + "/props.txt");
+                            if (ChosenPlayer == null) ChosenPlayer = PhotonNetwork.player;
+
+                            GUILayout.BeginArea(new Rect(leftPos + 20f, topPos + 100f, fullAreaWidth * ControlPanelProportion[0] - 10f, fullAreaHeight - 40f));
+                            {
+                                Label("Players", LabelType.Header, width: fullAreaWidth * ControlPanelProportion[0] - 10f);
+                                scrollControlPanelLeft = GUILayout.BeginScrollView(scrollControlPanelLeft);
+                                {
+                                    foreach (var player in PhotonNetwork.playerList)
+                                    {
+                                        if (GUILayout.Button("[" + player.ID + "] " + player.UIName.hexColor(), GUILayout.Width(fullAreaWidth * ControlPanelProportion[0] - 20f)))
+                                        {
+                                            ChosenPlayer = player;
+                                        }
+                                    }
+                                }
+                                GUILayout.EndScrollView();
+                            }
+                            GUILayout.EndArea();
+
+                            GUILayout.BeginArea(new Rect(leftPos + 20f + fullAreaWidth * ControlPanelProportion[0], topPos + 100f, fullAreaWidth * ControlPanelProportion[1] - 10f, fullAreaHeight - 40f));
+                            {
+                                Label(infoPanel[InfoPanelPageSetting], LabelType.Header, width: fullAreaWidth * ControlPanelProportion[0] - 20f);
+                                scrollControlPanelCenter = GUILayout.BeginScrollView(scrollControlPanelCenter);
+                                {
+                                    switch (InfoPanelPageSetting)
+                                    {
+                                        case 0:
+                                            {
+                                                Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Mod: " + ChosenPlayer.CheckMod(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Guild: " + ((string)ChosenPlayer.customProperties[PhotonPlayerProperty.guildName]).hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Property: " + ChosenPlayer.CheckProps(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Character: " + RCextensions.returnStringFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.character]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("SPD: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.statSPD]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("BLA: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.statBLA]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("GAS: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.statGAS]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("ACL: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.statACL]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb R Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombR]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb G Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombG]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb B Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombB]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                if (ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius] != null)
+                                                {
+                                                    Label("Bomb Radius: " + ((float)ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius] - 20f) / 4, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
+                                                break;
+                                            }
+
+                                        case 1:
+                                            {
+                                                Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                foreach (var RPC in ChosenPlayer.RPCs.Split('\n'))
+                                                {
+                                                    Label(RPC, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
+                                                break;
+                                            }
+
+                                        case 2:
+                                            {
+                                                Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                foreach (var events in ChosenPlayer.Events.Split('\n'))
+                                                {
+                                                    Label(events, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
+                                                break;
+                                            }
+
+                                        case 3:
+                                            {
+                                                Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                foreach (var prop in ChosenPlayer.Props.Split('\n'))
+                                                {
+                                                    Label(prop, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
+                                                break;
+                                            }
+                                    }
+
+                                    GUILayout.Space(1f);
+                                }
+                                GUILayout.EndScrollView();
+                                Grid(string.Empty, ref InfoPanelPageSetting.Value, infoPanel, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                            }
+                            GUILayout.EndArea();
+
+                            GUILayout.BeginArea(new Rect(leftPos + 20f + fullAreaWidth * ControlPanelProportion[0] + fullAreaWidth * ControlPanelProportion[1], topPos + 100f, fullAreaWidth * ControlPanelProportion[2] - 10f, fullAreaHeight - 40f));
+                            {
+                                Label("Actions", LabelType.Header, width: fullAreaWidth * ControlPanelProportion[2] - 20f);
+                                if (GUILayout.Button("Kick", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                {
+                                    Commands.Kick(ChosenPlayer.ID.ToString());
+                                }
+
+                                if (GUILayout.Button("Ban", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                {
+                                    Commands.Ban(ChosenPlayer.ID.ToString());
+                                }
+
+                                if (GUILayout.Button("Reset Stats", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                {
+                                    Commands.ResetKD(ChosenPlayer.ID.ToString(), false);
+                                }
+
+                                if (GUILayout.Button("Revive", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                {
+                                    Commands.Revive(ChosenPlayer.ID.ToString());
+                                }
+
+                                if (GUILayout.Button("Steal Skin", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                {
+                                    if (!HERO.PlayersSkins.ContainsKey(ChosenPlayer.ID)) return;
+                                    var skin = HERO.PlayersSkins[ChosenPlayer.ID];
+                                    HumanSkinsTitlesList.Add(ChosenPlayer.UIName.StripHEX());
+                                    HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
+                                    HumanSkinsList.Add(skin.Split('`'));
+                                    HumanSkinsCountSetting.Value++;
+                                    scrollHumanSkins.y = 9999f;
+                                }
+                            }
+                            GUILayout.EndArea();
+                        }
                         break;
                     }
             }
