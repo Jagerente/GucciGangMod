@@ -175,5 +175,18 @@ namespace GGM
                 GameObjectCache.Find(str).SetActive(true);
             }
         }
+
+        public static void SendToGGMUser(this PhotonView pv, string RPCName, params object[] data)
+        {
+            var targets = PhotonPlayer.GetGGMUsers();
+            if (targets.Length == 0)
+            {
+                return;
+            }
+            foreach (var player in targets)
+            {
+                pv.RPC(RPCName, player, data);
+            }
+        }
     }
 }
