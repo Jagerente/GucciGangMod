@@ -108,6 +108,15 @@ namespace GGM.GUI.Pages
 
                 GUILayout.BeginHorizontal();
                 {
+                    if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
+                    {
+                        Save();
+                        GetInstance<Single>().Disable();
+                        NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, true);
+                    }
+
+                    GUILayout.FlexibleSpace();
+
                     if (GUILayout.Button("Start", GUILayout.Width(120f), GUILayout.Height(35f)))
                     {
                         Save();
@@ -132,14 +141,6 @@ namespace GGM.GUI.Pages
                         FengGameManagerMKII.level = MapStr[map];
                         Application.LoadLevel(MapNameStr[map]);
                         GetInstance<Single>().Disable();
-                    }
-
-                    GUILayout.FlexibleSpace();
-                    if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
-                    {
-                        Save();
-                        GetInstance<Single>().Disable();
-                        NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, true);
                     }
                 }
                 GUILayout.EndHorizontal();

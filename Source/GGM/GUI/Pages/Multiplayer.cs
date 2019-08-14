@@ -311,18 +311,18 @@ namespace GGM.GUI.Pages
                         {
                             GUILayout.BeginHorizontal();
                             {
-                                if (GUILayout.Button("Create", GUILayout.Width(120f), GUILayout.Height(35f)))
-                                {
-                                    Page = 1;
-                                }
-
-                                GUILayout.FlexibleSpace();
-
                                 if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
                                 {
                                     if (PhotonNetwork.connected) PhotonNetwork.Disconnect();
                                     NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, true);
                                     GetInstance<Multiplayer>().Disable();
+                                }
+
+                                GUILayout.FlexibleSpace();
+
+                                if (GUILayout.Button("Create", GUILayout.Width(120f), GUILayout.Height(35f)))
+                                {
+                                    Page = 1;
                                 }
                             }
                             GUILayout.EndHorizontal();
@@ -352,9 +352,9 @@ namespace GGM.GUI.Pages
                             Label("Password", LabelType.Header, width: BoxWidth * Proportion[3] - 10f);
                             TextField(string.Empty, ref PasswordToCreate, BoxWidth * Proportion[3]);
                             Label("Difficulty", LabelType.Header, width: BoxWidth * Proportion[3] - 10f);
-                            Grid(string.Empty, ref DifficultyToCreate, Difficulties, false, width: BoxWidth * Proportion[3]);
+                            Grid(string.Empty, ref DifficultyToCreate, Difficulties, false, width: BoxWidth * Proportion[3] - 10f);
                             Label("Day Time", LabelType.Header, width: BoxWidth * Proportion[3] - 10f);
-                            Grid(string.Empty, ref DayTimeToCreate, DayTimes, false, width: BoxWidth * Proportion[3]);
+                            Grid(string.Empty, ref DayTimeToCreate, DayTimes, false, width: BoxWidth * Proportion[3] - 10f);
                         }
                         GUILayout.EndArea();
 
@@ -399,7 +399,7 @@ namespace GGM.GUI.Pages
                             GUILayout.EndScrollView();
                             GUILayout.BeginHorizontal();
                             {
-                                if (GUILayout.Button("Add"))
+                                if (GUILayout.Button("Add", GUILayout.Width((BoxWidth * Proportion[4] - 10f) / 3f)))
                                 {
                                     PresetsCount++;
                                     CurrentPreset = PresetsCount - 1;
@@ -414,7 +414,7 @@ namespace GGM.GUI.Pages
                                     Save();
                                 }
 
-                                if (GUILayout.Button("Save"))
+                                if (GUILayout.Button("Save", GUILayout.Width((BoxWidth * Proportion[4] - 10f) / 3f)))
                                 {
                                     PresetsTitles[CurrentPreset] = PresetTitle;
                                     MapPresets[CurrentPreset] = MapToCreate;
@@ -427,7 +427,7 @@ namespace GGM.GUI.Pages
                                     Save();
                                 }
 
-                                if (GUILayout.Button("Remove"))
+                                if (GUILayout.Button("Remove", GUILayout.Width((BoxWidth * Proportion[4] - 10f) / 3f)))
                                 {
                                     if (PresetsCount > 1)
                                     {
@@ -453,18 +453,18 @@ namespace GGM.GUI.Pages
                         {
                             GUILayout.BeginHorizontal();
                             {
-                                if (GUILayout.Button("Start", GUILayout.Width(120f), GUILayout.Height(35f)))
+                                if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
                                 {
-                                    PhotonNetwork.offlineMode = Server == 0;
-                                    PhotonNetwork.CreateRoom(string.Concat(ServerNameToCreate, "`", Maps[MapToCreate], "`", Difficulties[DifficultyToCreate], "`", ServerTimeToCreate, "`", DayTimes[DayTimeToCreate], "`", PasswordToCreate.Length > 0 ? new SimpleAES().Encrypt(PasswordToCreate) : string.Empty, "`", Random.Range(0, 50000)), new RoomOptions { isOpen = true, isVisible = true, maxPlayers = MaxPlayersToCreate }, null);
-                                    GetInstance<Multiplayer>().Disable();
+                                    Page = 0;
                                 }
 
                                 GUILayout.FlexibleSpace();
 
-                                if (GUILayout.Button("Back", GUILayout.Width(120f), GUILayout.Height(35f)))
+                                if (GUILayout.Button("Start", GUILayout.Width(120f), GUILayout.Height(35f)))
                                 {
-                                    Page = 0;
+                                    PhotonNetwork.offlineMode = Server == 0;
+                                    PhotonNetwork.CreateRoom(string.Concat(ServerNameToCreate, "`", Maps[MapToCreate], "`", Difficulties[DifficultyToCreate], "`", ServerTimeToCreate, "`", DayTimes[DayTimeToCreate].ToLower(), "`", PasswordToCreate.Length > 0 ? new SimpleAES().Encrypt(PasswordToCreate) : string.Empty, "`", Random.Range(0, 50000)), new RoomOptions { isOpen = true, isVisible = true, maxPlayers = MaxPlayersToCreate }, null);
+                                    GetInstance<Multiplayer>().Disable();
                                 }
                             }
                             GUILayout.EndHorizontal();
