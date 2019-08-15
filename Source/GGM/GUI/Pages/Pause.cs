@@ -4,7 +4,7 @@ using static FengGameManagerMKII;
 
 namespace GGM.GUI.Pages
 {
-    public class Pause : MonoBehaviour
+    public class Pause : Page
     {
         private void OnGUI()
         {
@@ -13,13 +13,12 @@ namespace GGM.GUI.Pages
             {
                 num7 = Screen.width / 2f;
                 num8 = Screen.height / 2f;
-                UnityEngine.GUI.backgroundColor = new Color(0.08f, 0.3f, 0.4f, 1f);
-                UnityEngine.GUI.DrawTexture(new Rect(num7 - 98f, num8 - 48f, 196f, 96f), ColorCache.Blue);
-                UnityEngine.GUI.Box(new Rect(num7 - 100f, num8 - 50f, 200f, 100f), string.Empty);
+                UnityEngine.GUI.Box(new Rect(num7 - 100f, num8 - 50f, 200f, 100f), ColorCache.Textures[ColorCache.PurpleMunsell]);
                 if (FGM.pauseWaitTime <= 3f)
                 {
                     UnityEngine.GUI.Label(new Rect(num7 - 43f, num8 - 15f, 200f, 22f), "Unpausing in:");
                     UnityEngine.GUI.Label(new Rect(num7 - 8f, num8 + 5f, 200f, 22f), FGM.pauseWaitTime.ToString("F1"));
+                    if (FGM.pauseWaitTime == 0f) GetInstance<Pause>().Disable();
                 }
                 else
                 {
@@ -32,8 +31,7 @@ namespace GGM.GUI.Pages
                 num8 = Screen.height / 2f;
                 UnityEngine.GUI.backgroundColor = new Color(0.08f, 0.3f, 0.4f, 1f);
                 UnityEngine.GUI.DrawTexture(new Rect(0f, 0f, Screen.width, Screen.height), ColorCache.Black);
-                UnityEngine.GUI.DrawTexture(new Rect(num7 - 98f, num8 - 48f, 196f, 146f), ColorCache.Blue);
-                UnityEngine.GUI.Box(new Rect(num7 - 100f, num8 - 50f, 200f, 150f), string.Empty);
+                UnityEngine.GUI.Box(new Rect(num7 - 100f, num8 - 50f, 200f, 150f), ColorCache.Textures[ColorCache.PurpleMunsell]);
                 var length = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.currentLevel]).Length;
                 var num50 = RCextensions.returnStringFromObject(PhotonNetwork.masterClient.customProperties[PhotonPlayerProperty.currentLevel]).Length;
                 UnityEngine.GUI.Label(new Rect(num7 - 60f, num8 - 30f, 200f, 22f), "Loading Level (" + length + "/" + num50 + ")");
