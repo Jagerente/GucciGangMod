@@ -138,7 +138,7 @@ namespace GGM.Config
         public static FloatSetting[] SizeSettings = { new FloatSetting("GGM_MinimumSize", 2.5f), new FloatSetting("GGM_MaximumSize", 3f) };
         public static FloatSetting ChatOpacitySetting = new FloatSetting("GGM_ChatOpacity", 0.3f);
         public static FloatSetting ChatHeightSetting = new FloatSetting("GGM_ChatHeight", 470f);
-        public static FloatSetting ChatWidthSetting = new FloatSetting("GGM_ChatHeight", 300f);
+        public static FloatSetting ChatWidthSetting = new FloatSetting("GGM_ChatHWidth", 300f);
 
         //Video
         public static FloatSetting OverallQualitySetting = new FloatSetting("GGM_OverallQuality", 1);

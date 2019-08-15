@@ -341,6 +341,11 @@ public class InRoomChat : MonoBehaviour
     Label_219C:
         GUI.SetNextControlName(string.Empty);
 
+        if (chatWidth != Settings.ChatWidthSetting || chatHeight != Settings.ChatHeightSetting)
+        {
+            SetPosition();
+        }
+
         if (Settings.ChatBackground)
         {
             if (chatBackground == null || chatOpacity != Settings.ChatOpacitySetting)
