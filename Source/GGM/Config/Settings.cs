@@ -40,6 +40,8 @@ namespace GGM.Config
 
         public static List<object> ReceivedLocationSkinsData;
 
+        public static List<string> MutedPlayers;
+
         #region Booleans
 
         //Game
