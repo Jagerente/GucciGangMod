@@ -2357,6 +2357,14 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 kickPlayerRC(player, false, "banned.");
             }
+            if (Settings.AntiGuestsSetting && player.isGuest)
+            {
+                kickPlayerRC(player, true, "Anti Guest enabled.");
+            }
+            if (Settings.AntiAbusiveModsSetting && player.isAbusive)
+            {
+                kickPlayerRC(player, true, "Anti Abusive mods enabled.");
+            }
             else
             {
                 var num = RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.statACL]);

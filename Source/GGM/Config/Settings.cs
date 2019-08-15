@@ -95,6 +95,8 @@ namespace GGM.Config
         public static BoolSetting[] ChatMajorFormatSettings = { new BoolSetting("GGM_ChatMajorBold"), new BoolSetting("GGM_ChatMinorItalic") };
         public static BoolSetting[] ChatMinorFormatSettings = { new BoolSetting("GGM_ChatMinorBold"), new BoolSetting("GGM_ChatMinorItalic") };
         public static BoolSetting AntiTitanErenSetting = new BoolSetting("GGM_AntiTitanEren");
+        public static BoolSetting AntiGuestsSetting = new BoolSetting("GGM_AntiGuests");
+        public static BoolSetting AntiAbusiveModsSetting = new BoolSetting("GGM_AntiAbusiveMods");
 
         //Video
         public static BoolSetting MipMappingSetting = new BoolSetting("GGM_MipMapping");

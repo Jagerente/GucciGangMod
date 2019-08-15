@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using GGM;
 using UnityEngine;
 
 public class PhotonPlayer
@@ -260,6 +261,16 @@ public class PhotonPlayer
         get { return actorID; }
     }
 
+    public bool isGuest
+    {
+        get { return Name.StripHEX().Contains("GUEST"); }
+    }
+
+    public bool isAbusive
+    {
+        get { return Name.StripHEX().StartsWith("Tokyo Ghoul") || Name.StripHEX().Contains("Violent") || Name.StripHEX().StartsWith("Vivid") || Name.StripHEX().Contains("Hyper-MegaCannon") || Name.StripHEX().Contains("MegaCannon") || Name.StripHEX().Contains("G_U_E_S_T") || Name.StripHEX().Contains("Tokyo Ghoul X [") || Name.StripHEX().Contains("Tokyo Ghoul") || Name.StripHEX().Contains("MULTI-WEAPON") || Name.StripHEX().Contains("Saif"); }
+    }
+
     public bool isMasterClient
     {
         get { return PhotonNetwork.networkingPeer.mMasterClient == this; }
@@ -271,7 +282,7 @@ public class PhotonPlayer
         {
             var a = customProperties["name"];
             var b = a as string;
-            return b ?? String.Empty;
+            return b ?? string.Empty;
         }
         set
         {

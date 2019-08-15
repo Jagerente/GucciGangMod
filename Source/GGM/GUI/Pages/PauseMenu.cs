@@ -1492,6 +1492,8 @@ namespace GGM.GUI.Pages
                             Label("Protection", LabelType.Header);
                             Grid("Connection Protocol", ref ConnectionProtocolSettings.Value, connectionProtocols);
                             Grid("Anti Titan Eren", ref AntiTitanErenSetting.Value);
+                            Grid("Anti Guests", ref AntiGuestsSetting.Value);
+                            Grid("Anti Abusive Mods", ref AntiAbusiveModsSetting.Value);
                         }
                         GUILayout.EndArea();
                         break;
