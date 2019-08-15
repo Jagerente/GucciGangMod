@@ -9,14 +9,95 @@ namespace GGM
 {
     internal static class Commands
     {
-        public static bool MCRequired()
+        public static void ASODamage()
         {
-            if (!PhotonNetwork.isMasterClient)
+            Settings.CustomSizeSetting.Value = true;
+            Settings.SizeSettings[0].Value = 100f;
+            Settings.SizeSettings[0].Value = 0f;
+            Settings.SizeSettings[0].Value = 0f;
+            Settings.SizeSettings[0].Value = 0f;
+            Settings.SizeSettings[0].Value = 0f;
+            Settings.ArmorModeSetting.Value = true;
+            Settings.ArmorSetting.Value = 1000;
+            Settings.CustomSizeSetting.Value = true;
+            Settings.SizeSettings[0].Value = 2.5f;
+            Settings.SizeSettings[1].Value = 3f;
+            SystemMessageGlobal("ASO Damage enabled.");
+        }
+
+        public static void ASOKDR()
+        {
+            RCSettings.asoPreservekdr = RCSettings.asoPreservekdr == 0 ? 1 : 0;
+            SystemMessageGlobal("KDRs will " + (RCSettings.asoPreservekdr == 1 ? string.Empty : "not ") + "be preserved from disconnects.");
+        }
+
+        public static void ASORacing()
+        {
+            RCSettings.racingStatic = RCSettings.racingStatic == 0 ? 1 : 0;
+            SystemMessageLocal("Restart required.");
+        }
+
+        public static void Ban(string id)
+        {
+            if (MCRequired()) return;
+            foreach (var p in id.Split(','))
             {
-                SystemMessageLocal(Error(0));
+                if (Convert.ToInt32(p) == PhotonNetwork.player.ID)
+                {
+                    SystemMessageLocal(Error(2, "ban"));
+                }
+                else
+                {
+                    foreach (var player in PhotonNetwork.playerList)
+                    {
+                        if (Convert.ToInt32(p) == player.ID)
+                        {
+                            if (FengGameManagerMKII.OnPrivateServer)
+                            {
+                                FengGameManagerMKII.FGM.kickPlayerRC(player, true, "");
+                            }
+                            else if (PhotonNetwork.isMasterClient)
+                            {
+                                FengGameManagerMKII.FGM.kickPlayerRC(player, true, "");
+                                SystemMessageGlobal(player, "has been banned.");
+                            }
+                        }
+                    }
+
+                    if (PhotonPlayer.Find(Convert.ToInt32(p)) == null)
+                    {
+                        SystemMessageLocal(Error(1));
+                    }
+                }
+            }
+        }
+
+        public static void ClearChat(bool local = true)
+        {
+            if (local)
+            {
+                Chat.Clear();
+                return;
             }
 
-            return !PhotonNetwork.isMasterClient;
+            for (var i = 0; i < 15; i++)
+            {
+                SystemMessageGlobal(string.Empty);
+            }
+        }
+
+        public static void GetPosition()
+        {
+            string[] msg = { "Your position:\n", "\nX", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" + "\nY", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" + "\nZ", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
+            SystemMessageLocal(msg);
+        }
+
+        public static void IngoreList()
+        {
+            foreach (var id in FengGameManagerMKII.ignoreList)
+            {
+                SystemMessageLocal(id.ToString());
+            }
         }
 
         public static void Kick(string id)
@@ -55,137 +136,14 @@ namespace GGM
             }
         }
 
-        public static void Ban(string id)
+        public static bool MCRequired()
         {
-            if (MCRequired()) return;
-            foreach (var p in id.Split(','))
+            if (!PhotonNetwork.isMasterClient)
             {
-                if (Convert.ToInt32(p) == PhotonNetwork.player.ID)
-                {
-                    SystemMessageLocal(Error(2, "ban"));
-                }
-                else
-                {
-                    foreach (var player in PhotonNetwork.playerList)
-                    {
-                        if (Convert.ToInt32(p) == player.ID)
-                        {
-                            if (FengGameManagerMKII.OnPrivateServer)
-                            {
-                                FengGameManagerMKII.FGM.kickPlayerRC(player, true, "");
-                            }
-                            else if (PhotonNetwork.isMasterClient)
-                            {
-                                FengGameManagerMKII.FGM.kickPlayerRC(player, true, "");
-                                SystemMessageGlobal(player, "has been banned.");
-                            }
-                        }
-                    }
-
-                    if (PhotonPlayer.Find(Convert.ToInt32(p)) == null)
-                    {
-                        SystemMessageLocal(Error(1));
-                    }
-                }
-            }
-        }
-
-        public static void ASODamage()
-        {
-            Settings.CustomSizeSetting.Value = true;
-            Settings.SizeSettings[0].Value = 100f;
-            Settings.SizeSettings[0].Value = 0f;
-            Settings.SizeSettings[0].Value = 0f;
-            Settings.SizeSettings[0].Value = 0f;
-            Settings.SizeSettings[0].Value = 0f;
-            Settings.ArmorModeSetting.Value = true;
-            Settings.ArmorSetting.Value = 1000;
-            Settings.CustomSizeSetting.Value = true;
-            Settings.SizeSettings[0].Value = 2.5f;
-            Settings.SizeSettings[1].Value = 3f;
-            SystemMessageGlobal("ASO Damage enabled.");
-        }
-
-        public static void ASOKDR()
-        {
-            RCSettings.asoPreservekdr = RCSettings.asoPreservekdr == 0 ? 1 : 0;
-            SystemMessageGlobal("KDRs will " + (RCSettings.asoPreservekdr == 1 ? string.Empty : "not ") + "be preserved from disconnects.");
-        }
-
-        public static void ASORacing()
-        {
-            RCSettings.racingStatic = RCSettings.racingStatic == 0 ? 1 : 0;
-            SystemMessageLocal("Restart required.");
-        }
-
-        public static void GetPosition()
-        {
-            string[] msg = { "Your position:\n", "\nX", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" + "\nY", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" + "\nZ", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
-            SystemMessageLocal(msg);
-        }
-
-        public static void ClearChat(bool local = true)
-        {
-            if (local)
-            {
-                Chat.Clear();
-                return;
+                SystemMessageLocal(Error(0));
             }
 
-            for (var i = 0; i < 15; i++)
-            {
-                SystemMessageGlobal(string.Empty);
-            }
-        }
-
-        public static void IngoreList()
-        {
-            foreach (var id in FengGameManagerMKII.ignoreList)
-            {
-                SystemMessageLocal(id.ToString());
-            }
-        }
-
-        public static void SetSlots(int count)
-        {
-            if (MCRequired()) return;
-
-            PhotonNetwork.room.maxPlayers = count;
-            string[] msg = { "Max players changed to ", count.ToString(), "." };
-            SystemMessageGlobal(msg);
-        }
-
-        public static void SetTime(int t)
-        {
-            if (MCRequired()) return;
-
-            var time = FengGameManagerMKII.FGM.time - (int)FengGameManagerMKII.FGM.timeTotalServer - t * -1;
-            FengGameManagerMKII.FGM.addTime(time);
-            string[] msg = { "Time set to ", time.ToString(), "." };
-            SystemMessageGlobal(msg);
-        }
-
-        public static void Teleport(int id)
-        {
-            var player = PhotonPlayer.Find(id);
-            var obj = new GameObject();
-            var obj2 = new GameObject();
-            var players = GameObject.FindGameObjectsWithTag("Player");
-            foreach (var obj3 in players)
-            {
-                if (obj3.GetPhotonView().owner == player)
-                {
-                    obj = obj3;
-                }
-
-                if (obj3.GetPhotonView().owner == PhotonNetwork.player)
-                {
-                    obj2 = obj3;
-                }
-            }
-
-            SystemMessageLocal("Teleported to ", player, ".");
-            obj2.transform.position = obj.transform.position;
+            return !PhotonNetwork.isMasterClient;
         }
 
         public static void Reconnect()
@@ -228,6 +186,15 @@ namespace GGM
             }
         }
 
+        public static void Restart()
+        {
+            if (MCRequired()) return;
+
+            FengGameManagerMKII.FGM.restartGame(false);
+            string[] msg = { "MasterClient ", "has restarted the game." };
+            SystemMessageLocal(msg, false);
+        }
+
         public static void Revive(string id = "", bool all = false)
         {
             if (!all)
@@ -246,96 +213,6 @@ namespace GGM
 
                 FengGameManagerMKII.FGM.photonView.RPC("respawnHeroInNewRound", PhotonTargets.All);
                 SystemMessageGlobal("All players have been revived.");
-            }
-        }
-
-        public static void Restart()
-        {
-            if (MCRequired()) return;
-
-            FengGameManagerMKII.FGM.restartGame(false);
-            string[] msg = { "MasterClient ", "has restarted the game." };
-            SystemMessageLocal(msg, false);
-        }
-
-        public static void Spectate(int id)
-        {
-            foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
-            {
-                if (player.GetPhotonView().owner.ID == id)
-                {
-                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(player);
-                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
-                    SystemMessageLocal("You are now spectate", player.GetPhotonView().owner);
-                }
-            }
-        }
-
-        public static void SpectatorMode()
-        {
-            if ((int)FengGameManagerMKII.settings[245] == 0)
-            {
-                FengGameManagerMKII.settings[245] = 1;
-                FengGameManagerMKII.FGM.EnterSpecMode(true);
-                string[] msg = { "You have entered ", "Spectator ", "mode." };
-                SystemMessageLocal(msg);
-            }
-            else
-            {
-                FengGameManagerMKII.settings[245] = 0;
-                FengGameManagerMKII.FGM.EnterSpecMode(false);
-                string[] msg = { "You have exited ", "Spectator ", "mode." };
-                SystemMessageLocal(msg);
-            }
-        }
-
-        public static void SwitchTeam(string str)
-        {
-            if (RCSettings.teamMode != 1)
-            {
-                string[] msg = { "Teams ", "are locked or disabled." };
-                SystemMessageLocal(msg, false);
-                return;
-            }
-
-            var teamValue = 0;
-            var newTeamName = "Individuals";
-            switch (str)
-            {
-                case "0":
-                case "individual":
-                    break;
-
-                case "1":
-                case "cyan":
-                    teamValue = 1;
-                    newTeamName = "Cyan";
-                    break;
-
-                case "2":
-                case "magenta":
-                    teamValue = 2;
-                    newTeamName = "Magenta";
-                    break;
-
-                default:
-                    string[] err = { "Invalid team code/name. Possibles:\n" + "Team Individuals - ", "0", "/", "individuals.\n", "Team Cyan - ", "1", "/", "cyan.\n", "Team Magenta - ", "2", "/", "magenta." };
-                    SystemMessageLocal(err);
-                    return;
-            }
-
-            FengGameManagerMKII.FGM.photonView.RPC("setTeamRPC", PhotonNetwork.player, teamValue);
-            string[] msg2 = { "You have joined ", "Team " + newTeamName, "." };
-            SystemMessageLocal(msg2);
-            foreach (var obj in FengGameManagerMKII.FGM.getPlayers())
-            {
-                var her = (HERO)obj;
-                if (her.photonView.isMine)
-                {
-                    her.markDie();
-                    her.photonView.RPC("netDie2", PhotonTargets.All, -1, "Team Switch");
-                    break;
-                }
             }
         }
 
@@ -643,6 +520,129 @@ namespace GGM
                     SystemMessageLocal(msg, false);
                 }
             }
+        }
+
+        public static void SetSlots(int count)
+        {
+            if (MCRequired()) return;
+
+            PhotonNetwork.room.maxPlayers = count;
+            string[] msg = { "Max players changed to ", count.ToString(), "." };
+            SystemMessageGlobal(msg);
+        }
+
+        public static void SetTime(int t)
+        {
+            if (MCRequired()) return;
+
+            var time = FengGameManagerMKII.FGM.time - (int)FengGameManagerMKII.FGM.timeTotalServer - t * -1;
+            FengGameManagerMKII.FGM.addTime(time);
+            string[] msg = { "Time set to ", time.ToString(), "." };
+            SystemMessageGlobal(msg);
+        }
+
+        public static void Spectate(int id)
+        {
+            foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if (player.GetPhotonView().owner.ID == id)
+                {
+                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(player);
+                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
+                    SystemMessageLocal("You are now spectate", player.GetPhotonView().owner);
+                }
+            }
+        }
+
+        public static void SpectatorMode()
+        {
+            if ((int)FengGameManagerMKII.settings[245] == 0)
+            {
+                FengGameManagerMKII.settings[245] = 1;
+                FengGameManagerMKII.FGM.EnterSpecMode(true);
+                string[] msg = { "You have entered ", "Spectator ", "mode." };
+                SystemMessageLocal(msg);
+            }
+            else
+            {
+                FengGameManagerMKII.settings[245] = 0;
+                FengGameManagerMKII.FGM.EnterSpecMode(false);
+                string[] msg = { "You have exited ", "Spectator ", "mode." };
+                SystemMessageLocal(msg);
+            }
+        }
+
+        public static void SwitchTeam(string str)
+        {
+            if (RCSettings.teamMode != 1)
+            {
+                string[] msg = { "Teams ", "are locked or disabled." };
+                SystemMessageLocal(msg, false);
+                return;
+            }
+
+            var teamValue = 0;
+            var newTeamName = "Individuals";
+            switch (str)
+            {
+                case "0":
+                case "individual":
+                    break;
+
+                case "1":
+                case "cyan":
+                    teamValue = 1;
+                    newTeamName = "Cyan";
+                    break;
+
+                case "2":
+                case "magenta":
+                    teamValue = 2;
+                    newTeamName = "Magenta";
+                    break;
+
+                default:
+                    string[] err = { "Invalid team code/name. Possibles:\n" + "Team Individuals - ", "0", "/", "individuals.\n", "Team Cyan - ", "1", "/", "cyan.\n", "Team Magenta - ", "2", "/", "magenta." };
+                    SystemMessageLocal(err);
+                    return;
+            }
+
+            FengGameManagerMKII.FGM.photonView.RPC("setTeamRPC", PhotonNetwork.player, teamValue);
+            string[] msg2 = { "You have joined ", "Team " + newTeamName, "." };
+            SystemMessageLocal(msg2);
+            foreach (var obj in FengGameManagerMKII.FGM.getPlayers())
+            {
+                var her = (HERO)obj;
+                if (her.photonView.isMine)
+                {
+                    her.markDie();
+                    her.photonView.RPC("netDie2", PhotonTargets.All, -1, "Team Switch");
+                    break;
+                }
+            }
+        }
+
+        public static void Teleport(int id)
+        {
+            var player = PhotonPlayer.Find(id);
+            var obj = new GameObject();
+            var obj2 = new GameObject();
+            var players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var obj3 in players)
+            {
+                if (obj3.GetPhotonView().owner == player)
+                {
+                    obj = obj3;
+                }
+
+                if (obj3.GetPhotonView().owner == PhotonNetwork.player)
+                {
+                    obj2 = obj3;
+                }
+            }
+
+            SystemMessageLocal("Teleported to ", player, ".");
+            obj2.transform.position = obj.transform.position;
         }
     }
 }

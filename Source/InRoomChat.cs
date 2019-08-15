@@ -13,23 +13,18 @@ using Settings = GGM.Config.Settings;
 
 public class InRoomChat : MonoBehaviour
 {
-    private static Rect chatRect;
-    private static Rect chatInputRect;
-    private static Rect chatFeedRect;
-    private static float chatWidth;
-    private static float chatHeight;
-    private string inputLine;
     public static List<string> Chat;
     public static List<string> ChatFeed;
     private static Texture2D chatBackground;
-    private static float chatOpacity;
-    private static Vector2 chatScroll;
+    private static Rect chatFeedRect;
     private static Vector2 chatFeedScroll;
-
-    public static string RCLine(string line)
-    {
-        return "<color=#FFC000>" + line + "</color>";
-    }
+    private static float chatHeight;
+    private static Rect chatInputRect;
+    private static float chatOpacity;
+    private static Rect chatRect;
+    private static Vector2 chatScroll;
+    private static float chatWidth;
+    private string inputLine;
 
     public static void AddLineChat(string newLine)
     {
@@ -54,15 +49,9 @@ public class InRoomChat : MonoBehaviour
         AddLineChat(RCLine(str));
     }
 
-    public static void SendLineRC(params string[] newLine)
+    public static string ChatFormatting(string text, string color, bool bold, bool italic, string size = "")
     {
-        var str = string.Empty;
-        foreach (var line in newLine)
-        {
-            str += line;
-        }
-
-        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.All, RCLine(str), string.Empty);
+        return "<color=#" + color + ">" + (size != string.Empty ? "<size=" + size + ">" : string.Empty) + (bold ? "<b>" : string.Empty) + (italic ? "<i>" : string.Empty) + text + (italic ? "</i>" : string.Empty) + (bold ? "</b>" : string.Empty) + (size != "" ? "</size>" : string.Empty) + "</color>";
     }
 
     /// <param name="type">
@@ -89,9 +78,98 @@ public class InRoomChat : MonoBehaviour
         }
     }
 
-    public static string ChatFormatting(string text, string color, bool bold, bool italic, string size = "")
+    public static string RCLine(string line)
     {
-        return "<color=#" + color + ">" + (size != string.Empty ? "<size=" + size + ">" : string.Empty) + (bold ? "<b>" : string.Empty) + (italic ? "<i>" : string.Empty) + text + (italic ? "</i>" : string.Empty) + (bold ? "</b>" : string.Empty) + (size != "" ? "</size>" : string.Empty) + "</color>";
+        return "<color=#FFC000>" + line + "</color>";
+    }
+
+    public static void SendLineRC(params string[] newLine)
+    {
+        var str = string.Empty;
+        foreach (var line in newLine)
+        {
+            str += line;
+        }
+
+        FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.All, RCLine(str), string.Empty);
+    }
+
+    public static void SystemMessageGlobal(string str, bool major = true)
+    {
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC(str);
+        }
+        else
+        {
+            SystemMessageLocal(str, major);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]), string.Empty);
+        }
+    }
+
+    public static void SystemMessageGlobal(string[] str, bool parity = true)
+    {
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC(str);
+        }
+        else
+        {
+            var msg = new StringBuilder();
+            for (var i = 0; i < str.Length; i++)
+            {
+                if (i % 2 == 0 || i == 0)
+                {
+                    msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]));
+                }
+                else
+                {
+                    msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting, parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0], parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1]));
+                }
+            }
+
+            SystemMessageLocal(msg.ToString(), parity);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, msg.ToString(), string.Empty);
+        }
+    }
+
+    public static void SystemMessageGlobal(string str, PhotonPlayer player)
+    {
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC(str, $" [{player.ID}] {player.Name.hexColor()}.");
+        }
+        else
+        {
+            SystemMessageLocal(str, player);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        }
+    }
+
+    public static void SystemMessageGlobal(PhotonPlayer player, string str)
+    {
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC($"[{player.ID}] {player.Name.hexColor()} ", str);
+        }
+        else
+        {
+            SystemMessageLocal(player, str);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        }
+    }
+
+    public static void SystemMessageGlobal(string str, PhotonPlayer player, string str2)
+    {
+        if (Settings.LegacyChatSetting)
+        {
+            SendLineRC(str, $" [{player.ID}] {player.Name.hexColor()} ", str2);
+        }
+        else
+        {
+            SystemMessageLocal(str, player, str2);
+            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
+        }
     }
 
     public static void SystemMessageLocal(string str, bool major = true)
@@ -173,240 +251,6 @@ public class InRoomChat : MonoBehaviour
         else
         {
             AddLineChat(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
-        }
-    }
-
-    public static void SystemMessageGlobal(string str, bool major = true)
-    {
-        if (Settings.LegacyChatSetting)
-        {
-            SendLineRC(str);
-        }
-        else
-        {
-            SystemMessageLocal(str, major);
-            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]), string.Empty);
-        }
-    }
-
-    public static void SystemMessageGlobal(string[] str, bool parity = true)
-    {
-        if (Settings.LegacyChatSetting)
-        {
-            SendLineRC(str);
-        }
-        else
-        {
-            var msg = new StringBuilder();
-            for (var i = 0; i < str.Length; i++)
-            {
-                if (i % 2 == 0 || i == 0)
-                {
-                    msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1]));
-                }
-                else
-                {
-                    msg.Append(ChatFormatting(str[i], parity ? Settings.ChatMinorColorSetting : Settings.ChatMajorColorSetting, parity ? Settings.ChatMinorFormatSettings[0] : Settings.ChatMajorFormatSettings[0], parity ? Settings.ChatMinorFormatSettings[1] : Settings.ChatMajorFormatSettings[1]));
-                }
-            }
-
-            SystemMessageLocal(msg.ToString(), parity);
-            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, msg.ToString(), string.Empty);
-        }
-    }
-
-    public static void SystemMessageGlobal(string str, PhotonPlayer player)
-    {
-        if (Settings.LegacyChatSetting)
-        {
-            SendLineRC(str, $" [{player.ID}] {player.Name.hexColor()}.");
-        }
-        else
-        {
-            SystemMessageLocal(str, player);
-            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
-        }
-    }
-
-    public static void SystemMessageGlobal(PhotonPlayer player, string str)
-    {
-        if (Settings.LegacyChatSetting)
-        {
-            SendLineRC($"[{player.ID}] {player.Name.hexColor()} ", str);
-        }
-        else
-        {
-            SystemMessageLocal(player, str);
-            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
-        }
-    }
-
-    public static void SystemMessageGlobal(string str, PhotonPlayer player, string str2)
-    {
-        if (Settings.LegacyChatSetting)
-        {
-            SendLineRC(str, $" [{player.ID}] {player.Name.hexColor()} ", str2);
-        }
-        else
-        {
-            SystemMessageLocal(str, player, str2);
-            FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
-        }
-    }
-
-    private static void CommandSwitch(string[] args)
-    {
-        switch (args[0])
-        {
-            case "pos":
-                Commands.GetPosition();
-                break;
-
-            case "ban":
-                Commands.Ban(args[1]);
-                break;
-
-            case "aso":
-                switch (args[1])
-                {
-                    case "damage":
-                        Commands.ASODamage();
-                        break;
-
-                    case "kdr":
-                        Commands.ASOKDR();
-                        break;
-
-                    case "racing":
-                        Commands.ASORacing();
-                        break;
-
-                    default:
-                        string[] err = { "Invalid command. Possibles:", "\n/aso kdr", " - preserves players KDR's from disconnects.", "\n/aso racing", " - racing will not restart on finish.", "\n/aso damage", " - sets ASO Damage settings." };
-                        SystemMessageLocal(err);
-                        break;
-                }
-                break;
-
-            case "clean":
-            case "clear":
-
-                Commands.CleanChat();
-
-                break;
-
-            case "/clean":
-            case "/clear":
-
-                Commands.CleanChat(false);
-
-                break;
-
-            case "pause":
-            case "unpause":
-                FengGameManagerMKII.FGM.SetPause();
-                break;
-
-            case "ignorelist":
-                Commands.IngoreList();
-                break;
-
-            case "slots":
-                Commands.SetSlots(Convert.ToInt32(args[1]));
-                break;
-
-            case "time":
-                Commands.SetTime(Convert.ToInt32(args[1]));
-                break;
-
-            case "tp":
-                Commands.Teleport(Convert.ToInt32(args[1]));
-                break;
-
-            case "reconnect":
-                Commands.Reconnect();
-                break;
-
-            case "resetkd":
-                Commands.ResetKD();
-                break;
-
-            case "/resetkd":
-                Commands.ResetKD(args[1]);
-                break;
-
-            case "resetkdall":
-                Commands.ResetKD(global: true);
-                break;
-
-            case "revive":
-                Commands.Revive(args[1]);
-                break;
-
-            case "reviveall":
-                Commands.Revive(all: true);
-                break;
-
-            case "pm":
-                {
-                    var player = PhotonPlayer.Find(Convert.ToInt32(args[1]));
-                    var msg = "";
-                    for (var i = 2; i < args.Length; i++)
-                    {
-                        msg += args[i] + (i == args.Length - 1 ? "" : " ");
-                    }
-
-                    var myName = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties["name"]).hexColor();
-                    string sendName;
-                    switch (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties["RCteam"]))
-                    {
-                        case 1:
-                            sendName = "<color=cyan>" + myName + "</color>";
-                            break;
-
-                        case 2:
-                            sendName = "<color=magenta>" + myName + "</color>";
-                            break;
-
-                        default:
-                            sendName = myName;
-                            break;
-                    }
-
-                    FengGameManagerMKII.FGM.photonView.RPC("ChatPM", player, sendName, msg);
-                    AddLineChat(ChatFormatting("PM to", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
-                }
-                break;
-
-            case "team":
-                {
-                    Commands.SwitchTeam(args[1]);
-                }
-                break;
-
-            case "kick":
-                Commands.Kick(args[1]);
-                return;
-
-            case "restart":
-                Commands.Restart();
-                return;
-
-            case "specmode":
-                Commands.SpectatorMode();
-                return;
-
-            case "spectate":
-                Commands.Spectate(Convert.ToInt32(args[1]));
-                return;
-
-            case "rules":
-                Commands.Rules();
-                break;
-
-            default:
-                SystemMessageLocal("Unknown command.");
-                break;
         }
     }
 
@@ -573,5 +417,156 @@ public class InRoomChat : MonoBehaviour
     public void Start()
     {
         SetPosition();
+    }
+
+    private static void CommandSwitch(string[] args)
+    {
+        switch (args[0])
+        {
+            case "pos":
+                Commands.GetPosition();
+                break;
+
+            case "ban":
+                Commands.Ban(args[1]);
+                break;
+
+            case "aso":
+                switch (args[1])
+                {
+                    case "damage":
+                        Commands.ASODamage();
+                        break;
+
+                    case "kdr":
+                        Commands.ASOKDR();
+                        break;
+
+                    case "racing":
+                        Commands.ASORacing();
+                        break;
+
+                    default:
+                        string[] err = { "Invalid command. Possibles:", "\n/aso kdr", " - preserves players KDR's from disconnects.", "\n/aso racing", " - racing will not restart on finish.", "\n/aso damage", " - sets ASO Damage settings." };
+                        SystemMessageLocal(err);
+                        break;
+                }
+                break;
+
+            case "clear":
+                Commands.ClearChat();
+                break;
+
+            case "/clean":
+            case "/clear":
+                Commands.ClearChat(false);
+                break;
+
+            case "pause":
+            case "unpause":
+                FengGameManagerMKII.FGM.SetPause();
+                break;
+
+            case "ignorelist":
+                Commands.IngoreList();
+                break;
+
+            case "slots":
+                Commands.SetSlots(Convert.ToInt32(args[1]));
+                break;
+
+            case "time":
+                Commands.SetTime(Convert.ToInt32(args[1]));
+                break;
+
+            case "tp":
+                Commands.Teleport(Convert.ToInt32(args[1]));
+                break;
+
+            case "reconnect":
+                Commands.Reconnect();
+                break;
+
+            case "resetkd":
+                Commands.ResetKD();
+                break;
+
+            case "/resetkd":
+                Commands.ResetKD(args[1]);
+                break;
+
+            case "resetkdall":
+                Commands.ResetKD(global: true);
+                break;
+
+            case "revive":
+                Commands.Revive(args[1]);
+                break;
+
+            case "reviveall":
+                Commands.Revive(all: true);
+                break;
+
+            case "pm":
+                {
+                    var player = PhotonPlayer.Find(Convert.ToInt32(args[1]));
+                    var msg = "";
+                    for (var i = 2; i < args.Length; i++)
+                    {
+                        msg += args[i] + (i == args.Length - 1 ? "" : " ");
+                    }
+
+                    var myName = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties["name"]).hexColor();
+                    string sendName;
+                    switch (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties["RCteam"]))
+                    {
+                        case 1:
+                            sendName = "<color=cyan>" + myName + "</color>";
+                            break;
+
+                        case 2:
+                            sendName = "<color=magenta>" + myName + "</color>";
+                            break;
+
+                        default:
+                            sendName = myName;
+                            break;
+                    }
+
+                    FengGameManagerMKII.FGM.photonView.RPC("ChatPM", player, sendName, msg);
+                    AddLineChat(ChatFormatting("PM to", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+                }
+                break;
+
+            case "team":
+                {
+                    Commands.SwitchTeam(args[1]);
+                }
+                break;
+
+            case "kick":
+                Commands.Kick(args[1]);
+                return;
+
+            case "restart":
+                Commands.Restart();
+                return;
+
+            case "specmode":
+                Commands.SpectatorMode();
+                return;
+
+            case "spectate":
+                Commands.Spectate(Convert.ToInt32(args[1]));
+                return;
+
+            case "rules":
+                Commands.Rules();
+                break;
+
+            default:
+                SystemMessageLocal("Unknown command.");
+                break;
+        }
     }
 }
