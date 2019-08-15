@@ -338,13 +338,10 @@ public class HERO : MonoBehaviour
             bombCD = num4 * -0.4f + 5f;
             bombSpeed = num3 * 60f + 200f;
             var propertiesToSet = new Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombR, Settings.BombColorSetting[0].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombG, Settings.BombColorSetting[1].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombB, Settings.BombColorSetting[2].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, Settings.BombSettings[0].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, Settings.BombSettings[1].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, Settings.BombSettings[2].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, Settings.BombSettings[3].ToString());
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombR, Settings.BombColorSetting[0].Value);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombG, Settings.BombColorSetting[1].Value);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombB, Settings.BombColorSetting[2].Value);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, Settings.BombSettings[0].Value);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             skillId = "bomb";
             skillIDHUD = "armin";

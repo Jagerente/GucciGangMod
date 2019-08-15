@@ -259,7 +259,7 @@ namespace GGM
                     }
                     else
                     {
-                        result += str + " ";
+                        result += str + '\n';
                     }
                 }
             }

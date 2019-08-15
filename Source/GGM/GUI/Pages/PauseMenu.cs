@@ -13,6 +13,7 @@ namespace GGM.GUI.Pages
     {
         private static PhotonPlayer ChosenPlayer;
         private static float[] ControlPanelProportion = { 0.35f, 0.4f, 0.25f };
+        private static int InfoPanelPageSetting = 1;
 
         #region Switchers
 
@@ -1536,7 +1537,11 @@ namespace GGM.GUI.Pages
                                                 Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Mod: " + ChosenPlayer.CheckMod(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Guild: " + ((string)ChosenPlayer.customProperties[PhotonPlayerProperty.guildName]).hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Property: " + ChosenPlayer.CheckProps(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Unusual Properties:", width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                foreach (var property in ChosenPlayer.CheckProps().Split('\n'))
+                                                {
+                                                    Label(property, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
                                                 Label("Character: " + RCextensions.returnStringFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.character]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("SPD: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.statSPD]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("BLA: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.statBLA]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
@@ -1545,10 +1550,7 @@ namespace GGM.GUI.Pages
                                                 Label("Bomb R Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombR]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb G Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombG]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb B Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombB]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                if (ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius] != null)
-                                                {
-                                                    Label("Bomb Radius: " + ((float)ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius] - 20f) / 4, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                }
+                                                Label("Bomb Radius: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 break;
                                             }
 
@@ -1589,7 +1591,7 @@ namespace GGM.GUI.Pages
                                     GUILayout.Space(1f);
                                 }
                                 GUILayout.EndScrollView();
-                                Grid(string.Empty, ref InfoPanelPageSetting.Value, infoPanel, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                Grid(string.Empty, ref InfoPanelPageSetting, infoPanel, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                             }
                             GUILayout.EndArea();
 
