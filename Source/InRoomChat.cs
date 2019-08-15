@@ -14,7 +14,7 @@ using Settings = GGM.Config.Settings;
 public class InRoomChat : MonoBehaviour
 {
     public static List<string> Chat;
-    public static List<string> ChatFeed;
+    public static List<string> ChatFeed = new List<string>();
     private static Texture2D chatBackground;
     private static Rect chatFeedRect;
     private static Vector2 chatFeedScroll;
@@ -24,7 +24,7 @@ public class InRoomChat : MonoBehaviour
     private static Rect chatRect;
     private static Vector2 chatScroll;
     private static float chatWidth;
-    private string inputLine;
+    private string inputLine = string.Empty;
 
     public static void AddLineChat(string newLine)
     {
