@@ -202,6 +202,7 @@ namespace GGM.GUI.Pages
 
         private void OnEnable()
         {
+            Page = 0;
             timeToUpdate = UpdateTime;
             MapToCreate = PlayerPrefs.GetInt("GGM_MapToCreate", 0);
             ServerNameToCreate = PlayerPrefs.GetString("GGM_ServerNameToCreate", "FoodForTitan");
