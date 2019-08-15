@@ -139,7 +139,7 @@ namespace GGM
             {
                 var path = Application.dataPath + "/Screenshots";
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                Application.CaptureScreenshot(Application.dataPath + "/Screenshoots/Screenshot_" + DateTime.Now.ToString("yyyy:mm:dd:hh:mm:ss").Replace(":", "-") + ".png");
+                Application.CaptureScreenshot(Application.dataPath + "/Screenshots/Screenshot_" + DateTime.Now.ToString("yyyy:mm:dd:hh:mm:ss").Replace(":", "-") + ".png");
             }
 
             //Is your mod non-abusive? WELL YES BUT ACTUALLY NO.
