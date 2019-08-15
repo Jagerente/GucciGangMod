@@ -37,6 +37,7 @@ namespace GGM.Config
         public static List<int> LocationSkinsCityParticlesList;
         public static List<float[]> LocationSkinsCityParticlesSettingsList;
         public static string[] LocationSkinsCityCopiedSet;
+        public static List<string> MutedPlayers;
 
         public static List<object> ReceivedLocationSkinsData;
 
