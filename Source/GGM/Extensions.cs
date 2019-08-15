@@ -334,6 +334,10 @@ namespace GGM
             return PhotonNetwork.room.name.Split(new char[] { '`' })[0].Trim().StripHEX();
         }
 
+        public static string SetSize(this string str, int size)
+        {
+            return $"<size={size}>{str}</size>";
+        }
         public static void SendToGGMUser(this PhotonView pv, string RPCName, params object[] data)
         {
             var targets = PhotonPlayer.GetGGMUsers();
