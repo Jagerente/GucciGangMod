@@ -124,7 +124,7 @@ namespace GGM
             SystemMessageLocal(msg);
         }
 
-        public static void CleanChat(bool local = true)
+        public static void ClearChat(bool local = true)
         {
             if (local)
             {
