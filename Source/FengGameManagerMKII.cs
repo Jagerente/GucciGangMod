@@ -2357,6 +2357,14 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 kickPlayerRC(player, false, "banned.");
             }
+            if (Settings.AntiGuestsSetting && player.isGuest)
+            {
+                kickPlayerRC(player, true, "Anti Guest enabled.");
+            }
+            if (Settings.AntiAbusiveModsSetting && player.isAbusive)
+            {
+                kickPlayerRC(player, true, "Anti Abusive mods enabled.");
+            }
             else
             {
                 var num = RCextensions.returnIntFromObject(player.customProperties[PhotonPlayerProperty.statACL]);
@@ -5723,7 +5731,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
         if (sender != string.Empty)
         {
-            content = sender + ": " + content;
+            content = sender + ": " + content.StripHTML();
         }
 
         if (Settings.LegacyChatSetting)
@@ -9812,6 +9820,7 @@ public class FengGameManagerMKII : MonoBehaviour
         titanSpawners = new List<TitanSpawner>();
         restartCount = new List<float>();
         ignoreList = new List<int>();
+        Settings.MutedPlayers = new List<string>();
         groundList = new List<GameObject>();
         noRestart = false;
         masterRC = false;

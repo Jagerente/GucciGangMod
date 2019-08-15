@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using GGM;
 using UnityEngine;
 
 public class PhotonPlayer
@@ -313,6 +314,40 @@ public class PhotonPlayer
                 nameField = (string)properties[(byte)255];
             }
 
+    public Hashtable customProperties { get; private set; }
+
+    public int ID
+    {
+        get { return actorID; }
+    }
+
+    public bool isGuest
+    {
+        get { return Name.StripHEX().Contains("GUEST"); }
+    }
+
+    public bool isAbusive
+    {
+        get { return Name.StripHEX().StartsWith("Tokyo Ghoul") || Name.StripHEX().Contains("Violent") || Name.StripHEX().StartsWith("Vivid") || Name.StripHEX().Contains("Hyper-MegaCannon") || Name.StripHEX().Contains("MegaCannon") || Name.StripHEX().Contains("G_U_E_S_T") || Name.StripHEX().Contains("Tokyo Ghoul X [") || Name.StripHEX().Contains("Tokyo Ghoul") || Name.StripHEX().Contains("MULTI-WEAPON") || Name.StripHEX().Contains("Saif"); }
+    }
+
+    public bool isMuted
+    {
+        get { return GGM.Config.Settings.MutedPlayers.Contains(Name.StripHEX()); }
+    }
+
+    public bool isMasterClient
+    {
+        get { return PhotonNetwork.networkingPeer.mMasterClient == this; }
+    }
+
+    protected internal string Name
+    {
+        get
+        {
+            var a = customProperties["name"];
+            var b = a as string;
+            return b ?? string.Empty;
             customProperties.MergeStringKeys(properties);
             customProperties.StripKeysWithNullValues();
         }
