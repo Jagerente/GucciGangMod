@@ -6,24 +6,39 @@ using UnityEngine;
 
 public class PhotonPlayer
 {
-    public readonly bool isLocal;
-    private int actorID;
-    public Dictionary<byte, long> EventList = new Dictionary<byte, long>();
-    public bool GucciGangMod;
-    private string nameField;
     public Dictionary<string, long> RPCList = new Dictionary<string, long>();
+    public Dictionary<byte, long> EventList = new Dictionary<byte, long>();
+    private int actorID;
+    public readonly bool isLocal;
+    private string nameField;
     public object TagObject;
+    public bool CelestialDeath { get; set; }
+    public bool CyanMod { get; set; }
+    public bool DI { get; set; }
+    public bool DeadInside { get; set; }
+    public bool DeadInsideVer { get; set; }
+    public bool DeathMod { get; set; }
+    public bool GucciLab { get; set; }
+    public bool RC83 { get; set; }
+    public bool RS { get; set; }
+    public bool SukaMod { get; set; }
+    public bool SukaModOld { get; set; }
+    public bool Universe { get; set; }
+    public bool VENICE { get; set; }
 
-    public PhotonPlayer(bool isLocal, int actorID, string name)
+    public bool GucciGangMod;
+
+    public static PhotonPlayer[] GetGGMUsers()
     {
-        this.actorID = -1;
-        nameField = String.Empty;
-        customProperties = new Hashtable();
-        this.isLocal = isLocal;
-        this.actorID = actorID;
-        nameField = name;
-        if (isLocal)
-            GucciGangMod = true;
+        var tmp = new List<PhotonPlayer>();
+        foreach (var player in PhotonNetwork.playerList)
+        {
+            if (player.GucciGangMod)
+            {
+                tmp.Add(player);
+            }
+        }
+        return tmp.ToArray();
     }
 
     protected internal PhotonPlayer(bool isLocal, int actorID, Hashtable properties)
@@ -38,159 +53,16 @@ public class PhotonPlayer
             GucciGangMod = true;
     }
 
-    public Hashtable allProperties
+    public PhotonPlayer(bool isLocal, int actorID, string name)
     {
-        get
-        {
-            var target = new Hashtable();
-            target.Merge(customProperties);
-            target[(byte)255] = name;
-            return target;
-        }
-    }
-
-    public bool CelestialDeath { get; set; }
-    public Hashtable customProperties { get; private set; }
-    public bool CyanMod { get; set; }
-    public bool DeadInside { get; set; }
-    public bool DeadInsideVer { get; set; }
-    public bool DeathMod { get; set; }
-    public bool DI { get; set; }
-
-    public string Events
-    {
-        get
-        {
-            string str = string.Empty;
-            foreach (byte code in this.EventList.Keys)
-            {
-                str += code + ": " + EventList[code] + "\n";
-            }
-
-            return str;
-        }
-    }
-
-    public bool GucciLab { get; set; }
-
-    public int ID
-    {
-        get { return actorID; }
-    }
-
-    public bool isMasterClient
-    {
-        get { return PhotonNetwork.networkingPeer.mMasterClient == this; }
-    }
-
-    public string name
-    {
-        get { return nameField; }
-        set
-        {
-            if (!isLocal)
-            {
-                Debug.LogError("Error: Cannot change the name of a remote player!");
-            }
-            else
-            {
-                nameField = value;
-            }
-        }
-    }
-
-    public string Props
-    {
-        get
-        {
-            string str = "";
-            foreach (object prop in this.allProperties.Keys)
-            {
-                str += prop + ": " + this.allProperties[prop] + "\n";
-            }
-
-            return str;
-        }
-    }
-
-    public bool RC83 { get; set; }
-
-    public string RPCs
-    {
-        get
-        {
-            string str = String.Empty;
-            foreach (string key in RPCList.Keys)
-            {
-                str += key + ": " + RPCList[key] + "\n";
-            }
-
-            return str;
-        }
-    }
-
-    public bool RS { get; set; }
-    public bool SukaMod { get; set; }
-    public bool SukaModOld { get; set; }
-
-    public string UIName
-    {
-        get
-        {
-            string str = "Unknown";
-            if (customProperties["name"] is string && customProperties["name"] != null)
-            {
-                str = (string)customProperties["name"];
-            }
-
-            return str;
-        }
-    }
-
-    public bool Universe { get; set; }
-    public bool VENICE { get; set; }
-
-    protected internal string Name
-    {
-        get
-        {
-            var a = customProperties["name"];
-            var b = a as string;
-            return b ?? String.Empty;
-        }
-        set
-        {
-            var propertiesToSet = new Hashtable { { "name", value } };
-            SetCustomProperties(propertiesToSet);
-        }
-    }
-
-    public static PhotonPlayer Find(int ID)
-    {
-        for (var i = 0; i < PhotonNetwork.playerList.Length; i++)
-        {
-            var player = PhotonNetwork.playerList[i];
-            if (player.ID == ID)
-            {
-                return player;
-            }
-        }
-
-        return null;
-    }
-
-    public static PhotonPlayer[] GetGGMUsers()
-    {
-        var tmp = new List<PhotonPlayer>();
-        foreach (var player in PhotonNetwork.playerList)
-        {
-            if (player.GucciGangMod)
-            {
-                tmp.Add(player);
-            }
-        }
-
-        return tmp.ToArray();
+        this.actorID = -1;
+        nameField = String.Empty;
+        customProperties = new Hashtable();
+        this.isLocal = isLocal;
+        this.actorID = actorID;
+        nameField = name;
+        if (isLocal)
+            GucciGangMod = true;
     }
 
     public void AddToEvent(byte code)
@@ -221,6 +93,33 @@ public class PhotonPlayer
     {
         var player = p as PhotonPlayer;
         return player != null && GetHashCode() == player.GetHashCode();
+    }
+
+    public string Events
+    {
+        get
+        {
+            string str = string.Empty;
+            foreach (byte code in this.EventList.Keys)
+            {
+                str += code + ": " + EventList[code] + "\n";
+            }
+            return str;
+        }
+    }
+
+    public static PhotonPlayer Find(int ID)
+    {
+        for (var i = 0; i < PhotonNetwork.playerList.Length; i++)
+        {
+            var player = PhotonNetwork.playerList[i];
+            if (player.ID == ID)
+            {
+                return player;
+            }
+        }
+
+        return null;
     }
 
     public PhotonPlayer Get(int id)
@@ -273,6 +172,32 @@ public class PhotonPlayer
         return num == 2147483647 ? mActors[num2] : mActors[num];
     }
 
+    internal void InternalCacheProperties(Hashtable properties)
+    {
+        if (properties != null && properties.Count != 0 && !customProperties.Equals(properties))
+        {
+            if (properties.ContainsKey((byte)255))
+            {
+                nameField = (string)properties[(byte)255];
+            }
+
+            customProperties.MergeStringKeys(properties);
+            customProperties.StripKeysWithNullValues();
+        }
+    }
+
+    internal void InternalChangeLocalID(int newID)
+    {
+        if (!isLocal)
+        {
+            Debug.LogError("ERROR You should never change PhotonPlayer IDs!");
+        }
+        else
+        {
+            actorID = newID;
+        }
+    }
+
     public void SetCustomProperties(Hashtable propertiesToSet)
     {
         if (propertiesToSet != null)
@@ -305,14 +230,29 @@ public class PhotonPlayer
         return String.Format("#{0:00} '{1}' {2}", ID, name, customProperties.ToStringFull());
     }
 
-    internal void InternalCacheProperties(Hashtable properties)
+    public Hashtable allProperties
     {
-        if (properties != null && properties.Count != 0 && !customProperties.Equals(properties))
+        get
         {
-            if (properties.ContainsKey((byte)255))
+            var target = new Hashtable();
+            target.Merge(customProperties);
+            target[(byte)255] = name;
+            return target;
+        }
+    }
+
+    public string Props
+    {
+        get
+        {
+            string str = "";
+            foreach (object prop in this.allProperties.Keys)
             {
-                nameField = (string)properties[(byte)255];
+                str += prop + ": " + this.allProperties[prop] + "\n";
             }
+            return str;
+        }
+    }
 
     public Hashtable customProperties { get; private set; }
 
@@ -348,20 +288,53 @@ public class PhotonPlayer
             var a = customProperties["name"];
             var b = a as string;
             return b ?? string.Empty;
-            customProperties.MergeStringKeys(properties);
-            customProperties.StripKeysWithNullValues();
+        }
+        set
+        {
+            var propertiesToSet = new Hashtable { { "name", value } };
+            SetCustomProperties(propertiesToSet);
         }
     }
 
-    internal void InternalChangeLocalID(int newID)
+    public string name
     {
-        if (!isLocal)
+        get { return nameField; }
+        set
         {
-            Debug.LogError("ERROR You should never change PhotonPlayer IDs!");
+            if (!isLocal)
+            {
+                Debug.LogError("Error: Cannot change the name of a remote player!");
+            }
+            else
+            {
+                nameField = value;
+            }
         }
-        else
+    }
+
+    public string RPCs
+    {
+        get
         {
-            actorID = newID;
+            string str = String.Empty;
+            foreach (string key in RPCList.Keys)
+            {
+                str += key + ": " + RPCList[key] + "\n";
+            }
+            return str;
+        }
+    }
+
+    public string UIName
+    {
+        get
+        {
+            string str = "Unknown";
+            if (customProperties["name"] is string && customProperties["name"] != null)
+            {
+                str = (string)customProperties["name"];
+            }
+            return str;
         }
     }
 }

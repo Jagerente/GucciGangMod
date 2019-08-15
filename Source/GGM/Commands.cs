@@ -572,7 +572,7 @@ namespace GGM
         {
             if (MCRequired()) return;
 
-            var time = FengGameManagerMKII.FGM.time - (int)FengGameManagerMKII.FGM.timeTotalServer - t * -1;
+            var time = FengGameManagerMKII.FGM.time - (int)FengGameManagerMKII.FGM.timeTotalServer - t * -1f;
             FengGameManagerMKII.FGM.addTime(time);
             string[] msg = { "Time set to ", time.ToString(), "." };
             SystemMessageGlobal(msg);

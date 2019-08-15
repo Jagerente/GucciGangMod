@@ -1499,7 +1499,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                     if (num27 <= 1)
                     {
-                        var str6 = " 5 points added.";
+                        var str6 = "5 points added.";
                         if (text == "Nobody")
                         {
                             str6 = string.Empty;
@@ -4136,8 +4136,7 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         if (Commands.MCRequired()) return;
         RCPausing = !RCPausing;
-        if (RCPausing) gameObject.AddComponent<Pause>();
-        else Destroy(GameObjectCache.Find("Pause"));
+        if (RCPausing) Page.GetInstance<Pause>().Enable();
         photonView.RPC("pauseRPC", PhotonTargets.All, RCPausing);
         string[] msg = { "MasterClient ", "has " + (RCPausing ? "paused" : "unpaused") + " the game." };
         InRoomChat.SystemMessageGlobal(msg, false);
@@ -5585,7 +5584,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
                     if (num28 <= 1)
                     {
-                        var str4 = " 5 points added.";
+                        var str4 = "5 points added.";
                         if (text == "Nobody")
                         {
                             str4 = string.Empty;
@@ -10026,7 +10025,7 @@ public class FengGameManagerMKII : MonoBehaviour
         {
             if (Settings.LegacyChatSetting)
             {
-                string str2 = ("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> ") + killer.hexColor() + " killed ";
+                string str2 = ("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> ") + killer.hexColor() + (killer.Contains("Server") ? string.Empty : " ") + "killed ";
                 string newLine = str2 + victim.hexColor() + " for " + dmg.ToString() + " damage.";
                 if (!Settings.ChatFeedSeparateSetting)
                     InRoomChat.AddLineChat(newLine);
@@ -10035,7 +10034,7 @@ public class FengGameManagerMKII : MonoBehaviour
             }
             else
             {
-                var msg = InRoomChat.ChatFormatting($"({roundTime.ToString("F2")}) ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + killer.hexColor() + InRoomChat.ChatFormatting(" killed ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + (victim.Contains("[") ? victim.hexColor() : InRoomChat.ChatFormatting(victim, Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1])) + InRoomChat.ChatFormatting(" for ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting(dmg.ToString(), Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + InRoomChat.ChatFormatting(" damage.", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]);
+                var msg = InRoomChat.ChatFormatting($"({roundTime.ToString("F2")}) ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + killer.hexColor() + (killer.Contains("Server") ? string.Empty : " ") + InRoomChat.ChatFormatting("killed ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + (victim.Contains("[") ? victim.hexColor() : InRoomChat.ChatFormatting(victim, Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1])) + InRoomChat.ChatFormatting(" for ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting(dmg.ToString(), Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + InRoomChat.ChatFormatting(" damage.", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]);
                 if (!Settings.ChatFeedSeparateSetting)
                     InRoomChat.AddLineChat($"<size={Settings.ChatSizeSetting}>{msg}</size>");
                 else
