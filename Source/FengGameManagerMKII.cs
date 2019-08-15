@@ -3709,8 +3709,6 @@ public class FengGameManagerMKII : MonoBehaviour
                 InRoomChat.AddLineChat($"<size={Settings.ChatSizeSetting}>{msg}</size>");
             }
         }
-
-        Page.GetInstance<PauseMenu>().Disable();
     }
 
     public void restartGameSingle()
@@ -5960,7 +5958,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
         if (Settings.FriendlyModeSetting)
         {
-            hashtable.Add("friendly", (int)settings[219]);
+            hashtable.Add("friendly", 1);
         }
 
         if (Settings.PVPModeSetting)
@@ -8486,6 +8484,11 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        if (Page.GetInstance<PauseMenu>().enabled)
+        {
+            Page.GetInstance<PauseMenu>().Disable();
+        }
+
         if (Application.loadedLevelName == "characterCreation") Page.GetInstance<CustomCharacters>().Enable();
         else
         {

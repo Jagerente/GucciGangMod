@@ -1944,6 +1944,11 @@ namespace GGM.GUI.Pages
             }
         }
 
+        private void OnDisable()
+        {
+            GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+        }
+
         private void OnGUI()
         {
             UnityEngine.GUI.Box(new Rect(leftPos, topPos, width, height), string.Empty);
@@ -2112,7 +2117,6 @@ namespace GGM.GUI.Pages
                 {
                     Screen.showCursor = true;
                     Screen.lockCursor = true;
-                    GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                     Camera.main.GetComponent<SpectatorMovement>().disable = false;
                     Camera.main.GetComponent<MouseLook>().disable = false;
                 }
@@ -2130,9 +2134,9 @@ namespace GGM.GUI.Pages
                         Screen.lockCursor = false;
                     }
 
-                    GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                     GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
                 }
+
             }
 
             if (UnityEngine.GUI.Button(new Rect(leftPos + 645f + 70f, topPos + height / 1.055f, 40f, 25f), "Quit"))
@@ -2151,7 +2155,6 @@ namespace GGM.GUI.Pages
                 Screen.showCursor = true;
                 IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
                 FengGameManagerMKII.FGM.gameStart = false;
-                GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                 FengGameManagerMKII.FGM.DestroyAllExistingCloths();
                 Destroy(GameObjectCache.Find("MultiplayerManager"));
                 Application.LoadLevel("menu");
