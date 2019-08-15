@@ -126,10 +126,15 @@ namespace GGM
 
         public static void CleanChat(bool local = true)
         {
+            if (local)
+            {
+                Chat.Clear();
+                return;
+            }
+
             for (var i = 0; i < 15; i++)
             {
-                if (local) SystemMessageLocal(string.Empty);
-                else SystemMessageGlobal(string.Empty);
+                SystemMessageGlobal(string.Empty);
             }
         }
 
