@@ -244,7 +244,7 @@ public class CustomCharacterManager : MonoBehaviour
         labelCostume.GetComponent<UILabel>().text = "costume_" + costumeId;
         labelCape.GetComponent<UILabel>().text = "cape_" + capeId;
         labelDivision.GetComponent<UILabel>().text = divisionOption[divisionId].ToString();
-        labelPOINT.GetComponent<UILabel>().text = "Points: " + (400 - calTotalPoints());
+        labelPOINT.GetComponent<UILabel>().text = "Points: " + (455 - calTotalPoints());
         labelSPD.GetComponent<UILabel>().text = "SPD " + setup.myCostume.stat.SPD;
         labelGAS.GetComponent<UILabel>().text = "GAS " + setup.myCostume.stat.GAS;
         labelBLA.GetComponent<UILabel>().text = "BLA " + setup.myCostume.stat.BLA;
@@ -293,7 +293,7 @@ public class CustomCharacterManager : MonoBehaviour
             character.GetComponent<CharacterCreateAnimationControl>().playAttack(setup.myCostume.stat.skillId);
             freshLabel();
         }
-        else if (calTotalPoints() < 400)
+        else if (calTotalPoints() < 455)
         {
             setStatPoint(type, 1);
         }
@@ -403,10 +403,10 @@ public class CustomCharacterManager : MonoBehaviour
                 break;
         }
 
-        setup.myCostume.stat.SPD = Mathf.Clamp(setup.myCostume.stat.SPD, 75, 125);
-        setup.myCostume.stat.GAS = Mathf.Clamp(setup.myCostume.stat.GAS, 75, 125);
+        setup.myCostume.stat.SPD = Mathf.Clamp(setup.myCostume.stat.SPD, 75, 140);
+        setup.myCostume.stat.GAS = Mathf.Clamp(setup.myCostume.stat.GAS, 75, 150);
         setup.myCostume.stat.BLA = Mathf.Clamp(setup.myCostume.stat.BLA, 75, 125);
-        setup.myCostume.stat.ACL = Mathf.Clamp(setup.myCostume.stat.ACL, 75, 125);
+        setup.myCostume.stat.ACL = Mathf.Clamp(setup.myCostume.stat.ACL, 75, 150);
         freshLabel();
     }
 

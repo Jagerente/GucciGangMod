@@ -665,7 +665,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             {
                 str = (string)rpcData[(byte)3];
             }
-
+            sender.AddToRPC(str);
             object[] parameters = null;
             if (rpcData.ContainsKey((byte)4))
             {
@@ -1271,6 +1271,119 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         {
             return;
         }
+        if (sender != null)
+        {
+            sender.AddToEvent(photonEvent.Code);
+        }
+        byte code = photonEvent.Code;
+        if (code == 101)
+        {
+            if (sender != null)
+            {
+                ExitGames.Client.Photon.Hashtable hashtable1 = (ExitGames.Client.Photon.Hashtable)photonEvent[245];
+                //SukaMod
+                if (hashtable1[147] is string)
+                {
+                    if ((string)hashtable1[147] == "SukaMod")
+                    {
+                        return;
+                    }
+                    sender.SukaMod = true;
+                }
+                //VeniceMod
+                if (hashtable1[4682942] is string)
+                {
+                    if ((string)hashtable1[147] == "VENICE")
+                    {
+                        return;
+                    }
+                    sender.VENICE = true;
+                }
+                //RedSkies
+                if (hashtable1[102] is string)
+                {
+                    if ((string)hashtable1[102] == "RedSkies")
+                    {
+                        return;
+                    }
+                    sender.RS = true;
+                }
+                //DeathMod
+                if (hashtable1[101] is string)
+                {
+                    if ((string)hashtable1[101] == "DeathMod")
+                    {
+                        return;
+                    }
+                    sender.DeathMod = true;
+                }
+                if (hashtable1[102] is string)
+                {
+                    if ((string)hashtable1[102] == "DeathMod")
+                    {
+                        return;
+                    }
+                    sender.DeathMod = true;
+                }
+                if (hashtable1[103] is string)
+                {
+                    if ((string)hashtable1[103] == "DeathMod")
+                    {
+                        return;
+                    }
+                    sender.DeathMod = true;
+                }
+                //Cyan
+                if (hashtable1[104] is string)
+                {
+                    if ((string)hashtable1[104] == "0.3.0.2")
+                    {
+                        return;
+                    }
+                    sender.CyanMod = true;
+                }
+                //DeadInside
+                if (hashtable1[131] is string)
+                {
+                    if ((string)hashtable1[131] == "DeadInsideVer")
+                    {
+                        return;
+                    }
+                    sender.DeadInsideVer = true;
+                }
+                if ((bool)hashtable1[130])
+                {
+                    sender.DeadInside = (bool)hashtable1[130];
+                }
+            }
+            return;
+        }
+        //Celestial Death
+        if (code == 142)
+        {
+            if (sender != null)
+            {
+                ExitGames.Client.Photon.Hashtable hashtable13 = (ExitGames.Client.Photon.Hashtable)photonEvent[245];
+                if ((int)hashtable13[0] == 101289)
+                {
+                    sender.CelestialDeath = true;
+                }
+            }
+            return;
+        }
+        //OldSukaMod
+        if (code == 147)
+        {
+            if (sender != null)
+            {
+                ExitGames.Client.Photon.Hashtable hashtable14 = (ExitGames.Client.Photon.Hashtable)photonEvent[245];
+                if ((int)hashtable14[0] != 129876)
+                {
+                    return;
+                }
+                sender.SukaModOld = true;
+            }
+        }
 
         switch (photonEvent.Code)
         {
@@ -1581,11 +1694,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                                             FengGameManagerMKII.FGM.kickPlayerRC(sender, true, "excessive stats.");
                                             return;
                                         }
-
                                     }
                                     if (iD == sender.ID && pActorProperties["RCteam"] is string str && str != null)
                                     {
-                                        if (str == "Gucci")
+                                        if (str == "GGM")
                                         {
                                             sender.GucciGangMod = true;
                                         }
@@ -3002,7 +3114,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     private void SendCheck()
     {
         int team = PhotonNetwork.player.customProperties["RCteam"] is int ? (int)PhotonNetwork.player.customProperties["RCteam"] : 0;
-        Hashtable hash = new Hashtable() { { "RCteam", "Gucci" } };
+        Hashtable hash = new Hashtable() { { "RCteam", "GGM" } };
         PhotonNetwork.player.SetCustomProperties(hash);
         hash["RCteam"] = team;
         PhotonNetwork.player.SetCustomProperties(hash);

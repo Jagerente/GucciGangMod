@@ -56,6 +56,7 @@
     <Compile Include="GGM\Caching\ColorCache.cs" />
     <Compile Include="GGM\Caching\GameObjectCache.cs" />
     <Compile Include="GGM\Caching\ResourcesCache.cs" />
+    <Compile Include="GGM\Commands.cs" />
     <Compile Include="GGM\Config\AssetsManager.cs" />
     <Compile Include="GGM\Discord\DiscordAPI.cs" />
     <Compile Include="GGM\Discord\RichPresence.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="GGM\GUI\Settings.cs" />
     <Compile Include="GGM\HotKeys.cs" />
     <Compile Include="GGM\Labels.cs" />
+    <Compile Include="GGM\Layer.cs" />
     <Compile Include="GGM\Logger.cs" />
     <Compile Include="GGM\SpectatorMode.cs" />
     <Compile Include="GGM\Storage\IDataStorage.cs" />

@@ -68,7 +68,7 @@ public class HeroCostume
         num += stat.GAS;
         num += stat.BLA;
         num += stat.ACL;
-        if (num > 400)
+        if (num > 455)
         {
             stat.SPD = stat.GAS = stat.BLA = stat.ACL = 100;
         }

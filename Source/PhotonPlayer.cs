@@ -1,15 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using GGM;
 using UnityEngine;
 
 public class PhotonPlayer
 {
+    public Dictionary<string, long> RPCList = new Dictionary<string, long>();
+    public Dictionary<byte, long> EventList = new Dictionary<byte, long>();
     private int actorID;
     public readonly bool isLocal;
     private string nameField;
     public object TagObject;
+    public bool CelestialDeath { get; set; }
+    public bool CyanMod { get; set; }
+    public bool DI { get; set; }
+    public bool DeadInside { get; set; }
+    public bool DeadInsideVer { get; set; }
+    public bool DeathMod { get; set; }
+    public bool GucciLab { get; set; }
+    public bool RC83 { get; set; }
+    public bool RS { get; set; }
+    public bool SukaMod { get; set; }
+    public bool SukaModOld { get; set; }
+    public bool Universe { get; set; }
+    public bool VENICE { get; set; }
 
-    public bool GucciGangMod = false;
+    public bool GucciGangMod;
 
     public static PhotonPlayer[] GetGGMUsers()
     {
@@ -27,7 +44,7 @@ public class PhotonPlayer
     protected internal PhotonPlayer(bool isLocal, int actorID, Hashtable properties)
     {
         this.actorID = -1;
-        nameField = string.Empty;
+        nameField = String.Empty;
         customProperties = new Hashtable();
         this.isLocal = isLocal;
         this.actorID = actorID;
@@ -39,7 +56,7 @@ public class PhotonPlayer
     public PhotonPlayer(bool isLocal, int actorID, string name)
     {
         this.actorID = -1;
-        nameField = string.Empty;
+        nameField = String.Empty;
         customProperties = new Hashtable();
         this.isLocal = isLocal;
         this.actorID = actorID;
@@ -48,10 +65,47 @@ public class PhotonPlayer
             GucciGangMod = true;
     }
 
+    public void AddToEvent(byte code)
+    {
+        if (!EventList.ContainsKey(code))
+        {
+            EventList.Add(code, 1);
+        }
+        else
+        {
+            EventList[code]++;
+        }
+    }
+
+    public void AddToRPC(string rpc)
+    {
+        if (!RPCList.ContainsKey(rpc))
+        {
+            RPCList.Add(rpc, 1);
+        }
+        else
+        {
+            RPCList[rpc]++;
+        }
+    }
+
     public override bool Equals(object p)
     {
         var player = p as PhotonPlayer;
         return player != null && GetHashCode() == player.GetHashCode();
+    }
+
+    public string Events
+    {
+        get
+        {
+            string str = string.Empty;
+            foreach (byte code in this.EventList.Keys)
+            {
+                str += code + ": " + EventList[code] + "\n";
+            }
+            return str;
+        }
     }
 
     public static PhotonPlayer Find(int ID)
@@ -163,17 +217,17 @@ public class PhotonPlayer
 
     public override string ToString()
     {
-        if (string.IsNullOrEmpty(name))
+        if (String.IsNullOrEmpty(name))
         {
-            return string.Format("#{0:00}{1}", ID, !isMasterClient ? string.Empty : "(master)");
+            return String.Format("#{0:00}{1}", ID, !isMasterClient ? String.Empty : "(master)");
         }
 
-        return string.Format("'{0}'{1}", name, !isMasterClient ? string.Empty : "(master)");
+        return String.Format("'{0}'{1}", name, !isMasterClient ? String.Empty : "(master)");
     }
 
     public string ToStringFull()
     {
-        return string.Format("#{0:00} '{1}' {2}", ID, name, customProperties.ToStringFull());
+        return String.Format("#{0:00} '{1}' {2}", ID, name, customProperties.ToStringFull());
     }
 
     public Hashtable allProperties
@@ -187,11 +241,39 @@ public class PhotonPlayer
         }
     }
 
+    public string Props
+    {
+        get
+        {
+            string str = "";
+            foreach (object prop in this.allProperties.Keys)
+            {
+                str += prop + ": " + this.allProperties[prop] + "\n";
+            }
+            return str;
+        }
+    }
+
     public Hashtable customProperties { get; private set; }
 
     public int ID
     {
         get { return actorID; }
+    }
+
+    public bool isGuest
+    {
+        get { return Name.StripHEX().Contains("GUEST"); }
+    }
+
+    public bool isAbusive
+    {
+        get { return Name.StripHEX().StartsWith("Tokyo Ghoul") || Name.StripHEX().Contains("Violent") || Name.StripHEX().StartsWith("Vivid") || Name.StripHEX().Contains("Hyper-MegaCannon") || Name.StripHEX().Contains("MegaCannon") || Name.StripHEX().Contains("G_U_E_S_T") || Name.StripHEX().Contains("Tokyo Ghoul X [") || Name.StripHEX().Contains("Tokyo Ghoul") || Name.StripHEX().Contains("MULTI-WEAPON") || Name.StripHEX().Contains("Saif"); }
+    }
+
+    public bool isMuted
+    {
+        get { return GGM.Config.Settings.MutedPlayers.Contains(Name.StripHEX()); }
     }
 
     public bool isMasterClient
@@ -227,6 +309,32 @@ public class PhotonPlayer
             {
                 nameField = value;
             }
+        }
+    }
+
+    public string RPCs
+    {
+        get
+        {
+            string str = String.Empty;
+            foreach (string key in RPCList.Keys)
+            {
+                str += key + ": " + RPCList[key] + "\n";
+            }
+            return str;
+        }
+    }
+
+    public string UIName
+    {
+        get
+        {
+            string str = "Unknown";
+            if (customProperties["name"] is string && customProperties["name"] != null)
+            {
+                str = (string)customProperties["name"];
+            }
+            return str;
         }
     }
 }
