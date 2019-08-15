@@ -268,12 +268,18 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 if (Settings.LegacyChatSetting)
                 {
-                    InRoomChat.AddLineRC("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round Start.");
+                    if (!Settings.ChatFeedSeparateSetting)
+                        InRoomChat.AddLineRC("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round Start.");
+                    else
+                        InRoomChat.AddLineChatFeed("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round Start.");
                 }
                 else
                 {
                     string[] msg = { $"({roundTime.ToString("F2")}) ", "Round Start." };
-                    InRoomChat.SystemMessageLocal(msg, false);
+                    if (!Settings.ChatFeedSeparateSetting)
+                        InRoomChat.SystemMessageLocal(msg, false);
+                    else
+                        InRoomChat.SystemMessageLocal(msg, false, true);
                 }
             }
         }
@@ -296,12 +302,12 @@ public class FengGameManagerMKII : MonoBehaviour
         if (Settings.LegacyChatSetting)
         {
             content = "<color=#FFC000>[" + Convert.ToString(info.sender.ID) + "]</color> " + content;
-            InRoomChat.AddLine(content);
+            InRoomChat.AddLineChat(content);
         }
         else
         {
             content = InRoomChat.ChatFormatting($"[{Convert.ToString(info.sender.ID)}] ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + content;
-            InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
+            InRoomChat.AddLineChat($"<size={Settings.ChatSizeSetting}>{content}</size>");
         }
     }
 
@@ -313,11 +319,11 @@ public class FengGameManagerMKII : MonoBehaviour
         if (Settings.LegacyChatSetting)
         {
             content = "<color=#FFC000>FROM [" + Convert.ToString(info.sender.ID) + "]</color> " + content;
-            InRoomChat.AddLine(content);
+            InRoomChat.AddLineChat(content);
         }
         else
         {
-            InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{content}</size>");
+            InRoomChat.AddLineChat($"<size={Settings.ChatSizeSetting}>{content}</size>");
         }
     }
 
@@ -2473,12 +2479,18 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     if (Settings.LegacyChatSetting)
                     {
-                        InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game lose).");
+                        if (!Settings.ChatFeedSeparateSetting)
+                            InRoomChat.AddLineChat("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game lose).");
+                        else
+                            InRoomChat.AddLineChatFeed("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game lose).");
                     }
                     else
                     {
                         string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Lose]" };
-                        InRoomChat.SystemMessageLocal(msg, false);
+                        if (!Settings.ChatFeedSeparateSetting)
+                            InRoomChat.SystemMessageLocal(msg, false);
+                        else
+                            InRoomChat.SystemMessageLocal(msg, false, true);
                     }
                 }
             }
@@ -2510,12 +2522,18 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         if (Settings.LegacyChatSetting)
                         {
-                            InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                            if (!Settings.ChatFeedSeparateSetting)
+                                InRoomChat.AddLineChat("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                            else
+                                InRoomChat.AddLineChatFeed("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
                         }
                         else
                         {
                             string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Win]" };
-                            InRoomChat.SystemMessageLocal(msg, false);
+                            if (!Settings.ChatFeedSeparateSetting)
+                                InRoomChat.SystemMessageLocal(msg, false);
+                            else
+                                InRoomChat.SystemMessageLocal(msg, false, true);
                         }
                     }
                 }
@@ -2531,12 +2549,18 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         if (Settings.LegacyChatSetting)
                         {
-                            InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                            if (!Settings.ChatFeedSeparateSetting)
+                                InRoomChat.AddLineChat("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                            else
+                                InRoomChat.AddLineChatFeed("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
                         }
                         else
                         {
                             string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Win]" };
-                            InRoomChat.SystemMessageLocal(msg, false);
+                            if (!Settings.ChatFeedSeparateSetting)
+                                InRoomChat.SystemMessageLocal(msg, false);
+                            else
+                                InRoomChat.SystemMessageLocal(msg, false, true);
                         }
                     }
                 }
@@ -2554,12 +2578,18 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         if (Settings.LegacyChatSetting)
                         {
-                            InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                            if (!Settings.ChatFeedSeparateSetting)
+                                InRoomChat.AddLineChat("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                            else
+                                InRoomChat.AddLineChatFeed("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
                         }
                         else
                         {
                             string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Win]" };
-                            InRoomChat.SystemMessageLocal(msg, false);
+                            if (!Settings.ChatFeedSeparateSetting)
+                                InRoomChat.SystemMessageLocal(msg, false);
+                            else
+                                InRoomChat.SystemMessageLocal(msg, false, true);
                         }
                     }
                 }
@@ -4392,12 +4422,18 @@ public class FengGameManagerMKII : MonoBehaviour
         {
             if (Settings.LegacyChatSetting)
             {
-                InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game lose).");
+                if (!Settings.ChatFeedSeparateSetting)
+                    InRoomChat.AddLineChat("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game lose).");
+                else
+                    InRoomChat.AddLineChatFeed("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game lose).");
             }
             else
             {
                 string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Lose]" };
-                InRoomChat.SystemMessageLocal(msg, false);
+                if (!Settings.ChatFeedSeparateSetting)
+                    InRoomChat.SystemMessageLocal(msg, false);
+                else
+                    InRoomChat.SystemMessageLocal(msg, false, true);
             }
         }
 
@@ -4438,12 +4474,18 @@ public class FengGameManagerMKII : MonoBehaviour
         {
             if (Settings.LegacyChatSetting)
             {
-                InRoomChat.AddLine("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                if (!Settings.ChatFeedSeparateSetting)
+                    InRoomChat.AddLineChat("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
+                else
+                    InRoomChat.AddLineChatFeed("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> Round ended (game win).");
             }
             else
             {
                 string[] msg = { $"({roundTime.ToString("F2")}) ", "Round ended. ", "[Game Win]" };
-                InRoomChat.SystemMessageLocal(msg, false);
+                if (!Settings.ChatFeedSeparateSetting)
+                    InRoomChat.SystemMessageLocal(msg, false);
+                else
+                    InRoomChat.SystemMessageLocal(msg, true);
             }
         }
 
@@ -4711,7 +4753,22 @@ public class FengGameManagerMKII : MonoBehaviour
 
                         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                         {
-                            InRoomChat.SystemMessageLocal($"[Wave {wave}]", false);
+                            if (Settings.LegacyChatSetting)
+                            {
+                                string msg = "<color=#A8FF24>Wave : " + this.wave + "</color>";
+                                if (!Settings.ChatFeedSeparateSetting)
+                                    InRoomChat.AddLineChat(msg);
+                                else
+                                    InRoomChat.AddLineChatFeed(msg);
+                            }
+                            else
+                            {
+                                string[] msg = { $"[Wave {wave}]" };
+                                if (!Settings.ChatFeedSeparateSetting)
+                                    InRoomChat.SystemMessageLocal(msg, false);
+                                else
+                                    InRoomChat.SystemMessageLocal(msg, false, true);
+                            }
                         }
 
                         if (wave > highestwave)
@@ -4877,7 +4934,7 @@ public class FengGameManagerMKII : MonoBehaviour
         needChooseSide = true;
         chatContent = new ArrayList();
         killInfoGO = new ArrayList();
-        InRoomChat.Messages = new List<string>();
+        InRoomChat.Chat = new List<string>();
 
         if (!PhotonNetwork.isMasterClient)
         {
@@ -6790,9 +6847,11 @@ public class FengGameManagerMKII : MonoBehaviour
             if (masterclientSwitched)
             {
                 var msg = InRoomChat.ChatFormatting("MasterClient ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + InRoomChat.ChatFormatting("has switched to ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting($"[{PhotonNetwork.player.ID}] ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + PhotonNetwork.player.Name.hexColor();
-                InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
+                InRoomChat.AddLineChat($"<size={Settings.ChatSizeSetting}>{msg}</size>");
             }
         }
+
+        Page.GetInstance<PauseMenu>().Disable();
     }
 
     [RPC]
@@ -7520,7 +7579,7 @@ public class FengGameManagerMKII : MonoBehaviour
             if (RCSettings.explodeMode != (int)hash["explode"])
             {
                 RCSettings.explodeMode = (int)hash["explode"];
-                string[] msg = { "Explode radius is ", $"[{Convert.ToString(RCSettings.explodeMode)}", "." };
+                string[] msg = { "Explode radius is ", $"[{Convert.ToString(RCSettings.explodeMode)}]", "." };
                 InRoomChat.SystemMessageLocal(msg);
             }
         }
@@ -7733,7 +7792,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
 
                 string[] msg = { mode + "PVP mode is enabled." };
-                InRoomChat.SystemMessageLocal(msg, false);
+                InRoomChat.SystemMessageLocal(msg);
             }
         }
         else if (RCSettings.pvpMode != 0)
@@ -9311,12 +9370,18 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 string str2 = ("<color=#FFC000>(" + this.roundTime.ToString("F2") + ")</color> ") + killer.hexColor() + " killed ";
                 string newLine = str2 + victim.hexColor() + " for " + dmg.ToString() + " damage.";
-                InRoomChat.AddLine(newLine);
+                if (!Settings.ChatFeedSeparateSetting)
+                    InRoomChat.AddLineChat(newLine);
+                else
+                    InRoomChat.AddLineChatFeed(newLine);
             }
             else
             {
-                var msg = InRoomChat.ChatFormatting($"[{roundTime.ToString("F2")}] ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + killer.hexColor() + InRoomChat.ChatFormatting(" killed ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + (victim.Contains("[") ? victim.hexColor() : InRoomChat.ChatFormatting(victim, Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1])) + InRoomChat.ChatFormatting(" for ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting(dmg.ToString(), Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + InRoomChat.ChatFormatting(" damage.", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]);
-                InRoomChat.AddLine($"<size={Settings.ChatSizeSetting}>{msg}</size>");
+                var msg = InRoomChat.ChatFormatting($"({roundTime.ToString("F2")}) ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + killer.hexColor() + InRoomChat.ChatFormatting(" killed ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + (victim.Contains("[") ? victim.hexColor() : InRoomChat.ChatFormatting(victim, Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1])) + InRoomChat.ChatFormatting(" for ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting(dmg.ToString(), Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + InRoomChat.ChatFormatting(" damage.", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]);
+                if (!Settings.ChatFeedSeparateSetting)
+                    InRoomChat.AddLineChat($"<size={Settings.ChatSizeSetting}>{msg}</size>");
+                else
+                    InRoomChat.AddLineChatFeed($"<size={Settings.ChatSizeSetting}>{msg}</size>");
             }
         }
 
