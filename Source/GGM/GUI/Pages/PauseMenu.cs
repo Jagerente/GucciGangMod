@@ -13,7 +13,7 @@ namespace GGM.GUI.Pages
     {
         private static PhotonPlayer ChosenPlayer;
         private static float[] ControlPanelProportion = { 0.35f, 0.4f, 0.25f };
-        private static int InfoPanelPageSetting = 1;
+        private static int InfoPanelPageSetting = 0;
 
         #region Switchers
 
@@ -1551,6 +1551,10 @@ namespace GGM.GUI.Pages
                                                 Label("Bomb G Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombG]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb B Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombB]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb Radius: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb Cooldown: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombCooldown]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb Speed: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombSpeed]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb Range: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRange]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+
                                                 break;
                                             }
 

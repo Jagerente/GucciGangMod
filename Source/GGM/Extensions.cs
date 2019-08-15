@@ -259,7 +259,7 @@ namespace GGM
                     }
                     else
                     {
-                        result += str + '\n';
+                        result += str + ": " + player.customProperties[str] + '\n';
                     }
                 }
             }
