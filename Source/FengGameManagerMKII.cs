@@ -5723,7 +5723,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
         if (sender != string.Empty)
         {
-            content = sender + ": " + content;
+            content = sender + ": " + content.StripHTML();
         }
 
         if (Settings.LegacyChatSetting)
