@@ -1,31 +1,46 @@
 ﻿using ExitGames.Client.Photon;
 using GGM.Caching;
-using GGM.Config;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using GGM;
+using GGM.GUI;
 using GGM.GUI.Pages;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
+using Settings = GGM.Config.Settings;
 
 public class InRoomChat : MonoBehaviour
 {
-    private readonly bool AlignBottom = true;
-    internal static InRoomChat Chat;
-    public static Rect GuiRect = new Rect(0f, 100f, 300f, 470f);
-    public static Rect GuiRect2 = new Rect(30f, 575f, 300f, 25f);
-    private string inputLine = string.Empty;
-    public static List<string> Messages = new List<string>();
+    private static Rect chatRect;
+    private static Rect chatInputRect;
+    private static Rect chatFeedRect;
+    private static float chatWidth;
+    private static float chatHeight;
+    private string inputLine;
+    public static List<string> Chat;
+    public static List<string> ChatFeed;
+    private static Texture2D chatBackground;
+    private static float chatOpacity;
+    private static Vector2 chatScroll;
+    private static Vector2 chatFeedScroll;
 
     public static string RCLine(string line)
     {
         return "<color=#FFC000>" + line + "</color>";
     }
 
-    public static void AddLine(string newLine)
+    public static void AddLineChat(string newLine)
     {
-        Messages.Add(newLine);
+        Chat.Add(newLine);
+        chatScroll = new Vector2(9999f, 9999f);
+    }
+
+    public static void AddLineChatFeed(string newLine)
+    {
+        ChatFeed.Add(newLine);
+        chatFeedScroll = new Vector2(9999f, 9999f);
     }
 
     public static void AddLineRC(params string[] newLine)
@@ -36,7 +51,7 @@ public class InRoomChat : MonoBehaviour
             str += line;
         }
 
-        Messages.Add(RCLine(str));
+        AddLineChat(RCLine(str));
     }
 
     public static void SendLineRC(params string[] newLine)
@@ -87,11 +102,11 @@ public class InRoomChat : MonoBehaviour
         }
         else
         {
-            Messages.Add(ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+            AddLineChat(ChatFormatting(str, major ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, major ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], major ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
         }
     }
 
-    public static void SystemMessageLocal(string[] str, bool parity = true)
+    public static void SystemMessageLocal(string[] str, bool parity = true, bool chatFeed = false)
     {
         if (Settings.LegacyChatSetting)
         {
@@ -116,9 +131,12 @@ public class InRoomChat : MonoBehaviour
             }
             else
             {
-                msg.Append(msg.Append(ChatFormatting(str[0], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString())));
+                msg.Append(ChatFormatting(str[0], parity ? Settings.ChatMajorColorSetting : Settings.ChatMinorColorSetting, parity ? Settings.ChatMajorFormatSettings[0] : Settings.ChatMinorFormatSettings[0], parity ? Settings.ChatMajorFormatSettings[1] : Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
             }
-            Messages.Add(msg.ToString());
+            if (!chatFeed)
+                AddLineChat(msg.ToString());
+            else
+                AddLineChatFeed(msg.ToString());
         }
     }
 
@@ -130,7 +148,7 @@ public class InRoomChat : MonoBehaviour
         }
         else
         {
-            Messages.Add(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+            AddLineChat(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(".", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
         }
     }
 
@@ -142,7 +160,7 @@ public class InRoomChat : MonoBehaviour
         }
         else
         {
-            Messages.Add(ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+            AddLineChat(ChatFormatting($"[{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
         }
     }
 
@@ -154,7 +172,7 @@ public class InRoomChat : MonoBehaviour
         }
         else
         {
-            Messages.Add(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+            AddLineChat(ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
         }
     }
 
@@ -234,11 +252,6 @@ public class InRoomChat : MonoBehaviour
             SystemMessageLocal(str, player, str2);
             FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, ChatFormatting(str, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()} ", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + ChatFormatting(str2, Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]), string.Empty);
         }
-    }
-
-    private void Awake()
-    {
-        Chat = this;
     }
 
     private static void CommandSwitch(string[] args)
@@ -361,7 +374,7 @@ public class InRoomChat : MonoBehaviour
                     }
 
                     FengGameManagerMKII.FGM.photonView.RPC("ChatPM", player, sendName, msg);
-                    Messages.Add(ChatFormatting("PM to", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+                    AddLineChat(ChatFormatting("PM to", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
                 }
                 break;
 
@@ -483,41 +496,78 @@ public class InRoomChat : MonoBehaviour
 
     Label_219C:
         GUI.SetNextControlName(string.Empty);
-        GUILayout.BeginArea(GuiRect);
-        GUILayout.FlexibleSpace();
-        var text = string.Empty;
-        if (Messages.Count < 15)
+
+        if (Settings.ChatBackground)
         {
-            for (var msg = 0; msg < Messages.Count; msg++)
+            if (chatBackground == null || chatOpacity != Settings.ChatOpacitySetting)
             {
-                text = text + Messages[msg] + "\n";
+                chatBackground = new Texture2D(1, 1);
+                chatOpacity = Settings.ChatOpacitySetting;
+                chatBackground.SetPixel(0, 0, new Color(0f, 0f, 0f, chatOpacity));
+                chatBackground.Apply();
             }
-        }
-        else
-        {
-            for (var i = Messages.Count - 15; i < Messages.Count; i++)
-            {
-                text = text + Messages[i] + "\n";
-            }
+            GUI.DrawTexture(chatRect, chatBackground, ScaleMode.StretchToFill);
+            if (Settings.ChatFeedSeparateSetting)
+                GUI.DrawTexture(chatFeedRect, chatBackground, ScaleMode.StretchToFill);
         }
 
-        GUILayout.Label(text);
+        GUILayout.BeginArea(chatRect);
+        {
+            GUILayout.FlexibleSpace();
+            var text = string.Empty;
+            text = Chat.Aggregate(text, (current, t) => current + t + "\n");
+            if (Chat.Count > Settings.MessagesCache)
+            {
+                Chat.RemoveAt(0);
+            }
+
+            chatScroll = GUILayout.BeginScrollView(chatScroll);
+            {
+                GUILayout.Label(text);
+            }
+            GUILayout.EndScrollView();
+        }
         GUILayout.EndArea();
-        GUILayout.BeginArea(GuiRect2);
-        GUILayout.BeginHorizontal();
-        GUI.SetNextControlName("ChatInput");
-        inputLine = GUILayout.TextField(inputLine);
-        GUILayout.EndHorizontal();
+
+        GUILayout.BeginArea(chatInputRect);
+        {
+            GUILayout.BeginHorizontal();
+            {
+                GUI.SetNextControlName("ChatInput");
+                inputLine = GUILayout.TextField(inputLine);
+            }
+            GUILayout.EndHorizontal();
+        }
         GUILayout.EndArea();
+
+        if (Settings.ChatFeedSeparateSetting)
+        {
+            GUILayout.BeginArea(chatFeedRect);
+            {
+                chatFeedScroll = GUILayout.BeginScrollView(chatFeedScroll);
+                {
+                    GUILayout.FlexibleSpace();
+                    var text = string.Empty;
+                    text = ChatFeed.Aggregate(text, (current, t) => current + t + "\n");
+                    if (ChatFeed.Count > Settings.MessagesCache)
+                    {
+                        Chat.RemoveAt(0);
+                    }
+                    GUILayout.Label(text);
+                }
+                GUILayout.EndScrollView();
+            }
+            GUILayout.EndArea();
+        }
     }
 
     public void SetPosition()
     {
-        if (AlignBottom)
-        {
-            GuiRect = new Rect(0f, Screen.height - 500, 300f, 470f);
-            GuiRect2 = new Rect(30f, Screen.height - 300 + 275, 300f, 25f);
-        }
+        chatWidth = Settings.ChatWidthSetting;
+        chatHeight = Settings.ChatHeightSetting;
+        chatInputRect = new Rect(30f, Screen.height - 300 + 275, 300f, 25f);
+        chatRect = GUIHelpers.AlignRect(chatWidth, chatHeight, GUIHelpers.Alignment.BOTTOMLEFT, 5f, -5f);
+        chatFeedRect = GUIHelpers.AlignRect(chatWidth, chatHeight, GUIHelpers.Alignment.BOTTOMRIGHT, 0f, -5f);
     }
 
     public void Start()

@@ -90,6 +90,8 @@ namespace GGM.Config
         public static BoolSetting DisableAHSSAirReloadingSetting = new BoolSetting("GGM_DisableAHSSAirReloading");
         public static BoolSetting DeadlyCannonsModeSetting = new BoolSetting("GGM_DeadlyCannonsMode");
         public static BoolSetting LegacyChatSetting = new BoolSetting("GGM_LegacyChat");
+        public static BoolSetting ChatFeedSeparateSetting = new BoolSetting("GGM_ChatFeedSeparate");
+        public static BoolSetting ChatBackground = new BoolSetting("GGM_ChatBackground");
         public static BoolSetting[] ChatMajorFormatSettings = { new BoolSetting("GGM_ChatMajorBold"), new BoolSetting("GGM_ChatMinorItalic") };
         public static BoolSetting[] ChatMinorFormatSettings = { new BoolSetting("GGM_ChatMinorBold"), new BoolSetting("GGM_ChatMinorItalic") };
         public static BoolSetting AntiTitanErenSetting = new BoolSetting("GGM_AntiTitanEren");
@@ -134,6 +136,9 @@ namespace GGM.Config
         public static FloatSetting[] SpawnRateSettings = { new FloatSetting("GGM_NormalSpawnRate", 100f), new FloatSetting("GGM_AbnormalSpawnRate"), new FloatSetting("GGM_JumperSpawnRate"), new FloatSetting("GGM_CrawlerSpawnRate"), new FloatSetting("GGM_PunkSpawnRate") };
 
         public static FloatSetting[] SizeSettings = { new FloatSetting("GGM_MinimumSize", 2.5f), new FloatSetting("GGM_MaximumSize", 3f) };
+        public static FloatSetting ChatOpacitySetting = new FloatSetting("GGM_ChatOpacity", 0.3f);
+        public static FloatSetting ChatHeightSetting = new FloatSetting("GGM_ChatHeight", 470f);
+        public static FloatSetting ChatWidthSetting = new FloatSetting("GGM_ChatHeight", 300f);
 
         //Video
         public static FloatSetting OverallQualitySetting = new FloatSetting("GGM_OverallQuality", 1);
@@ -193,6 +198,7 @@ namespace GGM.Config
         public static IntSetting PointsLimitSetting = new IntSetting("GGM_PointsLimit", 50);
         public static IntSetting TeamSortSetting = new IntSetting("GGM_TeamSort");
         public static IntSetting AutoReviveTimeSetting = new IntSetting("GGM_AutoReviveTime", 5);
+        public static IntSetting MessagesCache = new IntSetting("GGM_MessagesCache", 30);
         public static IntSetting ChatSizeSetting = new IntSetting("GGM_ChatSize", 13);
         public static IntSetting ConnectionProtocolSettings = new IntSetting("GGM_ConnectionProtocol");
         public static IntSetting InfoPanelPageSetting = new IntSetting("GGM_InfoPanelPage");

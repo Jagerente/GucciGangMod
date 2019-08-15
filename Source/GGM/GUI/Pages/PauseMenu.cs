@@ -323,13 +323,13 @@ namespace GGM.GUI.Pages
                     Slider("Distance", ref CameraDistanceSetting.Value, 0f, 1, multiplier: 100f, round: true);
                     Grid("Tilt", ref CameraTiltSetting.Value);
                     Grid("Static FOV", ref CameraStaticFOVSetting.Value);
-                    if (CameraStaticFOVSetting) Slider("• FOV", ref CameraFOVSetting.Value, 60f, 120f, round: true);
+                    if (CameraStaticFOVSetting) Slider("FOV", ref CameraFOVSetting.Value, 60f, 120f, round: true);
                     Label("Snapshots", LabelType.Header);
                     Grid("Snapshots", ref SnapshotsSetting.Value);
                     if (SnapshotsSetting)
                     {
-                        Grid("• Show In Game", ref SnapshotsShowInGameSetting.Value);
-                        TextField("• Minimum Damage", ref SnapshotsMinimumDamageSetting.Value);
+                        Grid("Show In Game", ref SnapshotsShowInGameSetting.Value);
+                        TextField("Minimum Damage", ref SnapshotsMinimumDamageSetting.Value);
                     }
 
                     Label("Resources", LabelType.Header);
@@ -365,9 +365,10 @@ namespace GGM.GUI.Pages
                     Label("Misc", LabelType.Header);
                     Grid("Body Lean", ref BodyLean.Value);
                     Grid("Chat Feed", ref ChatFeedSetting.Value);
+                    if (ChatFeedSetting) Grid("Separate Window", ref ChatFeedSeparateSetting.Value);
                     Grid("Minimap", ref MinimapSetting.Value);
                     Grid("Speedometer", ref SpeedometerSetting.Value, speedometerTypes);
-                    if (SpeedometerSetting == 2) Grid("• AHSS Damage", ref SpeedometerAHSSSetting.Value, ahssSpeedometerTypes);
+                    if (SpeedometerSetting == 2) Grid("AHSS Damage", ref SpeedometerAHSSSetting.Value, ahssSpeedometerTypes);
                     Grid("Cannon Type", ref CannonTypeSetting.Value, cannonTypes);
                     TextField("Movement Speed", ref CannonMovementSpeedSetting.Value);
                     TextField("Rotate Speed", ref CannonRotateSpeedSetting.Value);
@@ -405,31 +406,31 @@ namespace GGM.GUI.Pages
                             {
                                 Label("General", LabelType.Header);
                                 Grid("Custom Starter Titans", ref CustomStarterTitansSetting.Value);
-                                if (CustomStarterTitansSetting) TextField("• Amount", ref StarterAmountSetting.Value);
+                                if (CustomStarterTitansSetting) TextField("Amount", ref StarterAmountSetting.Value);
                                 Grid("Custom Titans/Wave", ref CustomTitansPerWaveSetting.Value);
-                                if (CustomTitansPerWaveSetting) TextField("• Amount", ref TitansPerWaveSetting.Value);
+                                if (CustomTitansPerWaveSetting) TextField("Amount", ref TitansPerWaveSetting.Value);
                                 Grid("Custom Spawn Rate", ref CustomSpawnRateSetting.Value);
                                 if (CustomSpawnRateSetting)
                                 {
                                     float[] freePoints = { 100f - (SpawnRateSettings[1] + SpawnRateSettings[2] + SpawnRateSettings[3] + SpawnRateSettings[4]), 100f - (SpawnRateSettings[0] + SpawnRateSettings[2] + SpawnRateSettings[3] + SpawnRateSettings[4]), 100f - (SpawnRateSettings[0] + SpawnRateSettings[1] + SpawnRateSettings[3] + SpawnRateSettings[4]), 100f - (SpawnRateSettings[0] + SpawnRateSettings[1] + SpawnRateSettings[2] + SpawnRateSettings[4]), 100f - (SpawnRateSettings[0] + SpawnRateSettings[1] + SpawnRateSettings[2] + SpawnRateSettings[3]) };
-                                    string[] types = { "• Normal", "• Abnormal", "• Jumper", "• Crawler", "• Punk" };
+                                    string[] types = { "Normal", "Abnormal", "Jumper", "Crawler", "Punk" };
                                     for (var i = 0; i < SpawnRateSettings.Length; i++)
                                     {
                                         Slider(types[i], ref SpawnRateSettings[i].Value, 0f, freePoints[i], customValueText: true, valueText: Math.Round(SpawnRateSettings[i]) + "%");
                                     }
 
-                                    Grid("• Punk Waves", ref PunkWavesSetting.Value);
+                                    Grid("Punk Waves", ref PunkWavesSetting.Value);
                                 }
 
                                 Grid("Custom Size", ref CustomSizeSetting.Value);
                                 if (CustomSizeSetting)
                                 {
-                                    TextField("• Minimum", ref SizeSettings[0].Value);
-                                    TextField("• Maximum", ref SizeSettings[1].Value);
+                                    TextField("Minimum", ref SizeSettings[0].Value);
+                                    TextField("Maximum", ref SizeSettings[1].Value);
                                 }
 
                                 Grid("Custom Waves", ref CustomWavesSetting.Value);
-                                if (CustomWavesSetting) TextField("• Waves", ref MaximumWavesSetting.Value);
+                                if (CustomWavesSetting) TextField("Waves", ref MaximumWavesSetting.Value);
                                 Grid("Disable Rock-Throwing", ref DisableRockThrowingSetting.Value);
                                 GUILayout.Space(1f);
                             }
@@ -443,15 +444,15 @@ namespace GGM.GUI.Pages
                             Grid("Health Mode", ref HealthModeSetting.Value);
                             if (HealthModeSetting)
                             {
-                                Grid("• Type", ref HealthSettings[0].Value, healthTypes);
-                                TextField("• Minimum", ref HealthSettings[1].Value);
-                                TextField("• Maximum", ref HealthSettings[2].Value);
+                                Grid("Type", ref HealthSettings[0].Value, healthTypes);
+                                TextField("Minimum", ref HealthSettings[1].Value);
+                                TextField("Maximum", ref HealthSettings[2].Value);
                             }
 
                             Grid("Armor Mode", ref ArmorModeSetting.Value);
-                            if (ArmorModeSetting) TextField("• Damage", ref ArmorSetting.Value);
+                            if (ArmorModeSetting) TextField("Damage", ref ArmorSetting.Value);
                             Grid("Explode Mode", ref ExplodeModeSetting.Value);
-                            if (ExplodeModeSetting) TextField("• Radius", ref ExplodeRadiusSetting.Value);
+                            if (ExplodeModeSetting) TextField("Radius", ref ExplodeRadiusSetting.Value);
                         }
                         GUILayout.EndArea();
                         break;
@@ -463,18 +464,18 @@ namespace GGM.GUI.Pages
                         {
                             Label("PVP", LabelType.Header);
                             Grid("PVP Mode", ref PVPModeSetting.Value);
-                            if (PVPModeSetting) Grid("• Type", ref PVPTypeSetting.Value, pvpTypes);
+                            if (PVPModeSetting) Grid("Type", ref PVPTypeSetting.Value, pvpTypes);
                             Grid("Points Mode", ref PointsModeSetting.Value);
-                            if (PointsModeSetting) TextField("• Limit", ref PointsLimitSetting.Value);
+                            if (PointsModeSetting) TextField("Limit", ref PointsLimitSetting.Value);
                             Grid("Team Mode", ref TeamModeSetting.Value);
                             if (TeamModeSetting)
                             {
-                                Grid("• Sort", ref TeamSortSetting.Value, teamTypes);
+                                Grid("Sort", ref TeamSortSetting.Value, teamTypes);
                             }
 
                             Grid("Bombs Mode", ref BombsModeSetting.Value);
                             Grid("Infection Mode", ref InfectionModeSetting.Value);
-                            if (InfectionModeSetting) TextField("• Infected", ref InfectedTitansSetting.Value);
+                            if (InfectionModeSetting) TextField("Infected", ref InfectedTitansSetting.Value);
                             Grid("Friendly Mode", ref FriendlyModeSetting.Value);
                         }
                         GUILayout.EndArea();
@@ -483,7 +484,7 @@ namespace GGM.GUI.Pages
                         {
                             Label("Other", LabelType.Header);
                             Grid("Auto Revive", ref AutoReviveSetting.Value);
-                            if (AutoReviveSetting) TextField("• Seconds", ref AutoReviveTimeSetting.Value);
+                            if (AutoReviveSetting) TextField("Seconds", ref AutoReviveTimeSetting.Value);
                             Grid("Horses", ref HorsesSetting.Value);
                             Grid("Disable Minimaps", ref DisableMinimapsSetting.Value);
                             Grid("No AHSS Air-Reloading", ref DisableAHSSAirReloadingSetting.Value);
@@ -501,6 +502,11 @@ namespace GGM.GUI.Pages
                             {
                                 Label("Chat", LabelType.Header);
                                 Grid("Legacy Chat", ref LegacyChatSetting.Value);
+                                Grid("Background", ref ChatBackground.Value);
+                                if (ChatBackground) Slider("Opacity", ref ChatOpacitySetting.Value, 0f, 1f);
+                                Slider("Messages Cache", ref MessagesCache.Value, 15, 100);
+                                Slider("Chat Height", ref ChatHeightSetting.Value, 275f, Screen.height - 30f);
+                                Slider("Chat Width", ref ChatWidthSetting.Value, 300f, Screen.width / 2f - 5f);
                                 TextField("Size", ref ChatSizeSetting.Value);
                                 TextField("Major Color", ref ChatMajorColorSetting.Value);
                                 TextField("Minor Color", ref ChatMinorColorSetting.Value);
@@ -525,9 +531,7 @@ namespace GGM.GUI.Pages
                                 GUILayout.EndHorizontal();
                                 GUILayout.BeginHorizontal();
                                 {
-                                    GUILayout.FlexibleSpace();
-                                    TextArea(string.Empty, ref WelcomeMessageSetting.Value, halfAreaWidth - 15f, 185f);
-                                    GUILayout.FlexibleSpace();
+                                    TextArea(string.Empty, ref WelcomeMessageSetting.Value, halfAreaWidth - 25f, 185f);
                                 }
                                 GUILayout.EndHorizontal();
                                 GUILayout.Space(1f);
@@ -548,7 +552,7 @@ namespace GGM.GUI.Pages
 
                 case 3:
                     {
-                        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
+                        if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && !PhotonNetwork.offlineMode)
                         {
                             if (Extensions.AllProps == null) Extensions.AllProps = System.IO.File.ReadAllLines(Application.dataPath + "/props.txt");
                             if (ChosenPlayer == null) ChosenPlayer = PhotonNetwork.player;
