@@ -263,20 +263,20 @@ public class InRoomChat : MonoBehaviour
 
         if (Event.current.type == EventType.KeyDown)
         {
-            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') && !IN_GAME_MAIN_CAMERA.isPausing && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn && FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab)
+            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') && FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab && GUI.GetNameOfFocusedControl() != "WelcomeMessage" && GUI.GetNameOfFocusedControl() != "LevelScript" && GUI.GetNameOfFocusedControl() != "LogicScript")
             {
                 Event.current.Use();
                 goto Label_219C;
             }
         }
-        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None && Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] && GUI.GetNameOfFocusedControl() != "ChatInput" && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn)
+        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None && Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] && GUI.GetNameOfFocusedControl() != "ChatInput" && GUI.GetNameOfFocusedControl() != "WelcomeMessage" && GUI.GetNameOfFocusedControl() != "LevelScript" && GUI.GetNameOfFocusedControl() != "LogicScript")
         {
             inputLine = string.Empty;
             GUI.FocusControl("ChatInput");
             goto Label_219C;
         }
 
-        if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return) && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn)
+        if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return) && GUI.GetNameOfFocusedControl() != "WelcomeMessage" && GUI.GetNameOfFocusedControl() != "LevelScript" && GUI.GetNameOfFocusedControl() != "LogicScript")
         {
             if (!string.IsNullOrEmpty(inputLine))
             {

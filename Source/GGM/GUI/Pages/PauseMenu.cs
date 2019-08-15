@@ -195,6 +195,7 @@ namespace GGM.GUI.Pages
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.FlexibleSpace();
+                    UnityEngine.GUI.SetNextControlName("LogicScript");
                     TextArea(string.Empty, ref FengGameManagerMKII.currentScriptLogic, fullAreaWidth * 0.85f, fullAreaHeight * 0.65f);
                     GUILayout.FlexibleSpace();
                 }
@@ -230,7 +231,8 @@ namespace GGM.GUI.Pages
             var strArray16 = new[] { "1 Round", "Waves", "PVP", "Racing", "Custom" };
             RCSettings.gameType = UnityEngine.GUI.SelectionGrid(new Rect(leftPos + 40f + 190f, topPos + 25f + 80f, 140f, 60f), RCSettings.gameType, strArray16, 2, UnityEngine.GUI.skin.toggle);
             UnityEngine.GUI.Label(new Rect(leftPos + 40f + 150f, topPos + 25f + 155f, 150f, 20f), "Level Script:", "Label");
-            FengGameManagerMKII.currentScript = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 50f, topPos + 25f + 180f, 275f, 220f), FengGameManagerMKII.currentScript);
+            UnityEngine.GUI.SetNextControlName("LevelScript");
+            FengGameManagerMKII.currentScript = UnityEngine.GUI.TextArea(new Rect(leftPos + 40f + 50f, topPos + 25f + 180f, 275f, 220f), FengGameManagerMKII.currentScript);
             if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 100f, topPos + 25f + 410f, 50f, 25f), "Copy"))
             {
                 var editor = new TextEditor { content = new GUIContent(FengGameManagerMKII.currentScript) };
@@ -1479,6 +1481,7 @@ namespace GGM.GUI.Pages
                                 GUILayout.EndHorizontal();
                                 GUILayout.BeginHorizontal();
                                 {
+                                    UnityEngine.GUI.SetNextControlName("WelcomeMessage");
                                     TextArea(string.Empty, ref WelcomeMessageSetting.Value, halfAreaWidth - 25f, 185f);
                                 }
                                 GUILayout.EndHorizontal();
