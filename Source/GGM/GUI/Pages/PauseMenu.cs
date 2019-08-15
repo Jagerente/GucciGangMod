@@ -1606,6 +1606,17 @@ namespace GGM.GUI.Pages
                                     Commands.Ban(ChosenPlayer.ID.ToString());
                                 }
 
+                                if (GUILayout.Button(ChosenPlayer.isMuted ? "Unmute" : "Mute", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                {
+                                    if (ChosenPlayer.isMuted)
+                                    {
+                                        Commands.Unmute(ChosenPlayer);
+                                    }
+                                    else
+                                    {
+                                        Commands.Mute(ChosenPlayer);
+                                    }
+                                }
                                 if (GUILayout.Button("Reset Stats", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
                                 {
                                     Commands.ResetKD(ChosenPlayer.ID.ToString(), false);

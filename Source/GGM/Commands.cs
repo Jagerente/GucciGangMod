@@ -146,6 +146,43 @@ namespace GGM
             return !PhotonNetwork.isMasterClient;
         }
 
+        public static void Mute(PhotonPlayer player)
+        {
+            var name = player.Name.StripHEX();
+            if (!Settings.MutedPlayers.Contains(name))
+            {
+                Settings.MutedPlayers.Add(name);
+                SystemMessageLocal(player, "has been muted");
+            }
+            else
+            {
+                SystemMessageLocal(player, "already muted.");
+            }
+        }
+
+        public static void Unmute(PhotonPlayer player)
+        {
+            var name = player.Name.StripHEX();
+            if (Settings.MutedPlayers.Contains(name))
+            {
+                Settings.MutedPlayers.Remove(name);
+                SystemMessageLocal(player, "has been unmuted");
+            }
+            else
+            {
+                SystemMessageLocal(player, "not muted.");
+            }
+        }
+
+        public static void MuteList()
+        {
+            SystemMessageLocal("Muted Players:");
+            foreach (var player in Settings.MutedPlayers)
+            {
+                SystemMessageLocal(player);
+            }
+        }
+
         public static void Reconnect()
         {
             FengGameManagerMKII.NeedRejoin = true;

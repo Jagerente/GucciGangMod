@@ -9820,6 +9820,7 @@ public class FengGameManagerMKII : MonoBehaviour
         titanSpawners = new List<TitanSpawner>();
         restartCount = new List<float>();
         ignoreList = new List<int>();
+        Settings.MutedPlayers = new List<string>();
         groundList = new List<GameObject>();
         noRestart = false;
         masterRC = false;

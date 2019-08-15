@@ -271,6 +271,11 @@ public class PhotonPlayer
         get { return Name.StripHEX().StartsWith("Tokyo Ghoul") || Name.StripHEX().Contains("Violent") || Name.StripHEX().StartsWith("Vivid") || Name.StripHEX().Contains("Hyper-MegaCannon") || Name.StripHEX().Contains("MegaCannon") || Name.StripHEX().Contains("G_U_E_S_T") || Name.StripHEX().Contains("Tokyo Ghoul X [") || Name.StripHEX().Contains("Tokyo Ghoul") || Name.StripHEX().Contains("MULTI-WEAPON") || Name.StripHEX().Contains("Saif"); }
     }
 
+    public bool isMuted
+    {
+        get { return GGM.Config.Settings.MutedPlayers.Contains(Name.StripHEX()); }
+    }
+
     public bool isMasterClient
     {
         get { return PhotonNetwork.networkingPeer.mMasterClient == this; }

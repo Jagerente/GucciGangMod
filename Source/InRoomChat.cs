@@ -559,7 +559,15 @@ public class InRoomChat : MonoBehaviour
             case "spectate":
                 Commands.Spectate(Convert.ToInt32(args[1]));
                 return;
-
+            case "mute":
+                Commands.Mute(PhotonPlayer.Find(Convert.ToInt32(args[1])));
+                return;
+            case "unmute":
+                Commands.Unmute(PhotonPlayer.Find(Convert.ToInt32(args[1])));
+                return;
+            case "mutelist":
+                Commands.MuteList();
+                return;
             case "rules":
                 Commands.Rules();
                 break;
