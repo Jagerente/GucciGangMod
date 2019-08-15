@@ -3708,9 +3708,13 @@ public class HERO : MonoBehaviour
             var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
-            propertiesToSet = new Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
-            PhotonNetwork.player.SetCustomProperties(propertiesToSet);
+            if (titanName != string.Empty)
+            {
+                propertiesToSet = new Hashtable();
+                propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
+                PhotonNetwork.player.SetCustomProperties(propertiesToSet);
+            }
+
             object[] parameters = { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)
