@@ -1635,7 +1635,7 @@ namespace GGM.GUI.Pages
                                     var skin = HERO.PlayersSkins[ChosenPlayer.ID];
                                     HumanSkinsTitlesList.Add(ChosenPlayer.UIName.StripHEX());
                                     HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
-                                    HumanSkinsList.Add(skin.Split('`'));
+                                    HumanSkinsList.Add(skin.Split(','));
                                     HumanSkinsCountSetting.Value++;
                                     scrollHumanSkins.y = 9999f;
                                 }
