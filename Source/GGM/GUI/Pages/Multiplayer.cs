@@ -279,7 +279,7 @@ namespace GGM.GUI.Pages
                                     ButtonToggle(string.Empty, DayTimes, DayTime, false, width: BoxWidth * Proportion[0] - 10f);
                                     Label("Extended", LabelType.SubHeader, width: BoxWidth * Proportion[0] - 10f);
                                     ButtonToggle(string.Empty, ExtendedSettings, ExtendedSetting, false, width: BoxWidth * Proportion[0] - 10f);
-                                    GUILayout.Space(1f);
+                                    GUILayout.Space(5f);
                                 }
                                 GUILayout.EndScrollView();
                             }
