@@ -104,15 +104,13 @@ namespace GGM.Config
         public static BoolSetting TeamModeSetting = new BoolSetting("GGM_TeamMode");
         public static BoolSetting UserInterfaceSetting = new BoolSetting("GGM_UserInterface");
         public static BoolSetting WindSetting = new BoolSetting("GGM_Wind");
+        public static BoolSetting PrivateMessageSoundSetting = new BoolSetting("GGM_PrivateMessageSound", true);
+
         #endregion Booleans
 
         #region Floats
 
-        public static FloatSetting AHSSShotVolumeSetting = new FloatSetting("GGM_AHSSShotVolume", 1f);
-        public static FloatSetting AirSlashVolumeSetting = new FloatSetting("GGM_AirSlashVolume", 1f);
-        public static FloatSetting BodySlashVolumeSetting = new FloatSetting("GGM_BodySlashVolume", 1f);
         public static FloatSetting[] BombColorSetting = { new FloatSetting("GGM_BombColorR", 1f), new FloatSetting("GGM_BombColorG", 1f), new FloatSetting("GGM_BombColorB", 1f), };
-        public static FloatSetting BoomVolumeSetting = new FloatSetting("GGM_BoomVolume", 1f);
         public static FloatSetting CameraDistanceSetting = new FloatSetting("GGM_CameraDistance", 1f);
         public static FloatSetting CameraFOVSetting = new FloatSetting("GGM_CameraFOV", 110f);
         public static FloatSetting CannonCooldown = new FloatSetting("GGM_CannonCooldown", 3.5f);
@@ -127,19 +125,13 @@ namespace GGM.Config
         public static FloatSetting[] FogColorSettings = { new FloatSetting("GGM_FogColorR", 0.066f), new FloatSetting("GGM_FogColorG", 0.066f), new FloatSetting("GGM_FogColorB", 0.066f) };
         public static FloatSetting[] FogDistanceSettings = { new FloatSetting("GGM_FogStartDistance"), new FloatSetting("GGM_FogEndDistance", 1000f) };
         public static FloatSetting GlobalVolumeSetting = new FloatSetting("GGM_GlobalVolume", 1f);
-        public static FloatSetting HeadExplosionVolumeSetting = new FloatSetting("GGM_HeadExplosionVolume", 1f);
-        public static FloatSetting HeadPunchVolumeSetting = new FloatSetting("GGM_HeadPunchVolume", 1f);
-        public static FloatSetting HookVolumeSetting = new FloatSetting("GGM_HookVolume", 1f);
         public static FloatSetting MouseSensitivitySetting = new FloatSetting("GGM_MouseSensitivity", 0.5f);
         public static FloatSetting NapeSlashVolumeSetting = new FloatSetting("GGM_NapeSlashVolume", 1f);
         public static FloatSetting OverallQualitySetting = new FloatSetting("GGM_OverallQuality", 1);
         public static FloatSetting ShadowDistanceSetting = new FloatSetting("GGM_ShadowDistance", 600f);
         public static FloatSetting[] SizeSettings = { new FloatSetting("GGM_MinimumSize", 2.5f), new FloatSetting("GGM_MaximumSize", 3f) };
         public static FloatSetting[] SpawnRateSettings = { new FloatSetting("GGM_NormalSpawnRate", 100f), new FloatSetting("GGM_AbnormalSpawnRate"), new FloatSetting("GGM_JumperSpawnRate"), new FloatSetting("GGM_CrawlerSpawnRate"), new FloatSetting("GGM_PunkSpawnRate") };
-        public static FloatSetting StepVolumeSetting = new FloatSetting("GGM_StepVolume", 1f);
-        public static FloatSetting SwingVolumeSetting = new FloatSetting("GGM_SwingVolume", 1f);
-        public static FloatSetting ThunderVolumeSetting = new FloatSetting("GGM_ThunderVolume", 1f);
-        public static FloatSetting TitanErenRoarVolumeSetting = new FloatSetting("GGM_TitanErenRoarVolume", 1f);
+
         #endregion Floats
 
         #region Integers

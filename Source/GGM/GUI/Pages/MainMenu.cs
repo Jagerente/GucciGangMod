@@ -14,17 +14,17 @@ namespace GGM.GUI.Pages
         private static int loginSwitchInt;
         private static readonly Rect Panel = GUIHelpers.AlignRect(250f, 190f, GUIHelpers.Alignment.BOTTOMLEFT, 5, -5f);
         private static readonly Rect VersionPanel = GUIHelpers.AlignRect(175f, 20f, GUIHelpers.Alignment.BOTTOMRIGHT);
-        private static Texture2D background;
+        private static Texture2D background = new Texture2D(1, 1);
         private static float width = 275f;
         private static float height = 180f;
         private static float leftElement = width * 0.4f;
         private static float rightElement = width * 0.6f - 5f;
         private static readonly string[] leftPanelSwitcher = {"User".SetSize(24), "Servers".SetSize(24)};
 
-    private void Awake()
+        private void Awake()
         {
             background = new Texture2D(1, 1);
-            background.SetPixel(0,0, new Color(0f,0f,0f,0.7f));
+            background.SetPixel(0, 0, new Color(0f, 0f, 0f, 0.7f));
             background.Apply();
         }
 
@@ -41,12 +41,14 @@ namespace GGM.GUI.Pages
                     NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
                     GetInstance<Single>().Enable();
                 }
+
                 GUILayout.Space(15f);
                 if (GUILayout.Button("Multiplayer".SetSize(24), GUILayout.Height(50f), GUILayout.Width(250f)))
                 {
                     NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
                     GetInstance<Multiplayer>().Enable();
                 }
+
                 GUILayout.Space(15f);
                 if (GUILayout.Button("Quit".SetSize(24), GUILayout.Height(50f), GUILayout.Width(250f)))
                 {
@@ -74,6 +76,8 @@ namespace GGM.GUI.Pages
                         }
                         GUILayout.EndHorizontal();
 
+                        GUILayout.Space(Settings.space);
+
                         GUILayout.BeginHorizontal();
                         {
                             TextField("Guild", ref LoginFengKAI.player.guildname, rightElement, labelWidth: leftElement);
@@ -84,13 +88,13 @@ namespace GGM.GUI.Pages
 
                         GUILayout.BeginHorizontal();
                         {
-                            if (Button("Save", width/2f - 5f))
+                            if (Button("Save", width / 2f - 5f))
                             {
                                 PlayerPrefs.SetString("Name", FengGameManagerMKII.nameField);
                                 PlayerPrefs.SetString("Guild", LoginFengKAI.player.guildname);
                             }
 
-                            if (Button("Load", width/2f - 5f))
+                            if (Button("Load", width / 2f - 5f))
                             {
                                 FengGameManagerMKII.nameField = PlayerPrefs.GetString("Name", string.Empty);
                                 LoginFengKAI.player.guildname = PlayerPrefs.GetString("Guild", string.Empty);
@@ -115,23 +119,27 @@ namespace GGM.GUI.Pages
                         }
                         GUILayout.EndHorizontal();
 
+                        GUILayout.Space(Settings.space);
+
                         GUILayout.BeginHorizontal();
                         {
                             Label("RCPrivate", width: leftElement);
                             if (Button("Connect", width: rightElement))
                             {
-                                    UIMainReferences.ServerKey = FengGameManagerMKII.s[0];
+                                UIMainReferences.ServerKey = FengGameManagerMKII.s[0];
                             }
                         }
                         GUILayout.EndHorizontal();
 
+                        GUILayout.Space(Settings.space);
+
                         GUILayout.BeginHorizontal();
                         {
-                            TextField(string.Empty, ref FengGameManagerMKII.privateServerField, width: leftElement - 5f);
+                            TextField(string.Empty, ref FengGameManagerMKII.privateServerField, leftElement - 10f);
                             GUILayout.Space(1f);
                             if (Button("Connect", width: rightElement))
                             {
-                                    UIMainReferences.ServerKey = FengGameManagerMKII.privateServerField;
+                                UIMainReferences.ServerKey = FengGameManagerMKII.privateServerField;
                             }
                         }
                         GUILayout.EndHorizontal();
@@ -148,11 +156,10 @@ namespace GGM.GUI.Pages
                 Application.LoadLevel("characterCreation");
             }
 
-            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(175f, Settings.ButtonHeight, GUIHelpers.Alignment.TOPRIGHT, -5f,  5f + Settings.ButtonHeight), "Snapshot Reviewer"))
+            if (UnityEngine.GUI.Button(GUIHelpers.AlignRect(175f, Settings.ButtonHeight, GUIHelpers.Alignment.TOPRIGHT, -5f, 5f + Settings.ButtonHeight + Settings.space), "Snapshot Reviewer"))
             {
                 Application.LoadLevel("SnapShot");
             }
-
         }
     }
 }

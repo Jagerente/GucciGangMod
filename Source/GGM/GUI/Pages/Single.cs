@@ -7,9 +7,9 @@ namespace GGM.GUI.Pages
 {
     internal class Single : Page
     {
-        private const float BoxWidth = 880;
+        private const float BoxWidth = 880f;
 
-        private const float BoxHeight = 450;
+        private const float BoxHeight = 435f;
 
         private static readonly float[] Proportion = new[] { 0.4f, 0.25f, 0.35f };
 
@@ -38,8 +38,6 @@ namespace GGM.GUI.Pages
         private static int camera;
 
         private static readonly string[] CameraStr = { "Original", "WOW", "TPS", "Old TPS" };
-
-        private static GUIStyle box;
 
         private void OnEnable()
         {

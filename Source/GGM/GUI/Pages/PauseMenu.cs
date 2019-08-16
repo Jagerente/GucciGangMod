@@ -22,7 +22,6 @@ namespace GGM.GUI.Pages
         private static int pauseMenuSwitchInt;
         private static int rebindsSwitch;
         private static int serverSwitch;
-        private static int videoAndAudioSwitch;
 
         #endregion Switchers
 
@@ -55,11 +54,12 @@ namespace GGM.GUI.Pages
         private static readonly string[] shadowCascades = { "0", "2", "4" };
         private static readonly string[] shadowProjection = { "Stable Fit", "Close Fit" };
         private static readonly string[] skinsAppearanceType = { "Off", "Local", "Global" };
-        private static readonly string[] speedometerTypes = { "Off", "Speed", "Damage" };
+        private static readonly string[] speedometerTypes = { "Off", "SPD", "DMG" };
         private static readonly string[] teamTypes = { "Off", "Size", "Skill" };
         private static readonly string[] textures = { "Low", "Medium", "High" };
         private static readonly string[] titanRebinds = { "Forward", "Backward", "Left", "Right", "Walk", "Jump", "Punch", "Slam", "Grab Front", "Grab Back", "Grab Nape", "Slap", "Bite", "Cover Nape" };
-        private static readonly string[] videoAndAudioPages = { "Video", "Audio" };
+        private static readonly string[] customMapTypes= { "1 Round", "Waves", "PVP", "Racing", "Custom" };
+        private static readonly string[] customMapSkinFields = { "Ground", "Skybox Front", "Skybox Back", "Skybox Left", "Skybox Right", "Skybox Up", "Skybox Down" };
 
         #endregion Strings
 
@@ -68,9 +68,11 @@ namespace GGM.GUI.Pages
         private static Vector2 scrollControlPanelCenter = Vector2.zero;
         private static Vector2 scrollControlPanelLeft = Vector2.zero;
         private static Vector2 scrollControlPanelRight = Vector2.zero;
+        private static Vector2 scrollHumanSkinsRight = Vector2.zero;
+        private static Vector2 scrollCustomMapSkins = Vector2.zero;
         private static Vector2 scrollGameLeft = Vector2.zero;
         private static Vector2 scrollGameRight = Vector2.zero;
-        private static Vector2 scrollHumanSkins = Vector2.zero;
+        private static Vector2 scrollHumanSkinsLeft = Vector2.zero;
         private static Vector2 scrollLocationSkinsCityLeft = Vector2.zero;
         private static Vector2 scrollLocationSkinsCityRight = Vector2.zero;
         private static Vector2 scrollLocationSkinsForestLeft = Vector2.zero;
@@ -78,6 +80,7 @@ namespace GGM.GUI.Pages
         private static Vector2 scrollServerMiscLeft = Vector2.zero;
         private static Vector2 scrollServerTitansLeft = Vector2.zero;
         private static Vector2 scrollVideoLeft = Vector2.zero;
+        private static Vector2 scrollAudioLeft = Vector2.zero;
 
         #endregion Scrolls
 
@@ -120,7 +123,7 @@ namespace GGM.GUI.Pages
             GUILayout.BeginArea(center[3]);
             {
                 GUILayout.Space(15f);
-                GUILayout.Label("Color Presets", HeaderStyle);
+                Label("Color Presets", LabelType.Header, width: fullAreaWidth);
                 var style = new GUIStyle();
                 const float size = 13f;
                 GUILayout.BeginHorizontal();
@@ -129,7 +132,7 @@ namespace GGM.GUI.Pages
                     for (var i = 0; i < 35; i++)
                     {
                         style.normal.background = style.hover.background = style.active.background = ColorCache.Textures[ColorCache.White];
-                        if (GUILayout.Button("", style, GUILayout.Height(size), GUILayout.Width(size)))
+                        if (GUILayout.Button(string.Empty, style, GUILayout.Height(size), GUILayout.Width(size)))
                         {
                             BombColorSetting[0].Value = ColorCache.Textures.First().Key.r;
                             BombColorSetting[1].Value = ColorCache.Textures.First().Key.g;
@@ -200,10 +203,11 @@ namespace GGM.GUI.Pages
                     GUILayout.FlexibleSpace();
                 }
                 GUILayout.EndHorizontal();
+                GUILayout.FlexibleSpace();
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.FlexibleSpace();
-                    if (GUILayout.Button("Copy"))
+                    if (Button("Copy", 100))
                     {
                         var editor = new TextEditor { content = new GUIContent(FengGameManagerMKII.currentScriptLogic) };
                         editor.SelectAll();
@@ -211,7 +215,7 @@ namespace GGM.GUI.Pages
                     }
 
                     GUILayout.FlexibleSpace();
-                    if (GUILayout.Button("Clear"))
+                    if (Button("Clear", 100))
                     {
                         FengGameManagerMKII.currentScriptLogic = string.Empty;
                     }
@@ -225,40 +229,104 @@ namespace GGM.GUI.Pages
 
         private static void CustomMap()
         {
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 150f, topPos + 25f + 51f, 120f, 22f), "Map Settings", "Label");
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 50f, topPos + 25f + 81f, 140f, 20f), "Titan Spawn Cap:", "Label");
-            FengGameManagerMKII.settings[85] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 155f, topPos + 25f + 81f, 30f, 20f), (string)FengGameManagerMKII.settings[85]);
-            var strArray16 = new[] { "1 Round", "Waves", "PVP", "Racing", "Custom" };
-            RCSettings.gameType = UnityEngine.GUI.SelectionGrid(new Rect(leftPos + 40f + 190f, topPos + 25f + 80f, 140f, 60f), RCSettings.gameType, strArray16, 2, UnityEngine.GUI.skin.toggle);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 150f, topPos + 25f + 155f, 150f, 20f), "Level Script:", "Label");
-            UnityEngine.GUI.SetNextControlName("LevelScript");
-            FengGameManagerMKII.currentScript = UnityEngine.GUI.TextArea(new Rect(leftPos + 40f + 50f, topPos + 25f + 180f, 275f, 220f), FengGameManagerMKII.currentScript);
-            if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 100f, topPos + 25f + 410f, 50f, 25f), "Copy"))
+            GUILayout.BeginArea(left[0]);
             {
-                var editor = new TextEditor { content = new GUIContent(FengGameManagerMKII.currentScript) };
-                editor.SelectAll();
-                editor.Copy();
-            }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 225f, topPos + 25f + 410f, 50f, 25f), "Clear"))
-            {
-                FengGameManagerMKII.currentScript = string.Empty;
-            }
+                GUILayout.Space(15f);
 
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 455f, topPos + 25f + 51f, 180f, 20f), "Custom Textures", "Label");
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 375f, topPos + 25f + 81f, 180f, 20f), "Ground Skin:", "Label");
-            FengGameManagerMKII.settings[162] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 375f, topPos + 25f + 103f, 275f, 20f), (string)FengGameManagerMKII.settings[162]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 375f, topPos + 25f + 125f, 150f, 20f), "Skybox Front:", "Label");
-            FengGameManagerMKII.settings[175] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 375f, topPos + 25f + 147f, 275f, 20f), (string)FengGameManagerMKII.settings[175]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 375f, topPos + 25f + 169f, 150f, 20f), "Skybox Back:", "Label");
-            FengGameManagerMKII.settings[176] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 375f, topPos + 25f + 191f, 275f, 20f), (string)FengGameManagerMKII.settings[176]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 375f, topPos + 25f + 213f, 150f, 20f), "Skybox Left:", "Label");
-            FengGameManagerMKII.settings[177] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 375f, topPos + 25f + 235f, 275f, 20f), (string)FengGameManagerMKII.settings[177]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 375f, topPos + 25f + 257f, 150f, 20f), "Skybox Right:", "Label");
-            FengGameManagerMKII.settings[178] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 375f, topPos + 25f + 279f, 275f, 20f), (string)FengGameManagerMKII.settings[178]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 375f, topPos + 25f + 301f, 150f, 20f), "Skybox Up:", "Label");
-            FengGameManagerMKII.settings[179] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 375f, topPos + 25f + 323f, 275f, 20f), (string)FengGameManagerMKII.settings[179]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 375f, topPos + 25f + 345f, 150f, 20f), "Skybox Down:", "Label");
-            FengGameManagerMKII.settings[180] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 375f, topPos + 25f + 367f, 275f, 20f), (string)FengGameManagerMKII.settings[180]);
+                Label("Map Settings", LabelType.Header);
+                TextField("Titan Spawn Cap", ref TitansSpawnCapSetting.Value);
+                Grid("Game Type", ref RCSettings.gameType, customMapTypes, false, 2);
+                UnityEngine.GUI.SetNextControlName("LevelScript");
+                Label("Script", LabelType.Header);
+                CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = GUILayout.TextArea(CustomMapScriptsList[CustomMapSkinsCurrentSetSetting], GUILayout.Width(leftElementWidth + rightElementWidth), GUILayout.Height(220f));
+                GUILayout.BeginHorizontal();
+                {
+                    if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                    {
+                        var editor = new TextEditor { content = new GUIContent(CustomMapScriptsList[CustomMapSkinsCurrentSetSetting]) };
+                        editor.SelectAll();
+                        editor.Copy();
+                    }
+                    if (Button("Clear", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                    {
+                        CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = string.Empty;
+                    }
+                    if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                    {
+                        CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = PhotonNetwork.masterClient.GetProperty(PhotonPlayerProperty.currentLevel);
+                    }
+                }
+                FengGameManagerMKII.currentScript = CustomMapScriptsList[CustomMapSkinsCurrentSetSetting];
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.EndArea();
+            GUILayout.BeginArea(right[0]);
+            {
+                GUILayout.Space(15f);
+
+                Label("Custom Skins", LabelType.Header);
+                GUILayout.BeginHorizontal();
+                {
+                    Label("Title");
+                    CustomMapSkinsTitlesList[CustomMapSkinsCurrentSetSetting] = GUILayout.TextField(CustomMapSkinsTitlesList[CustomMapSkinsCurrentSetSetting], GUILayout.Width(TextFieldWidth), GUILayout.Height(TextFieldHeight));
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.Space(space);
+                for (var i = 0; i < customMapSkinFields.Length; i++)
+                {
+                    TextField(customMapSkinFields[i], ref CustomMapSkinsList[CustomMapSkinsCurrentSetSetting][i]);
+                }
+
+                Label("Presets", LabelType.SubHeader);
+                scrollCustomMapSkins = GUILayout.BeginScrollView(scrollCustomMapSkins, false, true);
+                {
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.FlexibleSpace();
+                        Grid(string.Empty, ref CustomMapSkinsCurrentSetSetting.Value, CustomMapSkinsTitlesList.ToArray(), false, width: 175f);
+                        GUILayout.FlexibleSpace();
+                    }
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(5f);
+                }
+                GUILayout.EndScrollView();
+
+                GUILayout.FlexibleSpace();
+
+                GUILayout.BeginHorizontal();
+                {
+                    if (Button("Add", (leftElementWidth + rightElementWidth) / 2f))
+                    {
+                        CustomMapSkinsTitlesList.Add("Preset " + (CustomMapSkinsTitlesList.Count + 1));
+                        CustomMapSkinsCurrentSetSetting.Value = CustomMapSkinsTitlesList.Count - 1;
+                        CustomMapSkinsList.Add("``````".Split('`'));
+                        CustomMapScriptsList.Add(string.Empty);
+                        CustomMapSkinsCountSetting.Value++;
+                        scrollCustomMapSkins.y = 9999f;
+                    }
+
+                    if (Button("Remove", (leftElementWidth + rightElementWidth) / 2f))
+                    {
+                        if (CustomMapSkinsCountSetting == 1)
+                        {
+                            CustomMapSkinsTitlesList[CustomMapSkinsCurrentSetSetting] = "Preset 1";
+                            CustomMapSkinsList[CustomMapSkinsCurrentSetSetting] = "``````".Split('`');
+                            CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = string.Empty;
+                        }
+                        else
+                        {
+                            int setToRemove = CustomMapSkinsCurrentSetSetting;
+                            if (setToRemove != 0) CustomMapSkinsCurrentSetSetting.Value--;
+                            CustomMapSkinsList.RemoveAt(setToRemove);
+                            CustomMapScriptsList.RemoveAt(setToRemove);
+                            CustomMapSkinsTitlesList.RemoveAt(setToRemove);
+                            CustomMapSkinsCountSetting.Value--;
+                        }
+                    }
+                }
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.EndArea();
         }
 
         private static void Game()
@@ -272,7 +340,7 @@ namespace GGM.GUI.Pages
                     Slider("Sensitivity", ref MouseSensitivitySetting.Value, 0.1f, 1f, multiplier: 100f, round: true);
                     Grid("Invert Y", ref MouseInvertYSetting.Value);
                     Label("Camera", LabelType.Header);
-                    ButtonToggle(string.Empty, cameraTypes, CameraTypeSettings);
+                    ButtonToggle(string.Empty, cameraTypes, CameraTypeSettings, width: leftElementWidth + rightElementWidth);
                     Slider("Distance", ref CameraDistanceSetting.Value, 0f, 1, multiplier: 100f, round: true);
                     Grid("Tilt", ref CameraTiltSetting.Value);
                     Grid("Static FOV", ref CameraStaticFOVSetting.Value);
@@ -290,7 +358,7 @@ namespace GGM.GUI.Pages
                     Grid("Infinite Bullets", ref InfiniteBulletsSetting.Value);
                     if (InfiniteBulletsSetting) Grid("No Reloading", ref InfiniteBulletsNoReloadingSetting.Value);
                     Grid("Infinite Gas", ref InfiniteGasSetting.Value);
-                    GUILayout.Space(1f);
+                    GUILayout.Space(5f);
                 }
                 GUILayout.EndScrollView();
             }
@@ -326,7 +394,7 @@ namespace GGM.GUI.Pages
                     TextField("Movement Speed", ref CannonMovementSpeedSetting.Value);
                     TextField("Rotate Speed", ref CannonRotateSpeedSetting.Value);
                     TextField("Fire Cooldown", ref CannonCooldown.Value);
-                    GUILayout.Space(1f);
+                    GUILayout.Space(5f);
                 }
                 GUILayout.EndScrollView();
             }
@@ -351,31 +419,33 @@ namespace GGM.GUI.Pages
                 Grid("Infinite Lifetime", ref BladeTrailsInfiniteLifetimeSetting.Value);
 
                 Label("Presets", LabelType.SubHeader);
-                scrollHumanSkins = GUILayout.BeginScrollView(scrollHumanSkins);
+                scrollHumanSkinsLeft = GUILayout.BeginScrollView(scrollHumanSkinsLeft, false, true);
                 {
-                    GUILayout.BeginHorizontal(GUILayout.Width(leftElementWidth + rightElementWidth + 15f));
+                    GUILayout.BeginHorizontal();
                     {
                         GUILayout.FlexibleSpace();
-                        HumanSkinsCurrentSetSetting.Value = GUILayout.SelectionGrid(HumanSkinsCurrentSetSetting, HumanSkinsTitlesList.ToArray(), 1, GUILayout.Width(175f));
+                        Grid(string.Empty, ref HumanSkinsCurrentSetSetting.Value, HumanSkinsTitlesList.ToArray(), false, width: 175f);
                         GUILayout.FlexibleSpace();
                     }
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(1f);
+                    GUILayout.Space(5f);
                 }
                 GUILayout.EndScrollView();
 
+                GUILayout.FlexibleSpace();
+
                 GUILayout.BeginHorizontal();
                 {
-                    if (GUILayout.Button("Add"))
+                    if (Button("Add", (leftElementWidth + rightElementWidth) / 2f))
                     {
                         HumanSkinsTitlesList.Add("Set " + (HumanSkinsTitlesList.Count + 1));
                         HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
                         HumanSkinsList.Add("````````````".Split('`'));
                         HumanSkinsCountSetting.Value++;
-                        scrollHumanSkins.y = 9999f;
+                        scrollHumanSkinsLeft.y = 9999f;
                     }
 
-                    if (GUILayout.Button("Remove"))
+                    if (Button("Remove", (leftElementWidth + rightElementWidth) / 2f))
                     {
                         if (HumanSkinsCountSetting == 1)
                         {
@@ -402,40 +472,39 @@ namespace GGM.GUI.Pages
 
                 Label("Skins", LabelType.Header);
                 Label(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], LabelType.SubHeader);
+                scrollHumanSkinsRight = GUILayout.BeginScrollView(scrollHumanSkinsRight);
                 GUILayout.BeginHorizontal();
                 {
                     Label("Title");
-                    HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] = GUILayout.TextField(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], GUILayout.Width(TextFieldWidth));
+                    HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] = GUILayout.TextField(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], GUILayout.Width(TextFieldWidth), GUILayout.Height(TextFieldHeight));
                 }
                 GUILayout.EndHorizontal();
+                GUILayout.Space(space);
                 for (var i = 0; i < humanSkinFields.Length; i++)
                 {
                     TextField(humanSkinFields[i], ref HumanSkinsList[HumanSkinsCurrentSetSetting][i]);
                 }
-
-                GUILayout.Space(10f);
+                GUILayout.EndScrollView();
+                GUILayout.FlexibleSpace();
 
                 GUILayout.BeginHorizontal();
                 {
-                    GUILayout.FlexibleSpace();
-                    if (GUILayout.Button("Copy"))
+                    if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
                         CopiedHumanSkins = HumanSkinsList[HumanSkinsCurrentSetSetting];
                     }
 
-                    if (GUILayout.Button("Paste"))
+                    if (Button("Paste", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
                         if (CopiedHumanSkins != null)
                             HumanSkinsList[HumanSkinsCurrentSetSetting] = CopiedHumanSkins;
                     }
 
-                    if (GUILayout.Button("Reset"))
+                    if (Button("Reset", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
                         HumanSkinsTitlesList[HumanSkinsCurrentSetSetting] = "Set " + (HumanSkinsCurrentSetSetting + 1);
                         HumanSkinsList[HumanSkinsCurrentSetSetting] = "````````````".Split('`');
                     }
-
-                    GUILayout.FlexibleSpace();
                 }
                 GUILayout.EndHorizontal();
             }
@@ -459,22 +528,24 @@ namespace GGM.GUI.Pages
                             Grid("Randomized Pairs", ref LocationSkinsRandomizedPairsSetting.Value);
 
                             Label("Presets", LabelType.SubHeader);
-                            scrollLocationSkinsForestLeft = GUILayout.BeginScrollView(scrollLocationSkinsForestLeft);
+                            scrollLocationSkinsForestLeft = GUILayout.BeginScrollView(scrollLocationSkinsForestLeft, false, true);
                             {
-                                GUILayout.BeginHorizontal(GUILayout.Width(leftElementWidth + rightElementWidth + 15f));
+                                GUILayout.BeginHorizontal();
                                 {
                                     GUILayout.FlexibleSpace();
                                     LocationSkinsForestCurrentSetSetting.Value = GUILayout.SelectionGrid(LocationSkinsForestCurrentSetSetting, LocationSkinsForestTitlesList.ToArray(), 1, GUILayout.Width(175f));
                                     GUILayout.FlexibleSpace();
                                 }
                                 GUILayout.EndHorizontal();
-                                GUILayout.Space(1f);
+                                GUILayout.Space(5f);
                             }
                             GUILayout.EndScrollView();
 
+                            GUILayout.FlexibleSpace();
+
                             GUILayout.BeginHorizontal();
                             {
-                                if (GUILayout.Button("Add"))
+                                if (Button("Add", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     LocationSkinsForestList.Add("``````````````````````".Split('`'));
                                     LocationSkinsForestTitlesList.Add("Set " + (LocationSkinsForestTitlesList.Count + 1));
@@ -485,11 +556,49 @@ namespace GGM.GUI.Pages
                                     LocationSkinsForestFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
                                     LocationSkinsForestParticlesList.Add(0);
                                     LocationSkinsForestParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                                    LocationSkinsForestLightList.Add(0);
+                                    LocationSkinsForestLightSettingsList.Add(new []{1f, 1f, 1f});
                                     LocationSkinsForestCountSetting.Value++;
                                     scrollLocationSkinsForestLeft.y = 9999f;
                                 }
 
-                                if (GUILayout.Button("Remove"))
+                                if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                {
+                                    if (string.IsNullOrEmpty(FengGameManagerMKII.LocationSkinToSteal) || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || PhotonNetwork.isMasterClient) return;
+                                    if (Application.loadedLevelName.Contains("Forest"))
+                                    {
+                                        LocationSkinsForestList.Add(FengGameManagerMKII.LocationSkinToSteal.Split(','));
+                                        LocationSkinsForestTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
+                                        LocationSkinsForestCurrentSetSetting.Value = LocationSkinsForestTitlesList.Count - 1;
+                                        LocationSkinsForestAmbientList.Add(0);
+                                        LocationSkinsForestAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
+                                        LocationSkinsForestFogList.Add(0);
+                                        LocationSkinsForestFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
+                                        LocationSkinsForestParticlesList.Add(0);
+                                        LocationSkinsForestParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                                        LocationSkinsForestLightList.Add(0);
+                                        LocationSkinsForestLightSettingsList.Add(new[] { 1f, 1f, 1f });
+                                        LocationSkinsForestCountSetting.Value++;
+                                        scrollLocationSkinsForestLeft.y = 9999f;
+                                    }
+                                    else if (Application.loadedLevelName.Contains("City"))
+                                    {
+                                        LocationSkinsCityTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
+                                        LocationSkinsCityList.Add(FengGameManagerMKII.LocationSkinToSteal.Split('`'));
+                                        LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
+                                        LocationSkinsCityAmbientList.Add(0);
+                                        LocationSkinsCityAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
+                                        LocationSkinsCityFogList.Add(0);
+                                        LocationSkinsCityFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
+                                        LocationSkinsCityParticlesList.Add(0);
+                                        LocationSkinsCityParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                                        LocationSkinsCityLightList.Add(0);
+                                        LocationSkinsCityLightSettingsList.Add(new[] { 1f, 1f, 1f });
+                                        LocationSkinsCityCountSetting.Value++;
+                                        scrollLocationSkinsCityLeft.y = 9999f;
+                                    }
+                                }
+                                if (Button("Remove", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     if (LocationSkinsForestCountSetting == 1)
                                     {
@@ -516,6 +625,8 @@ namespace GGM.GUI.Pages
                                         LocationSkinsForestFogSettingsList.RemoveAt(setToRemove);
                                         LocationSkinsForestParticlesList.RemoveAt(setToRemove);
                                         LocationSkinsForestParticlesSettingsList.RemoveAt(setToRemove);
+                                        LocationSkinsForestLightList.RemoveAt(setToRemove);
+                                        LocationSkinsForestLightSettingsList.RemoveAt(setToRemove);
                                         LocationSkinsForestCountSetting.Value--;
                                     }
                                 }
@@ -529,14 +640,15 @@ namespace GGM.GUI.Pages
                             GUILayout.Space(15f);
 
                             Label(LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting], LabelType.Header);
-                            scrollLocationSkinsForestRight = GUILayout.BeginScrollView(scrollLocationSkinsForestRight);
+                            scrollLocationSkinsForestRight = GUILayout.BeginScrollView(scrollLocationSkinsForestRight, false, true);
                             {
                                 GUILayout.BeginHorizontal();
                                 {
                                     Label("Title");
-                                    LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting] = GUILayout.TextField(LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting], GUILayout.Width(TextFieldWidth));
+                                    LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting] = GUILayout.TextField(LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting], GUILayout.Width(TextFieldWidth), GUILayout.Height(TextFieldHeight));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 for (var i = 0; i < locationSkinForestFields.Length; i++)
                                 {
                                     TextField(locationSkinForestFields[i], ref LocationSkinsForestList[LocationSkinsForestCurrentSetSetting][i]);
@@ -548,6 +660,7 @@ namespace GGM.GUI.Pages
                                     LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(ButtonWidth));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 if (LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting] == 1)
                                 {
                                     Slider("R", ref LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][0], 0f, 1f);
@@ -561,6 +674,7 @@ namespace GGM.GUI.Pages
                                     LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(ButtonWidth));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 if (LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting] == 1)
                                 {
                                     Slider("R", ref LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][0], 0f, 1f);
@@ -580,6 +694,7 @@ namespace GGM.GUI.Pages
                                     LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(ButtonWidth));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 if (LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting] == 1)
                                 {
                                     Slider("R", ref LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][0], 0f, 1f);
@@ -593,6 +708,7 @@ namespace GGM.GUI.Pages
                                     LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(ButtonWidth));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 if (LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting] == 1)
                                 {
                                     Slider("Count", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][0], 100, 15000, round: true);
@@ -610,26 +726,27 @@ namespace GGM.GUI.Pages
                                     Slider("A", ref LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][8], 0f, 1f);
                                 }
 
-                                GUILayout.Space(1f);
+                                GUILayout.Space(5f);
                             }
                             GUILayout.EndScrollView();
 
-                            GUILayout.Space(10f);
+                            GUILayout.FlexibleSpace();
+
                             GUILayout.BeginHorizontal();
                             {
                                 GUILayout.FlexibleSpace();
-                                if (GUILayout.Button("Copy"))
+                                if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     LocationSkinsForestCopiedSet = LocationSkinsForestList[LocationSkinsForestCurrentSetSetting];
                                 }
 
-                                if (GUILayout.Button("Paste"))
+                                if (Button("Paste", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     if (LocationSkinsForestCopiedSet != null)
                                         LocationSkinsForestList[LocationSkinsForestCurrentSetSetting] = LocationSkinsForestCopiedSet;
                                 }
 
-                                if (GUILayout.Button("Reset"))
+                                if (Button("Reset", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting] = "Set " + (LocationSkinsForestCurrentSetSetting + 1);
                                     LocationSkinsForestList[LocationSkinsForestCurrentSetSetting] = "``````````````````````".Split('`');
@@ -663,37 +780,75 @@ namespace GGM.GUI.Pages
                             Grid("Location", ref locationSkinsSwitch, locationSkinsLocation);
 
                             Label("Presets", LabelType.SubHeader);
-                            scrollLocationSkinsCityLeft = GUILayout.BeginScrollView(scrollLocationSkinsCityLeft, GUILayout.Width(0f));
+                            scrollLocationSkinsCityLeft = GUILayout.BeginScrollView(scrollLocationSkinsCityLeft, false, true);
                             {
-                                GUILayout.BeginHorizontal(GUILayout.Width(leftElementWidth + rightElementWidth + 15f));
+                                GUILayout.BeginHorizontal();
                                 {
                                     GUILayout.FlexibleSpace();
                                     LocationSkinsCityCurrentSetSetting.Value = GUILayout.SelectionGrid(LocationSkinsCityCurrentSetSetting, LocationSkinsCityTitlesList.ToArray(), 1, GUILayout.Width(175f));
                                     GUILayout.FlexibleSpace();
                                 }
                                 GUILayout.EndHorizontal();
-                                GUILayout.Space(1f);
+                                GUILayout.Space(5f);
                             }
                             GUILayout.EndScrollView();
 
                             GUILayout.BeginHorizontal();
                             {
-                                if (GUILayout.Button("Add"))
+                                if (Button("Add", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     LocationSkinsCityTitlesList.Add("Set " + (LocationSkinsCityTitlesList.Count + 1));
-                                    LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
                                     LocationSkinsCityList.Add("````````````````".Split('`'));
+                                    LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
                                     LocationSkinsCityAmbientList.Add(0);
                                     LocationSkinsCityAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
                                     LocationSkinsCityFogList.Add(0);
                                     LocationSkinsCityFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
                                     LocationSkinsCityParticlesList.Add(0);
                                     LocationSkinsCityParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                                    LocationSkinsCityLightList.Add(0);
+                                    LocationSkinsCityLightSettingsList.Add(new []{1f, 1f, 1f});
                                     LocationSkinsCityCountSetting.Value++;
                                     scrollLocationSkinsCityLeft.y = 9999f;
                                 }
+                                if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                {
+                                    if (string.IsNullOrEmpty(FengGameManagerMKII.LocationSkinToSteal) || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || PhotonNetwork.isMasterClient) return;
+                                    if (Application.loadedLevelName.Contains("Forest"))
+                                    {
+                                        LocationSkinsForestList.Add(FengGameManagerMKII.LocationSkinToSteal.Split(','));
+                                        LocationSkinsForestTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
+                                        LocationSkinsForestCurrentSetSetting.Value = LocationSkinsForestTitlesList.Count - 1;
+                                        LocationSkinsForestAmbientList.Add(0);
+                                        LocationSkinsForestAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
+                                        LocationSkinsForestFogList.Add(0);
+                                        LocationSkinsForestFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
+                                        LocationSkinsForestParticlesList.Add(0);
+                                        LocationSkinsForestParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                                        LocationSkinsForestLightList.Add(0);
+                                        LocationSkinsForestLightSettingsList.Add(new[] { 1f, 1f, 1f });
+                                        LocationSkinsForestCountSetting.Value++;
+                                        scrollLocationSkinsForestLeft.y = 9999f;
+                                    }
+                                    else if (Application.loadedLevelName.Contains("City"))
+                                    {
+                                        LocationSkinsCityTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
+                                        LocationSkinsCityList.Add(FengGameManagerMKII.LocationSkinToSteal.Split('`'));
+                                        LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
+                                        LocationSkinsCityAmbientList.Add(0);
+                                        LocationSkinsCityAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
+                                        LocationSkinsCityFogList.Add(0);
+                                        LocationSkinsCityFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
+                                        LocationSkinsCityParticlesList.Add(0);
+                                        LocationSkinsCityParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                                        LocationSkinsCityLightList.Add(0);
+                                        LocationSkinsCityLightSettingsList.Add(new[] { 1f, 1f, 1f });
+                                        LocationSkinsCityCountSetting.Value++;
+                                        scrollLocationSkinsCityLeft.y = 9999f;
+                                    }
+                                }
 
-                                if (GUILayout.Button("Remove"))
+                                if (Button("Remove", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     if (LocationSkinsCityCountSetting == 1)
                                     {
@@ -720,6 +875,8 @@ namespace GGM.GUI.Pages
                                         LocationSkinsCityFogSettingsList.RemoveAt(setToRemove);
                                         LocationSkinsCityParticlesList.RemoveAt(setToRemove);
                                         LocationSkinsCityParticlesSettingsList.RemoveAt(setToRemove);
+                                        LocationSkinsCityLightList.RemoveAt(setToRemove);
+                                        LocationSkinsCityLightSettingsList.RemoveAt(setToRemove);
                                         LocationSkinsCityCountSetting.Value--;
                                     }
                                 }
@@ -733,14 +890,15 @@ namespace GGM.GUI.Pages
                             GUILayout.Space(15f);
 
                             Label(LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting], LabelType.Header);
-                            scrollLocationSkinsCityRight = GUILayout.BeginScrollView(scrollLocationSkinsCityRight, GUILayout.Width(0f));
+                            scrollLocationSkinsCityRight = GUILayout.BeginScrollView(scrollLocationSkinsCityRight, false, true);
                             {
                                 GUILayout.BeginHorizontal();
                                 {
                                     Label("Title");
-                                    LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting] = GUILayout.TextField(LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting], GUILayout.Width(TextFieldWidth));
+                                    LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting] = GUILayout.TextField(LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting], GUILayout.Width(TextFieldWidth), GUILayout.Height(TextFieldHeight));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 for (var i = 0; i < locationSkinCityFields.Length; i++)
                                 {
                                     TextField(locationSkinCityFields[i], ref LocationSkinsCityList[LocationSkinsCityCurrentSetSetting][i]);
@@ -752,6 +910,7 @@ namespace GGM.GUI.Pages
                                     LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(ButtonWidth));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 if (LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting] == 1)
                                 {
                                     Slider("R", ref LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][0], 0f, 1f);
@@ -765,6 +924,7 @@ namespace GGM.GUI.Pages
                                     LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(ButtonWidth));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 if (LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting] == 1)
                                 {
                                     Slider("R", ref LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][0], 0f, 1f);
@@ -784,6 +944,7 @@ namespace GGM.GUI.Pages
                                     LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(ButtonWidth));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 if (LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting] == 1)
                                 {
                                     Slider("R", ref LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][0], 0f, 1f);
@@ -797,6 +958,7 @@ namespace GGM.GUI.Pages
                                     LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting] = GUILayout.SelectionGrid(LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting], SwitcherStr, 2, GUILayout.Width(ButtonWidth));
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                                 if (LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting] == 1)
                                 {
                                     Slider("Count", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][0], 100f, 15000f, round: true);
@@ -814,26 +976,27 @@ namespace GGM.GUI.Pages
                                     Slider("A", ref LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][8], 0f, 1f);
                                 }
 
-                                GUILayout.Space(1f);
+                                GUILayout.Space(5f);
                             }
                             GUILayout.EndScrollView();
 
-                            GUILayout.Space(10f);
+                            GUILayout.FlexibleSpace();
+
                             GUILayout.BeginHorizontal();
                             {
                                 GUILayout.FlexibleSpace();
-                                if (GUILayout.Button("Copy"))
+                                if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     LocationSkinsCityCopiedSet = LocationSkinsCityList[LocationSkinsCityCurrentSetSetting];
                                 }
 
-                                if (GUILayout.Button("Paste"))
+                                if (Button("Paste", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     if (LocationSkinsCityCopiedSet != null)
                                         LocationSkinsCityList[LocationSkinsCityCurrentSetSetting] = LocationSkinsCityCopiedSet;
                                 }
 
-                                if (GUILayout.Button("Reset"))
+                                if (Button("Reset", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
                                     LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting] = "Set " + (LocationSkinsCityCurrentSetSetting + 1);
                                     LocationSkinsCityList[LocationSkinsCityCurrentSetSetting] = "````````````````".Split('`');
@@ -867,7 +1030,7 @@ namespace GGM.GUI.Pages
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.FlexibleSpace();
-                    rebindsSwitch = GUILayout.SelectionGrid(rebindsSwitch, rebindsPages, 4, GUILayout.Height(25f));
+                    Grid(string.Empty, ref rebindsSwitch, rebindsPages, width: rebindsPages.Length * 75f);
                     GUILayout.FlexibleSpace();
                 }
                 GUILayout.EndHorizontal();
@@ -888,17 +1051,16 @@ namespace GGM.GUI.Pages
                             {
                                 GUILayout.BeginHorizontal();
                                 {
-                                    var width = 225f;
+                                    Label(humanRebinds[i], width: halfAreaWidth * 0.6f);
 
-                                    Label(humanRebinds[i], width: width);
-
-                                    if (GUILayout.Button(FengGameManagerMKII.inputManager.getKeyRC(i)))
+                                    if (Button(FengGameManagerMKII.inputManager.getKeyRC(i), halfAreaWidth * 0.4f - 10f))
                                     {
                                         FengGameManagerMKII.settings[100] = i + 1;
                                         FengGameManagerMKII.inputManager.setNameRC(i, "waiting...");
                                     }
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                             }
                         }
                         GUILayout.EndArea();
@@ -909,12 +1071,12 @@ namespace GGM.GUI.Pages
                             {
                                 GUILayout.BeginHorizontal();
                                 {
-                                    var width = 225f;
-                                    if (i == 22 || i == 23 || i == 24) width = 170f;
+                                    var width = halfAreaWidth * 0.6f;
+                                    if (i == 22 || i == 23 || i == 24) width = halfAreaWidth * 0.4f;
                                     Label(humanRebinds[i], width: width);
                                     if (i < 22)
                                     {
-                                        if (GUILayout.Button(FengGameManagerMKII.inputManager.getKeyRC(i)))
+                                        if (Button(FengGameManagerMKII.inputManager.getKeyRC(i), halfAreaWidth * 0.4f - 10f))
                                         {
                                             FengGameManagerMKII.settings[100] = i + 1;
                                             FengGameManagerMKII.inputManager.setNameRC(i, "waiting...");
@@ -930,7 +1092,7 @@ namespace GGM.GUI.Pages
                                         {
                                             style.normal = ReelingSettings[0] ? UnityEngine.GUI.skin.button.onNormal : UnityEngine.GUI.skin.button.normal;
                                             style.hover = ReelingSettings[0] ? UnityEngine.GUI.skin.button.onHover : UnityEngine.GUI.skin.button.hover;
-                                            if (GUILayout.Button(ReelingSettings[0] ? txt[1] : txt[0], style, GUILayout.Width(50f)))
+                                            if (GUILayout.Button(ReelingSettings[0] ? txt[1] : txt[0], style, GUILayout.Width(halfAreaWidth * 0.2f - 5f), GUILayout.Height(ButtonHeight)))
                                             {
                                                 ReelingSettings[0].Value = !ReelingSettings[0];
                                             }
@@ -939,7 +1101,7 @@ namespace GGM.GUI.Pages
                                         {
                                             style.normal = ReelingSettings[1] ? UnityEngine.GUI.skin.button.onNormal : UnityEngine.GUI.skin.button.normal;
                                             style.hover = ReelingSettings[1] ? UnityEngine.GUI.skin.button.onHover : UnityEngine.GUI.skin.button.hover;
-                                            if (GUILayout.Button(ReelingSettings[1] ? txt[1] : txt[0], style, GUILayout.Width(50f)))
+                                            if (GUILayout.Button(ReelingSettings[1] ? txt[1] : txt[0], style, GUILayout.Width(halfAreaWidth * 0.2f - 5f), GUILayout.Height(ButtonHeight)))
                                             {
                                                 ReelingSettings[1].Value = !ReelingSettings[1];
                                             }
@@ -948,13 +1110,13 @@ namespace GGM.GUI.Pages
                                         {
                                             style.normal = DashSetting ? UnityEngine.GUI.skin.button.onNormal : UnityEngine.GUI.skin.button.normal;
                                             style.hover = DashSetting ? UnityEngine.GUI.skin.button.onHover : UnityEngine.GUI.skin.button.hover;
-                                            if (GUILayout.Button(DashSetting ? txt[1] : txt[0], style, GUILayout.Width(50f)))
+                                            if (GUILayout.Button(DashSetting ? txt[1] : txt[0], style, GUILayout.Width(halfAreaWidth * 0.2f - 5f), GUILayout.Height(ButtonHeight)))
                                             {
                                                 DashSetting.Value = !DashSetting;
                                             }
                                         }
 
-                                        if (GUILayout.Button((string)FengGameManagerMKII.settings[k]))
+                                        if (Button((string)FengGameManagerMKII.settings[k], halfAreaWidth * 0.4f - 10f))
                                         {
                                             FengGameManagerMKII.settings[k] = "waiting...";
                                             FengGameManagerMKII.settings[100] = k;
@@ -962,6 +1124,7 @@ namespace GGM.GUI.Pages
                                     }
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                             }
                         }
                         GUILayout.EndArea();
@@ -1088,14 +1251,15 @@ namespace GGM.GUI.Pages
                                 var k = 101 + i;
                                 GUILayout.BeginHorizontal();
                                 {
-                                    Label(titanRebinds[i], width: 225f);
-                                    if (GUILayout.Button((string)FengGameManagerMKII.settings[k]))
+                                    Label(titanRebinds[i], width: halfAreaWidth * 0.6f);
+                                    if (Button((string)FengGameManagerMKII.settings[k], halfAreaWidth * 0.4f - 10f))
                                     {
                                         FengGameManagerMKII.settings[k] = "waiting...";
                                         FengGameManagerMKII.settings[100] = k;
                                     }
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                             }
                         }
                         GUILayout.EndArea();
@@ -1107,14 +1271,15 @@ namespace GGM.GUI.Pages
                                 var k = 101 + i;
                                 GUILayout.BeginHorizontal();
                                 {
-                                    Label(titanRebinds[i], width: 225f);
-                                    if (GUILayout.Button((string)FengGameManagerMKII.settings[k]))
+                                    Label(titanRebinds[i], width: halfAreaWidth * 0.6f);
+                                    if (Button((string)FengGameManagerMKII.settings[k], halfAreaWidth * 0.4f - 10f))
                                     {
                                         FengGameManagerMKII.settings[k] = "waiting...";
                                         FengGameManagerMKII.settings[100] = k;
                                     }
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                             }
                         }
                         GUILayout.EndArea();
@@ -1192,14 +1357,15 @@ namespace GGM.GUI.Pages
                                 var k = 237 + i;
                                 GUILayout.BeginHorizontal();
                                 {
-                                    Label(horseRebinds[i], width: 225f);
-                                    if (GUILayout.Button((string)FengGameManagerMKII.settings[k]))
+                                    Label(horseRebinds[i], width: halfAreaWidth * 0.6f);
+                                    if (Button((string)FengGameManagerMKII.settings[k], halfAreaWidth * 0.4f - 10f))
                                     {
                                         FengGameManagerMKII.settings[k] = "waiting...";
                                         FengGameManagerMKII.settings[100] = k;
                                     }
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                             }
                         }
                         GUILayout.EndArea();
@@ -1212,14 +1378,15 @@ namespace GGM.GUI.Pages
                                 var k = 254 + i;
                                 GUILayout.BeginHorizontal();
                                 {
-                                    Label(cannonRebinds[i], width: 225f);
-                                    if (GUILayout.Button((string)FengGameManagerMKII.settings[k]))
+                                    Label(cannonRebinds[i], width: halfAreaWidth * 0.6f - 10f);
+                                    if (Button((string)FengGameManagerMKII.settings[k], halfAreaWidth * 0.4f - 10f))
                                     {
                                         FengGameManagerMKII.settings[k] = "waiting...";
                                         FengGameManagerMKII.settings[100] = k;
                                     }
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                             }
                         }
                         GUILayout.EndArea();
@@ -1305,14 +1472,15 @@ namespace GGM.GUI.Pages
                             {
                                 GUILayout.BeginHorizontal();
                                 {
-                                    Label(HotKey.AllHotKeys[i].Name, width: 225f);
-                                    if (GUILayout.Button(HotKeysToWait[i] ? "waiting..." : HotKey.AllHotKeys[i].Key.ToString()))
+                                    Label(HotKey.AllHotKeys[i].Name, width: halfAreaWidth * 0.6f);
+                                    if (Button(HotKeysToWait[i] ? "waiting..." : HotKey.AllHotKeys[i].Key.ToString(), halfAreaWidth * 0.4f - 10f))
                                     {
                                         HotKeyToRebind = i;
                                         HotKeysToWait[i] = true;
                                     }
                                 }
                                 GUILayout.EndHorizontal();
+                                GUILayout.Space(space);
                             }
 
                             var eventCurrent = Event.current;
@@ -1338,7 +1506,7 @@ namespace GGM.GUI.Pages
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.FlexibleSpace();
-                    Grid(string.Empty, ref serverSwitch, serverPages, width: 425, height: 25f);
+                    Grid(string.Empty, ref serverSwitch, serverPages, width: serverPages.Length * 110f);
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
                 }
@@ -1382,7 +1550,7 @@ namespace GGM.GUI.Pages
                                 Grid("Custom Waves", ref CustomWavesSetting.Value);
                                 if (CustomWavesSetting) TextField("Waves", ref MaximumWavesSetting.Value);
                                 Grid("Disable Rock-Throwing", ref DisableRockThrowingSetting.Value);
-                                GUILayout.Space(1f);
+                                GUILayout.Space(5f);
                             }
                             GUILayout.EndScrollView();
                         }
@@ -1466,12 +1634,12 @@ namespace GGM.GUI.Pages
                                 GUILayout.BeginHorizontal();
                                 {
                                     GUILayout.FlexibleSpace();
-                                    if (GUILayout.Button("Bold", GUILayout.Width(75f)))
+                                    if (Button("Bold", 75f))
                                     {
                                         WelcomeMessageSetting.Value = $"<b>{WelcomeMessageSetting}</b>";
                                     }
 
-                                    if (GUILayout.Button("Italic", GUILayout.Width(75f)))
+                                    if (Button("Italic", 75f))
                                     {
                                         WelcomeMessageSetting.Value = $"<i>{WelcomeMessageSetting}</i>";
                                     }
@@ -1485,7 +1653,7 @@ namespace GGM.GUI.Pages
                                     TextArea(string.Empty, ref WelcomeMessageSetting.Value, halfAreaWidth - 25f, 185f);
                                 }
                                 GUILayout.EndHorizontal();
-                                GUILayout.Space(1f);
+                                GUILayout.Space(5f);
                             }
                             GUILayout.EndScrollView();
                         }
@@ -1517,7 +1685,7 @@ namespace GGM.GUI.Pages
                                 {
                                     foreach (var player in PhotonNetwork.playerList)
                                     {
-                                        if (GUILayout.Button("[" + player.ID + "] " + player.UIName.hexColor(), GUILayout.Width(fullAreaWidth * ControlPanelProportion[0] - 20f)))
+                                        if (Button("[" + player.ID + "] " + player.UIName.hexColor(), fullAreaWidth * ControlPanelProportion[0] - 20f))
                                         {
                                             ChosenPlayer = player;
                                         }
@@ -1595,7 +1763,7 @@ namespace GGM.GUI.Pages
                                             }
                                     }
 
-                                    GUILayout.Space(1f);
+                                    GUILayout.Space(5f);
                                 }
                                 GUILayout.EndScrollView();
                                 Grid(string.Empty, ref InfoPanelPageSetting, infoPanel, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
@@ -1605,17 +1773,17 @@ namespace GGM.GUI.Pages
                             GUILayout.BeginArea(new Rect(leftPos + 20f + fullAreaWidth * ControlPanelProportion[0] + fullAreaWidth * ControlPanelProportion[1], topPos + 100f, fullAreaWidth * ControlPanelProportion[2] - 10f, fullAreaHeight - 40f));
                             {
                                 Label("Actions", LabelType.Header, width: fullAreaWidth * ControlPanelProportion[2] - 20f);
-                                if (GUILayout.Button("Kick", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                if (Button("Kick", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     Commands.Kick(ChosenPlayer.ID.ToString());
                                 }
 
-                                if (GUILayout.Button("Ban", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                if (Button("Ban", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     Commands.Ban(ChosenPlayer.ID.ToString());
                                 }
 
-                                if (GUILayout.Button(ChosenPlayer.isMuted ? "Unmute" : "Mute", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                if (Button(ChosenPlayer.isMuted ? "Unmute" : "Mute", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     if (ChosenPlayer.isMuted)
                                     {
@@ -1626,17 +1794,17 @@ namespace GGM.GUI.Pages
                                         Commands.Mute(ChosenPlayer);
                                     }
                                 }
-                                if (GUILayout.Button("Reset Stats", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                if (Button("Reset Stats", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     Commands.ResetKD(ChosenPlayer.ID.ToString(), false);
                                 }
 
-                                if (GUILayout.Button("Revive", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                if (Button("Revive", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     Commands.Revive(ChosenPlayer.ID.ToString());
                                 }
 
-                                if (GUILayout.Button("Steal Skin", GUILayout.Width(fullAreaWidth * ControlPanelProportion[2] - 20f)))
+                                if (Button("Steal Skin", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     if (!HERO.PlayersSkins.ContainsKey(ChosenPlayer.ID)) return;
                                     var skin = HERO.PlayersSkins[ChosenPlayer.ID];
@@ -1644,7 +1812,7 @@ namespace GGM.GUI.Pages
                                     HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
                                     HumanSkinsList.Add(skin.Split(','));
                                     HumanSkinsCountSetting.Value++;
-                                    scrollHumanSkins.y = 9999f;
+                                    scrollHumanSkinsLeft.y = 9999f;
                                 }
                             }
                             GUILayout.EndArea();
@@ -1658,7 +1826,7 @@ namespace GGM.GUI.Pages
         {
             int num45;
             int num46;
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 270f, topPos + 25f + 52f, 120f, 30f), "Titan Skin Mode:", "Label");
+            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 270f, topPos + 20f + 52f, 120f, 30f), "Titan Skin Mode:", Styles.LabelStyle[1]);
             var flag6 = false;
             if ((int)FengGameManagerMKII.settings[1] == 1)
             {
@@ -1678,7 +1846,7 @@ namespace GGM.GUI.Pages
                 }
             }
 
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 270f, topPos + 25f + 77f, 120f, 30f), "Randomized Pairs:", "Label");
+            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 270f, topPos + 20f + 77f, 120f, 30f), "Randomized Pairs:", Styles.LabelStyle[1]);
             flag6 = false;
             if ((int)FengGameManagerMKII.settings[32] == 1)
             {
@@ -1698,13 +1866,15 @@ namespace GGM.GUI.Pages
                 }
             }
 
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 158f, topPos + 25f + 112f, 150f, 20f), "Titan Hair:", "Label");
-            FengGameManagerMKII.settings[21] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 134f, 160f, 20f), (string)FengGameManagerMKII.settings[21]);
-            FengGameManagerMKII.settings[22] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 156f, 160f, 20f), (string)FengGameManagerMKII.settings[22]);
-            FengGameManagerMKII.settings[23] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 178f, 160f, 20f), (string)FengGameManagerMKII.settings[23]);
-            FengGameManagerMKII.settings[24] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 200f, 160f, 20f), (string)FengGameManagerMKII.settings[24]);
-            FengGameManagerMKII.settings[25] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 222f, 160f, 20f), (string)FengGameManagerMKII.settings[25]);
-            if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 250f, topPos + 25f + 134f, 65f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[16])))
+            UnityEngine.GUI.Label(new Rect(leftPos + 160f, topPos + 25f + 112f, 150f, 20f), "Titan Hair:", Styles.LabelStyle[1]);
+
+            FengGameManagerMKII.settings[21] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 134f, 155f, 20f), (string)FengGameManagerMKII.settings[21]);
+            FengGameManagerMKII.settings[22] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 156f, 155f, 20f), (string)FengGameManagerMKII.settings[22]);
+            FengGameManagerMKII.settings[23] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 178f, 155f, 20f), (string)FengGameManagerMKII.settings[23]);
+            FengGameManagerMKII.settings[24] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 200f, 155f, 20f), (string)FengGameManagerMKII.settings[24]);
+            FengGameManagerMKII.settings[25] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 222f, 155f, 20f), (string)FengGameManagerMKII.settings[25]);
+
+            if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 243f, topPos + 25f + 134f, 70f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[16])))
             {
                 num45 = 16;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1719,7 +1889,7 @@ namespace GGM.GUI.Pages
 
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 250f, topPos + 25f + 156f, 65f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[17])))
+            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 243f, topPos + 25f + 156f, 70f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[17])))
             {
                 num45 = 17;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1734,7 +1904,7 @@ namespace GGM.GUI.Pages
 
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 250f, topPos + 25f + 178f, 65f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[18])))
+            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 243f, topPos + 25f + 178f, 70f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[18])))
             {
                 num45 = 18;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1749,7 +1919,7 @@ namespace GGM.GUI.Pages
 
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 250f, topPos + 25f + 200f, 65f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[19])))
+            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 243f, topPos + 25f + 200f, 70f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[19])))
             {
                 num45 = 19;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1764,7 +1934,7 @@ namespace GGM.GUI.Pages
 
                 FengGameManagerMKII.settings[num45] = num46;
             }
-            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 250f, topPos + 25f + 222f, 65f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[20])))
+            else if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 243f, topPos + 25f + 222f, 70f, 20f), FengGameManagerMKII.FGM.hairtype((int)FengGameManagerMKII.settings[20])))
             {
                 num45 = 20;
                 num46 = (int)FengGameManagerMKII.settings[num45];
@@ -1780,177 +1950,138 @@ namespace GGM.GUI.Pages
                 FengGameManagerMKII.settings[num45] = num46;
             }
 
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 158f, topPos + 25f + 252f, 150f, 20f), "Titan Eye:", "Label");
+            UnityEngine.GUI.Label(new Rect(leftPos + 160f, topPos + 25f + 252f, 150f, 20f), "Titan Eye:", Styles.LabelStyle[1]);
             FengGameManagerMKII.settings[26] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 274f, 230f, 20f), (string)FengGameManagerMKII.settings[26]);
             FengGameManagerMKII.settings[27] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 296f, 230f, 20f), (string)FengGameManagerMKII.settings[27]);
             FengGameManagerMKII.settings[28] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 318f, 230f, 20f), (string)FengGameManagerMKII.settings[28]);
             FengGameManagerMKII.settings[29] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 340f, 230f, 20f), (string)FengGameManagerMKII.settings[29]);
             FengGameManagerMKII.settings[30] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 80f, topPos + 25f + 362f, 230f, 20f), (string)FengGameManagerMKII.settings[30]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 455f, topPos + 25f + 112f, 150f, 20f), "Titan Body:", "Label");
+            UnityEngine.GUI.Label(new Rect(leftPos + 470f, topPos + 25f + 112f, 150f, 20f), "Titan Body:", Styles.LabelStyle[1]);
             FengGameManagerMKII.settings[86] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 390f, topPos + 25f + 134f, 230f, 20f), (string)FengGameManagerMKII.settings[86]);
             FengGameManagerMKII.settings[87] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 390f, topPos + 25f + 156f, 230f, 20f), (string)FengGameManagerMKII.settings[87]);
             FengGameManagerMKII.settings[88] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 390f, topPos + 25f + 178f, 230f, 20f), (string)FengGameManagerMKII.settings[88]);
             FengGameManagerMKII.settings[89] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 390f, topPos + 25f + 200f, 230f, 20f), (string)FengGameManagerMKII.settings[89]);
             FengGameManagerMKII.settings[90] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 390f, topPos + 25f + 222f, 230f, 20f), (string)FengGameManagerMKII.settings[90]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 472f, topPos + 25f + 252f, 150f, 20f), "Eren:", "Label");
+            UnityEngine.GUI.Label(new Rect(leftPos + 470f, topPos + 25f + 252f, 150f, 20f), "Eren:", Styles.LabelStyle[1]);
             FengGameManagerMKII.settings[65] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 390f, topPos + 25f + 274f, 230f, 20f), (string)FengGameManagerMKII.settings[65]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 470f, topPos + 25f + 296f, 150f, 20f), "Annie:", "Label");
+            UnityEngine.GUI.Label(new Rect(leftPos + 470f, topPos + 25f + 296f, 150f, 20f), "Annie:", Styles.LabelStyle[1]);
             FengGameManagerMKII.settings[66] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 390f, topPos + 25f + 318f, 230f, 20f), (string)FengGameManagerMKII.settings[66]);
-            UnityEngine.GUI.Label(new Rect(leftPos + 40f + 465f, topPos + 25f + 340f, 150f, 20f), "Colossal:", "Label");
+            UnityEngine.GUI.Label(new Rect(leftPos + 470f, topPos + 25f + 340f, 150f, 20f), "Colossal:", Styles.LabelStyle[1]);
             FengGameManagerMKII.settings[67] = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 390f, topPos + 25f + 362f, 230f, 20f), (string)FengGameManagerMKII.settings[67]);
         }
 
         private static void VideoAndAudio()
         {
-            GUILayout.BeginArea(center[1]);
+            GUILayout.Space(15f);
+
+            GUILayout.BeginArea(left[0]);
             {
-                GUILayout.FlexibleSpace();
-                GUILayout.BeginHorizontal();
+                GUILayout.BeginVertical();
                 {
-                    GUILayout.FlexibleSpace();
-                    videoAndAudioSwitch = GUILayout.SelectionGrid(videoAndAudioSwitch, videoAndAudioPages, 2, GUILayout.Width(175f), GUILayout.Height(25f));
-                    GUILayout.FlexibleSpace();
+                    Label("General", LabelType.Header, GUIHelpers.Alignment.CENTER);
+                    Slider("Volume", ref GlobalVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
+                    Slider("Overall Quality", ref OverallQualitySetting.Value, 0f, 5f, round: true);
+                    Grid("Textures", ref TexturesSetting.Value, textures);
+                    TextField("FPS Lock", ref FPSLockSetting.Value);
+                    Label("Advanced", LabelType.Header, GUIHelpers.Alignment.CENTER);
+                    Grid("Anisotropic Filtering", ref AnisotropicFilteringSetting.Value, anisotropicFiltering);
+                    Grid("Anti-Aliasing", ref AntiAliasingSetting.Value, antiAliasing);
+                    Grid("Blend Weights", ref BlendWeightsSetting.Value, blendWeights);
+                    Grid("Mip Mapping", ref MipMappingSetting.Value);
+                    Slider("Draw Distance", ref DrawDistanceSetting.Value, 1000f, 15000f, valueTextFormat: "0");
+                    Slider("Shadow Distance", ref ShadowDistanceSetting.Value, 0f, 15000f, valueTextFormat: "0");
+                    Grid("Shadow Projection", ref ShadowProjectionSetting.Value, shadowProjection);
+                    Grid("Shadow Cascades", ref ShadowCascadesSetting.Value, shadowCascades);
                 }
-                GUILayout.EndHorizontal();
-                GUILayout.FlexibleSpace();
+                GUILayout.EndVertical();
+            }
+            GUILayout.EndArea();
+            GUILayout.Space(15f);
+            GUILayout.BeginArea(right[0]);
+            {
+                GUILayout.BeginVertical();
+                {
+                    scrollVideoLeft = GUILayout.BeginScrollView(scrollVideoLeft);
+                    {
+                        Label("Visuals", LabelType.Header);
+                        Grid("Wind", ref WindSetting.Value);
+                        Grid("Blur", ref BlurSetting.Value);
+                        Grid("Custom Ambient", ref CustomAmbientSetting.Value);
+                        if (CustomAmbientSetting)
+                        {
+                            Grid("Day Time", ref ambientDayTimeSwitch, dayTime);
+                            switch (ambientDayTimeSwitch)
+                            {
+                                case 0:
+                                    Slider("Color R", ref CustomAmbientColorSetting[0][0].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color G", ref CustomAmbientColorSetting[0][1].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color B", ref CustomAmbientColorSetting[0][2].Value, 0f, 1f, 160f, 25f);
+                                    break;
+
+                                case 1:
+                                    Slider("Color R", ref CustomAmbientColorSetting[1][0].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color G", ref CustomAmbientColorSetting[1][1].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color B", ref CustomAmbientColorSetting[1][2].Value, 0f, 1f, 160f, 25f);
+                                    break;
+
+                                case 2:
+                                    Slider("Color R", ref CustomAmbientColorSetting[2][0].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color G", ref CustomAmbientColorSetting[2][1].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color B", ref CustomAmbientColorSetting[2][2].Value, 0f, 1f, 160f, 25f);
+                                    break;
+                            }
+                        }
+
+                        Grid("Custom Fog", ref CustomFogSetting.Value);
+                        if (CustomFogSetting)
+                        {
+                            Slider("Color R", ref FogColorSettings[0].Value, 0f, 1f, 160f, 25f);
+                            Slider("Color G", ref FogColorSettings[1].Value, 0f, 1f, 160f, 25f);
+                            Slider("Color B", ref FogColorSettings[2].Value, 0f, 1f, 160f, 25f);
+                            if (FogDistanceSettings[0] > FogDistanceSettings[1] && FogDistanceSettings[0] != 0f)
+                                FogDistanceSettings[0].Value = FogDistanceSettings[1] - 0.1f;
+                            if (FogDistanceSettings[0] < 0)
+                                FogDistanceSettings[0].Value = 0;
+                            if (FogDistanceSettings[1] > DrawDistanceSetting)
+                                FogDistanceSettings[1].Value = DrawDistanceSetting - 0.1f;
+                            Slider("Start Distance", ref FogDistanceSettings[0].Value, 0f, ref DrawDistanceSetting.Value, 160f, 25f, valueTextFormat: "0");
+                            Slider("End Distance", ref FogDistanceSettings[1].Value, 0f, ref DrawDistanceSetting.Value, 160f, 25f, valueTextFormat: "0");
+                        }
+
+                        Grid("Custom Light", ref CustomLightSetting.Value);
+                        if (CustomLightSetting)
+                        {
+                            Grid("Day Time", ref ambientDayTimeSwitch, dayTime);
+                            switch (ambientDayTimeSwitch)
+                            {
+                                case 0:
+                                    Slider("Color R", ref CustomLightColorSettings[0][0].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color G", ref CustomLightColorSettings[0][1].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color B", ref CustomLightColorSettings[0][2].Value, 0f, 1f, 160f, 25f);
+                                    break;
+
+                                case 1:
+                                    Slider("Color R", ref CustomLightColorSettings[1][0].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color G", ref CustomLightColorSettings[1][1].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color B", ref CustomLightColorSettings[1][2].Value, 0f, 1f, 160f, 25f);
+                                    break;
+
+                                case 2:
+                                    Slider("Color R", ref CustomLightColorSettings[2][0].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color G", ref CustomLightColorSettings[2][1].Value, 0f, 1f, 160f, 25f);
+                                    Slider("Color B", ref CustomLightColorSettings[2][2].Value, 0f, 1f, 160f, 25f);
+                                    break;
+                            }
+                        }
+
+                        GUILayout.Space(5f);
+                    }
+                    GUILayout.EndScrollView();
+                }
+                GUILayout.EndVertical();
             }
             GUILayout.EndArea();
 
-            switch (videoAndAudioSwitch)
-            {
-                case 0:
-                    GUILayout.BeginArea(left[2]);
-                    {
-                        GUILayout.BeginVertical();
-                        {
-                            Label("General", LabelType.Header, GUIHelpers.Alignment.CENTER);
-                            Slider("Overall Quality", ref OverallQualitySetting.Value, 0f, 5f, round: true);
-                            Grid("Textures", ref TexturesSetting.Value, textures);
-                            TextField("FPS Lock", ref FPSLockSetting.Value);
-                            Label("Advanced", LabelType.Header, GUIHelpers.Alignment.CENTER);
-                            Grid("Anisotropic Filtering", ref AnisotropicFilteringSetting.Value, anisotropicFiltering);
-                            Grid("Anti-Aliasing", ref AntiAliasingSetting.Value, antiAliasing);
-                            Grid("Blend Weights", ref BlendWeightsSetting.Value, blendWeights);
-                            Grid("Mip Mapping", ref MipMappingSetting.Value);
-                            Slider("Draw Distance", ref DrawDistanceSetting.Value, 1000f, 15000f, valueTextFormat: "0");
-                            Slider("Shadow Distance", ref ShadowDistanceSetting.Value, 0f, 15000f, valueTextFormat: "0");
-                            Grid("Shadow Projection", ref ShadowProjectionSetting.Value, shadowProjection);
-                            Grid("Shadow Cascades", ref ShadowCascadesSetting.Value, shadowCascades);
-                        }
-                        GUILayout.EndVertical();
-                    }
-                    GUILayout.EndArea();
-
-                    GUILayout.BeginArea(right[2]);
-                    {
-                        GUILayout.BeginVertical();
-                        {
-                            scrollVideoLeft = GUILayout.BeginScrollView(scrollVideoLeft);
-                            {
-                                Label("Visuals", LabelType.Header);
-                                Grid("Wind", ref WindSetting.Value);
-                                Grid("Blur", ref BlurSetting.Value);
-                                Grid("Custom Ambient", ref CustomAmbientSetting.Value);
-                                if (CustomAmbientSetting)
-                                {
-                                    Grid("Day Time", ref ambientDayTimeSwitch, dayTime);
-                                    switch (ambientDayTimeSwitch)
-                                    {
-                                        case 0:
-                                            Slider("Color R", ref CustomAmbientColorSetting[0][0].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color G", ref CustomAmbientColorSetting[0][1].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color B", ref CustomAmbientColorSetting[0][2].Value, 0f, 1f, 160f, 25f);
-                                            break;
-
-                                        case 1:
-                                            Slider("Color R", ref CustomAmbientColorSetting[1][0].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color G", ref CustomAmbientColorSetting[1][1].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color B", ref CustomAmbientColorSetting[1][2].Value, 0f, 1f, 160f, 25f);
-                                            break;
-
-                                        case 2:
-                                            Slider("Color R", ref CustomAmbientColorSetting[2][0].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color G", ref CustomAmbientColorSetting[2][1].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color B", ref CustomAmbientColorSetting[2][2].Value, 0f, 1f, 160f, 25f);
-                                            break;
-                                    }
-                                }
-
-                                Grid("Custom Fog", ref CustomFogSetting.Value);
-                                if (CustomFogSetting)
-                                {
-                                    Slider("Color R", ref FogColorSettings[0].Value, 0f, 1f, 160f, 25f);
-                                    Slider("Color G", ref FogColorSettings[1].Value, 0f, 1f, 160f, 25f);
-                                    Slider("Color B", ref FogColorSettings[2].Value, 0f, 1f, 160f, 25f);
-                                    if (FogDistanceSettings[0] > FogDistanceSettings[1] && FogDistanceSettings[0] != 0f)
-                                        FogDistanceSettings[0].Value = FogDistanceSettings[1] - 0.1f;
-                                    if (FogDistanceSettings[0] < 0)
-                                        FogDistanceSettings[0].Value = 0;
-                                    if (FogDistanceSettings[1] > DrawDistanceSetting)
-                                        FogDistanceSettings[1].Value = DrawDistanceSetting - 0.1f;
-                                    Slider("Start Distance", ref FogDistanceSettings[0].Value, 0f, ref DrawDistanceSetting.Value, 160f, 25f, valueTextFormat: "0");
-                                    Slider("End Distance", ref FogDistanceSettings[1].Value, 0f, ref DrawDistanceSetting.Value, 160f, 25f, valueTextFormat: "0");
-                                }
-
-                                Grid("Custom Light", ref CustomLightSetting.Value);
-                                if (CustomLightSetting)
-                                {
-                                    Grid("Day Time", ref ambientDayTimeSwitch, dayTime);
-                                    switch (ambientDayTimeSwitch)
-                                    {
-                                        case 0:
-                                            Slider("Color R", ref CustomLightColorSettings[0][0].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color G", ref CustomLightColorSettings[0][1].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color B", ref CustomLightColorSettings[0][2].Value, 0f, 1f, 160f, 25f);
-                                            break;
-
-                                        case 1:
-                                            Slider("Color R", ref CustomLightColorSettings[1][0].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color G", ref CustomLightColorSettings[1][1].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color B", ref CustomLightColorSettings[1][2].Value, 0f, 1f, 160f, 25f);
-                                            break;
-
-                                        case 2:
-                                            Slider("Color R", ref CustomLightColorSettings[2][0].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color G", ref CustomLightColorSettings[2][1].Value, 0f, 1f, 160f, 25f);
-                                            Slider("Color B", ref CustomLightColorSettings[2][2].Value, 0f, 1f, 160f, 25f);
-                                            break;
-                                    }
-                                }
-
-                                GUILayout.Space(1f);
-                            }
-                            GUILayout.EndScrollView();
-                        }
-                        GUILayout.EndVertical();
-                    }
-                    GUILayout.EndArea();
-
-                    break;
-
-                case 1:
-                    GUILayout.BeginArea(left[2]);
-                    {
-                        Label("General", LabelType.Header);
-                        Slider("Global", ref GlobalVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Label("Human", LabelType.Header);
-                        Slider("AHSS Shot", ref AHSSShotVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Air Slash", ref AirSlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Nape Slash", ref NapeSlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Body Slash", ref BodySlashVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Hooks", ref HookVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Label("Titan", LabelType.Header);
-                        Slider("Titan Eren Roar", ref TitanErenRoarVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Swing", ref SwingVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Thunder", ref ThunderVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Head Explosion", ref HeadExplosionVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Head Punch", ref HeadPunchVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Explosion", ref BoomVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                        Slider("Steps", ref StepVolumeSetting.Value, 0f, 1f, round: true, multiplier: 100f);
-                    }
-                    GUILayout.EndArea();
-                    break;
-            }
         }
 
         private void OnDisable()
@@ -2032,7 +2163,6 @@ namespace GGM.GUI.Pages
                 PlayerPrefs.SetString("annie", (string)FengGameManagerMKII.settings[66]);
                 PlayerPrefs.SetString("colossal", (string)FengGameManagerMKII.settings[67]);
                 PlayerPrefs.SetString("cnumber", (string)FengGameManagerMKII.settings[82]);
-                PlayerPrefs.SetString("cmax", (string)FengGameManagerMKII.settings[85]);
                 PlayerPrefs.SetString("titanbody1", (string)FengGameManagerMKII.settings[86]);
                 PlayerPrefs.SetString("titanbody2", (string)FengGameManagerMKII.settings[87]);
                 PlayerPrefs.SetString("titanbody3", (string)FengGameManagerMKII.settings[88]);
@@ -2057,7 +2187,6 @@ namespace GGM.GUI.Pages
                 PlayerPrefs.SetString("tcover", (string)FengGameManagerMKII.settings[114]);
                 PlayerPrefs.SetString("tsit", (string)FengGameManagerMKII.settings[115]);
                 PlayerPrefs.SetInt("humangui", (int)FengGameManagerMKII.settings[133]);
-                PlayerPrefs.SetString("customGround", (string)FengGameManagerMKII.settings[162]);
                 PlayerPrefs.SetString("forestskyfront", (string)FengGameManagerMKII.settings[163]);
                 PlayerPrefs.SetString("forestskyback", (string)FengGameManagerMKII.settings[164]);
                 PlayerPrefs.SetString("forestskyleft", (string)FengGameManagerMKII.settings[165]);

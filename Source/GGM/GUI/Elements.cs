@@ -70,6 +70,7 @@ namespace GGM.GUI
                 value = GUILayout.TextArea(value, options);
             }
             if (text != string.Empty) GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void TextField(string text, ref string value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
@@ -82,6 +83,8 @@ namespace GGM.GUI
                 value = GUILayout.TextField(value, options);
             }
             if (text != string.Empty) GUILayout.EndHorizontal();
+
+            GUILayout.Space(space);
         }
 
         public static void TextField(string text, ref int value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
@@ -96,6 +99,7 @@ namespace GGM.GUI
                 value = v != string.Empty ? Convert.ToInt32(v) : 0;
             }
             if (text != string.Empty) GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void TextField(string text, ref float value, float width = TextFieldWidth, float height = TextFieldHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
@@ -110,6 +114,7 @@ namespace GGM.GUI
                 value = v != string.Empty ? Convert.ToSingle(v) : 0f;
             }
             if (text != string.Empty) GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void Slider(string text, ref float value, float left, float right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "", string valueTextFormat = "0.###", bool round = false, float multiplier = 1)
@@ -121,14 +126,15 @@ namespace GGM.GUI
             value = GUILayout.HorizontalSlider(value, left, right, options);
             if (!customValueText)
             {
-                Label(round ? Mathf.Round(value * multiplier).ToString(valueTextFormat) : (value * multiplier).ToString(valueTextFormat), LabelType.SliderStatus, width: valueWidth);
+                Label(round ? Mathf.Round(value * multiplier).ToString(valueTextFormat).SetSize(11) : (value * multiplier).ToString(valueTextFormat).SetSize(11), LabelType.SliderStatus, width: valueWidth);
             }
             else
             {
-                Label(valueText, LabelType.SliderStatus, width: valueWidth);
+                Label(valueText.SetSize(11), LabelType.SliderStatus, width: valueWidth);
             }
 
             GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void Slider(string text, ref float value, float left, ref float right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "", string valueTextFormat = "0.###", bool round = false, float multiplier = 1)
@@ -141,14 +147,15 @@ namespace GGM.GUI
                 value = GUILayout.HorizontalSlider(value, left, right, options);
                 if (!customValueText)
                 {
-                    Label(round ? Mathf.Round(value * multiplier).ToString(valueTextFormat) : (value * multiplier).ToString(valueTextFormat), LabelType.SliderStatus, width: valueWidth);
+                    Label(round ? Mathf.Round(value * multiplier).ToString(valueTextFormat).SetSize(11) : (value * multiplier).ToString(valueTextFormat).SetSize(11), LabelType.SliderStatus, width: valueWidth);
                 }
                 else
                 {
-                    Label(valueText, LabelType.SliderStatus, width: valueWidth);
+                    Label(valueText.SetSize(11), LabelType.SliderStatus, width: valueWidth);
                 }
             }
             GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void Slider(string text, ref int value, int left, int right, float sliderWidth = SliderWidth, float valueWidth = SliderValueWidth, bool customValueText = false, string valueText = "")
@@ -162,9 +169,10 @@ namespace GGM.GUI
             {
                 if (text != string.Empty) Label(text);
                 value = Convert.ToInt32(GUILayout.HorizontalSlider(v, l, r, options));
-                Label(!customValueText ? Mathf.Round(value).ToString() : valueText, LabelType.SliderStatus, width: valueWidth);
+                Label(!customValueText ? Mathf.Round(value).ToString().SetSize(11) : valueText.SetSize(11), LabelType.SliderStatus, width: valueWidth);
             }
             GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void Grid(string text, ref int INT, string[] str, bool sameCount = true, int count = 1, float width = ButtonWidth, float height = ButtonHeight)
@@ -176,6 +184,7 @@ namespace GGM.GUI
                 INT = GUILayout.SelectionGrid(INT, str, sameCount ? str.Length : count, options);
             }
             if (text != string.Empty) GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void Grid(string text, ref bool value, bool horizontal = true, float width = ButtonWidth, float height = ButtonHeight)
@@ -188,6 +197,7 @@ namespace GGM.GUI
             i = GUILayout.SelectionGrid(i, SwitcherStr, horizontal ? 2 : 1, options);
             value = i != 0;
             if (text != string.Empty) GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void ButtonToggle(string text, string[] buttonsText, BoolSetting[] bools, bool horizontal = true, float width = ButtonWidth, float height = ButtonHeight)
@@ -211,6 +221,7 @@ namespace GGM.GUI
 
             if (text == string.Empty) GUILayout.FlexibleSpace();
             if (horizontal) GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static void ButtonToggle(string text, string[] buttonsText, bool[] bools, bool horizontal = true, float width = ButtonWidth, float height = ButtonHeight)
@@ -236,6 +247,7 @@ namespace GGM.GUI
                 if (text == string.Empty) GUILayout.FlexibleSpace();
             }
             if (horizontal) GUILayout.EndHorizontal();
+            GUILayout.Space(space);
         }
 
         public static bool Button(string text, float width = ButtonWidth, float height = ButtonHeight)
