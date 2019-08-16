@@ -7,263 +7,248 @@ namespace GGM.Config
 {
     public static class Settings
     {
-        public static IDataStorage Storage = null;
-        private static Queue<ISetting> allSettings = null;
-
+        public static string[] CopiedHumanSkins;
+        public static List<string[]> CustomMapSkinsList;
+        public static List<string> CustomMapSkinsTitlesList;
+        public static List<string> CustomMapScriptsList;
         public static List<string[]> HumanSkinsList;
         public static List<string> HumanSkinsTitlesList;
-        public static string[] CopiedHumanSkins;
-
-        public static List<string[]> LocationSkinsForestList;
-        public static List<string> LocationSkinsForestTitlesList;
-        public static List<int> LocationSkinsForestAmbientList;
-        public static List<float[]> LocationSkinsForestAmbientSettingsList;
-        public static List<int> LocationSkinsForestFogList;
-        public static List<float[]> LocationSkinsForestFogSettingsList;
-        public static List<int> LocationSkinsForestLightList;
-        public static List<float[]> LocationSkinsForestLightSettingsList;
-        public static List<int> LocationSkinsForestParticlesList;
-        public static List<float[]> LocationSkinsForestParticlesSettingsList;
-        public static string[] LocationSkinsForestCopiedSet;
-
-        public static List<string[]> LocationSkinsCityList;
-        public static List<string> LocationSkinsCityTitlesList;
         public static List<int> LocationSkinsCityAmbientList;
         public static List<float[]> LocationSkinsCityAmbientSettingsList;
+        public static string[] LocationSkinsCityCopiedSet;
         public static List<int> LocationSkinsCityFogList;
         public static List<float[]> LocationSkinsCityFogSettingsList;
         public static List<int> LocationSkinsCityLightList;
         public static List<float[]> LocationSkinsCityLightSettingsList;
+        public static List<string[]> LocationSkinsCityList;
         public static List<int> LocationSkinsCityParticlesList;
         public static List<float[]> LocationSkinsCityParticlesSettingsList;
-        public static string[] LocationSkinsCityCopiedSet;
+        public static List<string> LocationSkinsCityTitlesList;
+        public static List<int> LocationSkinsForestAmbientList;
+        public static List<float[]> LocationSkinsForestAmbientSettingsList;
+        public static string[] LocationSkinsForestCopiedSet;
+        public static List<int> LocationSkinsForestFogList;
+        public static List<float[]> LocationSkinsForestFogSettingsList;
+        public static List<int> LocationSkinsForestLightList;
+        public static List<float[]> LocationSkinsForestLightSettingsList;
+        public static List<string[]> LocationSkinsForestList;
+        public static List<int> LocationSkinsForestParticlesList;
+        public static List<float[]> LocationSkinsForestParticlesSettingsList;
+        public static List<string> LocationSkinsForestTitlesList;
         public static List<string> MutedPlayers;
-
         public static List<object> ReceivedLocationSkinsData;
+        public static IDataStorage Storage = null;
+        private static Queue<ISetting> allSettings = null;
 
         #region Booleans
 
-        //Game
-        public static BoolSetting MouseInvertYSetting = new BoolSetting("GGM_MouseInvertY");
-
-        public static BoolSetting CameraTiltSetting = new BoolSetting("GGM_CameraTilt");
-        public static BoolSetting CameraStaticFOVSetting = new BoolSetting("GGM_StaticFOV");
-        public static BoolSetting[] CameraTypeSettings = { new BoolSetting("GGM_OriginalCamera", true), new BoolSetting("GGM_TPSCamera", true), new BoolSetting("GGM_WOWCamera"), new BoolSetting("GGM_OldTPS"), };
-        public static BoolSetting SnapshotsSetting = new BoolSetting("GGM_Snapshots");
-        public static BoolSetting SnapshotsShowInGameSetting = new BoolSetting("GGM_SnapshotsShowInGame");
-        public static BoolSetting InfiniteBladesSetting = new BoolSetting("GGM_InfiniteBlades");
-        public static BoolSetting InfiniteBulletsSetting = new BoolSetting("GGM_InfiniteBullets");
-        public static BoolSetting InfiniteBulletsNoReloadingSetting = new BoolSetting("GGM_InfiniteBulletsNoReloading");
-        public static BoolSetting InfiniteGasSetting = new BoolSetting("GGM_InfiniteGas");
-        public static BoolSetting LegacyLabelsSetting = new BoolSetting("GGM_LegacyLabels");
-        public static BoolSetting UserInterfaceSetting = new BoolSetting("GGM_UserInterface");
-        public static BoolSetting PlayerListUISetting = new BoolSetting("GGM_PlayerListUI", true);
-        public static BoolSetting GameInfoUISetting = new BoolSetting("GGM_GameInfoUI", true);
-        public static BoolSetting ChatUISetting = new BoolSetting("GGM_ChatUI", true);
-        public static BoolSetting SpritesUISetting = new BoolSetting("GGM_SpritesUI", true);
-        public static BoolSetting DamageFeedUISetting = new BoolSetting("GGM_GameFeedUI", true);
-        public static BoolSetting CrosshairUISetting = new BoolSetting("GGM_CrosshairUI", true);
-        public static BoolSetting BodyLean = new BoolSetting("GGM_BodyLean", true);
-        public static BoolSetting ChatFeedSetting = new BoolSetting("GGM_ChatFeed");
-        public static BoolSetting MinimapSetting = new BoolSetting("GGM_Minimap");
-
-        //Server
-        public static BoolSetting CustomStarterTitansSetting = new BoolSetting("GGM_CustomStarterTitans");
-
-        public static BoolSetting CustomTitansPerWaveSetting = new BoolSetting("GGM_CustomTitansPerWave");
-        public static BoolSetting CustomSpawnRateSetting = new BoolSetting("GGM_CustomSpawnRate");
-        public static BoolSetting PunkWavesSetting = new BoolSetting("GGM_PunkWaves");
-        public static BoolSetting CustomSizeSetting = new BoolSetting("GGM_CustomSize");
-        public static BoolSetting CustomWavesSetting = new BoolSetting("GGM_CustomWaves");
-        public static BoolSetting HealthModeSetting = new BoolSetting("GGM_HealthMode");
+        public static BoolSetting AntiAbusiveModsSetting = new BoolSetting("GGM_AntiAbusiveMods");
+        public static BoolSetting AntiGuestsSetting = new BoolSetting("GGM_AntiGuests");
+        public static BoolSetting AntiTitanErenSetting = new BoolSetting("GGM_AntiTitanEren");
         public static BoolSetting ArmorModeSetting = new BoolSetting("GGM_ArmorMode");
-        public static BoolSetting ExplodeModeSetting = new BoolSetting("GGM_ExplodeMode");
-        public static BoolSetting DisableRockThrowingSetting = new BoolSetting("GGM_DisableRockThrowing");
-        public static BoolSetting PVPModeSetting = new BoolSetting("GGM_PVPMode");
-        public static BoolSetting PointsModeSetting = new BoolSetting("GGM_PointsMode");
-        public static BoolSetting TeamModeSetting = new BoolSetting("GGM_TeamMode");
-        public static BoolSetting BombsModeSetting = new BoolSetting("GGM_BombsMode");
-        public static BoolSetting InfectionModeSetting = new BoolSetting("GGM_InfectionMode");
-        public static BoolSetting FriendlyModeSetting = new BoolSetting("GGM_FriendlyMode");
         public static BoolSetting AutoReviveSetting = new BoolSetting("GGM_AutoRevive");
-        public static BoolSetting HorsesSetting = new BoolSetting("GGM_Horses");
-        public static BoolSetting DisableMinimapsSetting = new BoolSetting("GGM_DisableMinimaps");
-        public static BoolSetting DisableAHSSAirReloadingSetting = new BoolSetting("GGM_DisableAHSSAirReloading");
-        public static BoolSetting DeadlyCannonsModeSetting = new BoolSetting("GGM_DeadlyCannonsMode");
-        public static BoolSetting LegacyChatSetting = new BoolSetting("GGM_LegacyChat");
-        public static BoolSetting ChatFeedSeparateSetting = new BoolSetting("GGM_ChatFeedSeparate");
+        public static BoolSetting BladeTrailsInfiniteLifetimeSetting = new BoolSetting("GGM_BladeTrailsInfiniteLifetime");
+        public static BoolSetting BladeTrailsSetting = new BoolSetting("GGM_BladeTrails", true);
+        public static BoolSetting BlurSetting = new BoolSetting("GGM_Blur");
+        public static BoolSetting BodyLean = new BoolSetting("GGM_BodyLean", true);
+        public static BoolSetting BombsModeSetting = new BoolSetting("GGM_BombsMode");
+        public static BoolSetting CameraStaticFOVSetting = new BoolSetting("GGM_StaticFOV");
+        public static BoolSetting CameraTiltSetting = new BoolSetting("GGM_CameraTilt");
+        public static BoolSetting[] CameraTypeSettings = { new BoolSetting("GGM_OriginalCamera", true), new BoolSetting("GGM_TPSCamera", true), new BoolSetting("GGM_WOWCamera"), new BoolSetting("GGM_OldTPS"), };
         public static BoolSetting ChatBackground = new BoolSetting("GGM_ChatBackground");
+        public static BoolSetting ChatFeedSeparateSetting = new BoolSetting("GGM_ChatFeedSeparate");
+        public static BoolSetting ChatFeedSetting = new BoolSetting("GGM_ChatFeed");
         public static BoolSetting[] ChatMajorFormatSettings = { new BoolSetting("GGM_ChatMajorBold"), new BoolSetting("GGM_ChatMinorItalic") };
         public static BoolSetting[] ChatMinorFormatSettings = { new BoolSetting("GGM_ChatMinorBold"), new BoolSetting("GGM_ChatMinorItalic") };
-        public static BoolSetting AntiTitanErenSetting = new BoolSetting("GGM_AntiTitanEren");
-        public static BoolSetting AntiGuestsSetting = new BoolSetting("GGM_AntiGuests");
-        public static BoolSetting AntiAbusiveModsSetting = new BoolSetting("GGM_AntiAbusiveMods");
-
-        //Video
-        public static BoolSetting MipMappingSetting = new BoolSetting("GGM_MipMapping");
-
-        public static BoolSetting WindSetting = new BoolSetting("GGM_Wind");
-        public static BoolSetting BlurSetting = new BoolSetting("GGM_Blur");
+        public static BoolSetting ChatUISetting = new BoolSetting("GGM_ChatUI", true);
+        public static BoolSetting CrosshairUISetting = new BoolSetting("GGM_CrosshairUI", true);
         public static BoolSetting CustomAmbientSetting = new BoolSetting("GGM_CustomAmbient");
         public static BoolSetting CustomFogSetting = new BoolSetting("GGM_CustomFog");
-        public static BoolSetting CustomLightSetting = new BoolSetting("GGM_CustomLight");
-
-        //Rebinds
-        public static BoolSetting[] ReelingSettings = { new BoolSetting("GGM_ReelIn", true), new BoolSetting("GGM_ReelOut", true) };
-
-        public static BoolSetting DashSetting = new BoolSetting("GGM_Dash");
-
-        //HumanSkins
-        public static BoolSetting BladeTrailsSetting = new BoolSetting("GGM_BladeTrails", true);
-
         public static BoolSetting CustomGasSetting = new BoolSetting("GGM_CustomGas");
-        public static BoolSetting BladeTrailsInfiniteLifetimeSetting = new BoolSetting("GGM_BladeTrailsInfiniteLifetime");
-
-        //LocationSkins
+        public static BoolSetting CustomLightSetting = new BoolSetting("GGM_CustomLight");
+        public static BoolSetting CustomSizeSetting = new BoolSetting("GGM_CustomSize");
+        public static BoolSetting CustomSpawnRateSetting = new BoolSetting("GGM_CustomSpawnRate");
+        public static BoolSetting CustomStarterTitansSetting = new BoolSetting("GGM_CustomStarterTitans");
+        public static BoolSetting CustomTitansPerWaveSetting = new BoolSetting("GGM_CustomTitansPerWave");
+        public static BoolSetting CustomWavesSetting = new BoolSetting("GGM_CustomWaves");
+        public static BoolSetting DamageFeedUISetting = new BoolSetting("GGM_GameFeedUI", true);
+        public static BoolSetting DashSetting = new BoolSetting("GGM_Dash");
+        public static BoolSetting DeadlyCannonsModeSetting = new BoolSetting("GGM_DeadlyCannonsMode");
+        public static BoolSetting DisableAHSSAirReloadingSetting = new BoolSetting("GGM_DisableAHSSAirReloading");
+        public static BoolSetting DisableMinimapsSetting = new BoolSetting("GGM_DisableMinimaps");
+        public static BoolSetting DisableRockThrowingSetting = new BoolSetting("GGM_DisableRockThrowing");
+        public static BoolSetting ExplodeModeSetting = new BoolSetting("GGM_ExplodeMode");
+        public static BoolSetting FriendlyModeSetting = new BoolSetting("GGM_FriendlyMode");
+        public static BoolSetting GameInfoUISetting = new BoolSetting("GGM_GameInfoUI", true);
+        public static BoolSetting HealthModeSetting = new BoolSetting("GGM_HealthMode");
+        public static BoolSetting HorsesSetting = new BoolSetting("GGM_Horses");
+        public static BoolSetting InfectionModeSetting = new BoolSetting("GGM_InfectionMode");
+        public static BoolSetting InfiniteBladesSetting = new BoolSetting("GGM_InfiniteBlades");
+        public static BoolSetting InfiniteBulletsNoReloadingSetting = new BoolSetting("GGM_InfiniteBulletsNoReloading");
+        public static BoolSetting InfiniteBulletsSetting = new BoolSetting("GGM_InfiniteBullets");
+        public static BoolSetting InfiniteGasSetting = new BoolSetting("GGM_InfiniteGas");
+        public static BoolSetting LegacyChatSetting = new BoolSetting("GGM_LegacyChat");
+        public static BoolSetting LegacyLabelsSetting = new BoolSetting("GGM_LegacyLabels");
         public static BoolSetting LocationSkinsRandomizedPairsSetting = new BoolSetting("GGM_LocationSkinsRandomizedPairs");
-
+        public static BoolSetting MinimapSetting = new BoolSetting("GGM_Minimap");
+        public static BoolSetting MipMappingSetting = new BoolSetting("GGM_MipMapping");
+        public static BoolSetting MouseInvertYSetting = new BoolSetting("GGM_MouseInvertY");
+        public static BoolSetting PlayerListUISetting = new BoolSetting("GGM_PlayerListUI", true);
+        public static BoolSetting PointsModeSetting = new BoolSetting("GGM_PointsMode");
+        public static BoolSetting PunkWavesSetting = new BoolSetting("GGM_PunkWaves");
+        public static BoolSetting PVPModeSetting = new BoolSetting("GGM_PVPMode");
+        public static BoolSetting[] ReelingSettings = { new BoolSetting("GGM_ReelIn", true), new BoolSetting("GGM_ReelOut", true) };
+        public static BoolSetting SnapshotsSetting = new BoolSetting("GGM_Snapshots");
+        public static BoolSetting SnapshotsShowInGameSetting = new BoolSetting("GGM_SnapshotsShowInGame");
+        public static BoolSetting SpritesUISetting = new BoolSetting("GGM_SpritesUI", true);
+        public static BoolSetting TeamModeSetting = new BoolSetting("GGM_TeamMode");
+        public static BoolSetting UserInterfaceSetting = new BoolSetting("GGM_UserInterface");
+        public static BoolSetting WindSetting = new BoolSetting("GGM_Wind");
         #endregion Booleans
 
         #region Floats
 
-        //Game
-        //Mouse
-        public static FloatSetting MouseSensitivitySetting = new FloatSetting("GGM_MouseSensitivity", 0.5f);
-
-        //Camera
-        public static FloatSetting CameraDistanceSetting = new FloatSetting("GGM_CameraDistance", 1f);
-
-        public static FloatSetting CameraFOVSetting = new FloatSetting("GGM_CameraFOV", 110f);
-
-        //Server
-        public static FloatSetting[] SpawnRateSettings = { new FloatSetting("GGM_NormalSpawnRate", 100f), new FloatSetting("GGM_AbnormalSpawnRate"), new FloatSetting("GGM_JumperSpawnRate"), new FloatSetting("GGM_CrawlerSpawnRate"), new FloatSetting("GGM_PunkSpawnRate") };
-
-        public static FloatSetting[] SizeSettings = { new FloatSetting("GGM_MinimumSize", 2.5f), new FloatSetting("GGM_MaximumSize", 3f) };
-        public static FloatSetting ChatOpacitySetting = new FloatSetting("GGM_ChatOpacity", 0.3f);
-        public static FloatSetting ChatHeightSetting = new FloatSetting("GGM_ChatHeight", 470f);
-        public static FloatSetting ChatWidthSetting = new FloatSetting("GGM_ChatHWidth", 300f);
-
-        //Video
-        public static FloatSetting OverallQualitySetting = new FloatSetting("GGM_OverallQuality", 1);
-
-        public static FloatSetting DrawDistanceSetting = new FloatSetting("GGM_DrawDistance", 5000f);
-        public static FloatSetting ShadowDistanceSetting = new FloatSetting("GGM_ShadowDistance", 600f);
-        public static FloatSetting[][] CustomAmbientColorSetting = { new[] { new FloatSetting("GGM_AmbientColorDayR", 0.494f), new FloatSetting("GGM_AmbientColorDayG", 0.478f), new FloatSetting("GGM_AmbientColorDayB", 0.447f) }, new[] { new FloatSetting("GGM_AmbientColorDawnR", 0.345f), new FloatSetting("GGM_AmbientColorDawnG", 0.305f), new FloatSetting("GGM_AmbientColorDawnB", 0.271f) }, new[] { new FloatSetting("GGM_AmbientColorNightR", 0.05f), new FloatSetting("GGM_AmbientColorNightG", 0.05f), new FloatSetting("GGM_AmbientColorNightB", 0.05f) } };
-        public static FloatSetting[] FogColorSettings = { new FloatSetting("GGM_FogColorR", 0.066f), new FloatSetting("GGM_FogColorG", 0.066f), new FloatSetting("GGM_FogColorB", 0.066f) };
-        public static FloatSetting[] FogDistanceSettings = { new FloatSetting("GGM_FogStartDistance"), new FloatSetting("GGM_FogEndDistance", 1000f) };
-        public static FloatSetting[][] CustomLightColorSettings = { new[] { new FloatSetting("GGM_LightColorDayR", 1f), new FloatSetting("GGM_LightColorDayG", 1f), new FloatSetting("GGM_LightColorDayB", 1f) }, new[] { new FloatSetting("GGM_LightColorDawnR", 0.729f), new FloatSetting("GGM_LightColorDawnG", 0.643f), new FloatSetting("GGM_LightColorDawnB", 0.458f) }, new[] { new FloatSetting("GGM_LightColorNightR", 0.08f), new FloatSetting("GGM_LightColorNightG", 0.08f), new FloatSetting("GGM_LightColorNightB", 0.1f) } };
-
-        //Audio
-        public static FloatSetting GlobalVolumeSetting = new FloatSetting("GGM_GlobalVolume", 1f);
-
         public static FloatSetting AHSSShotVolumeSetting = new FloatSetting("GGM_AHSSShotVolume", 1f);
         public static FloatSetting AirSlashVolumeSetting = new FloatSetting("GGM_AirSlashVolume", 1f);
-        public static FloatSetting NapeSlashVolumeSetting = new FloatSetting("GGM_NapeSlashVolume", 1f);
         public static FloatSetting BodySlashVolumeSetting = new FloatSetting("GGM_BodySlashVolume", 1f);
-        public static FloatSetting HookVolumeSetting = new FloatSetting("GGM_HookVolume", 1f);
-        public static FloatSetting TitanErenRoarVolumeSetting = new FloatSetting("GGM_TitanErenRoarVolume", 1f);
-        public static FloatSetting SwingVolumeSetting = new FloatSetting("GGM_SwingVolume", 1f);
-        public static FloatSetting ThunderVolumeSetting = new FloatSetting("GGM_ThunderVolume", 1f);
+        public static FloatSetting[] BombColorSetting = { new FloatSetting("GGM_BombColorR", 1f), new FloatSetting("GGM_BombColorG", 1f), new FloatSetting("GGM_BombColorB", 1f), };
+        public static FloatSetting BoomVolumeSetting = new FloatSetting("GGM_BoomVolume", 1f);
+        public static FloatSetting CameraDistanceSetting = new FloatSetting("GGM_CameraDistance", 1f);
+        public static FloatSetting CameraFOVSetting = new FloatSetting("GGM_CameraFOV", 110f);
+        public static FloatSetting CannonCooldown = new FloatSetting("GGM_CannonCooldown", 3.5f);
+        public static FloatSetting CannonMovementSpeedSetting = new FloatSetting("GGM_CannonSpeed", 40f);
+        public static FloatSetting CannonRotateSpeedSetting = new FloatSetting("GGM_CannonRotate", 40f);
+        public static FloatSetting ChatHeightSetting = new FloatSetting("GGM_ChatHeight", 470f);
+        public static FloatSetting ChatOpacitySetting = new FloatSetting("GGM_ChatOpacity", 0.3f);
+        public static FloatSetting ChatWidthSetting = new FloatSetting("GGM_ChatHWidth", 300f);
+        public static FloatSetting[][] CustomAmbientColorSetting = { new[] { new FloatSetting("GGM_AmbientColorDayR", 0.494f), new FloatSetting("GGM_AmbientColorDayG", 0.478f), new FloatSetting("GGM_AmbientColorDayB", 0.447f) }, new[] { new FloatSetting("GGM_AmbientColorDawnR", 0.345f), new FloatSetting("GGM_AmbientColorDawnG", 0.305f), new FloatSetting("GGM_AmbientColorDawnB", 0.271f) }, new[] { new FloatSetting("GGM_AmbientColorNightR", 0.05f), new FloatSetting("GGM_AmbientColorNightG", 0.05f), new FloatSetting("GGM_AmbientColorNightB", 0.05f) } };
+        public static FloatSetting[][] CustomLightColorSettings = { new[] { new FloatSetting("GGM_LightColorDayR", 1f), new FloatSetting("GGM_LightColorDayG", 1f), new FloatSetting("GGM_LightColorDayB", 1f) }, new[] { new FloatSetting("GGM_LightColorDawnR", 0.729f), new FloatSetting("GGM_LightColorDawnG", 0.643f), new FloatSetting("GGM_LightColorDawnB", 0.458f) }, new[] { new FloatSetting("GGM_LightColorNightR", 0.08f), new FloatSetting("GGM_LightColorNightG", 0.08f), new FloatSetting("GGM_LightColorNightB", 0.1f) } };
+        public static FloatSetting DrawDistanceSetting = new FloatSetting("GGM_DrawDistance", 5000f);
+        public static FloatSetting[] FogColorSettings = { new FloatSetting("GGM_FogColorR", 0.066f), new FloatSetting("GGM_FogColorG", 0.066f), new FloatSetting("GGM_FogColorB", 0.066f) };
+        public static FloatSetting[] FogDistanceSettings = { new FloatSetting("GGM_FogStartDistance"), new FloatSetting("GGM_FogEndDistance", 1000f) };
+        public static FloatSetting GlobalVolumeSetting = new FloatSetting("GGM_GlobalVolume", 1f);
         public static FloatSetting HeadExplosionVolumeSetting = new FloatSetting("GGM_HeadExplosionVolume", 1f);
         public static FloatSetting HeadPunchVolumeSetting = new FloatSetting("GGM_HeadPunchVolume", 1f);
-        public static FloatSetting BoomVolumeSetting = new FloatSetting("GGM_BoomVolume", 1f);
+        public static FloatSetting HookVolumeSetting = new FloatSetting("GGM_HookVolume", 1f);
+        public static FloatSetting MouseSensitivitySetting = new FloatSetting("GGM_MouseSensitivity", 0.5f);
+        public static FloatSetting NapeSlashVolumeSetting = new FloatSetting("GGM_NapeSlashVolume", 1f);
+        public static FloatSetting OverallQualitySetting = new FloatSetting("GGM_OverallQuality", 1);
+        public static FloatSetting ShadowDistanceSetting = new FloatSetting("GGM_ShadowDistance", 600f);
+        public static FloatSetting[] SizeSettings = { new FloatSetting("GGM_MinimumSize", 2.5f), new FloatSetting("GGM_MaximumSize", 3f) };
+        public static FloatSetting[] SpawnRateSettings = { new FloatSetting("GGM_NormalSpawnRate", 100f), new FloatSetting("GGM_AbnormalSpawnRate"), new FloatSetting("GGM_JumperSpawnRate"), new FloatSetting("GGM_CrawlerSpawnRate"), new FloatSetting("GGM_PunkSpawnRate") };
         public static FloatSetting StepVolumeSetting = new FloatSetting("GGM_StepVolume", 1f);
-
-        //Bombs
-        public static FloatSetting[] BombColorSetting = { new FloatSetting("GGM_BombColorR", 1f), new FloatSetting("GGM_BombColorG", 1f), new FloatSetting("GGM_BombColorB", 1f), };
-
-        //Cannon
-        public static FloatSetting CannonMovementSpeedSetting = new FloatSetting("GGM_CannonSpeed", 40f);
-
-        public static FloatSetting CannonRotateSpeedSetting = new FloatSetting("GGM_CannonRotate", 40f);
-        public static FloatSetting CannonCooldown = new FloatSetting("GGM_CannonCooldown", 3.5f);
-
+        public static FloatSetting SwingVolumeSetting = new FloatSetting("GGM_SwingVolume", 1f);
+        public static FloatSetting ThunderVolumeSetting = new FloatSetting("GGM_ThunderVolume", 1f);
+        public static FloatSetting TitanErenRoarVolumeSetting = new FloatSetting("GGM_TitanErenRoarVolume", 1f);
         #endregion Floats
 
         #region Integers
 
-        //Game
-        public static IntSetting SnapshotsMinimumDamageSetting = new IntSetting("GGM_SnapshotsMinimumDamage");
-
-        public static IntSetting SpeedometerSetting = new IntSetting("GGM_Speedometer");
-        public static IntSetting SpeedometerAHSSSetting = new IntSetting("GGM_SpeedometerAHSS", 0);
-
-        //Server
-        public static IntSetting StarterAmountSetting = new IntSetting("GGM_StarterAmount", 3);
-
-        public static IntSetting TitansPerWaveSetting = new IntSetting("GGM_TitansPerWave", 2);
-        public static IntSetting MaximumWavesSetting = new IntSetting("GGM_MaximumWaves", 20);
-        public static IntSetting[] HealthSettings = { new IntSetting("GGM_HealthType"), new IntSetting("GGM_MinimumTitansHealth", 100), new IntSetting("GGM_MaximumTitansHealth", 200) };
-        public static IntSetting ArmorSetting = new IntSetting("GGM_Armor", 1000);
-        public static IntSetting ExplodeRadiusSetting = new IntSetting("GGM_ExplodeRadius", 30);
-        public static IntSetting PVPTypeSetting = new IntSetting("GGM_PVPType");
-        public static IntSetting InfectedTitansSetting = new IntSetting("GGM_InfectedTitans", 1);
-        public static IntSetting PointsLimitSetting = new IntSetting("GGM_PointsLimit", 50);
-        public static IntSetting TeamSortSetting = new IntSetting("GGM_TeamSort");
-        public static IntSetting AutoReviveTimeSetting = new IntSetting("GGM_AutoReviveTime", 5);
-        public static IntSetting MessagesCache = new IntSetting("GGM_MessagesCache", 30);
-        public static IntSetting ChatSizeSetting = new IntSetting("GGM_ChatSize", 13);
-        public static IntSetting ConnectionProtocolSettings = new IntSetting("GGM_ConnectionProtocol");
-
-        //Video
-        public static IntSetting TexturesSetting = new IntSetting("GGM_Textures", 2);
-
-        public static IntSetting FPSLockSetting = new IntSetting("GGM_FPSLock", 240);
         public static IntSetting AnisotropicFilteringSetting = new IntSetting("GGM_AnisotropicFiltering", 1);
         public static IntSetting AntiAliasingSetting = new IntSetting("GGM_AntiAliasing", 1);
-        public static IntSetting BlendWeightsSetting = new IntSetting("GGM_BlendWeights", 2);
-        public static IntSetting ShadowProjectionSetting = new IntSetting("GGM_ShadowProjectionSetting");
-        public static IntSetting ShadowCascadesSetting = new IntSetting("GGM_ShadowCascades", 2);
-
-        //Bombs
-        public static IntSetting[] BombSettings = { new IntSetting("GGM_BombRadius", 5), new IntSetting("GGM_BombRange", 5), new IntSetting("GGM_BombSpeed", 5), new IntSetting("GGM_BombCooldown", 5) };
-
-        //HumanSkins
-        public static IntSetting HumanSkinsSetting = new IntSetting("GGM_HumanSkins");
-
+        public static IntSetting ArmorSetting = new IntSetting("GGM_Armor", 1000);
+        public static IntSetting AutoReviveTimeSetting = new IntSetting("GGM_AutoReviveTime", 5);
         public static IntSetting BladeTrailsAppearanceSetting = new IntSetting("GGM_BladeTrailsAppearance", 1);
         public static IntSetting BladeTrailsFrameRateSetting = new IntSetting("GGM_BladeTrailsFrameRate", 120);
+        public static IntSetting BlendWeightsSetting = new IntSetting("GGM_BlendWeights", 2);
+        public static IntSetting[] BombSettings = { new IntSetting("GGM_BombRadius", 5), new IntSetting("GGM_BombRange", 5), new IntSetting("GGM_BombSpeed", 5), new IntSetting("GGM_BombCooldown", 5) };
+        public static IntSetting CannonTypeSetting = new IntSetting("GGM_CannonType");
+        public static IntSetting ChatSizeSetting = new IntSetting("GGM_ChatSize", 13);
+        public static IntSetting ConnectionProtocolSettings = new IntSetting("GGM_ConnectionProtocol");
+        public static IntSetting CustomMapSkinsCountSetting = new IntSetting("GGM_CustomMapSkinsCount", 3);
+        public static IntSetting CustomMapSkinsCurrentSetSetting = new IntSetting("GGM_CustomMapCurrentSkin");
+        public static IntSetting ExplodeRadiusSetting = new IntSetting("GGM_ExplodeRadius", 30);
+        public static IntSetting FPSLockSetting = new IntSetting("GGM_FPSLock", 240);
+        public static IntSetting[] HealthSettings = { new IntSetting("GGM_HealthType"), new IntSetting("GGM_MinimumTitansHealth", 100), new IntSetting("GGM_MaximumTitansHealth", 200) };
         public static IntSetting HumanSkinsCountSetting = new IntSetting("GGM_HumanSkinsCount", 5);
         public static IntSetting HumanSkinsCurrentSetSetting = new IntSetting("GGM_HumanCurrentSkin");
-
-        //LevelSkins
-        public static IntSetting LocationSkinsSetting = new IntSetting("GGM_LocationSkins");
-
-        public static IntSetting LocationSkinsForestCountSetting = new IntSetting("GGM_LocationSkinsForestCount", 1);
-        public static IntSetting LocationSkinsForestCurrentSetSetting = new IntSetting("GGM_LocationSkinsForestCurrentSet");
+        public static IntSetting HumanSkinsSetting = new IntSetting("GGM_HumanSkins");
+        public static IntSetting InfectedTitansSetting = new IntSetting("GGM_InfectedTitans", 1);
         public static IntSetting LocationSkinsCityCountSetting = new IntSetting("GGM_LocationSkinsCityCount", 1);
         public static IntSetting LocationSkinsCityCurrentSetSetting = new IntSetting("GGM_LocationSkinsCityCurrentSet");
-
-        //Cannon
-        public static IntSetting CannonTypeSetting = new IntSetting("GGM_CannonType", 0);
-
+        public static IntSetting LocationSkinsForestCountSetting = new IntSetting("GGM_LocationSkinsForestCount", 1);
+        public static IntSetting LocationSkinsForestCurrentSetSetting = new IntSetting("GGM_LocationSkinsForestCurrentSet");
+        public static IntSetting LocationSkinsSetting = new IntSetting("GGM_LocationSkins");
+        public static IntSetting MaximumWavesSetting = new IntSetting("GGM_MaximumWaves", 20);
+        public static IntSetting MessagesCache = new IntSetting("GGM_MessagesCache", 30);
+        public static IntSetting PointsLimitSetting = new IntSetting("GGM_PointsLimit", 50);
+        public static IntSetting PVPTypeSetting = new IntSetting("GGM_PVPType");
+        public static IntSetting ShadowCascadesSetting = new IntSetting("GGM_ShadowCascades", 2);
+        public static IntSetting ShadowProjectionSetting = new IntSetting("GGM_ShadowProjectionSetting");
+        public static IntSetting SnapshotsMinimumDamageSetting = new IntSetting("GGM_SnapshotsMinimumDamage");
+        public static IntSetting SpeedometerAHSSSetting = new IntSetting("GGM_SpeedometerAHSS", 0);
+        public static IntSetting SpeedometerSetting = new IntSetting("GGM_Speedometer");
+        public static IntSetting StarterAmountSetting = new IntSetting("GGM_StarterAmount", 3);
+        public static IntSetting TeamSortSetting = new IntSetting("GGM_TeamSort");
+        public static IntSetting TexturesSetting = new IntSetting("GGM_Textures", 2);
+        public static IntSetting TitansPerWaveSetting = new IntSetting("GGM_TitansPerWave", 2);
+        public static IntSetting TitansSpawnCapSetting = new IntSetting("GGM_TitansSpawnCap", 20);
         #endregion Integers
 
         #region Strings
 
-        //Server
         public static StringSetting ChatMajorColorSetting = new StringSetting("GGM_ChatMajorColor", "FDBCB4");
-
         public static StringSetting ChatMinorColorSetting = new StringSetting("GGM_ChatMinorColor", "F08080");
+        public static StringSetting CustomMapSkinsTitlesSetting = new StringSetting("GGM_CustomMapkinsSetTitles", "Preset 1`Preset 2`Preset 3");
+        public static StringSetting[] HumanRebindsSetting = { new StringSetting("GGM_HumanForward"), new StringSetting("GGM_HumanBackward"), new StringSetting("GGM_HumanLeft"), new StringSetting("GGM_HumanRight"), new StringSetting("GGM_HumanJump"), new StringSetting("GGM_HumanDodge"), new StringSetting("GGM_HumanLeftHook"), new StringSetting("GGM_HumanRightHook"), new StringSetting("GGM_HumanBothHooks"), new StringSetting("GGM_HumanLock"), new StringSetting("GGM_HumanAttack"), new StringSetting("GGM_HumanSpecial"), new StringSetting("GGM_HumanSalute"), new StringSetting("GGM_HumanChangeCamera"), new StringSetting("GGM_HumanRestartSuicide"), new StringSetting("GGM_HumanMenu"), new StringSetting("GGM_HumanShowHideCursor"), new StringSetting("GGM_HumanFullscreen"), new StringSetting("GGM_HumanReload"), new StringSetting("GGM_HumanFlareGreen"), new StringSetting("GGM_HumanFlareRed"), new StringSetting("GGM_HumanFlareBlack"), new StringSetting("GGM_HumanReelIn"), new StringSetting("GGM_HumanReelOut"), new StringSetting("GGM_HumanDash"), new StringSetting("GGM_HumanMinimapMaximize"), new StringSetting("GGM_HumanMinimapToggle"), new StringSetting("GGM_HumanMinimapReset"), new StringSetting("GGM_HumanChat"), new StringSetting("GGM_HumanLiveSpectate") };
+        public static StringSetting HumanSkinsTitlesSetting = new StringSetting("GGM_HumanSkinsSetTitles", "Set 1`Set 2`Set 3`Set 4`Set 5");
+        public static StringSetting LocationSkinsCitySetTitlesSetting = new StringSetting("GGM_LocationSkinsCitySetTitles", "Set 1");
+        public static StringSetting LocationSkinsForestSetTitlesSetting = new StringSetting("GGM_LocationSkinsForestSetTitles", "Sakura Forest");
         public static StringSetting WelcomeMessageSetting = new StringSetting("GGM_WelcomeMessage");
 
-        //Rebinds
-        public static StringSetting[] HumanRebindsSetting = { new StringSetting("GGM_HumanForward"), new StringSetting("GGM_HumanBackward"), new StringSetting("GGM_HumanLeft"), new StringSetting("GGM_HumanRight"), new StringSetting("GGM_HumanJump"), new StringSetting("GGM_HumanDodge"), new StringSetting("GGM_HumanLeftHook"), new StringSetting("GGM_HumanRightHook"), new StringSetting("GGM_HumanBothHooks"), new StringSetting("GGM_HumanLock"), new StringSetting("GGM_HumanAttack"), new StringSetting("GGM_HumanSpecial"), new StringSetting("GGM_HumanSalute"), new StringSetting("GGM_HumanChangeCamera"), new StringSetting("GGM_HumanRestartSuicide"), new StringSetting("GGM_HumanMenu"), new StringSetting("GGM_HumanShowHideCursor"), new StringSetting("GGM_HumanFullscreen"), new StringSetting("GGM_HumanReload"), new StringSetting("GGM_HumanFlareGreen"), new StringSetting("GGM_HumanFlareRed"), new StringSetting("GGM_HumanFlareBlack"), new StringSetting("GGM_HumanReelIn"), new StringSetting("GGM_HumanReelOut"), new StringSetting("GGM_HumanDash"), new StringSetting("GGM_HumanMinimapMaximize"), new StringSetting("GGM_HumanMinimapToggle"), new StringSetting("GGM_HumanMinimapReset"), new StringSetting("GGM_HumanChat"), new StringSetting("GGM_HumanLiveSpectate") };
-
-        //HumanSkins
-        public static StringSetting HumanSkinsTitlesSetting = new StringSetting("GGM_HumanSkinsSetTitles", "Set 1`Set 2`Set 3`Set 4`Set 5");
-
-        //LevelSkins
-        public static StringSetting LocationSkinsForestSetTitlesSetting = new StringSetting("GGM_LocationSkinsForestSetTitles", "Sakura Forest");
-
-        public static StringSetting LocationSkinsCitySetTitlesSetting = new StringSetting("GGM_LocationSkinsCitySetTitles", "Set 1");
-
         #endregion Strings
+
+        private static bool updateHUD;
 
         static Settings()
         {
             Load();
         }
+
+        #region Custom Map Skins
+
+        public static void LoadCustomMapSkins()
+        {
+            CustomMapSkinsList = new List<string[]>();
+            CustomMapSkinsTitlesList = new List<string>();
+            CustomMapScriptsList = new List<string>();
+
+            for (var i = 0; i < CustomMapSkinsCountSetting; i++)
+            {
+                CustomMapSkinsList.Add(PlayerPrefs.GetString("GGM_CustomMapSkin_" + i, "``````").Split('`'));
+                CustomMapScriptsList.Add(PlayerPrefs.GetString("GGM_CustomMapScript_" + i, string.Empty));
+            }
+
+            foreach (var str in CustomMapSkinsTitlesSetting.Value.Split('`'))
+            {
+                CustomMapSkinsTitlesList.Add(str);
+            }
+        }
+
+        public static void SaveCustomMapSkins()
+        {
+            for (var i = 0; i < CustomMapSkinsCountSetting; i++)
+            {
+                var str = string.Empty;
+                for (var j = 0; j < 7; j++)
+                {
+                    str += CustomMapSkinsList[i][j] + (j != 6 ? "`" : string.Empty);
+                }
+
+                PlayerPrefs.SetString("GGM_CustomMapSkin_" + i, str);
+                PlayerPrefs.SetString("GGM_CustomMapScript_" + i, CustomMapScriptsList[i]);
+            }
+
+            var str2 = string.Empty;
+            for (var i = 0; i < CustomMapSkinsTitlesList.Count; i++)
+            {
+                str2 += CustomMapSkinsTitlesList[i] + (i != CustomMapSkinsTitlesList.Count - 1 ? "`" : string.Empty);
+            }
+
+            CustomMapSkinsTitlesSetting.Value = str2;
+        }
+
+        #endregion
 
         #region Human Skins
 
@@ -487,17 +472,6 @@ namespace GGM.Config
             allSettings.Enqueue(set);
         }
 
-        private static void CreateStorage()
-        {
-            var choice = PlayerPrefs.GetInt("StorageType", 0);
-            switch (choice)
-            {
-                case 0:
-                    Storage = new PrefStorage();
-                    break;
-            }
-        }
-
         public static void Load()
         {
             if (Storage == null)
@@ -507,6 +481,7 @@ namespace GGM.Config
                 set.Load();
             }
 
+            LoadCustomMapSkins();
             LoadHumanSkins();
             LoadForestSkins();
             LoadCitySkins();
@@ -519,12 +494,11 @@ namespace GGM.Config
                 set.Save();
             }
 
+            SaveCustomMapSkins();
             SaveHumanSkins();
             SaveForestSkins();
             SaveCitySkins();
         }
-
-        private static bool updateHUD;
 
         public static void Update()
         {
@@ -630,7 +604,7 @@ namespace GGM.Config
                     RenderSettings.fogEndDistance = LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4];
                 }
             }
-            else if (LocationSkinsSetting == 2 && !PhotonNetwork.isMasterClient && ReceivedLocationSkinsData != null)
+            else if (LocationSkinsSetting == 2 && !PhotonNetwork.isMasterClient && ReceivedLocationSkinsData != null && PhotonNetwork.masterClient.GucciGangMod)
             {
                 if (Application.loadedLevelName.Contains("Forest"))
                 {
@@ -650,6 +624,17 @@ namespace GGM.Config
                     RenderSettings.fogStartDistance = (float)ReceivedLocationSkinsData[12];
                     RenderSettings.fogEndDistance = (float)ReceivedLocationSkinsData[12];
                 }
+            }
+        }
+
+        private static void CreateStorage()
+        {
+            var choice = PlayerPrefs.GetInt("StorageType", 0);
+            switch (choice)
+            {
+                case 0:
+                    Storage = new PrefStorage();
+                    break;
             }
         }
     }
