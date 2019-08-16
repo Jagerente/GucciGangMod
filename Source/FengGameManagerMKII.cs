@@ -2119,11 +2119,6 @@ public class FengGameManagerMKII : MonoBehaviour
         print("OnFailedToConnectToPhoton");
     }
 
-    public void OnGUI()
-    {
-        GGM.GUI.Styles.Init();
-    }
-
     public void OnJoinedLobby()
     {
         if (NeedRejoin)
@@ -5746,7 +5741,7 @@ public class FengGameManagerMKII : MonoBehaviour
     private void ChatPM(string sender, string content, PhotonMessageInfo info)
     {
         Logger.LogChat(Application.dataPath + "/chat.txt", content, info);
-        content = InRoomChat.ChatFormatting("Message from ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting($"[{Convert.ToString(info.sender.ID)}]", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + info.sender.Name.hexColor() + content;
+        content = InRoomChat.ChatFormatting("Message from ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting($"[{Convert.ToString(info.sender.ID)}]", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + info.sender.Name.hexColor() + ": " + content;
         if (Settings.LegacyChatSetting)
         {
             content = "<color=#FFC000>FROM [" + Convert.ToString(info.sender.ID) + "]</color> " + content;

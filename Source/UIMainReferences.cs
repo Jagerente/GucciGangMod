@@ -29,6 +29,11 @@ public class UIMainReferences : MonoBehaviour
         instance = this;
     }
 
+    private void OnGUI()
+    {
+        GGM.GUI.Styles.Init();
+    }
+
     private IEnumerator OnOpen()
     {
         yield return StartCoroutine(AssetsManager.LoadRCAssets());
