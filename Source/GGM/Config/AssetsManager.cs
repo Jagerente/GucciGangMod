@@ -13,7 +13,6 @@ namespace GGM.Config
             var bundle = AssetBundle.CreateFromMemory(System.IO.File.ReadAllBytes(Application.dataPath + "/Resources/ggmfonts.unity3d"));
             yield return bundle;
             GUI.Styles.Fonts = new[] { (Font)bundle.assetBundle.Load("chemistry"), (Font)bundle.assetBundle.Load("tahoma"), (Font)bundle.assetBundle.Load("rabelo"), (Font)bundle.assetBundle.Load("bienetresocial"), (Font)bundle.assetBundle.Load("mandatory") };
-            Labels.Version = $"GucciGangMod {UIMainReferences.Version}";
         }
 
         public static IEnumerator LoadRCAssets()
