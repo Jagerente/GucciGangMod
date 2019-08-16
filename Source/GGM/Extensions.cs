@@ -338,6 +338,12 @@ namespace GGM
         {
             return $"<size={size}>{str}</size>";
         }
+
+        public static string SetColor(this string str, string color)
+        {
+            return $"<color=#{color}>{str}</color>";
+        }
+
         public static void SendToGGMUser(this PhotonView pv, string RPCName, params object[] data)
         {
             var targets = PhotonPlayer.GetGGMUsers();
