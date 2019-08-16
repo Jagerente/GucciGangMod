@@ -45,6 +45,48 @@ namespace GGM.GUI
         public static Texture2D CityNight;
         public static Texture2D Akina;
 
+        /// <summary>
+        /// 0 - MiddleLeft
+        /// 1 - MiddleCenter
+        /// 2 - MiddleRight
+        /// </summary>
+        internal static GUIStyle[] LabelStyle;
+
+        internal static GUIStyle HeaderStyle;
+        internal static GUIStyle SubHeaderStyle;
+        internal static GUIStyle SliderStatusStyle;
+
+
+        internal static GUIStyle TextStyle(TextAnchor alignment, FontStyle fontStyle, int fontSize, bool wordWrap, Color normalColor, Color hoverColor, Color activeColor)
+        {
+            return new GUIStyle
+            {
+                alignment = alignment,
+                fontStyle = fontStyle,
+                fontSize = fontSize,
+                wordWrap = wordWrap,
+                normal = { textColor = normalColor },
+                hover = { textColor = hoverColor },
+                active = { textColor = activeColor },
+            };
+        }
+
+        internal static GUIStyle TextStyle(Font font, TextAnchor alignment, FontStyle fontStyle, int fontSize, bool wordWrap, Color normalColor, Color hoverColor, Color activeColor)
+        {
+            return new GUIStyle
+            {
+                alignment = alignment,
+                fontStyle = fontStyle,
+                fontSize = fontSize,
+                wordWrap = wordWrap,
+                normal = { textColor = normalColor },
+                hover = { textColor = hoverColor },
+                active = { textColor = activeColor },
+                font = font
+            };
+        }
+
+
         private void Start()
         {
             var tutorial = new WWW("file:///" + Application.dataPath + $"/Resources/Locations/tutorial.png");
@@ -303,20 +345,30 @@ namespace GGM.GUI
         public static void Init()
         {
             if (isInited) return;
+            LabelStyle = new []
+            {
+                TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleLeft, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor), 
+                TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleCenter, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor), 
+                TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleRight, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor)
+            };
+            HeaderStyle = TextStyle(Fonts[Settings.headerFont], TextAnchor.MiddleCenter, FontStyle.Normal, Settings.HeaderFontSize, true, Settings.colorMinor, Settings.colorMinor, Settings.colorMinor);
+            SubHeaderStyle = TextStyle(Fonts[Settings.headerFont], TextAnchor.MiddleCenter, FontStyle.Normal, Settings.SubHeaderFontSize, true, Settings.colorMinor, Settings.colorMinor, Settings.colorMinor);
+            SliderStatusStyle = TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleCenter, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMinor, Settings.colorMinor, Settings.colorMinor);
+
             //Button
-            UnityEngine.GUI.skin.button.normal.textColor = Caching.ColorCache.White;
-            UnityEngine.GUI.skin.button.active.textColor = Caching.ColorCache.White;
-            UnityEngine.GUI.skin.button.hover.textColor = Caching.ColorCache.White;
-            UnityEngine.GUI.skin.button.onNormal.textColor = Caching.ColorCache.White;
-            UnityEngine.GUI.skin.button.onActive.textColor = Caching.ColorCache.White;
-            UnityEngine.GUI.skin.button.onHover.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.button.normal.textColor = ColorCache.White;
+            UnityEngine.GUI.skin.button.active.textColor = ColorCache.White;
+            UnityEngine.GUI.skin.button.hover.textColor = ColorCache.White;
+            UnityEngine.GUI.skin.button.onNormal.textColor = ColorCache.White;
+            UnityEngine.GUI.skin.button.onActive.textColor = ColorCache.White;
+            UnityEngine.GUI.skin.button.onHover.textColor = ColorCache.White;
             UnityEngine.GUI.skin.button.normal.background = ButtonN;
             UnityEngine.GUI.skin.button.active.background = ButtonA;
             UnityEngine.GUI.skin.button.hover.background = ButtonH;
             UnityEngine.GUI.skin.button.onNormal.background = ButtonON;
             UnityEngine.GUI.skin.button.onActive.background = ButtonOA;
             UnityEngine.GUI.skin.button.onHover.background = ButtonOH;
-            UnityEngine.GUI.skin.button.fontStyle = FontStyle.Bold;
+            UnityEngine.GUI.skin.button.font = Fonts[Settings.buttonFont];
             //TextField
             UnityEngine.GUI.skin.textField.normal.background = TextN;
             UnityEngine.GUI.skin.textField.hover.background = TextH;
