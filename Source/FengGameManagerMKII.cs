@@ -5,6 +5,7 @@ using GGM.GUI.Pages;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -1621,7 +1622,6 @@ public class FengGameManagerMKII : MonoBehaviour
         objArray[66] = PlayerPrefs.GetString("annie", string.Empty);
         objArray[67] = PlayerPrefs.GetString("colossal", string.Empty);
         objArray[82] = PlayerPrefs.GetString("cnumber", "1");
-        objArray[85] = PlayerPrefs.GetString("cmax", "20");
         objArray[86] = PlayerPrefs.GetString("titanbody1", string.Empty);
         objArray[87] = PlayerPrefs.GetString("titanbody2", string.Empty);
         objArray[88] = PlayerPrefs.GetString("titanbody3", string.Empty);
@@ -1664,7 +1664,6 @@ public class FengGameManagerMKII : MonoBehaviour
         objArray[132] = PlayerPrefs.GetString("lrcw", "C");
         objArray[133] = PlayerPrefs.GetInt("humangui", 0);
         objArray[161] = PlayerPrefs.GetString("lfast", "LeftControl");
-        objArray[162] = PlayerPrefs.GetString("customGround", string.Empty);
         objArray[163] = PlayerPrefs.GetString("forestskyfront", string.Empty);
         objArray[164] = PlayerPrefs.GetString("forestskyback", string.Empty);
         objArray[165] = PlayerPrefs.GetString("forestskyleft", string.Empty);
@@ -7825,20 +7824,11 @@ public class FengGameManagerMKII : MonoBehaviour
                     SkyBoxArray = new[] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty };
                     for (num = 0; num < 6; num++)
                     {
-                        SkyBoxArray[num] = (string)settings[num + 175];
+                        SkyBoxArray[num] = Settings.CustomMapSkinsList[Settings.CustomMapSkinsCurrentSetSetting][num + 1];
                     }
 
-                    SkyBoxArray[6] = (string)settings[162];
-                    if (int.TryParse((string)settings[85], out num6))
-                    {
-                        RCSettings.titanCap = num6;
-                    }
-                    else
-                    {
-                        RCSettings.titanCap = 0;
-                        settings[85] = "0";
-                    }
-
+                    SkyBoxArray[6] = Settings.CustomMapSkinsList[Settings.CustomMapSkinsCurrentSetSetting][0];
+                    RCSettings.titanCap = Settings.TitansSpawnCapSetting;
                     RCSettings.titanCap = Math.Min(50, RCSettings.titanCap);
                     photonView.RPC("clearlevel", PhotonTargets.AllBuffered, SkyBoxArray, RCSettings.gameType);
                     RCRegions.Clear();
@@ -8369,9 +8359,34 @@ public class FengGameManagerMKII : MonoBehaviour
         }
     }
 
+    public static string LocationSkinToSteal = string.Empty;
+
     [RPC]
     private void loadskinRPC(string n, string url, string url2, string[] skybox, PhotonMessageInfo info)
     {
+        if (Application.loadedLevelName.Contains("Forest"))
+        {
+            LocationSkinToSteal = url2.Split(',').Last() + url + ',';
+
+            for (var i = 0; i < url2.Split(',').Length - 1; i++)
+            {
+                LocationSkinToSteal += url2.Split(',')[i];
+            }
+
+            for (var i = 0; i < 6; i++)
+            {
+                LocationSkinToSteal += (i != 5 ? "," : string.Empty) + skybox[i];
+            }
+        }
+        else if (Application.loadedLevelName.Contains("City"))
+        {
+            LocationSkinToSteal = url2 + ',' + url + ',';
+            for (var i = 0; i < 6; i++)
+            {
+                LocationSkinToSteal += (i != 5 ? "," : string.Empty) + skybox[i];
+            }
+        }
+
         if (Settings.LocationSkinsSetting == 2 && info.sender.isMasterClient)
         {
             StartCoroutine(loadskinE(n, url, url2, skybox));
