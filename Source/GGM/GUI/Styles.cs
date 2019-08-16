@@ -344,7 +344,7 @@ namespace GGM.GUI
 
         public static void Init()
         {
-            if (isInited) return;
+            if (isInited || !FengGameManagerMKII.isAssetLoaded) return;
             LabelStyle = new []
             {
                 TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleLeft, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor), 
@@ -369,18 +369,23 @@ namespace GGM.GUI
             UnityEngine.GUI.skin.button.onActive.background = ButtonOA;
             UnityEngine.GUI.skin.button.onHover.background = ButtonOH;
             UnityEngine.GUI.skin.button.font = Fonts[Settings.buttonFont];
+            UnityEngine.GUI.skin.button.fontSize = 14;
             //TextField
             UnityEngine.GUI.skin.textField.normal.background = TextN;
             UnityEngine.GUI.skin.textField.hover.background = TextH;
             UnityEngine.GUI.skin.textField.focused.background = TextF;
             UnityEngine.GUI.skin.textField.onNormal.background = TextON;
             UnityEngine.GUI.skin.textField.focused.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.textField.font = Fonts[Settings.labelFont];
+            UnityEngine.GUI.skin.textField.fontSize = 13;
             //TextArea
             UnityEngine.GUI.skin.textArea.normal.background = TextN;
             UnityEngine.GUI.skin.textArea.hover.background = TextH;
             UnityEngine.GUI.skin.textArea.focused.background = TextF;
             UnityEngine.GUI.skin.textArea.onNormal.background = TextON;
             UnityEngine.GUI.skin.textArea.focused.textColor = Caching.ColorCache.White;
+            UnityEngine.GUI.skin.textArea.font = Fonts[Settings.labelFont];
+            UnityEngine.GUI.skin.textArea.fontSize = 13;
             //VerticalSlider
             UnityEngine.GUI.skin.verticalSlider.normal.background = Slider;
             UnityEngine.GUI.skin.verticalSliderThumb.normal.background = ThumbN;
