@@ -2237,7 +2237,6 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 PhotonNetwork.Disconnect();
             }
-
             resetSettings(true);
             loadconfig();
             IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
@@ -7735,8 +7734,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         skyboxpart++;
                     }
                 }
-
-                if (Application.loadedLevelName.Contains("Forest"))
+                else if (Application.loadedLevelName.Contains("Forest"))
                 {
                     //Trunks
                     for (var i = 1; i < 9; i++)
@@ -7775,7 +7773,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     }
                 }
 
-                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || Settings.LocationSkinsSetting == 1)
+                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE && Settings.LocationSkinsSetting > 0)
                 {
                     StartCoroutine(loadskinE(n, url, str3, SkyBoxArray));
                 }
