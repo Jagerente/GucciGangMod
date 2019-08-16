@@ -1,4 +1,5 @@
 ﻿using GGM.Caching;
+using System.Linq;
 using UnityEngine;
 
 namespace GGM.GUI
@@ -44,6 +45,65 @@ namespace GGM.GUI
         public static Texture2D CityDawn;
         public static Texture2D CityNight;
         public static Texture2D Akina;
+        public static GUIStyle TextFieldStyle;
+
+         public static void ApplyStyle(GUIStyle style, TextAnchor anchor, FontStyle fontStyle, int fontSize, bool wordWrap)
+        {
+            if (style == null)
+                return;
+            style.alignment = anchor;
+            style.fontStyle = fontStyle;
+            style.fontSize = fontSize;
+            style.wordWrap = wordWrap;
+            style.padding = new RectOffset(1, 1, 1, 1);
+            style.margin = new RectOffset(5, 5, 5, 5);
+            style.border = new RectOffset(2, 2, 2, 2);
+        }
+
+
+        public static void ApplyStyle(GUIStyle style, TextAnchor anchor, FontStyle fstyle, int fontSize, bool wordWrap, Color color)
+        {
+            if (style == null)
+                return;
+            ApplyStyle(style, anchor, fstyle, fontSize, wordWrap, new Color[6].Select(x => color).ToArray());
+        }
+
+        public static void ApplyStyle(GUIStyle res, TextAnchor anchor, FontStyle style, int fontSize, bool wordWrap, Color[] colors)
+        {
+            if (res == null)
+                return;
+            ApplyStyle(res, anchor, style, fontSize, wordWrap);
+            res.normal.textColor = colors[0];
+            res.hover.textColor = colors[1];
+            res.active.textColor = colors[2];
+            res.onNormal.textColor = colors[3];
+            res.onHover.textColor = colors[4];
+            res.onActive.textColor = colors[5];
+        }
+
+        public static GUIStyle CreateStyle(TextAnchor anchor, FontStyle fontStyle, int fontSize, bool wordWrap)
+        {
+            GUIStyle style = new GUIStyle();
+            ApplyStyle(style, anchor, fontStyle, fontSize, wordWrap);
+            return style;
+        }
+
+        public static GUIStyle CreateStyle(TextAnchor anchor, FontStyle style, int fontSize, bool wordWrap, Color color)
+        {
+            return CreateStyle(anchor, style, fontSize, wordWrap, new Color[6].Select(x => color).ToArray());
+        }
+
+        public static GUIStyle CreateStyle(TextAnchor anchor, FontStyle style, int fontSize, bool wordWrap, Color[] colors)
+        {
+            GUIStyle res = CreateStyle(anchor, style, fontSize, wordWrap);
+            res.normal.textColor = colors[0];
+            res.hover.textColor = colors[1];
+            res.active.textColor = colors[2];
+            res.onNormal.textColor = colors[3];
+            res.onHover.textColor = colors[4];
+            res.onActive.textColor = colors[5];
+            return res;
+        }
 
         private void Start()
         {
@@ -187,7 +247,7 @@ namespace GGM.GUI
                 TextF.Apply();
             }
 
-            var textON = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}TextON.png");
+            var textON = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}TextA.png");
             if (TextON == null && textON != null)
             {
                 TextON = textON.texture;
@@ -298,6 +358,14 @@ namespace GGM.GUI
                 Slider = slider.texture;
                 Slider.Apply();
             }
+            TextFieldStyle = CreateStyle(TextAnchor.MiddleLeft, FontStyle.Normal, 16, false, new Color[6].Select(x => ColorCache.White.Value).ToArray());
+            TextFieldStyle.normal.background = TextN;
+            TextFieldStyle.hover.background = TextH;
+            TextFieldStyle.active.background = TextON;
+            TextFieldStyle.focused.background = TextF;
+            TextFieldStyle.focused.textColor = ColorCache.White.Value;
+            TextFieldStyle.clipping = TextClipping.Clip;
+            TextFieldStyle.richText = false;
         }
 
         public static void Init()
@@ -370,7 +438,6 @@ namespace GGM.GUI
             UnityEngine.GUI.skin.window.active.background = Window;
             UnityEngine.GUI.skin.window.onNormal.background = Window;
             UnityEngine.GUI.skin.window.onActive.background = Window;
-
             isInited = true;
         }
     }

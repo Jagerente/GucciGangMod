@@ -48,11 +48,11 @@ namespace GGM.GUI.Pages
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("<size=16>Name:</size>", GUILayout.Width(115));
-                    FengGameManagerMKII.nameField = GUILayout.TextField(FengGameManagerMKII.nameField, GUILayout.Width(180));
+                    FengGameManagerMKII.nameField = GUILayout.TextField(FengGameManagerMKII.nameField, Styles.TextFieldStyle, GUILayout.Width(180));
                     GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("<size=16>Guild:</size>", GUILayout.Width(115));
-                    LoginFengKAI.player.guildname = GUILayout.TextArea(LoginFengKAI.player.guildname, GUILayout.Width(180));
+                    LoginFengKAI.player.guildname = GUILayout.TextArea(LoginFengKAI.player.guildname, Styles.TextFieldStyle, GUILayout.Width(180));
                     GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal();
                     if (GUILayout.Button("<size=16>Save</size>", GUILayout.Width(147)))
