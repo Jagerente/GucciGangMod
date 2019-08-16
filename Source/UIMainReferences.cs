@@ -55,7 +55,7 @@ public class UIMainReferences : MonoBehaviour
         }
         else
         {
-            Labels.Version = $"GucciGangMod {Version}";
+            Labels.Version = string.Empty;
         }
 
         NGUITools.SetActive(panelMain, true);
