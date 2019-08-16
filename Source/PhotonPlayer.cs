@@ -230,6 +230,12 @@ public class PhotonPlayer
         return String.Format("#{0:00} '{1}' {2}", ID, name, customProperties.ToStringFull());
     }
 
+    public string GetProperty(string key)
+    {
+        customProperties.TryGetValue(key, out var property);
+        return property != null ? property.ToString() : string.Empty;
+    }
+
     public Hashtable allProperties
     {
         get
