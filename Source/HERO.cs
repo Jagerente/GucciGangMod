@@ -331,20 +331,21 @@ public class HERO : MonoBehaviour
         {
             var num = Settings.BombSettings[0].Value;
             var num2 = Settings.BombSettings[1].Value;
-            var num3 = Settings.BombSettings[1].Value;
+            var num3 = Settings.BombSettings[2].Value;
             var num4 = Settings.BombSettings[3].Value;
             bombTimeMax = (num2 * 60f + 200f) / (num3 * 60f + 200f);
             bombRadius = num * 4f + 20f;
             bombCD = num4 * -0.4f + 5f;
             bombSpeed = num3 * 60f + 200f;
             var propertiesToSet = new Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombR, Settings.BombColorSetting[0].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombG, Settings.BombColorSetting[1].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombB, Settings.BombColorSetting[2].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, Settings.BombSettings[0].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, Settings.BombSettings[1].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, Settings.BombSettings[2].ToString());
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, Settings.BombSettings[3].ToString());
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombR, Settings.BombColorSetting[0].Value);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombG, Settings.BombColorSetting[1].Value);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombB, Settings.BombColorSetting[2].Value);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, Convert.ToSingle(Settings.BombSettings[0].Value));
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, Convert.ToSingle(Settings.BombSettings[1].Value));
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, Convert.ToSingle(Settings.BombSettings[2].Value));
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, Convert.ToSingle(Settings.BombSettings[3].Value));
+
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             skillId = "bomb";
             skillIDHUD = "armin";
@@ -3708,9 +3709,13 @@ public class HERO : MonoBehaviour
             var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.dead, true);
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
-            propertiesToSet = new Hashtable();
-            propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
-            PhotonNetwork.player.SetCustomProperties(propertiesToSet);
+            if (titanName != string.Empty)
+            {
+                propertiesToSet = new Hashtable();
+                propertiesToSet.Add(PhotonPlayerProperty.deaths, RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.deaths]) + 1);
+                PhotonNetwork.player.SetCustomProperties(propertiesToSet);
+            }
+
             object[] parameters = { !(titanName == string.Empty) ? 1 : 0 };
             FengGameManagerMKII.FGM.photonView.RPC("someOneIsDead", PhotonTargets.MasterClient, parameters);
             if (viewID != -1)

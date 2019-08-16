@@ -5,63 +5,32 @@ namespace GGM.GUI.Pages
 {
     internal class MainMenu : Page
     {
-        #region Settings
-
         private static int loginSwitchInt;
-
-        private const string Size = "72";
-
-        private const string Color1 = "D6B1DE";
-
-        private const string Color2 = "FFFFFF";
-
-        private static string singleButton = string.Empty;
-        private static Rect single = GUIHelpers.AlignRect(375f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -300f);
-
-        private static string multiplayerButton = string.Empty;
-        private static Rect multiplayer = GUIHelpers.AlignRect(715f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -175f);
-
-        private static string quitButton = string.Empty;
-        private static Rect quit = GUIHelpers.AlignRect(245f, 100f, GUIHelpers.Alignment.BOTTOMCENTER, 0f, -50f);
-
-        #endregion Settings
+        private static Rect panel = GUIHelpers.AlignRect(250f, 190f, GUIHelpers.Alignment.BOTTOMLEFT, 5, -5f);
 
         private void OnGUI()
         {
-            #region Single
-
-            if (UnityEngine.GUI.Button(single, singleButton, "label"))
+            GUILayout.BeginArea(panel);
             {
-                NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
-                GetInstance<Single>().Enable();
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("Single".SetSize(24), GUILayout.Height(50f), GUILayout.Width(250f)))
+                {
+                    NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
+                    GetInstance<Single>().Enable();
+                }
+                GUILayout.Space(15f);
+                if (GUILayout.Button("Multiplayer".SetSize(24), GUILayout.Height(50f), GUILayout.Width(250f)))
+                {
+                    NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
+                    GetInstance<Multiplayer>().Enable();
+                }
+                GUILayout.Space(15f);
+                if (GUILayout.Button("Quit".SetSize(24), GUILayout.Height(50f), GUILayout.Width(250f)))
+                {
+                    Application.Quit();
+                }
             }
-
-            singleButton = single.Contains(GUIHelpers.mousePos) ? $"<color=#{Color1}><size={Size}><b><i>S I N G L E</i></b></size></color>" : $"<color=#{Color2}><size={Size}><b><i>S I N G L E</i></b></size></color>";
-
-            #endregion Single
-
-            #region Multiplayer
-
-            if (UnityEngine.GUI.Button(multiplayer, multiplayerButton, "label"))
-            {
-                NGUITools.SetActive(UIMainReferences.instance.panelMain.gameObject, false);
-                GetInstance<Multiplayer>().Enable();
-            }
-
-            multiplayerButton = multiplayer.Contains(GUIHelpers.mousePos) ? $"<color=#{Color1}><size={Size}><b><i>M U L T I P L A Y E R</i></b></size></color>" : $"<color=#{Color2}><size={Size}><b><i>M U L T I P L A Y E R</i></b></size></color>";
-
-            #endregion Multiplayer
-
-            #region Quit
-
-            if (UnityEngine.GUI.Button(quit, quitButton, "label"))
-            {
-                Application.Quit();
-            }
-
-            quitButton = quit.Contains(GUIHelpers.mousePos) ? $"<color=#{Color1}><size={Size}><b><i>Q U I T</i></b></size></color>" : $"<color=#{Color2}><size={Size}><b><i>Q U I T</i></b></size></color>";
-
-            #endregion Quit
+            GUILayout.EndArea();
 
             #region Top Left Navigation Panel
 

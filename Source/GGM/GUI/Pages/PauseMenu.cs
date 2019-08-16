@@ -13,6 +13,7 @@ namespace GGM.GUI.Pages
     {
         private static PhotonPlayer ChosenPlayer;
         private static float[] ControlPanelProportion = { 0.35f, 0.4f, 0.25f };
+        private static int InfoPanelPageSetting = 0;
 
         #region Switchers
 
@@ -194,6 +195,7 @@ namespace GGM.GUI.Pages
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.FlexibleSpace();
+                    UnityEngine.GUI.SetNextControlName("LogicScript");
                     TextArea(string.Empty, ref FengGameManagerMKII.currentScriptLogic, fullAreaWidth * 0.85f, fullAreaHeight * 0.65f);
                     GUILayout.FlexibleSpace();
                 }
@@ -229,7 +231,8 @@ namespace GGM.GUI.Pages
             var strArray16 = new[] { "1 Round", "Waves", "PVP", "Racing", "Custom" };
             RCSettings.gameType = UnityEngine.GUI.SelectionGrid(new Rect(leftPos + 40f + 190f, topPos + 25f + 80f, 140f, 60f), RCSettings.gameType, strArray16, 2, UnityEngine.GUI.skin.toggle);
             UnityEngine.GUI.Label(new Rect(leftPos + 40f + 150f, topPos + 25f + 155f, 150f, 20f), "Level Script:", "Label");
-            FengGameManagerMKII.currentScript = UnityEngine.GUI.TextField(new Rect(leftPos + 40f + 50f, topPos + 25f + 180f, 275f, 220f), FengGameManagerMKII.currentScript);
+            UnityEngine.GUI.SetNextControlName("LevelScript");
+            FengGameManagerMKII.currentScript = UnityEngine.GUI.TextArea(new Rect(leftPos + 40f + 50f, topPos + 25f + 180f, 275f, 220f), FengGameManagerMKII.currentScript);
             if (UnityEngine.GUI.Button(new Rect(leftPos + 40f + 100f, topPos + 25f + 410f, 50f, 25f), "Copy"))
             {
                 var editor = new TextEditor { content = new GUIContent(FengGameManagerMKII.currentScript) };
@@ -1478,6 +1481,7 @@ namespace GGM.GUI.Pages
                                 GUILayout.EndHorizontal();
                                 GUILayout.BeginHorizontal();
                                 {
+                                    UnityEngine.GUI.SetNextControlName("WelcomeMessage");
                                     TextArea(string.Empty, ref WelcomeMessageSetting.Value, halfAreaWidth - 25f, 185f);
                                 }
                                 GUILayout.EndHorizontal();
@@ -1536,7 +1540,11 @@ namespace GGM.GUI.Pages
                                                 Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Mod: " + ChosenPlayer.CheckMod(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Guild: " + ((string)ChosenPlayer.customProperties[PhotonPlayerProperty.guildName]).hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Property: " + ChosenPlayer.CheckProps(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Unusual Properties:", width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                foreach (var property in ChosenPlayer.CheckProps().Split('\n'))
+                                                {
+                                                    Label(property, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
                                                 Label("Character: " + RCextensions.returnStringFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.character]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("SPD: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.statSPD]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("BLA: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.statBLA]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
@@ -1545,10 +1553,11 @@ namespace GGM.GUI.Pages
                                                 Label("Bomb R Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombR]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb G Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombG]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb B Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombB]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                if (ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius] != null)
-                                                {
-                                                    Label("Bomb Radius: " + ((float)ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius] - 20f) / 4, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                }
+                                                Label("Bomb Radius: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb Cooldown: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombCooldown]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb Speed: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombSpeed]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Bomb Range: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRange]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+
                                                 break;
                                             }
 
@@ -1589,7 +1598,7 @@ namespace GGM.GUI.Pages
                                     GUILayout.Space(1f);
                                 }
                                 GUILayout.EndScrollView();
-                                Grid(string.Empty, ref InfoPanelPageSetting.Value, infoPanel, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                Grid(string.Empty, ref InfoPanelPageSetting, infoPanel, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                             }
                             GUILayout.EndArea();
 
@@ -1633,7 +1642,7 @@ namespace GGM.GUI.Pages
                                     var skin = HERO.PlayersSkins[ChosenPlayer.ID];
                                     HumanSkinsTitlesList.Add(ChosenPlayer.UIName.StripHEX());
                                     HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
-                                    HumanSkinsList.Add(skin.Split('`'));
+                                    HumanSkinsList.Add(skin.Split(','));
                                     HumanSkinsCountSetting.Value++;
                                     scrollHumanSkins.y = 9999f;
                                 }
@@ -1944,6 +1953,11 @@ namespace GGM.GUI.Pages
             }
         }
 
+        private void OnDisable()
+        {
+            GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
+        }
+
         private void OnGUI()
         {
             UnityEngine.GUI.Box(new Rect(leftPos, topPos, width, height), string.Empty);
@@ -2112,7 +2126,6 @@ namespace GGM.GUI.Pages
                 {
                     Screen.showCursor = true;
                     Screen.lockCursor = true;
-                    GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                     Camera.main.GetComponent<SpectatorMovement>().disable = false;
                     Camera.main.GetComponent<MouseLook>().disable = false;
                 }
@@ -2130,9 +2143,9 @@ namespace GGM.GUI.Pages
                         Screen.lockCursor = false;
                     }
 
-                    GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                     GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().justUPDATEME();
                 }
+
             }
 
             if (UnityEngine.GUI.Button(new Rect(leftPos + 645f + 70f, topPos + height / 1.055f, 40f, 25f), "Quit"))
@@ -2151,7 +2164,6 @@ namespace GGM.GUI.Pages
                 Screen.showCursor = true;
                 IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
                 FengGameManagerMKII.FGM.gameStart = false;
-                GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn = false;
                 FengGameManagerMKII.FGM.DestroyAllExistingCloths();
                 Destroy(GameObjectCache.Find("MultiplayerManager"));
                 Application.LoadLevel("menu");

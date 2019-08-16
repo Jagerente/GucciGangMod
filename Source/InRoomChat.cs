@@ -263,20 +263,20 @@ public class InRoomChat : MonoBehaviour
 
         if (Event.current.type == EventType.KeyDown)
         {
-            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') && !IN_GAME_MAIN_CAMERA.isPausing && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn && FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab)
+            if ((Event.current.keyCode == KeyCode.Tab || Event.current.character == '\t') && FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] != KeyCode.Tab && GUI.GetNameOfFocusedControl() != "WelcomeMessage" && GUI.GetNameOfFocusedControl() != "LevelScript" && GUI.GetNameOfFocusedControl() != "LogicScript")
             {
                 Event.current.Use();
                 goto Label_219C;
             }
         }
-        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None && Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] && GUI.GetNameOfFocusedControl() != "ChatInput" && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn)
+        else if (Event.current.type == EventType.KeyUp && Event.current.keyCode != KeyCode.None && Event.current.keyCode == FengGameManagerMKII.inputRC.humanKeys[InputCodeRC.chat] && GUI.GetNameOfFocusedControl() != "ChatInput" && GUI.GetNameOfFocusedControl() != "WelcomeMessage" && GUI.GetNameOfFocusedControl() != "LevelScript" && GUI.GetNameOfFocusedControl() != "LogicScript")
         {
             inputLine = string.Empty;
             GUI.FocusControl("ChatInput");
             goto Label_219C;
         }
 
-        if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return) && !GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>().menuOn)
+        if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.KeypadEnter || Event.current.keyCode == KeyCode.Return) && GUI.GetNameOfFocusedControl() != "WelcomeMessage" && GUI.GetNameOfFocusedControl() != "LevelScript" && GUI.GetNameOfFocusedControl() != "LogicScript")
         {
             if (!string.IsNullOrEmpty(inputLine))
             {
@@ -338,22 +338,41 @@ public class InRoomChat : MonoBehaviour
             GUI.FocusControl("ChatInput");
         }
 
-    Label_219C:
+        Label_219C:
         GUI.SetNextControlName(string.Empty);
+
+        if (chatWidth != Settings.ChatWidthSetting || chatHeight != Settings.ChatHeightSetting)
+        {
+            SetPosition();
+        }
 
         if (Settings.ChatBackground)
         {
-            if (chatBackground == null || chatOpacity != Settings.ChatOpacitySetting)
+            if (chatBackground == null)
             {
                 chatBackground = new Texture2D(1, 1);
-                chatOpacity = Settings.ChatOpacitySetting;
+                chatOpacity = 0f;
                 chatBackground.SetPixel(0, 0, new Color(0f, 0f, 0f, chatOpacity));
                 chatBackground.Apply();
             }
+            if (chatRect.Contains(GUIHelpers.mousePos) || GUI.GetNameOfFocusedControl() == "ChatInput")
+            {
+                chatOpacity = Mathf.Lerp(chatOpacity, Settings.ChatOpacitySetting, Time.timeScale < 1f ? 0.01f : Time.deltaTime * 1.5f);
+                chatBackground.SetPixel(0, 0, new Color(0f, 0f, 0f, chatOpacity));
+                chatBackground.Apply();
+            }
+            else if (chatOpacity != 0f)
+            {
+                chatOpacity = Mathf.Lerp(chatOpacity, 0f, Time.timeScale < 1f ? 0.01f : Time.deltaTime * 1.5f);
+                chatBackground.SetPixel(0, 0, new Color(0f, 0f, 0f, chatOpacity));
+                chatBackground.Apply();
+            }
+
             GUI.DrawTexture(chatRect, chatBackground, ScaleMode.StretchToFill);
-            if (Settings.ChatFeedSeparateSetting)
+            if (Settings.ChatFeedSeparateSetting && Settings.ChatFeedSetting)
                 GUI.DrawTexture(chatFeedRect, chatBackground, ScaleMode.StretchToFill);
         }
+
 
         GUILayout.BeginArea(chatRect);
         {
@@ -386,6 +405,11 @@ public class InRoomChat : MonoBehaviour
 
         if (Settings.ChatFeedSeparateSetting)
         {
+            if (!Settings.ChatFeedSetting && ChatFeed.Count > 0)
+            {
+                ChatFeed.Clear();
+            }
+
             GUILayout.BeginArea(chatFeedRect);
             {
                 chatFeedScroll = GUILayout.BeginScrollView(chatFeedScroll);
@@ -409,9 +433,9 @@ public class InRoomChat : MonoBehaviour
     {
         chatWidth = Settings.ChatWidthSetting;
         chatHeight = Settings.ChatHeightSetting;
-        chatInputRect = new Rect(30f, Screen.height - 300 + 275, 300f, 25f);
-        chatRect = GUIHelpers.AlignRect(chatWidth, chatHeight, GUIHelpers.Alignment.BOTTOMLEFT, 5f, -5f);
-        chatFeedRect = GUIHelpers.AlignRect(chatWidth, chatHeight, GUIHelpers.Alignment.BOTTOMRIGHT, 0f, -5f);
+        chatInputRect = new Rect(30f, Screen.height - 300 + 275, chatWidth - 25f, 25f);
+        chatRect = GUIHelpers.AlignRect(chatWidth, chatHeight - 15f, GUIHelpers.Alignment.BOTTOMLEFT, 5f, -30f);
+        chatFeedRect = GUIHelpers.AlignRect(chatWidth, chatHeight - 15f, GUIHelpers.Alignment.BOTTOMRIGHT, -5f, -30f);
     }
 
     public void Start()
@@ -559,15 +583,19 @@ public class InRoomChat : MonoBehaviour
             case "spectate":
                 Commands.Spectate(Convert.ToInt32(args[1]));
                 return;
+
             case "mute":
                 Commands.Mute(PhotonPlayer.Find(Convert.ToInt32(args[1])));
                 return;
+
             case "unmute":
                 Commands.Unmute(PhotonPlayer.Find(Convert.ToInt32(args[1])));
                 return;
+
             case "mutelist":
                 Commands.MuteList();
                 return;
+
             case "rules":
                 Commands.Rules();
                 break;

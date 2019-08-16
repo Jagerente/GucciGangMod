@@ -141,7 +141,7 @@ namespace GGM.Config
         public static FloatSetting[] SizeSettings = { new FloatSetting("GGM_MinimumSize", 2.5f), new FloatSetting("GGM_MaximumSize", 3f) };
         public static FloatSetting ChatOpacitySetting = new FloatSetting("GGM_ChatOpacity", 0.3f);
         public static FloatSetting ChatHeightSetting = new FloatSetting("GGM_ChatHeight", 470f);
-        public static FloatSetting ChatWidthSetting = new FloatSetting("GGM_ChatHeight", 300f);
+        public static FloatSetting ChatWidthSetting = new FloatSetting("GGM_ChatHWidth", 300f);
 
         //Video
         public static FloatSetting OverallQualitySetting = new FloatSetting("GGM_OverallQuality", 1);
@@ -204,7 +204,6 @@ namespace GGM.Config
         public static IntSetting MessagesCache = new IntSetting("GGM_MessagesCache", 30);
         public static IntSetting ChatSizeSetting = new IntSetting("GGM_ChatSize", 13);
         public static IntSetting ConnectionProtocolSettings = new IntSetting("GGM_ConnectionProtocol");
-        public static IntSetting InfoPanelPageSetting = new IntSetting("GGM_InfoPanelPage");
 
         //Video
         public static IntSetting TexturesSetting = new IntSetting("GGM_Textures", 2);
