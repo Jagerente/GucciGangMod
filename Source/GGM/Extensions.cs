@@ -334,16 +334,6 @@ namespace GGM
             return PhotonNetwork.room.name.Split(new char[] { '`' })[0].Trim().StripHEX();
         }
 
-        public static string SetSize(this string str, int size)
-        {
-            return $"<size={size}>{str}</size>";
-        }
-
-        public static string SetColor(this string str, string color)
-        {
-            return $"<color=#{color}>{str}</color>";
-        }
-
         public static void SendToGGMUser(this PhotonView pv, string RPCName, params object[] data)
         {
             var targets = PhotonPlayer.GetGGMUsers();
@@ -358,6 +348,15 @@ namespace GGM
             }
         }
 
+        public static string SetColor(this string str, string color)
+        {
+            return $"<color=#{color}>{str}</color>";
+        }
+
+        public static string SetSize(this string str, int size)
+        {
+            return $"<size={size}>{str}</size>";
+        }
         /// <summary>
         /// Removes HEX tag colors from string.
         /// </summary>
@@ -457,6 +456,11 @@ namespace GGM
             }
 
             return str;
+        }
+
+        public static string ToUpperCase(this string str)
+        {
+            return char.ToUpper(str[0]) + str.Substring(1);
         }
     }
 }
