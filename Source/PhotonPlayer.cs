@@ -291,9 +291,12 @@ public class PhotonPlayer
     {
         get
         {
-            var a = customProperties["name"];
-            var b = a as string;
-            return b ?? string.Empty;
+            string str = "Unknown";
+            if (customProperties["name"] is string && customProperties["name"] != null)
+            {
+                str = (string)customProperties["name"];
+            }
+            return str;
         }
         set
         {
@@ -326,19 +329,6 @@ public class PhotonPlayer
             foreach (string key in RPCList.Keys)
             {
                 str += key + ": " + RPCList[key] + "\n";
-            }
-            return str;
-        }
-    }
-
-    public string UIName
-    {
-        get
-        {
-            string str = "Unknown";
-            if (customProperties["name"] is string && customProperties["name"] != null)
-            {
-                str = (string)customProperties["name"];
             }
             return str;
         }
