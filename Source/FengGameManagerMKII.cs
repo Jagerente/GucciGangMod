@@ -8360,25 +8360,16 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         if (Application.loadedLevelName.Contains("Forest"))
         {
-            LocationSkinToSteal = url2.Split(',').Last() + url + ',';
-
+            LocationSkinToSteal = url2.Split(',').Last() + ",";
             for (var i = 0; i < url2.Split(',').Length - 1; i++)
             {
-                LocationSkinToSteal += url2.Split(',')[i];
+                LocationSkinToSteal += url2.Split(',') + ",";
             }
-
-            for (var i = 0; i < 6; i++)
-            {
-                LocationSkinToSteal += (i != 5 ? "," : string.Empty) + skybox[i];
-            }
+            LocationSkinToSteal += string.Join(",", skybox);
         }
         else if (Application.loadedLevelName.Contains("City"))
         {
-            LocationSkinToSteal = url2 + ',' + url + ',';
-            for (var i = 0; i < 6; i++)
-            {
-                LocationSkinToSteal += (i != 5 ? "," : string.Empty) + skybox[i];
-            }
+            LocationSkinToSteal = string.Join(",", url2.Split(',')) + ',' + string.Join(",", url.Split(',')) + ',' + string.Join(",", skybox);
         }
 
         if (Settings.LocationSkinsSetting == 2 && info.sender.isMasterClient)
