@@ -3935,7 +3935,10 @@ public class HERO : MonoBehaviour
             ClothFactory.DisposeObject(setup.part_hair_2);
         }
 
-        Antis.CheckAntiReviveAdd(photonView.owner.ID);
+        if (!photonView.owner.isLocal)
+        {
+            Antis.CheckAntiReviveAdd(photonView.owner.ID);
+        }
     }
 
     public void pauseAnimation()

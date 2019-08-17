@@ -1673,7 +1673,7 @@ namespace GGM.GUI.Pages
                         GUILayout.BeginArea(right[2]);
                         {
                             Label("Protection", LabelType.Header);
-                            Grid("Anti-Human revive", ref AntiRevive.Value);
+                            Grid("Anti Revive", ref AntiRevive.Value);
                             Grid("Anti Titan Eren", ref AntiTitanErenSetting.Value);
                             Grid("Anti Guests", ref AntiGuestsSetting.Value);
                             Grid("Anti Abusive Mods", ref AntiAbusiveModsSetting.Value);
