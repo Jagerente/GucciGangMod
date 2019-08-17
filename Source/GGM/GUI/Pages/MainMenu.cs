@@ -14,24 +14,15 @@ namespace GGM.GUI.Pages
         private static int loginSwitchInt;
         private static readonly Rect Panel = GUIHelpers.AlignRect(250f, 190f, GUIHelpers.Alignment.BOTTOMLEFT, 5, -5f);
         private static readonly Rect VersionPanel = GUIHelpers.AlignRect(175f, 20f, GUIHelpers.Alignment.BOTTOMRIGHT);
-        private static Texture2D background = new Texture2D(1, 1);
         private static float width = 275f;
         private static float height = 180f;
         private static float leftElement = width * 0.4f;
         private static float rightElement = width * 0.6f - 5f;
         private static readonly string[] leftPanelSwitcher = {"User".SetSize(24), "Servers".SetSize(24)};
 
-        private void Awake()
-        {
-            background = new Texture2D(1, 1);
-            background.SetPixel(0, 0, new Color(0f, 0f, 0f, 0.7f));
-            background.Apply();
-        }
-
         private void OnGUI()
         {
             UnityEngine.GUI.Label(VersionPanel, "GucciGangMod " + UIMainReferences.Version, Styles.LabelStyle[2]);
-            Labels.Version = string.Empty;
 
             GUILayout.BeginArea(Panel);
             {
