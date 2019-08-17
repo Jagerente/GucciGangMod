@@ -355,7 +355,7 @@ public class InRoomChat : MonoBehaviour
                 chatBackground.SetPixel(0, 0, new Color(0f, 0f, 0f, chatOpacity));
                 chatBackground.Apply();
             }
-            if (chatRect.Contains(GUIHelpers.mousePos) || GUI.GetNameOfFocusedControl() == "ChatInput")
+            if (chatRect.Contains(GUIHelpers.mousePos) || GUI.GetNameOfFocusedControl() == "ChatInput" || chatFeedRect.Contains(GUIHelpers.mousePos))
             {
                 chatOpacity = Mathf.Lerp(chatOpacity, Settings.ChatOpacitySetting, Time.timeScale < 1f ? 0.01f : Time.deltaTime * 1.5f);
                 chatBackground.SetPixel(0, 0, new Color(0f, 0f, 0f, chatOpacity));
@@ -376,7 +376,6 @@ public class InRoomChat : MonoBehaviour
 
         GUILayout.BeginArea(chatRect);
         {
-            GUILayout.FlexibleSpace();
             var text = string.Empty;
             text = Chat.Aggregate(text, (current, t) => current + t + "\n");
             if (Chat.Count > Settings.MessagesCache)
@@ -386,6 +385,7 @@ public class InRoomChat : MonoBehaviour
 
             chatScroll = GUILayout.BeginScrollView(chatScroll);
             {
+                GUILayout.FlexibleSpace();
                 GUILayout.Label(text);
             }
             GUILayout.EndScrollView();
@@ -412,15 +412,18 @@ public class InRoomChat : MonoBehaviour
 
             GUILayout.BeginArea(chatFeedRect);
             {
+                var text = string.Empty;
+                text = ChatFeed.Aggregate(text, (current, t) => current + t + "\n");
+
+
+                if (ChatFeed.Count > Settings.MessagesCache)
+                {
+                    ChatFeed.RemoveAt(0);
+                }
+
                 chatFeedScroll = GUILayout.BeginScrollView(chatFeedScroll);
                 {
                     GUILayout.FlexibleSpace();
-                    var text = string.Empty;
-                    text = ChatFeed.Aggregate(text, (current, t) => current + t + "\n");
-                    if (ChatFeed.Count > Settings.MessagesCache)
-                    {
-                        Chat.RemoveAt(0);
-                    }
                     GUILayout.Label(text);
                 }
                 GUILayout.EndScrollView();
