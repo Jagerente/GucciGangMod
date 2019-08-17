@@ -19,6 +19,8 @@ namespace GGM.GUI.Pages
         private static float leftElement = width * 0.4f;
         private static float rightElement = width * 0.6f - 5f;
         private static readonly string[] leftPanelSwitcher = {"User".SetSize(24), "Servers".SetSize(24)};
+        private static readonly string[] connectionProtocols = { "UDP", "TCP", "WS" };
+
 
         private void OnGUI()
         {
@@ -114,9 +116,10 @@ namespace GGM.GUI.Pages
 
                     case 1:
                     {
-                        height = 155f;
+                        height = 185f;
                         string server = UIMainReferences.ServerKey == UIMainReferences.PublicKey ? "Connected to Public server." : UIMainReferences.ServerKey == FengGameManagerMKII.s[0] ? "Connected to RC Private server." : FengGameManagerMKII.privateServerField == string.Empty ? "Connected to Custom server." : $"Connected to {UIMainReferences.ServerKey}.";
                         Label(server.SetColor("FFFFFF"), Settings.LabelType.SubHeader, width: width);
+                        Grid("Protocol", ref Config.Settings.ConnectionProtocolSettings.Value, connectionProtocols, width: rightElement, labelWidth: leftElement);
                         GUILayout.BeginHorizontal();
                         {
                             Label("Public", width: leftElement);
@@ -151,7 +154,6 @@ namespace GGM.GUI.Pages
                             }
                         }
                         GUILayout.EndHorizontal();
-
                         break;
                     }
                 }

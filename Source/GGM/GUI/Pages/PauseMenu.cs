@@ -36,7 +36,6 @@ namespace GGM.GUI.Pages
         private static readonly string[] cameraTypes = { "Original", "TPS", "WOW", "OldTPS" };
         private static readonly string[] cannonRebinds = { "Rotate Up:", "Rotate Down:", "Rotate Left:", "Rotate Right:", "Fire:", "Mount:", "Slow Rotate:" };
         private static readonly string[] cannonTypes = { "Ground", "Wall" };
-        private static readonly string[] connectionProtocols = { "UDP", "TCP", "WS" };
         private static readonly string[] dayTime = { "Day", "Dawn", "Night" };
         private static readonly string[] formatOptions = { "Bold", "Italic" };
         private static readonly string[] healthTypes = { "Fixed", "Static" };
@@ -116,7 +115,7 @@ namespace GGM.GUI.Pages
                 var txt = new Texture2D(1, 1);
                 txt.SetPixel(0, 0, new Color(BombColorSetting[0], BombColorSetting[1], BombColorSetting[2]));
                 txt.Apply();
-                UnityEngine.GUI.DrawTexture(new Rect(45f, 55f, 70f, 70f), txt, ScaleMode.StretchToFill);
+                UnityEngine.GUI.DrawTexture(new Rect(45f, 45f, 70f, 70f), txt, ScaleMode.StretchToFill);
 
                 Grid("Random Color", ref RandomBombColorSetting.Value);
             }
@@ -1674,7 +1673,6 @@ namespace GGM.GUI.Pages
                         GUILayout.BeginArea(right[2]);
                         {
                             Label("Protection", LabelType.Header);
-                            Grid("Connection Protocol", ref ConnectionProtocolSettings.Value, connectionProtocols);
                             Grid("Anti-Human revive", ref AntiRevive.Value);
                             Grid("Anti Titan Eren", ref AntiTitanErenSetting.Value);
                             Grid("Anti Guests", ref AntiGuestsSetting.Value);
@@ -2121,6 +2119,8 @@ namespace GGM.GUI.Pages
 
         private void OnGUI()
         {
+            Screen.showCursor = true;
+
             UnityEngine.GUI.Box(new Rect(leftPos, topPos, width, height), string.Empty);
 
             pauseMenuSwitchInt = UnityEngine.GUI.SelectionGrid(new Rect(leftPos + 5f, topPos + 5f, width - 10f, 50f), pauseMenuSwitchInt, pauseMenuPages, 5);
