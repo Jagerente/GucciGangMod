@@ -85,16 +85,6 @@ namespace GGM
             }
         }
 
-        public static void CloseRoom()
-        {
-            if (MCRequired())
-            {
-                return;
-            }
-            FengGameManagerMKII.FGM.photonView.RPC("showResult", PhotonTargets.Others, new object[] { new string[6].Select(x => "[000000]Closed").ToArray() });
-            SystemMessageLocal("You have closed the room.");
-        }
-
         public static void GetPosition()
         {
             string[] msg = { "Your position:\n", "\nX", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" + "\nY", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" + "\nZ", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
@@ -166,20 +156,6 @@ namespace GGM
             else
             {
                 SystemMessageLocal(player, "already muted.");
-            }
-        }
-
-        public static void Unmute(PhotonPlayer player)
-        {
-            var name = player.Name.StripHEX();
-            if (Settings.MutedPlayers.Contains(name))
-            {
-                Settings.MutedPlayers.Remove(name);
-                SystemMessageLocal(player, "has been unmuted");
-            }
-            else
-            {
-                SystemMessageLocal(player, "not muted.");
             }
         }
 
@@ -263,16 +239,15 @@ namespace GGM
             }
         }
 
-        public static void RoomClose(bool state)
+        public static void RoomClose()
         {
             if (MCRequired())
             {
                 return;
             }
-            PhotonNetwork.room.open = state;
-            SystemMessageLocal($"Room is <i>{(state ? "Opened" : "Closed")}</i> now!");
+            FengGameManagerMKII.FGM.photonView.RPC("showResult", PhotonTargets.Others, new object[] { new string[6].Select(x => "[000000]Closed").ToArray() });
+            SystemMessageLocal("You have closed the room.");
         }
-
         public static void RoomHide(bool state)
         {
             if (MCRequired())
@@ -280,7 +255,17 @@ namespace GGM
                 return;
             }
             PhotonNetwork.room.visible = state;
-            SystemMessageLocal($"Room is <i>{(state ? "Visible" : "Hidden")}</i> now!");
+            SystemMessageLocal(new []{"Room is ", (state ? "Visible" : "Hidden"), " now."});
+        }
+
+        public static void RoomOpen()
+        {
+            if (MCRequired())
+            {
+                return;
+            }
+            PhotonNetwork.room.open = true;
+            SystemMessageLocal("You have opened the room.");
         }
 
         public static void Rules()
@@ -710,6 +695,20 @@ namespace GGM
 
             SystemMessageLocal("Teleported to ", player, ".");
             obj2.transform.position = obj.transform.position;
+        }
+
+        public static void Unmute(PhotonPlayer player)
+        {
+            var name = player.Name.StripHEX();
+            if (Settings.MutedPlayers.Contains(name))
+            {
+                Settings.MutedPlayers.Remove(name);
+                SystemMessageLocal(player, "has been unmuted");
+            }
+            else
+            {
+                SystemMessageLocal(player, "not muted.");
+            }
         }
     }
 }
