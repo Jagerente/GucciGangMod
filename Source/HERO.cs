@@ -89,6 +89,7 @@ public class HERO : MonoBehaviour
     private bool hookSomeOne;
     private GameObject hookTarget;
     public FengCustomInputs inputManager;
+    public HERO Instance;
     private float invincible = 3f;
     public bool isCannon;
     private bool isLaunchLeft;
@@ -222,6 +223,7 @@ public class HERO : MonoBehaviour
         forearmR = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R/forearm_R");
         upperarmL = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_L/upper_arm_L");
         upperarmR = baseTransform.Find("Amarture/Controller_Body/hip/spine/chest/shoulder_R/upper_arm_R");
+        Instance = this;
     }
 
     public void backToHuman()
@@ -329,22 +331,23 @@ public class HERO : MonoBehaviour
         skillCDDuration = skillCDLast;
         if (RCSettings.bombMode == 1)
         {
-            var num = Settings.BombSettings[0].Value;
-            var num2 = Settings.BombSettings[1].Value;
-            var num3 = Settings.BombSettings[2].Value;
-            var num4 = Settings.BombSettings[3].Value;
-            bombTimeMax = (num2 * 60f + 200f) / (num3 * 60f + 200f);
-            bombRadius = num * 4f + 20f;
-            bombCD = num4 * -0.4f + 5f;
-            bombSpeed = num3 * 60f + 200f;
+            var radius = Settings.BombSettings[0].Value;
+            var range = Settings.BombSettings[1].Value;
+            var speed = Settings.BombSettings[2].Value;
+            var cooldown = Settings.BombSettings[3].Value;
+            bombRadius = radius * 4f + 20f;
+            bombTimeMax = (range * 60f + 200f) / (speed * 60f + 200f);
+            bombSpeed = speed * 60f + 200f;
+            bombCD = cooldown * -0.4f + 5f;
             var propertiesToSet = new Hashtable();
             propertiesToSet.Add(PhotonPlayerProperty.RCBombR, Settings.BombColorSetting[0].Value);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombG, Settings.BombColorSetting[1].Value);
             propertiesToSet.Add(PhotonPlayerProperty.RCBombB, Settings.BombColorSetting[2].Value);
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, Convert.ToSingle(Settings.BombSettings[0].Value));
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, Convert.ToSingle(Settings.BombSettings[1].Value));
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, Convert.ToSingle(Settings.BombSettings[2].Value));
-            propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, Convert.ToSingle(Settings.BombSettings[3].Value));
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombA, 1f);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, bombRadius);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, Settings.BombSettings[1].Value);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, Settings.BombSettings[2].Value);
+            propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, Settings.BombSettings[3].Value);
 
             PhotonNetwork.player.SetCustomProperties(propertiesToSet);
             skillId = "bomb";
@@ -6231,11 +6234,45 @@ public class HERO : MonoBehaviour
         {
             if (inputManager.isInputDown[InputCode.attack1] && skillCDDuration <= 0f)
             {
+                if (RCextensions.returnFloatFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCBombRadius]) != Settings.BombSettings[0] * 4 + 20f)
+                {
+                    var hash = new Hashtable {{ PhotonPlayerProperty.RCBombRadius, Settings.BombSettings[0] * 4 + 20f }};
+                    PhotonNetwork.player.SetCustomProperties(hash);
+                    bombRadius = Settings.BombSettings[0] * 4 + 20f;
+                }
+                if (RCextensions.returnFloatFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCBombRange]) != Settings.BombSettings[1])
+                {
+                    var hash = new Hashtable { { PhotonPlayerProperty.RCBombRange, Settings.BombSettings[1] } };
+                    PhotonNetwork.player.SetCustomProperties(hash);
+                    bombTimeMax = (Settings.BombSettings[1] * 60f + 200f) / (Settings.BombSettings[3] * 60f + 200f);
+                }
+                if (RCextensions.returnFloatFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCBombSpeed]) != Settings.BombSettings[2])
+                {
+                    var hash = new Hashtable { { PhotonPlayerProperty.RCBombSpeed, Settings.BombSettings[2] } };
+                    PhotonNetwork.player.SetCustomProperties(hash);
+                    bombSpeed = Settings.BombSettings[2] * 60f + 200f;
+                }
+                if (RCextensions.returnFloatFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCBombCooldown]) != Settings.BombSettings[3])
+                {
+                    var hash = new Hashtable { { PhotonPlayerProperty.RCBombCooldown, Settings.BombSettings[3] } };
+                    PhotonNetwork.player.SetCustomProperties(hash);
+                    bombCD = Settings.BombSettings[3] * -0.4f + 5f;
+                }
+
                 if (!(myBomb == null || myBomb.disabled))
                 {
                     myBomb.Explode(bombRadius);
                 }
-
+                if (Settings.RandomBombColorSetting)
+                {
+                    var hash = new Hashtable
+                    {
+                        { PhotonPlayerProperty.RCBombR, Random.Range(0f, 1f) },
+                        { PhotonPlayerProperty.RCBombG, Random.Range(0f, 1f) },
+                        { PhotonPlayerProperty.RCBombB, Random.Range(0f, 1f) }
+                    };
+                    PhotonNetwork.player.SetCustomProperties(hash);
+                }
                 detonate = false;
                 skillCDDuration = bombCD;
                 var hitInfo = new RaycastHit();
