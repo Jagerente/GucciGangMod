@@ -199,6 +199,20 @@ namespace GGM.GUI
             if (text != string.Empty) GUILayout.EndHorizontal();
             GUILayout.Space(space);
         }
+        public static bool GridCheck(string text, ref bool value, bool horizontal = true,  float width = ButtonWidth, float height = ButtonHeight)
+        {
+            GUILayoutOption[] options = { GUILayout.Width(width), GUILayout.Height(horizontal ? height : height * 2f + 5f) };
+            
+            var i = value ? 1 : 0;
+            bool old = value;
+            if (text != string.Empty) GUILayout.BeginHorizontal();
+            if (text != string.Empty) Label(text);
+            i = GUILayout.SelectionGrid(i, SwitcherStr, horizontal ? 2 : 1, options);
+            value = i != 0;
+            if (text != string.Empty) GUILayout.EndHorizontal();
+            GUILayout.Space(space);
+            return value != old;
+        }
 
         public static void ButtonToggle(string text, string[] buttonsText, BoolSetting[] bools, bool horizontal = true, float width = ButtonWidth, float height = ButtonHeight)
         {

@@ -3934,6 +3934,8 @@ public class HERO : MonoBehaviour
         {
             ClothFactory.DisposeObject(setup.part_hair_2);
         }
+
+        Antis.CheckAntiReviveAdd(photonView.owner.ID);
     }
 
     public void pauseAnimation()
@@ -4965,6 +4967,8 @@ public class HERO : MonoBehaviour
             bombImmune = true;
             StartCoroutine(stopImmunity());
         }
+        if(IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
+            Antis.CheckAntiRevive(this, photonView.owner.ID);
     }
 
     public IEnumerator stopImmunity()

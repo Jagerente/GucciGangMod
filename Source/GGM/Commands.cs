@@ -2,6 +2,7 @@
 using GGM.Caching;
 using GGM.Config;
 using System;
+using System.Linq;
 using UnityEngine;
 using static InRoomChat;
 
@@ -82,6 +83,16 @@ namespace GGM
                     FengGameManagerMKII.FGM.photonView.RPC("Chat", PhotonTargets.Others, string.Empty, string.Empty);
                 }
             }
+        }
+
+        public static void CloseRoom()
+        {
+            if (MCRequired())
+            {
+                return;
+            }
+            FengGameManagerMKII.FGM.photonView.RPC("showResult", PhotonTargets.Others, new object[] { new string[6].Select(x => "[000000]Closed").ToArray() });
+            SystemMessageLocal("You have closed the room.");
         }
 
         public static void GetPosition()
@@ -232,11 +243,13 @@ namespace GGM
 
         public static void Revive(string id = "", bool all = false)
         {
+            if (MCRequired()) return;
             if (!all)
             {
                 foreach (var p in id.Split(','))
                 {
                     var player = PhotonPlayer.Find(Convert.ToInt32(p));
+                    Antis.RemoveFromAntiRevive(player.ID);
                     FengGameManagerMKII.FGM.photonView.RPC("respawnHeroInNewRound", player);
                     if (PhotonNetwork.isMasterClient) SystemMessageGlobal(player, "has been revived.");
                     else SystemMessageLocal(player, "has been revived.");
@@ -244,11 +257,30 @@ namespace GGM
             }
             else
             {
-                if (MCRequired()) return;
-
+                Antis.ClearAntiRevive();
                 FengGameManagerMKII.FGM.photonView.RPC("respawnHeroInNewRound", PhotonTargets.All);
                 SystemMessageGlobal("All players have been revived.");
             }
+        }
+
+        public static void RoomClose(bool state)
+        {
+            if (MCRequired())
+            {
+                return;
+            }
+            PhotonNetwork.room.open = state;
+            SystemMessageLocal($"Room is <i>{(state ? "Opened" : "Closed")}</i> now!");
+        }
+
+        public static void RoomHide(bool state)
+        {
+            if (MCRequired())
+            {
+                return;
+            }
+            PhotonNetwork.room.visible = state;
+            SystemMessageLocal($"Room is <i>{(state ? "Visible" : "Hidden")}</i> now!");
         }
 
         public static void Rules()

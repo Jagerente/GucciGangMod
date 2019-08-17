@@ -1675,6 +1675,7 @@ namespace GGM.GUI.Pages
                         {
                             Label("Protection", LabelType.Header);
                             Grid("Connection Protocol", ref ConnectionProtocolSettings.Value, connectionProtocols);
+                            Grid("Anti-Human revive", ref AntiRevive.Value);
                             Grid("Anti Titan Eren", ref AntiTitanErenSetting.Value);
                             Grid("Anti Guests", ref AntiGuestsSetting.Value);
                             Grid("Anti Abusive Mods", ref AntiAbusiveModsSetting.Value);
@@ -1697,7 +1698,7 @@ namespace GGM.GUI.Pages
                                 {
                                     foreach (var player in PhotonNetwork.playerList)
                                     {
-                                        if (Button("[" + player.ID + "] " + player.UIName.hexColor(), fullAreaWidth * ControlPanelProportion[0] - 20f))
+                                        if (Button("[" + player.ID + "] " + player.Name.hexColor(), fullAreaWidth * ControlPanelProportion[0] - 20f))
                                         {
                                             ChosenPlayer = player;
                                         }
@@ -1750,7 +1751,7 @@ namespace GGM.GUI.Pages
                                         case 1:
                                             {
                                                 Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.Name.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 foreach (var RPC in ChosenPlayer.RPCs.Split('\n'))
                                                 {
                                                     Label(RPC, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
@@ -1761,7 +1762,7 @@ namespace GGM.GUI.Pages
                                         case 2:
                                             {
                                                 Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.Name.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 foreach (var events in ChosenPlayer.Events.Split('\n'))
                                                 {
                                                     Label(events, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
@@ -1772,7 +1773,7 @@ namespace GGM.GUI.Pages
                                         case 3:
                                             {
                                                 Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.Name.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 foreach (var prop in ChosenPlayer.Props.Split('\n'))
                                                 {
                                                     Label(prop, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
@@ -1826,7 +1827,7 @@ namespace GGM.GUI.Pages
                                 {
                                     if (!HERO.PlayersSkins.ContainsKey(ChosenPlayer.ID)) return;
                                     var skin = HERO.PlayersSkins[ChosenPlayer.ID];
-                                    HumanSkinsTitlesList.Add(ChosenPlayer.UIName.StripHEX());
+                                    HumanSkinsTitlesList.Add(ChosenPlayer.Name.StripHEX());
                                     HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
                                     HumanSkinsList.Add(skin.Split(','));
                                     HumanSkinsCountSetting.Value++;

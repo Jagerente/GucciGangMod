@@ -534,6 +534,18 @@ public class InRoomChat : MonoBehaviour
                 Commands.Revive(all: true);
                 break;
 
+            case "roomhide":
+                Commands.RoomHide(args[1].Equals("1"));
+                break;
+
+            case "roomopen":
+                Commands.RoomClose(args[1].Equals("1"));
+                break;
+
+            case "closeroom":
+                Commands.CloseRoom();
+                break;
+
             case "pm":
                 {
                     var player = PhotonPlayer.Find(Convert.ToInt32(args[1]));

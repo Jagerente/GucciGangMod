@@ -185,6 +185,9 @@ namespace GGM.GUI.Pages
         {
             if (connectedServer != Server)
             {
+                connected = false;
+                if(PhotonNetwork.connected)
+                    PhotonNetwork.Disconnect();
                 if (Server == 0 && !connected)
                 {
                     connectedServer = Server;
