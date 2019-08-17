@@ -105,6 +105,7 @@ namespace GGM.Config
         public static BoolSetting UserInterfaceSetting = new BoolSetting("GGM_UserInterface");
         public static BoolSetting WindSetting = new BoolSetting("GGM_Wind");
         public static BoolSetting PrivateMessageSoundSetting = new BoolSetting("GGM_PrivateMessageSound", true);
+        public static BoolSetting RandomBombColorSetting = new BoolSetting("GGM_RandomBombColor");
 
         #endregion Booleans
 
