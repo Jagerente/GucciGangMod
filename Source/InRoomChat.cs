@@ -538,12 +538,32 @@ public class InRoomChat : MonoBehaviour
                 Commands.RoomHide(args[1].Equals("1"));
                 break;
 
-            case "roomopen":
-                Commands.RoomClose(args[1].Equals("1"));
-                break;
-
-            case "closeroom":
-                Commands.CloseRoom();
+            case "room":
+                switch (args[1])
+                {
+                    case "open":
+                        Commands.RoomOpen();
+                        break;
+                    case "close":
+                        Commands.RoomClose();
+                        break;
+                    case "hide":
+                        Commands.RoomHide(true);
+                        break;
+                    case "show":
+                        Commands.RoomHide(false);
+                        break;
+                    case "slots":
+                        Commands.SetSlots(int.Parse(args[2]));
+                        break;
+                    case "time":
+                        Commands.SetTime(int.Parse(args[2]));
+                        break;
+                    default:
+                        string[] err = { "Invalid command. Possibles:", "\n/room open", " - opens the room.", "\n/room close", " - closes the room.", "\n/room hide", " - hides the room from the server list.", "\n/room show", " - show the room on the server list.", "\n/room slots", " - sets room slots.", "\n/room time", " - sets room time." };
+                        SystemMessageLocal(err);
+                        break;
+                }
                 break;
 
             case "pm":
@@ -573,7 +593,7 @@ public class InRoomChat : MonoBehaviour
                     }
 
                     FengGameManagerMKII.FGM.photonView.RPC("ChatPM", player, sendName, msg);
-                    AddLineChat(ChatFormatting("PM to", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
+                    AddLineChat(ChatFormatting("To ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
                 }
                 break;
 
