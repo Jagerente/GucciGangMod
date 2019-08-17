@@ -92,7 +92,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(left[3]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 Label("Stats", LabelType.Header);
                 int[] freePoints = { 20 - (BombSettings[1] + BombSettings[2] + BombSettings[3]), 20 - (BombSettings[0] + BombSettings[2] + BombSettings[3]), 20 - (BombSettings[0] + BombSettings[1] + BombSettings[3]), 20 - (BombSettings[0] + BombSettings[1] + BombSettings[2]) };
                 for (var i = 0; i < 4; i++)
@@ -108,7 +108,7 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginArea(right[3]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 Label("Color", LabelType.Header);
                 Slider("R", ref BombColorSetting[0].Value, 0f, 1f);
                 Slider("G", ref BombColorSetting[1].Value, 0f, 1f);
@@ -124,7 +124,7 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginArea(center[3]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 Label("Color Presets", LabelType.Header, width: fullAreaWidth);
                 var style = new GUIStyle();
                 const float size = 13f;
@@ -195,7 +195,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(center[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 Label("Script", LabelType.Header);
                 GUILayout.BeginHorizontal();
                 {
@@ -234,7 +234,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(left[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
 
                 Label("Map Settings", LabelType.Header);
                 TextField("Titan Spawn Cap", ref TitansSpawnCapSetting.Value);
@@ -275,7 +275,7 @@ namespace GGM.GUI.Pages
             GUILayout.EndArea();
             GUILayout.BeginArea(right[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
 
                 Label("Custom Skins", LabelType.Header);
                 GUILayout.BeginHorizontal();
@@ -346,7 +346,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(left[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 scrollGameLeft = GUILayout.BeginScrollView(scrollGameLeft);
                 {
                     Label("Mouse", LabelType.Header);
@@ -379,10 +379,9 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginArea(right[0]);
             {
+                GUILayout.Space(5f);
                 scrollGameRight = GUILayout.BeginScrollView(scrollGameRight);
                 {
-                    GUILayout.Space(15f);
-
                     Label("User Interface", LabelType.Header);
                     Grid("Legacy Labels", ref LegacyLabelsSetting.Value);
                     Grid("Hide Everything", ref UserInterfaceSetting.Value);
@@ -418,7 +417,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(left[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
 
                 Label("Settings", LabelType.Header);
                 Label("General", LabelType.SubHeader);
@@ -481,7 +480,7 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginArea(right[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
 
                 Label("Skins", LabelType.Header);
                 Label(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], LabelType.SubHeader);
@@ -532,7 +531,7 @@ namespace GGM.GUI.Pages
                     {
                         GUILayout.BeginArea(left[0]);
                         {
-                            GUILayout.Space(15f);
+                            GUILayout.Space(5f);
 
                             Label("Forest", LabelType.Header);
                             Label("Settings", LabelType.SubHeader);
@@ -650,7 +649,7 @@ namespace GGM.GUI.Pages
 
                         GUILayout.BeginArea(right[0]);
                         {
-                            GUILayout.Space(15f);
+                            GUILayout.Space(5f);
 
                             Label(LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting], LabelType.Header);
                             scrollLocationSkinsForestRight = GUILayout.BeginScrollView(scrollLocationSkinsForestRight, false, true);
@@ -785,7 +784,7 @@ namespace GGM.GUI.Pages
                     {
                         GUILayout.BeginArea(left[0]);
                         {
-                            GUILayout.Space(15f);
+                            GUILayout.Space(5f);
 
                             Label("City", LabelType.Header);
                             Label("Settings", LabelType.SubHeader);
@@ -900,7 +899,7 @@ namespace GGM.GUI.Pages
 
                         GUILayout.BeginArea(right[0]);
                         {
-                            GUILayout.Space(15f);
+                            GUILayout.Space(5f);
 
                             Label(LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting], LabelType.Header);
                             scrollLocationSkinsCityRight = GUILayout.BeginScrollView(scrollLocationSkinsCityRight, false, true);
@@ -1991,10 +1990,11 @@ namespace GGM.GUI.Pages
 
         private static void VideoAndAudio()
         {
-            GUILayout.Space(15f);
 
             GUILayout.BeginArea(left[0]);
             {
+                GUILayout.Space(5f);
+
                 GUILayout.BeginVertical();
                 {
                     Label("General", LabelType.Header, GUIHelpers.Alignment.CENTER);
@@ -2018,6 +2018,8 @@ namespace GGM.GUI.Pages
             GUILayout.Space(15f);
             GUILayout.BeginArea(right[0]);
             {
+                GUILayout.Space(5f);
+
                 GUILayout.BeginVertical();
                 {
                     scrollVideoLeft = GUILayout.BeginScrollView(scrollVideoLeft);
