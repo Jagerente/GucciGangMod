@@ -7783,9 +7783,67 @@ public class FengGameManagerMKII : MonoBehaviour
                 if (PhotonNetwork.isMasterClient && Settings.LocationSkinsSetting == 2)
                 {
                     if (Application.loadedLevelName.Contains("Forest"))
-                        base.photonView.SendToGGMUser("extendedSkinsRPC", Settings.LocationSkinsForestAmbientList[Settings.LocationSkinsForestCurrentSetSetting], Settings.LocationSkinsForestAmbientSettingsList[Settings.LocationSkinsForestCurrentSetSetting][1], Settings.LocationSkinsForestAmbientSettingsList[Settings.LocationSkinsForestCurrentSetSetting][2], Settings.LocationSkinsForestLightList[Settings.LocationSkinsForestCurrentSetSetting], Settings.LocationSkinsForestLightSettingsList[Settings.LocationSkinsForestCurrentSetSetting][0], Settings.LocationSkinsForestLightSettingsList[Settings.LocationSkinsForestCurrentSetSetting][1], Settings.LocationSkinsForestLightSettingsList[Settings.LocationSkinsForestCurrentSetSetting][2], Settings.LocationSkinsForestFogList[Settings.LocationSkinsForestCurrentSetSetting], Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][0], Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][1], Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][2], Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][3], Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][4]);
+                    {
+                        object[] par =
+                        {
+                            Settings.LocationSkinsForestAmbientList[Settings.LocationSkinsForestCurrentSetSetting],
+                            new float[]
+                            {
+                                Settings.LocationSkinsForestAmbientSettingsList[Settings.LocationSkinsForestCurrentSetSetting][0],
+                                Settings.LocationSkinsForestAmbientSettingsList[Settings.LocationSkinsForestCurrentSetSetting][1],
+                                Settings.LocationSkinsForestAmbientSettingsList[Settings.LocationSkinsForestCurrentSetSetting][2]
+                            },
+                            Settings.LocationSkinsForestLightList[Settings.LocationSkinsForestCurrentSetSetting],
+                            new float[]
+                            {
+                                Settings.LocationSkinsForestLightSettingsList[Settings.LocationSkinsForestCurrentSetSetting][0],
+                                Settings.LocationSkinsForestLightSettingsList[Settings.LocationSkinsForestCurrentSetSetting][1],
+                                Settings.LocationSkinsForestLightSettingsList[Settings.LocationSkinsForestCurrentSetSetting][2]
+                            },
+                            Settings.LocationSkinsForestFogList[Settings.LocationSkinsForestCurrentSetSetting],
+                            new float[]
+                            {
+                                Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][0],
+                                Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][1],
+                                Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][2],
+                                Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][3],
+                                Settings.LocationSkinsForestFogSettingsList[Settings.LocationSkinsForestCurrentSetSetting][4]
+
+                            }
+                        };
+                        base.photonView.SendToGGMUser("extendedSkinsRPC", PhotonTargets.Others, par);
+                    }
+
                     if (Application.loadedLevelName.Contains("City"))
-                        base.photonView.SendToGGMUser("extendedSkinsRPC", Settings.LocationSkinsCityAmbientList[Settings.LocationSkinsCityCurrentSetSetting], Settings.LocationSkinsCityAmbientSettingsList[Settings.LocationSkinsCityCurrentSetSetting][1], Settings.LocationSkinsCityAmbientSettingsList[Settings.LocationSkinsCityCurrentSetSetting][2], Settings.LocationSkinsCityLightList[Settings.LocationSkinsCityCurrentSetSetting], Settings.LocationSkinsCityLightSettingsList[Settings.LocationSkinsCityCurrentSetSetting][0], Settings.LocationSkinsCityLightSettingsList[Settings.LocationSkinsCityCurrentSetSetting][1], Settings.LocationSkinsCityLightSettingsList[Settings.LocationSkinsCityCurrentSetSetting][2], Settings.LocationSkinsCityFogList[Settings.LocationSkinsCityCurrentSetSetting], Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][0], Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][1], Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][2], Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][3], Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][4]);
+                    {
+                        object[] par =
+                        {
+                            Settings.LocationSkinsCityAmbientList[Settings.LocationSkinsCityCurrentSetSetting],
+                            new float[]
+                            {
+                                Settings.LocationSkinsCityAmbientSettingsList[Settings.LocationSkinsCityCurrentSetSetting][0],
+                                Settings.LocationSkinsCityAmbientSettingsList[Settings.LocationSkinsCityCurrentSetSetting][1],
+                                Settings.LocationSkinsCityAmbientSettingsList[Settings.LocationSkinsCityCurrentSetSetting][2]
+                            },
+                            Settings.LocationSkinsCityLightList[Settings.LocationSkinsCityCurrentSetSetting],
+                            new float[]
+                            {
+                                Settings.LocationSkinsCityLightSettingsList[Settings.LocationSkinsCityCurrentSetSetting][0],
+                                Settings.LocationSkinsCityLightSettingsList[Settings.LocationSkinsCityCurrentSetSetting][1],
+                                Settings.LocationSkinsCityLightSettingsList[Settings.LocationSkinsCityCurrentSetSetting][2],
+                            },
+                            Settings.LocationSkinsCityFogList[Settings.LocationSkinsCityCurrentSetSetting],
+                            new float[]
+                            {
+                                Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][0],
+                                Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][1],
+                                Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][2],
+                                Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][3],
+                                Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][4]
+                            }
+                        };
+                        base.photonView.SendToGGMUser("extendedSkinsRPC", par);
+                    }
                     photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, n, url, str3, SkyBoxArray);
                 }
             }
