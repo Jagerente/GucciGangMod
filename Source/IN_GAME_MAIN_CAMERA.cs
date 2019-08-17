@@ -1,4 +1,6 @@
-﻿using GGM.Config;
+﻿using System.Text;
+using GGM.Caching;
+using GGM.Config;
 using GGM.GUI.Pages;
 using UnityEngine;
 
@@ -209,7 +211,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
             }
 
             minimap.CreateMinimap(Minimap.instance.myCam, 512, 0.3f, info.minimapPreset);
-            if (Settings.MinimapSetting || RCSettings.globalDisableMinimap == 1)
+            if (!Settings.MinimapSetting || RCSettings.globalDisableMinimap == 1)
             {
                 minimap.SetEnabled(false);
             }
@@ -661,6 +663,12 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
 
     public void update()
     {
+        if (Settings.MinimapSetting && RCSettings.globalDisableMinimap != 1 && !Minimap.instance.isEnabled)
+        {
+            gameObject.GetComponent<Minimap>().SetEnabled(true);
+            Minimap.TryRecaptureInstance();
+        }
+
         if (flashDuration > 0f)
         {
             flashDuration -= Time.deltaTime;

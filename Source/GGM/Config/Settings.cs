@@ -105,6 +105,7 @@ namespace GGM.Config
         public static BoolSetting UserInterfaceSetting = new BoolSetting("GGM_UserInterface");
         public static BoolSetting WindSetting = new BoolSetting("GGM_Wind");
         public static BoolSetting PrivateMessageSoundSetting = new BoolSetting("GGM_PrivateMessageSound", true);
+        public static BoolSetting RandomBombColorSetting = new BoolSetting("GGM_RandomBombColor");
 
         #endregion Booleans
 
@@ -162,7 +163,7 @@ namespace GGM.Config
         public static IntSetting LocationSkinsForestCurrentSetSetting = new IntSetting("GGM_LocationSkinsForestCurrentSet");
         public static IntSetting LocationSkinsSetting = new IntSetting("GGM_LocationSkins");
         public static IntSetting MaximumWavesSetting = new IntSetting("GGM_MaximumWaves", 20);
-        public static IntSetting MessagesCache = new IntSetting("GGM_MessagesCache", 30);
+        public static IntSetting MessagesCache = new IntSetting("GGM_MessagesCache", 128);
         public static IntSetting PointsLimitSetting = new IntSetting("GGM_PointsLimit", 50);
         public static IntSetting PVPTypeSetting = new IntSetting("GGM_PVPType");
         public static IntSetting ShadowCascadesSetting = new IntSetting("GGM_ShadowCascades", 2);
@@ -175,6 +176,7 @@ namespace GGM.Config
         public static IntSetting TexturesSetting = new IntSetting("GGM_Textures", 2);
         public static IntSetting TitansPerWaveSetting = new IntSetting("GGM_TitansPerWave", 2);
         public static IntSetting TitansSpawnCapSetting = new IntSetting("GGM_TitansSpawnCap", 20);
+
         #endregion Integers
 
         #region Strings

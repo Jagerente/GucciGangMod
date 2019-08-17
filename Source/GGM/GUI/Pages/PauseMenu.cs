@@ -92,7 +92,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(left[3]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 Label("Stats", LabelType.Header);
                 int[] freePoints = { 20 - (BombSettings[1] + BombSettings[2] + BombSettings[3]), 20 - (BombSettings[0] + BombSettings[2] + BombSettings[3]), 20 - (BombSettings[0] + BombSettings[1] + BombSettings[3]), 20 - (BombSettings[0] + BombSettings[1] + BombSettings[2]) };
                 for (var i = 0; i < 4; i++)
@@ -108,7 +108,7 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginArea(right[3]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 Label("Color", LabelType.Header);
                 Slider("R", ref BombColorSetting[0].Value, 0f, 1f);
                 Slider("G", ref BombColorSetting[1].Value, 0f, 1f);
@@ -117,12 +117,14 @@ namespace GGM.GUI.Pages
                 txt.SetPixel(0, 0, new Color(BombColorSetting[0], BombColorSetting[1], BombColorSetting[2]));
                 txt.Apply();
                 UnityEngine.GUI.DrawTexture(new Rect(45f, 55f, 70f, 70f), txt, ScaleMode.StretchToFill);
+
+                Grid("Random Color", ref RandomBombColorSetting.Value);
             }
             GUILayout.EndArea();
 
             GUILayout.BeginArea(center[3]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 Label("Color Presets", LabelType.Header, width: fullAreaWidth);
                 var style = new GUIStyle();
                 const float size = 13f;
@@ -193,7 +195,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(center[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 Label("Script", LabelType.Header);
                 GUILayout.BeginHorizontal();
                 {
@@ -206,7 +208,13 @@ namespace GGM.GUI.Pages
                 GUILayout.FlexibleSpace();
                 GUILayout.BeginHorizontal();
                 {
+                    if (Button("Clear", 100))
+                    {
+                        FengGameManagerMKII.currentScriptLogic = string.Empty;
+                    }
+
                     GUILayout.FlexibleSpace();
+
                     if (Button("Copy", 100))
                     {
                         var editor = new TextEditor { content = new GUIContent(FengGameManagerMKII.currentScriptLogic) };
@@ -214,11 +222,6 @@ namespace GGM.GUI.Pages
                         editor.Copy();
                     }
 
-                    GUILayout.FlexibleSpace();
-                    if (Button("Clear", 100))
-                    {
-                        FengGameManagerMKII.currentScriptLogic = string.Empty;
-                    }
 
                     GUILayout.FlexibleSpace();
                 }
@@ -231,7 +234,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(left[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
 
                 Label("Map Settings", LabelType.Header);
                 TextField("Titan Spawn Cap", ref TitansSpawnCapSetting.Value);
@@ -239,21 +242,31 @@ namespace GGM.GUI.Pages
                 UnityEngine.GUI.SetNextControlName("LevelScript");
                 Label("Script", LabelType.Header);
                 CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = GUILayout.TextArea(CustomMapScriptsList[CustomMapSkinsCurrentSetSetting], GUILayout.Width(leftElementWidth + rightElementWidth), GUILayout.Height(220f));
+                GUILayout.FlexibleSpace();
                 GUILayout.BeginHorizontal();
                 {
-                    if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
-                    {
-                        var editor = new TextEditor { content = new GUIContent(CustomMapScriptsList[CustomMapSkinsCurrentSetSetting]) };
-                        editor.SelectAll();
-                        editor.Copy();
-                    }
                     if (Button("Clear", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
                         CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = string.Empty;
                     }
                     if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
-                        CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = PhotonNetwork.masterClient.GetProperty(PhotonPlayerProperty.currentLevel);
+                        CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = string.Empty;
+
+                        foreach (var line in FengGameManagerMKII.FGM.levelCache)
+                        {
+                            foreach (var obj in line)
+                            {
+                                CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] += obj;
+                                CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] += ";\n";
+                            }
+                        }
+                    }
+                    if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                    {
+                        var editor = new TextEditor { content = new GUIContent(CustomMapScriptsList[CustomMapSkinsCurrentSetSetting]) };
+                        editor.SelectAll();
+                        editor.Copy();
                     }
                 }
                 FengGameManagerMKII.currentScript = CustomMapScriptsList[CustomMapSkinsCurrentSetSetting];
@@ -262,7 +275,7 @@ namespace GGM.GUI.Pages
             GUILayout.EndArea();
             GUILayout.BeginArea(right[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
 
                 Label("Custom Skins", LabelType.Header);
                 GUILayout.BeginHorizontal();
@@ -333,7 +346,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(left[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
                 scrollGameLeft = GUILayout.BeginScrollView(scrollGameLeft);
                 {
                     Label("Mouse", LabelType.Header);
@@ -366,10 +379,9 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginArea(right[0]);
             {
+                GUILayout.Space(5f);
                 scrollGameRight = GUILayout.BeginScrollView(scrollGameRight);
                 {
-                    GUILayout.Space(15f);
-
                     Label("User Interface", LabelType.Header);
                     Grid("Legacy Labels", ref LegacyLabelsSetting.Value);
                     Grid("Hide Everything", ref UserInterfaceSetting.Value);
@@ -405,7 +417,7 @@ namespace GGM.GUI.Pages
         {
             GUILayout.BeginArea(left[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
 
                 Label("Settings", LabelType.Header);
                 Label("General", LabelType.SubHeader);
@@ -468,7 +480,7 @@ namespace GGM.GUI.Pages
 
             GUILayout.BeginArea(right[0]);
             {
-                GUILayout.Space(15f);
+                GUILayout.Space(5f);
 
                 Label("Skins", LabelType.Header);
                 Label(HumanSkinsTitlesList[HumanSkinsCurrentSetSetting], LabelType.SubHeader);
@@ -519,7 +531,7 @@ namespace GGM.GUI.Pages
                     {
                         GUILayout.BeginArea(left[0]);
                         {
-                            GUILayout.Space(15f);
+                            GUILayout.Space(5f);
 
                             Label("Forest", LabelType.Header);
                             Label("Settings", LabelType.SubHeader);
@@ -637,7 +649,7 @@ namespace GGM.GUI.Pages
 
                         GUILayout.BeginArea(right[0]);
                         {
-                            GUILayout.Space(15f);
+                            GUILayout.Space(5f);
 
                             Label(LocationSkinsForestTitlesList[LocationSkinsForestCurrentSetSetting], LabelType.Header);
                             scrollLocationSkinsForestRight = GUILayout.BeginScrollView(scrollLocationSkinsForestRight, false, true);
@@ -772,7 +784,7 @@ namespace GGM.GUI.Pages
                     {
                         GUILayout.BeginArea(left[0]);
                         {
-                            GUILayout.Space(15f);
+                            GUILayout.Space(5f);
 
                             Label("City", LabelType.Header);
                             Label("Settings", LabelType.SubHeader);
@@ -887,7 +899,7 @@ namespace GGM.GUI.Pages
 
                         GUILayout.BeginArea(right[0]);
                         {
-                            GUILayout.Space(15f);
+                            GUILayout.Space(5f);
 
                             Label(LocationSkinsCityTitlesList[LocationSkinsCityCurrentSetSetting], LabelType.Header);
                             scrollLocationSkinsCityRight = GUILayout.BeginScrollView(scrollLocationSkinsCityRight, false, true);
@@ -1605,7 +1617,7 @@ namespace GGM.GUI.Pages
                             if (AutoReviveSetting) TextField("Seconds", ref AutoReviveTimeSetting.Value);
                             Grid("Horses", ref HorsesSetting.Value);
                             Grid("Disable Minimaps", ref DisableMinimapsSetting.Value);
-                            Grid("No AHSS Air-Reloading", ref DisableAHSSAirReloadingSetting.Value);
+                            Grid("No AHSS Air-Reload", ref DisableAHSSAirReloadingSetting.Value);
                             Grid("Deadly Cannons Mode", ref DeadlyCannonsModeSetting.Value);
                         }
                         GUILayout.EndArea();
@@ -1622,7 +1634,7 @@ namespace GGM.GUI.Pages
                                 Grid("Legacy Chat", ref LegacyChatSetting.Value);
                                 Grid("Background", ref ChatBackground.Value);
                                 if (ChatBackground) Slider("Opacity", ref ChatOpacitySetting.Value, 0f, 1f);
-                                Slider("Messages Cache", ref MessagesCache.Value, 15, 100);
+                                Slider("Messages Cache", ref MessagesCache.Value, 15, 512);
                                 Slider("Chat Height", ref ChatHeightSetting.Value, 275f, Screen.height - 30f);
                                 Slider("Chat Width", ref ChatWidthSetting.Value, 300f, Screen.width / 2f - 5f);
                                 TextField("Size", ref ChatSizeSetting.Value);
@@ -1705,9 +1717,13 @@ namespace GGM.GUI.Pages
                                         case 0:
                                             {
                                                 Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.Name.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Mod: " + ChosenPlayer.CheckMod(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Guild: " + ((string)ChosenPlayer.customProperties[PhotonPlayerProperty.guildName]).hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                var split = ((string)ChosenPlayer.customProperties[PhotonPlayerProperty.guildName]).Split('\n');
+                                                for (var i = 0; i < split.Length; i++)
+                                                {
+                                                    Label($"Guild {i + 1}: {split[i].StripHTML().hexColor()}", width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
                                                 Label("Unusual Properties:", width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 foreach (var property in ChosenPlayer.CheckProps().Split('\n'))
                                                 {
@@ -1721,11 +1737,13 @@ namespace GGM.GUI.Pages
                                                 Label("Bomb R Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombR]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb G Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombG]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb B Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombB]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Bomb Radius: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Bomb Cooldown: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombCooldown]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Bomb Speed: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombSpeed]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Bomb Range: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRange]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-
+                                                Label("Bomb Radius: " + (RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius]) - 20f) / 4f, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                if (ChosenPlayer.GucciGangMod)
+                                                {
+                                                    Label("Bomb Range: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRange]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                    Label("Bomb Speed: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombSpeed]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                    Label("Bomb Cooldown: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombCooldown]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
                                                 break;
                                             }
 
@@ -1972,10 +1990,11 @@ namespace GGM.GUI.Pages
 
         private static void VideoAndAudio()
         {
-            GUILayout.Space(15f);
 
             GUILayout.BeginArea(left[0]);
             {
+                GUILayout.Space(5f);
+
                 GUILayout.BeginVertical();
                 {
                     Label("General", LabelType.Header, GUIHelpers.Alignment.CENTER);
@@ -1999,6 +2018,8 @@ namespace GGM.GUI.Pages
             GUILayout.Space(15f);
             GUILayout.BeginArea(right[0]);
             {
+                GUILayout.Space(5f);
+
                 GUILayout.BeginVertical();
                 {
                     scrollVideoLeft = GUILayout.BeginScrollView(scrollVideoLeft);

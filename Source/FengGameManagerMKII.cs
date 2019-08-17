@@ -6062,69 +6062,70 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         var key = skybox[6];
         var mipmap = Settings.MipMappingSetting;
-        var iteratorVariable2 = false;
+        var needUnloadAssests = false;
 
         if (skybox[0] != string.Empty || skybox[1] != string.Empty || skybox[2] != string.Empty || skybox[3] != string.Empty || skybox[4] != string.Empty || skybox[5] != string.Empty)
         {
             var iteratorVariable3 = string.Join(",", skybox);
             if (!linkHash[1].ContainsKey(iteratorVariable3))
             {
-                iteratorVariable2 = true;
+                needUnloadAssests = true;
                 var material = Camera.main.GetComponent<Skybox>().material;
-                var url = skybox[0];
-                var iteratorVariable6 = skybox[1];
-                var iteratorVariable7 = skybox[2];
-                var iteratorVariable8 = skybox[3];
-                var iteratorVariable9 = skybox[4];
-                var iteratorVariable10 = skybox[5];
-                if (url.EndsWith(".jpg") || url.EndsWith(".png") || url.EndsWith(".jpeg"))
+                var skyboxFront = skybox[0];
+                var skyboxBack = skybox[1];
+                var skyboxLeft = skybox[2];
+                var skyboxRight = skybox[3];
+                var skyboxUp = skybox[4];
+                var skyboxDown = skybox[5];
+
+                if (skyboxFront.EndsWith(".jpg") || skyboxFront.EndsWith(".png") || skyboxFront.EndsWith(".jpeg"))
                 {
-                    var link = new WWW(url);
+                    var link = new WWW(skyboxFront);
                     yield return link;
                     var texture = RCextensions.loadimage(link, mipmap, 500000);
                     link.Dispose();
                     material.SetTexture("_FrontTex", texture);
                 }
 
-                if (iteratorVariable6.EndsWith(".jpg") || iteratorVariable6.EndsWith(".png") || iteratorVariable6.EndsWith(".jpeg"))
+                if (skyboxBack.EndsWith(".jpg") || skyboxBack.EndsWith(".png") || skyboxBack.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable13 = new WWW(iteratorVariable6);
+                    var iteratorVariable13 = new WWW(skyboxBack);
                     yield return iteratorVariable13;
                     var iteratorVariable14 = RCextensions.loadimage(iteratorVariable13, mipmap, 500000);
                     iteratorVariable13.Dispose();
                     material.SetTexture("_BackTex", iteratorVariable14);
                 }
 
-                if (iteratorVariable7.EndsWith(".jpg") || iteratorVariable7.EndsWith(".png") || iteratorVariable7.EndsWith(".jpeg"))
+                if (skyboxLeft.EndsWith(".jpg") || skyboxLeft.EndsWith(".png") || skyboxLeft.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable15 = new WWW(iteratorVariable7);
+                    var iteratorVariable15 = new WWW(skyboxLeft);
                     yield return iteratorVariable15;
                     var iteratorVariable16 = RCextensions.loadimage(iteratorVariable15, mipmap, 500000);
                     iteratorVariable15.Dispose();
                     material.SetTexture("_LeftTex", iteratorVariable16);
                 }
 
-                if (iteratorVariable8.EndsWith(".jpg") || iteratorVariable8.EndsWith(".png") || iteratorVariable8.EndsWith(".jpeg"))
+                if (skyboxRight.EndsWith(".jpg") || skyboxRight.EndsWith(".png") || skyboxRight.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable17 = new WWW(iteratorVariable8);
+                    var iteratorVariable17 = new WWW(skyboxRight);
                     yield return iteratorVariable17;
                     var iteratorVariable18 = RCextensions.loadimage(iteratorVariable17, mipmap, 500000);
                     iteratorVariable17.Dispose();
                     material.SetTexture("_RightTex", iteratorVariable18);
                 }
 
-                if (iteratorVariable9.EndsWith(".jpg") || iteratorVariable9.EndsWith(".png") || iteratorVariable9.EndsWith(".jpeg"))
+                if (skyboxUp.EndsWith(".jpg") || skyboxUp.EndsWith(".png") || skyboxUp.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable19 = new WWW(iteratorVariable9);
+                    var iteratorVariable19 = new WWW(skyboxUp);
                     yield return iteratorVariable19;
                     var iteratorVariable20 = RCextensions.loadimage(iteratorVariable19, mipmap, 500000);
                     iteratorVariable19.Dispose();
                     material.SetTexture("_UpTex", iteratorVariable20);
                 }
 
-                if (iteratorVariable10.EndsWith(".jpg") || iteratorVariable10.EndsWith(".png") || iteratorVariable10.EndsWith(".jpeg"))
+                if (skyboxDown.EndsWith(".jpg") || skyboxDown.EndsWith(".png") || skyboxDown.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable21 = new WWW(iteratorVariable10);
+                    var iteratorVariable21 = new WWW(skyboxDown);
                     yield return iteratorVariable21;
                     var iteratorVariable22 = RCextensions.loadimage(iteratorVariable21, mipmap, 500000);
                     iteratorVariable21.Dispose();
@@ -6158,7 +6159,7 @@ public class FengGameManagerMKII : MonoBehaviour
                             iteratorVariable25.Dispose();
                             if (!linkHash[0].ContainsKey(key))
                             {
-                                iteratorVariable2 = true;
+                                needUnloadAssests = true;
                                 iteratorVariable24.material.mainTexture = iteratorVariable26;
                                 linkHash[0].Add(key, iteratorVariable24.material);
                                 iteratorVariable24.material = (Material)linkHash[0][key];
@@ -6190,7 +6191,7 @@ public class FengGameManagerMKII : MonoBehaviour
             }
         }
 
-        if (iteratorVariable2)
+        if (needUnloadAssests)
         {
             unloadAssets();
         }
@@ -7773,7 +7774,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     }
                 }
 
-                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE && Settings.LocationSkinsSetting > 0)
+                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || PhotonNetwork.isMasterClient)
                 {
                     StartCoroutine(loadskinE(n, url, str3, SkyBoxArray));
                 }
@@ -7976,15 +7977,15 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 iteratorVariable1 = true;
                 var material = Camera.main.GetComponent<Skybox>().material;
-                var iteratorVariable4 = skybox[0];
-                var iteratorVariable5 = skybox[1];
-                var iteratorVariable6 = skybox[2];
-                var iteratorVariable7 = skybox[3];
-                var iteratorVariable8 = skybox[4];
-                var iteratorVariable9 = skybox[5];
-                if (iteratorVariable4.EndsWith(".jpg") || iteratorVariable4.EndsWith(".png") || iteratorVariable4.EndsWith(".jpeg"))
+                var skyboxFront = skybox[0];
+                var skyboxBack = skybox[1];
+                var skyboxLeft = skybox[2];
+                var skyboxRight = skybox[3];
+                var skyboxUp = skybox[4];
+                var skyboxDown = skybox[5];
+                if (skyboxFront.EndsWith(".jpg") || skyboxFront.EndsWith(".png") || skyboxFront.EndsWith(".jpeg"))
                 {
-                    var link = new WWW(iteratorVariable4);
+                    var link = new WWW(skyboxFront);
                     yield return link;
                     var texture = RCextensions.loadimage(link, mipmap, 500000);
                     link.Dispose();
@@ -7992,9 +7993,9 @@ public class FengGameManagerMKII : MonoBehaviour
                     material.SetTexture("_FrontTex", texture);
                 }
 
-                if (iteratorVariable5.EndsWith(".jpg") || iteratorVariable5.EndsWith(".png") || iteratorVariable5.EndsWith(".jpeg"))
+                if (skyboxBack.EndsWith(".jpg") || skyboxBack.EndsWith(".png") || skyboxBack.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable12 = new WWW(iteratorVariable5);
+                    var iteratorVariable12 = new WWW(skyboxBack);
                     yield return iteratorVariable12;
                     var iteratorVariable13 = RCextensions.loadimage(iteratorVariable12, mipmap, 500000);
                     iteratorVariable12.Dispose();
@@ -8002,9 +8003,9 @@ public class FengGameManagerMKII : MonoBehaviour
                     material.SetTexture("_BackTex", iteratorVariable13);
                 }
 
-                if (iteratorVariable6.EndsWith(".jpg") || iteratorVariable6.EndsWith(".png") || iteratorVariable6.EndsWith(".jpeg"))
+                if (skyboxLeft.EndsWith(".jpg") || skyboxLeft.EndsWith(".png") || skyboxLeft.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable14 = new WWW(iteratorVariable6);
+                    var iteratorVariable14 = new WWW(skyboxLeft);
                     yield return iteratorVariable14;
                     var iteratorVariable15 = RCextensions.loadimage(iteratorVariable14, mipmap, 500000);
                     iteratorVariable14.Dispose();
@@ -8012,9 +8013,9 @@ public class FengGameManagerMKII : MonoBehaviour
                     material.SetTexture("_LeftTex", iteratorVariable15);
                 }
 
-                if (iteratorVariable7.EndsWith(".jpg") || iteratorVariable7.EndsWith(".png") || iteratorVariable7.EndsWith(".jpeg"))
+                if (skyboxRight.EndsWith(".jpg") || skyboxRight.EndsWith(".png") || skyboxRight.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable16 = new WWW(iteratorVariable7);
+                    var iteratorVariable16 = new WWW(skyboxRight);
                     yield return iteratorVariable16;
                     var iteratorVariable17 = RCextensions.loadimage(iteratorVariable16, mipmap, 500000);
                     iteratorVariable16.Dispose();
@@ -8022,9 +8023,9 @@ public class FengGameManagerMKII : MonoBehaviour
                     material.SetTexture("_RightTex", iteratorVariable17);
                 }
 
-                if (iteratorVariable8.EndsWith(".jpg") || iteratorVariable8.EndsWith(".png") || iteratorVariable8.EndsWith(".jpeg"))
+                if (skyboxUp.EndsWith(".jpg") || skyboxUp.EndsWith(".png") || skyboxUp.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable18 = new WWW(iteratorVariable8);
+                    var iteratorVariable18 = new WWW(skyboxUp);
                     yield return iteratorVariable18;
                     var iteratorVariable19 = RCextensions.loadimage(iteratorVariable18, mipmap, 500000);
                     iteratorVariable18.Dispose();
@@ -8032,9 +8033,9 @@ public class FengGameManagerMKII : MonoBehaviour
                     material.SetTexture("_UpTex", iteratorVariable19);
                 }
 
-                if (iteratorVariable9.EndsWith(".jpg") || iteratorVariable9.EndsWith(".png") || iteratorVariable9.EndsWith(".jpeg"))
+                if (skyboxDown.EndsWith(".jpg") || skyboxDown.EndsWith(".png") || skyboxDown.EndsWith(".jpeg"))
                 {
-                    var iteratorVariable20 = new WWW(iteratorVariable9);
+                    var iteratorVariable20 = new WWW(skyboxDown);
                     yield return iteratorVariable20;
                     var iteratorVariable21 = RCextensions.loadimage(iteratorVariable20, mipmap, 500000);
                     iteratorVariable20.Dispose();
@@ -8053,7 +8054,7 @@ public class FengGameManagerMKII : MonoBehaviour
             }
         }
 
-        if (LevelInfo.getInfo(level).mapName.Contains("City"))
+        if (Application.loadedLevelName.Contains("Forest"))
         {
             var iteratorVariable22 = url.Split(',');
             var iteratorVariable23 = url2.Split(',');
@@ -8182,11 +8183,11 @@ public class FengGameManagerMKII : MonoBehaviour
                 }
             }
         }
-        else if (LevelInfo.getInfo(level).mapName.Contains("City"))
+        else if (Application.loadedLevelName.Contains("City"))
         {
-            var iteratorVariable42 = url.Split(',');
-            var iteratorVariable43 = url2.Split(',');
-            var iteratorVariable44 = iteratorVariable43[2];
+            var trunks = url.Split(',');
+            var leavesAndGround = url2.Split(',');
+            var iteratorVariable44 = leavesAndGround[2];
             var iteratorVariable45 = 0;
             object[] iteratorVariable46 = FindObjectsOfType(typeof(GameObject));
             foreach (GameObject iteratorVariable47 in iteratorVariable46)
@@ -8195,9 +8196,9 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     if (iteratorVariable47.name.EndsWith("001"))
                     {
-                        if (iteratorVariable43.Length > 0 && iteratorVariable43[0] != null)
+                        if (leavesAndGround.Length > 0 && leavesAndGround[0] != null)
                         {
-                            var iteratorVariable48 = iteratorVariable43[0];
+                            var iteratorVariable48 = leavesAndGround[0];
                             if (iteratorVariable48.EndsWith(".jpg") || iteratorVariable48.EndsWith(".png") || iteratorVariable48.EndsWith(".jpeg"))
                             {
                                 foreach (var iteratorVariable49 in iteratorVariable47.GetComponentsInChildren<Renderer>())
@@ -8237,9 +8238,9 @@ public class FengGameManagerMKII : MonoBehaviour
                     }
                     else if (iteratorVariable47.name.EndsWith("006") || iteratorVariable47.name.EndsWith("007") || iteratorVariable47.name.EndsWith("015") || iteratorVariable47.name.EndsWith("000") || iteratorVariable47.name.EndsWith("002") && iteratorVariable47.transform.position.x == 0f && iteratorVariable47.transform.position.y == 0f && iteratorVariable47.transform.position.z == 0f)
                     {
-                        if (iteratorVariable43.Length > 0 && iteratorVariable43[1] != null)
+                        if (leavesAndGround.Length > 0 && leavesAndGround[1] != null)
                         {
-                            var iteratorVariable52 = iteratorVariable43[1];
+                            var iteratorVariable52 = leavesAndGround[1];
                             if (iteratorVariable52.EndsWith(".jpg") || iteratorVariable52.EndsWith(".png") || iteratorVariable52.EndsWith(".jpeg"))
                             {
                                 foreach (var iteratorVariable53 in iteratorVariable47.GetComponentsInChildren<Renderer>())
@@ -8274,9 +8275,9 @@ public class FengGameManagerMKII : MonoBehaviour
                     {
                         int iteratorVariable56;
                         var iteratorVariable57 = n.Substring(iteratorVariable45, 1);
-                        if (int.TryParse(iteratorVariable57, out iteratorVariable56) && iteratorVariable56 >= 0 && iteratorVariable56 < 8 && iteratorVariable42.Length >= 8 && iteratorVariable42[iteratorVariable56] != null)
+                        if (int.TryParse(iteratorVariable57, out iteratorVariable56) && iteratorVariable56 >= 0 && iteratorVariable56 < 8 && trunks.Length >= 8 && trunks[iteratorVariable56] != null)
                         {
-                            var iteratorVariable58 = iteratorVariable42[iteratorVariable56];
+                            var iteratorVariable58 = trunks[iteratorVariable56];
                             if (iteratorVariable58.EndsWith(".jpg") || iteratorVariable58.EndsWith(".png") || iteratorVariable58.EndsWith(".jpeg"))
                             {
                                 foreach (var iteratorVariable59 in iteratorVariable47.GetComponentsInChildren<Renderer>())
@@ -8309,9 +8310,9 @@ public class FengGameManagerMKII : MonoBehaviour
 
                         iteratorVariable45++;
                     }
-                    else if ((iteratorVariable47.name.EndsWith("019") || iteratorVariable47.name.EndsWith("020")) && iteratorVariable43.Length > 2 && iteratorVariable43[2] != null)
+                    else if ((iteratorVariable47.name.EndsWith("019") || iteratorVariable47.name.EndsWith("020")) && leavesAndGround.Length > 2 && leavesAndGround[2] != null)
                     {
-                        var iteratorVariable62 = iteratorVariable43[2];
+                        var iteratorVariable62 = leavesAndGround[2];
                         if (iteratorVariable62.EndsWith(".jpg") || iteratorVariable62.EndsWith(".png") || iteratorVariable62.EndsWith(".jpeg"))
                         {
                             foreach (var iteratorVariable63 in iteratorVariable47.GetComponentsInChildren<Renderer>())
@@ -8359,25 +8360,16 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         if (Application.loadedLevelName.Contains("Forest"))
         {
-            LocationSkinToSteal = url2.Split(',').Last() + url + ',';
-
+            LocationSkinToSteal = url2.Split(',').Last() + ",";
             for (var i = 0; i < url2.Split(',').Length - 1; i++)
             {
-                LocationSkinToSteal += url2.Split(',')[i];
+                LocationSkinToSteal += url2.Split(',') + ",";
             }
-
-            for (var i = 0; i < 6; i++)
-            {
-                LocationSkinToSteal += (i != 5 ? "," : string.Empty) + skybox[i];
-            }
+            LocationSkinToSteal += string.Join(",", skybox);
         }
         else if (Application.loadedLevelName.Contains("City"))
         {
-            LocationSkinToSteal = url2 + ',' + url + ',';
-            for (var i = 0; i < 6; i++)
-            {
-                LocationSkinToSteal += (i != 5 ? "," : string.Empty) + skybox[i];
-            }
+            LocationSkinToSteal = string.Join(",", url2.Split(',')) + ',' + string.Join(",", url.Split(',')) + ',' + string.Join(",", skybox);
         }
 
         if (Settings.LocationSkinsSetting == 2 && info.sender.isMasterClient)

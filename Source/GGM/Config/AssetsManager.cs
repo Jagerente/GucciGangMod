@@ -7,12 +7,15 @@ namespace GGM.Config
 {
     internal class AssetsManager : MonoBehaviour
     {
+        public static bool FontsLoaded;
+
         public static IEnumerator LoadFonts()
         {
             if (GUI.Styles.Fonts != null) yield break;
             var bundle = AssetBundle.CreateFromMemory(System.IO.File.ReadAllBytes(Application.dataPath + "/Resources/ggmfonts.unity3d"));
             yield return bundle;
             GUI.Styles.Fonts = new[] { (Font)bundle.assetBundle.Load("chemistry"), (Font)bundle.assetBundle.Load("tahoma"), (Font)bundle.assetBundle.Load("rabelo"), (Font)bundle.assetBundle.Load("bienetresocial"), (Font)bundle.assetBundle.Load("mandatory") };
+            FontsLoaded = true;
         }
 
         public static IEnumerator LoadRCAssets()

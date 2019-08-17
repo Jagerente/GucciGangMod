@@ -1,7 +1,9 @@
-﻿using GGM.Config;
+﻿using System;
+using GGM.Config;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 [DisallowMultipleComponent]
 public class Minimap : MonoBehaviour
@@ -14,7 +16,7 @@ public class Minimap : MonoBehaviour
     private float cornerSizeRatio;
     private Preset initialPreset;
     public static Minimap instance;
-    private bool isEnabled;
+    public bool isEnabled;
     private bool isEnabledTemp;
     private Vector3 lastMinimapCenter;
     private float lastMinimapOrthoSize;
@@ -28,7 +30,7 @@ public class Minimap : MonoBehaviour
     private int MINIMAP_SIZE;
     private Vector2 MINIMAP_SUPPLY_SIZE;
     private MinimapIcon[] minimapIcons;
-    private bool minimapIsCreated;
+    public bool minimapIsCreated;
     private RectTransform minimapMaskT;
     private Bounds minimapOrthographicBounds;
     public RenderTexture minimapRT;

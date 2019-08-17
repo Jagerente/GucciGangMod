@@ -12,27 +12,18 @@ namespace GGM.GUI.Pages
     internal class MainMenu : Page
     {
         private static int loginSwitchInt;
-        private static readonly Rect Panel = GUIHelpers.AlignRect(250f, 190f, GUIHelpers.Alignment.BOTTOMLEFT, 5, -5f);
+        private static Rect Panel = GUIHelpers.AlignRect(250f, 190f, GUIHelpers.Alignment.BOTTOMLEFT, 5, -5f);
         private static readonly Rect VersionPanel = GUIHelpers.AlignRect(175f, 20f, GUIHelpers.Alignment.BOTTOMRIGHT);
-        private static Texture2D background = new Texture2D(1, 1);
-        private static float width = 275f;
+        private static float width = 250f;
         private static float height = 180f;
         private static float leftElement = width * 0.4f;
         private static float rightElement = width * 0.6f - 5f;
         private static readonly string[] leftPanelSwitcher = {"User".SetSize(24), "Servers".SetSize(24)};
 
-        private void Awake()
-        {
-            background = new Texture2D(1, 1);
-            background.SetPixel(0, 0, new Color(0f, 0f, 0f, 0.7f));
-            background.Apply();
-        }
-
         private void OnGUI()
         {
             UnityEngine.GUI.Label(VersionPanel, "GucciGangMod " + UIMainReferences.Version, Styles.LabelStyle[2]);
-            Labels.Version = string.Empty;
-
+            
             GUILayout.BeginArea(Panel);
             {
                 GUILayout.FlexibleSpace();
@@ -58,6 +49,7 @@ namespace GGM.GUI.Pages
             GUILayout.EndArea();
 
             UnityEngine.GUI.Box(GUIHelpers.AlignRect(width + 10f, height + 10f, GUIHelpers.Alignment.TOPLEFT, 5f, 5f), ColorCache.Textures[ColorCache.PurpleMunsell]);
+
             GUILayout.BeginArea(GUIHelpers.AlignRect(width, height, GUIHelpers.Alignment.TOPLEFT, 10, 10));
             {
                 Grid(string.Empty, ref loginSwitchInt, leftPanelSwitcher, width: width - 5f, height: 35f);
@@ -66,9 +58,20 @@ namespace GGM.GUI.Pages
                 {
                     case 0:
                     {
-                        Label(FengGameManagerMKII.nameField.SetColor("FFFFFF").ToHTML(), Settings.LabelType.SubHeader, width: width);
+                        height = 130f + (LoginFengKAI.player.guildname == string.Empty ? 0f : LoginFengKAI.player.guildname.Split('\n').Length * Settings.SubHeaderHeight) + (FengGameManagerMKII.nameField == string.Empty ? 0 : Settings.SubHeaderHeight);
 
-                        Label(LoginFengKAI.player.guildname.SetColor("FFFF00").ToHTML(), Settings.LabelType.SubHeader, width: width);
+                        if (FengGameManagerMKII.nameField != string.Empty)
+                        {
+                            Label(FengGameManagerMKII.nameField.SetColor("FFFFFF").ToHTML(), Settings.LabelType.SubHeader, width: width);
+                        }
+
+                        if (LoginFengKAI.player.guildname != string.Empty)
+                        {
+                            for (var i = 0; i < LoginFengKAI.player.guildname.Split('\n').Length; i++)
+                            {
+                                Label(LoginFengKAI.player.guildname.Split('\n')[i].SetColor("FFFF00").ToHTML(), Settings.LabelType.SubHeader, width: width);
+                            }
+                        }
 
                         GUILayout.BeginHorizontal();
                         {
@@ -80,7 +83,7 @@ namespace GGM.GUI.Pages
 
                         GUILayout.BeginHorizontal();
                         {
-                            TextField("Guild", ref LoginFengKAI.player.guildname, rightElement, labelWidth: leftElement);
+                            TextArea("Guild", ref LoginFengKAI.player.guildname, rightElement, labelWidth: leftElement);
                         }
                         GUILayout.EndHorizontal();
 
@@ -107,6 +110,7 @@ namespace GGM.GUI.Pages
 
                     case 1:
                     {
+                        height = 155f;
                         string server = UIMainReferences.ServerKey == UIMainReferences.PublicKey ? "Connected to Public server." : UIMainReferences.ServerKey == FengGameManagerMKII.s[0] ? "Connected to RC Private server." : FengGameManagerMKII.privateServerField == string.Empty ? "Connected to Custom server." : $"Connected to {UIMainReferences.ServerKey}.";
                         Label(server.SetColor("FFFFFF"), Settings.LabelType.SubHeader, width: width);
                         GUILayout.BeginHorizontal();
