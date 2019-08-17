@@ -22,8 +22,12 @@ namespace GGM.GUI.Pages
 
         private void OnGUI()
         {
+            if(Styles.LabelStyle == null)
+            {
+                return;
+            }
+
             UnityEngine.GUI.Label(VersionPanel, "GucciGangMod " + UIMainReferences.Version, Styles.LabelStyle[2]);
-            
             GUILayout.BeginArea(Panel);
             {
                 GUILayout.FlexibleSpace();

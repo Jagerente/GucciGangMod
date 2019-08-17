@@ -345,7 +345,7 @@ namespace GGM.GUI
 
         public static void Init()
         {
-            if (isInited || !AssetsManager.FontsLoaded) return;
+            if ((isInited && AssetsManager.FontsLoaded) || Fonts == null) return;
 
             LabelStyle = new []
             {
