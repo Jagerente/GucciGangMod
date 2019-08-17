@@ -117,6 +117,8 @@ namespace GGM.GUI.Pages
                 txt.SetPixel(0, 0, new Color(BombColorSetting[0], BombColorSetting[1], BombColorSetting[2]));
                 txt.Apply();
                 UnityEngine.GUI.DrawTexture(new Rect(45f, 55f, 70f, 70f), txt, ScaleMode.StretchToFill);
+
+                Grid("Random Color", ref RandomBombColorSetting.Value);
             }
             GUILayout.EndArea();
 
@@ -206,7 +208,13 @@ namespace GGM.GUI.Pages
                 GUILayout.FlexibleSpace();
                 GUILayout.BeginHorizontal();
                 {
+                    if (Button("Clear", 100))
+                    {
+                        FengGameManagerMKII.currentScriptLogic = string.Empty;
+                    }
+
                     GUILayout.FlexibleSpace();
+
                     if (Button("Copy", 100))
                     {
                         var editor = new TextEditor { content = new GUIContent(FengGameManagerMKII.currentScriptLogic) };
@@ -214,11 +222,6 @@ namespace GGM.GUI.Pages
                         editor.Copy();
                     }
 
-                    GUILayout.FlexibleSpace();
-                    if (Button("Clear", 100))
-                    {
-                        FengGameManagerMKII.currentScriptLogic = string.Empty;
-                    }
 
                     GUILayout.FlexibleSpace();
                 }
@@ -239,14 +242,9 @@ namespace GGM.GUI.Pages
                 UnityEngine.GUI.SetNextControlName("LevelScript");
                 Label("Script", LabelType.Header);
                 CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = GUILayout.TextArea(CustomMapScriptsList[CustomMapSkinsCurrentSetSetting], GUILayout.Width(leftElementWidth + rightElementWidth), GUILayout.Height(220f));
+                GUILayout.FlexibleSpace();
                 GUILayout.BeginHorizontal();
                 {
-                    if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
-                    {
-                        var editor = new TextEditor { content = new GUIContent(CustomMapScriptsList[CustomMapSkinsCurrentSetSetting]) };
-                        editor.SelectAll();
-                        editor.Copy();
-                    }
                     if (Button("Clear", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
                         CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = string.Empty;
@@ -263,6 +261,12 @@ namespace GGM.GUI.Pages
                                 CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] += ";\n";
                             }
                         }
+                    }
+                    if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                    {
+                        var editor = new TextEditor { content = new GUIContent(CustomMapScriptsList[CustomMapSkinsCurrentSetSetting]) };
+                        editor.SelectAll();
+                        editor.Copy();
                     }
                 }
                 FengGameManagerMKII.currentScript = CustomMapScriptsList[CustomMapSkinsCurrentSetSetting];
@@ -1614,7 +1618,7 @@ namespace GGM.GUI.Pages
                             if (AutoReviveSetting) TextField("Seconds", ref AutoReviveTimeSetting.Value);
                             Grid("Horses", ref HorsesSetting.Value);
                             Grid("Disable Minimaps", ref DisableMinimapsSetting.Value);
-                            Grid("No AHSS Air-Reloading", ref DisableAHSSAirReloadingSetting.Value);
+                            Grid("No AHSS Air-Reload", ref DisableAHSSAirReloadingSetting.Value);
                             Grid("Deadly Cannons Mode", ref DeadlyCannonsModeSetting.Value);
                         }
                         GUILayout.EndArea();
@@ -1714,9 +1718,13 @@ namespace GGM.GUI.Pages
                                         case 0:
                                             {
                                                 Label("ID: " + ChosenPlayer.ID, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Name: " + ChosenPlayer.UIName.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                Label("Name: " + ChosenPlayer.Name.hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Mod: " + ChosenPlayer.CheckMod(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Guild: " + ((string)ChosenPlayer.customProperties[PhotonPlayerProperty.guildName]).hexColor(), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                var split = ((string)ChosenPlayer.customProperties[PhotonPlayerProperty.guildName]).Split('\n');
+                                                for (var i = 0; i < split.Length; i++)
+                                                {
+                                                    Label($"Guild {i + 1}: {split[i].StripHTML().hexColor()}", width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
                                                 Label("Unusual Properties:", width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 foreach (var property in ChosenPlayer.CheckProps().Split('\n'))
                                                 {
@@ -1730,11 +1738,13 @@ namespace GGM.GUI.Pages
                                                 Label("Bomb R Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombR]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb G Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombG]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
                                                 Label("Bomb B Color: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombB]).ToString("0.###"), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Bomb Radius: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Bomb Cooldown: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombCooldown]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Bomb Speed: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombSpeed]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-                                                Label("Bomb Range: " + RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRange]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
-
+                                                Label("Bomb Radius: " + (RCextensions.returnFloatFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRadius]) - 20f) / 4f, width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                if (ChosenPlayer.GucciGangMod)
+                                                {
+                                                    Label("Bomb Range: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombRange]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                    Label("Bomb Speed: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombSpeed]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                    Label("Bomb Cooldown: " + RCextensions.returnIntFromObject(ChosenPlayer.customProperties[PhotonPlayerProperty.RCBombCooldown]), width: fullAreaWidth * ControlPanelProportion[1] - 20f);
+                                                }
                                                 break;
                                             }
 
