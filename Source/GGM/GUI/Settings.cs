@@ -58,7 +58,7 @@ namespace GGM.GUI
         internal const float SubHeaderWidth = leftElementWidth + rightElementWidth;
         internal const float SubHeaderHeight = 28f;
 
-        internal const int LabelFontSize = 14;
+        internal const int LabelFontSize = 15;
         internal const float LabelWidth = leftElementWidth;
         internal const float LabelHeight = 22f;
 
@@ -74,9 +74,9 @@ namespace GGM.GUI
         internal static readonly Color colorMajor = ColorCache.White;
         internal static readonly Color colorMinor = new Color(1f, 0.702f, 0.8f);
 
-        internal static readonly int headerFont = 4;
-        internal static readonly int labelFont = 1;
-        internal static readonly int buttonFont = 2;
+        internal static int headerFont = 4;
+        internal static int labelFont = 1;
+        internal static int buttonFont = 2;
 
         public enum LabelType
         {
