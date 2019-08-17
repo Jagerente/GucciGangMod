@@ -1,11 +1,12 @@
 ﻿using GGM.Caching;
+using GGM.Config;
 using UnityEngine;
 
 namespace GGM.GUI
 {
     internal class Styles : MonoBehaviour
     {
-        private static bool isInited;
+        public static bool isInited;
         private const string StylePath = "GGM/";
         internal static Font[] Fonts;
         public static Texture2D Box;
@@ -344,7 +345,7 @@ namespace GGM.GUI
 
         public static void Init()
         {
-            if (isInited || !FengGameManagerMKII.isAssetLoaded) return;
+            if (isInited || !AssetsManager.FontsLoaded) return;
             LabelStyle = new []
             {
                 TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleLeft, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor), 

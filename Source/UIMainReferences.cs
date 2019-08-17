@@ -31,7 +31,11 @@ public class UIMainReferences : MonoBehaviour
 
     private void OnGUI()
     {
-        GGM.GUI.Styles.Init();
+        if (AssetsManager.FontsLoaded)
+        {
+            GGM.GUI.Styles.Init();
+            Labels.Version = string.Empty;
+        }
     }
 
     private IEnumerator OnOpen()
@@ -57,10 +61,6 @@ public class UIMainReferences : MonoBehaviour
             DontDestroyOnLoad(pages);
             ServerKey = PublicKey;
             FengGameManagerMKII.s = "verified343,hair,character_eye,glass,character_face,character_head,character_hand,character_body,character_arm,character_leg,character_chest,character_cape,character_brand,character_3dmg,r,character_blade_l,character_3dmg_gas_r,character_blade_r,3dmg_smoke,HORSE,hair,body_001,Cube,Plane_031,mikasa_asset,character_cap_,character_gun".Split(',');
-        }
-        else
-        {
-            Labels.Version = string.Empty;
         }
 
         NGUITools.SetActive(panelMain, true);
