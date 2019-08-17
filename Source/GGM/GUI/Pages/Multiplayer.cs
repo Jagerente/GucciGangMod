@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GGM.Caching;
 using GGM.Config;
 using UnityEngine;
@@ -112,24 +113,19 @@ namespace GGM.GUI.Pages
 
         private bool CheckFilters(RoomInfo info)
         {
-            if (KeyWords != string.Empty && !info.name.ToUpper().Contains(KeyWords.ToUpper()) && !KeyWords.Contains(";"))
+            var serverName = info.name.Split('`')[0];
+            var serverMap = info.name.Split('`')[1];
+            var serverDifficulty = info.name.Split('`')[2];
+            var serverDayTime = info.name.Split('`')[4];
+
+            if (KeyWords != string.Empty && !serverName.ToUpper().Contains(KeyWords.ToUpper()) && !KeyWords.Contains(";"))
             {
                 return false;
             }
 
             if (KeyWords.ToUpper().Contains(";"))
             {
-                var pass = false;
-                foreach (var key in KeyWords.ToUpper().Split(';'))
-                {
-                    if (info.name.ToUpper().Contains(key))
-                    {
-                        pass = true;
-                        break;
-                    }
-                }
-
-                if (!pass)
+                if (!KeyWords.ToUpper().Split(';').Any(key => serverName.ToUpper().Contains(key)))
                 {
                     return false;
                 }
@@ -139,35 +135,45 @@ namespace GGM.GUI.Pages
             {
                 if (Map[map])
                 {
-                    if (!info.name.ToUpper().Contains(Maps[map].ToUpper()))
+                    if (serverMap.ToUpper().Equals(Maps[map].ToUpper()))
                     {
-                        return false;
+                        goto MapPass;
                     }
                 }
             }
 
+            if (Map.Any(i => i)) return false;
+
+
+            MapPass:
             for (var difficulty = 0; difficulty < Difficulty.Length; difficulty++)
             {
                 if (Difficulty[difficulty])
                 {
-                    if (!info.name.ToUpper().Contains(Difficulties[difficulty].ToUpper()))
+                    if (serverDifficulty.ToUpper().Equals(Difficulties[difficulty].ToUpper()))
                     {
-                        return false;
+                        goto DifficultyPass;
                     }
                 }
             }
 
+            if (Difficulty.Any(i => i)) return false;
+
+            DifficultyPass:
             for (var dayTime = 0; dayTime < DayTime.Length; dayTime++)
             {
                 if (DayTime[dayTime])
                 {
-                    if (!info.name.ToUpper().Contains(DayTimes[dayTime].ToUpper()))
+                    if (serverDayTime.ToUpper().Equals(DayTimes[dayTime].ToUpper()))
                     {
-                        return false;
+                        goto DayTimePass;
                     }
                 }
             }
 
+            if (DayTime.Any(i => i)) return false;
+
+            DayTimePass:
             if (ExtendedSetting[0] && info.name.Split('`')[5] != string.Empty)
             {
                 return false;
@@ -297,7 +303,7 @@ namespace GGM.GUI.Pages
                             foreach (var server in servers)
                             {
                                 var data = server.name.Split('`');
-                                if (GUILayout.Button((data[5] != string.Empty ? "[PWD]" : string.Empty) + (data[0].Length > 40 ? data[0].Remove(40, data[0].Length - 40).ToHTML() : data[0].ToHTML()) + "/" + data[1] + "/" + data[2] + "/" + data[4] + "    " + server.playerCount + "/" + server.maxPlayers, GUILayout.Width(BoxWidth * Proportion[1] - 10f)))
+                                if (GUILayout.Button((data[5] != string.Empty ? "[PWD]" : string.Empty) + (data[0].Length > 40 ? data[0].Remove(40, data[0].Length - 40).ToHTML() : data[0].ToHTML()) + "/" + data[1] + "/" + data[2].ToUpperCase() + "/" + data[4].ToUpperCase() + "    " + server.playerCount + "/" + server.maxPlayers, GUILayout.Width(BoxWidth * Proportion[1] - 10f)))
                                 {
                                     if (server.playerCount < server.maxPlayers)
                                     {
