@@ -253,7 +253,16 @@ namespace GGM.GUI.Pages
                     }
                     if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
-                        CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = PhotonNetwork.masterClient.GetProperty(PhotonPlayerProperty.currentLevel);
+                        CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = string.Empty;
+
+                        foreach (var line in FengGameManagerMKII.FGM.levelCache)
+                        {
+                            foreach (var obj in line)
+                            {
+                                CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] += obj;
+                                CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] += ";\n";
+                            }
+                        }
                     }
                 }
                 FengGameManagerMKII.currentScript = CustomMapScriptsList[CustomMapSkinsCurrentSetSetting];
