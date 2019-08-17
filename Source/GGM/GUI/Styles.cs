@@ -346,9 +346,10 @@ namespace GGM.GUI
         public static void Init()
         {
             if (isInited || !AssetsManager.FontsLoaded) return;
+
             LabelStyle = new []
             {
-                TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleLeft, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor), 
+                TextStyle(Fonts[Settings.labelFont], TextAnchor.LowerLeft, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor), 
                 TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleCenter, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor), 
                 TextStyle(Fonts[Settings.labelFont], TextAnchor.MiddleRight, FontStyle.Normal, Settings.LabelFontSize, true, Settings.colorMajor, Settings.colorMajor, Settings.colorMajor)
             };
