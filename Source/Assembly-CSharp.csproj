@@ -56,6 +56,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ExitGames\Client\Photon\Lite\EventCaching.cs" />
     <Compile Include="ExitGames\Client\Photon\Lite\ReceiverGroup.cs" />
+    <Compile Include="GGM\Antis.cs" />
     <Compile Include="GGM\Caching\ColorCache.cs" />
     <Compile Include="GGM\Caching\GameObjectCache.cs" />
     <Compile Include="GGM\Caching\ResourcesCache.cs" />

@@ -2013,6 +2013,7 @@ public class FengGameManagerMKII : MonoBehaviour
                     if (checkIsTitanAllDie())
                     {
                         wave++;
+                        Antis.ClearAntiRevive();
                         if ((LevelInfo.getInfo(level).respawnMode == RespawnMode.NEWROUND || level.StartsWith("Custom") && RCSettings.gameType == 1) && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
                         {
                             foreach (var player in PhotonNetwork.playerList)
@@ -8484,6 +8485,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        Antis.ClearAntiRevive();
         if (Page.GetInstance<PauseMenu>().enabled)
         {
             Page.GetInstance<PauseMenu>().Disable();

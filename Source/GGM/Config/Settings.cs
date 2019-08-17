@@ -44,6 +44,7 @@ namespace GGM.Config
 
         public static BoolSetting AntiAbusiveModsSetting = new BoolSetting("GGM_AntiAbusiveMods");
         public static BoolSetting AntiGuestsSetting = new BoolSetting("GGM_AntiGuests");
+        public static BoolSetting AntiRevive = new BoolSetting("GGM_AntiRevive");
         public static BoolSetting AntiTitanErenSetting = new BoolSetting("GGM_AntiTitanEren");
         public static BoolSetting ArmorModeSetting = new BoolSetting("GGM_ArmorMode");
         public static BoolSetting AutoReviveSetting = new BoolSetting("GGM_AutoRevive");
