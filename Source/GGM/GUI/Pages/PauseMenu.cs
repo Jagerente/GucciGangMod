@@ -1835,6 +1835,14 @@ namespace GGM.GUI.Pages
                             }
                             GUILayout.EndArea();
                         }
+                        else
+                        {
+                            GUILayout.BeginArea(center[0]);
+                            GUILayout.FlexibleSpace();
+                            Label("Online Only".SetSize(64), LabelType.Header, width: fullAreaWidth);
+                            GUILayout.FlexibleSpace();
+                            GUILayout.EndArea();
+                        }
                         break;
                     }
             }
