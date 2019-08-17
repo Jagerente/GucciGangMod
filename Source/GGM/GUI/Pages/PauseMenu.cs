@@ -1790,6 +1790,7 @@ namespace GGM.GUI.Pages
                             GUILayout.BeginArea(new Rect(leftPos + 20f + fullAreaWidth * ControlPanelProportion[0] + fullAreaWidth * ControlPanelProportion[1], topPos + 100f, fullAreaWidth * ControlPanelProportion[2] - 10f, fullAreaHeight - 40f));
                             {
                                 Label("Actions", LabelType.Header, width: fullAreaWidth * ControlPanelProportion[2] - 20f);
+                                Label("Players", LabelType.SubHeader, width: fullAreaWidth * ControlPanelProportion[2] - 20f);
                                 if (Button("Kick", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     Commands.Kick(ChosenPlayer.ID.ToString());
@@ -1821,6 +1822,11 @@ namespace GGM.GUI.Pages
                                     Commands.Revive(ChosenPlayer.ID.ToString());
                                 }
 
+                                if (Button("Revive All", fullAreaWidth * ControlPanelProportion[2] - 20f))
+                                {
+                                    Commands.Revive(all: true);
+                                }
+
                                 if (Button("Steal Skin", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     if (!HERO.PlayersSkins.ContainsKey(ChosenPlayer.ID)) return;
@@ -1830,6 +1836,29 @@ namespace GGM.GUI.Pages
                                     HumanSkinsList.Add(skin.Split(','));
                                     HumanSkinsCountSetting.Value++;
                                     scrollHumanSkinsLeft.y = 9999f;
+                                }
+                                Label("Server", LabelType.SubHeader, width: fullAreaWidth * ControlPanelProportion[2] - 20f);
+                                if (Button(PhotonNetwork.room.open ? "Close" : "Open", fullAreaWidth * ControlPanelProportion[2] - 20f))
+                                {
+                                    if (PhotonNetwork.room.open)
+                                    {
+                                        Commands.RoomClose();
+                                    }
+                                    else
+                                    {
+                                        Commands.RoomOpen();
+                                    }
+                                }
+                                if (Button(PhotonNetwork.room.visible ? "Hide" : "Show", fullAreaWidth * ControlPanelProportion[2] - 20f))
+                                {
+                                    if (PhotonNetwork.room.visible)
+                                    {
+                                        Commands.RoomHide(true);
+                                    }
+                                    else
+                                    {
+                                        Commands.RoomHide(false);
+                                    }
                                 }
                             }
                             GUILayout.EndArea();
