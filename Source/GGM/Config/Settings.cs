@@ -91,7 +91,7 @@ namespace GGM.Config
         public static BoolSetting LegacyChatSetting = new BoolSetting("GGM_LegacyChat");
         public static BoolSetting LegacyLabelsSetting = new BoolSetting("GGM_LegacyLabels");
         public static BoolSetting LocationSkinsRandomizedPairsSetting = new BoolSetting("GGM_LocationSkinsRandomizedPairs");
-        public static BoolSetting LogChatSetting = new BoolSetting("GGM_LogChat");
+        public static BoolSetting LogChatSetting = new BoolSetting("GGM_LogChat", true);
         public static BoolSetting MinimapSetting = new BoolSetting("GGM_Minimap");
         public static BoolSetting MipMappingSetting = new BoolSetting("GGM_MipMapping");
         public static BoolSetting MouseInvertYSetting = new BoolSetting("GGM_MouseInvertY");
