@@ -270,5 +270,16 @@ namespace GGM.GUI
 
             return GUILayout.Button(text, options);
         }
+
+        public static bool Button(string labelText, string text, float width = ButtonWidth, float height = ButtonHeight, float labelWidth = LabelWidth, float labelHeight = LabelHeight)
+        {
+            bool output;
+            GUILayout.BeginHorizontal();
+            Label(labelText, width: labelWidth, height: labelHeight);
+            output = Button(text, width, height);
+            GUILayout.EndHorizontal();
+            GUILayout.Space(space);
+            return output;
+        }
     }
 }
