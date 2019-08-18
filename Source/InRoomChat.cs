@@ -458,6 +458,10 @@ public class InRoomChat : MonoBehaviour
                 Commands.Ban(args[1]);
                 break;
 
+            case "unban":
+                Commands.Unban(args[1]);
+                break;
+
             case "aso":
                 switch (args[1])
                 {

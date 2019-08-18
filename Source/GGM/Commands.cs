@@ -692,6 +692,32 @@ namespace GGM
             obj2.transform.position = obj.transform.position;
         }
 
+        public static void Unban(string id)
+        {
+            if (MCRequired())
+            {
+                return;
+            }
+
+            if (FengGameManagerMKII.OnPrivateServer)
+            {
+                FengGameManagerMKII.ServerRequestUnban(id);
+            }
+            else if (PhotonNetwork.isMasterClient)
+            {
+                var unbanplayer = Convert.ToInt32(id);
+                if (FengGameManagerMKII.banHash.ContainsKey(unbanplayer))
+                {
+                    SystemMessageGlobal(PhotonPlayer.Find(unbanplayer), " has been unbanned from the server.");
+                    FengGameManagerMKII.banHash.Remove(unbanplayer);
+                }
+                else
+                {
+                    SystemMessageLocal(Error(1));
+                }
+            }
+        }
+
         public static void Unmute(PhotonPlayer player)
         {
             var name = player.Name.StripHEX();
