@@ -1,5 +1,6 @@
 ﻿using GGM.Caching;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using UnityEngine;
@@ -1630,6 +1631,15 @@ namespace GGM.GUI.Pages
                             scrollServerMiscLeft = GUILayout.BeginScrollView(scrollServerMiscLeft);
                             {
                                 Label("Chat", LabelType.Header);
+                                Grid("Log To File", ref LogChatSetting.Value);
+                                if (LogChatSetting && File.Exists(Logger.ChatLogPath))
+                                {
+                                    if (Button($"File Size {new FileInfo(Logger.ChatLogPath).Length.BytesToMegabytes():0.###} MB", "Clear"))
+                                    {
+                                        File.WriteAllText(Logger.ChatLogPath, string.Empty);
+                                    }
+                                }
+
                                 Grid("Legacy Chat", ref LegacyChatSetting.Value);
                                 Grid("Background", ref ChatBackground.Value);
                                 if (ChatBackground) Slider("Opacity", ref ChatOpacitySetting.Value, 0f, 1f);
