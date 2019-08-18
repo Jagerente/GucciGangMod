@@ -120,7 +120,7 @@ namespace GGM.Config
         public static FloatSetting CannonMovementSpeedSetting = new FloatSetting("GGM_CannonSpeed", 40f);
         public static FloatSetting CannonRotateSpeedSetting = new FloatSetting("GGM_CannonRotate", 40f);
         public static FloatSetting ChatHeightSetting = new FloatSetting("GGM_ChatHeight", 470f);
-        public static FloatSetting ChatOpacitySetting = new FloatSetting("GGM_ChatOpacity", 0.3f);
+        public static FloatSetting ChatOpacitySetting = new FloatSetting("GGM_ChatOpacity", 0.75f);
         public static FloatSetting ChatWidthSetting = new FloatSetting("GGM_ChatHWidth", 300f);
         public static FloatSetting[][] CustomAmbientColorSetting = { new[] { new FloatSetting("GGM_AmbientColorDayR", 0.494f), new FloatSetting("GGM_AmbientColorDayG", 0.478f), new FloatSetting("GGM_AmbientColorDayB", 0.447f) }, new[] { new FloatSetting("GGM_AmbientColorDawnR", 0.345f), new FloatSetting("GGM_AmbientColorDawnG", 0.305f), new FloatSetting("GGM_AmbientColorDawnB", 0.271f) }, new[] { new FloatSetting("GGM_AmbientColorNightR", 0.05f), new FloatSetting("GGM_AmbientColorNightG", 0.05f), new FloatSetting("GGM_AmbientColorNightB", 0.05f) } };
         public static FloatSetting[][] CustomLightColorSettings = { new[] { new FloatSetting("GGM_LightColorDayR", 1f), new FloatSetting("GGM_LightColorDayG", 1f), new FloatSetting("GGM_LightColorDayB", 1f) }, new[] { new FloatSetting("GGM_LightColorDawnR", 0.729f), new FloatSetting("GGM_LightColorDawnG", 0.643f), new FloatSetting("GGM_LightColorDawnB", 0.458f) }, new[] { new FloatSetting("GGM_LightColorNightR", 0.08f), new FloatSetting("GGM_LightColorNightG", 0.08f), new FloatSetting("GGM_LightColorNightB", 0.1f) } };
