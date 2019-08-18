@@ -39,13 +39,15 @@ namespace GGM.Config
         public static List<object> ReceivedLocationSkinsData;
         public static IDataStorage Storage = null;
         private static Queue<ISetting> allSettings = null;
+        public static object[] ExtendedSkinsToSend;
 
         #region Booleans
 
         public static BoolSetting AntiAbusiveModsSetting = new BoolSetting("GGM_AntiAbusiveMods");
         public static BoolSetting AntiGuestsSetting = new BoolSetting("GGM_AntiGuests");
-        public static BoolSetting AntiRevive = new BoolSetting("GGM_AntiRevive");
+        public static BoolSetting AntiRevive = new BoolSetting("GGM_AntiRevive", true);
         public static BoolSetting AntiTitanErenSetting = new BoolSetting("GGM_AntiTitanEren");
+        public static BoolSetting AnnounceArrivalsSetting = new BoolSetting("GGM_AnnounceArrivals", true);
         public static BoolSetting ArmorModeSetting = new BoolSetting("GGM_ArmorMode");
         public static BoolSetting AutoReviveSetting = new BoolSetting("GGM_AutoRevive");
         public static BoolSetting BladeTrailsInfiniteLifetimeSetting = new BoolSetting("GGM_BladeTrailsInfiniteLifetime");
@@ -56,7 +58,7 @@ namespace GGM.Config
         public static BoolSetting CameraStaticFOVSetting = new BoolSetting("GGM_StaticFOV");
         public static BoolSetting CameraTiltSetting = new BoolSetting("GGM_CameraTilt");
         public static BoolSetting[] CameraTypeSettings = { new BoolSetting("GGM_OriginalCamera", true), new BoolSetting("GGM_TPSCamera", true), new BoolSetting("GGM_WOWCamera"), new BoolSetting("GGM_OldTPS"), };
-        public static BoolSetting ChatBackground = new BoolSetting("GGM_ChatBackground");
+        public static BoolSetting ChatBackground = new BoolSetting("GGM_ChatBackground", true);
         public static BoolSetting ChatFeedSeparateSetting = new BoolSetting("GGM_ChatFeedSeparate");
         public static BoolSetting ChatFeedSetting = new BoolSetting("GGM_ChatFeed");
         public static BoolSetting[] ChatMajorFormatSettings = { new BoolSetting("GGM_ChatMajorBold"), new BoolSetting("GGM_ChatMinorItalic") };
@@ -72,7 +74,7 @@ namespace GGM.Config
         public static BoolSetting CustomStarterTitansSetting = new BoolSetting("GGM_CustomStarterTitans");
         public static BoolSetting CustomTitansPerWaveSetting = new BoolSetting("GGM_CustomTitansPerWave");
         public static BoolSetting CustomWavesSetting = new BoolSetting("GGM_CustomWaves");
-        public static BoolSetting DamageFeedUISetting = new BoolSetting("GGM_GameFeedUI");
+        public static BoolSetting DamageFeedUISetting = new BoolSetting("GGM_DamageFeedUI", true);
         public static BoolSetting DashSetting = new BoolSetting("GGM_Dash");
         public static BoolSetting DeadlyCannonsModeSetting = new BoolSetting("GGM_DeadlyCannonsMode");
         public static BoolSetting DisableAHSSAirReloadingSetting = new BoolSetting("GGM_DisableAHSSAirReloading");
@@ -315,17 +317,12 @@ namespace GGM.Config
                 LocationSkinsForestParticlesList.Add(PlayerPrefs.GetInt("GGM_ForestParticles_" + i, 0));
                 LocationSkinsForestParticlesSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestParticlesCount_" + i, 1500f), PlayerPrefs.GetFloat("GGM_ForestParticlesHeight_" + i, 125f), PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMinimum_" + i, 60f), PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMaximum_" + i, 120f), PlayerPrefs.GetFloat("GGM_ForestParticlesGravity_" + i, 0.001f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorB_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorA_" + i, 1f), });
             }
-            Debug.Log(LocationSkinsForestSetTitlesSetting);
-
-            Debug.Log(LocationSkinsForestSetTitlesSetting.Value.Split('`').Length);
 
 
             foreach (var str in LocationSkinsForestSetTitlesSetting.Value.Split('`'))
             {
                 LocationSkinsForestTitlesList.Add(str);
             }
-
-            Debug.Log(PlayerPrefs.GetString("GGM_LocationSkinsForestSetTitles"));
         }
 
         public static void SaveForestSkins()
@@ -482,15 +479,15 @@ namespace GGM.Config
 
         public static void Save()
         {
-            foreach (var set in allSettings)
-            {
-                set.Save();
-            }
-
             SaveCustomMapSkins();
             SaveHumanSkins();
             SaveForestSkins();
             SaveCitySkins();
+
+            foreach (var set in allSettings)
+            {
+                set.Save();
+            }
         }
 
         public static void Update()

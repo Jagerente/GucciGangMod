@@ -1745,7 +1745,7 @@ namespace GGM.GUI.Pages
                                         File.WriteAllText(Logger.ChatLogPath, string.Empty);
                                     }
                                 }
-
+                                Grid("Announce Arrivals", ref AnnounceArrivalsSetting.Value);
                                 Grid("Legacy Chat", ref LegacyChatSetting.Value);
                                 Grid("Background", ref ChatBackground.Value);
                                 if (ChatBackground) Slider("Opacity", ref ChatOpacitySetting.Value, 0f, 1f);
