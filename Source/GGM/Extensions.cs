@@ -246,6 +246,11 @@ namespace GGM
             return "Unknown";
         }
 
+        public static float BytesToMegabytes(this long bytes)
+        {
+            return (bytes / 1024f) / 1024f;
+        }
+
         public static string CheckProps(this PhotonPlayer player)
         {
             var result = string.Empty;
