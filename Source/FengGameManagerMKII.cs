@@ -1630,8 +1630,8 @@ public class FengGameManagerMKII : MonoBehaviour
         objArray[89] = PlayerPrefs.GetString("titanbody4", string.Empty);
         objArray[90] = PlayerPrefs.GetString("titanbody5", string.Empty);
         objArray[91] = 0;
-        objArray[98] = PlayerPrefs.GetString("reelin", "LeftControl");
-        objArray[99] = PlayerPrefs.GetString("reelout", "LeftAlt");
+        objArray[98] = PlayerPrefs.GetString("reelin", "LeftAlt");
+        objArray[99] = PlayerPrefs.GetString("reelout", "Space");
         objArray[100] = 0;
         objArray[101] = PlayerPrefs.GetString("tforward", "W");
         objArray[102] = PlayerPrefs.GetString("tback", "S");
@@ -2032,18 +2032,13 @@ public class FengGameManagerMKII : MonoBehaviour
                             if (Settings.LegacyChatSetting)
                             {
                                 string msg = "<color=#A8FF24>Wave : " + this.wave + "</color>";
-                                if (!Settings.ChatFeedSeparateSetting)
-                                    InRoomChat.AddLineChat(msg);
-                                else
-                                    InRoomChat.AddLineChatFeed(msg);
+                                photonView.RPC("Chat", PhotonTargets.All, new object[] { msg, string.Empty });
                             }
                             else
                             {
                                 string[] msg = { $"[Wave {wave}]" };
-                                if (!Settings.ChatFeedSeparateSetting)
-                                    InRoomChat.SystemMessageLocal(msg, false);
-                                else
-                                    InRoomChat.SystemMessageLocal(msg, false, true);
+                                InRoomChat.SystemMessageGlobal(msg, false);
+
                             }
                         }
 
