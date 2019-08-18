@@ -17,9 +17,9 @@ namespace GGM.Discord
         private void Awake()
         {
             var handlers = new DiscordAPI.EventHandlers();
-            handlers.readyCallback += () => { };
-            handlers.disconnectedCallback += (a, b) => { };
-            handlers.errorCallback += (a, b) => { Debug.Log(b); };
+            handlers.readyCallback += () => { Debug.Log("[RichPresence] Ready."); };
+            handlers.disconnectedCallback += (a, b) => { Debug.Log("[RichPresence] Disconnected."); };
+            handlers.errorCallback += (a, b) => { Debug.Log("[RichPresence] Error " + a + ": "+ b); };
             handlers.joinCallback += (a) => { };
             handlers.requestCallback += (ref DiscordAPI.JoinRequest a) => { };
             handlers.spectateCallback += (a) => { };
