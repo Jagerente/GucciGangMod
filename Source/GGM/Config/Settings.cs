@@ -492,9 +492,10 @@ namespace GGM.Config
 
         public static void Update()
         {
-            if (Application.loadedLevel == 0 || Application.loadedLevelName == "characterCreation" || Application.loadedLevelName == "SnapShot" || FengGameManagerMKII.inputManager.menuOn)
+            if (Application.loadedLevel == 0 || Application.loadedLevelName == "characterCreation" || Application.loadedLevelName == "SnapShot")
             {
                 Application.targetFrameRate = 60;
+                return;
             }
 
             if (UserInterfaceSetting)
