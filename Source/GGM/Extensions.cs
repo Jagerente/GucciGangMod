@@ -1,4 +1,5 @@
-﻿using GGM.Caching;
+﻿using System;
+using GGM.Caching;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -8,13 +9,252 @@ namespace GGM
 {
     public static class Extensions
     {
-        public static string[] AllProps;
+        /// <summary>
+        /// Converts Bytes to Megabytes.
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static float BytesToMegabytes(this long bytes)
+        {
+            return (bytes / 1024f) / 1024f;
+        }
+
+        /// <summary>
+        /// Counts words in string.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="s1"></param>
+        /// <returns></returns>
+        public static int CountWords(this string s, string s1)
+        {
+            return (s.Length - s.Replace(s1, "").Length) / s1.Length;
+        }
+
+        /// <summary>
+        /// Disables GameObject using cache.
+        /// </summary>
+        /// <param name="str"></param>
+        public static void DisableObject(string str)
+        {
+            if (GameObjectCache.Find(str))
+            {
+                GameObjectCache.Find(str).SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// Enables GameObject using cache.
+        /// </summary>
+        /// <param name="str"></param>
+        public static void EnableObject(string str)
+        {
+            if (GameObjectCache.Find(str))
+            {
+                GameObjectCache.Find(str).SetActive(true);
+            }
+        }
+
+        /// <summary>
+        /// Sends RPC to all GGM users on server.
+        /// </summary>
+        /// <param name="pv"></param>
+        /// <param name="RPCName"></param>
+        /// <param name="data"></param>
+        public static void SendToGGMUser(this PhotonView pv, string RPCName, params object[] data)
+        {
+            var targets = PhotonPlayer.GetGGMUsers();
+            if (targets.Length == 0)
+            {
+                return;
+            }
+
+            foreach (var player in targets)
+            {
+                pv.RPC(RPCName, player, data);
+            }
+        }
+
+        /// <summary>
+        /// Adds HTML color tag to string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static string SetColor(this string str, string color)
+        {
+            return $"<color=#{color}>{str}</color>";
+        }
+
+        /// <summary>
+        /// Adds HTML size tag to string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public static string SetSize(this string str, int size)
+        {
+            return $"<size={size}>{str}</size>";
+        }
+
+        /// <summary>
+        /// Removes HEX tag colors from string.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string StripHEX(this string text)
+        {
+            var list = new[] { 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }.ToList();
+            for (var i = 0; i < text.Length; i++)
+            {
+                if (text[i] == '[')
+                {
+                    var num = i;
+                    var num2 = 1;
+                    var flag = false;
+                    while (num + num2 < text.Length)
+                    {
+                        num2++;
+                        if (num2 > 8)
+                        {
+                            break;
+                        }
+
+                        var num3 = num + num2 - 1;
+                        if (text[num3] == ']')
+                        {
+                            if (num2 >= 3 && (num2 != 3 || text[num3 - 1] == '-'))
+                            {
+                                flag = true;
+                            }
+
+                            break;
+                        }
+
+                        if (!list.Contains(Char.ToUpper(text[num3])) && (num3 + 1 >= text.Length || text[num3 + 1] != ']'))
+                        {
+                            break;
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        text = text.Remove(num, num2);
+                        i = 0;
+                    }
+                }
+            }
+
+            return String.Concat(text);
+        }
+
+        /// <summary>
+        /// Removes HTML tags from string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string StripHTML(this string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
+        }
+
+        /// <summary>
+        /// Converts HEX string to Color.
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public static Color ToColor(this string hex, byte a = 255)
+        {
+            if (hex.Length != 6) return ColorCache.White;
+            var r = Byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
+            var g = Byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
+            var b = Byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
+            return new Color32(r, g, b, a);
+        }
+
+        /// <summary>
+        /// Converts string array to float array.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static float[] ToFloatArray(this string[] str)
+        {
+            var output = new float[str.Length];
+
+            for (var i = 0; i < str.Length; i++)
+            {
+                output[i] = Single.Parse(str[i]);
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Converts Color variable to HEX-format string.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static string ToHEX(this Color color)
+        {
+            return color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
+        }
+
+        /// <summary>
+        /// Converts HEX color tag to HTML color tag.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string ToHTML(this string str)
+        {
+            if (Regex.IsMatch(str, @"\[([0-9a-zA-Z]{6})\]"))
+            {
+                str = str.Contains("[-]") ? Regex.Replace(str, @"\[([0-9a-fA-F]{6})\]", "<color=#$1>").Replace("[-]", "</color>") : Regex.Replace(str, @"\[([0-9a-fA-F]{6})\]", "<color=#$1>");
+                var c = (short)(str.CountWords("<color=") - str.CountWords("</color>"));
+                for (short i = 0; i < c; i++)
+                {
+                    str += "</color>";
+                }
+            }
+
+            return str;
+        }
+
+        /// <summary>
+        /// Makes first letter of string upper case.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string ToUpperCase(this string str)
+        {
+            return Char.ToUpper(str[0]) + str.Substring(1);
+        }
+
+        public static string CheckProps(this PhotonPlayer player)
+        {
+            var result = String.Empty;
+            foreach (string str in player.customProperties.Keys)
+            {
+                if (PhotonPlayer.AllProps.Contains(str))
+                {
+                    if ((string)str == String.Empty)
+                    {
+                        result += "string.Empty ";
+                    }
+                    else
+                    {
+                        result += str + ": " + player.customProperties[str] + '\n';
+                    }
+                }
+            }
+
+            return result == String.Empty ? "No unusual properties" : result;
+        }
 
         public static string CheckMod(this PhotonPlayer player)
         {
-            var mod = string.Empty;
-            var key = string.Empty;
-            var rank = string.Empty;
+            var mod = String.Empty;
+            var key = String.Empty;
+            var rank = String.Empty;
             string[] rankarray = { "bronze", "silver", "gold", "platin", "diamond", "master", "grandmaster", "top5", "legendary" };
             switch (key)
             {
@@ -238,234 +478,12 @@ namespace GGM
                 return "Venice's Mod";
             }
 
-            if (player.customProperties.ContainsKey("RCteam") && mod == string.Empty)
+            if (player.customProperties.ContainsKey("RCteam") && mod == String.Empty)
             {
                 return "RC Mod";
             }
 
             return "Unknown";
-        }
-
-        public static float BytesToMegabytes(this long bytes)
-        {
-            return (bytes / 1024f) / 1024f;
-        }
-
-        public static string CheckProps(this PhotonPlayer player)
-        {
-            var result = string.Empty;
-            foreach (string str in player.customProperties.Keys)
-            {
-                if (!AllProps.Contains(str))
-                {
-                    if ((string)str == string.Empty)
-                    {
-                        result += "string.Empty ";
-                    }
-                    else
-                    {
-                        result += str + ": " + player.customProperties[str] + '\n';
-                    }
-                }
-            }
-
-            return result == string.Empty ? "No unusual properties" : result;
-        }
-
-        public static int CountWords(this string s, string s1)
-        {
-            return (s.Length - s.Replace(s1, "").Length) / s1.Length;
-        }
-
-        public static void DisableObject(string str)
-        {
-            if (GameObjectCache.Find(str))
-            {
-                GameObjectCache.Find(str).SetActive(false);
-            }
-        }
-
-        public static void EnableObject(string str)
-        {
-            if (GameObjectCache.Find(str))
-            {
-                GameObjectCache.Find(str).SetActive(true);
-            }
-        }
-
-        public static string GetDayLight()
-        {
-            var dayLight = "Day";
-            switch (IN_GAME_MAIN_CAMERA.dayLight)
-            {
-                case DayLight.Day:
-                    return dayLight = "Day";
-
-                case DayLight.Dawn:
-                    return dayLight = "Dawn";
-
-                case DayLight.Night:
-                    return dayLight = "Night";
-            }
-
-            return dayLight;
-        }
-
-        public static string GetDifficulty()
-        {
-            var difficulty = "Training";
-            switch (IN_GAME_MAIN_CAMERA.difficulty)
-            {
-                case 0:
-                    return difficulty = "Normal";
-
-                case 1:
-                    return difficulty = "Hard";
-
-                case 2:
-                    return difficulty = "Abnormal";
-            }
-
-            return difficulty;
-        }
-
-        public static string GetLobbyName()
-        {
-            return Regex.Replace(PhotonNetwork.ServerAddress, "app\\-|\\.exitgamescloud\\.com|\\:\\d+", "").ToUpper();
-        }
-
-        public static string GetRoomName()
-        {
-            return PhotonNetwork.room.name.Split(new char[] { '`' })[0].Trim().StripHEX();
-        }
-
-        public static void SendToGGMUser(this PhotonView pv, string RPCName, params object[] data)
-        {
-            var targets = PhotonPlayer.GetGGMUsers();
-            if (targets.Length == 0)
-            {
-                return;
-            }
-
-            foreach (var player in targets)
-            {
-                pv.RPC(RPCName, player, data);
-            }
-        }
-
-        public static string SetColor(this string str, string color)
-        {
-            return $"<color=#{color}>{str}</color>";
-        }
-
-        public static string SetSize(this string str, int size)
-        {
-            return $"<size={size}>{str}</size>";
-        }
-        /// <summary>
-        /// Removes HEX tag colors from string.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public static string StripHEX(this string text)
-        {
-            var list = new[] { 'A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }.ToList();
-            for (var i = 0; i < text.Length; i++)
-            {
-                if (text[i] == '[')
-                {
-                    var num = i;
-                    var num2 = 1;
-                    var flag = false;
-                    while (num + num2 < text.Length)
-                    {
-                        num2++;
-                        if (num2 > 8)
-                        {
-                            break;
-                        }
-
-                        var num3 = num + num2 - 1;
-                        if (text[num3] == ']')
-                        {
-                            if (num2 >= 3 && (num2 != 3 || text[num3 - 1] == '-'))
-                            {
-                                flag = true;
-                            }
-
-                            break;
-                        }
-
-                        if (!list.Contains(char.ToUpper(text[num3])) && (num3 + 1 >= text.Length || text[num3 + 1] != ']'))
-                        {
-                            break;
-                        }
-                    }
-
-                    if (flag)
-                    {
-                        text = text.Remove(num, num2);
-                        i = 0;
-                    }
-                }
-            }
-
-            return string.Concat(text);
-        }
-
-        /// <summary>
-        /// Removes HTML tags from string.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static string StripHTML(this string input)
-        {
-            return Regex.Replace(input, "<.*?>", string.Empty);
-        }
-
-        /// <summary>
-        /// Converts HEX string to Color.
-        /// </summary>
-        /// <param name="hex"></param>
-        /// <param name="a"></param>
-        /// <returns></returns>
-        public static Color ToColor(this string hex, byte a = 255)
-        {
-            if (hex.Length != 6) return Caching.ColorCache.White;
-            var r = byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
-            var g = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
-            var b = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
-            return new Color32(r, g, b, a);
-        }
-
-        /// <summary>
-        /// Converts Color variable to HEX-format string.
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        public static string ToHEX(this Color color)
-        {
-            return color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
-        }
-
-        public static string ToHTML(this string str)
-        {
-            if (Regex.IsMatch(str, @"\[([0-9a-zA-Z]{6})\]"))
-            {
-                str = str.Contains("[-]") ? Regex.Replace(str, @"\[([0-9a-fA-F]{6})\]", "<color=#$1>").Replace("[-]", "</color>") : Regex.Replace(str, @"\[([0-9a-fA-F]{6})\]", "<color=#$1>");
-                var c = (short)(str.CountWords("<color=") - str.CountWords("</color>"));
-                for (short i = 0; i < c; i++)
-                {
-                    str += "</color>";
-                }
-            }
-
-            return str;
-        }
-
-        public static string ToUpperCase(this string str)
-        {
-            return char.ToUpper(str[0]) + str.Substring(1);
         }
     }
 }

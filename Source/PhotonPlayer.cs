@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ExitGames.Client.Photon;
 using GGM;
+using GGM.Config;
 using UnityEngine;
 
 public class PhotonPlayer
@@ -99,7 +101,7 @@ public class PhotonPlayer
     {
         get
         {
-            string str = string.Empty;
+            string str = String.Empty;
             foreach (byte code in this.EventList.Keys)
             {
                 str += code + ": " + EventList[code] + "\n";
@@ -233,8 +235,10 @@ public class PhotonPlayer
     public string GetProperty(string key)
     {
         customProperties.TryGetValue(key, out var property);
-        return property != null ? property.ToString() : string.Empty;
+        return property != null ? property.ToString() : String.Empty;
     }
+
+    public static string[] AllProps;
 
     public Hashtable allProperties
     {
@@ -279,7 +283,7 @@ public class PhotonPlayer
 
     public bool isMuted
     {
-        get { return GGM.Config.Settings.MutedPlayers.Contains(Name.StripHEX()); }
+        get { return Settings.MutedPlayers.Contains(Name.StripHEX()); }
     }
 
     public bool isMasterClient

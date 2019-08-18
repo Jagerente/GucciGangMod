@@ -2,6 +2,8 @@
 using GGM.Config;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using GGM;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -43,7 +45,7 @@ public static class PhotonNetwork
         photonMono = obj2.AddComponent<PhotonHandler>();
         obj2.name = "PhotonMono";
         obj2.hideFlags = HideFlags.HideInHierarchy;
-        networkingPeer = new NetworkingPeer(photonMono, string.Empty, Settings.ConnectionProtocolSettings == 0 ? ConnectionProtocol.Udp : Settings.ConnectionProtocolSettings == 1 ? ConnectionProtocol.Tcp : ConnectionProtocol.WebSocket);
+        networkingPeer = new NetworkingPeer(photonMono, String.Empty, Settings.ConnectionProtocolSettings == 0 ? ConnectionProtocol.Udp : Settings.ConnectionProtocolSettings == 1 ? ConnectionProtocol.Tcp : ConnectionProtocol.WebSocket);
         CustomTypes.Register();
     }
 
@@ -85,7 +87,7 @@ public static class PhotonNetwork
                 }
             }
 
-            throw new Exception(string.Format("AllocateViewID() failed. Room (user {0}) is out of subIds, as all room viewIDs are used.", ownerId));
+            throw new Exception(String.Format("AllocateViewID() failed. Room (user {0}) is out of subIds, as all room viewIDs are used.", ownerId));
         }
 
         var lastUsedViewSubId = PhotonNetwork.lastUsedViewSubId;
@@ -104,7 +106,7 @@ public static class PhotonNetwork
             }
         }
 
-        throw new Exception(string.Format("AllocateViewID() failed. User {0} is out of subIds, as all viewIDs are used.", ownerId));
+        throw new Exception(String.Format("AllocateViewID() failed. User {0} is out of subIds, as all viewIDs are used.", ownerId));
     }
 
     public static bool CloseConnection(PhotonPlayer kickPlayer)
@@ -384,7 +386,7 @@ public static class PhotonNetwork
 
     public static GameObject Instantiate(string prefabName, Vector3 position, Quaternion rotation, int group)
     {
-        return Instantiate(prefabName, position, rotation, group, null);
+        return Instantiate(prefabName, position, rotation, @group, null);
     }
 
     public static GameObject Instantiate(string prefabName, Vector3 position, Quaternion rotation, int group, object[] data)
@@ -392,7 +394,7 @@ public static class PhotonNetwork
         GameObject obj2;
         if (!connected || InstantiateInRoomOnly && !inRoom)
         {
-            Debug.LogError(string.Concat("Failed to Instantiate prefab: ", prefabName, ". Client should be in a room. Current connectionStateDetailed: ", connectionStateDetailed));
+            Debug.LogError(String.Concat("Failed to Instantiate prefab: ", prefabName, ". Client should be in a room. Current connectionStateDetailed: ", connectionStateDetailed));
             return null;
         }
 
@@ -431,7 +433,7 @@ public static class PhotonNetwork
             viewIDs[i] = AllocateViewID(player.ID);
         }
 
-        var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, false);
+        var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, @group, viewIDs, data, false);
         return networkingPeer.DoInstantiate(evData, networkingPeer.mLocalActor, obj2);
     }
 
@@ -440,7 +442,7 @@ public static class PhotonNetwork
         GameObject obj2;
         if (!connected || InstantiateInRoomOnly && !inRoom)
         {
-            Debug.LogError(string.Concat("Failed to InstantiateSceneObject prefab: ", prefabName, ". Client should be in a room. Current connectionStateDetailed: ", connectionStateDetailed));
+            Debug.LogError(String.Concat("Failed to InstantiateSceneObject prefab: ", prefabName, ". Client should be in a room. Current connectionStateDetailed: ", connectionStateDetailed));
             return null;
         }
 
@@ -474,11 +476,11 @@ public static class PhotonNetwork
         var viewIDs = AllocateSceneViewIDs(obj2.GetPhotonViewsInChildren().Length);
         if (viewIDs == null)
         {
-            Debug.LogError(string.Concat("Failed to InstantiateSceneObject prefab: ", prefabName, ". No ViewIDs are free to use. Max is: ", MAX_VIEW_IDS));
+            Debug.LogError(String.Concat("Failed to InstantiateSceneObject prefab: ", prefabName, ". No ViewIDs are free to use. Max is: ", MAX_VIEW_IDS));
             return null;
         }
 
-        var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, group, viewIDs, data, true);
+        var evData = networkingPeer.SendInstantiate(prefabName, position, rotation, @group, viewIDs, data, true);
         return networkingPeer.DoInstantiate(evData, networkingPeer.mLocalActor, obj2);
     }
 
@@ -549,7 +551,7 @@ public static class PhotonNetwork
             return false;
         }
 
-        if (string.IsNullOrEmpty(roomName))
+        if (String.IsNullOrEmpty(roomName))
         {
             Debug.LogError("JoinOrCreateRoom failed. A roomname is required. If you don't know one, how will you join?");
             return false;
@@ -620,7 +622,7 @@ public static class PhotonNetwork
             return false;
         }
 
-        if (string.IsNullOrEmpty(roomName))
+        if (String.IsNullOrEmpty(roomName))
         {
             Debug.LogError("JoinRoom failed. A roomname is required. If you don't know one, how will you join?");
             return false;
@@ -640,7 +642,7 @@ public static class PhotonNetwork
         {
             Debug.LogError("JoinRoom aborted: You are already in a room!");
         }
-        else if (roomName == string.Empty)
+        else if (roomName == String.Empty)
         {
             Debug.LogError("JoinRoom aborted: You must specifiy a room name!");
         }
@@ -858,7 +860,7 @@ public static class PhotonNetwork
     {
         if (VerifyCanUseNetwork())
         {
-            networkingPeer.SetReceivingEnabled(group, enabled);
+            networkingPeer.SetReceivingEnabled(@group, enabled);
         }
     }
 
@@ -874,7 +876,7 @@ public static class PhotonNetwork
     {
         if (VerifyCanUseNetwork())
         {
-            networkingPeer.SetSendingEnabled(group, enabled);
+            networkingPeer.SetSendingEnabled(@group, enabled);
         }
     }
 
@@ -899,7 +901,7 @@ public static class PhotonNetwork
             {
             }
 
-            networkingPeer = new NetworkingPeer(photonMono, string.Empty, cp);
+            networkingPeer = new NetworkingPeer(photonMono, String.Empty, cp);
             Debug.Log("Protocol switched to: " + cp);
         }
     }
@@ -909,7 +911,7 @@ public static class PhotonNetwork
         manuallyAllocatedViewIds.Remove(viewID);
         if (networkingPeer.photonViewList.ContainsKey(viewID))
         {
-            Debug.LogWarning(string.Format("Unallocated manually used viewID: {0} but found it used still in a PhotonView: {1}", viewID, networkingPeer.photonViewList[viewID]));
+            Debug.LogWarning(String.Format("Unallocated manually used viewID: {0} but found it used still in a PhotonView: {1}", viewID, networkingPeer.photonViewList[viewID]));
         }
     }
 
@@ -1373,4 +1375,14 @@ public static class PhotonNetwork
     }
 
     public delegate void EventCallback(byte eventCode, object content, int senderId);
+
+    public static string GetRoomName()
+    {
+        return PhotonNetwork.room.name.Split(new char[] { '`' })[0].Trim().StripHEX();
+    }
+
+    public static string GetLobbyName()
+    {
+        return Regex.Replace(PhotonNetwork.ServerAddress, "app\\-|\\.exitgamescloud\\.com|\\:\\d+", "").ToUpper();
+    }
 }

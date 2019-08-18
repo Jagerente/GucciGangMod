@@ -51,7 +51,7 @@ namespace GGM.Discord
                 if (PhotonNetwork.insideLobby)
                 {
                     presence.details = "Lobby";
-                    presence.state = Extensions.GetLobbyName();
+                    presence.state = PhotonNetwork.GetLobbyName();
                     presence.partySize = 0;
                     presence.partyMax = 0;
                 }
@@ -59,7 +59,7 @@ namespace GGM.Discord
                 {
                     presence.details = "Singleplayer";
                     presence.largeImageKey = GetImage();
-                    presence.largeImageText = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
+                    presence.largeImageText = $"{FengGameManagerMKII.level}/{IN_GAME_MAIN_CAMERA.GetDifficulty()}/{IN_GAME_MAIN_CAMERA.GetDayLight()}";
                     presence.state = $"{FengGameManagerMKII.single_kills}/{FengGameManagerMKII.single_maxDamage}/{FengGameManagerMKII.single_totalDamage}";
                     presence.partySize = 0;
                     presence.partyMax = 0;
@@ -77,9 +77,9 @@ namespace GGM.Discord
             else
             {
                 presence.details = "Multiplayer";
-                presence.state = Extensions.GetRoomName().Length > 14 ? Extensions.GetRoomName().Remove(12) + "..." : Extensions.GetRoomName();
+                presence.state = PhotonNetwork.GetRoomName().Length > 14 ? PhotonNetwork.GetRoomName().Remove(12) + "..." : PhotonNetwork.GetRoomName();
                 presence.largeImageKey = GetImage();
-                presence.largeImageText = $"{FengGameManagerMKII.level}/{Extensions.GetDifficulty()}/{Extensions.GetDayLight()}";
+                presence.largeImageText = $"{FengGameManagerMKII.level}/{IN_GAME_MAIN_CAMERA.GetDifficulty()}/{IN_GAME_MAIN_CAMERA.GetDayLight()}";
                 presence.partySize = PhotonNetwork.room.playerCount;
                 presence.partyMax = PhotonNetwork.room.maxPlayers;
             }
@@ -101,7 +101,7 @@ namespace GGM.Discord
 
             if ((FengGameManagerMKII.level.ToLower().Contains("forest") || FengGameManagerMKII.level.ToLower().Contains("city")) && largeImageKey != "logo_large")
             {
-                return $"{largeImageKey}_{Extensions.GetDayLight().ToLower()}";
+                return $"{largeImageKey}_{IN_GAME_MAIN_CAMERA.GetDayLight().ToLower()}";
             }
 
             return largeImageKey;
