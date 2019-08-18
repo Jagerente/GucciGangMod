@@ -22,7 +22,7 @@ public class UIMainReferences : MonoBehaviour
     public GameObject PanelSnapShot;
     public static string ServerKey;
     public const string PublicKey = "01042015";
-    public const string Version = "v5.8.10";
+    public const string Version = "v5.8.18-BETA";
 
     private void Awake()
     {

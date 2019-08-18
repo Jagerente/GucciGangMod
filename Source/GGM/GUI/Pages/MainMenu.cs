@@ -13,7 +13,7 @@ namespace GGM.GUI.Pages
     {
         private static int loginSwitchInt;
         private static Rect Panel = GUIHelpers.AlignRect(250f, 190f, GUIHelpers.Alignment.BOTTOMLEFT, 5, -5f);
-        private static readonly Rect VersionPanel = GUIHelpers.AlignRect(175f, 20f, GUIHelpers.Alignment.BOTTOMRIGHT);
+        private static readonly Rect VersionPanel = GUIHelpers.AlignRect(300f, 20f, GUIHelpers.Alignment.BOTTOMRIGHT);
         private static float width = 250f;
         private static float height = 180f;
         private static float leftElement = width * 0.4f;

@@ -308,11 +308,11 @@ namespace GGM.Config
             for (var i = 0; i < LocationSkinsForestCountSetting; i++)
             {
                 LocationSkinsForestList.Add(PlayerPrefs.GetString("GGM_ForestSkin_" + i,"```````````````````````").Split('`'));
-                LocationSkinsForestAmbientList.Add(PlayerPrefs.GetInt("GGM_ForestAmbient_" + i, 0));
+                LocationSkinsForestAmbientList.Add(PlayerPrefs.GetInt("GGM_ForestAmbient_" + i, 1));
                 LocationSkinsForestAmbientSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestAmbientColorR_" + i, FengColor.dayAmbientLight.r), PlayerPrefs.GetFloat("GGM_ForestAmbientColorG_" + i, FengColor.dayAmbientLight.g), PlayerPrefs.GetFloat("GGM_ForestAmbientColorB_" + i, FengColor.dayAmbientLight.b) });
-                LocationSkinsForestFogList.Add(PlayerPrefs.GetInt("GGM_ForestFog_" + i, 0));
+                LocationSkinsForestFogList.Add(PlayerPrefs.GetInt("GGM_ForestFog_" + i, 1));
                 LocationSkinsForestFogSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestFogColorR_" + i, 0.66f), PlayerPrefs.GetFloat("GGM_ForestFogColorG_" + i, 0.66f), PlayerPrefs.GetFloat("GGM_ForestFogColorB_" + i, 0.66f), PlayerPrefs.GetFloat("GGM_ForestFogStartDistance_" + i, 0f), PlayerPrefs.GetFloat("GGM_ForestFogEndDistance_" + i, 1000f) });
-                LocationSkinsForestLightList.Add(PlayerPrefs.GetInt("GGM_ForestLight_" + i, 0));
+                LocationSkinsForestLightList.Add(PlayerPrefs.GetInt("GGM_ForestLight_" + i, 1));
                 LocationSkinsForestLightSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestLightColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestLightColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestLightColorB_" + i, 1f) });
                 LocationSkinsForestParticlesList.Add(PlayerPrefs.GetInt("GGM_ForestParticles_" + i, 0));
                 LocationSkinsForestParticlesSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestParticlesCount_" + i, 1500f), PlayerPrefs.GetFloat("GGM_ForestParticlesHeight_" + i, 125f), PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMinimum_" + i, 60f), PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMaximum_" + i, 120f), PlayerPrefs.GetFloat("GGM_ForestParticlesGravity_" + i, 0.001f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorB_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorA_" + i, 1f), });
@@ -495,7 +495,6 @@ namespace GGM.Config
             if (Application.loadedLevel == 0 || Application.loadedLevelName == "characterCreation" || Application.loadedLevelName == "SnapShot" || FengGameManagerMKII.inputManager.menuOn)
             {
                 Application.targetFrameRate = 60;
-                return;
             }
 
             if (UserInterfaceSetting)
