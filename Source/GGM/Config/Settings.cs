@@ -72,7 +72,7 @@ namespace GGM.Config
         public static BoolSetting CustomStarterTitansSetting = new BoolSetting("GGM_CustomStarterTitans");
         public static BoolSetting CustomTitansPerWaveSetting = new BoolSetting("GGM_CustomTitansPerWave");
         public static BoolSetting CustomWavesSetting = new BoolSetting("GGM_CustomWaves");
-        public static BoolSetting DamageFeedUISetting = new BoolSetting("GGM_GameFeedUI", true);
+        public static BoolSetting DamageFeedUISetting = new BoolSetting("GGM_GameFeedUI");
         public static BoolSetting DashSetting = new BoolSetting("GGM_Dash");
         public static BoolSetting DeadlyCannonsModeSetting = new BoolSetting("GGM_DeadlyCannonsMode");
         public static BoolSetting DisableAHSSAirReloadingSetting = new BoolSetting("GGM_DisableAHSSAirReloading");
@@ -91,6 +91,7 @@ namespace GGM.Config
         public static BoolSetting LegacyChatSetting = new BoolSetting("GGM_LegacyChat");
         public static BoolSetting LegacyLabelsSetting = new BoolSetting("GGM_LegacyLabels");
         public static BoolSetting LocationSkinsRandomizedPairsSetting = new BoolSetting("GGM_LocationSkinsRandomizedPairs");
+        public static BoolSetting LogChatSetting = new BoolSetting("GGM_LogChat");
         public static BoolSetting MinimapSetting = new BoolSetting("GGM_Minimap");
         public static BoolSetting MipMappingSetting = new BoolSetting("GGM_MipMapping");
         public static BoolSetting MouseInvertYSetting = new BoolSetting("GGM_MouseInvertY");

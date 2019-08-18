@@ -2134,12 +2134,7 @@ public class FengGameManagerMKII : MonoBehaviour
     public void OnJoinedRoom()
     {
         HERO.PlayersSkins = new Dictionary<int, string>();
-
-        var section = "--------------------------------------------------------------------------------------------------------------------------------------------------------";
-        var info = string.Empty;
-        for (var i = 0; i < 4; i++) info += PhotonNetwork.room.name.Split('`')[i].ToUpper() + (i < 3 ? "/" : string.Empty);
-        Logger.Log(Application.dataPath + "/chat.txt", section + Environment.NewLine + DateTime.Now.ToLongDateString() + Environment.NewLine + info + Environment.NewLine + section + Environment.NewLine);
-
+        Logger.LogChat(Logger.ChatLogPath, PhotonNetwork.room);
         maxPlayers = PhotonNetwork.room.maxPlayers;
         playerList = string.Empty;
         char[] separator = { "`"[0] };
@@ -5718,7 +5713,7 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void Chat(string content, string sender, PhotonMessageInfo info)
     {
-        Logger.LogChat(Application.dataPath + "/chat.txt", content, info);
+        Logger.LogChat(Logger.ChatLogPath, content, info);
 
         if (sender != string.Empty)
         {
@@ -5740,7 +5735,8 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void ChatPM(string sender, string content, PhotonMessageInfo info)
     {
-        Logger.LogChat(Application.dataPath + "/chat.txt", content, info);
+        Logger.LogChat(Logger.ChatLogPath, content, info);
+
         content = InRoomChat.ChatFormatting("Message from ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting($"[{Convert.ToString(info.sender.ID)}]", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + info.sender.Name.hexColor() + ": " + content;
         if (Settings.LegacyChatSetting)
         {
