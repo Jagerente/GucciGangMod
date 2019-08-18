@@ -23,7 +23,6 @@ namespace GGM.GUI.Pages
                         Label("Unpausing in:", Settings.LabelType.Header, width: 200f);
                         Label(FGM.pauseWaitTime.ToString("F1"), Settings.LabelType.SubHeader, width: 200f);
                         GUILayout.FlexibleSpace();
-                        if (FGM.pauseWaitTime == 0f) GetInstance<Pause>().Disable();
                     }
                     else
                     {
@@ -34,6 +33,8 @@ namespace GGM.GUI.Pages
                 }
                 GUILayout.EndArea();
             }
+
+            if (FGM.pauseWaitTime == 0f) GetInstance<Pause>().Disable();
         }
     }
 }
