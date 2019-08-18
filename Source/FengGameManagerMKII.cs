@@ -9,7 +9,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+using WebSocketSharp;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Logger = GGM.Logger;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 
@@ -2339,6 +2341,8 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnPhotonPlayerConnected(PhotonPlayer player)
     {
+        if (Settings.AnnounceArrivalsSetting) InRoomChat.SystemMessageLocal(player, "has joined.");
+
         if (PhotonNetwork.isMasterClient)
         {
             var photonView = this.photonView;
@@ -2521,14 +2525,16 @@ public class FengGameManagerMKII : MonoBehaviour
                     photonView.RPC("Chat", player, parameters);
                 }
             }
+            if (player.GucciGangMod && Settings.LocationSkinsSetting == 2) photonView.RPC("extendedSkinsRPC", player, Settings.ExtendedSkinsToSend);
         }
-
         RecompilePlayerList(0.1f);
         GGM.Discord.RichPresence.UpdateStatus();
     }
 
     public void OnPhotonPlayerDisconnected(PhotonPlayer player)
     {
+        if (Settings.AnnounceArrivalsSetting) InRoomChat.SystemMessageLocal(player, "has left.");
+
         if (!gameTimesUp)
         {
             oneTitanDown(string.Empty, true);
@@ -7780,7 +7786,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 {
                     if (Application.loadedLevelName.Contains("Forest"))
                     {
-                        object[] par =
+                        Settings.ExtendedSkinsToSend = new object[]
                         {
                             Settings.LocationSkinsForestAmbientList[Settings.LocationSkinsForestCurrentSetSetting],
                             new float[]
@@ -7807,12 +7813,12 @@ public class FengGameManagerMKII : MonoBehaviour
 
                             }
                         };
-                        base.photonView.SendToGGMUser("extendedSkinsRPC", PhotonTargets.Others, par);
+                        photonView.SendToGGMUser("extendedSkinsRPC", Settings.ExtendedSkinsToSend);
                     }
 
                     if (Application.loadedLevelName.Contains("City"))
                     {
-                        object[] par =
+                        Settings.ExtendedSkinsToSend = new object[]
                         {
                             Settings.LocationSkinsCityAmbientList[Settings.LocationSkinsCityCurrentSetSetting],
                             new float[]
@@ -7838,7 +7844,7 @@ public class FengGameManagerMKII : MonoBehaviour
                                 Settings.LocationSkinsCityFogSettingsList[Settings.LocationSkinsCityCurrentSetSetting][4]
                             }
                         };
-                        base.photonView.SendToGGMUser("extendedSkinsRPC", par);
+                        photonView.SendToGGMUser("extendedSkinsRPC", Settings.ExtendedSkinsToSend);
                     }
                     photonView.RPC("loadskinRPC", PhotonTargets.AllBuffered, n, url, str3, SkyBoxArray);
                 }
