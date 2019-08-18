@@ -107,23 +107,28 @@ namespace GGM.GUI.Pages
                     GUILayout.EndHorizontal();
                 }
 
-                if (Button("Apply", width: halfAreaWidth))
+                GUILayout.BeginHorizontal();
                 {
-                    HERO.Instance.bombRadius = BombSettings[0] * 4f + 20f;
-                    HERO.Instance.bombTimeMax = (BombSettings[1] * 60f + 200f) / (BombSettings[2] * 60f + 200f);
-                    HERO.Instance.bombSpeed = BombSettings[2] * 60f + 200f;
-                    HERO.Instance.bombCD = BombSettings[3] * -0.4f + 5f;
-                    var propertiesToSet = new Hashtable();
-                    propertiesToSet.Add(PhotonPlayerProperty.RCBombR, BombColorSetting[0].Value);
-                    propertiesToSet.Add(PhotonPlayerProperty.RCBombG, BombColorSetting[1].Value);
-                    propertiesToSet.Add(PhotonPlayerProperty.RCBombB, BombColorSetting[2].Value);
-                    propertiesToSet.Add(PhotonPlayerProperty.RCBombA, 1f);
-                    propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, HERO.Instance.bombRadius);
-                    propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, BombSettings[1].Value);
-                    propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, BombSettings[2].Value);
-                    propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, BombSettings[3].Value);
-                    PhotonNetwork.player.SetCustomProperties(propertiesToSet);
+                    if (Button("Apply", width: leftElementWidth + rightElementWidth))
+                    {
+                        HERO.Instance.bombRadius = BombSettings[0] * 4f + 20f;
+                        HERO.Instance.bombTimeMax = (BombSettings[1] * 60f + 200f) / (BombSettings[2] * 60f + 200f);
+                        HERO.Instance.bombSpeed = BombSettings[2] * 60f + 200f;
+                        HERO.Instance.bombCD = BombSettings[3] * -0.4f + 5f;
+                        var propertiesToSet = new Hashtable();
+                        propertiesToSet.Add(PhotonPlayerProperty.RCBombR, BombColorSetting[0].Value);
+                        propertiesToSet.Add(PhotonPlayerProperty.RCBombG, BombColorSetting[1].Value);
+                        propertiesToSet.Add(PhotonPlayerProperty.RCBombB, BombColorSetting[2].Value);
+                        propertiesToSet.Add(PhotonPlayerProperty.RCBombA, 1f);
+                        propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, HERO.Instance.bombRadius);
+                        propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, BombSettings[1].Value);
+                        propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, BombSettings[2].Value);
+                        propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, BombSettings[3].Value);
+                        PhotonNetwork.player.SetCustomProperties(propertiesToSet);
+                    }
+
                 }
+                GUILayout.EndHorizontal();
             }
             GUILayout.EndArea();
 
