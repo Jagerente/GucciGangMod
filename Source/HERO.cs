@@ -89,7 +89,7 @@ public class HERO : MonoBehaviour
     private bool hookSomeOne;
     private GameObject hookTarget;
     public FengCustomInputs inputManager;
-    public HERO Instance;
+    public static HERO Instance;
     private float invincible = 3f;
     public bool isCannon;
     private bool isLaunchLeft;
