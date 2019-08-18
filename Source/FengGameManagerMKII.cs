@@ -151,7 +151,6 @@ public class FengGameManagerMKII : MonoBehaviour
     private int PVPhumanScoreMax = 200;
     private int PVPtitanScoreMax = 200;
     private ArrayList racingResult;
-    private bool RCPausing;
     private bool startRacing;
     private int[] teamScores;
     private int teamWinner;
@@ -4126,13 +4125,15 @@ public class FengGameManagerMKII : MonoBehaviour
         photonView.RPC("updateKillInfo", PhotonTargets.All, parameters);
     }
 
-    public void SetPause()
+    public void SetPause(bool state)
     {
-        if (Commands.MCRequired()) return;
-        RCPausing = !RCPausing;
-        if (RCPausing) Page.GetInstance<Pause>().Enable();
-        photonView.RPC("pauseRPC", PhotonTargets.AllBuffered, RCPausing);
-        string[] msg = { "MasterClient ", "has " + (RCPausing ? "paused" : "unpaused") + " the game." };
+        if (Commands.MCRequired())
+        {
+            return;
+        }
+        if (state) Page.GetInstance<Pause>().Enable();
+        photonView.RPC("pauseRPC", PhotonTargets.AllBuffered, state);
+        string[] msg = { "MasterClient ", "has " + (state ? "paused" : "unpaused") + " the game." };
         InRoomChat.SystemMessageGlobal(msg, false);
     }
 
@@ -5714,7 +5715,6 @@ public class FengGameManagerMKII : MonoBehaviour
 
         isFirstLoad = false;
         RecompilePlayerList(0.5f);
-        RCPausing = false;
     }
 
     [RPC]

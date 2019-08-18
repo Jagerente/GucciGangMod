@@ -239,14 +239,18 @@ namespace GGM
             }
         }
 
-        public static void RoomClose()
+        public static void RoomClose(bool state)
         {
             if (MCRequired())
             {
                 return;
             }
-            FengGameManagerMKII.FGM.photonView.RPC("showResult", PhotonTargets.Others, new object[] { new string[6].Select(x => "[000000]Closed").ToArray() });
-            SystemMessageLocal("You have closed the room.");
+            PhotonNetwork.room.open = state;
+            if (state)
+            {
+                FengGameManagerMKII.FGM.photonView.RPC("showResult", PhotonTargets.Others, new object[] {new string[6].Select(x => "[000000]Closed").ToArray()});
+            }
+            SystemMessageLocal(new[]{"Room is ", state ? "Closed" : "Opened", " now."});
         }
         public static void RoomHide(bool state)
         {
@@ -258,15 +262,6 @@ namespace GGM
             SystemMessageLocal(new []{"Room is ", (state ? "Visible" : "Hidden"), " now."});
         }
 
-        public static void RoomOpen()
-        {
-            if (MCRequired())
-            {
-                return;
-            }
-            PhotonNetwork.room.open = true;
-            SystemMessageLocal("You have opened the room.");
-        }
 
         public static void Rules()
         {

@@ -490,8 +490,10 @@ public class InRoomChat : MonoBehaviour
                 break;
 
             case "pause":
+                FengGameManagerMKII.FGM.SetPause(true);
+                break;
             case "unpause":
-                FengGameManagerMKII.FGM.SetPause();
+                FengGameManagerMKII.FGM.SetPause(false);
                 break;
 
             case "ignorelist":
@@ -542,10 +544,10 @@ public class InRoomChat : MonoBehaviour
                 switch (args[1])
                 {
                     case "open":
-                        Commands.RoomOpen();
+                        Commands.RoomClose(false);
                         break;
                     case "close":
-                        Commands.RoomClose();
+                        Commands.RoomClose(true);
                         break;
                     case "hide":
                         Commands.RoomHide(true);

@@ -160,7 +160,7 @@ namespace GGM
                 switch (IN_GAME_MAIN_CAMERA.gametype)
                 {
                     case GAMETYPE.MULTIPLAYER:
-                        FengGameManagerMKII.FGM.SetPause();
+                        FengGameManagerMKII.FGM.SetPause(Time.timeScale == 1);
                         break;
                     case GAMETYPE.SINGLE:
                         if (Time.timeScale == 1f)

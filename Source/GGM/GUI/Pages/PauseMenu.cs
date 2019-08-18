@@ -1938,11 +1938,6 @@ namespace GGM.GUI.Pages
                                     Commands.Revive(ChosenPlayer.ID.ToString());
                                 }
 
-                                if (Button("Revive All", fullAreaWidth * ControlPanelProportion[2] - 20f))
-                                {
-                                    Commands.Revive(all: true);
-                                }
-
                                 if (Button("Steal Skin", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     if (!HERO.PlayersSkins.ContainsKey(ChosenPlayer.ID)) return;
@@ -1954,27 +1949,21 @@ namespace GGM.GUI.Pages
                                     scrollHumanSkinsLeft.y = 9999f;
                                 }
                                 Label("Server", LabelType.SubHeader, width: fullAreaWidth * ControlPanelProportion[2] - 20f);
-                                if (Button(PhotonNetwork.room.open ? "Close" : "Open", fullAreaWidth * ControlPanelProportion[2] - 20f))
+                                if (Button("Reset All Stats", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
-                                    if (PhotonNetwork.room.open)
-                                    {
-                                        Commands.RoomClose();
-                                    }
-                                    else
-                                    {
-                                        Commands.RoomOpen();
-                                    }
+                                    Commands.ResetKD(global:true);
+                                }
+                                if (Button("Revive All", fullAreaWidth * ControlPanelProportion[2] - 20f))
+                                {
+                                    Commands.Revive(all: true);
                                 }
                                 if (Button(PhotonNetwork.room.visible ? "Hide" : "Show", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
-                                    if (PhotonNetwork.room.visible)
-                                    {
-                                        Commands.RoomHide(true);
-                                    }
-                                    else
-                                    {
-                                        Commands.RoomHide(false);
-                                    }
+                                    Commands.RoomHide(PhotonNetwork.room.visible);
+                                }
+                                if (Button(PhotonNetwork.room.open ? "Close" : "Open", fullAreaWidth * ControlPanelProportion[2] - 20f))
+                                {
+                                    Commands.RoomClose(PhotonNetwork.room.open);
                                 }
                             }
                             GUILayout.EndArea();
