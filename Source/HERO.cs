@@ -6241,31 +6241,6 @@ public class HERO : MonoBehaviour
         {
             if (inputManager.isInputDown[InputCode.attack1] && skillCDDuration <= 0f)
             {
-                //if (RCextensions.returnFloatFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCBombRadius]) != Settings.BombSettings[0].Value * 4f + 20f)
-                //{
-                //    var hash = new Hashtable {{ PhotonPlayerProperty.RCBombRadius, Settings.BombSettings[0] * 4 + 20f }};
-                //    PhotonNetwork.player.SetCustomProperties(hash);
-                //    bombRadius = Settings.BombSettings[0] * 4 + 20f;
-                //}
-                //if (RCextensions.returnFloatFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCBombRange]) != Settings.BombSettings[1])
-                //{
-                //    var hash = new Hashtable { { PhotonPlayerProperty.RCBombRange, Settings.BombSettings[1] } };
-                //    PhotonNetwork.player.SetCustomProperties(hash);
-                //    bombTimeMax = (Settings.BombSettings[1] * 60f + 200f) / (Settings.BombSettings[3] * 60f + 200f);
-                //}
-                //if (RCextensions.returnFloatFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCBombSpeed]) != Settings.BombSettings[2])
-                //{
-                //    var hash = new Hashtable { { PhotonPlayerProperty.RCBombSpeed, Settings.BombSettings[2] } };
-                //    PhotonNetwork.player.SetCustomProperties(hash);
-                //    bombSpeed = Settings.BombSettings[2] * 60f + 200f;
-                //}
-                //if (RCextensions.returnFloatFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.RCBombCooldown]) != Settings.BombSettings[3])
-                //{
-                //    var hash = new Hashtable { { PhotonPlayerProperty.RCBombCooldown, Settings.BombSettings[3] } };
-                //    PhotonNetwork.player.SetCustomProperties(hash);
-                //    bombCD = Settings.BombSettings[3] * -0.4f + 5f;
-                //}
-
                 if (!(myBomb == null || myBomb.disabled))
                 {
                     myBomb.Explode(bombRadius);

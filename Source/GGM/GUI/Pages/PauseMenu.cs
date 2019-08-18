@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using ExitGames.Client.Photon;
 using GGM.Storage;
 using UnityEngine;
 using static GGM.Config.Settings;
@@ -104,6 +105,24 @@ namespace GGM.GUI.Pages
                         Slider(bombStats[i], ref BombSettings[i].Value, 0, freePoints[i] > 10 ? 10 : freePoints[i]);
                     }
                     GUILayout.EndHorizontal();
+                }
+
+                if (Button("Apply", width: halfAreaWidth))
+                {
+                    HERO.Instance.bombRadius = BombSettings[0] * 4f + 20f;
+                    HERO.Instance.bombTimeMax = (BombSettings[1] * 60f + 200f) / (BombSettings[2] * 60f + 200f);
+                    HERO.Instance.bombSpeed = BombSettings[2] * 60f + 200f;
+                    HERO.Instance.bombCD = BombSettings[3] * -0.4f + 5f;
+                    var propertiesToSet = new Hashtable();
+                    propertiesToSet.Add(PhotonPlayerProperty.RCBombR, BombColorSetting[0].Value);
+                    propertiesToSet.Add(PhotonPlayerProperty.RCBombG, BombColorSetting[1].Value);
+                    propertiesToSet.Add(PhotonPlayerProperty.RCBombB, BombColorSetting[2].Value);
+                    propertiesToSet.Add(PhotonPlayerProperty.RCBombA, 1f);
+                    propertiesToSet.Add(PhotonPlayerProperty.RCBombRadius, HERO.Instance.bombRadius);
+                    propertiesToSet.Add(PhotonPlayerProperty.RCBombRange, BombSettings[1].Value);
+                    propertiesToSet.Add(PhotonPlayerProperty.RCBombSpeed, BombSettings[2].Value);
+                    propertiesToSet.Add(PhotonPlayerProperty.RCBombCooldown, BombSettings[3].Value);
+                    PhotonNetwork.player.SetCustomProperties(propertiesToSet);
                 }
             }
             GUILayout.EndArea();
