@@ -103,8 +103,12 @@ namespace GGM
         public static HotKey Pause = new HotKey("Pause", KeyCode.O);
         public static HotKey CannonSpawn = new HotKey("CannonSpawn", KeyCode.J);
 
+        private CAMERA_TYPE Old;
+
         private void Update()
         {
+            if (FengGameManagerMKII.inputManager.menuOn) return;
+
             //Restarts and clears all stats.
             if (Restart.IsDown())
             {
@@ -153,22 +157,28 @@ namespace GGM
             //Pause
             if (Pause.IsDown())
             {
-                if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER)
+                switch (IN_GAME_MAIN_CAMERA.gametype)
                 {
-                    FengGameManagerMKII.FGM.SetPause();
-                }
-                else if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
-                {
-                    if (Time.timeScale == 1f)
-                    {
-                        Time.timeScale = 0f;
-                        GameObject.Find("MainCamera").GetComponent<MouseLook>().disable = false;
-                    }
-                    else
-                    {
-                        GameObject.Find("MainCamera").GetComponent<MouseLook>().disable = true;
-                        Time.timeScale = 1f;
-                    }
+                    case GAMETYPE.MULTIPLAYER:
+                        FengGameManagerMKII.FGM.SetPause();
+                        break;
+                    case GAMETYPE.SINGLE:
+                        if (Time.timeScale == 1f)
+                        {
+                            Old = IN_GAME_MAIN_CAMERA.cameraMode;
+                            Screen.showCursor = true;
+                            Screen.lockCursor = true;
+                            IN_GAME_MAIN_CAMERA.cameraMode = CAMERA_TYPE.TPS;
+                            Time.timeScale = 0f;
+                        }
+                        else
+                        {
+                            Time.timeScale = 1f;
+                            IN_GAME_MAIN_CAMERA.cameraMode = Old;
+                            Screen.lockCursor = IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS || IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.OLDTPS;
+                            Screen.showCursor = false;
+                        }
+                        break;
                 }
             }
 
