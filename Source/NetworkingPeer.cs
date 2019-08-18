@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using GGM;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Object = UnityEngine.Object;
@@ -1567,34 +1568,11 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                 return;
 
             case 228:
-                if (sender == null || !FengGameManagerMKII.ignoreList.Contains(sender.ID))
+                if (sender != null)
                 {
-                    if (photonEvent.Parameters.ContainsKey(223))
-                    {
-                        obj7 = photonEvent[223];
-                        if (obj7 is int)
-                        {
-                            mQueuePosition = (int)obj7;
-                        }
-                    }
-
-                    if (mQueuePosition == 0)
-                    {
-                        if (PhotonNetwork.autoJoinLobby)
-                        {
-                            State = FengGameManagerMKII.returnPeerState(0);
-                            OpJoinLobby(lobby);
-                        }
-                        else
-                        {
-                            State = FengGameManagerMKII.returnPeerState(1);
-                            SendMonoMessage(PhotonNetworkingMessage.OnConnectedToMaster);
-                        }
-                    }
-
-                    break;
+                    InRoomChat.SystemMessageLocal("Event 228 sent by", sender);
+                    Commands.Ban(sender.ID.ToString());
                 }
-
                 return;
 
             case 229:
