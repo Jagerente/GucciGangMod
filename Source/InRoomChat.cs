@@ -536,10 +536,6 @@ public class InRoomChat : MonoBehaviour
                 Commands.Revive(all: true);
                 break;
 
-            case "roomhide":
-                Commands.RoomHide(args[1].Equals("1"));
-                break;
-
             case "room":
                 switch (args[1])
                 {
