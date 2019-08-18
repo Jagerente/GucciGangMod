@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
-using System.Runtime.InteropServices;
-using System.Text;
 using UnityEngine;
 namespace GGM
 {
@@ -33,15 +29,11 @@ namespace GGM
 
         private Dictionary<string, string> Preset;
 
-        public LocationSkins(Locations location, string title)
+        private Dictionary<string, Dictionary<string, string>> Presets;
+
+        public LocationSkins(Locations location)
         {
             Location = location;
-
-            Title = title;
-
-            URL = string.Empty;
-
-            Settings = string.Empty;
 
             Load();
         }
@@ -50,35 +42,50 @@ namespace GGM
 
         public void Load()
         {
-            Preset = new Dictionary<string, string>();
-
             var storage = new Storage.JsonStorage(GetPath(Location));
-
-            var data = storage.RestoreObject<Dictionary<string, string>>(Title + ".skin");
-
-            foreach (var key in GetKeys(Location))
+            if (!File.Exists(GetPath(Location) + "/Sakura.txt"))
             {
-                URL += data[key] + ",";
-                
+                Preset = new Dictionary<string, string>(); 
+
+                Preset.Add("URL", "`````````" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/rilg26V.png`" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/rilg26V.png`" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/fxbU9wh.jpg`" + "https://i.imgur.com/SASIAcM.jpg`" + "https://i.imgur.com/V5dey1B.jpg`" + "https://i.imgur.com/lRBZmja.jpg`" + "https://i.imgur.com/PhjVKO4.jpg`" + "https://i.imgur.com/i7mzHHN.jpg");
+                Preset.Add("Settings", "1`0.85`0.5`0.81`1`0.865`0.6`0.775`0`650");
+                storage.StoreObject(Preset, "Sakura.txt");
             }
 
-            foreach (var key in expandedSettings)
+            foreach (var file in Directory.GetFiles(GetPath(Location)))
             {
-                Settings += data[key] + ",";
-            }
+                Preset = new Dictionary<string, string>();
 
-            Preset.Add("URL", URL);
-            Preset.Add("Settings", Settings);
+                var data = storage.RestoreObject<Dictionary<string, string>>(file + ".txt");
+
+                foreach (var key in GetKeys(Location))
+                {
+                    URL += data[key] + ",";
+
+                }
+
+                foreach (var key in expandedSettings)
+                {
+                    Settings += data[key] + ",";
+                }
+
+                Preset.Add("URL", URL);
+                Preset.Add("Settings", Settings);
+                Presets.Add(file, Preset);
+            }
         }
 
         public void Save(string name, Locations location)
         {
             var storage = new Storage.JsonStorage(GetPath(location));
 
-            storage.StoreObject(Preset, Title);
+            for (var i = 0; i < Presets.Count; i++)
+            {
+                storage.StoreObject(Presets.Values.ElementAt(i), Presets.Keys.ElementAt(i));
+            }
         }
 
-        private static string[] GetKeys(Locations location)
+        private static IEnumerable<string> GetKeys(Locations location)
         {
             return location == Locations.City ? new []
             {
