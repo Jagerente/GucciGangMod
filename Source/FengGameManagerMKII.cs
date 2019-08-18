@@ -4125,7 +4125,7 @@ public class FengGameManagerMKII : MonoBehaviour
         if (Commands.MCRequired()) return;
         RCPausing = !RCPausing;
         if (RCPausing) Page.GetInstance<Pause>().Enable();
-        photonView.RPC("pauseRPC", PhotonTargets.All, RCPausing);
+        photonView.RPC("pauseRPC", PhotonTargets.AllBuffered, RCPausing);
         string[] msg = { "MasterClient ", "has " + (RCPausing ? "paused" : "unpaused") + " the game." };
         InRoomChat.SystemMessageGlobal(msg, false);
     }
