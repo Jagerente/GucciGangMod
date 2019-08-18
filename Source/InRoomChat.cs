@@ -355,7 +355,7 @@ public class InRoomChat : MonoBehaviour
                 chatBackground.SetPixel(0, 0, new Color(0f, 0f, 0f, chatOpacity));
                 chatBackground.Apply();
             }
-            if (chatRect.Contains(GUIHelpers.mousePos) || GUI.GetNameOfFocusedControl() == "ChatInput" || chatFeedRect.Contains(GUIHelpers.mousePos))
+            if (chatRect.Contains(GUIHelpers.mousePos) || GUI.GetNameOfFocusedControl() == "ChatInput" || chatFeedRect.Contains(GUIHelpers.mousePos) && Settings.ChatFeedSeparateSetting)
             {
                 chatOpacity = Mathf.Lerp(chatOpacity, Settings.ChatOpacitySetting, Time.timeScale < 1f ? 0.01f : Time.deltaTime * 1.5f);
                 chatBackground.SetPixel(0, 0, new Color(0f, 0f, 0f, chatOpacity));
