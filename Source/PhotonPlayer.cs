@@ -273,7 +273,7 @@ public class PhotonPlayer
 
     public bool isGuest
     {
-        get { return Name.StripHEX().Contains("GUEST"); }
+        get { return Name.StripHEX().ToUpper().Contains("GUEST"); }
     }
 
     public bool isAbusive

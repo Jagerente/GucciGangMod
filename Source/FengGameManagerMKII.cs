@@ -2334,24 +2334,30 @@ public class FengGameManagerMKII : MonoBehaviour
         print("OnPhotonMaxCccuReached");
     }
 
+    private IEnumerator OnPlayerConnected(PhotonPlayer player)
+    {
+        yield return new WaitForSeconds(1);
+
+        if (Settings.AnnounceArrivalsSetting) InRoomChat.SystemMessageLocal(player, "has joined.");
+        if (Settings.AntiGuestsSetting && player.isGuest)
+        {
+            kickPlayerRC(player, true, "Anti Guest enabled.");
+        }
+        if (Settings.AntiAbusiveModsSetting && player.isAbusive)
+        {
+            kickPlayerRC(player, true, "Anti Abusive mods enabled.");
+        }
+    }
+
     public void OnPhotonPlayerConnected(PhotonPlayer player)
     {
-        if (Settings.AnnounceArrivalsSetting) InRoomChat.SystemMessageLocal(player, "has joined.");
-
+        StartCoroutine(OnPlayerConnected(player));
         if (PhotonNetwork.isMasterClient)
         {
             var photonView = this.photonView;
             if (banHash.ContainsValue(RCextensions.returnStringFromObject(player.customProperties[PhotonPlayerProperty.name])))
             {
                 kickPlayerRC(player, false, "banned.");
-            }
-            if (Settings.AntiGuestsSetting && player.isGuest)
-            {
-                kickPlayerRC(player, true, "Anti Guest enabled.");
-            }
-            if (Settings.AntiAbusiveModsSetting && player.isAbusive)
-            {
-                kickPlayerRC(player, true, "Anti Abusive mods enabled.");
             }
             else
             {
