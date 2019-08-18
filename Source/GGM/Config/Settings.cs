@@ -189,7 +189,7 @@ namespace GGM.Config
         public static StringSetting[] HumanRebindsSetting = { new StringSetting("GGM_HumanForward"), new StringSetting("GGM_HumanBackward"), new StringSetting("GGM_HumanLeft"), new StringSetting("GGM_HumanRight"), new StringSetting("GGM_HumanJump"), new StringSetting("GGM_HumanDodge"), new StringSetting("GGM_HumanLeftHook"), new StringSetting("GGM_HumanRightHook"), new StringSetting("GGM_HumanBothHooks"), new StringSetting("GGM_HumanLock"), new StringSetting("GGM_HumanAttack"), new StringSetting("GGM_HumanSpecial"), new StringSetting("GGM_HumanSalute"), new StringSetting("GGM_HumanChangeCamera"), new StringSetting("GGM_HumanRestartSuicide"), new StringSetting("GGM_HumanMenu"), new StringSetting("GGM_HumanShowHideCursor"), new StringSetting("GGM_HumanFullscreen"), new StringSetting("GGM_HumanReload"), new StringSetting("GGM_HumanFlareGreen"), new StringSetting("GGM_HumanFlareRed"), new StringSetting("GGM_HumanFlareBlack"), new StringSetting("GGM_HumanReelIn"), new StringSetting("GGM_HumanReelOut"), new StringSetting("GGM_HumanDash"), new StringSetting("GGM_HumanMinimapMaximize"), new StringSetting("GGM_HumanMinimapToggle"), new StringSetting("GGM_HumanMinimapReset"), new StringSetting("GGM_HumanChat"), new StringSetting("GGM_HumanLiveSpectate") };
         public static StringSetting HumanSkinsTitlesSetting = new StringSetting("GGM_HumanSkinsSetTitles", "Set 1`Set 2`Set 3`Set 4`Set 5");
         public static StringSetting LocationSkinsCitySetTitlesSetting = new StringSetting("GGM_LocationSkinsCitySetTitles", "Set 1");
-        public static StringSetting LocationSkinsForestSetTitlesSetting = new StringSetting("GGM_LocationSkinsForestSetTitles", "Sakura Forest");
+        public static StringSetting LocationSkinsForestSetTitlesSetting = new StringSetting("GGM_LocationSkinsForestSetTitles", "Set 1");
         public static StringSetting WelcomeMessageSetting = new StringSetting("GGM_WelcomeMessage");
 
         #endregion Strings
@@ -302,28 +302,30 @@ namespace GGM.Config
             LocationSkinsForestLightSettingsList = new List<float[]>();
             LocationSkinsForestParticlesList = new List<int>();
             LocationSkinsForestParticlesSettingsList = new List<float[]>();
+
             for (var i = 0; i < LocationSkinsForestCountSetting; i++)
             {
-                //Skin Fields
-                LocationSkinsForestList.Add(PlayerPrefs.GetString("GGM_ForestSkin_" + i, "`````````" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/rilg26V.png`" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/rilg26V.png`" + "https://i.imgur.com/tAzxZjG.png`" + "https://i.imgur.com/p4lwfdl.png`" + "https://i.imgur.com/fxbU9wh.jpg`" + "https://i.imgur.com/SASIAcM.jpg`" + "https://i.imgur.com/V5dey1B.jpg`" + "https://i.imgur.com/lRBZmja.jpg`" + "https://i.imgur.com/PhjVKO4.jpg`" + "https://i.imgur.com/i7mzHHN.jpg").Split('`'));
-                //Ambient
-                LocationSkinsForestAmbientList.Add(PlayerPrefs.GetInt("GGM_ForestAmbient_" + i, 1));
-                LocationSkinsForestAmbientSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestAmbientColorR_" + i, 0.850f), PlayerPrefs.GetFloat("GGM_ForestAmbientColorG_" + i, 0.500f), PlayerPrefs.GetFloat("GGM_ForestAmbientColorB_" + i, 0.810f) });
-                //Fog
-                LocationSkinsForestFogList.Add(PlayerPrefs.GetInt("GGM_ForestFog_" + i, 1));
-                LocationSkinsForestFogSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestFogColorR_" + i, 0.865f), PlayerPrefs.GetFloat("GGM_ForestFogColorG_" + i, 0.600f), PlayerPrefs.GetFloat("GGM_ForestFogColorB_" + i, 0.775f), PlayerPrefs.GetFloat("GGM_ForestFogStartDistance_" + i, 0f), PlayerPrefs.GetFloat("GGM_ForestFogEndDistance_" + i, 650f) });
-                //Color
+                LocationSkinsForestList.Add(PlayerPrefs.GetString("GGM_ForestSkin_" + i,"```````````````````````").Split('`'));
+                LocationSkinsForestAmbientList.Add(PlayerPrefs.GetInt("GGM_ForestAmbient_" + i, 0));
+                LocationSkinsForestAmbientSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestAmbientColorR_" + i, FengColor.dayAmbientLight.r), PlayerPrefs.GetFloat("GGM_ForestAmbientColorG_" + i, FengColor.dayAmbientLight.g), PlayerPrefs.GetFloat("GGM_ForestAmbientColorB_" + i, FengColor.dayAmbientLight.b) });
+                LocationSkinsForestFogList.Add(PlayerPrefs.GetInt("GGM_ForestFog_" + i, 0));
+                LocationSkinsForestFogSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestFogColorR_" + i, 0.66f), PlayerPrefs.GetFloat("GGM_ForestFogColorG_" + i, 0.66f), PlayerPrefs.GetFloat("GGM_ForestFogColorB_" + i, 0.66f), PlayerPrefs.GetFloat("GGM_ForestFogStartDistance_" + i, 0f), PlayerPrefs.GetFloat("GGM_ForestFogEndDistance_" + i, 1000f) });
                 LocationSkinsForestLightList.Add(PlayerPrefs.GetInt("GGM_ForestLight_" + i, 0));
                 LocationSkinsForestLightSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestLightColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestLightColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestLightColorB_" + i, 1f) });
-                //Particles
                 LocationSkinsForestParticlesList.Add(PlayerPrefs.GetInt("GGM_ForestParticles_" + i, 0));
                 LocationSkinsForestParticlesSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_ForestParticlesCount_" + i, 1500f), PlayerPrefs.GetFloat("GGM_ForestParticlesHeight_" + i, 125f), PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMinimum_" + i, 60f), PlayerPrefs.GetFloat("GGM_ForestParticlesLifeTimeMaximum_" + i, 120f), PlayerPrefs.GetFloat("GGM_ForestParticlesGravity_" + i, 0.001f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorB_" + i, 1f), PlayerPrefs.GetFloat("GGM_ForestParticlesColorA_" + i, 1f), });
             }
+            Debug.Log(LocationSkinsForestSetTitlesSetting);
+
+            Debug.Log(LocationSkinsForestSetTitlesSetting.Value.Split('`').Length);
+
 
             foreach (var str in LocationSkinsForestSetTitlesSetting.Value.Split('`'))
             {
                 LocationSkinsForestTitlesList.Add(str);
             }
+
+            Debug.Log(PlayerPrefs.GetString("GGM_LocationSkinsForestSetTitles"));
         }
 
         public static void SaveForestSkins()
@@ -391,18 +393,13 @@ namespace GGM.Config
 
             for (var i = 0; i < LocationSkinsCityCountSetting; i++)
             {
-                //Skin Fields
                 LocationSkinsCityList.Add(PlayerPrefs.GetString("GGM_CitySkin_" + i, "````````````````").Split('`'));
-                //Ambient
                 LocationSkinsCityAmbientList.Add(PlayerPrefs.GetInt("GGM_CityAmbient_" + i, 0));
                 LocationSkinsCityAmbientSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_CityAmbientColorR_" + i, 0.5f), PlayerPrefs.GetFloat("GGM_CityAmbientColorG_" + i, 0.5f), PlayerPrefs.GetFloat("GGM_CityAmbientColorB_" + i, 0.5f) });
-                //Fog
                 LocationSkinsCityFogList.Add(PlayerPrefs.GetInt("GGM_CityFog_" + i, 0));
                 LocationSkinsCityFogSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_CityFogColorR_" + i, 0.066f), PlayerPrefs.GetFloat("GGM_CityFogColorG_" + i, 0.066f), PlayerPrefs.GetFloat("GGM_CityFogColorB_" + i, 0.066f), PlayerPrefs.GetFloat("GGM_CityFogStartDistance" + i, 0f), PlayerPrefs.GetFloat("GGM_CityFogEndDistance" + i, 1000f) });
-                //Color
                 LocationSkinsCityLightList.Add(PlayerPrefs.GetInt("GGM_CityLight_" + i, 0));
                 LocationSkinsCityLightSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_CityLightColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityLightColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityLightColorB_" + i, 1f) });
-                //Particles
                 LocationSkinsCityParticlesList.Add(PlayerPrefs.GetInt("GGM_CityParticles_" + i, 0));
                 LocationSkinsCityParticlesSettingsList.Add(new[] { PlayerPrefs.GetFloat("GGM_CityParticlesCount_" + i, 1500f), PlayerPrefs.GetFloat("GGM_CityParticlesHeight_" + i, 125f), PlayerPrefs.GetFloat("GGM_CityParticlesLifeTimeMinimum_" + i, 60f), PlayerPrefs.GetFloat("GGM_CityParticlesLifeTimeMaximum_" + i, 120f), PlayerPrefs.GetFloat("GGM_CityParticlesGravity_" + i, 0.001f), PlayerPrefs.GetFloat("GGM_CityParticlesColorR_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityParticlesColorG_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityParticlesColorB_" + i, 1f), PlayerPrefs.GetFloat("GGM_CityParticlesColorA_" + i, 1f), });
             }
