@@ -27,7 +27,7 @@ namespace GGM.GUI.Pages
         private static readonly string[] ServersAdresses = new string[] { string.Empty, "eu", "us", "asia", "jp" };
         private static string KeyWords;
         private static bool[] Map;
-        private static readonly string[] Maps = { "The City", "The City III", "The Forest", "The Forest II", "The Forest III", "The Forest IV - LAVA", "Annie", "Annie II", "Colossal Titan", "Colossal Titan II", "Trost", "Trost II", "Racing - Akina", "Outside The Walls", "Cave Fight", "House Fight", "Custom", "Custom (No PT)" };
+        private static readonly string[] Maps = { "The City", "The City III", "The Forest", "The Forest II", "The Forest III", "The Forest IV  - LAVA", "Annie", "Annie II", "Colossal Titan", "Colossal Titan II", "Trost", "Trost II", "Racing - Akina", "Outside The Walls", "Cave Fight", "House Fight", "Custom", "Custom (No PT)" };
         private static bool[] Difficulty;
         private static readonly string[] Difficulties = { "Normal", "Hard", "Abnormal" };
         private static bool[] DayTime;
