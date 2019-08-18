@@ -256,7 +256,7 @@ public class InRoomChat : MonoBehaviour
 
     public void OnGUI()
     {
-        if (!Settings.ChatUISetting || PhotonNetwork.connectionStateDetailed != PeerStates.Joined)
+        if (Settings.UserInterfaceSetting || !Settings.ChatUISetting || PhotonNetwork.connectionStateDetailed != PeerStates.Joined)
         {
             return;
         }
