@@ -1917,6 +1917,12 @@ namespace GGM.GUI.Pages
                                     Commands.Ban(ChosenPlayer.ID.ToString());
                                 }
 
+
+                                if (Button("Ignore", fullAreaWidth * ControlPanelProportion[2] - 20f))
+                                {
+                                    Commands.Ignore(ChosenPlayer.ID.ToString());
+                                }
+
                                 if (Button(ChosenPlayer.isMuted ? "Unmute" : "Mute", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     if (ChosenPlayer.isMuted)

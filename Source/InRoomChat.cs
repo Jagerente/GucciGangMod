@@ -500,16 +500,12 @@ public class InRoomChat : MonoBehaviour
                 FengGameManagerMKII.FGM.SetPause(false);
                 break;
 
+            case "ignore":
+                Commands.Ignore(args[1]);
+                break;
+
             case "ignorelist":
                 Commands.IngoreList();
-                break;
-
-            case "slots":
-                Commands.SetSlots(Convert.ToInt32(args[1]));
-                break;
-
-            case "time":
-                Commands.SetTime(Convert.ToInt32(args[1]));
                 break;
 
             case "tp":

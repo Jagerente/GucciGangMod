@@ -91,6 +91,25 @@ namespace GGM
             SystemMessageLocal(msg);
         }
 
+        public static void Ignore(string str)
+        {
+            var ignoreplayer = PhotonPlayer.Find(Convert.ToInt32(str));
+            if (ignoreplayer != null && !ignoreplayer.isLocal && !ignoreplayer.GucciLab)
+            {
+                FengGameManagerMKII.ignoreList.Add(ignoreplayer.ID);
+                SystemMessageLocal(ignoreplayer, " in ignore list now.");
+            }
+            else if (ignoreplayer.isLocal)
+            {
+                SystemMessageLocal(Error(2, "ignore"));
+            }
+            else
+            {
+                SystemMessageLocal(Error(1));
+            }
+
+        }
+
         public static void IngoreList()
         {
             foreach (var id in FengGameManagerMKII.ignoreList)
