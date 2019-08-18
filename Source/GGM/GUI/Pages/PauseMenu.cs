@@ -451,7 +451,7 @@ namespace GGM.GUI.Pages
 
                 GUILayout.BeginHorizontal();
                 {
-                    if (Button("Add", (leftElementWidth + rightElementWidth) / 2f))
+                    if (Button("Add", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
                         HumanSkinsTitlesList.Add("Set " + (HumanSkinsTitlesList.Count + 1));
                         HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
@@ -460,7 +460,7 @@ namespace GGM.GUI.Pages
                         scrollHumanSkinsLeft.y = 9999f;
                     }
 
-                    if (Button("Remove", (leftElementWidth + rightElementWidth) / 2f))
+                    if (Button("Remove", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
                         if (HumanSkinsCountSetting == 1)
                         {
@@ -475,6 +475,11 @@ namespace GGM.GUI.Pages
                             HumanSkinsTitlesList.RemoveAt(setToRemove);
                             HumanSkinsCountSetting.Value--;
                         }
+                    }
+
+                    if (Button("Apply", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                    {
+                        HERO.Instance.loadskin();
                     }
                 }
                 GUILayout.EndHorizontal();
