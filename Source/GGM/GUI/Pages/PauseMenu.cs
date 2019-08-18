@@ -573,7 +573,6 @@ namespace GGM.GUI.Pages
 
                                         if (LocationSkinsForestTitlesList.Any(x => x.Equals(fileName)) || file.Split('`').Length != 9) continue;
 
-
                                         LocationSkinsForestList.Add(file.Split('`')[0].Split(','));
                                         LocationSkinsForestTitlesList.Add(fileName);
                                         LocationSkinsForestAmbientList.Add(int.Parse(file.Split('`')[1]));
@@ -593,18 +592,18 @@ namespace GGM.GUI.Pages
                                 {
                                     if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-                                    foreach (var skin in LocationSkinsForestTitlesList)
+                                    for (var i = 0; i < LocationSkinsForestTitlesList.Count; i++)
                                     {
-                                        File.WriteAllText($"{path}/{skin}.txt", 
-                                            $"{string.Join(",", LocationSkinsForestList[LocationSkinsForestCurrentSetSetting])}`" + 
-                                            $"{LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting].ToString()}`" +
-                                            $"{LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][0]},{LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][1]},{LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][2]}`" + 
-                                            $"{LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting].ToString()}`" + 
-                                            $"{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][0]},{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][1]},{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][2]},{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3]},{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][4]}`" + 
-                                            $"{LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting].ToString()}`" + 
-                                            $"{LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][0]},{LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][1]},{LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][2]}`" + 
-                                            $"{LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting]}`" + 
-                                            $"{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][0]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][1]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][2]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][3]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][4]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][5]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][6]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][7]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][8]}");
+                                        File.WriteAllText($"{path}/{LocationSkinsForestTitlesList[i]}.txt", 
+                                            $"{string.Join(",", LocationSkinsForestList[i])}`" + 
+                                            $"{LocationSkinsForestAmbientList[i].ToString()}`" +
+                                            $"{LocationSkinsForestAmbientSettingsList[i][0]},{LocationSkinsForestAmbientSettingsList[i][1]},{LocationSkinsForestAmbientSettingsList[i][2]}`" + 
+                                            $"{LocationSkinsForestFogList[i].ToString()}`" + 
+                                            $"{LocationSkinsForestFogSettingsList[i][0]},{LocationSkinsForestFogSettingsList[i][1]},{LocationSkinsForestFogSettingsList[i][2]},{LocationSkinsForestFogSettingsList[i][3]},{LocationSkinsForestFogSettingsList[i][4]}`" + 
+                                            $"{LocationSkinsForestLightList[i].ToString()}`" + 
+                                            $"{LocationSkinsForestLightSettingsList[i][0]},{LocationSkinsForestLightSettingsList[i][1]},{LocationSkinsForestLightSettingsList[i][2]}`" + 
+                                            $"{LocationSkinsForestParticlesList[i]}`" + 
+                                            $"{LocationSkinsForestParticlesSettingsList[i][0]},{LocationSkinsForestParticlesSettingsList[i][1]},{LocationSkinsForestParticlesSettingsList[i][2]},{LocationSkinsForestParticlesSettingsList[i][3]},{LocationSkinsForestParticlesSettingsList[i][4]},{LocationSkinsForestParticlesSettingsList[i][5]},{LocationSkinsForestParticlesSettingsList[i][6]},{LocationSkinsForestParticlesSettingsList[i][7]},{LocationSkinsForestParticlesSettingsList[i][8]}");
                                     }
                                 }
                                 if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
@@ -895,18 +894,18 @@ namespace GGM.GUI.Pages
                                 {
                                     if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-                                    foreach (var skin in LocationSkinsCityTitlesList)
+                                    for (var i = 0; i < LocationSkinsCityTitlesList.Count; i++)
                                     {
-                                        File.WriteAllText($"{path}/{skin}.txt",
-                                            $"{string.Join(",", LocationSkinsCityList[LocationSkinsCityCurrentSetSetting])}`" +
-                                            $"{LocationSkinsCityAmbientList[LocationSkinsCityCurrentSetSetting].ToString()}`" +
-                                            $"{LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][0]},{LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][1]},{LocationSkinsCityAmbientSettingsList[LocationSkinsCityCurrentSetSetting][2]}`" +
-                                            $"{LocationSkinsCityFogList[LocationSkinsCityCurrentSetSetting].ToString()}`" +
-                                            $"{LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][0]},{LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][1]},{LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][2]},{LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][3]},{LocationSkinsCityFogSettingsList[LocationSkinsCityCurrentSetSetting][4]}`" +
-                                            $"{LocationSkinsCityLightList[LocationSkinsCityCurrentSetSetting].ToString()}`" +
-                                            $"{LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][0]},{LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][1]},{LocationSkinsCityLightSettingsList[LocationSkinsCityCurrentSetSetting][2]}`" +
-                                            $"{LocationSkinsCityParticlesList[LocationSkinsCityCurrentSetSetting]}`" +
-                                            $"{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][0]},{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][1]},{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][2]},{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][3]},{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][4]},{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][5]},{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][6]},{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][7]},{LocationSkinsCityParticlesSettingsList[LocationSkinsCityCurrentSetSetting][8]}");
+                                        File.WriteAllText($"{path}/{LocationSkinsCityTitlesList[i]}.txt",
+                                            $"{string.Join(",", LocationSkinsCityList[i])}`" +
+                                            $"{LocationSkinsCityAmbientList[i].ToString()}`" +
+                                            $"{LocationSkinsCityAmbientSettingsList[i][0]},{LocationSkinsCityAmbientSettingsList[i][1]},{LocationSkinsCityAmbientSettingsList[i][2]}`" +
+                                            $"{LocationSkinsCityFogList[i].ToString()}`" +
+                                            $"{LocationSkinsCityFogSettingsList[i][0]},{LocationSkinsCityFogSettingsList[i][1]},{LocationSkinsCityFogSettingsList[i][2]},{LocationSkinsCityFogSettingsList[i][3]},{LocationSkinsCityFogSettingsList[i][4]}`" +
+                                            $"{LocationSkinsCityLightList[i].ToString()}`" +
+                                            $"{LocationSkinsCityLightSettingsList[i][0]},{LocationSkinsCityLightSettingsList[i][1]},{LocationSkinsCityLightSettingsList[i][2]}`" +
+                                            $"{LocationSkinsCityParticlesList[i]}`" +
+                                            $"{LocationSkinsCityParticlesSettingsList[i][0]},{LocationSkinsCityParticlesSettingsList[i][1]},{LocationSkinsCityParticlesSettingsList[i][2]},{LocationSkinsCityParticlesSettingsList[i][3]},{LocationSkinsCityParticlesSettingsList[i][4]},{LocationSkinsCityParticlesSettingsList[i][5]},{LocationSkinsCityParticlesSettingsList[i][6]},{LocationSkinsCityParticlesSettingsList[i][7]},{LocationSkinsCityParticlesSettingsList[i][8]}");
                                     }
                                 }
                                 if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
