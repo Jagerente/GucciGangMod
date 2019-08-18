@@ -110,14 +110,6 @@ namespace GGM
 
         }
 
-        public static void IngoreList()
-        {
-            foreach (var id in FengGameManagerMKII.ignoreList)
-            {
-                SystemMessageLocal(id.ToString());
-            }
-        }
-
         public static void Kick(string id)
         {
             if (MCRequired()) return;
@@ -605,19 +597,6 @@ namespace GGM
             FengGameManagerMKII.FGM.addTime(time);
             string[] msg = { "Time set to ", time.ToString(), "." };
             SystemMessageGlobal(msg);
-        }
-
-        public static void Spectate(int id)
-        {
-            foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
-            {
-                if (player.GetPhotonView().owner.ID == id)
-                {
-                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(player);
-                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
-                    SystemMessageLocal("You are now spectate", player.GetPhotonView().owner);
-                }
-            }
         }
 
         public static void SpectatorMode()

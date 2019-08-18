@@ -478,7 +478,7 @@ public class InRoomChat : MonoBehaviour
                         break;
 
                     default:
-                        string[] err = { "Invalid command. Possibles:", "\n/aso kdr", " - preserves players KDR's from disconnects.", "\n/aso racing", " - racing will not restart on finish.", "\n/aso damage", " - sets ASO Damage settings." };
+                        string[] err = { "Invalid command. Possibles:", "\n/aso kdr", " - preserves players KDR's from disconnects.", "\n/aso racing", " -  .", "\n/aso damage", " - sets ASO Damage settings." };
                         SystemMessageLocal(err);
                         break;
                 }
@@ -498,14 +498,6 @@ public class InRoomChat : MonoBehaviour
                 break;
             case "unpause":
                 FengGameManagerMKII.FGM.SetPause(false);
-                break;
-
-            case "ignore":
-                Commands.Ignore(args[1]);
-                break;
-
-            case "ignorelist":
-                Commands.IngoreList();
                 break;
 
             case "tp":
@@ -611,10 +603,6 @@ public class InRoomChat : MonoBehaviour
 
             case "specmode":
                 Commands.SpectatorMode();
-                return;
-
-            case "spectate":
-                Commands.Spectate(Convert.ToInt32(args[1]));
                 return;
 
             case "mute":
