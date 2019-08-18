@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.IO;
+using System.Net;
+using UnityEngine;
 
 namespace GGM.Discord
 {
@@ -11,8 +14,6 @@ namespace GGM.Discord
         private static string largeImageKey;
 
         private static DiscordAPI.RichPresence presence;
-
-        public static string UserID;
 
         private void Awake()
         {
@@ -33,6 +34,7 @@ namespace GGM.Discord
                 largeImageText = "Art by https://vk.com/bishoptyan",
                 smallImageKey = "logo_small",
                 smallImageText = "github.com/Jagerente/GucciGangMod",
+                startTimestamp = DateTime.Now.Ticks,
                 partySize = 0,
                 partyMax = 0
             };
