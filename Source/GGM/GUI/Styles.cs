@@ -160,13 +160,6 @@ namespace GGM.GUI
                 Box.Apply();
             }
 
-            var window = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}Window.png");
-            if (Window == null && window != null)
-            {
-                Window = window.texture;
-                Window.Apply();
-            }
-
             var buttonN = new WWW("file:///" + Application.dataPath + $"/Styles/{StylePath}ButtonN.png");
             if (ButtonN == null && buttonN != null)
             {
@@ -424,11 +417,6 @@ namespace GGM.GUI
             //Box
             UnityEngine.GUI.skin.box.normal.textColor = Caching.ColorCache.White;
             UnityEngine.GUI.skin.box.normal.background = Box;
-            //Window
-            UnityEngine.GUI.skin.window.normal.background = Window;
-            UnityEngine.GUI.skin.window.active.background = Window;
-            UnityEngine.GUI.skin.window.onNormal.background = Window;
-            UnityEngine.GUI.skin.window.onActive.background = Window;
 
             isInited = true;
         }
