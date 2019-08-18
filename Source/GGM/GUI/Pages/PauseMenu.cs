@@ -1,8 +1,10 @@
 ﻿using GGM.Caching;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using GGM.Storage;
 using UnityEngine;
 using static GGM.Config.Settings;
 using static GGM.GUI.Elements;
@@ -545,7 +547,11 @@ namespace GGM.GUI.Pages
                                 GUILayout.BeginHorizontal();
                                 {
                                     GUILayout.FlexibleSpace();
-                                    LocationSkinsForestCurrentSetSetting.Value = GUILayout.SelectionGrid(LocationSkinsForestCurrentSetSetting, LocationSkinsForestTitlesList.ToArray(), 1, GUILayout.Width(175f));
+                                    if (GridCheck(string.Empty, ref LocationSkinsForestCurrentSetSetting.Value, LocationSkinsForestTitlesList.ToArray(), false, width: 175f))
+                                    {
+                                        FengGameManagerMKII.FGM.loadskin();
+                                    }
+                                    //LocationSkinsForestCurrentSetSetting.Value = GUILayout.SelectionGrid(LocationSkinsForestCurrentSetSetting, LocationSkinsForestTitlesList.ToArray(), 1, GUILayout.Width(175f));
                                     GUILayout.FlexibleSpace();
                                 }
                                 GUILayout.EndHorizontal();
@@ -557,7 +563,89 @@ namespace GGM.GUI.Pages
 
                             GUILayout.BeginHorizontal();
                             {
-                                if (Button("Add", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                var path = Application.dataPath + "/Skins/Forest";
+
+                                if (Button("Import", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                {
+                                    foreach (var fileName in Directory.GetFiles(path))
+                                    {
+                                        if (LocationSkinsForestTitlesList.Any(x => x.Equals(fileName))) continue;
+
+                                        var file = File.ReadAllText(fileName);
+
+                                        LocationSkinsForestList.Add(file.Split('`')[0].Split(','));
+                                        LocationSkinsForestTitlesList.Add(new FileInfo(fileName).Name.Replace(".txt", string.Empty));
+                                        LocationSkinsForestAmbientList.Add(int.Parse(file.Split('`')[1]));
+                                        LocationSkinsForestAmbientSettingsList.Add( file.Split('`')[2].Split(',').ToFloatArray());
+                                        LocationSkinsForestFogList.Add(int.Parse(file.Split('`')[3]));
+                                        LocationSkinsForestFogSettingsList.Add(file.Split('`')[4].Split(',').ToFloatArray());
+                                        LocationSkinsForestLightList.Add(int.Parse(file.Split('`')[5]));
+                                        LocationSkinsForestLightSettingsList.Add(file.Split('`')[6].Split(',').ToFloatArray());
+                                        LocationSkinsForestParticlesList.Add(int.Parse(file.Split('`')[7]));
+                                        LocationSkinsForestParticlesSettingsList.Add(file.Split('`')[8].Split(',').ToFloatArray());
+                                        LocationSkinsForestCountSetting.Value++;
+                                        scrollLocationSkinsForestLeft.y = 9999f;
+                                    }
+                                    LocationSkinsForestCurrentSetSetting.Value = LocationSkinsForestTitlesList.Count - 1;
+                                }
+                                if (Button("Export", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                {
+                                    foreach (var skin in LocationSkinsForestTitlesList)
+                                    {
+                                        File.WriteAllText($"{path}/{skin}.txt", 
+                                            $"{string.Join(",", LocationSkinsForestList[LocationSkinsForestCurrentSetSetting])}`" + 
+                                            $"{LocationSkinsForestAmbientList[LocationSkinsForestCurrentSetSetting].ToString()}`" +
+                                            $"{LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][0]},{LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][1]},{LocationSkinsForestAmbientSettingsList[LocationSkinsForestCurrentSetSetting][2]}`" + 
+                                            $"{LocationSkinsForestFogList[LocationSkinsForestCurrentSetSetting].ToString()}`" + 
+                                            $"{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][0]},{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][1]},{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][2]},{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][3]},{LocationSkinsForestFogSettingsList[LocationSkinsForestCurrentSetSetting][4]}`" + 
+                                            $"{LocationSkinsForestLightList[LocationSkinsForestCurrentSetSetting].ToString()}`" + 
+                                            $"{LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][0]},{LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][1]},{LocationSkinsForestLightSettingsList[LocationSkinsForestCurrentSetSetting][2]}`" + 
+                                            $"{LocationSkinsForestParticlesList[LocationSkinsForestCurrentSetSetting]}`" + 
+                                            $"{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][0]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][1]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][2]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][3]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][4]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][5]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][6]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][7]},{LocationSkinsForestParticlesSettingsList[LocationSkinsForestCurrentSetSetting][8]}");
+                                    }
+                                }
+                                if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                {
+                                    if (string.IsNullOrEmpty(FengGameManagerMKII.LocationSkinToSteal) || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || PhotonNetwork.isMasterClient) return;
+                                    if (Application.loadedLevelName.Contains("Forest"))
+                                    {
+                                        LocationSkinsForestList.Add(FengGameManagerMKII.LocationSkinToSteal.Split(','));
+                                        LocationSkinsForestTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
+                                        LocationSkinsForestCurrentSetSetting.Value = LocationSkinsForestTitlesList.Count - 1;
+                                        LocationSkinsForestAmbientList.Add(0);
+                                        LocationSkinsForestAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
+                                        LocationSkinsForestFogList.Add(0);
+                                        LocationSkinsForestFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
+                                        LocationSkinsForestLightList.Add(0);
+                                        LocationSkinsForestLightSettingsList.Add(new[] { 1f, 1f, 1f });
+                                        LocationSkinsForestParticlesList.Add(0);
+                                        LocationSkinsForestParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                                        LocationSkinsForestCountSetting.Value++;
+                                        scrollLocationSkinsForestLeft.y = 9999f;
+                                    }
+                                    else if (Application.loadedLevelName.Contains("City"))
+                                    {
+                                        LocationSkinsCityTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
+                                        LocationSkinsCityList.Add(FengGameManagerMKII.LocationSkinToSteal.Split('`'));
+                                        LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
+                                        LocationSkinsCityAmbientList.Add(0);
+                                        LocationSkinsCityAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
+                                        LocationSkinsCityFogList.Add(0);
+                                        LocationSkinsCityFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
+                                        LocationSkinsCityLightList.Add(0);
+                                        LocationSkinsCityLightSettingsList.Add(new[] { 1f, 1f, 1f });
+                                        LocationSkinsCityParticlesList.Add(0);
+                                        LocationSkinsCityParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                                        LocationSkinsCityCountSetting.Value++;
+                                        scrollLocationSkinsCityLeft.y = 9999f;
+                                    }
+                                }
+                            }
+                            GUILayout.EndHorizontal();
+
+                            GUILayout.BeginHorizontal();
+                            {
+                                if (Button("Add", (leftElementWidth + rightElementWidth) / 2f - 5f / 2f))
                                 {
                                     LocationSkinsForestList.Add("``````````````````````".Split('`'));
                                     LocationSkinsForestTitlesList.Add("Set " + (LocationSkinsForestTitlesList.Count + 1));
@@ -574,43 +662,7 @@ namespace GGM.GUI.Pages
                                     scrollLocationSkinsForestLeft.y = 9999f;
                                 }
 
-                                if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
-                                {
-                                    if (string.IsNullOrEmpty(FengGameManagerMKII.LocationSkinToSteal) || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || PhotonNetwork.isMasterClient) return;
-                                    if (Application.loadedLevelName.Contains("Forest"))
-                                    {
-                                        LocationSkinsForestList.Add(FengGameManagerMKII.LocationSkinToSteal.Split(','));
-                                        LocationSkinsForestTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
-                                        LocationSkinsForestCurrentSetSetting.Value = LocationSkinsForestTitlesList.Count - 1;
-                                        LocationSkinsForestAmbientList.Add(0);
-                                        LocationSkinsForestAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
-                                        LocationSkinsForestFogList.Add(0);
-                                        LocationSkinsForestFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
-                                        LocationSkinsForestParticlesList.Add(0);
-                                        LocationSkinsForestParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
-                                        LocationSkinsForestLightList.Add(0);
-                                        LocationSkinsForestLightSettingsList.Add(new[] { 1f, 1f, 1f });
-                                        LocationSkinsForestCountSetting.Value++;
-                                        scrollLocationSkinsForestLeft.y = 9999f;
-                                    }
-                                    else if (Application.loadedLevelName.Contains("City"))
-                                    {
-                                        LocationSkinsCityTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
-                                        LocationSkinsCityList.Add(FengGameManagerMKII.LocationSkinToSteal.Split('`'));
-                                        LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
-                                        LocationSkinsCityAmbientList.Add(0);
-                                        LocationSkinsCityAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
-                                        LocationSkinsCityFogList.Add(0);
-                                        LocationSkinsCityFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
-                                        LocationSkinsCityParticlesList.Add(0);
-                                        LocationSkinsCityParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
-                                        LocationSkinsCityLightList.Add(0);
-                                        LocationSkinsCityLightSettingsList.Add(new[] { 1f, 1f, 1f });
-                                        LocationSkinsCityCountSetting.Value++;
-                                        scrollLocationSkinsCityLeft.y = 9999f;
-                                    }
-                                }
-                                if (Button("Remove", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                if (Button("Remove", (leftElementWidth + rightElementWidth) / 2f - 5f / 2f))
                                 {
                                     if (LocationSkinsForestCountSetting == 1)
                                     {
@@ -1696,7 +1748,7 @@ namespace GGM.GUI.Pages
                     {
                         if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && !PhotonNetwork.offlineMode)
                         {
-                            if (Extensions.AllProps == null) Extensions.AllProps = System.IO.File.ReadAllLines(Application.dataPath + "/props.txt");
+                            if (PhotonPlayer.AllProps == null) PhotonPlayer.AllProps = System.IO.File.ReadAllLines(Application.dataPath + "/props.txt");
                             if (ChosenPlayer == null) ChosenPlayer = PhotonNetwork.player;
 
                             GUILayout.BeginArea(new Rect(leftPos + 20f, topPos + 100f, fullAreaWidth * ControlPanelProportion[0] - 10f, fullAreaHeight - 40f));
