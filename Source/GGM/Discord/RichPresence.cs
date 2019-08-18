@@ -34,7 +34,6 @@ namespace GGM.Discord
                 largeImageText = "Art by https://vk.com/bishoptyan",
                 smallImageKey = "logo_small",
                 smallImageText = "github.com/Jagerente/GucciGangMod",
-                startTimestamp = DateTime.Now.Ticks,
                 partySize = 0,
                 partyMax = 0
             };
