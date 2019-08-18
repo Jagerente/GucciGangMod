@@ -7616,7 +7616,7 @@ public class FengGameManagerMKII : MonoBehaviour
         }
     }
 
-    private void loadskin()
+    public void loadskin()
     {
         GameObject[] objArray;
         int num;
