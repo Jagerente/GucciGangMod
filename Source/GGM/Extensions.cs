@@ -405,7 +405,7 @@ namespace GGM
 
             if (player.isLocal)
             {
-                return "GucciGang";
+                return "GucciGangMod";
             }
 
             if (player.CelestialDeath)
