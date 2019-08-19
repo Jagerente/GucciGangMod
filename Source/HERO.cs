@@ -5037,6 +5037,8 @@ public class HERO : MonoBehaviour
         isMounted = false;
     }
 
+    public static CAMERA_TYPE Old;
+
     public void update()
     {
         if (!IN_GAME_MAIN_CAMERA.isPausing)
@@ -5067,6 +5069,8 @@ public class HERO : MonoBehaviour
                         if (FengGameManagerMKII.inputRC.isInputCannonDown(InputCodeRC.cannonMount))
                         {
                             myCannonRegion.photonView.RPC("RequestControlRPC", PhotonTargets.MasterClient, photonView.viewID);
+                            IN_GAME_MAIN_CAMERA.LockCamera(true);
+                            Screen.showCursor = false;
                         }
                     }
 

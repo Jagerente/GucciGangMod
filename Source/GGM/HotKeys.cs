@@ -101,13 +101,29 @@ namespace GGM
         public static HotKey Screenshot = new HotKey("Screenshot", KeyCode.F5);
         public static HotKey Infinites = new HotKey("Infinites", KeyCode.B);
         public static HotKey Pause = new HotKey("Pause", KeyCode.O);
-        public static HotKey CannonSpawn = new HotKey("CannonSpawn", KeyCode.J);
-
-        private CAMERA_TYPE Old;
+        public static HotKey CannonSpawn = new HotKey("Cannon Spawn", KeyCode.J);
+        public static HotKey CannonForward = new HotKey("Cannon Forward", KeyCode.W);
+        public static HotKey CannonBackward = new HotKey("Cannon Backward", KeyCode.S);
+        public static HotKey CannonTurnLeft = new HotKey("Cannon Turn Left", KeyCode.A);
+        public static HotKey CannonTurnRight = new HotKey("Cannon Turn Right", KeyCode.D);
+        public static HotKey CannonTurnUp = new HotKey("Cannon Turn Up", KeyCode.R);
+        public static HotKey CannonTurnDown = new HotKey("Cannon Turn Up", KeyCode.F);
+        public static HotKey CannonUp = new HotKey("Cannon Up", KeyCode.E);
+        public static HotKey CannonDown = new HotKey("Cannon Down", KeyCode.Q);
 
         private void Update()
         {
-            if (FengGameManagerMKII.inputManager.menuOn) return;
+            if (FengGameManagerMKII.inputManager != null)
+            {
+                if (FengGameManagerMKII.inputManager.menuOn)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                return;
+            }
 
             //Restarts and clears all stats.
             if (Restart.IsDown())
@@ -165,18 +181,13 @@ namespace GGM
                     case GAMETYPE.SINGLE:
                         if (Time.timeScale == 1f)
                         {
-                            Old = IN_GAME_MAIN_CAMERA.cameraMode;
-                            Screen.showCursor = true;
-                            Screen.lockCursor = true;
-                            IN_GAME_MAIN_CAMERA.cameraMode = CAMERA_TYPE.TPS;
+                            IN_GAME_MAIN_CAMERA.LockCamera(true);
                             Time.timeScale = 0f;
                         }
                         else
                         {
                             Time.timeScale = 1f;
-                            IN_GAME_MAIN_CAMERA.cameraMode = Old;
-                            Screen.lockCursor = IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.TPS || IN_GAME_MAIN_CAMERA.cameraMode == CAMERA_TYPE.OLDTPS;
-                            Screen.showCursor = false;
+                            IN_GAME_MAIN_CAMERA.LockCamera(false);
                         }
                         break;
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using GGM;
 using GGM.Config;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
@@ -77,7 +78,7 @@ public class Cannon : MonoBehaviour
             myCannonBall = PhotonNetwork.Instantiate("RCAsset/CannonBallObject", ballPoint.position, firingPoint.rotation, 0);
             myCannonBall.rigidbody.velocity = firingPoint.forward * 300f;
             myCannonBall.GetComponent<CannonBall>().myHero = myHero;
-            myHero.skillCDDuration = 3.5f;
+            myHero.skillCDDuration = Settings.CannonCooldown;
         }
     }
 
@@ -267,35 +268,35 @@ public class Cannon : MonoBehaviour
                     transform.Rotate(new Vector3(0f, Time.deltaTime * num3, 0f));
                 }
             }
-            if (Input.GetKey(KeyCode.W))
+            if (HotKeys.CannonForward.IsPressed())
             {
                 base.transform.Translate(Vector3.forward * Settings.CannonMovementSpeedSetting * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.S))
+            if (HotKeys.CannonBackward.IsPressed())
             {
                 base.transform.Translate(-Vector3.forward * Settings.CannonMovementSpeedSetting * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.A))
+            if (HotKeys.CannonTurnLeft.IsPressed())
             {
                 base.transform.Rotate(-Vector3.up * Settings.CannonMovementSpeedSetting * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.D))
+            if (HotKeys.CannonTurnRight.IsPressed())
             {
                 base.transform.Rotate(Vector3.up * Settings.CannonMovementSpeedSetting * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.E))
+            if (HotKeys.CannonUp.IsPressed())
             {
                 base.transform.Translate(Vector3.up * Settings.CannonMovementSpeedSetting * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.Q))
+            if (HotKeys.CannonDown.IsPressed())
             {
                 base.transform.Translate(-Vector3.up * Settings.CannonMovementSpeedSetting * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.R))
+            if (HotKeys.CannonTurnUp.IsPressed())
             {
                 base.transform.Rotate(Vector3.left * Settings.CannonRotateSpeedSetting * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.F))
+            if (HotKeys.CannonTurnDown.IsPressed())
             {
                 base.transform.Rotate(-Vector3.left * Settings.CannonRotateSpeedSetting * Time.deltaTime);
             }
@@ -315,6 +316,7 @@ public class Cannon : MonoBehaviour
                     myHero.photonView.RPC("ReturnFromCannon", PhotonTargets.Others);
                     myHero.skillCDLast = myHero.skillCDLastCannon;
                     myHero.skillCDDuration = myHero.skillCDLast;
+                    IN_GAME_MAIN_CAMERA.LockCamera(false);
                 }
 
                 PhotonNetwork.Destroy(gameObject);
