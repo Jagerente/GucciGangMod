@@ -1701,7 +1701,7 @@ public class FengGameManagerMKII : MonoBehaviour
         objArray[256] = PlayerPrefs.GetString("cannonLeft", "LeftArrow");
         objArray[257] = PlayerPrefs.GetString("cannonRight", "RightArrow");
         objArray[258] = PlayerPrefs.GetString("cannonFire", "Mouse0");
-        objArray[259] = PlayerPrefs.GetString("cannonMount", "LeftCtrl");
+        objArray[259] = PlayerPrefs.GetString("cannonMount", "LeftControl");
         objArray[260] = PlayerPrefs.GetString("cannonSlow", "LeftShift");
         objArray[262] = PlayerPrefs.GetString("liveCam", "Y");
         objArray[263] = 0;
@@ -2338,11 +2338,11 @@ public class FengGameManagerMKII : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         if (Settings.AnnounceArrivalsSetting) InRoomChat.SystemMessageLocal(player, "has joined.");
-        if (Settings.AntiGuestsSetting && player.isGuest)
+        if (Settings.AntiGuestsSetting && player.isGuest && PhotonNetwork.isMasterClient)
         {
             kickPlayerRC(player, true, "Anti Guest enabled.");
         }
-        if (Settings.AntiAbusiveModsSetting && player.isAbusive)
+        if (Settings.AntiAbusiveModsSetting && player.isAbusive && PhotonNetwork.isMasterClient)
         {
             kickPlayerRC(player, true, "Anti Abusive mods enabled.");
         }
