@@ -256,7 +256,7 @@ namespace GGM
             {
                 return;
             }
-            PhotonNetwork.room.open = state;
+            PhotonNetwork.room.open = !state;
             if (state)
             {
                 FengGameManagerMKII.FGM.photonView.RPC("showResult", PhotonTargets.Others, new object[] {new string[6].Select(x => "[000000]Closed").ToArray()});
@@ -269,8 +269,8 @@ namespace GGM
             {
                 return;
             }
-            PhotonNetwork.room.visible = state;
-            SystemMessageLocal(new []{"Room is ", (state ? "Visible" : "Hidden"), " now."});
+            PhotonNetwork.room.visible = !state;
+            SystemMessageLocal(new []{"Room is ", (!state ? "Visible" : "Hidden"), " now."});
         }
 
 
