@@ -276,18 +276,11 @@ namespace GGM.GUI.Pages
                     {
                         CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = string.Empty;
                     }
-                    if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                    if (Button("Request", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
-                        CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] = string.Empty;
-
-                        foreach (var line in FengGameManagerMKII.FGM.levelCache)
-                        {
-                            foreach (var obj in line)
-                            {
-                                CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] += obj;
-                                CustomMapScriptsList[CustomMapSkinsCurrentSetSetting] += ";\n";
-                            }
-                        }
+                        FengGameManagerMKII.FGM.photonView.RPC("ChatPM", PhotonNetwork.masterClient, FengGameManagerMKII.nameField.ToHTML(), $"{FengGameManagerMKII.nameField.ToHTML()} requests to get your map script.\n/pm {PhotonNetwork.player.ID} Y/N");
+                        PhotonNetwork.masterClient.WaitForMapScript = true;
+                        InRoomChat.SystemMessageLocal("Map Script request sent to", PhotonNetwork.masterClient);
                     }
                     if (Button("Copy", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                     {
@@ -305,6 +298,7 @@ namespace GGM.GUI.Pages
                 GUILayout.Space(5f);
 
                 Label("Custom Skins", LabelType.Header);
+                Grid("Skins Appearance", ref CustomMapSkinsSetting.Value);
                 GUILayout.BeginHorizontal();
                 {
                     Label("Title");
@@ -635,41 +629,11 @@ namespace GGM.GUI.Pages
                                             $"{LocationSkinsForestParticlesSettingsList[i][0]},{LocationSkinsForestParticlesSettingsList[i][1]},{LocationSkinsForestParticlesSettingsList[i][2]},{LocationSkinsForestParticlesSettingsList[i][3]},{LocationSkinsForestParticlesSettingsList[i][4]},{LocationSkinsForestParticlesSettingsList[i][5]},{LocationSkinsForestParticlesSettingsList[i][6]},{LocationSkinsForestParticlesSettingsList[i][7]},{LocationSkinsForestParticlesSettingsList[i][8]}");
                                     }
                                 }
-                                if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                if (Button("Request", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
-                                    if (string.IsNullOrEmpty(FengGameManagerMKII.LocationSkinToSteal) || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || PhotonNetwork.isMasterClient) return;
-                                    if (Application.loadedLevelName.Contains("Forest"))
-                                    {
-                                        LocationSkinsForestList.Add(FengGameManagerMKII.LocationSkinToSteal.Split(','));
-                                        LocationSkinsForestTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
-                                        LocationSkinsForestCurrentSetSetting.Value = LocationSkinsForestTitlesList.Count - 1;
-                                        LocationSkinsForestAmbientList.Add(0);
-                                        LocationSkinsForestAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
-                                        LocationSkinsForestFogList.Add(0);
-                                        LocationSkinsForestFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
-                                        LocationSkinsForestLightList.Add(0);
-                                        LocationSkinsForestLightSettingsList.Add(new[] { 1f, 1f, 1f });
-                                        LocationSkinsForestParticlesList.Add(0);
-                                        LocationSkinsForestParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
-                                        LocationSkinsForestCountSetting.Value++;
-                                        scrollLocationSkinsForestLeft.y = 9999f;
-                                    }
-                                    else if (Application.loadedLevelName.Contains("City"))
-                                    {
-                                        LocationSkinsCityTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
-                                        LocationSkinsCityList.Add(FengGameManagerMKII.LocationSkinToSteal.Split('`'));
-                                        LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
-                                        LocationSkinsCityAmbientList.Add(0);
-                                        LocationSkinsCityAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
-                                        LocationSkinsCityFogList.Add(0);
-                                        LocationSkinsCityFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
-                                        LocationSkinsCityLightList.Add(0);
-                                        LocationSkinsCityLightSettingsList.Add(new[] { 1f, 1f, 1f });
-                                        LocationSkinsCityParticlesList.Add(0);
-                                        LocationSkinsCityParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
-                                        LocationSkinsCityCountSetting.Value++;
-                                        scrollLocationSkinsCityLeft.y = 9999f;
-                                    }
+                                    FengGameManagerMKII.FGM.photonView.RPC("ChatPM", PhotonNetwork.masterClient, FengGameManagerMKII.nameField.ToHTML(), $"{FengGameManagerMKII.nameField.ToHTML()} requests to get your location skins.\n/pm {PhotonNetwork.player.ID} Y/N");
+                                    PhotonNetwork.masterClient.WaitForLocationSkin = true;
+                                    InRoomChat.SystemMessageLocal("Location Skins request sent to", PhotonNetwork.masterClient);
                                 }
                             }
                             GUILayout.EndHorizontal();
@@ -937,41 +901,11 @@ namespace GGM.GUI.Pages
                                             $"{LocationSkinsCityParticlesSettingsList[i][0]},{LocationSkinsCityParticlesSettingsList[i][1]},{LocationSkinsCityParticlesSettingsList[i][2]},{LocationSkinsCityParticlesSettingsList[i][3]},{LocationSkinsCityParticlesSettingsList[i][4]},{LocationSkinsCityParticlesSettingsList[i][5]},{LocationSkinsCityParticlesSettingsList[i][6]},{LocationSkinsCityParticlesSettingsList[i][7]},{LocationSkinsCityParticlesSettingsList[i][8]}");
                                     }
                                 }
-                                if (Button("Steal", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
+                                if (Button("Request", (leftElementWidth + rightElementWidth) / 3f - 5f / 3f))
                                 {
-                                    if (string.IsNullOrEmpty(FengGameManagerMKII.LocationSkinToSteal) || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || PhotonNetwork.isMasterClient) return;
-                                    if (Application.loadedLevelName.Contains("Forest"))
-                                    {
-                                        LocationSkinsForestList.Add(FengGameManagerMKII.LocationSkinToSteal.Split(','));
-                                        LocationSkinsForestTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
-                                        LocationSkinsForestCurrentSetSetting.Value = LocationSkinsForestTitlesList.Count - 1;
-                                        LocationSkinsForestAmbientList.Add(0);
-                                        LocationSkinsForestAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
-                                        LocationSkinsForestFogList.Add(0);
-                                        LocationSkinsForestFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
-                                        LocationSkinsForestLightList.Add(0);
-                                        LocationSkinsForestLightSettingsList.Add(new[] { 1f, 1f, 1f });
-                                        LocationSkinsForestParticlesList.Add(0);
-                                        LocationSkinsForestParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
-                                        LocationSkinsForestCountSetting.Value++;
-                                        scrollLocationSkinsForestLeft.y = 9999f;
-                                    }
-                                    else if (Application.loadedLevelName.Contains("City"))
-                                    {
-                                        LocationSkinsCityTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
-                                        LocationSkinsCityList.Add(FengGameManagerMKII.LocationSkinToSteal.Split('`'));
-                                        LocationSkinsCityCurrentSetSetting.Value = LocationSkinsCityTitlesList.Count - 1;
-                                        LocationSkinsCityAmbientList.Add(0);
-                                        LocationSkinsCityAmbientSettingsList.Add(new float[] { CustomAmbientColorSetting[0][0], CustomAmbientColorSetting[0][1], CustomAmbientColorSetting[0][2] });
-                                        LocationSkinsCityFogList.Add(0);
-                                        LocationSkinsCityFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
-                                        LocationSkinsCityLightList.Add(0);
-                                        LocationSkinsCityLightSettingsList.Add(new[] { 1f, 1f, 1f });
-                                        LocationSkinsCityParticlesList.Add(0);
-                                        LocationSkinsCityParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
-                                        LocationSkinsCityCountSetting.Value++;
-                                        scrollLocationSkinsCityLeft.y = 9999f;
-                                    }
+                                    FengGameManagerMKII.FGM.photonView.RPC("ChatPM", PhotonNetwork.masterClient, FengGameManagerMKII.nameField.ToHTML(), $"{FengGameManagerMKII.nameField.ToHTML()} requests to get your location skins.\n/pm {PhotonNetwork.player.ID} Y/N");
+                                    PhotonNetwork.masterClient.WaitForLocationSkin = true;
+                                    InRoomChat.SystemMessageLocal("Location Skins request sent to", PhotonNetwork.masterClient);
                                 }
                             }
                             GUILayout.EndHorizontal();
@@ -1972,15 +1906,12 @@ namespace GGM.GUI.Pages
                                     Commands.Revive(ChosenPlayer.ID.ToString());
                                 }
 
-                                if (Button("Steal Skin", fullAreaWidth * ControlPanelProportion[2] - 20f))
+                                if (Button("Request Skin", fullAreaWidth * ControlPanelProportion[2] - 20f))
                                 {
                                     if (!HERO.PlayersSkins.ContainsKey(ChosenPlayer.ID)) return;
-                                    var skin = HERO.PlayersSkins[ChosenPlayer.ID];
-                                    HumanSkinsTitlesList.Add(ChosenPlayer.Name.StripHEX());
-                                    HumanSkinsCurrentSetSetting.Value = HumanSkinsTitlesList.Count - 1;
-                                    HumanSkinsList.Add(skin.Split(','));
-                                    HumanSkinsCountSetting.Value++;
-                                    scrollHumanSkinsLeft.y = 9999f;
+                                    FengGameManagerMKII.FGM.photonView.RPC("ChatPM", ChosenPlayer, FengGameManagerMKII.nameField.ToHTML(), $"{FengGameManagerMKII.nameField.ToHTML()} requests to get your human skins.\n/pm {PhotonNetwork.player.ID} Y/N");
+                                    ChosenPlayer.WaitForHumanSkin = true;
+                                    InRoomChat.SystemMessageLocal("Human Skins request sent to", ChosenPlayer);
                                 }
                                 Label("Server", LabelType.SubHeader, width: fullAreaWidth * ControlPanelProportion[2] - 20f);
                                 if (Button("Reset All Stats", fullAreaWidth * ControlPanelProportion[2] - 20f))

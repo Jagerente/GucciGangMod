@@ -337,4 +337,10 @@ public class PhotonPlayer
             return str;
         }
     }
+
+    public bool WaitForMapScript { get; set; }
+
+    public bool WaitForHumanSkin { get; set; }
+
+    public bool WaitForLocationSkin { get; set; }
 }

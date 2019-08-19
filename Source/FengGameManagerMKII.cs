@@ -5742,6 +5742,8 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void ChatPM(string sender, string content, PhotonMessageInfo info)
     {
+        var request = content.ToUpper();
+
         Logger.LogChat(Logger.ChatLogPath, content, info);
 
         content = InRoomChat.ChatFormatting("Message from ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1]) + InRoomChat.ChatFormatting($"[{Convert.ToString(info.sender.ID)}]", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1]) + info.sender.Name.hexColor() + ": " + content;
@@ -5753,6 +5755,98 @@ public class FengGameManagerMKII : MonoBehaviour
         else
         {
             InRoomChat.AddLineChat($"<size={Settings.ChatSizeSetting}>{content}</size>");
+        }
+
+        CheckRequests(info, request);
+    }
+
+    private void CheckRequests(PhotonMessageInfo info, string request)
+    {
+        if (info.sender.WaitForMapScript && (request.Contains("Y") || request.Contains("N")))
+        {
+            info.sender.WaitForMapScript = false;
+
+            if (!request.StripHTML().ToUpper().Contains("Y"))
+            {
+                InRoomChat.SystemMessageLocal(info.sender, "denied your request.");
+                return;
+            }
+
+            InRoomChat.SystemMessageLocal(info.sender, "accepted your request.");
+            Settings.CustomMapScriptsList[Settings.CustomMapSkinsCurrentSetSetting] = string.Empty;
+
+            foreach (var line in levelCache)
+            {
+                foreach (var obj in line)
+                {
+                    Settings.CustomMapScriptsList[Settings.CustomMapSkinsCurrentSetSetting] += obj;
+                    Settings.CustomMapScriptsList[Settings.CustomMapSkinsCurrentSetSetting] += ";\n";
+                }
+            }
+        }
+
+        if (info.sender.WaitForLocationSkin && (request.Contains("Y") || request.Contains("N")))
+        {
+            info.sender.WaitForLocationSkin = false;
+
+            if (!request.StripHTML().ToUpper().Contains("Y"))
+            {
+                InRoomChat.SystemMessageLocal(info.sender, "denied your request.");
+                return;
+            }
+
+            InRoomChat.SystemMessageLocal(info.sender, "accepted your request.");
+
+            if (string.IsNullOrEmpty(LocationSkinToSteal) || IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.MULTIPLAYER || PhotonNetwork.isMasterClient) return;
+            if (Application.loadedLevelName.Contains("Forest"))
+            {
+                Settings.LocationSkinsForestTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
+                Settings.LocationSkinsForestList.Add(LocationSkinToSteal.Split(','));
+                Settings.LocationSkinsForestCurrentSetSetting.Value = Settings.LocationSkinsForestTitlesList.Count - 1;
+                Settings.LocationSkinsForestAmbientList.Add(0);
+                Settings.LocationSkinsForestAmbientSettingsList.Add(new float[] { Settings.CustomAmbientColorSetting[0][0], Settings.CustomAmbientColorSetting[0][1], Settings.CustomAmbientColorSetting[0][2] });
+                Settings.LocationSkinsForestFogList.Add(0);
+                Settings.LocationSkinsForestFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
+                Settings.LocationSkinsForestLightList.Add(0);
+                Settings.LocationSkinsForestLightSettingsList.Add(new[] { 1f, 1f, 1f });
+                Settings.LocationSkinsForestParticlesList.Add(0);
+                Settings.LocationSkinsForestParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                Settings.LocationSkinsForestCountSetting.Value++;
+            }
+            else if (Application.loadedLevelName.Contains("City"))
+            {
+                Settings.LocationSkinsCityTitlesList.Add(PhotonNetwork.masterClient.Name.StripHEX());
+                Settings.LocationSkinsCityList.Add(LocationSkinToSteal.Split('`'));
+                Settings.LocationSkinsCityCurrentSetSetting.Value = Settings.LocationSkinsCityTitlesList.Count - 1;
+                Settings.LocationSkinsCityAmbientList.Add(0);
+                Settings.LocationSkinsCityAmbientSettingsList.Add(new float[] { Settings.CustomAmbientColorSetting[0][0], Settings.CustomAmbientColorSetting[0][1], Settings.CustomAmbientColorSetting[0][2] });
+                Settings.LocationSkinsCityFogList.Add(0);
+                Settings.LocationSkinsCityFogSettingsList.Add(new float[] { 0.066f, 0.066f, 0.066f, 0f, 1000f });
+                Settings.LocationSkinsCityLightList.Add(0);
+                Settings.LocationSkinsCityLightSettingsList.Add(new[] { 1f, 1f, 1f });
+                Settings.LocationSkinsCityParticlesList.Add(0);
+                Settings.LocationSkinsCityParticlesSettingsList.Add(new float[] { 1500f, 125f, 60f, 120f, 0.001f, 0f, 1f, 1f, 1f, 1f });
+                Settings.LocationSkinsCityCountSetting.Value++;
+            }
+        }
+
+        if (info.sender.WaitForHumanSkin && (request.Contains("Y") || request.Contains("N")))
+        {
+            info.sender.WaitForHumanSkin = false;
+
+            if (!request.StripHTML().ToUpper().Contains("Y"))
+            {
+                InRoomChat.SystemMessageLocal(info.sender, "denied your request.");
+                return;
+            }
+
+            InRoomChat.SystemMessageLocal(info.sender, "accepted your request.");
+
+            var skin = HERO.PlayersSkins[info.sender.ID];
+            Settings.HumanSkinsTitlesList.Add(info.sender.Name.StripHEX());
+            Settings.HumanSkinsCurrentSetSetting.Value = Settings.HumanSkinsTitlesList.Count - 1;
+            Settings.HumanSkinsList.Add(skin.Split(','));
+            Settings.HumanSkinsCountSetting.Value++;
         }
     }
 
@@ -6055,7 +6149,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 IN_GAME_MAIN_CAMERA.gamemode = GAMEMODE.None;
             }
 
-            if (info.sender.isMasterClient && link.Length > 6)
+            if (info.sender.isMasterClient && link.Length > 6 && Settings.CustomMapSkinsSetting)
             {
                 StartCoroutine(clearlevelE(link));
             }
