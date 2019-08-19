@@ -412,7 +412,7 @@ namespace GGM.GUI.Pages
                         Grid("Damage Feed", ref DamageFeedUISetting.Value);
                         Grid("Game Info", ref GameInfoUISetting.Value);
                         Grid("Chat", ref ChatUISetting.Value);
-                        Grid("Crosshair", ref CrosshairUISetting.Value);
+                        Grid("Crosshair Helper", ref CrosshairHelperUISetting.Value);
                         Grid("Sprites", ref SpritesUISetting.Value);
                     }
 

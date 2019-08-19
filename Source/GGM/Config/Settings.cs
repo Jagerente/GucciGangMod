@@ -64,7 +64,7 @@ namespace GGM.Config
         public static BoolSetting[] ChatMajorFormatSettings = { new BoolSetting("GGM_ChatMajorBold"), new BoolSetting("GGM_ChatMinorItalic") };
         public static BoolSetting[] ChatMinorFormatSettings = { new BoolSetting("GGM_ChatMinorBold"), new BoolSetting("GGM_ChatMinorItalic") };
         public static BoolSetting ChatUISetting = new BoolSetting("GGM_ChatUI", true);
-        public static BoolSetting CrosshairUISetting = new BoolSetting("GGM_CrosshairUI", true);
+        public static BoolSetting CrosshairHelperUISetting = new BoolSetting("GGM_CrosshairHelperUI", true);
         public static BoolSetting CustomAmbientSetting = new BoolSetting("GGM_CustomAmbient");
         public static BoolSetting CustomFogSetting = new BoolSetting("GGM_CustomFog");
         public static BoolSetting CustomGasSetting = new BoolSetting("GGM_CustomGas");
@@ -499,6 +499,14 @@ namespace GGM.Config
                 return;
             }
 
+            if (!CrosshairHelperUISetting)
+            {
+                Extensions.DisableObject("crossL1");
+                Extensions.DisableObject("crossR1");
+                Extensions.DisableObject("crossL2");
+                Extensions.DisableObject("crossR2");
+            }
+
             if (UserInterfaceSetting)
             {
                 Extensions.DisableObject("UIflare1");
@@ -523,6 +531,10 @@ namespace GGM.Config
                 Extensions.DisableObject("skill_cd_marco");
                 Extensions.DisableObject("skill_cd_eren");
                 Extensions.DisableObject("GasUI");
+                Extensions.DisableObject("crossL1");
+                Extensions.DisableObject("crossR1");
+                Extensions.DisableObject("crossL2");
+                Extensions.DisableObject("crossR2");
                 updateHUD = true;
             }
             else
