@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using GGM;
 using GGM.Caching;
@@ -43,6 +44,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
     public float minimumX = -360f;
     public float minimumY = -60f;
     private bool needSetHUD;
+    public static CAMERA_TYPE Old = CAMERA_TYPE.TPS;
     private float R;
     public int score;
     public static float sensitivityMulti = 0.5f;
@@ -81,6 +83,27 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         name = "MainCamera";
         CreateMinimap();
     }
+
+    public static void LockCamera(bool needLock)
+    {
+        if (needLock)
+        {
+            if (cameraMode != CAMERA_TYPE.TPS)
+            {
+                Old = cameraMode;
+            }
+            cameraMode = CAMERA_TYPE.TPS;
+            Screen.showCursor = true;
+            Screen.lockCursor = true;
+        }
+        else
+        {
+            cameraMode = Old;
+            Screen.lockCursor = cameraMode == CAMERA_TYPE.TPS || cameraMode == CAMERA_TYPE.OLDTPS;
+            Screen.showCursor = false;
+        }
+    }
+    
 
     private void camareMovement()
     {
