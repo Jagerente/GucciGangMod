@@ -69,6 +69,7 @@ namespace GGM.Config
         public static BoolSetting CustomFogSetting = new BoolSetting("GGM_CustomFog");
         public static BoolSetting CustomGasSetting = new BoolSetting("GGM_CustomGas");
         public static BoolSetting CustomLightSetting = new BoolSetting("GGM_CustomLight");
+        public static BoolSetting CustomMapSkinsSetting = new BoolSetting("GGM_CustomMapSkins");
         public static BoolSetting CustomSizeSetting = new BoolSetting("GGM_CustomSize");
         public static BoolSetting CustomSpawnRateSetting = new BoolSetting("GGM_CustomSpawnRate");
         public static BoolSetting CustomStarterTitansSetting = new BoolSetting("GGM_CustomStarterTitans");
