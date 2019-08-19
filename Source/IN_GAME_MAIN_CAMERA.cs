@@ -728,7 +728,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.RightArrow) || inputManager.isInputDown[InputCode.right])
+                if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
                     currentPeekPlayerIndex++;
                     var length = GameObject.FindGameObjectsWithTag("Player").Length;
@@ -745,7 +745,7 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || inputManager.isInputDown[InputCode.left])
+                if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
                     currentPeekPlayerIndex--;
                     var num2 = GameObject.FindGameObjectsWithTag("Player").Length;

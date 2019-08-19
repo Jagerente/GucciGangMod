@@ -86,15 +86,17 @@ namespace GGM
                     _baseT = gm.transform;
                     if (flag)
                     {
+                        gm.GetComponent<SpectatorMovement>().disable = true;
+                        gm.GetComponent<MouseLook>().disable = true;
                         Screen.showCursor = true;
                         Screen.lockCursor = false;
-                        gm.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
                     }
                     else
                     {
+                        gm.GetComponent<SpectatorMovement>().disable = false;
+                        gm.GetComponent<MouseLook>().disable = false;
                         Screen.showCursor = false;
                         Screen.lockCursor = true;
-                        gm.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(true);
                     }
                 }
             }
