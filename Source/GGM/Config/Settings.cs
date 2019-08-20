@@ -499,14 +499,6 @@ namespace GGM.Config
                 return;
             }
 
-            if (!CrosshairHelperUISetting)
-            {
-                Extensions.DisableObject("crossL1");
-                Extensions.DisableObject("crossR1");
-                Extensions.DisableObject("crossL2");
-                Extensions.DisableObject("crossR2");
-            }
-
             if (UserInterfaceSetting)
             {
                 Extensions.DisableObject("UIflare1");
@@ -561,7 +553,7 @@ namespace GGM.Config
             QualitySettings.shadowCascades = ShadowCascadesSetting == 0 ? 0 : ShadowCascadesSetting == 1 ? 2 : 4;
             AudioListener.volume = GlobalVolumeSetting;
 
-            if (LocationSkinsSetting == 1 || LocationSkinsSetting == 2 && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE))
+            if ((LocationSkinsSetting == 1 || LocationSkinsSetting == 2 && (PhotonNetwork.isMasterClient || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)) && !FengGameManagerMKII.level.StartsWith("Custom"))
             {
                 if (Application.loadedLevelName.Contains("Forest"))
                 {

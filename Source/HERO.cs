@@ -4608,6 +4608,13 @@ public class HERO : MonoBehaviour
                 }
             }
         }
+        if (!Settings.CrosshairHelperUISetting)
+        {
+            GGM.Extensions.DisableObject("crossL1");
+            GGM.Extensions.DisableObject("crossR1");
+            GGM.Extensions.DisableObject("crossL2");
+            GGM.Extensions.DisableObject("crossR2");
+        }
     }
 
     private void showFlareCD()
