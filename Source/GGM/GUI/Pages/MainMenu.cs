@@ -22,6 +22,14 @@ namespace GGM.GUI.Pages
         private static readonly string[] connectionProtocols = { "UDP", "TCP", "WS" };
 
 
+        private void Update()
+        {
+            if (PhotonNetwork.connected)
+            {
+                PhotonNetwork.Disconnect();
+            }
+        }
+
         private void OnGUI()
         {
             if(Styles.LabelStyle == null)
