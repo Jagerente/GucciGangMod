@@ -24,7 +24,7 @@ namespace GGM.GUI.Pages
 
         private void Update()
         {
-            if (PhotonNetwork.connected)
+            if (PhotonNetwork.connected && !FengGameManagerMKII.NeedRejoin)
             {
                 PhotonNetwork.Disconnect();
             }
