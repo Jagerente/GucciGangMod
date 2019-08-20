@@ -26,7 +26,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Mod\GGM_DATA\Managed\</OutputPath>
+    <OutputPath>..\GucciGangMod\GGM_DATA\Managed\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -44,9 +44,6 @@
     <Reference Include="Assembly-UnityScript-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Assemblies\Assembly-UnityScript-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
       <HintPath>..\Assemblies\Photon3Unity3D.dll</HintPath>
@@ -88,12 +85,10 @@
     <Compile Include="GGM\HotKeys.cs" />
     <Compile Include="GGM\Labels.cs" />
     <Compile Include="GGM\Layer.cs" />
-    <Compile Include="GGM\LocationSkins.cs" />
     <Compile Include="GGM\Logger.cs" />
     <Compile Include="GGM\SpectatorMode.cs" />
     <Compile Include="GGM\Storage\IDataStorage.cs" />
     <Compile Include="GGM\Storage\ISerializable.cs" />
-    <Compile Include="GGM\Storage\JsonStorage.cs" />
     <Compile Include="GGM\Storage\PrefStorage.cs" />
     <Compile Include="GGM\GUI\Styles.cs" />
     <Compile Include="Global.cs" />
