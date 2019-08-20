@@ -168,7 +168,7 @@ namespace GGM.Config
         public static IntSetting LocationSkinsForestCurrentSetSetting = new IntSetting("GGM_LocationSkinsForestCurrentSet");
         public static IntSetting LocationSkinsSetting = new IntSetting("GGM_LocationSkins");
         public static IntSetting MaximumWavesSetting = new IntSetting("GGM_MaximumWaves", 20);
-        public static IntSetting MessagesCache = new IntSetting("GGM_MessagesCache", 128);
+        public static IntSetting ChatMessagesCache = new IntSetting("GGM_ChatMessagesCache", 128);
         public static IntSetting PointsLimitSetting = new IntSetting("GGM_PointsLimit", 50);
         public static IntSetting PVPTypeSetting = new IntSetting("GGM_PVPType");
         public static IntSetting ShadowCascadesSetting = new IntSetting("GGM_ShadowCascades", 2);
