@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GGM.Caching;
 using UnityEngine;
 using Xft;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -4454,6 +4455,21 @@ public class HERO : MonoBehaviour
 
     private void showAimUI()
     {
+        if (!Settings.CrosshairHelperUISetting)
+        {
+            GGM.Extensions.DisableObject("crossL1");
+            GGM.Extensions.DisableObject("crossR1");
+            GGM.Extensions.DisableObject("crossL2");
+            GGM.Extensions.DisableObject("crossR2");
+        }
+        else if (!GameObject.Find("crossL1").activeSelf || !GameObject.Find("crossL2").activeSelf || !GameObject.Find("crossR1").activeSelf || !GameObject.Find("crossR1").activeSelf)
+        {
+            GGM.Extensions.EnableObject("crossL1");
+            GGM.Extensions.EnableObject("crossR1");
+            GGM.Extensions.EnableObject("crossL2");
+            GGM.Extensions.EnableObject("crossR2");
+        }
+
         Vector3 vector;
         if (Screen.showCursor)
         {
@@ -4563,7 +4579,7 @@ public class HERO : MonoBehaviour
                 vector5.Normalize();
                 vector4 = vector4 * 1000000f;
                 vector5 = vector5 * 1000000f;
-                if (Physics.Linecast(baseTransform.position + vector2, baseTransform.position + vector2 + vector4, out hit2, mask3.value))
+                if (Physics.Linecast(baseTransform.position + vector2, baseTransform.position + vector2 + vector4, out hit2, mask3.value) && Settings.CrosshairHelperUISetting)
                 {
                     var obj12 = crossL1;
                     obj12.transform.localPosition = currentCamera.WorldToScreenPoint(hit2.point);
@@ -4585,7 +4601,7 @@ public class HERO : MonoBehaviour
                     }
                 }
 
-                if (Physics.Linecast(baseTransform.position + vector3, baseTransform.position + vector3 + vector5, out hit2, mask3.value))
+                if (Physics.Linecast(baseTransform.position + vector3, baseTransform.position + vector3 + vector5, out hit2, mask3.value) && Settings.CrosshairHelperUISetting)
                 {
                     var obj14 = crossR1;
                     obj14.transform.localPosition = currentCamera.WorldToScreenPoint(hit2.point);
@@ -4607,13 +4623,6 @@ public class HERO : MonoBehaviour
                     }
                 }
             }
-        }
-        if (!Settings.CrosshairHelperUISetting)
-        {
-            GGM.Extensions.DisableObject("crossL1");
-            GGM.Extensions.DisableObject("crossR1");
-            GGM.Extensions.DisableObject("crossL2");
-            GGM.Extensions.DisableObject("crossR2");
         }
     }
 
