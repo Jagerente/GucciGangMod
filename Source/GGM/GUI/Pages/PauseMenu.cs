@@ -1711,7 +1711,7 @@ namespace GGM.GUI.Pages
                                 Grid("Legacy Chat", ref LegacyChatSetting.Value);
                                 Grid("Background", ref ChatBackground.Value);
                                 if (ChatBackground) Slider("Opacity", ref ChatOpacitySetting.Value, 0f, 1f);
-                                Slider("Messages Cache", ref MessagesCache.Value, 15, 512);
+                                Slider("Messages Cache", ref ChatMessagesCache.Value, 15, 512);
                                 Slider("Chat Height", ref ChatHeightSetting.Value, 275f, Screen.height - 30f);
                                 Slider("Chat Width", ref ChatWidthSetting.Value, 300f, Screen.width / 2f - 5f);
                                 TextField("Size", ref ChatSizeSetting.Value);
