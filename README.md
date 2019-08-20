@@ -30,7 +30,7 @@ I literally cannot test anything to detect and fix bugs so I really need help wi
 * Follow the instruction.
 
 # Download
-* [Latest version](https://github.com/JustlPain/GucciGangMod/releases)
+* [Latest version](https://github.com/Jagerente/GucciGangMod/releases/latest)
 
 # Special thanks
 ### For helping with C# learning:
