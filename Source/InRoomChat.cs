@@ -577,6 +577,9 @@ public class InRoomChat : MonoBehaviour
                 Commands.Rules();
                 break;
 
+            case "spectate":
+                Commands.Spectate(args[1]);
+                break;
             case "specmode":
                 Commands.SpectatorMode();
                 break;
