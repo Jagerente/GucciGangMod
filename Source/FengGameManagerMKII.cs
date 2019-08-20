@@ -6554,7 +6554,7 @@ public class FengGameManagerMKII : MonoBehaviour
                         ShowHUDInfoTopCenter("Time : " + (roundTime >= 20f ? (num3 = (int)(roundTime * 10f) * 0.1f - 20f).ToString() : "WAITING"));
                         if (roundTime < 20f)
                         {
-                            ShowHUDInfoCenter("RACE START IN " + (int)(20f - roundTime) + (!(localRacingResult == string.Empty) ? "\nLast Round\n" + localRacingResult : "\n\n"));
+                            ShowHUDInfoCenter("RACE START IN " + (int) (20f - roundTime) + (!(localRacingResult == string.Empty) ? "\nLast Round\n" + localRacingResult : "\n\n"));
                         }
                         else if (!startRacing)
                         {
