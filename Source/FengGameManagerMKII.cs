@@ -25,9 +25,10 @@ public class FengGameManagerMKII : MonoBehaviour
     public static string currentScript;
     public static string currentScriptLogic;
     public static bool customLevelLoaded;
-    public static float deltaTimer = 8f;
-    public static float deltaTimer2 = 0f;
-    public static int feed_number = 0;
+    public static List<int> DamageFeed = new List<int>();
+    public static int DamageFeedCurrent = 0;
+    public static int DamageFeedHighest = 0;
+    public static List<float> DamageFeedTime = new List<float>();
     public static FengGameManagerMKII FGM;
     public static Hashtable floatVariables;
     public static FPSCounter FPS = new FPSCounter();
@@ -40,7 +41,6 @@ public class FengGameManagerMKII : MonoBehaviour
     public static FengCustomInputs inputManager;
     public static InputManagerRC inputRC;
     public static Hashtable intVariables;
-    public static bool is_feed = false;
     public static bool isAssetLoaded;
     public static bool LAN;
     public static string level = string.Empty;
@@ -3542,6 +3542,7 @@ public class FengGameManagerMKII : MonoBehaviour
         single_maxDamage = Mathf.Max(dmg, single_maxDamage);
         single_totalDamage += dmg;
         GGM.Discord.RichPresence.UpdateStatus();
+        UpdateDamageFeedLabel(dmg);
     }
 
     public void playerKillInfoUpdate(PhotonPlayer player, int dmg)
@@ -4961,6 +4962,10 @@ public class FengGameManagerMKII : MonoBehaviour
         photonView.RPC("oneTitanDown", PhotonTargets.MasterClient, objArray2);
         sendKillInfo(false, (string)player.customProperties[PhotonPlayerProperty.name], true, name, Damage);
         playerKillInfoUpdate(player, Damage);
+        if (player.isLocal)
+        {
+            UpdateDamageFeedLabel(Damage);
+        }
     }
 
     public void titanGetKillbyServer(int Damage, string name)
@@ -5639,11 +5644,6 @@ public class FengGameManagerMKII : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         SpawnPlayerAt(myLastHero, pos);
-    }
-
-    private int add_number(int dmg)
-    {
-        return FengGameManagerMKII.feed_number += dmg;
     }
 
     private void cache()
@@ -6720,9 +6720,9 @@ public class FengGameManagerMKII : MonoBehaviour
                         ShowHUDInfoTopRightMAPNAME("\n" + level + " : " + str4);
                     }
 
-                    if (Settings.DamageFeedUISetting)
+                    if (Settings.DamageFeedUISetting && Application.loadedLevelName.Contains("Forest") && !level.StartsWith("Custom"))
                     {
-                        ShowHUDInfoTopCenterADD(string.Concat("\nDamage Feed: ", FengGameManagerMKII.feed_number, "  Highest Feed: ", FengGameManagerMKII.highest_feed));
+                        ShowHUDInfoTopCenterADD(string.Concat("\nDamage Feed: ", DamageFeedCurrent, "  Highest Feed: ", DamageFeedHighest));
                     }
 
                     ShowHUDInfoTopRightMAPNAME($"\nFPS [{Settings.ChatMinorColorSetting}]{FPS.FPS}[-]");
@@ -10092,22 +10092,6 @@ public class FengGameManagerMKII : MonoBehaviour
             Labels.NetworkStatus = PhotonNetwork.connectionState != ConnectionState.Disconnected ? PhotonNetwork.connectionState.ToString() + (PhotonNetwork.connected ? " ping: " + PhotonNetwork.GetPing() : string.Empty) : string.Empty;
         }
 
-        if (Settings.DamageFeedUISetting)
-        {
-            deltaTimer2 += Time.deltaTime;
-            if (deltaTimer2 > deltaTimer)
-            {
-                bool flag7 = feed_number > highest_feed && (double)RCSettings.sizeUpper <= 3.0;
-                if (flag7)
-                {
-                    highest_feed = feed_number;
-                }
-
-                feed_number = 0;
-                FengGameManagerMKII.deltaTimer2 = 0f;
-                is_feed = false;
-            }
-        }
         if (gameStart)
         {
             foreach (HERO hERO in heroes)
@@ -10149,6 +10133,53 @@ public class FengGameManagerMKII : MonoBehaviour
             {
                 mainCamera.update();
             }
+        }
+
+        if (Settings.DamageFeedUISetting)
+        {
+            for (var i = 0; i < DamageFeedTime.Count; i++)
+            {
+                if (DamageFeedTime[i] <= 0f)
+                {
+                    DamageFeedCurrent -= DamageFeed[0];
+                    DamageFeedTime.RemoveAt(0);
+                    DamageFeed.RemoveAt(0);
+                }
+                else
+                {
+                    DamageFeedTime[i] -= Time.deltaTime;
+                }
+            }
+        }
+    }
+
+    private void UpdateDamageFeedLabel(int damage)
+    {
+        if (!Settings.DamageFeedUISetting)
+        {
+            return;
+        }
+
+        if (DamageFeed == null)
+        {
+            DamageFeed = new List<int>();
+        }
+        else if (DamageFeedTime == null)
+        {
+            DamageFeedTime = new List<float>();
+        }
+
+        DamageFeed.Add(damage);
+        DamageFeedTime.Add(8f);
+        DamageFeedCurrent = 0;
+        foreach (var dmg in DamageFeed)
+        {
+            DamageFeedCurrent += dmg;
+        }
+
+        if (DamageFeedCurrent > DamageFeedHighest)
+        {
+            DamageFeedHighest = DamageFeedCurrent;
         }
     }
 
@@ -10200,16 +10231,6 @@ public class FengGameManagerMKII : MonoBehaviour
                 else
                     InRoomChat.AddLineChatFeed($"<size={Settings.ChatSizeSetting}>{msg}</size>");
             }
-        }
-
-        if (killer.Equals(RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties[PhotonPlayerProperty.name])))
-        {
-            if (!is_feed && Settings.DamageFeedUISetting)
-            {
-                is_feed = true;
-            }
-
-            this.add_number(dmg);
         }
     }
 }
