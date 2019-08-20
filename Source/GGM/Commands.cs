@@ -73,6 +73,15 @@ namespace GGM
             }
         }
 
+        public static void BanList()
+        {
+            SystemMessageLocal("Banned Players:");
+            foreach (int i in FengGameManagerMKII.banHash.Keys)
+            {
+                SystemMessageLocal(Convert.ToString(i) + ":" + (string)FengGameManagerMKII.banHash[i]);
+            }
+        }
+
         public static void ClearChat(bool local = true)
         {
             Chat.Clear();
@@ -177,6 +186,36 @@ namespace GGM
             {
                 SystemMessageLocal(player);
             }
+        }
+
+        public static void PM(string[] args)
+        {
+            var player = PhotonPlayer.Find(Convert.ToInt32(args[1]));
+            var msg = "";
+            for (var i = 2; i < args.Length; i++)
+            {
+                msg += args[i] + (i == args.Length - 1 ? "" : " ");
+            }
+
+            var myName = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties["name"]).hexColor();
+            string sendName;
+            switch (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties["RCteam"]))
+            {
+                case 1:
+                    sendName = "<color=cyan>" + myName + "</color>";
+                    break;
+
+                case 2:
+                    sendName = "<color=magenta>" + myName + "</color>";
+                    break;
+
+                default:
+                    sendName = myName;
+                    break;
+            }
+
+            FengGameManagerMKII.FGM.photonView.RPC("ChatPM", player, sendName, msg);
+            AddLineChat(ChatFormatting("To ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
         }
 
         public static void Reconnect()
@@ -597,6 +636,19 @@ namespace GGM
             FengGameManagerMKII.FGM.addTime(time);
             string[] msg = { "Time set to ", time.ToString(), "." };
             SystemMessageGlobal(msg);
+        }
+
+        public static void Spectate(string id)
+        {
+            var playerID = Convert.ToInt32(id);
+            foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if (player.GetPhotonView().owner.ID == playerID)
+                {
+                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setMainObject(player, true, false);
+                    Camera.main.GetComponent<IN_GAME_MAIN_CAMERA>().setSpectorMode(false);
+                }
+            }
         }
 
         public static void SpectatorMode()

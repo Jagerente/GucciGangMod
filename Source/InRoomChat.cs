@@ -378,7 +378,7 @@ public class InRoomChat : MonoBehaviour
         {
             var text = string.Empty;
             text = Chat.Aggregate(text, (current, t) => current + t + "\n");
-            if (Chat.Count > Settings.MessagesCache)
+            if (Chat.Count > Settings.ChatMessagesCache)
             {
                 Chat.RemoveAt(0);
             }
@@ -416,7 +416,7 @@ public class InRoomChat : MonoBehaviour
                 text = ChatFeed.Aggregate(text, (current, t) => current + t + "\n");
 
 
-                if (ChatFeed.Count > Settings.MessagesCache)
+                if (ChatFeed.Count > Settings.ChatMessagesCache)
                 {
                     ChatFeed.RemoveAt(0);
                 }
@@ -450,18 +450,6 @@ public class InRoomChat : MonoBehaviour
     {
         switch (args[0])
         {
-            case "pos":
-                Commands.GetPosition();
-                break;
-
-            case "ban":
-                Commands.Ban(args[1]);
-                break;
-
-            case "unban":
-                Commands.Unban(args[1]);
-                break;
-
             case "aso":
                 switch (args[1])
                 {
@@ -484,7 +472,19 @@ public class InRoomChat : MonoBehaviour
                 }
                 break;
 
+            case "ban":
+                Commands.Ban(args[1]);
+                break;
+
+            case "unban":
+                Commands.Unban(args[1]);
+                break;
+            case "banlist":
+                Commands.BanList();
+                break;
+
             case "clear":
+            case "clean":
                 Commands.ClearChat();
                 break;
 
@@ -493,15 +493,32 @@ public class InRoomChat : MonoBehaviour
                 Commands.ClearChat(false);
                 break;
 
+            case "kick":
+                Commands.Kick(args[1]);
+                return;
+
+            case "mute":
+                Commands.Mute(PhotonPlayer.Find(Convert.ToInt32(args[1])));
+                return;
+
+            case "unmute":
+                Commands.Unmute(PhotonPlayer.Find(Convert.ToInt32(args[1])));
+                return;
+
+            case "mutelist":
+                Commands.MuteList();
+                return;
+
             case "pause":
                 FengGameManagerMKII.FGM.SetPause(true);
                 break;
+
             case "unpause":
                 FengGameManagerMKII.FGM.SetPause(false);
                 break;
 
-            case "tp":
-                Commands.Teleport(Convert.ToInt32(args[1]));
+            case "pm":
+                Commands.PM(args);
                 break;
 
             case "reconnect":
@@ -512,13 +529,13 @@ public class InRoomChat : MonoBehaviour
                 Commands.ResetKD();
                 break;
 
-            case "/resetkd":
-                Commands.ResetKD(args[1]);
-                break;
-
             case "resetkdall":
                 Commands.ResetKD(global: true);
                 break;
+
+            case "restart":
+                Commands.Restart();
+                return;
 
             case "revive":
                 Commands.Revive(args[1]);
@@ -556,69 +573,20 @@ public class InRoomChat : MonoBehaviour
                 }
                 break;
 
-            case "pm":
-                {
-                    var player = PhotonPlayer.Find(Convert.ToInt32(args[1]));
-                    var msg = "";
-                    for (var i = 2; i < args.Length; i++)
-                    {
-                        msg += args[i] + (i == args.Length - 1 ? "" : " ");
-                    }
-
-                    var myName = RCextensions.returnStringFromObject(PhotonNetwork.player.customProperties["name"]).hexColor();
-                    string sendName;
-                    switch (RCextensions.returnIntFromObject(PhotonNetwork.player.customProperties["RCteam"]))
-                    {
-                        case 1:
-                            sendName = "<color=cyan>" + myName + "</color>";
-                            break;
-
-                        case 2:
-                            sendName = "<color=magenta>" + myName + "</color>";
-                            break;
-
-                        default:
-                            sendName = myName;
-                            break;
-                    }
-
-                    FengGameManagerMKII.FGM.photonView.RPC("ChatPM", player, sendName, msg);
-                    AddLineChat(ChatFormatting("To ", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($" [{player.ID}] {player.Name.hexColor()}", Settings.ChatMinorColorSetting, Settings.ChatMinorFormatSettings[0], Settings.ChatMinorFormatSettings[1], Settings.ChatSizeSetting.ToString()) + ChatFormatting($": {msg}", Settings.ChatMajorColorSetting, Settings.ChatMajorFormatSettings[0], Settings.ChatMajorFormatSettings[1], Settings.ChatSizeSetting.ToString()));
-                }
+            case "rules":
+                Commands.Rules();
                 break;
-
-            case "team":
-                {
-                    Commands.SwitchTeam(args[1]);
-                }
-                break;
-
-            case "kick":
-                Commands.Kick(args[1]);
-                return;
-
-            case "restart":
-                Commands.Restart();
-                return;
 
             case "specmode":
                 Commands.SpectatorMode();
-                return;
+                break;
 
-            case "mute":
-                Commands.Mute(PhotonPlayer.Find(Convert.ToInt32(args[1])));
-                return;
+            case "team":
+                Commands.SwitchTeam(args[1]);
+                 break;
 
-            case "unmute":
-                Commands.Unmute(PhotonPlayer.Find(Convert.ToInt32(args[1])));
-                return;
-
-            case "mutelist":
-                Commands.MuteList();
-                return;
-
-            case "rules":
-                Commands.Rules();
+            case "tp":
+                Commands.Teleport(Convert.ToInt32(args[1]));
                 break;
 
             default:
