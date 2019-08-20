@@ -55,7 +55,15 @@ namespace GGM
                 }
 
                 center = CreateLabel("LabelInfoCenter", 32, TextAnchor.MiddleCenter, White, Fonts[Font], TextAlignment.Center);
-                return center == null ? string.Empty : center.text;
+
+                var space = "\n\n\n";
+
+                for (var i = 0; i < center.text.Split('\n').Length; i++)
+                {
+                    space += '\n';
+                }
+
+                return center == null ? string.Empty : center.text + space;
             }
             set
             {
@@ -66,7 +74,14 @@ namespace GGM
                         return;
                 }
 
-                center.text = Settings.UserInterfaceSetting ? string.Empty : value;
+                var space = "\n\n\n";
+
+                for (var i = 0; i < value.Split('\n').Length; i++)
+                {
+                    space += '\n';
+                }
+
+                center.text = Settings.UserInterfaceSetting ? string.Empty : value + space;
             }
         }
 
