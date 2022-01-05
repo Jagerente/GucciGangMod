@@ -1640,96 +1640,152 @@ public class TITAN : MonoBehaviour
 
     public void headMovement()
     {
-        if (!hasDie)
+        if (!this.hasDie)
         {
-            if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
+            this.targetHeadRotation = this.head.rotation;
+            bool flag = false;
+            var isLocal = IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine;
+
+            if (!isLocal && myHero != null)
             {
-                if (photonView.isMine)
+                UpdateHeroDistance();
+            }
+            if (!_ignoreLookTarget && abnormalType != AbnormalType.TYPE_CRAWLER && myDistance < 100f && this.myHero != null)
+            {
+                Vector3 vector3 = this.myHero.transform.position - baseTransform.position;
+                this.angle = -Mathf.Atan2(vector3.z, vector3.x) * 57.29578f;
+                float num7 = -Mathf.DeltaAngle(this.angle, baseTransform.rotation.eulerAngles.y - 90f);
+                num7 = Mathf.Clamp(num7, -40f, 40f);
+                float num8 = (this.neck.position.y + (this.myLevel * 2f)) - this.myHero.transform.position.y;
+                float num9 = Mathf.Atan2(num8, this.myDistance) * 57.29578f;
+                num9 = Mathf.Clamp(num9, -40f, 30f);
+                this.targetHeadRotation = Quaternion.Euler(head.rotation.eulerAngles.x + num9, head.rotation.eulerAngles.y + num7, head.rotation.eulerAngles.z);
+                if (!asClientLookTarget)
                 {
-                    targetHeadRotation = head.rotation;
-                    var flag = false;
-                    if (abnormalType != AbnormalType.TYPE_CRAWLER && state != TitanState.attack && state != TitanState.down && state != TitanState.hit && state != TitanState.recover && state != TitanState.eat && state != TitanState.hit_eye && !hasDie && myDistance < 100f && myHero != null)
-                    {
-                        var vector = myHero.transform.position - transform.position;
-                        angle = -Mathf.Atan2(vector.z, vector.x) * 57.29578f;
-                        var num = -Mathf.DeltaAngle(angle, transform.rotation.eulerAngles.y - 90f);
-                        num = Mathf.Clamp(num, -40f, 40f);
-                        var y = neck.position.y + myLevel * 2f - myHero.transform.position.y;
-                        var num3 = Mathf.Atan2(y, myDistance) * 57.29578f;
-                        num3 = Mathf.Clamp(num3, -40f, 30f);
-                        targetHeadRotation = Quaternion.Euler(head.rotation.eulerAngles.x + num3, head.rotation.eulerAngles.y + num, head.rotation.eulerAngles.z);
-                        if (!asClientLookTarget)
-                        {
-                            asClientLookTarget = true;
-                            object[] parameters = { true };
-                            photonView.RPC("setIfLookTarget", PhotonTargets.Others, parameters);
-                        }
-                        flag = true;
-                    }
-                    if (!flag && asClientLookTarget)
-                    {
-                        asClientLookTarget = false;
-                        object[] objArray2 = { false };
-                        photonView.RPC("setIfLookTarget", PhotonTargets.Others, objArray2);
-                    }
-                    if (state == TitanState.attack || state == TitanState.hit || state == TitanState.hit_eye)
-                    {
-                        oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 20f);
-                    }
-                    else
-                    {
-                        oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 10f);
-                    }
+                    asClientLookTarget = true;
+                }
+                flag = true;
+            }
+            if (!flag || !asClientLookTarget)
+            {
+                asClientLookTarget = false;
+                targetHeadRotation = head.rotation;
+            }
+
+            if (isLocal)
+            {
+                if (_fastHeadRotation)
+                {
+                    this.oldHeadRotation = Quaternion.Lerp(this.oldHeadRotation, this.targetHeadRotation, Time.deltaTime * 20f);
                 }
                 else
                 {
-                    targetHeadRotation = head.rotation;
-                    if (asClientLookTarget && myHero != null)
-                    {
-                        var vector8 = myHero.transform.position - transform.position;
-                        angle = -Mathf.Atan2(vector8.z, vector8.x) * 57.29578f;
-                        var num4 = -Mathf.DeltaAngle(angle, transform.rotation.eulerAngles.y - 90f);
-                        num4 = Mathf.Clamp(num4, -40f, 40f);
-                        var num5 = neck.position.y + myLevel * 2f - myHero.transform.position.y;
-                        var num6 = Mathf.Atan2(num5, myDistance) * 57.29578f;
-                        num6 = Mathf.Clamp(num6, -40f, 30f);
-                        targetHeadRotation = Quaternion.Euler(head.rotation.eulerAngles.x + num6, head.rotation.eulerAngles.y + num4, head.rotation.eulerAngles.z);
-                    }
-                    if (!hasDie)
-                    {
-                        oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 10f);
-                    }
+                    this.oldHeadRotation = Quaternion.Lerp(this.oldHeadRotation, this.targetHeadRotation, Time.deltaTime * 10f);
                 }
             }
             else
             {
-                targetHeadRotation = head.rotation;
-                if (abnormalType != AbnormalType.TYPE_CRAWLER && state != TitanState.attack && state != TitanState.down && state != TitanState.hit && state != TitanState.recover && state != TitanState.hit_eye && !hasDie && myDistance < 100f && myHero != null)
-                {
-                    var vector15 = myHero.transform.position - transform.position;
-                    angle = -Mathf.Atan2(vector15.z, vector15.x) * 57.29578f;
-                    var num7 = -Mathf.DeltaAngle(angle, transform.rotation.eulerAngles.y - 90f);
-                    num7 = Mathf.Clamp(num7, -40f, 40f);
-                    var num8 = neck.position.y + myLevel * 2f - myHero.transform.position.y;
-                    var num9 = Mathf.Atan2(num8, myDistance) * 57.29578f;
-                    num9 = Mathf.Clamp(num9, -40f, 30f);
-                    targetHeadRotation = Quaternion.Euler(head.rotation.eulerAngles.x + num9, head.rotation.eulerAngles.y + num7, head.rotation.eulerAngles.z);
-                }
-                if (state == TitanState.attack || state == TitanState.hit || state == TitanState.hit_eye)
-                {
-                    oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 20f);
-                }
-                else
-                {
-                    oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 10f);
-                }
+                this.oldHeadRotation = Quaternion.Slerp(this.oldHeadRotation, this.targetHeadRotation, Time.deltaTime * 10f);
             }
-            head.rotation = oldHeadRotation;
+            head.rotation = this.oldHeadRotation;
         }
         if (!animation.IsPlaying("die_headOff"))
         {
-            head.localScale = headscale;
+            head.localScale = this.headscale;
         }
+
+        #region RCVersion
+        //if (!hasDie)
+        //{
+        //    if (IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE)
+        //    {
+        //        if (photonView.isMine)
+        //        {
+        //            targetHeadRotation = head.rotation;
+        //            var flag = false;
+        //            if (abnormalType != AbnormalType.TYPE_CRAWLER && state != TitanState.attack && state != TitanState.down && state != TitanState.hit && state != TitanState.recover && state != TitanState.eat && state != TitanState.hit_eye && !hasDie && myDistance < 100f && myHero != null)
+        //            {
+        //                var vector = myHero.transform.position - transform.position;
+        //                angle = -Mathf.Atan2(vector.z, vector.x) * 57.29578f;
+        //                var num = -Mathf.DeltaAngle(angle, transform.rotation.eulerAngles.y - 90f);
+        //                num = Mathf.Clamp(num, -40f, 40f);
+        //                var y = neck.position.y + myLevel * 2f - myHero.transform.position.y;
+        //                var num3 = Mathf.Atan2(y, myDistance) * 57.29578f;
+        //                num3 = Mathf.Clamp(num3, -40f, 30f);
+        //                targetHeadRotation = Quaternion.Euler(head.rotation.eulerAngles.x + num3, head.rotation.eulerAngles.y + num, head.rotation.eulerAngles.z);
+        //                if (!asClientLookTarget)
+        //                {
+        //                    asClientLookTarget = true;
+        //                    object[] parameters = { true };
+        //                    photonView.RPC("setIfLookTarget", PhotonTargets.Others, parameters);
+        //                }
+        //                flag = true;
+        //            }
+        //            if (!flag && asClientLookTarget)
+        //            {
+        //                asClientLookTarget = false;
+        //                object[] objArray2 = { false };
+        //                photonView.RPC("setIfLookTarget", PhotonTargets.Others, objArray2);
+        //            }
+        //            if (state == TitanState.attack || state == TitanState.hit || state == TitanState.hit_eye)
+        //            {
+        //                oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 20f);
+        //            }
+        //            else
+        //            {
+        //                oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 10f);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            targetHeadRotation = head.rotation;
+        //            if (asClientLookTarget && myHero != null)
+        //            {
+        //                var vector8 = myHero.transform.position - transform.position;
+        //                angle = -Mathf.Atan2(vector8.z, vector8.x) * 57.29578f;
+        //                var num4 = -Mathf.DeltaAngle(angle, transform.rotation.eulerAngles.y - 90f);
+        //                num4 = Mathf.Clamp(num4, -40f, 40f);
+        //                var num5 = neck.position.y + myLevel * 2f - myHero.transform.position.y;
+        //                var num6 = Mathf.Atan2(num5, myDistance) * 57.29578f;
+        //                num6 = Mathf.Clamp(num6, -40f, 30f);
+        //                targetHeadRotation = Quaternion.Euler(head.rotation.eulerAngles.x + num6, head.rotation.eulerAngles.y + num4, head.rotation.eulerAngles.z);
+        //            }
+        //            if (!hasDie)
+        //            {
+        //                oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 10f);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        targetHeadRotation = head.rotation;
+        //        if (abnormalType != AbnormalType.TYPE_CRAWLER && state != TitanState.attack && state != TitanState.down && state != TitanState.hit && state != TitanState.recover && state != TitanState.hit_eye && !hasDie && myDistance < 100f && myHero != null)
+        //        {
+        //            var vector15 = myHero.transform.position - transform.position;
+        //            angle = -Mathf.Atan2(vector15.z, vector15.x) * 57.29578f;
+        //            var num7 = -Mathf.DeltaAngle(angle, transform.rotation.eulerAngles.y - 90f);
+        //            num7 = Mathf.Clamp(num7, -40f, 40f);
+        //            var num8 = neck.position.y + myLevel * 2f - myHero.transform.position.y;
+        //            var num9 = Mathf.Atan2(num8, myDistance) * 57.29578f;
+        //            num9 = Mathf.Clamp(num9, -40f, 30f);
+        //            targetHeadRotation = Quaternion.Euler(head.rotation.eulerAngles.x + num9, head.rotation.eulerAngles.y + num7, head.rotation.eulerAngles.z);
+        //        }
+        //        if (state == TitanState.attack || state == TitanState.hit || state == TitanState.hit_eye)
+        //        {
+        //            oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 20f);
+        //        }
+        //        else
+        //        {
+        //            oldHeadRotation = Quaternion.Lerp(oldHeadRotation, targetHeadRotation, Time.deltaTime * 10f);
+        //        }
+        //    }
+        //    head.rotation = oldHeadRotation;
+        //}
+        //if (!animation.IsPlaying("die_headOff"))
+        //{
+        //    head.localScale = headscale;
+        //}
+        #endregion
     }
 
     public void headMovement2()
