@@ -22,9 +22,19 @@ namespace GGM.GUI.Pages
         private static Vector2 CreateMapSlider;
         private static Vector2 PresetsSlider;
 
-        private static int Server;
-        private static readonly string[] Servers = { "Offline", "Europe", "US", "Asia", "Japan" };
-        private static readonly string[] ServersAdresses = new string[] { string.Empty, "eu", "us", "asia", "jp" };
+        private static Regions Server;
+        private static int ChosenServer;
+
+        private enum Regions
+        {
+            Offline,
+            EU,
+            USA,
+            Asia,
+            SouthAmerica
+        }
+
+        private static readonly string[] Servers = { "Offline", "Europe", "USA", "Asia", "South America" };
         private static string KeyWords;
         private static bool[] Map;
         private static readonly string[] Maps = { "The City", "The City III", "The Forest", "The Forest II", "The Forest III", "The Forest IV  - LAVA", "Annie", "Annie II", "Colossal Titan", "Colossal Titan II", "Trost", "Trost II", "Racing - Akina", "Outside The Walls", "Cave Fight", "House Fight", "Custom", "Custom (No PT)" };
@@ -37,7 +47,7 @@ namespace GGM.GUI.Pages
         private float timeToUpdate;
         private List<RoomInfo> servers = new List<RoomInfo>();
         private bool connected;
-        private int connectedServer;
+        private Regions connectedServer;
         private static int Page;
         private static int MapToCreate;
         private static string ServerNameToCreate;
@@ -256,7 +266,8 @@ namespace GGM.GUI.Pages
                             GUILayout.BeginHorizontal();
                             {
                                 GUILayout.FlexibleSpace();
-                                Grid(string.Empty, ref Server, Servers, width: BoxWidth / 2f, height: 25);
+                                Grid(string.Empty, ref ChosenServer, Servers, width: BoxWidth / 2f, height: 25);
+                                Server = (Regions)ChosenServer;
                                 CheckIfNeedConnect();
                                 GUILayout.FlexibleSpace();
                             }
@@ -497,7 +508,24 @@ namespace GGM.GUI.Pages
             {
                 if (!connected && Server > 0)
                 {
-                    PhotonNetwork.ConnectToMaster($"app-{ServersAdresses[Server]}.exitgamescloud.com", NetworkingPeer.ProtocolToNameServerPort[PhotonNetwork.networkingPeer.UsedProtocol], FengGameManagerMKII.applicationId, UIMainReferences.ServerKey);
+                    switch (Server)
+                    {
+                        case Regions.EU:
+                            PhotonNetwork.ConnectToMaster("135.125.239.180", NetworkingPeer.ProtocolToNameServerPort[PhotonNetwork.networkingPeer.UsedProtocol], FengGameManagerMKII.applicationId, UIMainReferences.ServerKey);
+                            break;
+                        case Regions.USA:
+                            PhotonNetwork.ConnectToMaster("142.44.242.29", NetworkingPeer.ProtocolToNameServerPort[PhotonNetwork.networkingPeer.UsedProtocol], FengGameManagerMKII.applicationId, UIMainReferences.ServerKey);
+                            break;
+                        case Regions.Asia:
+                            PhotonNetwork.ConnectToMaster("51.79.164.137", NetworkingPeer.ProtocolToNameServerPort[PhotonNetwork.networkingPeer.UsedProtocol], FengGameManagerMKII.applicationId, UIMainReferences.ServerKey);
+                            break;
+                        case Regions.SouthAmerica:
+                            PhotonNetwork.ConnectToMaster("172.107.193.233", NetworkingPeer.ProtocolToNameServerPort[PhotonNetwork.networkingPeer.UsedProtocol], FengGameManagerMKII.applicationId, UIMainReferences.ServerKey);
+                            break;
+                        default:
+                            Server = Regions.EU;
+                            break;
+                    }
                 }
 
                 UpdateRoomList();

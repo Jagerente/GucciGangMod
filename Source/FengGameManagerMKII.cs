@@ -17,7 +17,7 @@ using Random = UnityEngine.Random;
 
 public class FengGameManagerMKII : MonoBehaviour
 {
-    public static readonly string applicationId = "f1f6195c-df4a-40f9-bae5-4744c32901ef";
+    public static readonly string applicationId = string.Empty;
     public static Hashtable banHash;
     public static Hashtable boolVariables;
     public static Dictionary<string, GameObject> CachedPrefabs;

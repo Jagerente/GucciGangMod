@@ -143,9 +143,17 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
 
     public void checkLAN()
     {
-        if (FengGameManagerMKII.OnPrivateServer && MasterServerAddress != null && MasterServerAddress != string.Empty && mGameserver != null && mGameserver != string.Empty && MasterServerAddress.Contains(":") && mGameserver.Contains(":"))
+        if (mGameserver.Contains("127.0.0.1"))
         {
-            mGameserver = MasterServerAddress.Split(':')[0] + ":" + mGameserver.Split(':')[1];
+            int addressIndex = TransportProtocol >= ConnectionProtocol.WebSocket ? 1 : 0;
+            string actualAddress = MasterServerAddress.Split(':')[addressIndex];
+
+            if (addressIndex > 0)
+            {
+                actualAddress = actualAddress.Substring(2);
+            }
+
+            this.mGameserver = mGameserver.Replace("127.0.0.1", actualAddress);
         }
     }
 
