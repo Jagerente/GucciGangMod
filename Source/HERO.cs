@@ -14,6 +14,7 @@ using Random = UnityEngine.Random;
 public class HERO : MonoBehaviour
 {
     private HERO_STATE _state;
+    private bool animationStopped = false;
     private bool almostSingleHook;
     private string attackAnimation;
     private int attackLoop;
@@ -785,6 +786,12 @@ public class HERO : MonoBehaviour
 
     public void continueAnimation()
     {
+        if (!animationStopped)
+        {
+            return;
+        }
+        animationStopped = false;
+
         foreach (AnimationState animationState in animation)
         {
             if (animationState.speed == 1f)
@@ -1912,26 +1919,33 @@ public class HERO : MonoBehaviour
                         currentCamera.GetComponent<Camera>().fieldOfView = Settings.CameraFOVSetting;
                     }
 
-                    if (flag2)
+                    if (!_cancelGasDisable)
                     {
-                        useGas(useGasSpeed * Time.deltaTime);
-                        if (!smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
+                        if (flag2)
                         {
-                            object[] parameters = { true };
-                            photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
-                        }
+                            useGas(useGasSpeed * Time.deltaTime);
+                            if (!smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
+                            {
+                                object[] parameters = { true };
+                                photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, parameters);
+                            }
 
-                        smoke_3dmg.enableEmission = true;
+                            smoke_3dmg.enableEmission = true;
+                        }
+                        else
+                        {
+                            if (smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
+                            {
+                                object[] objArray3 = { false };
+                                photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray3);
+                            }
+
+                            smoke_3dmg.enableEmission = false;
+                        }
                     }
                     else
                     {
-                        if (smoke_3dmg.enableEmission && IN_GAME_MAIN_CAMERA.gametype != GAMETYPE.SINGLE && photonView.isMine)
-                        {
-                            object[] objArray3 = { false };
-                            photonView.RPC("net3DMGSMOKE", PhotonTargets.Others, objArray3);
-                        }
-
-                        smoke_3dmg.enableEmission = false;
+                        _cancelGasDisable = false;
                     }
 
                     if (currentSpeed > 80f)
@@ -2346,6 +2360,8 @@ public class HERO : MonoBehaviour
             if (Settings.BodyLean || useGun) bodyLean();
         }
     }
+
+    private bool _cancelGasDisable = false;
 
     public void launch(Vector3 des, bool left = true, bool leviMode = false)
     {
@@ -3944,6 +3960,11 @@ public class HERO : MonoBehaviour
 
     public void pauseAnimation()
     {
+        if (animationStopped)
+        {
+            return;
+        }
+
         foreach (AnimationState animationState in animation)
         {
             animationState.speed = 0f;
@@ -3953,6 +3974,8 @@ public class HERO : MonoBehaviour
         {
             photonView.RPC("netPauseAnimation", PhotonTargets.Others);
         }
+
+        animationStopped = true;
     }
 
     public void playAnimation(string aniName)

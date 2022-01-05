@@ -1908,12 +1908,12 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnConnectedToMaster()
     {
-        print("OnConnectedToMaster");
+        Print("OnConnectedToMaster");
     }
 
     public void OnConnectedToPhoton()
     {
-        print("OnConnectedToPhoton");
+        Print("OnConnectedToPhoton");
     }
 
     public void OnConnectionFail(DisconnectCause cause)
@@ -1927,7 +1927,7 @@ public class FengGameManagerMKII : MonoBehaviour
                 break;
         }
 
-        print("OnConnectionFail : " + cause);
+        Print("OnConnectionFail : " + cause);
         Screen.lockCursor = false;
         Screen.showCursor = true;
         IN_GAME_MAIN_CAMERA.gametype = GAMETYPE.STOP;
@@ -1945,17 +1945,17 @@ public class FengGameManagerMKII : MonoBehaviour
         kicklist = new ArrayList();
         racingResult = new ArrayList();
         teamScores = new int[2];
-        print("OnCreatedRoom");
+        Print("OnCreatedRoom");
     }
 
     public void OnCustomAuthenticationFailed()
     {
-        print("OnCustomAuthenticationFailed");
+        Print("OnCustomAuthenticationFailed");
     }
 
     public void OnDisconnectedFromPhoton()
     {
-        print("OnDisconnectedFromPhoton");
+        Print("OnDisconnectedFromPhoton");
         Screen.lockCursor = false;
         Screen.showCursor = true;
     }
@@ -2113,7 +2113,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnFailedToConnectToPhoton()
     {
-        print("OnFailedToConnectToPhoton");
+        Print("OnFailedToConnectToPhoton");
     }
 
     public void OnJoinedLobby()
@@ -2127,6 +2127,11 @@ public class FengGameManagerMKII : MonoBehaviour
         RejoinRegion = PhotonNetwork.networkingPeer.MasterServerAddress.Split(':')[0].Replace("wss://", string.Empty).Replace("ws://", string.Empty);
     }
 
+    private void Print(object msg)
+    {
+        print($"{DateTime.Now:T} | INFO | {msg}");
+    }
+
     public void OnJoinedRoom()
     {
         HERO.PlayersSkins = new Dictionary<int, string>();
@@ -2134,7 +2139,7 @@ public class FengGameManagerMKII : MonoBehaviour
         maxPlayers = PhotonNetwork.room.maxPlayers;
         playerList = string.Empty;
         char[] separator = { "`"[0] };
-        print("OnJoinedRoom " + PhotonNetwork.room.name + "    >>>>   " + LevelInfo.getInfo(PhotonNetwork.room.name.Split(separator)[1]).mapName);
+        Print(DateTime.Now + "OnJoinedRoom " + PhotonNetwork.room.name + "    >>>>   " + LevelInfo.getInfo(PhotonNetwork.room.name.Split(separator)[1]).mapName);
         RejoinRoom = PhotonNetwork.networkingPeer.mRoomToGetInto;
         gameTimesUp = false;
         char[] chArray3 = { "`"[0] };
@@ -2217,7 +2222,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnLeftLobby()
     {
-        print("OnLeftLobby");
+        Print("OnLeftLobby");
     }
 
     public void OnLeftRoom()
@@ -2290,7 +2295,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnPhotonCreateRoomFailed()
     {
-        print("OnPhotonCreateRoomFailed");
+        Print("OnPhotonCreateRoomFailed");
     }
 
     public void OnPhotonCustomRoomPropertiesChanged()
@@ -2320,17 +2325,17 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnPhotonInstantiate()
     {
-        print("OnPhotonInstantiate");
+        Print("OnPhotonInstantiate");
     }
 
     public void OnPhotonJoinRoomFailed()
     {
-        print("OnPhotonJoinRoomFailed");
+        Print("OnPhotonJoinRoomFailed");
     }
 
     public void OnPhotonMaxCccuReached()
     {
-        print("OnPhotonMaxCccuReached");
+        Print("OnPhotonMaxCccuReached");
     }
 
     private IEnumerator OnPlayerConnected(PhotonPlayer player)
@@ -2626,12 +2631,12 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnPhotonRandomJoinFailed()
     {
-        print("OnPhotonRandomJoinFailed");
+        Print("OnPhotonRandomJoinFailed");
     }
 
     public void OnPhotonSerializeView()
     {
-        print("OnPhotonSerializeView");
+        Print("OnPhotonSerializeView");
     }
 
     public void OnReceivedRoomListUpdate()
@@ -2657,7 +2662,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     public void OnUpdatedFriendList()
     {
-        print("OnUpdatedFriendList");
+        Print("OnUpdatedFriendList");
     }
 
     public int operantType(string str, int condition)
@@ -7622,7 +7627,7 @@ public class FengGameManagerMKII : MonoBehaviour
 
     private void kickPhotonPlayer(string name)
     {
-        print("KICK " + name + "!!!");
+        Print("KICK " + name + "!!!");
         foreach (var player in PhotonNetwork.playerList)
         {
             if (player.ID.ToString() == name && !player.isMasterClient)
@@ -8898,7 +8903,7 @@ public class FengGameManagerMKII : MonoBehaviour
     [RPC]
     private void refreshPVPStatus_AHSS(int[] score1)
     {
-        print(score1);
+        Print(score1);
         teamScores = score1;
     }
 

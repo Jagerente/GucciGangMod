@@ -74,6 +74,11 @@ public class TITAN : MonoBehaviour
     public GameObject mainMaterial;
     public int maxHealth;
     private float maxStamina = 320f;
+    private HashSet<string> _ignoreLookTargetAnimations;
+    private HashSet<string> _fastHeadRotationAnimations;
+    private bool _ignoreLookTarget;
+    private bool _fastHeadRotation;
+
     public float maxVelocityChange = 10f;
     public static float minusDistance = 99999f;
     public static GameObject minusDistanceEnemy;
@@ -321,6 +326,20 @@ public class TITAN : MonoBehaviour
         cache();
         baseRigidBody.freezeRotation = true;
         baseRigidBody.useGravity = false;
+
+        //Ricecake's fix for setIfLookTarget RPC
+        _ignoreLookTargetAnimations = new HashSet<string>() { "sit_hunt_down", "hit_eren_L", "hit_eren_R",
+        "idle_recovery", "eat_l", "eat_r", "sit_hit_eye", "hit_eye"};
+        _fastHeadRotationAnimations = new HashSet<string>() { "hit_eren_L", "hit_eren_R", "sit_hit_eye", "hit_eye" };
+        foreach (AnimationState state in animation)
+        {
+            if (state.name.StartsWith("attack_"))
+            {
+                _ignoreLookTargetAnimations.Add(state.name);
+                _fastHeadRotationAnimations.Add(state.name);
+            }
+            //UnityEngine.Debug.Log(state.name);
+        }
     }
 
     public void beLaughAttacked()
@@ -382,6 +401,34 @@ public class TITAN : MonoBehaviour
         {
             baseGameObjectTransform = gameObject.transform;
         }
+    }
+
+    public void UpdateHeroDistance()
+    {
+        if ((!IN_GAME_MAIN_CAMERA.isPausing || IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER) && myDifficulty >= 0 && !nonAI)
+        {
+            if (myHero == null)
+            {
+                myDistance = float.MaxValue;
+            }
+            else
+            {
+                //myDistance = Vector3.Distance(myHero.transform.position, baseT.position);
+                Vector2 heroPosition = new Vector2(myHero.transform.position.x, myHero.transform.position.z);
+                Vector2 basePosition = new Vector2(baseTransform.position.x, baseTransform.position.z);
+                myDistance = Vector3.Distance(heroPosition, basePosition);
+            }
+        }
+    }
+
+    private void CheckAnimationLookTarget(string animation)
+    {
+        _ignoreLookTarget = _ignoreLookTargetAnimations.Contains(animation);
+    }
+
+    private void CheckFastRotation(string animation)
+    {
+        _fastHeadRotation = _fastHeadRotationAnimations.Contains(animation);
     }
 
     private void chase()
@@ -452,6 +499,8 @@ public class TITAN : MonoBehaviour
     private void crossFade(string aniName, float time)
     {
         animation.CrossFade(aniName, time);
+        CheckAnimationLookTarget(aniName);
+        CheckFastRotation(aniName);
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
         {
             object[] parameters = { aniName, time };
@@ -2568,6 +2617,8 @@ public class TITAN : MonoBehaviour
     private void playAnimation(string aniName)
     {
         animation.Play(aniName);
+        CheckAnimationLookTarget(aniName);
+        CheckFastRotation(aniName);
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
         {
             object[] parameters = { aniName };
@@ -2578,6 +2629,8 @@ public class TITAN : MonoBehaviour
     private void playAnimationAt(string aniName, float normalizedTime)
     {
         animation.Play(aniName);
+        CheckAnimationLookTarget(aniName);
+        CheckFastRotation(aniName);
         animation[aniName].normalizedTime = normalizedTime;
         if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && photonView.isMine)
         {
