@@ -96,7 +96,7 @@ namespace GGM
 
         public static void GetPosition()
         {
-            string[] msg = { "Your position:\n", "\nX", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x.ToString()}" + "\nY", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y.ToString()}" + "\nZ", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z.ToString()}" };
+            string[] msg = { "Your position:\n", "\nX", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.x}" + "\nY", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.y}" + "\nZ", " - ", $"{GameObjectCache.Find("MainCamera").GetComponent<IN_GAME_MAIN_CAMERA>().main_object.transform.position.z}" };
             SystemMessageLocal(msg);
         }
 
@@ -341,7 +341,7 @@ namespace GGM
 
                 if (RCSettings.pointMode > 0)
                 {
-                    AddLineRC("Point mode is on (" + Convert.ToString(RCSettings.pointMode) + ").");
+                    AddLineRC($"Point mode is on ({Convert.ToString(RCSettings.pointMode)}).");
                 }
 
                 if (RCSettings.disableRock > 0)
@@ -351,37 +351,37 @@ namespace GGM
 
                 if (RCSettings.spawnMode > 0)
                 {
-                    AddLineRC("Custom spawn rate is on (" + RCSettings.nRate.ToString("F2") + "% Normal, " + RCSettings.aRate.ToString("F2") + "% Abnormal, " + RCSettings.jRate.ToString("F2") + "% Jumper, " + RCSettings.cRate.ToString("F2") + "% Crawler, " + RCSettings.pRate.ToString("F2") + "% Punk");
+                    AddLineRC($"Custom spawn rate is on ({RCSettings.nRate:F2}% Normal, {RCSettings.aRate:F2}% Abnormal, {RCSettings.jRate:F2}% Jumper, {RCSettings.cRate:F2}% Crawler, {RCSettings.pRate:F2}% Punk");
                 }
 
                 if (RCSettings.explodeMode > 0)
                 {
-                    AddLineRC("Titan explode mode is on (" + Convert.ToString(RCSettings.explodeMode) + ").");
+                    AddLineRC($"Titan explode mode is on ({Convert.ToString(RCSettings.explodeMode)}).");
                 }
 
                 if (RCSettings.healthMode > 0)
                 {
-                    AddLineRC("Titan health mode is on (" + Convert.ToString(RCSettings.healthLower) + "-" + Convert.ToString(RCSettings.healthUpper) + ").");
+                    AddLineRC($"Titan health mode is on ({Convert.ToString(RCSettings.healthLower)}-{Convert.ToString(RCSettings.healthUpper)}).");
                 }
 
                 if (RCSettings.infectionMode > 0)
                 {
-                    AddLineRC("Infection mode is on (" + Convert.ToString(RCSettings.infectionMode) + ").");
+                    AddLineRC($"Infection mode is on ({Convert.ToString(RCSettings.infectionMode)}).");
                 }
 
                 if (RCSettings.damageMode > 0)
                 {
-                    AddLineRC("Minimum nape damage is on (" + Convert.ToString(RCSettings.damageMode) + ").");
+                    AddLineRC($"Minimum nape damage is on ({Convert.ToString(RCSettings.damageMode)}).");
                 }
 
                 if (RCSettings.moreTitans > 0)
                 {
-                    AddLineRC("Custom titan # is on (" + Convert.ToString(RCSettings.moreTitans) + ").");
+                    AddLineRC($"Custom titan # is on ({Convert.ToString(RCSettings.moreTitans)}).");
                 }
 
                 if (RCSettings.sizeMode > 0)
                 {
-                    AddLineRC("Custom titan size is on (" + RCSettings.sizeLower.ToString("F2") + "," + RCSettings.sizeUpper.ToString("F2") + ").");
+                    AddLineRC($"Custom titan size is on ({RCSettings.sizeLower:F2},{RCSettings.sizeUpper:F2}).");
                 }
 
                 if (RCSettings.banEren > 0)
@@ -391,7 +391,7 @@ namespace GGM
 
                 if (RCSettings.waveModeOn == 1)
                 {
-                    AddLineRC("Custom wave mode is on (" + Convert.ToString(RCSettings.waveModeNum) + ").");
+                    AddLineRC($"Custom wave mode is on ({Convert.ToString(RCSettings.waveModeNum)}).");
                 }
 
                 if (RCSettings.friendlyMode > 0)
@@ -433,7 +433,7 @@ namespace GGM
 
                 if (RCSettings.endlessMode > 0)
                 {
-                    AddLineRC("Endless Respawn is enabled (" + RCSettings.endlessMode.ToString() + " seconds).");
+                    AddLineRC($"Endless Respawn is enabled ({RCSettings.endlessMode.ToString()} seconds).");
                 }
 
                 if (RCSettings.globalDisableMinimap > 0)
@@ -443,7 +443,7 @@ namespace GGM
 
                 if (RCSettings.motd != string.Empty)
                 {
-                    AddLineRC("MOTD:" + RCSettings.motd);
+                    AddLineRC($"MOTD: {RCSettings.motd}");
                 }
 
                 if (RCSettings.deadlyCannons > 0)
@@ -489,7 +489,7 @@ namespace GGM
 
                 if (RCSettings.spawnMode > 0)
                 {
-                    string[] msg = { "Custom Spawn Rate is:", $"\n[{RCSettings.nRate.ToString("F2")}% Normal]" + $"\n[{RCSettings.aRate.ToString("F2")}% Abnormal]" + $"\n[{RCSettings.jRate.ToString("F2")}% Jumper]" + $"\n[{RCSettings.cRate.ToString("F2")}% Crawler]" + $"\n[{RCSettings.pRate.ToString("F2")}% Punk]" };
+                    string[] msg = { "Custom Spawn Rate is:", $"\n[{RCSettings.nRate:F2}% Normal]" + $"\n[{RCSettings.aRate:F2}% Abnormal]" + $"\n[{RCSettings.jRate:F2}% Jumper]" + $"\n[{RCSettings.cRate:F2}% Crawler]" + $"\n[{RCSettings.pRate:F2}% Punk]" };
                     SystemMessageLocal(msg, true);
                 }
 
@@ -531,7 +531,7 @@ namespace GGM
 
                 if (RCSettings.sizeMode > 0)
                 {
-                    string[] msg = { "Custom Titans Size is ", $"[{RCSettings.sizeLower.ToString("F2")} - {RCSettings.sizeUpper.ToString("F2")}]", "." };
+                    string[] msg = { "Custom Titans Size is ", $"[{RCSettings.sizeLower:F2} - {RCSettings.sizeUpper:F2}]", "." };
                     SystemMessageLocal(msg, true);
                 }
 
@@ -571,7 +571,7 @@ namespace GGM
 
                 if (RCSettings.maxWave > 0)
                 {
-                    string[] msg = { "Custom Maximum Wave is ", $"[{RCSettings.maxWave.ToString()}]", "." };
+                    string[] msg = { "Custom Maximum Wave is ", $"[{RCSettings.maxWave}]", "." };
                     SystemMessageLocal(msg, true);
                 }
 
@@ -595,7 +595,7 @@ namespace GGM
 
                 if (RCSettings.endlessMode > 0)
                 {
-                    string[] msg = { "Endless Respawn is ", $"[{RCSettings.endlessMode.ToString()}]", " seconds." };
+                    string[] msg = { "Endless Respawn is ", $"[{RCSettings.endlessMode}]", " seconds." };
                     SystemMessageLocal(msg, true);
                 }
 
