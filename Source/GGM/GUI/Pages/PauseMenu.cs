@@ -387,6 +387,8 @@ namespace GGM.GUI.Pages
                         TextField("Minimum Damage", ref SnapshotsMinimumDamageSetting.Value);
                     }
 
+                    Grid("Interpolation", ref InterporlationSetting.Value);
+
                     Label("Resources", LabelType.Header);
                     Grid("Infinite Blades", ref InfiniteBladesSetting.Value);
                     Grid("Infinite Bullets", ref InfiniteBulletsSetting.Value);
