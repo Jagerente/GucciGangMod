@@ -4858,16 +4858,7 @@ public class HERO : MonoBehaviour
         }
     }
 
-    private void EnableInterpolation()
-    {
-        if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE || photonView.isMine)
-        {
-            if (Settings.InterporlationSetting.Value)
-                rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-            else
-                rigidbody.interpolation = RigidbodyInterpolation.None;
-        }
-    }
+    
     private void Start()
     {
         FengGameManagerMKII.FGM.addHero(this);
@@ -5006,7 +4997,6 @@ public class HERO : MonoBehaviour
         }
         else
         {
-            EnableInterpolation();
             currentCamera = GGM.Caching.GameObjectCache.Find("MainCamera").GetComponent<Camera>();
             inputManager = GGM.Caching.GameObjectCache.Find("InputManagerController").GetComponent<FengCustomInputs>();
             loadskin();

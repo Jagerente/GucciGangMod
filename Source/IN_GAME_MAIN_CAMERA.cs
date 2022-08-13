@@ -454,6 +454,12 @@ public class IN_GAME_MAIN_CAMERA : MonoBehaviour
         else if (main_object.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head") != null)
         {
             head = main_object.transform.Find("Amarture/Controller_Body/hip/spine/chest/neck/head");
+
+            if (Settings.InterporlationSetting.Value)
+            {
+                main_object.GetComponent<HERO>().rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+            }
+
             distanceMulti = heightMulti = 0.64f;
             if (resetRotation)
             {
